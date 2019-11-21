@@ -1,0 +1,25 @@
+.DS_Store
+.idea
+.build
+glide.lock
+vendor
+hack
+
+# generated files
+models
+intersight/resource_*
+intersight/data_source_*
+intersight/provider_data_source_map.go
+intersight/provider_resource_map.go
+codegen/resource/swagger.json
+flatten_functions.go
+
+# terraform states and log files
+crash.log
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+
+# build file
+terraform-provider-intersight
