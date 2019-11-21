@@ -19,16 +19,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: terraform-provider-intersight
-        path: .build/linux_amd64/terraform-provider-intersight
-
-    - name: Archive Windows provider
-      uses: actions/upload-artifact@v1
-      with:
-        name: terraform-provider-intersight.exe
-        path: .build/windows/terraform-provider-intersight.exe
-
-    - name: Archive MacOS provider
-      uses: actions/upload-artifact@v1
-      with:
-        name: terraform-provider-intersight-darwin
-        path: .build/darwin/terraform-provider-intersight
+        path: .build
