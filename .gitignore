@@ -4,6 +4,7 @@
 glide.lock
 vendor
 hack
+go.sum
 
 # generated files
 models
