@@ -1,4 +1,4 @@
-module bitbucket-eng-sjc1.cisco.com/an/terraform-provider-intersight
+module github.com/vvb/terraform-provider-intersight
 
 go 1.12
 

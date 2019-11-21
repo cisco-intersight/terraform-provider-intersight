@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bitbucket-eng-sjc1.cisco.com/an/terraform-provider-intersight/intersight"
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
+	"github.com/vvb/terraform-provider-intersight/intersight"
 )
 
 func main() {
