@@ -25,12 +25,12 @@ install: vet build
 	$(GO_INSTALL)
 
 clean:
-	rm -rf vendor .build
 	go clean --cache
+	rm -rf vendor .build
 
 clobber:
-	rm -rf $(GENERATED_FOLDERS) vendor $(SWAGGER_SPEC) .build
 	go clean --cache
+	rm -rf $(GENERATED_FOLDERS) vendor $(SWAGGER_SPEC) .build
 
 vet:
 	@echo "go vet ."
