@@ -3,7 +3,7 @@ SWAGGER_SPEC=spec/swagger.json
 GENERATED_FOLDERS = $(PKG_NAME) models website
 
 export GOOS=$(shell go env GOOS)
-export GO_BUILD=env go build -o .build/terraform-provider-intersight
+export GO_BUILD=env go build
 export GO_RUN=env go run
 export GO_INSTALL=env go install
 export GO_VET=env go vet
@@ -18,7 +18,9 @@ default: install
 
 build: vet
 	@echo "building terraform-provider-intersight"
-	$(GO_BUILD)
+	GOOS=linux GOARCH=amd64 $(GO_BUILD) -o .build/linux_amd64/terraform-provider-intersight
+	GOOS=windows GOARCH=amd64 $(GO_BUILD) -o .build/windows/terraform-provider-intersight
+	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -o .build/darwin/terraform-provider-intersight
 
 install: vet build
 	@echo "installing terraform-provider-intersight"
