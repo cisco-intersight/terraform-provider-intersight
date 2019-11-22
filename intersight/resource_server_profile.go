@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/cisco-intersight/terraform-provider-intersight/models"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/vvb/terraform-provider-intersight/models"
 )
 
 func resourceServerProfile() *schema.Resource {

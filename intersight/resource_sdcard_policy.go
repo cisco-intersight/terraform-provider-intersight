@@ -5,8 +5,8 @@ import (
 	"log"
 	"reflect"
 
+	"github.com/cisco-intersight/terraform-provider-intersight/models"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/vvb/terraform-provider-intersight/models"
 )
 
 func resourceSdcardPolicy() *schema.Resource {

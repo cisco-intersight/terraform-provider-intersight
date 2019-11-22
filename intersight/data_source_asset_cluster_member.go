@@ -6,9 +6,9 @@ import (
 	"log"
 	"reflect"
 
+	"github.com/cisco-intersight/terraform-provider-intersight/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/vvb/terraform-provider-intersight/models"
 )
 
 func dataSourceAssetClusterMember() *schema.Resource {
