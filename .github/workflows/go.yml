@@ -15,7 +15,7 @@ jobs:
       with:
         args: make build
 
-    - name: Archive Linux provider
+    - name: Archive Providers
       uses: actions/upload-artifact@v1
       with:
         name: terraform-provider-intersight
