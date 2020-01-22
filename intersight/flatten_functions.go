@@ -8,35 +8,85 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func flattenMapIamAccountRef(p *models.IamAccountRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propaccounts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propaccount := make(map[string]interface{})
-	propaccount["moid"] = item.Moid
-	propaccount["object_type"] = item.ObjectType
-	propaccount["selector"] = item.Selector
-
-	propaccounts = append(propaccounts, propaccount)
-	return propaccounts
-}
-func flattenListIamEndPointRoleRef(p []*models.IamEndPointRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var propendpointroless []map[string]interface{}
+func flattenListHyperflexClusterProfileRef(p []*models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var propclusterprofiless []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propendpointroles := make(map[string]interface{})
-		propendpointroles["moid"] = item.Moid
-		propendpointroles["object_type"] = item.ObjectType
-		propendpointroles["selector"] = item.Selector
-		propendpointroless = append(propendpointroless, propendpointroles)
+		propclusterprofiles := make(map[string]interface{})
+		propclusterprofiles["moid"] = item.Moid
+		propclusterprofiles["object_type"] = item.ObjectType
+		propclusterprofiles["selector"] = item.Selector
+		propclusterprofiless = append(propclusterprofiless, propclusterprofiles)
 	}
-	return propendpointroless
+	return propclusterprofiless
+}
+func flattenMapHyperflexIPAddrRange(p *models.HyperflexIPAddrRange, d *schema.ResourceData) []map[string]interface{} {
+
+	var propkvmipranges []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propkvmiprange := make(map[string]interface{})
+	delete(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1, "ObjectType")
+	if len(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1)
+		if err == nil {
+			propkvmiprange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propkvmiprange["end_addr"] = item.EndAddr
+	propkvmiprange["gateway"] = item.Gateway
+	propkvmiprange["netmask"] = item.Netmask
+	propkvmiprange["object_type"] = item.ObjectType
+	propkvmiprange["start_addr"] = item.StartAddr
+
+	propkvmipranges = append(propkvmipranges, propkvmiprange)
+	return propkvmipranges
+}
+func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmacprefixranges []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmacprefixrange := make(map[string]interface{})
+	delete(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1, "ObjectType")
+	if len(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1)
+		if err == nil {
+			propmacprefixrange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propmacprefixrange["end_addr"] = item.EndAddr
+	propmacprefixrange["object_type"] = item.ObjectType
+	propmacprefixrange["start_addr"] = item.StartAddr
+
+	propmacprefixranges = append(propmacprefixranges, propmacprefixrange)
+	return propmacprefixranges
+}
+func flattenMapOrganizationOrganizationRef(p *models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proporganizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proporganization := make(map[string]interface{})
+	proporganization["moid"] = item.Moid
+	proporganization["object_type"] = item.ObjectType
+	proporganization["selector"] = item.Selector
+
+	proporganizations = append(proporganizations, proporganization)
+	return proporganizations
 }
 func flattenListMoBaseMoRef(p []*models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
 	var proppermissionresourcess []map[string]interface{}
@@ -52,36 +102,6 @@ func flattenListMoBaseMoRef(p []*models.MoBaseMoRef, d *schema.ResourceData) []m
 		proppermissionresourcess = append(proppermissionresourcess, proppermissionresources)
 	}
 	return proppermissionresourcess
-}
-func flattenListIamResourceRolesRef(p []*models.IamResourceRolesRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresourceroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propresourceroles := make(map[string]interface{})
-		propresourceroles["moid"] = item.Moid
-		propresourceroles["object_type"] = item.ObjectType
-		propresourceroles["selector"] = item.Selector
-		propresourceroless = append(propresourceroless, propresourceroles)
-	}
-	return propresourceroless
-}
-func flattenListIamRoleRef(p []*models.IamRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var proproless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proproles := make(map[string]interface{})
-		proproles["moid"] = item.Moid
-		proproles["object_type"] = item.ObjectType
-		proproles["selector"] = item.Selector
-		proproless = append(proproless, proproles)
-	}
-	return proproless
 }
 func flattenListMoTag(p []*models.MoTag, d *schema.ResourceData) []map[string]interface{} {
 	var proptagss []map[string]interface{}
@@ -108,35 +128,165 @@ func flattenListMoTag(p []*models.MoTag, d *schema.ResourceData) []map[string]in
 	}
 	return proptagss
 }
-func flattenListIamUserGroupRef(p []*models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propusergroupss []map[string]interface{}
+func flattenListPolicyAbstractConfigProfileRef(p []*models.PolicyAbstractConfigProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var propprofiless []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propusergroups := make(map[string]interface{})
-		propusergroups["moid"] = item.Moid
-		propusergroups["object_type"] = item.ObjectType
-		propusergroups["selector"] = item.Selector
-		propusergroupss = append(propusergroupss, propusergroups)
+		propprofiles := make(map[string]interface{})
+		propprofiles["moid"] = item.Moid
+		propprofiles["object_type"] = item.ObjectType
+		propprofiles["selector"] = item.Selector
+		propprofiless = append(propprofiless, propprofiles)
 	}
-	return propusergroupss
+	return propprofiless
 }
-func flattenListIamUserRef(p []*models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
-	var propuserss []map[string]interface{}
+func flattenMapIamAccountRef(p *models.IamAccountRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propaccounts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propaccount := make(map[string]interface{})
+	propaccount["moid"] = item.Moid
+	propaccount["object_type"] = item.ObjectType
+	propaccount["selector"] = item.Selector
+
+	propaccounts = append(propaccounts, propaccount)
+	return propaccounts
+}
+func flattenMapIamUserRef(p *models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propclaimedbyusers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propclaimedbyuser := make(map[string]interface{})
+	propclaimedbyuser["moid"] = item.Moid
+	propclaimedbyuser["object_type"] = item.ObjectType
+	propclaimedbyuser["selector"] = item.Selector
+
+	propclaimedbyusers = append(propclaimedbyusers, propclaimedbyuser)
+	return propclaimedbyusers
+}
+func flattenListAssetClusterMemberRef(p []*models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
+	var propclustermemberss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propusers := make(map[string]interface{})
-		propusers["moid"] = item.Moid
-		propusers["object_type"] = item.ObjectType
-		propusers["selector"] = item.Selector
-		propuserss = append(propuserss, propusers)
+		propclustermembers := make(map[string]interface{})
+		propclustermembers["moid"] = item.Moid
+		propclustermembers["object_type"] = item.ObjectType
+		propclustermembers["selector"] = item.Selector
+		propclustermemberss = append(propclustermemberss, propclustermembers)
 	}
-	return propuserss
+	return propclustermemberss
+}
+func flattenMapAssetDeviceClaimRef(p *models.AssetDeviceClaimRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propdeviceclaims []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propdeviceclaim := make(map[string]interface{})
+	propdeviceclaim["moid"] = item.Moid
+	propdeviceclaim["object_type"] = item.ObjectType
+	propdeviceclaim["selector"] = item.Selector
+
+	propdeviceclaims = append(propdeviceclaims, propdeviceclaim)
+	return propdeviceclaims
+}
+func flattenMapAssetDeviceConfigurationRef(p *models.AssetDeviceConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propdeviceconfigurations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propdeviceconfiguration := make(map[string]interface{})
+	propdeviceconfiguration["moid"] = item.Moid
+	propdeviceconfiguration["object_type"] = item.ObjectType
+	propdeviceconfiguration["selector"] = item.Selector
+
+	propdeviceconfigurations = append(propdeviceconfigurations, propdeviceconfiguration)
+	return propdeviceconfigurations
+}
+func flattenMapIamDomainGroupRef(p *models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propdomaingroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propdomaingroup := make(map[string]interface{})
+	propdomaingroup["moid"] = item.Moid
+	propdomaingroup["object_type"] = item.ObjectType
+	propdomaingroup["selector"] = item.Selector
+
+	propdomaingroups = append(propdomaingroups, propdomaingroup)
+	return propdomaingroups
+}
+func flattenMapAssetDeviceRegistrationRef(p *models.AssetDeviceRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propparentconnections []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propparentconnection := make(map[string]interface{})
+	propparentconnection["moid"] = item.Moid
+	propparentconnection["object_type"] = item.ObjectType
+	propparentconnection["selector"] = item.Selector
+
+	propparentconnections = append(propparentconnections, propparentconnection)
+	return propparentconnections
+}
+func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
+
+	var propparentsignatures []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propparentsignature := make(map[string]interface{})
+	delete(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1, "ObjectType")
+	if len(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1)
+		if err == nil {
+			propparentsignature["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propparentsignature["device_id"] = item.DeviceID
+	propparentsignature["node_id"] = item.NodeID
+	propparentsignature["object_type"] = item.ObjectType
+	propparentsignature["signature"] = item.Signature
+
+	propparentsignatures = append(propparentsignatures, propparentsignature)
+	return propparentsignatures
+}
+func flattenMapAssetSecurityTokenRef(p *models.AssetSecurityTokenRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsecuritytokens []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsecuritytoken := make(map[string]interface{})
+	propsecuritytoken["moid"] = item.Moid
+	propsecuritytoken["object_type"] = item.ObjectType
+	propsecuritytoken["selector"] = item.Selector
+
+	propsecuritytokens = append(propsecuritytokens, propsecuritytoken)
+	return propsecuritytokens
 }
 func flattenMapHyperflexAppCatalogRef(p *models.HyperflexAppCatalogRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -153,1153 +303,43 @@ func flattenMapHyperflexAppCatalogRef(p *models.HyperflexAppCatalogRef, d *schem
 	propappcatalogs = append(propappcatalogs, propappcatalog)
 	return propappcatalogs
 }
-func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData) []map[string]interface{} {
-	var propcapabilityconstraintss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcapabilityconstraints := make(map[string]interface{})
-		delete(item.HclConstraintAO1P1.HclConstraintAO1P1, "ObjectType")
-		if len(item.HclConstraintAO1P1.HclConstraintAO1P1) != 0 {
+func flattenMapHyperflexInstallerImageRef(p *models.HyperflexInstallerImageRef, d *schema.ResourceData) []map[string]interface{} {
 
-			j, err := json.Marshal(item.HclConstraintAO1P1.HclConstraintAO1P1)
-			if err == nil {
-				propcapabilityconstraints["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propcapabilityconstraints["constraint_name"] = item.ConstraintName
-		propcapabilityconstraints["constraint_value"] = item.ConstraintValue
-		propcapabilityconstraints["object_type"] = item.ObjectType
-		propcapabilityconstraintss = append(propcapabilityconstraintss, propcapabilityconstraints)
-	}
-	return propcapabilityconstraintss
-}
-func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
-
-	var propkeyspecs []map[string]interface{}
+	var propinstallerimages []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propkeyspec := make(map[string]interface{})
-	delete(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1, "ObjectType")
-	if len(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1)
+	propinstallerimage := make(map[string]interface{})
+	propinstallerimage["moid"] = item.Moid
+	propinstallerimage["object_type"] = item.ObjectType
+	propinstallerimage["selector"] = item.Selector
+
+	propinstallerimages = append(propinstallerimages, propinstallerimage)
+	return propinstallerimages
+}
+func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var propvsansettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propvsansettings := make(map[string]interface{})
+	delete(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1, "ObjectType")
+	if len(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1)
 		if err == nil {
-			propkeyspec["additional_properties"] = string(j)
+			propvsansettings["additional_properties"] = string(j)
 		} else {
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
-	propkeyspec["name"] = item.Name
-	propkeyspec["object_type"] = item.ObjectType
-
-	propkeyspecs = append(propkeyspecs, propkeyspec)
-	return propkeyspecs
-}
-func flattenMapIamPermissionRef(p *models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppermissions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proppermission := make(map[string]interface{})
-	proppermission["moid"] = item.Moid
-	proppermission["object_type"] = item.ObjectType
-	proppermission["selector"] = item.Selector
-
-	proppermissions = append(proppermissions, proppermission)
-	return proppermissions
-}
-func flattenMapIamUserRef(p *models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propusers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propuser := make(map[string]interface{})
-	propuser["moid"] = item.Moid
-	propuser["object_type"] = item.ObjectType
-	propuser["selector"] = item.Selector
-
-	propusers = append(propusers, propuser)
-	return propusers
-}
-func flattenMapIamSystemRef(p *models.IamSystemRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsystems []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsystem := make(map[string]interface{})
-	propsystem["moid"] = item.Moid
-	propsystem["object_type"] = item.ObjectType
-	propsystem["selector"] = item.Selector
-
-	propsystems = append(propsystems, propsystem)
-	return propsystems
-}
-func flattenListIamUserLoginTimeRef(p []*models.IamUserLoginTimeRef, d *schema.ResourceData) []map[string]interface{} {
-	var propuserlogintimes []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propuserlogintime := make(map[string]interface{})
-		propuserlogintime["moid"] = item.Moid
-		propuserlogintime["object_type"] = item.ObjectType
-		propuserlogintime["selector"] = item.Selector
-		propuserlogintimes = append(propuserlogintimes, propuserlogintime)
-	}
-	return propuserlogintimes
-}
-func flattenListIamUserPreferenceRef(p []*models.IamUserPreferenceRef, d *schema.ResourceData) []map[string]interface{} {
-	var propuserpreferencess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propuserpreferences := make(map[string]interface{})
-		propuserpreferences["moid"] = item.Moid
-		propuserpreferences["object_type"] = item.ObjectType
-		propuserpreferences["selector"] = item.Selector
-		propuserpreferencess = append(propuserpreferencess, propuserpreferences)
-	}
-	return propuserpreferencess
-}
-func flattenListHyperflexClusterProfileRef(p []*models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var propclusterprofiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propclusterprofiles := make(map[string]interface{})
-		propclusterprofiles["moid"] = item.Moid
-		propclusterprofiles["object_type"] = item.ObjectType
-		propclusterprofiles["selector"] = item.Selector
-		propclusterprofiless = append(propclusterprofiless, propclusterprofiles)
-	}
-	return propclusterprofiless
-}
-func flattenMapHyperflexIPAddrRange(p *models.HyperflexIPAddrRange, d *schema.ResourceData) []map[string]interface{} {
-
-	var propdataipranges []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propdataiprange := make(map[string]interface{})
-	delete(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1, "ObjectType")
-	if len(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1)
-		if err == nil {
-			propdataiprange["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propdataiprange["end_addr"] = item.EndAddr
-	propdataiprange["gateway"] = item.Gateway
-	propdataiprange["netmask"] = item.Netmask
-	propdataiprange["object_type"] = item.ObjectType
-	propdataiprange["start_addr"] = item.StartAddr
-
-	propdataipranges = append(propdataipranges, propdataiprange)
-	return propdataipranges
-}
-func flattenMapOrganizationOrganizationRef(p *models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proporganizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proporganization := make(map[string]interface{})
-	proporganization["moid"] = item.Moid
-	proporganization["object_type"] = item.ObjectType
-	proporganization["selector"] = item.Selector
-
-	proporganizations = append(proporganizations, proporganization)
-	return proporganizations
-}
-func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmacprefixranges []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmacprefixrange := make(map[string]interface{})
-	delete(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1, "ObjectType")
-	if len(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1)
-		if err == nil {
-			propmacprefixrange["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propmacprefixrange["end_addr"] = item.EndAddr
-	propmacprefixrange["object_type"] = item.ObjectType
-	propmacprefixrange["start_addr"] = item.StartAddr
-
-	propmacprefixranges = append(propmacprefixranges, propmacprefixrange)
-	return propmacprefixranges
-}
-func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmgmtvlans []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmgmtvlan := make(map[string]interface{})
-	delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
-	if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
-		if err == nil {
-			propmgmtvlan["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propmgmtvlan["name"] = item.Name
-	propmgmtvlan["object_type"] = item.ObjectType
-	propmgmtvlan["vlan_id"] = item.VlanID
-
-	propmgmtvlans = append(propmgmtvlans, propmgmtvlan)
-	return propmgmtvlans
-}
-func flattenListHyperflexNamedVlan(p []*models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
-	var propvmnetworkvlanss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propvmnetworkvlans := make(map[string]interface{})
-		delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
-		if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
-
-			j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
-			if err == nil {
-				propvmnetworkvlans["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propvmnetworkvlans["name"] = item.Name
-		propvmnetworkvlans["object_type"] = item.ObjectType
-		propvmnetworkvlans["vlan_id"] = item.VlanID
-		propvmnetworkvlanss = append(propvmnetworkvlanss, propvmnetworkvlans)
-	}
-	return propvmnetworkvlanss
-}
-func flattenMapHyperflexClusterRef(p *models.HyperflexClusterRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propassociatedclusters []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propassociatedcluster := make(map[string]interface{})
-	propassociatedcluster["moid"] = item.Moid
-	propassociatedcluster["object_type"] = item.ObjectType
-	propassociatedcluster["selector"] = item.Selector
-
-	propassociatedclusters = append(propassociatedclusters, propassociatedcluster)
-	return propassociatedclusters
-}
-func flattenMapHyperflexAutoSupportPolicyRef(p *models.HyperflexAutoSupportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propautosupports []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propautosupport := make(map[string]interface{})
-	propautosupport["moid"] = item.Moid
-	propautosupport["object_type"] = item.ObjectType
-	propautosupport["selector"] = item.Selector
-
-	propautosupports = append(propautosupports, propautosupport)
-	return propautosupports
-}
-func flattenMapHyperflexClusterNetworkPolicyRef(p *models.HyperflexClusterNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propclusternetworks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propclusternetwork := make(map[string]interface{})
-	propclusternetwork["moid"] = item.Moid
-	propclusternetwork["object_type"] = item.ObjectType
-	propclusternetwork["selector"] = item.Selector
-
-	propclusternetworks = append(propclusternetworks, propclusternetwork)
-	return propclusternetworks
-}
-func flattenMapHyperflexClusterStoragePolicyRef(p *models.HyperflexClusterStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propclusterstorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propclusterstorage := make(map[string]interface{})
-	propclusterstorage["moid"] = item.Moid
-	propclusterstorage["object_type"] = item.ObjectType
-	propclusterstorage["selector"] = item.Selector
-
-	propclusterstorages = append(propclusterstorages, propclusterstorage)
-	return propclusterstorages
-}
-func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
-
-	var propconfigcontexts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propconfigcontext := make(map[string]interface{})
-	delete(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1, "ObjectType")
-	if len(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1) != 0 {
-		j, err := json.Marshal(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1)
-		if err == nil {
-			propconfigcontext["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propconfigcontext["config_state"] = item.ConfigState
-	propconfigcontext["control_action"] = item.ControlAction
-	propconfigcontext["error_state"] = item.ErrorState
-	propconfigcontext["object_type"] = item.ObjectType
-	propconfigcontext["oper_state"] = item.OperState
-
-	propconfigcontexts = append(propconfigcontexts, propconfigcontext)
-	return propconfigcontexts
-}
-func flattenMapHyperflexConfigResultRef(p *models.HyperflexConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propconfigresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propconfigresult := make(map[string]interface{})
-	propconfigresult["moid"] = item.Moid
-	propconfigresult["object_type"] = item.ObjectType
-	propconfigresult["selector"] = item.Selector
-
-	propconfigresults = append(propconfigresults, propconfigresult)
-	return propconfigresults
-}
-func flattenMapHyperflexExtFcStoragePolicyRef(p *models.HyperflexExtFcStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propextfcstorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propextfcstorage := make(map[string]interface{})
-	propextfcstorage["moid"] = item.Moid
-	propextfcstorage["object_type"] = item.ObjectType
-	propextfcstorage["selector"] = item.Selector
-
-	propextfcstorages = append(propextfcstorages, propextfcstorage)
-	return propextfcstorages
-}
-func flattenMapHyperflexExtIscsiStoragePolicyRef(p *models.HyperflexExtIscsiStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propextiscsistorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propextiscsistorage := make(map[string]interface{})
-	propextiscsistorage["moid"] = item.Moid
-	propextiscsistorage["object_type"] = item.ObjectType
-	propextiscsistorage["selector"] = item.Selector
-
-	propextiscsistorages = append(propextiscsistorages, propextiscsistorage)
-	return propextiscsistorages
-}
-func flattenMapHyperflexLocalCredentialPolicyRef(p *models.HyperflexLocalCredentialPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplocalcredentials []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplocalcredential := make(map[string]interface{})
-	proplocalcredential["moid"] = item.Moid
-	proplocalcredential["object_type"] = item.ObjectType
-	proplocalcredential["selector"] = item.Selector
-
-	proplocalcredentials = append(proplocalcredentials, proplocalcredential)
-	return proplocalcredentials
-}
-func flattenMapHyperflexNodeConfigPolicyRef(p *models.HyperflexNodeConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propnodeconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propnodeconfig := make(map[string]interface{})
-	propnodeconfig["moid"] = item.Moid
-	propnodeconfig["object_type"] = item.ObjectType
-	propnodeconfig["selector"] = item.Selector
-
-	propnodeconfigs = append(propnodeconfigs, propnodeconfig)
-	return propnodeconfigs
-}
-func flattenListHyperflexNodeProfileRef(p []*models.HyperflexNodeProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var propnodeprofileconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propnodeprofileconfig := make(map[string]interface{})
-		propnodeprofileconfig["moid"] = item.Moid
-		propnodeprofileconfig["object_type"] = item.ObjectType
-		propnodeprofileconfig["selector"] = item.Selector
-		propnodeprofileconfigs = append(propnodeprofileconfigs, propnodeprofileconfig)
-	}
-	return propnodeprofileconfigs
-}
-func flattenMapHyperflexProxySettingPolicyRef(p *models.HyperflexProxySettingPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propproxysettings []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propproxysetting := make(map[string]interface{})
-	propproxysetting["moid"] = item.Moid
-	propproxysetting["object_type"] = item.ObjectType
-	propproxysetting["selector"] = item.Selector
-
-	propproxysettings = append(propproxysettings, propproxysetting)
-	return propproxysettings
-}
-func flattenListWorkflowWorkflowInfoRef(p []*models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var proprunningworkflowss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proprunningworkflows := make(map[string]interface{})
-		proprunningworkflows["moid"] = item.Moid
-		proprunningworkflows["object_type"] = item.ObjectType
-		proprunningworkflows["selector"] = item.Selector
-		proprunningworkflowss = append(proprunningworkflowss, proprunningworkflows)
-	}
-	return proprunningworkflowss
-}
-func flattenMapHyperflexSoftwareVersionPolicyRef(p *models.HyperflexSoftwareVersionPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsoftwareversions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsoftwareversion := make(map[string]interface{})
-	propsoftwareversion["moid"] = item.Moid
-	propsoftwareversion["object_type"] = item.ObjectType
-	propsoftwareversion["selector"] = item.Selector
-
-	propsoftwareversions = append(propsoftwareversions, propsoftwareversion)
-	return propsoftwareversions
-}
-func flattenMapPolicyAbstractProfileRef(p *models.PolicyAbstractProfileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsrctemplates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsrctemplate := make(map[string]interface{})
-	propsrctemplate["moid"] = item.Moid
-	propsrctemplate["object_type"] = item.ObjectType
-	propsrctemplate["selector"] = item.Selector
-
-	propsrctemplates = append(propsrctemplates, propsrctemplate)
-	return propsrctemplates
-}
-func flattenMapHyperflexSysConfigPolicyRef(p *models.HyperflexSysConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsysconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsysconfig := make(map[string]interface{})
-	propsysconfig["moid"] = item.Moid
-	propsysconfig["object_type"] = item.ObjectType
-	propsysconfig["selector"] = item.Selector
-
-	propsysconfigs = append(propsysconfigs, propsysconfig)
-	return propsysconfigs
-}
-func flattenMapHyperflexUcsmConfigPolicyRef(p *models.HyperflexUcsmConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propucsmconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propucsmconfig := make(map[string]interface{})
-	propucsmconfig["moid"] = item.Moid
-	propucsmconfig["object_type"] = item.ObjectType
-	propucsmconfig["selector"] = item.Selector
-
-	propucsmconfigs = append(propucsmconfigs, propucsmconfig)
-	return propucsmconfigs
-}
-func flattenMapHyperflexVcenterConfigPolicyRef(p *models.HyperflexVcenterConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvcenterconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvcenterconfig := make(map[string]interface{})
-	propvcenterconfig["moid"] = item.Moid
-	propvcenterconfig["object_type"] = item.ObjectType
-	propvcenterconfig["selector"] = item.Selector
-
-	propvcenterconfigs = append(propvcenterconfigs, propvcenterconfig)
-	return propvcenterconfigs
-}
-func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcredentials []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcredential := make(map[string]interface{})
-	delete(item.CommCredentialAO1P1.CommCredentialAO1P1, "ObjectType")
-	if len(item.CommCredentialAO1P1.CommCredentialAO1P1) != 0 {
-		j, err := json.Marshal(item.CommCredentialAO1P1.CommCredentialAO1P1)
-		if err == nil {
-			propcredential["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propcredential["is_password_set"] = item.IsPasswordSet
-	propcredential["object_type"] = item.ObjectType
-	propcredential["password"] = item.Password
-	propcredential["username"] = item.Username
-
-	propcredentials = append(propcredentials, propcredential)
-	return propcredentials
-}
-func flattenMapAssetDeviceRegistrationRef(p *models.AssetDeviceRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propdeviceconnectormanagers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propdeviceconnectormanager := make(map[string]interface{})
-	propdeviceconnectormanager["moid"] = item.Moid
-	propdeviceconnectormanager["object_type"] = item.ObjectType
-	propdeviceconnectormanager["selector"] = item.Selector
-
-	propdeviceconnectormanagers = append(propdeviceconnectormanagers, propdeviceconnectormanager)
-	return propdeviceconnectormanagers
-}
-func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstatuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstatus := make(map[string]interface{})
-	delete(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1, "ObjectType")
-	if len(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1) != 0 {
-		j, err := json.Marshal(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1)
-		if err == nil {
-			propstatus["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propstatus["cloud_port"] = item.CloudPort
-	propstatus["connection_failure_reason"] = item.ConnectionFailureReason
-	propstatus["connection_status"] = item.ConnectionStatus
-	propstatus["error_code"] = item.ErrorCode
-	propstatus["error_reason"] = item.ErrorReason
-	propstatus["object_type"] = item.ObjectType
-	propstatus["process_id"] = item.ProcessID
-	propstatus["server_port"] = item.ServerPort
-	propstatus["state"] = item.State
-
-	propstatuss = append(propstatuss, propstatus)
-	return propstatuss
-}
-func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propworkflowinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propworkflowinfo := make(map[string]interface{})
-	propworkflowinfo["moid"] = item.Moid
-	propworkflowinfo["object_type"] = item.ObjectType
-	propworkflowinfo["selector"] = item.Selector
-
-	propworkflowinfos = append(propworkflowinfos, propworkflowinfo)
-	return propworkflowinfos
-}
-func flattenListPolicyAbstractConfigProfileRef(p []*models.PolicyAbstractConfigProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var propprofiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propprofiles := make(map[string]interface{})
-		propprofiles["moid"] = item.Moid
-		propprofiles["object_type"] = item.ObjectType
-		propprofiles["selector"] = item.Selector
-		propprofiless = append(propprofiless, propprofiles)
-	}
-	return propprofiless
-}
-func flattenMapIamLdapPolicyRef(p *models.IamLdapPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propldappolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propldappolicy := make(map[string]interface{})
-	propldappolicy["moid"] = item.Moid
-	propldappolicy["object_type"] = item.ObjectType
-	propldappolicy["selector"] = item.Selector
-
-	propldappolicys = append(propldappolicys, propldappolicy)
-	return propldappolicys
-}
-func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.ResourceData) []map[string]interface{} {
-	var propapidatasourcess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propapidatasources := make(map[string]interface{})
-		delete(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1, "ObjectType")
-		if len(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1) != 0 {
-
-			j, err := json.Marshal(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1)
-			if err == nil {
-				propapidatasources["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propapidatasources["mo_type"] = item.MoType
-		propapidatasources["name"] = item.Name
-		propapidatasources["object_type"] = item.ObjectType
-		propapidatasources["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
-			var propqueriess []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				propqueries := make(map[string]interface{})
-				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
-				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
-
-					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
-					if err == nil {
-						propqueries["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
-				}
-				propqueries["name"] = item.Name
-				propqueries["object_type"] = item.ObjectType
-				propqueries["priority"] = item.Priority
-				propqueries["query"] = item.Query
-				propqueriess = append(propqueriess, propqueries)
-			}
-			return propqueriess
-		})(item.Queries, d)
-		propapidatasources["type"] = item.Type
-		propapidatasourcess = append(propapidatasourcess, propapidatasources)
-	}
-	return propapidatasourcess
-}
-func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[string]interface{} {
-	var propactionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propactions := make(map[string]interface{})
-		delete(item.TamActionAO1P1.TamActionAO1P1, "ObjectType")
-		if len(item.TamActionAO1P1.TamActionAO1P1) != 0 {
-
-			j, err := json.Marshal(item.TamActionAO1P1.TamActionAO1P1)
-			if err == nil {
-				propactions["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propactions["affected_object_type"] = item.AffectedObjectType
-		propactions["alert_type"] = item.AlertType
-		propactions["identifiers"] = (func(p []*models.TamIdentifiers, d *schema.ResourceData) []map[string]interface{} {
-			var propidentifierss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				propidentifiers := make(map[string]interface{})
-				delete(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1, "ObjectType")
-				if len(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1) != 0 {
-
-					j, err := json.Marshal(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1)
-					if err == nil {
-						propidentifiers["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
-				}
-				propidentifiers["name"] = item.Name
-				propidentifiers["object_type"] = item.ObjectType
-				propidentifiers["value"] = item.Value
-				propidentifierss = append(propidentifierss, propidentifiers)
-			}
-			return propidentifierss
-		})(item.Identifiers, d)
-		propactions["name"] = item.Name
-		propactions["object_type"] = item.ObjectType
-		propactions["operation_type"] = item.OperationType
-		propactions["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
-			var propqueriess []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				propqueries := make(map[string]interface{})
-				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
-				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
-
-					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
-					if err == nil {
-						propqueries["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
-				}
-				propqueries["name"] = item.Name
-				propqueries["object_type"] = item.ObjectType
-				propqueries["priority"] = item.Priority
-				propqueries["query"] = item.Query
-				propqueriess = append(propqueriess, propqueries)
-			}
-			return propqueriess
-		})(item.Queries, d)
-		propactions["type"] = item.Type
-		propactionss = append(propactionss, propactions)
-	}
-	return propactionss
-}
-func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
-
-	var propseveritys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propseverity := make(map[string]interface{})
-	delete(item.AO1, "ObjectType")
-	if len(item.AO1) != 0 {
-		j, err := json.Marshal(item.AO1)
-		if err == nil {
-			propseverity["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propseverity["object_type"] = item.ObjectType
-
-	propseveritys = append(propseveritys, propseverity)
-	return propseveritys
-}
-func flattenListBootDeviceBase(p []*models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
-	var propbootdevicess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propbootdevices := make(map[string]interface{})
-		delete(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1, "ObjectType")
-		if len(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1) != 0 {
-
-			j, err := json.Marshal(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1)
-			if err == nil {
-				propbootdevices["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propbootdevices["enabled"] = item.Enabled
-		propbootdevices["name"] = item.Name
-		propbootdevices["object_type"] = item.ObjectType
-		propbootdevicess = append(propbootdevicess, propbootdevices)
-	}
-	return propbootdevicess
-}
-func flattenListIamEndPointUserRoleRef(p []*models.IamEndPointUserRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var propendpointuserroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propendpointuserroles := make(map[string]interface{})
-		propendpointuserroles["moid"] = item.Moid
-		propendpointuserroles["object_type"] = item.ObjectType
-		propendpointuserroles["selector"] = item.Selector
-		propendpointuserroless = append(propendpointuserroless, propendpointuserroles)
-	}
-	return propendpointuserroless
-}
-func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppasswordpropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proppasswordproperties := make(map[string]interface{})
-	delete(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1, "ObjectType")
-	if len(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1)
-		if err == nil {
-			proppasswordproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	proppasswordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
-	proppasswordproperties["enforce_strong_password"] = item.EnforceStrongPassword
-	proppasswordproperties["grace_period"] = item.GracePeriod
-	proppasswordproperties["notification_period"] = item.NotificationPeriod
-	proppasswordproperties["object_type"] = item.ObjectType
-	proppasswordproperties["password_expiry_duration"] = item.PasswordExpiryDuration
-	proppasswordproperties["password_history"] = item.PasswordHistory
-
-	proppasswordpropertiess = append(proppasswordpropertiess, proppasswordproperties)
-	return proppasswordpropertiess
-}
-func flattenMapIamCertificateRef(p *models.IamCertificateRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcertificates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcertificate := make(map[string]interface{})
-	propcertificate["moid"] = item.Moid
-	propcertificate["object_type"] = item.ObjectType
-	propcertificate["selector"] = item.Selector
-
-	propcertificates = append(propcertificates, propcertificate)
-	return propcertificates
-}
-func flattenMapIamPrivateKeySpecRef(p *models.IamPrivateKeySpecRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propprivatekeyspecs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propprivatekeyspec := make(map[string]interface{})
-	propprivatekeyspec["moid"] = item.Moid
-	propprivatekeyspec["object_type"] = item.ObjectType
-	propprivatekeyspec["selector"] = item.Selector
-
-	propprivatekeyspecs = append(propprivatekeyspecs, propprivatekeyspec)
-	return propprivatekeyspecs
-}
-func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsubjects []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsubject := make(map[string]interface{})
-	delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
-	if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
-		if err == nil {
-			propsubject["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propsubject["common_name"] = item.CommonName
-	propsubject["country"] = item.Country
-	propsubject["locality"] = item.Locality
-	propsubject["object_type"] = item.ObjectType
-	propsubject["organization"] = item.Organization
-	propsubject["organizational_unit"] = item.OrganizationalUnit
-	propsubject["state"] = item.State
-
-	propsubjects = append(propsubjects, propsubject)
-	return propsubjects
-}
-func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsubjectalternatenames []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsubjectalternatename := make(map[string]interface{})
-	delete(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1, "ObjectType")
-	if len(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1)
-		if err == nil {
-			propsubjectalternatename["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propsubjectalternatename["dns_name"] = item.DNSName
-	propsubjectalternatename["email_address"] = item.EmailAddress
-	propsubjectalternatename["ip_address"] = item.IPAddress
-	propsubjectalternatename["object_type"] = item.ObjectType
-	propsubjectalternatename["uri"] = item.URI
-
-	propsubjectalternatenames = append(propsubjectalternatenames, propsubjectalternatename)
-	return propsubjectalternatenames
-}
-func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplogicalavalabilityzoneconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplogicalavalabilityzoneconfig := make(map[string]interface{})
-	delete(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1, "ObjectType")
-	if len(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1)
-		if err == nil {
-			proplogicalavalabilityzoneconfig["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	proplogicalavalabilityzoneconfig["auto_config"] = item.AutoConfig
-	proplogicalavalabilityzoneconfig["object_type"] = item.ObjectType
-
-	proplogicalavalabilityzoneconfigs = append(proplogicalavalabilityzoneconfigs, proplogicalavalabilityzoneconfig)
-	return proplogicalavalabilityzoneconfigs
-}
-func flattenListSyslogLocalClientBase(p []*models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
-	var proplocalclientss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proplocalclients := make(map[string]interface{})
-		delete(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1, "ObjectType")
-		if len(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1) != 0 {
-
-			j, err := json.Marshal(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1)
-			if err == nil {
-				proplocalclients["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		proplocalclients["min_severity"] = item.MinSeverity
-		proplocalclients["object_type"] = item.ObjectType
-		proplocalclientss = append(proplocalclientss, proplocalclients)
-	}
-	return proplocalclientss
-}
-func flattenListSyslogRemoteClientBase(p []*models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
-	var propremoteclientss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propremoteclients := make(map[string]interface{})
-		delete(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1, "ObjectType")
-		if len(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1) != 0 {
-
-			j, err := json.Marshal(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1)
-			if err == nil {
-				propremoteclients["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propremoteclients["enabled"] = item.Enabled
-		propremoteclients["hostname"] = item.Hostname
-		propremoteclients["min_severity"] = item.MinSeverity
-		propremoteclients["object_type"] = item.ObjectType
-		propremoteclients["port"] = item.Port
-		propremoteclients["protocol"] = item.Protocol
-		propremoteclientss = append(propremoteclientss, propremoteclients)
-	}
-	return propremoteclientss
-}
-func flattenListIamAPIKeyRef(p []*models.IamAPIKeyRef, d *schema.ResourceData) []map[string]interface{} {
-	var propapikeyss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propapikeys := make(map[string]interface{})
-		propapikeys["moid"] = item.Moid
-		propapikeys["object_type"] = item.ObjectType
-		propapikeys["selector"] = item.Selector
-		propapikeyss = append(propapikeyss, propapikeys)
-	}
-	return propapikeyss
-}
-func flattenListIamAppRegistrationRef(p []*models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
-	var propappregistrationss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propappregistrations := make(map[string]interface{})
-		propappregistrations["moid"] = item.Moid
-		propappregistrations["object_type"] = item.ObjectType
-		propappregistrations["selector"] = item.Selector
-		propappregistrationss = append(propappregistrationss, propappregistrations)
-	}
-	return propappregistrationss
-}
-func flattenMapIamIdpRef(p *models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propidps []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propidp := make(map[string]interface{})
-	propidp["moid"] = item.Moid
-	propidp["object_type"] = item.ObjectType
-	propidp["selector"] = item.Selector
-
-	propidps = append(propidps, propidp)
-	return propidps
-}
-func flattenMapIamIdpReferenceRef(p *models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propidpreferences []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propidpreference := make(map[string]interface{})
-	propidpreference["moid"] = item.Moid
-	propidpreference["object_type"] = item.ObjectType
-	propidpreference["selector"] = item.Selector
-
-	propidpreferences = append(propidpreferences, propidpreference)
-	return propidpreferences
-}
-func flattenMapIamLocalUserPasswordRef(p *models.IamLocalUserPasswordRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplocaluserpasswords []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplocaluserpassword := make(map[string]interface{})
-	proplocaluserpassword["moid"] = item.Moid
-	proplocaluserpassword["object_type"] = item.ObjectType
-	proplocaluserpassword["selector"] = item.Selector
-
-	proplocaluserpasswords = append(proplocaluserpasswords, proplocaluserpassword)
-	return proplocaluserpasswords
-}
-func flattenListIamOAuthTokenRef(p []*models.IamOAuthTokenRef, d *schema.ResourceData) []map[string]interface{} {
-	var propoauthtokenss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propoauthtokens := make(map[string]interface{})
-		propoauthtokens["moid"] = item.Moid
-		propoauthtokens["object_type"] = item.ObjectType
-		propoauthtokens["selector"] = item.Selector
-		propoauthtokenss = append(propoauthtokenss, propoauthtokens)
-	}
-	return propoauthtokenss
-}
-func flattenListIamPermissionRef(p []*models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppermissionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppermissions := make(map[string]interface{})
-		proppermissions["moid"] = item.Moid
-		proppermissions["object_type"] = item.ObjectType
-		proppermissions["selector"] = item.Selector
-		proppermissionss = append(proppermissionss, proppermissions)
-	}
-	return proppermissionss
-}
-func flattenListIamSessionRef(p []*models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsessionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propsessions := make(map[string]interface{})
-		propsessions["moid"] = item.Moid
-		propsessions["object_type"] = item.ObjectType
-		propsessions["selector"] = item.Selector
-		propsessionss = append(propsessionss, propsessions)
-	}
-	return propsessionss
+	propvsansettings["id"] = item.ID
+	propvsansettings["object_type"] = item.ObjectType
+
+	propvsansettingss = append(propvsansettingss, propvsansettings)
+	return propvsansettingss
 }
 func flattenMapTamAdvisoryRef(p *models.TamAdvisoryRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -1316,399 +356,125 @@ func flattenMapTamAdvisoryRef(p *models.TamAdvisoryRef, d *schema.ResourceData) 
 	propadvisorys = append(propadvisorys, propadvisory)
 	return propadvisorys
 }
-func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMoBaseMoRef(p *models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propbasepropertiess []map[string]interface{}
+	var propaffectedobjects []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propbaseproperties := make(map[string]interface{})
-	delete(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1, "ObjectType")
-	if len(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1)
-		if err == nil {
-			propbaseproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propbaseproperties["attribute"] = item.Attribute
-	propbaseproperties["base_dn"] = item.BaseDn
-	propbaseproperties["bind_dn"] = item.BindDn
-	propbaseproperties["bind_method"] = item.BindMethod
-	propbaseproperties["domain"] = item.Domain
-	propbaseproperties["enable_encryption"] = item.EnableEncryption
-	propbaseproperties["enable_group_authorization"] = item.EnableGroupAuthorization
-	propbaseproperties["filter"] = item.Filter
-	propbaseproperties["group_attribute"] = item.GroupAttribute
-	propbaseproperties["is_password_set"] = item.IsPasswordSet
-	propbaseproperties["nested_group_search_depth"] = item.NestedGroupSearchDepth
-	propbaseproperties["object_type"] = item.ObjectType
-	password_x := d.Get("base_properties").([]interface{})
-	password_y := password_x[0].(map[string]interface{})
-	propbaseproperties["password"] = password_y["password"]
-	propbaseproperties["timeout"] = item.Timeout
+	propaffectedobject := make(map[string]interface{})
+	propaffectedobject["moid"] = item.Moid
+	propaffectedobject["object_type"] = item.ObjectType
+	propaffectedobject["selector"] = item.Selector
 
-	propbasepropertiess = append(propbasepropertiess, propbaseproperties)
-	return propbasepropertiess
+	propaffectedobjects = append(propaffectedobjects, propaffectedobject)
+	return propaffectedobjects
 }
-func flattenMapIamLdapDNSParameters(p *models.IamLdapDNSParameters, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexFeatureLimitExternalRef(p *models.HyperflexFeatureLimitExternalRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propdnsparameterss []map[string]interface{}
+	var propfeaturelimitexternals []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propdnsparameters := make(map[string]interface{})
-	delete(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1, "ObjectType")
-	if len(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1) != 0 {
-		j, err := json.Marshal(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1)
-		if err == nil {
-			propdnsparameters["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propdnsparameters["object_type"] = item.ObjectType
-	propdnsparameters["search_domain"] = item.SearchDomain
-	propdnsparameters["search_forest"] = item.SearchForest
-	propdnsparameters["source"] = item.Source
+	propfeaturelimitexternal := make(map[string]interface{})
+	propfeaturelimitexternal["moid"] = item.Moid
+	propfeaturelimitexternal["object_type"] = item.ObjectType
+	propfeaturelimitexternal["selector"] = item.Selector
 
-	propdnsparameterss = append(propdnsparameterss, propdnsparameters)
-	return propdnsparameterss
+	propfeaturelimitexternals = append(propfeaturelimitexternals, propfeaturelimitexternal)
+	return propfeaturelimitexternals
 }
-func flattenListIamLdapGroupRef(p []*models.IamLdapGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propgroupss []map[string]interface{}
+func flattenMapHyperflexFeatureLimitInternalRef(p *models.HyperflexFeatureLimitInternalRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propfeaturelimitinternals []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propfeaturelimitinternal := make(map[string]interface{})
+	propfeaturelimitinternal["moid"] = item.Moid
+	propfeaturelimitinternal["object_type"] = item.ObjectType
+	propfeaturelimitinternal["selector"] = item.Selector
+
+	propfeaturelimitinternals = append(propfeaturelimitinternals, propfeaturelimitinternal)
+	return propfeaturelimitinternals
+}
+func flattenListHyperflexHxdpVersionRef(p []*models.HyperflexHxdpVersionRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophxdpversionss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propgroups := make(map[string]interface{})
-		propgroups["moid"] = item.Moid
-		propgroups["object_type"] = item.ObjectType
-		propgroups["selector"] = item.Selector
-		propgroupss = append(propgroupss, propgroups)
+		prophxdpversions := make(map[string]interface{})
+		prophxdpversions["moid"] = item.Moid
+		prophxdpversions["object_type"] = item.ObjectType
+		prophxdpversions["selector"] = item.Selector
+		prophxdpversionss = append(prophxdpversionss, prophxdpversions)
 	}
-	return propgroupss
+	return prophxdpversionss
 }
-func flattenListIamLdapProviderRef(p []*models.IamLdapProviderRef, d *schema.ResourceData) []map[string]interface{} {
-	var propproviderss []map[string]interface{}
+func flattenListHyperflexCapabilityInfoRef(p []*models.HyperflexCapabilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophyperflexcapabilityinfoss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propproviders := make(map[string]interface{})
-		propproviders["moid"] = item.Moid
-		propproviders["object_type"] = item.ObjectType
-		propproviders["selector"] = item.Selector
-		propproviderss = append(propproviderss, propproviders)
+		prophyperflexcapabilityinfos := make(map[string]interface{})
+		prophyperflexcapabilityinfos["moid"] = item.Moid
+		prophyperflexcapabilityinfos["object_type"] = item.ObjectType
+		prophyperflexcapabilityinfos["selector"] = item.Selector
+		prophyperflexcapabilityinfoss = append(prophyperflexcapabilityinfoss, prophyperflexcapabilityinfos)
 	}
-	return propproviderss
+	return prophyperflexcapabilityinfoss
 }
-func flattenListWorkflowMessage(p []*models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
-	var propmessages []map[string]interface{}
+func flattenListHclHyperflexSoftwareCompatibilityInfoRef(p []*models.HclHyperflexSoftwareCompatibilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophyperflexsoftwarecompatibilityinfoss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propmessage := make(map[string]interface{})
-		delete(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1, "ObjectType")
-		if len(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1) != 0 {
-
-			j, err := json.Marshal(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1)
-			if err == nil {
-				propmessage["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propmessage["message"] = item.Message
-		propmessage["object_type"] = item.ObjectType
-		propmessage["severity"] = item.Severity
-		propmessages = append(propmessages, propmessage)
+		prophyperflexsoftwarecompatibilityinfos := make(map[string]interface{})
+		prophyperflexsoftwarecompatibilityinfos["moid"] = item.Moid
+		prophyperflexsoftwarecompatibilityinfos["object_type"] = item.ObjectType
+		prophyperflexsoftwarecompatibilityinfos["selector"] = item.Selector
+		prophyperflexsoftwarecompatibilityinfoss = append(prophyperflexsoftwarecompatibilityinfoss, prophyperflexsoftwarecompatibilityinfos)
 	}
-	return propmessages
+	return prophyperflexsoftwarecompatibilityinfoss
 }
-func flattenMapHyperflexClusterProfileRef(p *models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexServerFirmwareVersionRef(p *models.HyperflexServerFirmwareVersionRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propnr0clusterprofiles []map[string]interface{}
+	var propserverfirmwareversions []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propnr0clusterprofile := make(map[string]interface{})
-	propnr0clusterprofile["moid"] = item.Moid
-	propnr0clusterprofile["object_type"] = item.ObjectType
-	propnr0clusterprofile["selector"] = item.Selector
+	propserverfirmwareversion := make(map[string]interface{})
+	propserverfirmwareversion["moid"] = item.Moid
+	propserverfirmwareversion["object_type"] = item.ObjectType
+	propserverfirmwareversion["selector"] = item.Selector
 
-	propnr0clusterprofiles = append(propnr0clusterprofiles, propnr0clusterprofile)
-	return propnr0clusterprofiles
+	propserverfirmwareversions = append(propserverfirmwareversions, propserverfirmwareversion)
+	return propserverfirmwareversions
 }
-func flattenMapServerProfileRef(p *models.ServerProfileRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexServerModelRef(p *models.HyperflexServerModelRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propnr1profiles []map[string]interface{}
+	var propservermodels []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propnr1profile := make(map[string]interface{})
-	propnr1profile["moid"] = item.Moid
-	propnr1profile["object_type"] = item.ObjectType
-	propnr1profile["selector"] = item.Selector
+	propservermodel := make(map[string]interface{})
+	propservermodel["moid"] = item.Moid
+	propservermodel["object_type"] = item.ObjectType
+	propservermodel["selector"] = item.Selector
 
-	propnr1profiles = append(propnr1profiles, propnr1profile)
-	return propnr1profiles
-}
-func flattenMapWorkflowTaskInfoRef(p *models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propparenttaskinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propparenttaskinfo := make(map[string]interface{})
-	propparenttaskinfo["moid"] = item.Moid
-	propparenttaskinfo["object_type"] = item.ObjectType
-	propparenttaskinfo["selector"] = item.Selector
-
-	propparenttaskinfos = append(propparenttaskinfos, propparenttaskinfo)
-	return propparenttaskinfos
-}
-func flattenMapWorkflowPendingDynamicWorkflowInfoRef(p *models.WorkflowPendingDynamicWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppendingdynamicworkflowinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proppendingdynamicworkflowinfo := make(map[string]interface{})
-	proppendingdynamicworkflowinfo["moid"] = item.Moid
-	proppendingdynamicworkflowinfo["object_type"] = item.ObjectType
-	proppendingdynamicworkflowinfo["selector"] = item.Selector
-
-	proppendingdynamicworkflowinfos = append(proppendingdynamicworkflowinfos, proppendingdynamicworkflowinfo)
-	return proppendingdynamicworkflowinfos
-}
-func flattenListWorkflowTaskInfoRef(p []*models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var proptaskinfoss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proptaskinfos := make(map[string]interface{})
-		proptaskinfos["moid"] = item.Moid
-		proptaskinfos["object_type"] = item.ObjectType
-		proptaskinfos["selector"] = item.Selector
-		proptaskinfoss = append(proptaskinfoss, proptaskinfos)
-	}
-	return proptaskinfoss
-}
-func flattenMapWorkflowWorkflowDefinitionRef(p *models.WorkflowWorkflowDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propworkflowdefinitions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propworkflowdefinition := make(map[string]interface{})
-	propworkflowdefinition["moid"] = item.Moid
-	propworkflowdefinition["object_type"] = item.ObjectType
-	propworkflowdefinition["selector"] = item.Selector
-
-	propworkflowdefinitions = append(propworkflowdefinitions, propworkflowdefinition)
-	return propworkflowdefinitions
-}
-func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
-	var propfeaturelimitentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propfeaturelimitentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
-		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
-
-			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
-			if err == nil {
-				propfeaturelimitentries["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propfeaturelimitentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
-
-			var propconstraints []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propconstraint := make(map[string]interface{})
-			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
-			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
-				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
-				if err == nil {
-					propconstraint["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propconstraint["hxdp_version"] = item.HxdpVersion
-			propconstraint["hypervisor_type"] = item.HypervisorType
-			propconstraint["mgmt_platform"] = item.MgmtPlatform
-			propconstraint["object_type"] = item.ObjectType
-			propconstraint["server_model"] = item.ServerModel
-
-			propconstraints = append(propconstraints, propconstraint)
-			return propconstraints
-		})(item.Constraint, d)
-		propfeaturelimitentries["name"] = item.Name
-		propfeaturelimitentries["object_type"] = item.ObjectType
-		propfeaturelimitentries["value"] = item.Value
-		propfeaturelimitentriess = append(propfeaturelimitentriess, propfeaturelimitentries)
-	}
-	return propfeaturelimitentriess
-}
-func flattenMapHyperflexInstallerImageRef(p *models.HyperflexInstallerImageRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propinstallerimages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propinstallerimage := make(map[string]interface{})
-	propinstallerimage["moid"] = item.Moid
-	propinstallerimage["object_type"] = item.ObjectType
-	propinstallerimage["selector"] = item.Selector
-
-	propinstallerimages = append(propinstallerimages, propinstallerimage)
-	return propinstallerimages
-}
-func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerFirmwareVersionEntry, d *schema.ResourceData) []map[string]interface{} {
-	var propserverfirmwareversionentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propserverfirmwareversionentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
-		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
-
-			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
-			if err == nil {
-				propserverfirmwareversionentries["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propserverfirmwareversionentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
-
-			var propconstraints []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propconstraint := make(map[string]interface{})
-			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
-			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
-				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
-				if err == nil {
-					propconstraint["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propconstraint["hxdp_version"] = item.HxdpVersion
-			propconstraint["hypervisor_type"] = item.HypervisorType
-			propconstraint["mgmt_platform"] = item.MgmtPlatform
-			propconstraint["object_type"] = item.ObjectType
-			propconstraint["server_model"] = item.ServerModel
-
-			propconstraints = append(propconstraints, propconstraint)
-			return propconstraints
-		})(item.Constraint, d)
-		propserverfirmwareversionentries["label"] = item.Label
-		propserverfirmwareversionentries["name"] = item.Name
-		propserverfirmwareversionentries["object_type"] = item.ObjectType
-		propserverfirmwareversionentries["value"] = item.Value
-		propserverfirmwareversionentriess = append(propserverfirmwareversionentriess, propserverfirmwareversionentries)
-	}
-	return propserverfirmwareversionentriess
-}
-func flattenMapComputeRackUnitRef(p *models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propassignedservers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propassignedserver := make(map[string]interface{})
-	propassignedserver["moid"] = item.Moid
-	propassignedserver["object_type"] = item.ObjectType
-	propassignedserver["selector"] = item.Selector
-
-	propassignedservers = append(propassignedservers, propassignedserver)
-	return propassignedservers
-}
-func flattenListServerConfigChangeDetailRef(p []*models.ServerConfigChangeDetailRef, d *schema.ResourceData) []map[string]interface{} {
-	var propconfigchangedetailss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propconfigchangedetails := make(map[string]interface{})
-		propconfigchangedetails["moid"] = item.Moid
-		propconfigchangedetails["object_type"] = item.ObjectType
-		propconfigchangedetails["selector"] = item.Selector
-		propconfigchangedetailss = append(propconfigchangedetailss, propconfigchangedetails)
-	}
-	return propconfigchangedetailss
-}
-func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
-
-	var propconfigchangess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propconfigchanges := make(map[string]interface{})
-	delete(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1, "ObjectType")
-	if len(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1) != 0 {
-		j, err := json.Marshal(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1)
-		if err == nil {
-			propconfigchanges["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propconfigchanges["changes"] = item.Changes
-	propconfigchanges["disruptions"] = item.Disruptions
-	propconfigchanges["object_type"] = item.ObjectType
-
-	propconfigchangess = append(propconfigchangess, propconfigchanges)
-	return propconfigchangess
-}
-func flattenMapServerConfigResultRef(p *models.ServerConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propconfigresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propconfigresult := make(map[string]interface{})
-	propconfigresult["moid"] = item.Moid
-	propconfigresult["object_type"] = item.ObjectType
-	propconfigresult["selector"] = item.Selector
-
-	propconfigresults = append(propconfigresults, propconfigresult)
-	return propconfigresults
+	propservermodels = append(propservermodels, propservermodel)
+	return propservermodels
 }
 func flattenListSnmpTrap(p []*models.SnmpTrap, d *schema.ResourceData) []map[string]interface{} {
 	var propsnmptrapss []map[string]interface{}
@@ -1774,44 +540,58 @@ func flattenListSnmpUser(p []*models.SnmpUser, d *schema.ResourceData) []map[str
 	}
 	return propsnmpuserss
 }
-func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenListVnicFcIfRef(p []*models.VnicFcIfRef, d *schema.ResourceData) []map[string]interface{} {
+	var propfcifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propfcifs := make(map[string]interface{})
+		propfcifs["moid"] = item.Moid
+		propfcifs["object_type"] = item.ObjectType
+		propfcifs["selector"] = item.Selector
+		propfcifss = append(propfcifss, propfcifs)
+	}
+	return propfcifss
+}
+func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
 
-	var propvlansettingss []map[string]interface{}
+	var propalgorithms []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propvlansettings := make(map[string]interface{})
-	delete(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1, "ObjectType")
-	if len(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1)
+	propalgorithm := make(map[string]interface{})
+	delete(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1, "ObjectType")
+	if len(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1)
 		if err == nil {
-			propvlansettings["additional_properties"] = string(j)
+			propalgorithm["additional_properties"] = string(j)
 		} else {
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
-	propvlansettings["default_vlan"] = item.DefaultVlan
-	propvlansettings["mode"] = item.Mode
-	propvlansettings["object_type"] = item.ObjectType
+	propalgorithm["name"] = item.Name
+	propalgorithm["object_type"] = item.ObjectType
 
-	propvlansettingss = append(propvlansettingss, propvlansettings)
-	return propvlansettingss
+	propalgorithms = append(propalgorithms, propalgorithm)
+	return propalgorithms
 }
-func flattenMapRecoveryConfigResultRef(p *models.RecoveryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamCertificateRequestRef(p *models.IamCertificateRequestRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propconfigresults []map[string]interface{}
+	var propcertificaterequests []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propconfigresult := make(map[string]interface{})
-	propconfigresult["moid"] = item.Moid
-	propconfigresult["object_type"] = item.ObjectType
-	propconfigresult["selector"] = item.Selector
+	propcertificaterequest := make(map[string]interface{})
+	propcertificaterequest["moid"] = item.Moid
+	propcertificaterequest["object_type"] = item.ObjectType
+	propcertificaterequest["selector"] = item.Selector
 
-	propconfigresults = append(propconfigresults, propconfigresult)
-	return propconfigresults
+	propcertificaterequests = append(propcertificaterequests, propcertificaterequest)
+	return propcertificaterequests
 }
 func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]interface{} {
 
@@ -1970,105 +750,50 @@ func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData
 	propvmqsettingss = append(propvmqsettingss, propvmqsettings)
 	return propvmqsettingss
 }
-func flattenListAssetClusterMemberRef(p []*models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
-	var propclustermemberss []map[string]interface{}
+func flattenListIamEndPointRoleRef(p []*models.IamEndPointRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var propendpointroles []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propclustermembers := make(map[string]interface{})
-		propclustermembers["moid"] = item.Moid
-		propclustermembers["object_type"] = item.ObjectType
-		propclustermembers["selector"] = item.Selector
-		propclustermemberss = append(propclustermemberss, propclustermembers)
+		propendpointrole := make(map[string]interface{})
+		propendpointrole["moid"] = item.Moid
+		propendpointrole["object_type"] = item.ObjectType
+		propendpointrole["selector"] = item.Selector
+		propendpointroles = append(propendpointroles, propendpointrole)
 	}
-	return propclustermemberss
+	return propendpointroles
 }
-func flattenMapAssetDeviceClaimRef(p *models.AssetDeviceClaimRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserRef(p *models.IamEndPointUserRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propdeviceclaims []map[string]interface{}
+	var propendpointusers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propdeviceclaim := make(map[string]interface{})
-	propdeviceclaim["moid"] = item.Moid
-	propdeviceclaim["object_type"] = item.ObjectType
-	propdeviceclaim["selector"] = item.Selector
+	propendpointuser := make(map[string]interface{})
+	propendpointuser["moid"] = item.Moid
+	propendpointuser["object_type"] = item.ObjectType
+	propendpointuser["selector"] = item.Selector
 
-	propdeviceclaims = append(propdeviceclaims, propdeviceclaim)
-	return propdeviceclaims
+	propendpointusers = append(propendpointusers, propendpointuser)
+	return propendpointusers
 }
-func flattenMapAssetDeviceConfigurationRef(p *models.AssetDeviceConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserPolicyRef(p *models.IamEndPointUserPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propdeviceconfigurations []map[string]interface{}
+	var propendpointuserpolicys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propdeviceconfiguration := make(map[string]interface{})
-	propdeviceconfiguration["moid"] = item.Moid
-	propdeviceconfiguration["object_type"] = item.ObjectType
-	propdeviceconfiguration["selector"] = item.Selector
+	propendpointuserpolicy := make(map[string]interface{})
+	propendpointuserpolicy["moid"] = item.Moid
+	propendpointuserpolicy["object_type"] = item.ObjectType
+	propendpointuserpolicy["selector"] = item.Selector
 
-	propdeviceconfigurations = append(propdeviceconfigurations, propdeviceconfiguration)
-	return propdeviceconfigurations
-}
-func flattenMapIamDomainGroupRef(p *models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propdomaingroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propdomaingroup := make(map[string]interface{})
-	propdomaingroup["moid"] = item.Moid
-	propdomaingroup["object_type"] = item.ObjectType
-	propdomaingroup["selector"] = item.Selector
-
-	propdomaingroups = append(propdomaingroups, propdomaingroup)
-	return propdomaingroups
-}
-func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
-
-	var propparentsignatures []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propparentsignature := make(map[string]interface{})
-	delete(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1, "ObjectType")
-	if len(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1) != 0 {
-		j, err := json.Marshal(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1)
-		if err == nil {
-			propparentsignature["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propparentsignature["device_id"] = item.DeviceID
-	propparentsignature["node_id"] = item.NodeID
-	propparentsignature["object_type"] = item.ObjectType
-	propparentsignature["signature"] = item.Signature
-
-	propparentsignatures = append(propparentsignatures, propparentsignature)
-	return propparentsignatures
-}
-func flattenMapAssetSecurityTokenRef(p *models.AssetSecurityTokenRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsecuritytokens []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsecuritytoken := make(map[string]interface{})
-	propsecuritytoken["moid"] = item.Moid
-	propsecuritytoken["object_type"] = item.ObjectType
-	propsecuritytoken["selector"] = item.Selector
-
-	propsecuritytokens = append(propsecuritytokens, propsecuritytoken)
-	return propsecuritytokens
+	propendpointuserpolicys = append(propendpointuserpolicys, propendpointuserpolicy)
+	return propendpointuserpolicys
 }
 func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []map[string]interface{} {
 	var propbatchs []map[string]interface{}
@@ -2206,6 +931,21 @@ func flattenMapWorkflowTaskDefinitionRef(p *models.WorkflowTaskDefinitionRef, d 
 
 	proptaskdefinitions = append(proptaskdefinitions, proptaskdefinition)
 	return proptaskdefinitions
+}
+func flattenMapRecoveryConfigResultRef(p *models.RecoveryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propconfigresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propconfigresult := make(map[string]interface{})
+	propconfigresult["moid"] = item.Moid
+	propconfigresult["object_type"] = item.ObjectType
+	propconfigresult["selector"] = item.Selector
+
+	propconfigresults = append(propconfigresults, propconfigresult)
+	return propconfigresults
 }
 func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings, d *schema.ResourceData) []map[string]interface{} {
 
@@ -2353,317 +1093,6 @@ func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.
 	propscsiqueuesettingss = append(propscsiqueuesettingss, propscsiqueuesettings)
 	return propscsiqueuesettingss
 }
-func flattenListStorageLocalDisk(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
-	var propdedicatedhotsparess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdedicatedhotspares := make(map[string]interface{})
-		delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
-		if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
-			if err == nil {
-				propdedicatedhotspares["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propdedicatedhotspares["object_type"] = item.ObjectType
-		propdedicatedhotspares["slot_number"] = item.SlotNumber
-		propdedicatedhotsparess = append(propdedicatedhotsparess, propdedicatedhotspares)
-	}
-	return propdedicatedhotsparess
-}
-func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
-	var propspangroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propspangroups := make(map[string]interface{})
-		delete(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1, "ObjectType")
-		if len(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1)
-			if err == nil {
-				propspangroups["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propspangroups["disks"] = (func(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
-			var propdiskss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				propdisks := make(map[string]interface{})
-				delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
-				if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
-
-					j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
-					if err == nil {
-						propdisks["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
-				}
-				propdisks["object_type"] = item.ObjectType
-				propdisks["slot_number"] = item.SlotNumber
-				propdiskss = append(propdiskss, propdisks)
-			}
-			return propdiskss
-		})(item.Disks, d)
-		propspangroups["object_type"] = item.ObjectType
-		propspangroupss = append(propspangroupss, propspangroups)
-	}
-	return propspangroupss
-}
-func flattenListStorageStoragePolicyRef(p []*models.StorageStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var propstoragepoliciess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propstoragepolicies := make(map[string]interface{})
-		propstoragepolicies["moid"] = item.Moid
-		propstoragepolicies["object_type"] = item.ObjectType
-		propstoragepolicies["selector"] = item.Selector
-		propstoragepoliciess = append(propstoragepoliciess, propstoragepolicies)
-	}
-	return propstoragepoliciess
-}
-func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcertificates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcertificate := make(map[string]interface{})
-	delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
-	if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
-		j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
-		if err == nil {
-			propcertificate["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propcertificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-		var propissuers []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		propissuer := make(map[string]interface{})
-		propissuer["common_name"] = item.CommonName
-		propissuer["country"] = item.Country
-		propissuer["locality"] = item.Locality
-		propissuer["object_type"] = item.ObjectType
-		propissuer["organization"] = item.Organization
-		propissuer["organizational_unit"] = item.OrganizationalUnit
-		propissuer["state"] = item.State
-
-		propissuers = append(propissuers, propissuer)
-		return propissuers
-	})(item.Issuer, d)
-	propcertificate["object_type"] = item.ObjectType
-	propcertificate["pem_certificate"] = item.PemCertificate
-	propcertificate["sha256_fingerprint"] = item.Sha256Fingerprint
-	propcertificate["signature_algorithm"] = item.SignatureAlgorithm
-	propcertificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-		var propsubjects []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		propsubject := make(map[string]interface{})
-		propsubject["common_name"] = item.CommonName
-		propsubject["country"] = item.Country
-		propsubject["locality"] = item.Locality
-		propsubject["object_type"] = item.ObjectType
-		propsubject["organization"] = item.Organization
-		propsubject["organizational_unit"] = item.OrganizationalUnit
-		propsubject["state"] = item.State
-
-		propsubjects = append(propsubjects, propsubject)
-		return propsubjects
-	})(item.Subject, d)
-
-	propcertificates = append(propcertificates, propcertificate)
-	return propcertificates
-}
-func flattenMapIamCertificateRequestRef(p *models.IamCertificateRequestRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcertificaterequests []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcertificaterequest := make(map[string]interface{})
-	propcertificaterequest["moid"] = item.Moid
-	propcertificaterequest["object_type"] = item.ObjectType
-	propcertificaterequest["selector"] = item.Selector
-
-	propcertificaterequests = append(propcertificaterequests, propcertificaterequest)
-	return propcertificaterequests
-}
-func flattenMapWorkflowCatalogRef(p *models.WorkflowCatalogRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcatalogs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcatalog := make(map[string]interface{})
-	propcatalog["moid"] = item.Moid
-	propcatalog["object_type"] = item.ObjectType
-	propcatalog["selector"] = item.Selector
-
-	propcatalogs = append(propcatalogs, propcatalog)
-	return propcatalogs
-}
-func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-	var propinputdefinitions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propinputdefinition := make(map[string]interface{})
-		delete(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1, "ObjectType")
-		if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
-
-			j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
-			if err == nil {
-				propinputdefinition["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propinputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-			var propdefaults []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propdefault := make(map[string]interface{})
-			delete(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1, "ObjectType")
-			if len(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1) != 0 {
-				j, err := json.Marshal(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1)
-				if err == nil {
-					propdefault["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propdefault["object_type"] = item.ObjectType
-			propdefault["override"] = item.Override
-			propdefault["value"] = item.Value
-
-			propdefaults = append(propdefaults, propdefault)
-			return propdefaults
-		})(item.Default, d)
-		propinputdefinition["description"] = item.Description
-		propinputdefinition["label"] = item.Label
-		propinputdefinition["name"] = item.Name
-		propinputdefinition["object_type"] = item.ObjectType
-		propinputdefinition["required"] = item.Required
-		propinputdefinitions = append(propinputdefinitions, propinputdefinition)
-	}
-	return propinputdefinitions
-}
-func flattenListWorkflowWorkflowTask(p []*models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
-	var proptaskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proptasks := make(map[string]interface{})
-		delete(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1, "ObjectType")
-		if len(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1) != 0 {
-
-			j, err := json.Marshal(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1)
-			if err == nil {
-				proptasks["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		proptasks["description"] = item.Description
-		proptasks["label"] = item.Label
-		proptasks["name"] = item.Name
-		proptasks["object_type"] = item.ObjectType
-		proptaskss = append(proptaskss, proptasks)
-	}
-	return proptaskss
-}
-func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvalidationinformations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvalidationinformation := make(map[string]interface{})
-	delete(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1, "ObjectType")
-	if len(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1)
-		if err == nil {
-			propvalidationinformation["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propvalidationinformation["object_type"] = item.ObjectType
-	propvalidationinformation["state"] = item.State
-	propvalidationinformation["validation_error"] = (func(p []*models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
-		var propvalidationerrors []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			propvalidationerror := make(map[string]interface{})
-			propvalidationerror["error_log"] = item.ErrorLog
-			propvalidationerror["field"] = item.Field
-			propvalidationerror["object_type"] = item.ObjectType
-			propvalidationerror["task_name"] = item.TaskName
-			propvalidationerror["transition_name"] = item.TransitionName
-			propvalidationerrors = append(propvalidationerrors, propvalidationerror)
-		}
-		return propvalidationerrors
-	})(item.ValidationError, d)
-
-	propvalidationinformations = append(propvalidationinformations, propvalidationinformation)
-	return propvalidationinformations
-}
-func flattenListRecoveryBackupProfileRef(p []*models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var propbackupprofiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propbackupprofiles := make(map[string]interface{})
-		propbackupprofiles["moid"] = item.Moid
-		propbackupprofiles["object_type"] = item.ObjectType
-		propbackupprofiles["selector"] = item.Selector
-		propbackupprofiless = append(propbackupprofiless, propbackupprofiles)
-	}
-	return propbackupprofiless
-}
 func flattenMapSoftwarerepositoryCatalogRef(p *models.SoftwarerepositoryCatalogRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var propcatalogs []map[string]interface{}
@@ -2701,103 +1130,6 @@ func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServ
 	propsources = append(propsources, propsource)
 	return propsources
 }
-func flattenListStorageDiskGroupPolicyRef(p []*models.StorageDiskGroupPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdiskgrouppoliciess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdiskgrouppolicies := make(map[string]interface{})
-		propdiskgrouppolicies["moid"] = item.Moid
-		propdiskgrouppolicies["object_type"] = item.ObjectType
-		propdiskgrouppolicies["selector"] = item.Selector
-		propdiskgrouppoliciess = append(propdiskgrouppoliciess, propdiskgrouppolicies)
-	}
-	return propdiskgrouppoliciess
-}
-func flattenListStorageVirtualDriveConfig(p []*models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
-	var propvirtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propvirtualdrives := make(map[string]interface{})
-		propvirtualdrives["access_policy"] = item.AccessPolicy
-		delete(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1, "ObjectType")
-		if len(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1)
-			if err == nil {
-				propvirtualdrives["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propvirtualdrives["boot_drive"] = item.BootDrive
-		propvirtualdrives["disk_group_name"] = item.DiskGroupName
-		propvirtualdrives["disk_group_policy"] = item.DiskGroupPolicy
-		propvirtualdrives["drive_cache"] = item.DriveCache
-		propvirtualdrives["expand_to_available"] = item.ExpandToAvailable
-		propvirtualdrives["io_policy"] = item.IoPolicy
-		propvirtualdrives["name"] = item.Name
-		propvirtualdrives["object_type"] = item.ObjectType
-		propvirtualdrives["read_policy"] = item.ReadPolicy
-		propvirtualdrives["size"] = item.Size
-		propvirtualdrives["write_policy"] = item.WritePolicy
-		propvirtualdrivess = append(propvirtualdrivess, propvirtualdrives)
-	}
-	return propvirtualdrivess
-}
-func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
-	var proppartitionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppartitions := make(map[string]interface{})
-		delete(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1, "ObjectType")
-		if len(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1) != 0 {
-
-			j, err := json.Marshal(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1)
-			if err == nil {
-				proppartitions["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		proppartitions["object_type"] = item.ObjectType
-		proppartitions["type"] = item.Type
-		proppartitions["virtual_drives"] = (func(p []*models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
-			var propvirtualdrivess []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				propvirtualdrives := make(map[string]interface{})
-				delete(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1, "ObjectType")
-				if len(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1) != 0 {
-
-					j, err := json.Marshal(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1)
-					if err == nil {
-						propvirtualdrives["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
-				}
-				propvirtualdrives["enable"] = item.Enable
-				propvirtualdrives["object_type"] = item.ObjectType
-				propvirtualdrivess = append(propvirtualdrivess, propvirtualdrives)
-			}
-			return propvirtualdrivess
-		})(item.VirtualDrives, d)
-		proppartitionss = append(proppartitionss, proppartitions)
-	}
-	return proppartitionss
-}
 func flattenMapSoftwareHyperflexDistributableRef(p *models.SoftwareHyperflexDistributableRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var prophxdpversioninfos []map[string]interface{}
@@ -2827,805 +1159,6 @@ func flattenMapFirmwareDistributableRef(p *models.FirmwareDistributableRef, d *s
 
 	propserverfirmwareversioninfos = append(propserverfirmwareversioninfos, propserverfirmwareversioninfo)
 	return propserverfirmwareversioninfos
-}
-func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvsansettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvsansettings := make(map[string]interface{})
-	delete(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1, "ObjectType")
-	if len(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1)
-		if err == nil {
-			propvsansettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propvsansettings["id"] = item.ID
-	propvsansettings["object_type"] = item.ObjectType
-
-	propvsansettingss = append(propvsansettingss, propvsansettings)
-	return propvsansettingss
-}
-func flattenMapIamQualifierRef(p *models.IamQualifierRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propqualifiers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propqualifier := make(map[string]interface{})
-	propqualifier["moid"] = item.Moid
-	propqualifier["object_type"] = item.ObjectType
-	propqualifier["selector"] = item.Selector
-
-	propqualifiers = append(propqualifiers, propqualifier)
-	return propqualifiers
-}
-func flattenMapRecoveryBackupConfigPolicyRef(p *models.RecoveryBackupConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propbackupconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propbackupconfig := make(map[string]interface{})
-	propbackupconfig["moid"] = item.Moid
-	propbackupconfig["object_type"] = item.ObjectType
-	propbackupconfig["selector"] = item.Selector
-
-	propbackupconfigs = append(propbackupconfigs, propbackupconfig)
-	return propbackupconfigs
-}
-func flattenMapRecoveryScheduleConfigPolicyRef(p *models.RecoveryScheduleConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propscheduleconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propscheduleconfig := make(map[string]interface{})
-	propscheduleconfig["moid"] = item.Moid
-	propscheduleconfig["object_type"] = item.ObjectType
-	propscheduleconfig["selector"] = item.Selector
-
-	propscheduleconfigs = append(propscheduleconfigs, propscheduleconfig)
-	return propscheduleconfigs
-}
-func flattenListResourceGroupRef(p []*models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresourcegroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propresourcegroups := make(map[string]interface{})
-		propresourcegroups["moid"] = item.Moid
-		propresourcegroups["object_type"] = item.ObjectType
-		propresourcegroups["selector"] = item.Selector
-		propresourcegroupss = append(propresourcegroupss, propresourcegroups)
-	}
-	return propresourcegroupss
-}
-func flattenMapIamUserGroupRef(p *models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propusergroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propusergroup := make(map[string]interface{})
-	propusergroup["moid"] = item.Moid
-	propusergroup["object_type"] = item.ObjectType
-	propusergroup["selector"] = item.Selector
-
-	propusergroups = append(propusergroups, propusergroup)
-	return propusergroups
-}
-func flattenListWorkflowTaskDefinitionRef(p []*models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-	var propimplementedtaskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propimplementedtasks := make(map[string]interface{})
-		propimplementedtasks["moid"] = item.Moid
-		propimplementedtasks["object_type"] = item.ObjectType
-		propimplementedtasks["selector"] = item.Selector
-		propimplementedtaskss = append(propimplementedtaskss, propimplementedtasks)
-	}
-	return propimplementedtaskss
-}
-func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var propinternalpropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propinternalproperties := make(map[string]interface{})
-	delete(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1, "ObjectType")
-	if len(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1)
-		if err == nil {
-			propinternalproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propinternalproperties["base_task_type"] = item.BaseTaskType
-	propinternalproperties["constraints"] = item.Constraints
-	propinternalproperties["internal"] = item.Internal
-	propinternalproperties["object_type"] = item.ObjectType
-	propinternalproperties["owner"] = item.Owner
-
-	propinternalpropertiess = append(propinternalpropertiess, propinternalproperties)
-	return propinternalpropertiess
-}
-func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propproperties := make(map[string]interface{})
-	delete(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1, "ObjectType")
-	if len(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1)
-		if err == nil {
-			propproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	propproperties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-		var propinputdefinitions []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			propinputdefinition := make(map[string]interface{})
-			propinputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-				var propdefaults []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				propdefault := make(map[string]interface{})
-				propdefault["object_type"] = item.ObjectType
-				propdefault["override"] = item.Override
-				propdefault["value"] = item.Value
-
-				propdefaults = append(propdefaults, propdefault)
-				return propdefaults
-			})(item.Default, d)
-			propinputdefinition["description"] = item.Description
-			propinputdefinition["label"] = item.Label
-			propinputdefinition["name"] = item.Name
-			propinputdefinition["object_type"] = item.ObjectType
-			propinputdefinition["required"] = item.Required
-			propinputdefinitions = append(propinputdefinitions, propinputdefinition)
-		}
-		return propinputdefinitions
-	})(item.InputDefinition, d)
-	propproperties["object_type"] = item.ObjectType
-	propproperties["output_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-		var propoutputdefinitions []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			propoutputdefinition := make(map[string]interface{})
-			propoutputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-				var propdefaults []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				propdefault := make(map[string]interface{})
-				propdefault["object_type"] = item.ObjectType
-				propdefault["override"] = item.Override
-				propdefault["value"] = item.Value
-
-				propdefaults = append(propdefaults, propdefault)
-				return propdefaults
-			})(item.Default, d)
-			propoutputdefinition["description"] = item.Description
-			propoutputdefinition["label"] = item.Label
-			propoutputdefinition["name"] = item.Name
-			propoutputdefinition["object_type"] = item.ObjectType
-			propoutputdefinition["required"] = item.Required
-			propoutputdefinitions = append(propoutputdefinitions, propoutputdefinition)
-		}
-		return propoutputdefinitions
-	})(item.OutputDefinition, d)
-	propproperties["retry_count"] = item.RetryCount
-	propproperties["retry_delay"] = item.RetryDelay
-	propproperties["retry_policy"] = item.RetryPolicy
-	propproperties["timeout"] = item.Timeout
-	propproperties["timeout_policy"] = item.TimeoutPolicy
-
-	proppropertiess = append(proppropertiess, propproperties)
-	return proppropertiess
-}
-func flattenMapIamEndPointUserRef(p *models.IamEndPointUserRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propendpointusers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propendpointuser := make(map[string]interface{})
-	propendpointuser["moid"] = item.Moid
-	propendpointuser["object_type"] = item.ObjectType
-	propendpointuser["selector"] = item.Selector
-
-	propendpointusers = append(propendpointusers, propendpointuser)
-	return propendpointusers
-}
-func flattenMapIamEndPointUserPolicyRef(p *models.IamEndPointUserPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propendpointuserpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propendpointuserpolicy := make(map[string]interface{})
-	propendpointuserpolicy["moid"] = item.Moid
-	propendpointuserpolicy["object_type"] = item.ObjectType
-	propendpointuserpolicy["selector"] = item.Selector
-
-	propendpointuserpolicys = append(propendpointuserpolicys, propendpointuserpolicy)
-	return propendpointuserpolicys
-}
-func flattenListIamDomainGroupRef(p []*models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdomaingroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdomaingroups := make(map[string]interface{})
-		propdomaingroups["moid"] = item.Moid
-		propdomaingroups["object_type"] = item.ObjectType
-		propdomaingroups["selector"] = item.Selector
-		propdomaingroupss = append(propdomaingroupss, propdomaingroups)
-	}
-	return propdomaingroupss
-}
-func flattenListIamIdpReferenceRef(p []*models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
-	var propidpreferencess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propidpreferences := make(map[string]interface{})
-		propidpreferences["moid"] = item.Moid
-		propidpreferences["object_type"] = item.ObjectType
-		propidpreferences["selector"] = item.Selector
-		propidpreferencess = append(propidpreferencess, propidpreferences)
-	}
-	return propidpreferencess
-}
-func flattenListIamIdpRef(p []*models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
-	var propidpss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propidps := make(map[string]interface{})
-		propidps["moid"] = item.Moid
-		propidps["object_type"] = item.ObjectType
-		propidps["selector"] = item.Selector
-		propidpss = append(propidpss, propidps)
-	}
-	return propidpss
-}
-func flattenMapCryptEncryptRef(p *models.CryptEncryptRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propnr0encrypts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propnr0encrypt := make(map[string]interface{})
-	propnr0encrypt["moid"] = item.Moid
-	propnr0encrypt["object_type"] = item.ObjectType
-	propnr0encrypt["selector"] = item.Selector
-
-	propnr0encrypts = append(propnr0encrypts, propnr0encrypt)
-	return propnr0encrypts
-}
-func flattenMapCryptDecryptRef(p *models.CryptDecryptRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propnr1decrypts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propnr1decrypt := make(map[string]interface{})
-	propnr1decrypt["moid"] = item.Moid
-	propnr1decrypt["object_type"] = item.ObjectType
-	propnr1decrypt["selector"] = item.Selector
-
-	propnr1decrypts = append(propnr1decrypts, propnr1decrypt)
-	return propnr1decrypts
-}
-func flattenListIamPrivilegeSetRef(p []*models.IamPrivilegeSetRef, d *schema.ResourceData) []map[string]interface{} {
-	var propprivilegesetss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propprivilegesets := make(map[string]interface{})
-		propprivilegesets["moid"] = item.Moid
-		propprivilegesets["object_type"] = item.ObjectType
-		propprivilegesets["selector"] = item.Selector
-		propprivilegesetss = append(propprivilegesetss, propprivilegesets)
-	}
-	return propprivilegesetss
-}
-func flattenListIamPrivilegeRef(p []*models.IamPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
-	var propprivilegess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propprivileges := make(map[string]interface{})
-		propprivileges["moid"] = item.Moid
-		propprivileges["object_type"] = item.ObjectType
-		propprivileges["selector"] = item.Selector
-		propprivilegess = append(propprivilegess, propprivileges)
-	}
-	return propprivilegess
-}
-func flattenMapIamResourceLimitsRef(p *models.IamResourceLimitsRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propresourcelimitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propresourcelimits := make(map[string]interface{})
-	propresourcelimits["moid"] = item.Moid
-	propresourcelimits["object_type"] = item.ObjectType
-	propresourcelimits["selector"] = item.Selector
-
-	propresourcelimitss = append(propresourcelimitss, propresourcelimits)
-	return propresourcelimitss
-}
-func flattenMapIamSecurityHolderRef(p *models.IamSecurityHolderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsecurityholders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsecurityholder := make(map[string]interface{})
-	propsecurityholder["moid"] = item.Moid
-	propsecurityholder["object_type"] = item.ObjectType
-	propsecurityholder["selector"] = item.Selector
-
-	propsecurityholders = append(propsecurityholders, propsecurityholder)
-	return propsecurityholders
-}
-func flattenMapIamSessionLimitsRef(p *models.IamSessionLimitsRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsessionlimitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsessionlimits := make(map[string]interface{})
-	propsessionlimits["moid"] = item.Moid
-	propsessionlimits["object_type"] = item.ObjectType
-	propsessionlimits["selector"] = item.Selector
-
-	propsessionlimitss = append(propsessionlimitss, propsessionlimits)
-	return propsessionlimitss
-}
-func flattenListVnicFcIfRef(p []*models.VnicFcIfRef, d *schema.ResourceData) []map[string]interface{} {
-	var propfcifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propfcifs := make(map[string]interface{})
-		propfcifs["moid"] = item.Moid
-		propfcifs["object_type"] = item.ObjectType
-		propfcifs["selector"] = item.Selector
-		propfcifss = append(propfcifss, propfcifs)
-	}
-	return propfcifss
-}
-func flattenListVnicEthIfRef(p []*models.VnicEthIfRef, d *schema.ResourceData) []map[string]interface{} {
-	var propethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propethifs := make(map[string]interface{})
-		propethifs["moid"] = item.Moid
-		propethifs["object_type"] = item.ObjectType
-		propethifs["selector"] = item.Selector
-		propethifss = append(propethifss, propethifs)
-	}
-	return propethifss
-}
-func flattenListIaasConnectorPackRef(p []*models.IaasConnectorPackRef, d *schema.ResourceData) []map[string]interface{} {
-	var propconnectorpacks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propconnectorpack := make(map[string]interface{})
-		propconnectorpack["moid"] = item.Moid
-		propconnectorpack["object_type"] = item.ObjectType
-		propconnectorpack["selector"] = item.Selector
-		propconnectorpacks = append(propconnectorpacks, propconnectorpack)
-	}
-	return propconnectorpacks
-}
-func flattenListIaasDeviceStatusRef(p []*models.IaasDeviceStatusRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdevicestatuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdevicestatus := make(map[string]interface{})
-		propdevicestatus["moid"] = item.Moid
-		propdevicestatus["object_type"] = item.ObjectType
-		propdevicestatus["selector"] = item.Selector
-		propdevicestatuss = append(propdevicestatuss, propdevicestatus)
-	}
-	return propdevicestatuss
-}
-func flattenMapIaasLicenseInfoRef(p *models.IaasLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplicenseinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplicenseinfo := make(map[string]interface{})
-	proplicenseinfo["moid"] = item.Moid
-	proplicenseinfo["object_type"] = item.ObjectType
-	proplicenseinfo["selector"] = item.Selector
-
-	proplicenseinfos = append(proplicenseinfos, proplicenseinfo)
-	return proplicenseinfos
-}
-func flattenListIaasMostRunTasksRef(p []*models.IaasMostRunTasksRef, d *schema.ResourceData) []map[string]interface{} {
-	var propmostruntaskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propmostruntasks := make(map[string]interface{})
-		propmostruntasks["moid"] = item.Moid
-		propmostruntasks["object_type"] = item.ObjectType
-		propmostruntasks["selector"] = item.Selector
-		propmostruntaskss = append(propmostruntaskss, propmostruntasks)
-	}
-	return propmostruntaskss
-}
-func flattenMapIaasUcsdManagedInfraRef(p *models.IaasUcsdManagedInfraRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propucsdmanagedinfras []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propucsdmanagedinfra := make(map[string]interface{})
-	propucsdmanagedinfra["moid"] = item.Moid
-	propucsdmanagedinfra["object_type"] = item.ObjectType
-	propucsdmanagedinfra["selector"] = item.Selector
-
-	propucsdmanagedinfras = append(propucsdmanagedinfras, propucsdmanagedinfra)
-	return propucsdmanagedinfras
-}
-func flattenMapVnicFcAdapterPolicyRef(p *models.VnicFcAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propfcadapterpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propfcadapterpolicy := make(map[string]interface{})
-	propfcadapterpolicy["moid"] = item.Moid
-	propfcadapterpolicy["object_type"] = item.ObjectType
-	propfcadapterpolicy["selector"] = item.Selector
-
-	propfcadapterpolicys = append(propfcadapterpolicys, propfcadapterpolicy)
-	return propfcadapterpolicys
-}
-func flattenMapVnicFcNetworkPolicyRef(p *models.VnicFcNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propfcnetworkpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propfcnetworkpolicy := make(map[string]interface{})
-	propfcnetworkpolicy["moid"] = item.Moid
-	propfcnetworkpolicy["object_type"] = item.ObjectType
-	propfcnetworkpolicy["selector"] = item.Selector
-
-	propfcnetworkpolicys = append(propfcnetworkpolicys, propfcnetworkpolicy)
-	return propfcnetworkpolicys
-}
-func flattenMapVnicFcQosPolicyRef(p *models.VnicFcQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propfcqospolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propfcqospolicy := make(map[string]interface{})
-	propfcqospolicy["moid"] = item.Moid
-	propfcqospolicy["object_type"] = item.ObjectType
-	propfcqospolicy["selector"] = item.Selector
-
-	propfcqospolicys = append(propfcqospolicys, propfcqospolicy)
-	return propfcqospolicys
-}
-func flattenMapVnicSanConnectivityPolicyRef(p *models.VnicSanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsanconnectivitypolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsanconnectivitypolicy := make(map[string]interface{})
-	propsanconnectivitypolicy["moid"] = item.Moid
-	propsanconnectivitypolicy["object_type"] = item.ObjectType
-	propsanconnectivitypolicy["selector"] = item.Selector
-
-	propsanconnectivitypolicys = append(propsanconnectivitypolicys, propsanconnectivitypolicy)
-	return propsanconnectivitypolicys
-}
-func flattenListOrganizationOrganizationRef(p []*models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
-	var proporganizationss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proporganizations := make(map[string]interface{})
-		proporganizations["moid"] = item.Moid
-		proporganizations["object_type"] = item.ObjectType
-		proporganizations["selector"] = item.Selector
-		proporganizationss = append(proporganizationss, proporganizations)
-	}
-	return proporganizationss
-}
-func flattenListResourcePerTypeCombinedSelector(p []*models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
-	var proppertypecombinedselectors []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppertypecombinedselector := make(map[string]interface{})
-		delete(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1, "ObjectType")
-		if len(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1) != 0 {
-
-			j, err := json.Marshal(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1)
-			if err == nil {
-				proppertypecombinedselector["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		proppertypecombinedselector["combined_selector"] = item.CombinedSelector
-		proppertypecombinedselector["empty_filter"] = item.EmptyFilter
-		proppertypecombinedselector["object_type"] = item.ObjectType
-		proppertypecombinedselector["selector_object_type"] = item.SelectorObjectType
-		proppertypecombinedselectors = append(proppertypecombinedselectors, proppertypecombinedselector)
-	}
-	return proppertypecombinedselectors
-}
-func flattenListResourceSelector(p []*models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
-	var propselectorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propselectors := make(map[string]interface{})
-		delete(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1, "ObjectType")
-		if len(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1) != 0 {
-
-			j, err := json.Marshal(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1)
-			if err == nil {
-				propselectors["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propselectors["object_type"] = item.ObjectType
-		propselectors["selector"] = item.Selector
-		propselectorss = append(propselectorss, propselectors)
-	}
-	return propselectorss
-}
-func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
-	var propsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propsettings := make(map[string]interface{})
-		delete(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1, "ObjectType")
-		if len(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1) != 0 {
-
-			j, err := json.Marshal(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1)
-			if err == nil {
-				propsettings["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propsettings["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var propethsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propethsettings := make(map[string]interface{})
-			delete(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1, "ObjectType")
-			if len(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1)
-				if err == nil {
-					propethsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propethsettings["lldp_enabled"] = item.LldpEnabled
-			propethsettings["object_type"] = item.ObjectType
-
-			propethsettingss = append(propethsettingss, propethsettings)
-			return propethsettingss
-		})(item.EthSettings, d)
-		propsettings["fc_settings"] = (func(p *models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var propfcsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propfcsettings := make(map[string]interface{})
-			delete(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1, "ObjectType")
-			if len(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1)
-				if err == nil {
-					propfcsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propfcsettings["fip_enabled"] = item.FipEnabled
-			propfcsettings["object_type"] = item.ObjectType
-
-			propfcsettingss = append(propfcsettingss, propfcsettings)
-			return propfcsettingss
-		})(item.FcSettings, d)
-		propsettings["object_type"] = item.ObjectType
-		propsettings["port_channel_settings"] = (func(p *models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var propportchannelsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propportchannelsettings := make(map[string]interface{})
-			delete(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1, "ObjectType")
-			if len(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1)
-				if err == nil {
-					propportchannelsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propportchannelsettings["enabled"] = item.Enabled
-			propportchannelsettings["object_type"] = item.ObjectType
-
-			propportchannelsettingss = append(propportchannelsettingss, propportchannelsettings)
-			return propportchannelsettingss
-		})(item.PortChannelSettings, d)
-		propsettings["slot_id"] = item.SlotID
-		propsettingss = append(propsettingss, propsettings)
-	}
-	return propsettingss
-}
-func flattenMapMoBaseMoRef(p *models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propaffectedobjects []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propaffectedobject := make(map[string]interface{})
-	propaffectedobject["moid"] = item.Moid
-	propaffectedobject["object_type"] = item.ObjectType
-	propaffectedobject["selector"] = item.Selector
-
-	propaffectedobjects = append(propaffectedobjects, propaffectedobject)
-	return propaffectedobjects
-}
-func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry, d *schema.ResourceData) []map[string]interface{} {
-	var propservermodelentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propservermodelentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
-		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
-
-			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
-			if err == nil {
-				propservermodelentries["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propservermodelentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
-
-			var propconstraints []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propconstraint := make(map[string]interface{})
-			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
-			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
-				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
-				if err == nil {
-					propconstraint["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propconstraint["hxdp_version"] = item.HxdpVersion
-			propconstraint["hypervisor_type"] = item.HypervisorType
-			propconstraint["mgmt_platform"] = item.MgmtPlatform
-			propconstraint["object_type"] = item.ObjectType
-			propconstraint["server_model"] = item.ServerModel
-
-			propconstraints = append(propconstraints, propconstraint)
-			return propconstraints
-		})(item.Constraint, d)
-		propservermodelentries["name"] = item.Name
-		propservermodelentries["object_type"] = item.ObjectType
-		propservermodelentries["value"] = item.Value
-		propservermodelentriess = append(propservermodelentriess, propservermodelentries)
-	}
-	return propservermodelentriess
 }
 func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
 
@@ -3846,6 +1379,527 @@ func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.Resource
 	propvxlansettingss = append(propvxlansettingss, propvxlansettings)
 	return propvxlansettingss
 }
+func flattenListIamResourceRolesRef(p []*models.IamResourceRolesRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresourceroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propresourceroles := make(map[string]interface{})
+		propresourceroles["moid"] = item.Moid
+		propresourceroles["object_type"] = item.ObjectType
+		propresourceroles["selector"] = item.Selector
+		propresourceroless = append(propresourceroless, propresourceroles)
+	}
+	return propresourceroless
+}
+func flattenListIamRoleRef(p []*models.IamRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var proproless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proproles := make(map[string]interface{})
+		proproles["moid"] = item.Moid
+		proproles["object_type"] = item.ObjectType
+		proproles["selector"] = item.Selector
+		proproless = append(proproless, proproles)
+	}
+	return proproless
+}
+func flattenListIamUserGroupRef(p []*models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propusergroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propusergroups := make(map[string]interface{})
+		propusergroups["moid"] = item.Moid
+		propusergroups["object_type"] = item.ObjectType
+		propusergroups["selector"] = item.Selector
+		propusergroupss = append(propusergroupss, propusergroups)
+	}
+	return propusergroupss
+}
+func flattenListIamUserRef(p []*models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
+	var propuserss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propusers := make(map[string]interface{})
+		propusers["moid"] = item.Moid
+		propusers["object_type"] = item.ObjectType
+		propusers["selector"] = item.Selector
+		propuserss = append(propuserss, propusers)
+	}
+	return propuserss
+}
+func flattenListRecoveryBackupProfileRef(p []*models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var propbackupprofiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propbackupprofiles := make(map[string]interface{})
+		propbackupprofiles["moid"] = item.Moid
+		propbackupprofiles["object_type"] = item.ObjectType
+		propbackupprofiles["selector"] = item.Selector
+		propbackupprofiless = append(propbackupprofiless, propbackupprofiles)
+	}
+	return propbackupprofiless
+}
+func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
+
+	var proplogicalavalabilityzoneconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proplogicalavalabilityzoneconfig := make(map[string]interface{})
+	delete(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1, "ObjectType")
+	if len(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1)
+		if err == nil {
+			proplogicalavalabilityzoneconfig["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	proplogicalavalabilityzoneconfig["auto_config"] = item.AutoConfig
+	proplogicalavalabilityzoneconfig["object_type"] = item.ObjectType
+
+	proplogicalavalabilityzoneconfigs = append(proplogicalavalabilityzoneconfigs, proplogicalavalabilityzoneconfig)
+	return proplogicalavalabilityzoneconfigs
+}
+func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerFirmwareVersionEntry, d *schema.ResourceData) []map[string]interface{} {
+	var propserverfirmwareversionentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propserverfirmwareversionentries := make(map[string]interface{})
+		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
+		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
+			if err == nil {
+				propserverfirmwareversionentries["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propserverfirmwareversionentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+
+			var propconstraints []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propconstraint := make(map[string]interface{})
+			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
+			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
+				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
+				if err == nil {
+					propconstraint["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propconstraint["hxdp_version"] = item.HxdpVersion
+			propconstraint["hypervisor_type"] = item.HypervisorType
+			propconstraint["mgmt_platform"] = item.MgmtPlatform
+			propconstraint["object_type"] = item.ObjectType
+			propconstraint["server_model"] = item.ServerModel
+
+			propconstraints = append(propconstraints, propconstraint)
+			return propconstraints
+		})(item.Constraint, d)
+		propserverfirmwareversionentries["label"] = item.Label
+		propserverfirmwareversionentries["name"] = item.Name
+		propserverfirmwareversionentries["object_type"] = item.ObjectType
+		propserverfirmwareversionentries["value"] = item.Value
+		propserverfirmwareversionentriess = append(propserverfirmwareversionentriess, propserverfirmwareversionentries)
+	}
+	return propserverfirmwareversionentriess
+}
+func flattenListStorageLocalDisk(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+	var propdedicatedhotsparess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdedicatedhotspares := make(map[string]interface{})
+		delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
+		if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
+			if err == nil {
+				propdedicatedhotspares["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propdedicatedhotspares["object_type"] = item.ObjectType
+		propdedicatedhotspares["slot_number"] = item.SlotNumber
+		propdedicatedhotsparess = append(propdedicatedhotsparess, propdedicatedhotspares)
+	}
+	return propdedicatedhotsparess
+}
+func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
+	var propspangroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propspangroups := make(map[string]interface{})
+		delete(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1, "ObjectType")
+		if len(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1)
+			if err == nil {
+				propspangroups["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propspangroups["disks"] = (func(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+			var propdiskss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				propdisks := make(map[string]interface{})
+				delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
+				if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
+
+					j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
+					if err == nil {
+						propdisks["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				propdisks["object_type"] = item.ObjectType
+				propdisks["slot_number"] = item.SlotNumber
+				propdiskss = append(propdiskss, propdisks)
+			}
+			return propdiskss
+		})(item.Disks, d)
+		propspangroups["object_type"] = item.ObjectType
+		propspangroupss = append(propspangroupss, propspangroups)
+	}
+	return propspangroupss
+}
+func flattenListStorageStoragePolicyRef(p []*models.StorageStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var propstoragepoliciess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propstoragepolicies := make(map[string]interface{})
+		propstoragepolicies["moid"] = item.Moid
+		propstoragepolicies["object_type"] = item.ObjectType
+		propstoragepolicies["selector"] = item.Selector
+		propstoragepoliciess = append(propstoragepoliciess, propstoragepolicies)
+	}
+	return propstoragepoliciess
+}
+func flattenListIamOAuthTokenRef(p []*models.IamOAuthTokenRef, d *schema.ResourceData) []map[string]interface{} {
+	var propoauthtokenss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propoauthtokens := make(map[string]interface{})
+		propoauthtokens["moid"] = item.Moid
+		propoauthtokens["object_type"] = item.ObjectType
+		propoauthtokens["selector"] = item.Selector
+		propoauthtokenss = append(propoauthtokenss, propoauthtokens)
+	}
+	return propoauthtokenss
+}
+func flattenMapIamPermissionRef(p *models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppermissions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proppermission := make(map[string]interface{})
+	proppermission["moid"] = item.Moid
+	proppermission["object_type"] = item.ObjectType
+	proppermission["selector"] = item.Selector
+
+	proppermissions = append(proppermissions, proppermission)
+	return proppermissions
+}
+func flattenListIamAPIKeyRef(p []*models.IamAPIKeyRef, d *schema.ResourceData) []map[string]interface{} {
+	var propapikeyss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propapikeys := make(map[string]interface{})
+		propapikeys["moid"] = item.Moid
+		propapikeys["object_type"] = item.ObjectType
+		propapikeys["selector"] = item.Selector
+		propapikeyss = append(propapikeyss, propapikeys)
+	}
+	return propapikeyss
+}
+func flattenListIamAppRegistrationRef(p []*models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+	var propappregistrationss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propappregistrations := make(map[string]interface{})
+		propappregistrations["moid"] = item.Moid
+		propappregistrations["object_type"] = item.ObjectType
+		propappregistrations["selector"] = item.Selector
+		propappregistrationss = append(propappregistrationss, propappregistrations)
+	}
+	return propappregistrationss
+}
+func flattenMapIamIdpRef(p *models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propidps []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propidp := make(map[string]interface{})
+	propidp["moid"] = item.Moid
+	propidp["object_type"] = item.ObjectType
+	propidp["selector"] = item.Selector
+
+	propidps = append(propidps, propidp)
+	return propidps
+}
+func flattenMapIamIdpReferenceRef(p *models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propidpreferences []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propidpreference := make(map[string]interface{})
+	propidpreference["moid"] = item.Moid
+	propidpreference["object_type"] = item.ObjectType
+	propidpreference["selector"] = item.Selector
+
+	propidpreferences = append(propidpreferences, propidpreference)
+	return propidpreferences
+}
+func flattenMapIamLocalUserPasswordRef(p *models.IamLocalUserPasswordRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proplocaluserpasswords []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proplocaluserpassword := make(map[string]interface{})
+	proplocaluserpassword["moid"] = item.Moid
+	proplocaluserpassword["object_type"] = item.ObjectType
+	proplocaluserpassword["selector"] = item.Selector
+
+	proplocaluserpasswords = append(proplocaluserpasswords, proplocaluserpassword)
+	return proplocaluserpasswords
+}
+func flattenListIamPermissionRef(p []*models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppermissionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proppermissions := make(map[string]interface{})
+		proppermissions["moid"] = item.Moid
+		proppermissions["object_type"] = item.ObjectType
+		proppermissions["selector"] = item.Selector
+		proppermissionss = append(proppermissionss, proppermissions)
+	}
+	return proppermissionss
+}
+func flattenListIamSessionRef(p []*models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsessionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsessions := make(map[string]interface{})
+		propsessions["moid"] = item.Moid
+		propsessions["object_type"] = item.ObjectType
+		propsessions["selector"] = item.Selector
+		propsessionss = append(propsessionss, propsessions)
+	}
+	return propsessionss
+}
+func flattenListIamDomainGroupRef(p []*models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdomaingroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdomaingroups := make(map[string]interface{})
+		propdomaingroups["moid"] = item.Moid
+		propdomaingroups["object_type"] = item.ObjectType
+		propdomaingroups["selector"] = item.Selector
+		propdomaingroupss = append(propdomaingroupss, propdomaingroups)
+	}
+	return propdomaingroupss
+}
+func flattenListIamIdpReferenceRef(p []*models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
+	var propidpreferencess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propidpreferences := make(map[string]interface{})
+		propidpreferences["moid"] = item.Moid
+		propidpreferences["object_type"] = item.ObjectType
+		propidpreferences["selector"] = item.Selector
+		propidpreferencess = append(propidpreferencess, propidpreferences)
+	}
+	return propidpreferencess
+}
+func flattenListIamIdpRef(p []*models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
+	var propidpss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propidps := make(map[string]interface{})
+		propidps["moid"] = item.Moid
+		propidps["object_type"] = item.ObjectType
+		propidps["selector"] = item.Selector
+		propidpss = append(propidpss, propidps)
+	}
+	return propidpss
+}
+func flattenMapCryptEncryptRef(p *models.CryptEncryptRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnr0encrypts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnr0encrypt := make(map[string]interface{})
+	propnr0encrypt["moid"] = item.Moid
+	propnr0encrypt["object_type"] = item.ObjectType
+	propnr0encrypt["selector"] = item.Selector
+
+	propnr0encrypts = append(propnr0encrypts, propnr0encrypt)
+	return propnr0encrypts
+}
+func flattenMapCryptDecryptRef(p *models.CryptDecryptRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnr1decrypts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnr1decrypt := make(map[string]interface{})
+	propnr1decrypt["moid"] = item.Moid
+	propnr1decrypt["object_type"] = item.ObjectType
+	propnr1decrypt["selector"] = item.Selector
+
+	propnr1decrypts = append(propnr1decrypts, propnr1decrypt)
+	return propnr1decrypts
+}
+func flattenListIamPrivilegeSetRef(p []*models.IamPrivilegeSetRef, d *schema.ResourceData) []map[string]interface{} {
+	var propprivilegesetss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propprivilegesets := make(map[string]interface{})
+		propprivilegesets["moid"] = item.Moid
+		propprivilegesets["object_type"] = item.ObjectType
+		propprivilegesets["selector"] = item.Selector
+		propprivilegesetss = append(propprivilegesetss, propprivilegesets)
+	}
+	return propprivilegesetss
+}
+func flattenListIamPrivilegeRef(p []*models.IamPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
+	var propprivilegess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propprivileges := make(map[string]interface{})
+		propprivileges["moid"] = item.Moid
+		propprivileges["object_type"] = item.ObjectType
+		propprivileges["selector"] = item.Selector
+		propprivilegess = append(propprivilegess, propprivileges)
+	}
+	return propprivilegess
+}
+func flattenMapIamResourceLimitsRef(p *models.IamResourceLimitsRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propresourcelimitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propresourcelimits := make(map[string]interface{})
+	propresourcelimits["moid"] = item.Moid
+	propresourcelimits["object_type"] = item.ObjectType
+	propresourcelimits["selector"] = item.Selector
+
+	propresourcelimitss = append(propresourcelimitss, propresourcelimits)
+	return propresourcelimitss
+}
+func flattenMapIamSecurityHolderRef(p *models.IamSecurityHolderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsecurityholders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsecurityholder := make(map[string]interface{})
+	propsecurityholder["moid"] = item.Moid
+	propsecurityholder["object_type"] = item.ObjectType
+	propsecurityholder["selector"] = item.Selector
+
+	propsecurityholders = append(propsecurityholders, propsecurityholder)
+	return propsecurityholders
+}
+func flattenMapIamSessionLimitsRef(p *models.IamSessionLimitsRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsessionlimitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsessionlimits := make(map[string]interface{})
+	propsessionlimits["moid"] = item.Moid
+	propsessionlimits["object_type"] = item.ObjectType
+	propsessionlimits["selector"] = item.Selector
+
+	propsessionlimitss = append(propsessionlimitss, propsessionlimits)
+	return propsessionlimitss
+}
 func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schema.ResourceData) []map[string]interface{} {
 
 	var propschedules []map[string]interface{}
@@ -3870,6 +1924,437 @@ func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schem
 
 	propschedules = append(propschedules, propschedule)
 	return propschedules
+}
+func flattenListIamEndPointUserRoleRef(p []*models.IamEndPointUserRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var propendpointuserroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propendpointuserroles := make(map[string]interface{})
+		propendpointuserroles["moid"] = item.Moid
+		propendpointuserroles["object_type"] = item.ObjectType
+		propendpointuserroles["selector"] = item.Selector
+		propendpointuserroless = append(propendpointuserroless, propendpointuserroles)
+	}
+	return propendpointuserroless
+}
+func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppasswordpropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proppasswordproperties := make(map[string]interface{})
+	delete(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1, "ObjectType")
+	if len(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1)
+		if err == nil {
+			proppasswordproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	proppasswordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
+	proppasswordproperties["enforce_strong_password"] = item.EnforceStrongPassword
+	proppasswordproperties["grace_period"] = item.GracePeriod
+	proppasswordproperties["notification_period"] = item.NotificationPeriod
+	proppasswordproperties["object_type"] = item.ObjectType
+	proppasswordproperties["password_expiry_duration"] = item.PasswordExpiryDuration
+	proppasswordproperties["password_history"] = item.PasswordHistory
+
+	proppasswordpropertiess = append(proppasswordpropertiess, proppasswordproperties)
+	return proppasswordpropertiess
+}
+func flattenListWorkflowMessage(p []*models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
+	var propmessages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propmessage := make(map[string]interface{})
+		delete(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1, "ObjectType")
+		if len(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1)
+			if err == nil {
+				propmessage["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propmessage["message"] = item.Message
+		propmessage["object_type"] = item.ObjectType
+		propmessage["severity"] = item.Severity
+		propmessages = append(propmessages, propmessage)
+	}
+	return propmessages
+}
+func flattenMapHyperflexClusterProfileRef(p *models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnr0clusterprofiles []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnr0clusterprofile := make(map[string]interface{})
+	propnr0clusterprofile["moid"] = item.Moid
+	propnr0clusterprofile["object_type"] = item.ObjectType
+	propnr0clusterprofile["selector"] = item.Selector
+
+	propnr0clusterprofiles = append(propnr0clusterprofiles, propnr0clusterprofile)
+	return propnr0clusterprofiles
+}
+func flattenMapServerProfileRef(p *models.ServerProfileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnr1profiles []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnr1profile := make(map[string]interface{})
+	propnr1profile["moid"] = item.Moid
+	propnr1profile["object_type"] = item.ObjectType
+	propnr1profile["selector"] = item.Selector
+
+	propnr1profiles = append(propnr1profiles, propnr1profile)
+	return propnr1profiles
+}
+func flattenMapWorkflowTaskInfoRef(p *models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propparenttaskinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propparenttaskinfo := make(map[string]interface{})
+	propparenttaskinfo["moid"] = item.Moid
+	propparenttaskinfo["object_type"] = item.ObjectType
+	propparenttaskinfo["selector"] = item.Selector
+
+	propparenttaskinfos = append(propparenttaskinfos, propparenttaskinfo)
+	return propparenttaskinfos
+}
+func flattenMapWorkflowPendingDynamicWorkflowInfoRef(p *models.WorkflowPendingDynamicWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppendingdynamicworkflowinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proppendingdynamicworkflowinfo := make(map[string]interface{})
+	proppendingdynamicworkflowinfo["moid"] = item.Moid
+	proppendingdynamicworkflowinfo["object_type"] = item.ObjectType
+	proppendingdynamicworkflowinfo["selector"] = item.Selector
+
+	proppendingdynamicworkflowinfos = append(proppendingdynamicworkflowinfos, proppendingdynamicworkflowinfo)
+	return proppendingdynamicworkflowinfos
+}
+func flattenListWorkflowTaskInfoRef(p []*models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var proptaskinfoss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proptaskinfos := make(map[string]interface{})
+		proptaskinfos["moid"] = item.Moid
+		proptaskinfos["object_type"] = item.ObjectType
+		proptaskinfos["selector"] = item.Selector
+		proptaskinfoss = append(proptaskinfoss, proptaskinfos)
+	}
+	return proptaskinfoss
+}
+func flattenMapWorkflowWorkflowDefinitionRef(p *models.WorkflowWorkflowDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propworkflowdefinitions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propworkflowdefinition := make(map[string]interface{})
+	propworkflowdefinition["moid"] = item.Moid
+	propworkflowdefinition["object_type"] = item.ObjectType
+	propworkflowdefinition["selector"] = item.Selector
+
+	propworkflowdefinitions = append(propworkflowdefinitions, propworkflowdefinition)
+	return propworkflowdefinitions
+}
+func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmgmtvlans []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmgmtvlan := make(map[string]interface{})
+	delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
+	if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
+		if err == nil {
+			propmgmtvlan["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propmgmtvlan["name"] = item.Name
+	propmgmtvlan["object_type"] = item.ObjectType
+	propmgmtvlan["vlan_id"] = item.VlanID
+
+	propmgmtvlans = append(propmgmtvlans, propmgmtvlan)
+	return propmgmtvlans
+}
+func flattenListHyperflexNamedVlan(p []*models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+	var propvmnetworkvlanss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propvmnetworkvlans := make(map[string]interface{})
+		delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
+		if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
+			if err == nil {
+				propvmnetworkvlans["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propvmnetworkvlans["name"] = item.Name
+		propvmnetworkvlans["object_type"] = item.ObjectType
+		propvmnetworkvlans["vlan_id"] = item.VlanID
+		propvmnetworkvlanss = append(propvmnetworkvlanss, propvmnetworkvlans)
+	}
+	return propvmnetworkvlanss
+}
+func flattenMapComputeRackUnitRef(p *models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propassignedservers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propassignedserver := make(map[string]interface{})
+	propassignedserver["moid"] = item.Moid
+	propassignedserver["object_type"] = item.ObjectType
+	propassignedserver["selector"] = item.Selector
+
+	propassignedservers = append(propassignedservers, propassignedserver)
+	return propassignedservers
+}
+func flattenListServerConfigChangeDetailRef(p []*models.ServerConfigChangeDetailRef, d *schema.ResourceData) []map[string]interface{} {
+	var propconfigchangedetailss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propconfigchangedetails := make(map[string]interface{})
+		propconfigchangedetails["moid"] = item.Moid
+		propconfigchangedetails["object_type"] = item.ObjectType
+		propconfigchangedetails["selector"] = item.Selector
+		propconfigchangedetailss = append(propconfigchangedetailss, propconfigchangedetails)
+	}
+	return propconfigchangedetailss
+}
+func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
+
+	var propconfigchangess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propconfigchanges := make(map[string]interface{})
+	delete(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1, "ObjectType")
+	if len(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1) != 0 {
+		j, err := json.Marshal(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1)
+		if err == nil {
+			propconfigchanges["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propconfigchanges["changes"] = item.Changes
+	propconfigchanges["disruptions"] = item.Disruptions
+	propconfigchanges["object_type"] = item.ObjectType
+
+	propconfigchangess = append(propconfigchangess, propconfigchanges)
+	return propconfigchangess
+}
+func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
+
+	var propconfigcontexts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propconfigcontext := make(map[string]interface{})
+	delete(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1, "ObjectType")
+	if len(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1) != 0 {
+		j, err := json.Marshal(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1)
+		if err == nil {
+			propconfigcontext["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propconfigcontext["config_state"] = item.ConfigState
+	propconfigcontext["control_action"] = item.ControlAction
+	propconfigcontext["error_state"] = item.ErrorState
+	propconfigcontext["object_type"] = item.ObjectType
+	propconfigcontext["oper_state"] = item.OperState
+
+	propconfigcontexts = append(propconfigcontexts, propconfigcontext)
+	return propconfigcontexts
+}
+func flattenMapServerConfigResultRef(p *models.ServerConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propconfigresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propconfigresult := make(map[string]interface{})
+	propconfigresult["moid"] = item.Moid
+	propconfigresult["object_type"] = item.ObjectType
+	propconfigresult["selector"] = item.Selector
+
+	propconfigresults = append(propconfigresults, propconfigresult)
+	return propconfigresults
+}
+func flattenListWorkflowWorkflowInfoRef(p []*models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var proprunningworkflowss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proprunningworkflows := make(map[string]interface{})
+		proprunningworkflows["moid"] = item.Moid
+		proprunningworkflows["object_type"] = item.ObjectType
+		proprunningworkflows["selector"] = item.Selector
+		proprunningworkflowss = append(proprunningworkflowss, proprunningworkflows)
+	}
+	return proprunningworkflowss
+}
+func flattenMapPolicyAbstractProfileRef(p *models.PolicyAbstractProfileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsrctemplates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsrctemplate := make(map[string]interface{})
+	propsrctemplate["moid"] = item.Moid
+	propsrctemplate["object_type"] = item.ObjectType
+	propsrctemplate["selector"] = item.Selector
+
+	propsrctemplates = append(propsrctemplates, propsrctemplate)
+	return propsrctemplates
+}
+func flattenListVnicEthIfRef(p []*models.VnicEthIfRef, d *schema.ResourceData) []map[string]interface{} {
+	var propethifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propethifs := make(map[string]interface{})
+		propethifs["moid"] = item.Moid
+		propethifs["object_type"] = item.ObjectType
+		propethifs["selector"] = item.Selector
+		propethifss = append(propethifss, propethifs)
+	}
+	return propethifss
+}
+func flattenMapIamCertificateRef(p *models.IamCertificateRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcertificates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcertificate := make(map[string]interface{})
+	propcertificate["moid"] = item.Moid
+	propcertificate["object_type"] = item.ObjectType
+	propcertificate["selector"] = item.Selector
+
+	propcertificates = append(propcertificates, propcertificate)
+	return propcertificates
+}
+func flattenMapIamPrivateKeySpecRef(p *models.IamPrivateKeySpecRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propprivatekeyspecs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propprivatekeyspec := make(map[string]interface{})
+	propprivatekeyspec["moid"] = item.Moid
+	propprivatekeyspec["object_type"] = item.ObjectType
+	propprivatekeyspec["selector"] = item.Selector
+
+	propprivatekeyspecs = append(propprivatekeyspecs, propprivatekeyspec)
+	return propprivatekeyspecs
+}
+func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsubjects []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsubject := make(map[string]interface{})
+	delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
+	if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
+		if err == nil {
+			propsubject["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propsubject["common_name"] = item.CommonName
+	propsubject["country"] = item.Country
+	propsubject["locality"] = item.Locality
+	propsubject["object_type"] = item.ObjectType
+	propsubject["organization"] = item.Organization
+	propsubject["organizational_unit"] = item.OrganizationalUnit
+	propsubject["state"] = item.State
+
+	propsubjects = append(propsubjects, propsubject)
+	return propsubjects
+}
+func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsubjectalternatenames []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsubjectalternatename := make(map[string]interface{})
+	delete(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1, "ObjectType")
+	if len(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1)
+		if err == nil {
+			propsubjectalternatename["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propsubjectalternatename["dns_name"] = item.DNSName
+	propsubjectalternatename["email_address"] = item.EmailAddress
+	propsubjectalternatename["ip_address"] = item.IPAddress
+	propsubjectalternatename["object_type"] = item.ObjectType
+	propsubjectalternatename["uri"] = item.URI
+
+	propsubjectalternatenames = append(propsubjectalternatenames, propsubjectalternatename)
+	return propsubjectalternatenames
 }
 func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData) []map[string]interface{} {
 	var propmappingss []map[string]interface{}
@@ -3905,110 +2390,1019 @@ func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData)
 	}
 	return propmappingss
 }
-func flattenMapHyperflexFeatureLimitExternalRef(p *models.HyperflexFeatureLimitExternalRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLdapPolicyRef(p *models.IamLdapPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propfeaturelimitexternals []map[string]interface{}
+	var propldappolicys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propfeaturelimitexternal := make(map[string]interface{})
-	propfeaturelimitexternal["moid"] = item.Moid
-	propfeaturelimitexternal["object_type"] = item.ObjectType
-	propfeaturelimitexternal["selector"] = item.Selector
+	propldappolicy := make(map[string]interface{})
+	propldappolicy["moid"] = item.Moid
+	propldappolicy["object_type"] = item.ObjectType
+	propldappolicy["selector"] = item.Selector
 
-	propfeaturelimitexternals = append(propfeaturelimitexternals, propfeaturelimitexternal)
-	return propfeaturelimitexternals
+	propldappolicys = append(propldappolicys, propldappolicy)
+	return propldappolicys
 }
-func flattenMapHyperflexFeatureLimitInternalRef(p *models.HyperflexFeatureLimitInternalRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
 
-	var propfeaturelimitinternals []map[string]interface{}
+	var propcredentials []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propfeaturelimitinternal := make(map[string]interface{})
-	propfeaturelimitinternal["moid"] = item.Moid
-	propfeaturelimitinternal["object_type"] = item.ObjectType
-	propfeaturelimitinternal["selector"] = item.Selector
+	propcredential := make(map[string]interface{})
+	delete(item.CommCredentialAO1P1.CommCredentialAO1P1, "ObjectType")
+	if len(item.CommCredentialAO1P1.CommCredentialAO1P1) != 0 {
+		j, err := json.Marshal(item.CommCredentialAO1P1.CommCredentialAO1P1)
+		if err == nil {
+			propcredential["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propcredential["is_password_set"] = item.IsPasswordSet
+	propcredential["object_type"] = item.ObjectType
+	propcredential["password"] = item.Password
+	propcredential["username"] = item.Username
 
-	propfeaturelimitinternals = append(propfeaturelimitinternals, propfeaturelimitinternal)
-	return propfeaturelimitinternals
+	propcredentials = append(propcredentials, propcredential)
+	return propcredentials
 }
-func flattenListHyperflexHxdpVersionRef(p []*models.HyperflexHxdpVersionRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophxdpversionss []map[string]interface{}
+func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstatuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstatus := make(map[string]interface{})
+	delete(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1, "ObjectType")
+	if len(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1)
+		if err == nil {
+			propstatus["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propstatus["cloud_port"] = item.CloudPort
+	propstatus["connection_failure_reason"] = item.ConnectionFailureReason
+	propstatus["connection_status"] = item.ConnectionStatus
+	propstatus["error_code"] = item.ErrorCode
+	propstatus["error_reason"] = item.ErrorReason
+	propstatus["object_type"] = item.ObjectType
+	propstatus["process_id"] = item.ProcessID
+	propstatus["server_port"] = item.ServerPort
+	propstatus["state"] = item.State
+
+	propstatuss = append(propstatuss, propstatus)
+	return propstatuss
+}
+func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propworkflowinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propworkflowinfo := make(map[string]interface{})
+	propworkflowinfo["moid"] = item.Moid
+	propworkflowinfo["object_type"] = item.ObjectType
+	propworkflowinfo["selector"] = item.Selector
+
+	propworkflowinfos = append(propworkflowinfos, propworkflowinfo)
+	return propworkflowinfos
+}
+func flattenMapHyperflexClusterRef(p *models.HyperflexClusterRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propassociatedclusters []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propassociatedcluster := make(map[string]interface{})
+	propassociatedcluster["moid"] = item.Moid
+	propassociatedcluster["object_type"] = item.ObjectType
+	propassociatedcluster["selector"] = item.Selector
+
+	propassociatedclusters = append(propassociatedclusters, propassociatedcluster)
+	return propassociatedclusters
+}
+func flattenMapHyperflexAutoSupportPolicyRef(p *models.HyperflexAutoSupportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propautosupports []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propautosupport := make(map[string]interface{})
+	propautosupport["moid"] = item.Moid
+	propautosupport["object_type"] = item.ObjectType
+	propautosupport["selector"] = item.Selector
+
+	propautosupports = append(propautosupports, propautosupport)
+	return propautosupports
+}
+func flattenMapHyperflexClusterNetworkPolicyRef(p *models.HyperflexClusterNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propclusternetworks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propclusternetwork := make(map[string]interface{})
+	propclusternetwork["moid"] = item.Moid
+	propclusternetwork["object_type"] = item.ObjectType
+	propclusternetwork["selector"] = item.Selector
+
+	propclusternetworks = append(propclusternetworks, propclusternetwork)
+	return propclusternetworks
+}
+func flattenMapHyperflexClusterStoragePolicyRef(p *models.HyperflexClusterStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propclusterstorages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propclusterstorage := make(map[string]interface{})
+	propclusterstorage["moid"] = item.Moid
+	propclusterstorage["object_type"] = item.ObjectType
+	propclusterstorage["selector"] = item.Selector
+
+	propclusterstorages = append(propclusterstorages, propclusterstorage)
+	return propclusterstorages
+}
+func flattenMapHyperflexConfigResultRef(p *models.HyperflexConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propconfigresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propconfigresult := make(map[string]interface{})
+	propconfigresult["moid"] = item.Moid
+	propconfigresult["object_type"] = item.ObjectType
+	propconfigresult["selector"] = item.Selector
+
+	propconfigresults = append(propconfigresults, propconfigresult)
+	return propconfigresults
+}
+func flattenMapHyperflexExtFcStoragePolicyRef(p *models.HyperflexExtFcStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propextfcstorages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propextfcstorage := make(map[string]interface{})
+	propextfcstorage["moid"] = item.Moid
+	propextfcstorage["object_type"] = item.ObjectType
+	propextfcstorage["selector"] = item.Selector
+
+	propextfcstorages = append(propextfcstorages, propextfcstorage)
+	return propextfcstorages
+}
+func flattenMapHyperflexExtIscsiStoragePolicyRef(p *models.HyperflexExtIscsiStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propextiscsistorages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propextiscsistorage := make(map[string]interface{})
+	propextiscsistorage["moid"] = item.Moid
+	propextiscsistorage["object_type"] = item.ObjectType
+	propextiscsistorage["selector"] = item.Selector
+
+	propextiscsistorages = append(propextiscsistorages, propextiscsistorage)
+	return propextiscsistorages
+}
+func flattenMapHyperflexLocalCredentialPolicyRef(p *models.HyperflexLocalCredentialPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proplocalcredentials []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proplocalcredential := make(map[string]interface{})
+	proplocalcredential["moid"] = item.Moid
+	proplocalcredential["object_type"] = item.ObjectType
+	proplocalcredential["selector"] = item.Selector
+
+	proplocalcredentials = append(proplocalcredentials, proplocalcredential)
+	return proplocalcredentials
+}
+func flattenMapHyperflexNodeConfigPolicyRef(p *models.HyperflexNodeConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnodeconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnodeconfig := make(map[string]interface{})
+	propnodeconfig["moid"] = item.Moid
+	propnodeconfig["object_type"] = item.ObjectType
+	propnodeconfig["selector"] = item.Selector
+
+	propnodeconfigs = append(propnodeconfigs, propnodeconfig)
+	return propnodeconfigs
+}
+func flattenListHyperflexNodeProfileRef(p []*models.HyperflexNodeProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var propnodeprofileconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		prophxdpversions := make(map[string]interface{})
-		prophxdpversions["moid"] = item.Moid
-		prophxdpversions["object_type"] = item.ObjectType
-		prophxdpversions["selector"] = item.Selector
-		prophxdpversionss = append(prophxdpversionss, prophxdpversions)
+		propnodeprofileconfig := make(map[string]interface{})
+		propnodeprofileconfig["moid"] = item.Moid
+		propnodeprofileconfig["object_type"] = item.ObjectType
+		propnodeprofileconfig["selector"] = item.Selector
+		propnodeprofileconfigs = append(propnodeprofileconfigs, propnodeprofileconfig)
 	}
-	return prophxdpversionss
+	return propnodeprofileconfigs
 }
-func flattenListHyperflexCapabilityInfoRef(p []*models.HyperflexCapabilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophyperflexcapabilityinfoss []map[string]interface{}
+func flattenMapHyperflexProxySettingPolicyRef(p *models.HyperflexProxySettingPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propproxysettings []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propproxysetting := make(map[string]interface{})
+	propproxysetting["moid"] = item.Moid
+	propproxysetting["object_type"] = item.ObjectType
+	propproxysetting["selector"] = item.Selector
+
+	propproxysettings = append(propproxysettings, propproxysetting)
+	return propproxysettings
+}
+func flattenMapHyperflexSoftwareVersionPolicyRef(p *models.HyperflexSoftwareVersionPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsoftwareversions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsoftwareversion := make(map[string]interface{})
+	propsoftwareversion["moid"] = item.Moid
+	propsoftwareversion["object_type"] = item.ObjectType
+	propsoftwareversion["selector"] = item.Selector
+
+	propsoftwareversions = append(propsoftwareversions, propsoftwareversion)
+	return propsoftwareversions
+}
+func flattenMapHyperflexSysConfigPolicyRef(p *models.HyperflexSysConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsysconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsysconfig := make(map[string]interface{})
+	propsysconfig["moid"] = item.Moid
+	propsysconfig["object_type"] = item.ObjectType
+	propsysconfig["selector"] = item.Selector
+
+	propsysconfigs = append(propsysconfigs, propsysconfig)
+	return propsysconfigs
+}
+func flattenMapHyperflexUcsmConfigPolicyRef(p *models.HyperflexUcsmConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propucsmconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propucsmconfig := make(map[string]interface{})
+	propucsmconfig["moid"] = item.Moid
+	propucsmconfig["object_type"] = item.ObjectType
+	propucsmconfig["selector"] = item.Selector
+
+	propucsmconfigs = append(propucsmconfigs, propucsmconfig)
+	return propucsmconfigs
+}
+func flattenMapHyperflexVcenterConfigPolicyRef(p *models.HyperflexVcenterConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propvcenterconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propvcenterconfig := make(map[string]interface{})
+	propvcenterconfig["moid"] = item.Moid
+	propvcenterconfig["object_type"] = item.ObjectType
+	propvcenterconfig["selector"] = item.Selector
+
+	propvcenterconfigs = append(propvcenterconfigs, propvcenterconfig)
+	return propvcenterconfigs
+}
+func flattenMapIamUserGroupRef(p *models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propusergroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propusergroup := make(map[string]interface{})
+	propusergroup["moid"] = item.Moid
+	propusergroup["object_type"] = item.ObjectType
+	propusergroup["selector"] = item.Selector
+
+	propusergroups = append(propusergroups, propusergroup)
+	return propusergroups
+}
+func flattenMapWorkflowCatalogRef(p *models.WorkflowCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcatalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcatalog := make(map[string]interface{})
+	propcatalog["moid"] = item.Moid
+	propcatalog["object_type"] = item.ObjectType
+	propcatalog["selector"] = item.Selector
+
+	propcatalogs = append(propcatalogs, propcatalog)
+	return propcatalogs
+}
+func flattenListWorkflowTaskDefinitionRef(p []*models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+	var propimplementedtaskss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		prophyperflexcapabilityinfos := make(map[string]interface{})
-		prophyperflexcapabilityinfos["moid"] = item.Moid
-		prophyperflexcapabilityinfos["object_type"] = item.ObjectType
-		prophyperflexcapabilityinfos["selector"] = item.Selector
-		prophyperflexcapabilityinfoss = append(prophyperflexcapabilityinfoss, prophyperflexcapabilityinfos)
+		propimplementedtasks := make(map[string]interface{})
+		propimplementedtasks["moid"] = item.Moid
+		propimplementedtasks["object_type"] = item.ObjectType
+		propimplementedtasks["selector"] = item.Selector
+		propimplementedtaskss = append(propimplementedtaskss, propimplementedtasks)
 	}
-	return prophyperflexcapabilityinfoss
+	return propimplementedtaskss
 }
-func flattenListHclHyperflexSoftwareCompatibilityInfoRef(p []*models.HclHyperflexSoftwareCompatibilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophyperflexsoftwarecompatibilityinfoss []map[string]interface{}
+func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var propinternalpropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propinternalproperties := make(map[string]interface{})
+	delete(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1)
+		if err == nil {
+			propinternalproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propinternalproperties["base_task_type"] = item.BaseTaskType
+	propinternalproperties["constraints"] = item.Constraints
+	propinternalproperties["internal"] = item.Internal
+	propinternalproperties["object_type"] = item.ObjectType
+	propinternalproperties["owner"] = item.Owner
+
+	propinternalpropertiess = append(propinternalpropertiess, propinternalproperties)
+	return propinternalpropertiess
+}
+func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propproperties := make(map[string]interface{})
+	delete(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1)
+		if err == nil {
+			propproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propproperties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+		var propinputdefinitions []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			propinputdefinition := make(map[string]interface{})
+			propinputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+				var propdefaults []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				propdefault := make(map[string]interface{})
+				propdefault["object_type"] = item.ObjectType
+				propdefault["override"] = item.Override
+				propdefault["value"] = item.Value
+
+				propdefaults = append(propdefaults, propdefault)
+				return propdefaults
+			})(item.Default, d)
+			propinputdefinition["description"] = item.Description
+			propinputdefinition["label"] = item.Label
+			propinputdefinition["name"] = item.Name
+			propinputdefinition["object_type"] = item.ObjectType
+			propinputdefinition["required"] = item.Required
+			propinputdefinitions = append(propinputdefinitions, propinputdefinition)
+		}
+		return propinputdefinitions
+	})(item.InputDefinition, d)
+	propproperties["object_type"] = item.ObjectType
+	propproperties["output_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+		var propoutputdefinitions []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			propoutputdefinition := make(map[string]interface{})
+			propoutputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+				var propdefaults []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				propdefault := make(map[string]interface{})
+				propdefault["object_type"] = item.ObjectType
+				propdefault["override"] = item.Override
+				propdefault["value"] = item.Value
+
+				propdefaults = append(propdefaults, propdefault)
+				return propdefaults
+			})(item.Default, d)
+			propoutputdefinition["description"] = item.Description
+			propoutputdefinition["label"] = item.Label
+			propoutputdefinition["name"] = item.Name
+			propoutputdefinition["object_type"] = item.ObjectType
+			propoutputdefinition["required"] = item.Required
+			propoutputdefinitions = append(propoutputdefinitions, propoutputdefinition)
+		}
+		return propoutputdefinitions
+	})(item.OutputDefinition, d)
+	propproperties["retry_count"] = item.RetryCount
+	propproperties["retry_delay"] = item.RetryDelay
+	propproperties["retry_policy"] = item.RetryPolicy
+	propproperties["timeout"] = item.Timeout
+	propproperties["timeout_policy"] = item.TimeoutPolicy
+
+	proppropertiess = append(proppropertiess, propproperties)
+	return proppropertiess
+}
+func flattenListBootDeviceBase(p []*models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
+	var propbootdevicess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		prophyperflexsoftwarecompatibilityinfos := make(map[string]interface{})
-		prophyperflexsoftwarecompatibilityinfos["moid"] = item.Moid
-		prophyperflexsoftwarecompatibilityinfos["object_type"] = item.ObjectType
-		prophyperflexsoftwarecompatibilityinfos["selector"] = item.Selector
-		prophyperflexsoftwarecompatibilityinfoss = append(prophyperflexsoftwarecompatibilityinfoss, prophyperflexsoftwarecompatibilityinfos)
-	}
-	return prophyperflexsoftwarecompatibilityinfoss
-}
-func flattenMapHyperflexServerFirmwareVersionRef(p *models.HyperflexServerFirmwareVersionRef, d *schema.ResourceData) []map[string]interface{} {
+		propbootdevices := make(map[string]interface{})
+		delete(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1, "ObjectType")
+		if len(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1) != 0 {
 
-	var propserverfirmwareversions []map[string]interface{}
+			j, err := json.Marshal(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1)
+			if err == nil {
+				propbootdevices["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propbootdevices["enabled"] = item.Enabled
+		propbootdevices["name"] = item.Name
+		propbootdevices["object_type"] = item.ObjectType
+		propbootdevicess = append(propbootdevicess, propbootdevices)
+	}
+	return propbootdevicess
+}
+func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
+	var propfeaturelimitentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propfeaturelimitentries := make(map[string]interface{})
+		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
+		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
+			if err == nil {
+				propfeaturelimitentries["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propfeaturelimitentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+
+			var propconstraints []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propconstraint := make(map[string]interface{})
+			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
+			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
+				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
+				if err == nil {
+					propconstraint["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propconstraint["hxdp_version"] = item.HxdpVersion
+			propconstraint["hypervisor_type"] = item.HypervisorType
+			propconstraint["mgmt_platform"] = item.MgmtPlatform
+			propconstraint["object_type"] = item.ObjectType
+			propconstraint["server_model"] = item.ServerModel
+
+			propconstraints = append(propconstraints, propconstraint)
+			return propconstraints
+		})(item.Constraint, d)
+		propfeaturelimitentries["name"] = item.Name
+		propfeaturelimitentries["object_type"] = item.ObjectType
+		propfeaturelimitentries["value"] = item.Value
+		propfeaturelimitentriess = append(propfeaturelimitentriess, propfeaturelimitentries)
+	}
+	return propfeaturelimitentriess
+}
+func flattenListSyslogLocalClientBase(p []*models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
+	var proplocalclientss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proplocalclients := make(map[string]interface{})
+		delete(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1, "ObjectType")
+		if len(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1)
+			if err == nil {
+				proplocalclients["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		proplocalclients["min_severity"] = item.MinSeverity
+		proplocalclients["object_type"] = item.ObjectType
+		proplocalclientss = append(proplocalclientss, proplocalclients)
+	}
+	return proplocalclientss
+}
+func flattenListSyslogRemoteClientBase(p []*models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
+	var propremoteclientss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propremoteclients := make(map[string]interface{})
+		delete(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1, "ObjectType")
+		if len(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1)
+			if err == nil {
+				propremoteclients["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propremoteclients["enabled"] = item.Enabled
+		propremoteclients["hostname"] = item.Hostname
+		propremoteclients["min_severity"] = item.MinSeverity
+		propremoteclients["object_type"] = item.ObjectType
+		propremoteclients["port"] = item.Port
+		propremoteclients["protocol"] = item.Protocol
+		propremoteclientss = append(propremoteclientss, propremoteclients)
+	}
+	return propremoteclientss
+}
+func flattenMapIamSystemRef(p *models.IamSystemRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsystems []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propserverfirmwareversion := make(map[string]interface{})
-	propserverfirmwareversion["moid"] = item.Moid
-	propserverfirmwareversion["object_type"] = item.ObjectType
-	propserverfirmwareversion["selector"] = item.Selector
+	propsystem := make(map[string]interface{})
+	propsystem["moid"] = item.Moid
+	propsystem["object_type"] = item.ObjectType
+	propsystem["selector"] = item.Selector
 
-	propserverfirmwareversions = append(propserverfirmwareversions, propserverfirmwareversion)
-	return propserverfirmwareversions
+	propsystems = append(propsystems, propsystem)
+	return propsystems
 }
-func flattenMapHyperflexServerModelRef(p *models.HyperflexServerModelRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamUserLoginTimeRef(p []*models.IamUserLoginTimeRef, d *schema.ResourceData) []map[string]interface{} {
+	var propuserlogintimes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propuserlogintime := make(map[string]interface{})
+		propuserlogintime["moid"] = item.Moid
+		propuserlogintime["object_type"] = item.ObjectType
+		propuserlogintime["selector"] = item.Selector
+		propuserlogintimes = append(propuserlogintimes, propuserlogintime)
+	}
+	return propuserlogintimes
+}
+func flattenListIamUserPreferenceRef(p []*models.IamUserPreferenceRef, d *schema.ResourceData) []map[string]interface{} {
+	var propuserpreferencess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propuserpreferences := make(map[string]interface{})
+		propuserpreferences["moid"] = item.Moid
+		propuserpreferences["object_type"] = item.ObjectType
+		propuserpreferences["selector"] = item.Selector
+		propuserpreferencess = append(propuserpreferencess, propuserpreferences)
+	}
+	return propuserpreferencess
+}
+func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry, d *schema.ResourceData) []map[string]interface{} {
+	var propservermodelentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propservermodelentries := make(map[string]interface{})
+		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
+		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
 
-	var propservermodels []map[string]interface{}
+			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
+			if err == nil {
+				propservermodelentries["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propservermodelentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+
+			var propconstraints []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propconstraint := make(map[string]interface{})
+			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
+			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
+				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
+				if err == nil {
+					propconstraint["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propconstraint["hxdp_version"] = item.HxdpVersion
+			propconstraint["hypervisor_type"] = item.HypervisorType
+			propconstraint["mgmt_platform"] = item.MgmtPlatform
+			propconstraint["object_type"] = item.ObjectType
+			propconstraint["server_model"] = item.ServerModel
+
+			propconstraints = append(propconstraints, propconstraint)
+			return propconstraints
+		})(item.Constraint, d)
+		propservermodelentries["name"] = item.Name
+		propservermodelentries["object_type"] = item.ObjectType
+		propservermodelentries["value"] = item.Value
+		propservermodelentriess = append(propservermodelentriess, propservermodelentries)
+	}
+	return propservermodelentriess
+}
+func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+	var propinputdefinitions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propinputdefinition := make(map[string]interface{})
+		delete(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1, "ObjectType")
+		if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
+			if err == nil {
+				propinputdefinition["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propinputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+			var propdefaults []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propdefault := make(map[string]interface{})
+			delete(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1, "ObjectType")
+			if len(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1) != 0 {
+				j, err := json.Marshal(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1)
+				if err == nil {
+					propdefault["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propdefault["object_type"] = item.ObjectType
+			propdefault["override"] = item.Override
+			propdefault["value"] = item.Value
+
+			propdefaults = append(propdefaults, propdefault)
+			return propdefaults
+		})(item.Default, d)
+		propinputdefinition["description"] = item.Description
+		propinputdefinition["label"] = item.Label
+		propinputdefinition["name"] = item.Name
+		propinputdefinition["object_type"] = item.ObjectType
+		propinputdefinition["required"] = item.Required
+		propinputdefinitions = append(propinputdefinitions, propinputdefinition)
+	}
+	return propinputdefinitions
+}
+func flattenListWorkflowWorkflowTask(p []*models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
+	var proptaskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proptasks := make(map[string]interface{})
+		delete(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1, "ObjectType")
+		if len(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1)
+			if err == nil {
+				proptasks["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		proptasks["description"] = item.Description
+		proptasks["label"] = item.Label
+		proptasks["name"] = item.Name
+		proptasks["object_type"] = item.ObjectType
+		proptaskss = append(proptaskss, proptasks)
+	}
+	return proptaskss
+}
+func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	var propvalidationinformations []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propservermodel := make(map[string]interface{})
-	propservermodel["moid"] = item.Moid
-	propservermodel["object_type"] = item.ObjectType
-	propservermodel["selector"] = item.Selector
+	propvalidationinformation := make(map[string]interface{})
+	delete(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1, "ObjectType")
+	if len(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1)
+		if err == nil {
+			propvalidationinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propvalidationinformation["object_type"] = item.ObjectType
+	propvalidationinformation["state"] = item.State
+	propvalidationinformation["validation_error"] = (func(p []*models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
+		var propvalidationerrors []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			propvalidationerror := make(map[string]interface{})
+			propvalidationerror["error_log"] = item.ErrorLog
+			propvalidationerror["field"] = item.Field
+			propvalidationerror["object_type"] = item.ObjectType
+			propvalidationerror["task_name"] = item.TaskName
+			propvalidationerror["transition_name"] = item.TransitionName
+			propvalidationerrors = append(propvalidationerrors, propvalidationerror)
+		}
+		return propvalidationerrors
+	})(item.ValidationError, d)
 
-	propservermodels = append(propservermodels, propservermodel)
-	return propservermodels
+	propvalidationinformations = append(propvalidationinformations, propvalidationinformation)
+	return propvalidationinformations
+}
+func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.ResourceData) []map[string]interface{} {
+	var propapidatasourcess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propapidatasources := make(map[string]interface{})
+		delete(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1, "ObjectType")
+		if len(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1) != 0 {
+
+			j, err := json.Marshal(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1)
+			if err == nil {
+				propapidatasources["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propapidatasources["mo_type"] = item.MoType
+		propapidatasources["name"] = item.Name
+		propapidatasources["object_type"] = item.ObjectType
+		propapidatasources["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
+			var propqueriess []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				propqueries := make(map[string]interface{})
+				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
+				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
+
+					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
+					if err == nil {
+						propqueries["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				propqueries["name"] = item.Name
+				propqueries["object_type"] = item.ObjectType
+				propqueries["priority"] = item.Priority
+				propqueries["query"] = item.Query
+				propqueriess = append(propqueriess, propqueries)
+			}
+			return propqueriess
+		})(item.Queries, d)
+		propapidatasources["type"] = item.Type
+		propapidatasourcess = append(propapidatasourcess, propapidatasources)
+	}
+	return propapidatasourcess
+}
+func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[string]interface{} {
+	var propactionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propactions := make(map[string]interface{})
+		delete(item.TamActionAO1P1.TamActionAO1P1, "ObjectType")
+		if len(item.TamActionAO1P1.TamActionAO1P1) != 0 {
+
+			j, err := json.Marshal(item.TamActionAO1P1.TamActionAO1P1)
+			if err == nil {
+				propactions["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propactions["affected_object_type"] = item.AffectedObjectType
+		propactions["alert_type"] = item.AlertType
+		propactions["identifiers"] = (func(p []*models.TamIdentifiers, d *schema.ResourceData) []map[string]interface{} {
+			var propidentifierss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				propidentifiers := make(map[string]interface{})
+				delete(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1, "ObjectType")
+				if len(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1) != 0 {
+
+					j, err := json.Marshal(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1)
+					if err == nil {
+						propidentifiers["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				propidentifiers["name"] = item.Name
+				propidentifiers["object_type"] = item.ObjectType
+				propidentifiers["value"] = item.Value
+				propidentifierss = append(propidentifierss, propidentifiers)
+			}
+			return propidentifierss
+		})(item.Identifiers, d)
+		propactions["name"] = item.Name
+		propactions["object_type"] = item.ObjectType
+		propactions["operation_type"] = item.OperationType
+		propactions["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
+			var propqueriess []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				propqueries := make(map[string]interface{})
+				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
+				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
+
+					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
+					if err == nil {
+						propqueries["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				propqueries["name"] = item.Name
+				propqueries["object_type"] = item.ObjectType
+				propqueries["priority"] = item.Priority
+				propqueries["query"] = item.Query
+				propqueriess = append(propqueriess, propqueries)
+			}
+			return propqueriess
+		})(item.Queries, d)
+		propactions["type"] = item.Type
+		propactionss = append(propactionss, propactions)
+	}
+	return propactionss
+}
+func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
+
+	var propseveritys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propseverity := make(map[string]interface{})
+	delete(item.AO1, "ObjectType")
+	if len(item.AO1) != 0 {
+		j, err := json.Marshal(item.AO1)
+		if err == nil {
+			propseverity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propseverity["object_type"] = item.ObjectType
+
+	propseveritys = append(propseveritys, propseverity)
+	return propseveritys
+}
+func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
+	var proppartitionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proppartitions := make(map[string]interface{})
+		delete(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1, "ObjectType")
+		if len(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1)
+			if err == nil {
+				proppartitions["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		proppartitions["object_type"] = item.ObjectType
+		proppartitions["type"] = item.Type
+		proppartitions["virtual_drives"] = (func(p []*models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
+			var propvirtualdrivess []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				propvirtualdrives := make(map[string]interface{})
+				delete(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1, "ObjectType")
+				if len(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1) != 0 {
+
+					j, err := json.Marshal(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1)
+					if err == nil {
+						propvirtualdrives["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				propvirtualdrives["enable"] = item.Enable
+				propvirtualdrives["object_type"] = item.ObjectType
+				propvirtualdrivess = append(propvirtualdrivess, propvirtualdrives)
+			}
+			return propvirtualdrivess
+		})(item.VirtualDrives, d)
+		proppartitionss = append(proppartitionss, proppartitions)
+	}
+	return proppartitionss
 }
 func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4058,57 +3452,633 @@ func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *s
 	propwwxnprefixranges = append(propwwxnprefixranges, propwwxnprefixrange)
 	return propwwxnprefixranges
 }
-func flattenMapOsCatalogRef(p *models.OsCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData) []map[string]interface{} {
+	var propconstraintss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propconstraints := make(map[string]interface{})
+		delete(item.HclConstraintAO1P1.HclConstraintAO1P1, "ObjectType")
+		if len(item.HclConstraintAO1P1.HclConstraintAO1P1) != 0 {
 
-	var propcatalogs []map[string]interface{}
+			j, err := json.Marshal(item.HclConstraintAO1P1.HclConstraintAO1P1)
+			if err == nil {
+				propconstraints["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propconstraints["constraint_name"] = item.ConstraintName
+		propconstraints["constraint_value"] = item.ConstraintValue
+		propconstraints["object_type"] = item.ObjectType
+		propconstraintss = append(propconstraintss, propconstraints)
+	}
+	return propconstraintss
+}
+func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbasepropertiess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propcatalog := make(map[string]interface{})
-	propcatalog["moid"] = item.Moid
-	propcatalog["object_type"] = item.ObjectType
-	propcatalog["selector"] = item.Selector
+	propbaseproperties := make(map[string]interface{})
+	delete(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1, "ObjectType")
+	if len(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1)
+		if err == nil {
+			propbaseproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propbaseproperties["attribute"] = item.Attribute
+	propbaseproperties["base_dn"] = item.BaseDn
+	propbaseproperties["bind_dn"] = item.BindDn
+	propbaseproperties["bind_method"] = item.BindMethod
+	propbaseproperties["domain"] = item.Domain
+	propbaseproperties["enable_encryption"] = item.EnableEncryption
+	propbaseproperties["enable_group_authorization"] = item.EnableGroupAuthorization
+	propbaseproperties["filter"] = item.Filter
+	propbaseproperties["group_attribute"] = item.GroupAttribute
+	propbaseproperties["is_password_set"] = item.IsPasswordSet
+	propbaseproperties["nested_group_search_depth"] = item.NestedGroupSearchDepth
+	propbaseproperties["object_type"] = item.ObjectType
+	password_x := d.Get("base_properties").([]interface{})
+	password_y := password_x[0].(map[string]interface{})
+	propbaseproperties["password"] = password_y["password"]
+	propbaseproperties["timeout"] = item.Timeout
 
-	propcatalogs = append(propcatalogs, propcatalog)
-	return propcatalogs
+	propbasepropertiess = append(propbasepropertiess, propbaseproperties)
+	return propbasepropertiess
 }
-func flattenListHclOperatingSystemRef(p []*models.HclOperatingSystemRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdistributionss []map[string]interface{}
+func flattenMapIamLdapDNSParameters(p *models.IamLdapDNSParameters, d *schema.ResourceData) []map[string]interface{} {
+
+	var propdnsparameterss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propdnsparameters := make(map[string]interface{})
+	delete(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1, "ObjectType")
+	if len(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1) != 0 {
+		j, err := json.Marshal(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1)
+		if err == nil {
+			propdnsparameters["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propdnsparameters["object_type"] = item.ObjectType
+	propdnsparameters["search_domain"] = item.SearchDomain
+	propdnsparameters["search_forest"] = item.SearchForest
+	propdnsparameters["source"] = item.Source
+
+	propdnsparameterss = append(propdnsparameterss, propdnsparameters)
+	return propdnsparameterss
+}
+func flattenListIamLdapGroupRef(p []*models.IamLdapGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propgroupss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propdistributions := make(map[string]interface{})
-		propdistributions["moid"] = item.Moid
-		propdistributions["object_type"] = item.ObjectType
-		propdistributions["selector"] = item.Selector
-		propdistributionss = append(propdistributionss, propdistributions)
+		propgroups := make(map[string]interface{})
+		propgroups["moid"] = item.Moid
+		propgroups["object_type"] = item.ObjectType
+		propgroups["selector"] = item.Selector
+		propgroupss = append(propgroupss, propgroups)
 	}
-	return propdistributionss
+	return propgroupss
+}
+func flattenListIamLdapProviderRef(p []*models.IamLdapProviderRef, d *schema.ResourceData) []map[string]interface{} {
+	var propproviderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propproviders := make(map[string]interface{})
+		propproviders["moid"] = item.Moid
+		propproviders["object_type"] = item.ObjectType
+		propproviders["selector"] = item.Selector
+		propproviderss = append(propproviderss, propproviders)
+	}
+	return propproviderss
+}
+func flattenListStorageDiskGroupPolicyRef(p []*models.StorageDiskGroupPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdiskgrouppoliciess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdiskgrouppolicies := make(map[string]interface{})
+		propdiskgrouppolicies["moid"] = item.Moid
+		propdiskgrouppolicies["object_type"] = item.ObjectType
+		propdiskgrouppolicies["selector"] = item.Selector
+		propdiskgrouppoliciess = append(propdiskgrouppoliciess, propdiskgrouppolicies)
+	}
+	return propdiskgrouppoliciess
+}
+func flattenListStorageVirtualDriveConfig(p []*models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
+	var propvirtualdrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propvirtualdrives := make(map[string]interface{})
+		propvirtualdrives["access_policy"] = item.AccessPolicy
+		delete(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1, "ObjectType")
+		if len(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1)
+			if err == nil {
+				propvirtualdrives["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propvirtualdrives["boot_drive"] = item.BootDrive
+		propvirtualdrives["disk_group_name"] = item.DiskGroupName
+		propvirtualdrives["disk_group_policy"] = item.DiskGroupPolicy
+		propvirtualdrives["drive_cache"] = item.DriveCache
+		propvirtualdrives["expand_to_available"] = item.ExpandToAvailable
+		propvirtualdrives["io_policy"] = item.IoPolicy
+		propvirtualdrives["name"] = item.Name
+		propvirtualdrives["object_type"] = item.ObjectType
+		propvirtualdrives["read_policy"] = item.ReadPolicy
+		propvirtualdrives["size"] = item.Size
+		propvirtualdrives["write_policy"] = item.WritePolicy
+		propvirtualdrivess = append(propvirtualdrivess, propvirtualdrives)
+	}
+	return propvirtualdrivess
+}
+func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcertificates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcertificate := make(map[string]interface{})
+	delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
+	if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
+		j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
+		if err == nil {
+			propcertificate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propcertificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+		var propissuers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		propissuer := make(map[string]interface{})
+		propissuer["common_name"] = item.CommonName
+		propissuer["country"] = item.Country
+		propissuer["locality"] = item.Locality
+		propissuer["object_type"] = item.ObjectType
+		propissuer["organization"] = item.Organization
+		propissuer["organizational_unit"] = item.OrganizationalUnit
+		propissuer["state"] = item.State
+
+		propissuers = append(propissuers, propissuer)
+		return propissuers
+	})(item.Issuer, d)
+	propcertificate["object_type"] = item.ObjectType
+	propcertificate["pem_certificate"] = item.PemCertificate
+	propcertificate["sha256_fingerprint"] = item.Sha256Fingerprint
+	propcertificate["signature_algorithm"] = item.SignatureAlgorithm
+	propcertificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+		var propsubjects []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		propsubject := make(map[string]interface{})
+		propsubject["common_name"] = item.CommonName
+		propsubject["country"] = item.Country
+		propsubject["locality"] = item.Locality
+		propsubject["object_type"] = item.ObjectType
+		propsubject["organization"] = item.Organization
+		propsubject["organizational_unit"] = item.OrganizationalUnit
+		propsubject["state"] = item.State
+
+		propsubjects = append(propsubjects, propsubject)
+		return propsubjects
+	})(item.Subject, d)
+
+	propcertificates = append(propcertificates, propcertificate)
+	return propcertificates
+}
+func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var propvlansettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propvlansettings := make(map[string]interface{})
+	delete(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1, "ObjectType")
+	if len(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1)
+		if err == nil {
+			propvlansettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	propvlansettings["default_vlan"] = item.DefaultVlan
+	propvlansettings["mode"] = item.Mode
+	propvlansettings["object_type"] = item.ObjectType
+
+	propvlansettingss = append(propvlansettingss, propvlansettings)
+	return propvlansettingss
+}
+func flattenMapIamQualifierRef(p *models.IamQualifierRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propqualifiers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propqualifier := make(map[string]interface{})
+	propqualifier["moid"] = item.Moid
+	propqualifier["object_type"] = item.ObjectType
+	propqualifier["selector"] = item.Selector
+
+	propqualifiers = append(propqualifiers, propqualifier)
+	return propqualifiers
+}
+func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
+	var propsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsettings := make(map[string]interface{})
+		delete(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1, "ObjectType")
+		if len(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1) != 0 {
+
+			j, err := json.Marshal(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1)
+			if err == nil {
+				propsettings["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propsettings["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
+
+			var propethsettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propethsettings := make(map[string]interface{})
+			delete(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1, "ObjectType")
+			if len(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1)
+				if err == nil {
+					propethsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propethsettings["lldp_enabled"] = item.LldpEnabled
+			propethsettings["object_type"] = item.ObjectType
+
+			propethsettingss = append(propethsettingss, propethsettings)
+			return propethsettingss
+		})(item.EthSettings, d)
+		propsettings["fc_settings"] = (func(p *models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
+
+			var propfcsettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propfcsettings := make(map[string]interface{})
+			delete(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1, "ObjectType")
+			if len(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1)
+				if err == nil {
+					propfcsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propfcsettings["fip_enabled"] = item.FipEnabled
+			propfcsettings["object_type"] = item.ObjectType
+
+			propfcsettingss = append(propfcsettingss, propfcsettings)
+			return propfcsettingss
+		})(item.FcSettings, d)
+		propsettings["object_type"] = item.ObjectType
+		propsettings["port_channel_settings"] = (func(p *models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
+
+			var propportchannelsettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propportchannelsettings := make(map[string]interface{})
+			delete(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1, "ObjectType")
+			if len(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1)
+				if err == nil {
+					propportchannelsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propportchannelsettings["enabled"] = item.Enabled
+			propportchannelsettings["object_type"] = item.ObjectType
+
+			propportchannelsettingss = append(propportchannelsettingss, propportchannelsettings)
+			return propportchannelsettingss
+		})(item.PortChannelSettings, d)
+		propsettings["slot_id"] = item.SlotID
+		propsettingss = append(propsettingss, propsettings)
+	}
+	return propsettingss
+}
+func flattenListResourceGroupRef(p []*models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresourcegroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propresourcegroups := make(map[string]interface{})
+		propresourcegroups["moid"] = item.Moid
+		propresourcegroups["object_type"] = item.ObjectType
+		propresourcegroups["selector"] = item.Selector
+		propresourcegroupss = append(propresourcegroupss, propresourcegroups)
+	}
+	return propresourcegroupss
+}
+func flattenListOrganizationOrganizationRef(p []*models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
+	var proporganizationss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proporganizations := make(map[string]interface{})
+		proporganizations["moid"] = item.Moid
+		proporganizations["object_type"] = item.ObjectType
+		proporganizations["selector"] = item.Selector
+		proporganizationss = append(proporganizationss, proporganizations)
+	}
+	return proporganizationss
+}
+func flattenListResourcePerTypeCombinedSelector(p []*models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
+	var proppertypecombinedselectors []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proppertypecombinedselector := make(map[string]interface{})
+		delete(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1, "ObjectType")
+		if len(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1)
+			if err == nil {
+				proppertypecombinedselector["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		proppertypecombinedselector["combined_selector"] = item.CombinedSelector
+		proppertypecombinedselector["empty_filter"] = item.EmptyFilter
+		proppertypecombinedselector["object_type"] = item.ObjectType
+		proppertypecombinedselector["selector_object_type"] = item.SelectorObjectType
+		proppertypecombinedselectors = append(proppertypecombinedselectors, proppertypecombinedselector)
+	}
+	return proppertypecombinedselectors
+}
+func flattenListResourceSelector(p []*models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
+	var propselectorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propselectors := make(map[string]interface{})
+		delete(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1, "ObjectType")
+		if len(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1)
+			if err == nil {
+				propselectors["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propselectors["object_type"] = item.ObjectType
+		propselectors["selector"] = item.Selector
+		propselectorss = append(propselectorss, propselectors)
+	}
+	return propselectorss
+}
+func flattenListIaasConnectorPackRef(p []*models.IaasConnectorPackRef, d *schema.ResourceData) []map[string]interface{} {
+	var propconnectorpacks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propconnectorpack := make(map[string]interface{})
+		propconnectorpack["moid"] = item.Moid
+		propconnectorpack["object_type"] = item.ObjectType
+		propconnectorpack["selector"] = item.Selector
+		propconnectorpacks = append(propconnectorpacks, propconnectorpack)
+	}
+	return propconnectorpacks
+}
+func flattenListIaasDeviceStatusRef(p []*models.IaasDeviceStatusRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdevicestatuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdevicestatus := make(map[string]interface{})
+		propdevicestatus["moid"] = item.Moid
+		propdevicestatus["object_type"] = item.ObjectType
+		propdevicestatus["selector"] = item.Selector
+		propdevicestatuss = append(propdevicestatuss, propdevicestatus)
+	}
+	return propdevicestatuss
+}
+func flattenMapIaasLicenseInfoRef(p *models.IaasLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proplicenseinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proplicenseinfo := make(map[string]interface{})
+	proplicenseinfo["moid"] = item.Moid
+	proplicenseinfo["object_type"] = item.ObjectType
+	proplicenseinfo["selector"] = item.Selector
+
+	proplicenseinfos = append(proplicenseinfos, proplicenseinfo)
+	return proplicenseinfos
+}
+func flattenListIaasMostRunTasksRef(p []*models.IaasMostRunTasksRef, d *schema.ResourceData) []map[string]interface{} {
+	var propmostruntaskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propmostruntasks := make(map[string]interface{})
+		propmostruntasks["moid"] = item.Moid
+		propmostruntasks["object_type"] = item.ObjectType
+		propmostruntasks["selector"] = item.Selector
+		propmostruntaskss = append(propmostruntaskss, propmostruntasks)
+	}
+	return propmostruntaskss
+}
+func flattenMapIaasUcsdManagedInfraRef(p *models.IaasUcsdManagedInfraRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propucsdmanagedinfras []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propucsdmanagedinfra := make(map[string]interface{})
+	propucsdmanagedinfra["moid"] = item.Moid
+	propucsdmanagedinfra["object_type"] = item.ObjectType
+	propucsdmanagedinfra["selector"] = item.Selector
+
+	propucsdmanagedinfras = append(propucsdmanagedinfras, propucsdmanagedinfra)
+	return propucsdmanagedinfras
+}
+func flattenMapVnicFcAdapterPolicyRef(p *models.VnicFcAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propfcadapterpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propfcadapterpolicy := make(map[string]interface{})
+	propfcadapterpolicy["moid"] = item.Moid
+	propfcadapterpolicy["object_type"] = item.ObjectType
+	propfcadapterpolicy["selector"] = item.Selector
+
+	propfcadapterpolicys = append(propfcadapterpolicys, propfcadapterpolicy)
+	return propfcadapterpolicys
+}
+func flattenMapVnicFcNetworkPolicyRef(p *models.VnicFcNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propfcnetworkpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propfcnetworkpolicy := make(map[string]interface{})
+	propfcnetworkpolicy["moid"] = item.Moid
+	propfcnetworkpolicy["object_type"] = item.ObjectType
+	propfcnetworkpolicy["selector"] = item.Selector
+
+	propfcnetworkpolicys = append(propfcnetworkpolicys, propfcnetworkpolicy)
+	return propfcnetworkpolicys
+}
+func flattenMapVnicFcQosPolicyRef(p *models.VnicFcQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propfcqospolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propfcqospolicy := make(map[string]interface{})
+	propfcqospolicy["moid"] = item.Moid
+	propfcqospolicy["object_type"] = item.ObjectType
+	propfcqospolicy["selector"] = item.Selector
+
+	propfcqospolicys = append(propfcqospolicys, propfcqospolicy)
+	return propfcqospolicys
+}
+func flattenMapVnicSanConnectivityPolicyRef(p *models.VnicSanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsanconnectivitypolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsanconnectivitypolicy := make(map[string]interface{})
+	propsanconnectivitypolicy["moid"] = item.Moid
+	propsanconnectivitypolicy["object_type"] = item.ObjectType
+	propsanconnectivitypolicy["selector"] = item.Selector
+
+	propsanconnectivitypolicys = append(propsanconnectivitypolicys, propsanconnectivitypolicy)
+	return propsanconnectivitypolicys
+}
+func flattenMapRecoveryBackupConfigPolicyRef(p *models.RecoveryBackupConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbackupconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbackupconfig := make(map[string]interface{})
+	propbackupconfig["moid"] = item.Moid
+	propbackupconfig["object_type"] = item.ObjectType
+	propbackupconfig["selector"] = item.Selector
+
+	propbackupconfigs = append(propbackupconfigs, propbackupconfig)
+	return propbackupconfigs
+}
+func flattenMapRecoveryScheduleConfigPolicyRef(p *models.RecoveryScheduleConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propscheduleconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propscheduleconfig := make(map[string]interface{})
+	propscheduleconfig["moid"] = item.Moid
+	propscheduleconfig["object_type"] = item.ObjectType
+	propscheduleconfig["selector"] = item.Selector
+
+	propscheduleconfigs = append(propscheduleconfigs, propscheduleconfig)
+	return propscheduleconfigs
 }
 func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
-	var propplaceholderss []map[string]interface{}
+	var propadditionalparameterss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propplaceholders := make(map[string]interface{})
+		propadditionalparameters := make(map[string]interface{})
 		delete(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1, "ObjectType")
 		if len(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1) != 0 {
 
 			j, err := json.Marshal(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1)
 			if err == nil {
-				propplaceholders["additional_properties"] = string(j)
+				propadditionalparameters["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		propplaceholders["is_value_set"] = item.IsValueSet
-		propplaceholders["object_type"] = item.ObjectType
-		propplaceholders["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
+		propadditionalparameters["is_value_set"] = item.IsValueSet
+		propadditionalparameters["object_type"] = item.ObjectType
+		propadditionalparameters["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
 
 			var proptypes []map[string]interface{}
 			if p == nil {
@@ -4195,92 +4165,10 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 			proptypes = append(proptypes, proptype)
 			return proptypes
 		})(item.Type, d)
-		propplaceholders["value"] = item.Value
-		propplaceholderss = append(propplaceholderss, propplaceholders)
+		propadditionalparameters["value"] = item.Value
+		propadditionalparameterss = append(propadditionalparameterss, propadditionalparameters)
 	}
-	return propplaceholderss
-}
-func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
-	var propcertificatess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcertificates := make(map[string]interface{})
-		delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
-		if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
-
-			j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
-			if err == nil {
-				propcertificates["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		propcertificates["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-			var propissuers []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propissuer := make(map[string]interface{})
-			delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
-			if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
-				j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
-				if err == nil {
-					propissuer["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propissuer["common_name"] = item.CommonName
-			propissuer["country"] = item.Country
-			propissuer["locality"] = item.Locality
-			propissuer["object_type"] = item.ObjectType
-			propissuer["organization"] = item.Organization
-			propissuer["organizational_unit"] = item.OrganizationalUnit
-			propissuer["state"] = item.State
-
-			propissuers = append(propissuers, propissuer)
-			return propissuers
-		})(item.Issuer, d)
-		propcertificates["object_type"] = item.ObjectType
-		propcertificates["pem_certificate"] = item.PemCertificate
-		propcertificates["sha256_fingerprint"] = item.Sha256Fingerprint
-		propcertificates["signature_algorithm"] = item.SignatureAlgorithm
-		propcertificates["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-			var propsubjects []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propsubject := make(map[string]interface{})
-			delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
-			if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
-				j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
-				if err == nil {
-					propsubject["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			propsubject["common_name"] = item.CommonName
-			propsubject["country"] = item.Country
-			propsubject["locality"] = item.Locality
-			propsubject["object_type"] = item.ObjectType
-			propsubject["organization"] = item.Organization
-			propsubject["organizational_unit"] = item.OrganizationalUnit
-			propsubject["state"] = item.State
-
-			propsubjects = append(propsubjects, propsubject)
-			return propsubjects
-		})(item.Subject, d)
-		propcertificatess = append(propcertificatess, propcertificates)
-	}
-	return propcertificatess
+	return propadditionalparameterss
 }
 func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4425,6 +4313,118 @@ func flattenMapComputePhysicalRef(p *models.ComputePhysicalRef, d *schema.Resour
 
 	propservers = append(propservers, propserver)
 	return propservers
+}
+func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+	var propcertificatess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcertificates := make(map[string]interface{})
+		delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
+		if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
+
+			j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
+			if err == nil {
+				propcertificates["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		propcertificates["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+			var propissuers []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propissuer := make(map[string]interface{})
+			delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
+			if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
+				j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
+				if err == nil {
+					propissuer["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propissuer["common_name"] = item.CommonName
+			propissuer["country"] = item.Country
+			propissuer["locality"] = item.Locality
+			propissuer["object_type"] = item.ObjectType
+			propissuer["organization"] = item.Organization
+			propissuer["organizational_unit"] = item.OrganizationalUnit
+			propissuer["state"] = item.State
+
+			propissuers = append(propissuers, propissuer)
+			return propissuers
+		})(item.Issuer, d)
+		propcertificates["object_type"] = item.ObjectType
+		propcertificates["pem_certificate"] = item.PemCertificate
+		propcertificates["sha256_fingerprint"] = item.Sha256Fingerprint
+		propcertificates["signature_algorithm"] = item.SignatureAlgorithm
+		propcertificates["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+			var propsubjects []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propsubject := make(map[string]interface{})
+			delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
+			if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
+				j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
+				if err == nil {
+					propsubject["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			propsubject["common_name"] = item.CommonName
+			propsubject["country"] = item.Country
+			propsubject["locality"] = item.Locality
+			propsubject["object_type"] = item.ObjectType
+			propsubject["organization"] = item.Organization
+			propsubject["organizational_unit"] = item.OrganizationalUnit
+			propsubject["state"] = item.State
+
+			propsubjects = append(propsubjects, propsubject)
+			return propsubjects
+		})(item.Subject, d)
+		propcertificatess = append(propcertificatess, propcertificates)
+	}
+	return propcertificatess
+}
+func flattenMapOsCatalogRef(p *models.OsCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcatalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcatalog := make(map[string]interface{})
+	propcatalog["moid"] = item.Moid
+	propcatalog["object_type"] = item.ObjectType
+	propcatalog["selector"] = item.Selector
+
+	propcatalogs = append(propcatalogs, propcatalog)
+	return propcatalogs
+}
+func flattenListHclOperatingSystemRef(p []*models.HclOperatingSystemRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdistributionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdistributions := make(map[string]interface{})
+		propdistributions["moid"] = item.Moid
+		propdistributions["object_type"] = item.ObjectType
+		propdistributions["selector"] = item.Selector
+		propdistributionss = append(propdistributionss, propdistributions)
+	}
+	return propdistributionss
 }
 func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4626,21 +4626,6 @@ func flattenMapComputeBladeRef(p *models.ComputeBladeRef, d *schema.ResourceData
 	propcomputeblades = append(propcomputeblades, propcomputeblade)
 	return propcomputeblades
 }
-func flattenMapInventoryGenericInventoryHolderRef(p *models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propinventorygenericinventoryholders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propinventorygenericinventoryholder := make(map[string]interface{})
-	propinventorygenericinventoryholder["moid"] = item.Moid
-	propinventorygenericinventoryholder["object_type"] = item.ObjectType
-	propinventorygenericinventoryholder["selector"] = item.Selector
-
-	propinventorygenericinventoryholders = append(propinventorygenericinventoryholders, propinventorygenericinventoryholder)
-	return propinventorygenericinventoryholders
-}
 func flattenMapStoragePhysicalDiskRef(p *models.StoragePhysicalDiskRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var propstoragephysicaldisks []map[string]interface{}
@@ -4655,51 +4640,6 @@ func flattenMapStoragePhysicalDiskRef(p *models.StoragePhysicalDiskRef, d *schem
 
 	propstoragephysicaldisks = append(propstoragephysicaldisks, propstoragephysicaldisk)
 	return propstoragephysicaldisks
-}
-func flattenMapInventoryBaseRef(p *models.InventoryBaseRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcomponents []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcomponent := make(map[string]interface{})
-	propcomponent["moid"] = item.Moid
-	propcomponent["object_type"] = item.ObjectType
-	propcomponent["selector"] = item.Selector
-
-	propcomponents = append(propcomponents, propcomponent)
-	return propcomponents
-}
-func flattenMapCondHclStatusRef(p *models.CondHclStatusRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var prophclstatuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	prophclstatus := make(map[string]interface{})
-	prophclstatus["moid"] = item.Moid
-	prophclstatus["object_type"] = item.ObjectType
-	prophclstatus["selector"] = item.Selector
-
-	prophclstatuss = append(prophclstatuss, prophclstatus)
-	return prophclstatuss
-}
-func flattenMapHclOperatingSystemVendorRef(p *models.HclOperatingSystemVendorRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvendors []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvendor := make(map[string]interface{})
-	propvendor["moid"] = item.Moid
-	propvendor["object_type"] = item.ObjectType
-	propvendor["selector"] = item.Selector
-
-	propvendors = append(propvendors, propvendor)
-	return propvendors
 }
 func flattenListStoragePureHostRef(p []*models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
 	var prophostgroupss []map[string]interface{}
@@ -4745,21 +4685,6 @@ func flattenListStoragePureVolumeRef(p []*models.StoragePureVolumeRef, d *schema
 		propvolumess = append(propvolumess, propvolumes)
 	}
 	return propvolumess
-}
-func flattenListFirmwareRunningFirmwareRef(p []*models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
-	var proprunningfirmwares []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proprunningfirmware := make(map[string]interface{})
-		proprunningfirmware["moid"] = item.Moid
-		proprunningfirmware["object_type"] = item.ObjectType
-		proprunningfirmware["selector"] = item.Selector
-		proprunningfirmwares = append(proprunningfirmwares, proprunningfirmware)
-	}
-	return proprunningfirmwares
 }
 func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4815,834 +4740,35 @@ func flattenListHyperflexHxZoneResiliencyInfoDt(p []*models.HyperflexHxZoneResil
 	}
 	return propzoneresiliencylists
 }
-func flattenListNiaapiDetail(p []*models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
-	var propcontents []map[string]interface{}
+func flattenMapMemoryPersistentMemoryConfigurationRef(p *models.MemoryPersistentMemoryConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmemorypersistentmemoryconfigurations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmemorypersistentmemoryconfiguration := make(map[string]interface{})
+	propmemorypersistentmemoryconfiguration["moid"] = item.Moid
+	propmemorypersistentmemoryconfiguration["object_type"] = item.ObjectType
+	propmemorypersistentmemoryconfiguration["selector"] = item.Selector
+
+	propmemorypersistentmemoryconfigurations = append(propmemorypersistentmemoryconfigurations, propmemorypersistentmemoryconfiguration)
+	return propmemorypersistentmemoryconfigurations
+}
+func flattenListMemoryPersistentMemoryNamespaceRef(p []*models.MemoryPersistentMemoryNamespaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppersistentmemorynamespacess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propcontent := make(map[string]interface{})
-		propcontent["chksum"] = item.Chksum
-		propcontent["filename"] = item.Filename
-		propcontent["name"] = item.Name
-		propcontent["object_type"] = item.ObjectType
-		propcontents = append(propcontents, propcontent)
-	}
-	return propcontents
-}
-func flattenMapAdapterUnitRef(p *models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propadapterunits []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propadapterunit := make(map[string]interface{})
-	propadapterunit["moid"] = item.Moid
-	propadapterunit["object_type"] = item.ObjectType
-	propadapterunit["selector"] = item.Selector
-
-	propadapterunits = append(propadapterunits, propadapterunit)
-	return propadapterunits
-}
-func flattenListIamEndPointPrivilegeRef(p []*models.IamEndPointPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
-	var propendpointprivilegess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propendpointprivileges := make(map[string]interface{})
-		propendpointprivileges["moid"] = item.Moid
-		propendpointprivileges["object_type"] = item.ObjectType
-		propendpointprivileges["selector"] = item.Selector
-		propendpointprivilegess = append(propendpointprivilegess, propendpointprivileges)
-	}
-	return propendpointprivilegess
-}
-func flattenMapStorageProtectionGroupRef(p *models.StorageProtectionGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propprotectiongroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propprotectiongroup := make(map[string]interface{})
-	propprotectiongroup["moid"] = item.Moid
-	propprotectiongroup["object_type"] = item.ObjectType
-	propprotectiongroup["selector"] = item.Selector
-
-	propprotectiongroups = append(propprotectiongroups, propprotectiongroup)
-	return propprotectiongroups
-}
-func flattenMapManagementControllerRef(p *models.ManagementControllerRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmanagementcontrollers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmanagementcontroller := make(map[string]interface{})
-	propmanagementcontroller["moid"] = item.Moid
-	propmanagementcontroller["object_type"] = item.ObjectType
-	propmanagementcontroller["selector"] = item.Selector
-
-	propmanagementcontrollers = append(propmanagementcontrollers, propmanagementcontroller)
-	return propmanagementcontrollers
-}
-func flattenMapStorageControllerRef(p *models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstoragecontrollers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstoragecontroller := make(map[string]interface{})
-	propstoragecontroller["moid"] = item.Moid
-	propstoragecontroller["object_type"] = item.ObjectType
-	propstoragecontroller["selector"] = item.Selector
-
-	propstoragecontrollers = append(propstoragecontrollers, propstoragecontroller)
-	return propstoragecontrollers
-}
-func flattenMapStorageVirtualDriveRef(p *models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvirtualdrives []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvirtualdrive := make(map[string]interface{})
-	propvirtualdrive["moid"] = item.Moid
-	propvirtualdrive["object_type"] = item.ObjectType
-	propvirtualdrive["selector"] = item.Selector
-
-	propvirtualdrives = append(propvirtualdrives, propvirtualdrive)
-	return propvirtualdrives
-}
-func flattenMapForecastDefinitionRef(p *models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propforecastdefs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propforecastdef := make(map[string]interface{})
-	propforecastdef["moid"] = item.Moid
-	propforecastdef["object_type"] = item.ObjectType
-	propforecastdef["selector"] = item.Selector
-
-	propforecastdefs = append(propforecastdefs, propforecastdef)
-	return propforecastdefs
-}
-func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmodels []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmodel := make(map[string]interface{})
-	propmodel["accuracy"] = item.Accuracy
-	propmodel["model_data"] = item.ModelData
-	propmodel["model_type"] = item.ModelType
-	propmodel["object_type"] = item.ObjectType
-
-	propmodels = append(propmodels, propmodel)
-	return propmodels
-}
-func flattenListInventoryGenericInventoryRef(p []*models.InventoryGenericInventoryRef, d *schema.ResourceData) []map[string]interface{} {
-	var propgenericinventorys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propgenericinventory := make(map[string]interface{})
-		propgenericinventory["moid"] = item.Moid
-		propgenericinventory["object_type"] = item.ObjectType
-		propgenericinventory["selector"] = item.Selector
-		propgenericinventorys = append(propgenericinventorys, propgenericinventory)
-	}
-	return propgenericinventorys
-}
-func flattenListOsConfigurationFileRef(p []*models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
-	var propconfigurationfiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propconfigurationfiles := make(map[string]interface{})
-		propconfigurationfiles["moid"] = item.Moid
-		propconfigurationfiles["object_type"] = item.ObjectType
-		propconfigurationfiles["selector"] = item.Selector
-		propconfigurationfiless = append(propconfigurationfiless, propconfigurationfiles)
-	}
-	return propconfigurationfiless
-}
-func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, d *schema.ResourceData) []map[string]interface{} {
-
-	var propapics []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propapic := make(map[string]interface{})
-	propapic["anyllregex"] = item.Anyllregex
-	propapic["currentlltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
-
-		var propcurrentlltrains []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		propcurrentlltrain := make(map[string]interface{})
-		propcurrentlltrain["object_type"] = item.ObjectType
-		propcurrentlltrain["regex"] = item.Regex
-		propcurrentlltrain["software_version"] = item.SoftwareVersion
-
-		propcurrentlltrains = append(propcurrentlltrains, propcurrentlltrain)
-		return propcurrentlltrains
-	})(item.Currentlltrain, d)
-	propapic["latestsltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
-
-		var proplatestsltrains []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		proplatestsltrain := make(map[string]interface{})
-		proplatestsltrain["object_type"] = item.ObjectType
-		proplatestsltrain["regex"] = item.Regex
-		proplatestsltrain["software_version"] = item.SoftwareVersion
-
-		proplatestsltrains = append(proplatestsltrains, proplatestsltrain)
-		return proplatestsltrains
-	})(item.Latestsltrain, d)
-	propapic["object_type"] = item.ObjectType
-	propapic["sltrain"] = (func(p []*models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
-		var propsltrains []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			propsltrain := make(map[string]interface{})
-			propsltrain["object_type"] = item.ObjectType
-			propsltrain["regex"] = item.Regex
-			propsltrain["software_version"] = item.SoftwareVersion
-			propsltrains = append(propsltrains, propsltrain)
-		}
-		return propsltrains
-	})(item.Sltrain, d)
-	propapic["upcominglltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
-
-		var propupcominglltrains []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		propupcominglltrain := make(map[string]interface{})
-		propupcominglltrain["object_type"] = item.ObjectType
-		propupcominglltrain["regex"] = item.Regex
-		propupcominglltrain["software_version"] = item.SoftwareVersion
-
-		propupcominglltrains = append(propupcominglltrains, propupcominglltrain)
-		return propupcominglltrains
-	})(item.Upcominglltrain, d)
-
-	propapics = append(propapics, propapic)
-	return propapics
-}
-func flattenListEtherPhysicalPortRef(p []*models.EtherPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var propethernetportss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propethernetports := make(map[string]interface{})
-		propethernetports["moid"] = item.Moid
-		propethernetports["object_type"] = item.ObjectType
-		propethernetports["selector"] = item.Selector
-		propethernetportss = append(propethernetportss, propethernetports)
-	}
-	return propethernetportss
-}
-func flattenMapPortGroupRef(p *models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propportgroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propportgroup := make(map[string]interface{})
-	propportgroup["moid"] = item.Moid
-	propportgroup["object_type"] = item.ObjectType
-	propportgroup["selector"] = item.Selector
-
-	propportgroups = append(propportgroups, propportgroup)
-	return propportgroups
-}
-func flattenMapEquipmentChassisRef(p *models.EquipmentChassisRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propequipmentchassiss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propequipmentchassis := make(map[string]interface{})
-	propequipmentchassis["moid"] = item.Moid
-	propequipmentchassis["object_type"] = item.ObjectType
-	propequipmentchassis["selector"] = item.Selector
-
-	propequipmentchassiss = append(propequipmentchassiss, propequipmentchassis)
-	return propequipmentchassiss
-}
-func flattenMapEquipmentSharedIoModuleRef(p *models.EquipmentSharedIoModuleRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsharediomodules []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsharediomodule := make(map[string]interface{})
-	propsharediomodule["moid"] = item.Moid
-	propsharediomodule["object_type"] = item.ObjectType
-	propsharediomodule["selector"] = item.Selector
-
-	propsharediomodules = append(propsharediomodules, propsharediomodule)
-	return propsharediomodules
-}
-func flattenMapIaasUcsdInfoRef(p *models.IaasUcsdInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propguids []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propguid := make(map[string]interface{})
-	propguid["moid"] = item.Moid
-	propguid["object_type"] = item.ObjectType
-	propguid["selector"] = item.Selector
-
-	propguids = append(propguids, propguid)
-	return propguids
-}
-func flattenListIaasLicenseKeysInfo(p []*models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
-	var proplicensekeysinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proplicensekeysinfo := make(map[string]interface{})
-		proplicensekeysinfo["count"] = item.Count
-		proplicensekeysinfo["expiration_date"] = item.ExpirationDate
-		proplicensekeysinfo["license_id"] = item.LicenseID
-		proplicensekeysinfo["object_type"] = item.ObjectType
-		proplicensekeysinfo["pid"] = item.Pid
-		proplicensekeysinfos = append(proplicensekeysinfos, proplicensekeysinfo)
-	}
-	return proplicensekeysinfos
-}
-func flattenListIaasLicenseUtilizationInfo(p []*models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
-	var proplicenseutilizationinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proplicenseutilizationinfo := make(map[string]interface{})
-		proplicenseutilizationinfo["actual_used"] = item.ActualUsed
-		proplicenseutilizationinfo["label"] = item.Label
-		proplicenseutilizationinfo["licensed_limit"] = item.LicensedLimit
-		proplicenseutilizationinfo["object_type"] = item.ObjectType
-		proplicenseutilizationinfo["sku"] = item.Sku
-		proplicenseutilizationinfos = append(proplicenseutilizationinfos, proplicenseutilizationinfo)
-	}
-	return proplicenseutilizationinfos
-}
-func flattenListServerConfigResultEntryRef(p []*models.ServerConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresultentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propresultentries := make(map[string]interface{})
-		propresultentries["moid"] = item.Moid
-		propresultentries["object_type"] = item.ObjectType
-		propresultentries["selector"] = item.Selector
-		propresultentriess = append(propresultentriess, propresultentries)
-	}
-	return propresultentriess
-}
-func flattenMapStorageFlexFlashControllerRef(p *models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstorageflexflashcontrollers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstorageflexflashcontroller := make(map[string]interface{})
-	propstorageflexflashcontroller["moid"] = item.Moid
-	propstorageflexflashcontroller["object_type"] = item.ObjectType
-	propstorageflexflashcontroller["selector"] = item.Selector
-
-	propstorageflexflashcontrollers = append(propstorageflexflashcontrollers, propstorageflexflashcontroller)
-	return propstorageflexflashcontrollers
-}
-func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
-	var proppermissionroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppermissionroles := make(map[string]interface{})
-		proppermissionroles["object_type"] = item.ObjectType
-		proppermissionroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-
-			var proppermissions []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			proppermission := make(map[string]interface{})
-			proppermission["moid"] = item.Moid
-			proppermission["object_type"] = item.ObjectType
-
-			proppermissions = append(proppermissions, proppermission)
-			return proppermissions
-		})(item.Permission, d)
-		proppermissionroles["roles"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-			var proproless []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				proproles := make(map[string]interface{})
-				proproles["moid"] = item.Moid
-				proproles["object_type"] = item.ObjectType
-				proproless = append(proproless, proproles)
-			}
-			return proproless
-		})(item.Roles, d)
-		proppermissionroless = append(proppermissionroless, proppermissionroles)
-	}
-	return proppermissionroless
-}
-func flattenListForecastDefinitionRef(p []*models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdefinitions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdefinition := make(map[string]interface{})
-		propdefinition["moid"] = item.Moid
-		propdefinition["object_type"] = item.ObjectType
-		propdefinition["selector"] = item.Selector
-		propdefinitions = append(propdefinitions, propdefinition)
-	}
-	return propdefinitions
-}
-func flattenMapMemoryPersistentMemoryRegionRef(p *models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmemorypersistentmemoryregions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmemorypersistentmemoryregion := make(map[string]interface{})
-	propmemorypersistentmemoryregion["moid"] = item.Moid
-	propmemorypersistentmemoryregion["object_type"] = item.ObjectType
-	propmemorypersistentmemoryregion["selector"] = item.Selector
-
-	propmemorypersistentmemoryregions = append(propmemorypersistentmemoryregions, propmemorypersistentmemoryregion)
-	return propmemorypersistentmemoryregions
-}
-func flattenMapStorageEnclosureRef(p *models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstorageenclosures []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstorageenclosure := make(map[string]interface{})
-	propstorageenclosure["moid"] = item.Moid
-	propstorageenclosure["object_type"] = item.ObjectType
-	propstorageenclosure["selector"] = item.Selector
-
-	propstorageenclosures = append(propstorageenclosures, propstorageenclosure)
-	return propstorageenclosures
-}
-func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
-
-	var propdisks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propdisk := make(map[string]interface{})
-	propdisk["free"] = item.Free
-	propdisk["name"] = item.Name
-	propdisk["object_type"] = item.ObjectType
-	propdisk["total"] = item.Total
-	propdisk["used"] = item.Used
-
-	propdisks = append(propdisks, propdisk)
-	return propdisks
-}
-func flattenMapNiatelemetryNiaLicenseStateRef(p *models.NiatelemetryNiaLicenseStateRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplicensestates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplicensestate := make(map[string]interface{})
-	proplicensestate["moid"] = item.Moid
-	proplicensestate["object_type"] = item.ObjectType
-	proplicensestate["selector"] = item.Selector
-
-	proplicensestates = append(proplicensestates, proplicensestate)
-	return proplicensestates
-}
-func flattenListEquipmentFanModuleRef(p []*models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
-	var propfanmoduless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propfanmodules := make(map[string]interface{})
-		propfanmodules["moid"] = item.Moid
-		propfanmodules["object_type"] = item.ObjectType
-		propfanmodules["selector"] = item.Selector
-		propfanmoduless = append(propfanmoduless, propfanmodules)
-	}
-	return propfanmoduless
-}
-func flattenListEquipmentPsuRef(p []*models.EquipmentPsuRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppsuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppsus := make(map[string]interface{})
-		proppsus["moid"] = item.Moid
-		proppsus["object_type"] = item.ObjectType
-		proppsus["selector"] = item.Selector
-		proppsuss = append(proppsuss, proppsus)
-	}
-	return proppsuss
-}
-func flattenListEquipmentRackEnclosureSlotRef(p []*models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
-	var propslotss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propslots := make(map[string]interface{})
-		propslots["moid"] = item.Moid
-		propslots["object_type"] = item.ObjectType
-		propslots["selector"] = item.Selector
-		propslotss = append(propslotss, propslots)
-	}
-	return propslotss
-}
-func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppostdetails []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proppostdetail := make(map[string]interface{})
-	proppostdetail["description"] = item.Description
-	proppostdetail["link"] = item.Link
-	proppostdetail["object_type"] = item.ObjectType
-	proppostdetail["release_note_link"] = item.ReleaseNoteLink
-	proppostdetail["release_note_link_title"] = item.ReleaseNoteLinkTitle
-	proppostdetail["software_download_link"] = item.SoftwareDownloadLink
-	proppostdetail["software_download_link_title"] = item.SoftwareDownloadLinkTitle
-	proppostdetail["title"] = item.Title
-	proppostdetail["version"] = item.Version
-
-	proppostdetails = append(proppostdetails, proppostdetail)
-	return proppostdetails
-}
-func flattenMapIamSessionRef(p *models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propsessionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propsessions := make(map[string]interface{})
-	propsessions["moid"] = item.Moid
-	propsessions["object_type"] = item.ObjectType
-	propsessions["selector"] = item.Selector
-
-	propsessionss = append(propsessionss, propsessions)
-	return propsessionss
-}
-func flattenMapCommIPV4Interface(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
-
-	var propnodeipv4configs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propnodeipv4config := make(map[string]interface{})
-	propnodeipv4config["gateway"] = item.Gateway
-	propnodeipv4config["ip_address"] = item.IPAddress
-	propnodeipv4config["netmask"] = item.Netmask
-	propnodeipv4config["object_type"] = item.ObjectType
-
-	propnodeipv4configs = append(propnodeipv4configs, propnodeipv4config)
-	return propnodeipv4configs
-}
-func flattenMapComputeBoardRef(p *models.ComputeBoardRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcomputeboards []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcomputeboard := make(map[string]interface{})
-	propcomputeboard["moid"] = item.Moid
-	propcomputeboard["object_type"] = item.ObjectType
-	propcomputeboard["selector"] = item.Selector
-
-	propcomputeboards = append(propcomputeboards, propcomputeboard)
-	return propcomputeboards
-}
-func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
-
-	var propschedules []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propschedule := make(map[string]interface{})
-	propschedule["day_of_month"] = item.DayOfMonth
-	propschedule["day_of_week"] = item.DayOfWeek
-	propschedule["month_of_year"] = item.MonthOfYear
-	propschedule["object_type"] = item.ObjectType
-	propschedule["repeat_interval"] = item.RepeatInterval
-	propschedule["time_of_day"] = item.TimeOfDay
-	propschedule["time_zone"] = item.TimeZone
-	propschedule["week_of_month"] = item.WeekOfMonth
-
-	propschedules = append(propschedules, propschedule)
-	return propschedules
-}
-func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstorageutilizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstorageutilization := make(map[string]interface{})
-	propstorageutilization["available"] = item.Available
-	propstorageutilization["free"] = item.Free
-	propstorageutilization["object_type"] = item.ObjectType
-	propstorageutilization["total"] = item.Total
-	propstorageutilization["used"] = item.Used
-
-	propstorageutilizations = append(propstorageutilizations, propstorageutilization)
-	return propstorageutilizations
-}
-func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
-
-	var propcontexts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcontext := make(map[string]interface{})
-	propcontext["entity_data"] = item.EntityData
-	propcontext["entity_moid"] = item.EntityMoid
-	propcontext["entity_name"] = item.EntityName
-	propcontext["entity_type"] = item.EntityType
-	propcontext["object_type"] = item.ObjectType
-
-	propcontexts = append(propcontexts, propcontext)
-	return propcontexts
-}
-func flattenMapEquipmentLocatorLedRef(p *models.EquipmentLocatorLedRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proplocatorleds []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proplocatorled := make(map[string]interface{})
-	proplocatorled["moid"] = item.Moid
-	proplocatorled["object_type"] = item.ObjectType
-	proplocatorled["selector"] = item.Selector
-
-	proplocatorleds = append(proplocatorleds, proplocatorled)
-	return proplocatorleds
-}
-func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
-
-	var propserverconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propserverconfig := make(map[string]interface{})
-	propserverconfig["asset_tag"] = item.AssetTag
-	propserverconfig["object_type"] = item.ObjectType
-	propserverconfig["user_label"] = item.UserLabel
-
-	propserverconfigs = append(propserverconfigs, propserverconfig)
-	return propserverconfigs
-}
-func flattenListAdapterExtEthInterfaceRef(p []*models.AdapterExtEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var propextethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propextethifs := make(map[string]interface{})
-		propextethifs["moid"] = item.Moid
-		propextethifs["object_type"] = item.ObjectType
-		propextethifs["selector"] = item.Selector
-		propextethifss = append(propextethifss, propextethifs)
-	}
-	return propextethifss
-}
-func flattenListAdapterHostEthInterfaceRef(p []*models.AdapterHostEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophostethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		prophostethifs := make(map[string]interface{})
-		prophostethifs["moid"] = item.Moid
-		prophostethifs["object_type"] = item.ObjectType
-		prophostethifs["selector"] = item.Selector
-		prophostethifss = append(prophostethifss, prophostethifs)
-	}
-	return prophostethifss
-}
-func flattenListAdapterHostFcInterfaceRef(p []*models.AdapterHostFcInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophostfcifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		prophostfcifs := make(map[string]interface{})
-		prophostfcifs["moid"] = item.Moid
-		prophostfcifs["object_type"] = item.ObjectType
-		prophostfcifs["selector"] = item.Selector
-		prophostfcifss = append(prophostfcifss, prophostfcifs)
-	}
-	return prophostfcifss
-}
-func flattenListAdapterHostIscsiInterfaceRef(p []*models.AdapterHostIscsiInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var prophostiscsiifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		prophostiscsiifs := make(map[string]interface{})
-		prophostiscsiifs["moid"] = item.Moid
-		prophostiscsiifs["object_type"] = item.ObjectType
-		prophostiscsiifs["selector"] = item.Selector
-		prophostiscsiifss = append(prophostiscsiifss, prophostiscsiifs)
-	}
-	return prophostiscsiifss
-}
-func flattenMapEquipmentRackEnclosureRef(p *models.EquipmentRackEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propequipmentrackenclosures []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propequipmentrackenclosure := make(map[string]interface{})
-	propequipmentrackenclosure["moid"] = item.Moid
-	propequipmentrackenclosure["object_type"] = item.ObjectType
-	propequipmentrackenclosure["selector"] = item.Selector
-
-	propequipmentrackenclosures = append(propequipmentrackenclosures, propequipmentrackenclosure)
-	return propequipmentrackenclosures
-}
-func flattenListEquipmentFanRef(p []*models.EquipmentFanRef, d *schema.ResourceData) []map[string]interface{} {
-	var propfanss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propfans := make(map[string]interface{})
-		propfans["moid"] = item.Moid
-		propfans["object_type"] = item.ObjectType
-		propfans["selector"] = item.Selector
-		propfanss = append(propfanss, propfans)
-	}
-	return propfanss
-}
-func flattenMapNetworkElementRef(p *models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propnetworkelements []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propnetworkelement := make(map[string]interface{})
-	propnetworkelement["moid"] = item.Moid
-	propnetworkelement["object_type"] = item.ObjectType
-	propnetworkelement["selector"] = item.Selector
-
-	propnetworkelements = append(propnetworkelements, propnetworkelement)
-	return propnetworkelements
-}
-func flattenMapStorageHostRef(p *models.StorageHostRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var prophosts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	prophost := make(map[string]interface{})
-	prophost["moid"] = item.Moid
-	prophost["object_type"] = item.ObjectType
-	prophost["selector"] = item.Selector
-
-	prophosts = append(prophosts, prophost)
-	return prophosts
-}
-func flattenMapStorageVolumeRef(p *models.StorageVolumeRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propvolumes []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propvolume := make(map[string]interface{})
-	propvolume["moid"] = item.Moid
-	propvolume["object_type"] = item.ObjectType
-	propvolume["selector"] = item.Selector
-
-	propvolumes = append(propvolumes, propvolume)
-	return propvolumes
+		proppersistentmemorynamespaces := make(map[string]interface{})
+		proppersistentmemorynamespaces["moid"] = item.Moid
+		proppersistentmemorynamespaces["object_type"] = item.ObjectType
+		proppersistentmemorynamespaces["selector"] = item.Selector
+		proppersistentmemorynamespacess = append(proppersistentmemorynamespacess, proppersistentmemorynamespaces)
+	}
+	return proppersistentmemorynamespacess
 }
 func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *schema.ResourceData) []map[string]interface{} {
 
@@ -5806,80 +4932,20 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 	propproducts = append(propproducts, propproduct)
 	return propproducts
 }
-func flattenMapFirmwareUpgradeRef(p *models.FirmwareUpgradeRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeBoardRef(p *models.ComputeBoardRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propupgrades []map[string]interface{}
+	var propcomputeboards []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propupgrade := make(map[string]interface{})
-	propupgrade["moid"] = item.Moid
-	propupgrade["object_type"] = item.ObjectType
-	propupgrade["selector"] = item.Selector
+	propcomputeboard := make(map[string]interface{})
+	propcomputeboard["moid"] = item.Moid
+	propcomputeboard["object_type"] = item.ObjectType
+	propcomputeboard["selector"] = item.Selector
 
-	propupgrades = append(propupgrades, propupgrade)
-	return propupgrades
-}
-func flattenMapMemoryArrayRef(p *models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmemoryarrays []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmemoryarray := make(map[string]interface{})
-	propmemoryarray["moid"] = item.Moid
-	propmemoryarray["object_type"] = item.ObjectType
-	propmemoryarray["selector"] = item.Selector
-
-	propmemoryarrays = append(propmemoryarrays, propmemoryarray)
-	return propmemoryarrays
-}
-func flattenListComputeBladeRef(p []*models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
-	var propcomputebladess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcomputeblades := make(map[string]interface{})
-		propcomputeblades["moid"] = item.Moid
-		propcomputeblades["object_type"] = item.ObjectType
-		propcomputeblades["selector"] = item.Selector
-		propcomputebladess = append(propcomputebladess, propcomputeblades)
-	}
-	return propcomputebladess
-}
-func flattenListComputeRackUnitRef(p []*models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var propcomputerackunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcomputerackunits := make(map[string]interface{})
-		propcomputerackunits["moid"] = item.Moid
-		propcomputerackunits["object_type"] = item.ObjectType
-		propcomputerackunits["selector"] = item.Selector
-		propcomputerackunitss = append(propcomputerackunitss, propcomputerackunits)
-	}
-	return propcomputerackunitss
-}
-func flattenListNetworkElementRef(p []*models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
-	var propnetworkelementss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propnetworkelements := make(map[string]interface{})
-		propnetworkelements["moid"] = item.Moid
-		propnetworkelements["object_type"] = item.ObjectType
-		propnetworkelements["selector"] = item.Selector
-		propnetworkelementss = append(propnetworkelementss, propnetworkelements)
-	}
-	return propnetworkelementss
+	propcomputeboards = append(propcomputeboards, propcomputeboard)
+	return propcomputeboards
 }
 func flattenListStoragePhysicalDiskExtensionRef(p []*models.StoragePhysicalDiskExtensionRef, d *schema.ResourceData) []map[string]interface{} {
 	var propphysicaldiskextensionss []map[string]interface{}
@@ -5911,6 +4977,21 @@ func flattenListStoragePhysicalDiskRef(p []*models.StoragePhysicalDiskRef, d *sc
 	}
 	return propphysicaldiskss
 }
+func flattenListFirmwareRunningFirmwareRef(p []*models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
+	var proprunningfirmwares []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proprunningfirmware := make(map[string]interface{})
+		proprunningfirmware["moid"] = item.Moid
+		proprunningfirmware["object_type"] = item.ObjectType
+		proprunningfirmware["selector"] = item.Selector
+		proprunningfirmwares = append(proprunningfirmwares, proprunningfirmware)
+	}
+	return proprunningfirmwares
+}
 func flattenListStorageVirtualDriveExtensionRef(p []*models.StorageVirtualDriveExtensionRef, d *schema.ResourceData) []map[string]interface{} {
 	var propvirtualdriveextensionss []map[string]interface{}
 	if p == nil {
@@ -5941,255 +5022,311 @@ func flattenListStorageVirtualDriveRef(p []*models.StorageVirtualDriveRef, d *sc
 	}
 	return propvirtualdrivess
 }
-func flattenMapEquipmentFanModuleRef(p *models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetDeviceConnectionRef(p *models.AssetDeviceConnectionRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propequipmentfanmodules []map[string]interface{}
+	var propdeviceregistrations []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propequipmentfanmodule := make(map[string]interface{})
-	propequipmentfanmodule["moid"] = item.Moid
-	propequipmentfanmodule["object_type"] = item.ObjectType
-	propequipmentfanmodule["selector"] = item.Selector
+	propdeviceregistration := make(map[string]interface{})
+	propdeviceregistration["moid"] = item.Moid
+	propdeviceregistration["object_type"] = item.ObjectType
+	propdeviceregistration["selector"] = item.Selector
 
-	propequipmentfanmodules = append(propequipmentfanmodules, propequipmentfanmodule)
-	return propequipmentfanmodules
+	propdeviceregistrations = append(propdeviceregistrations, propdeviceregistration)
+	return propdeviceregistrations
 }
-func flattenMapStorageArrayControllerRef(p *models.StorageArrayControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIaasUcsdInfoRef(p *models.IaasUcsdInfoRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propcontrollers []map[string]interface{}
+	var propguids []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propcontroller := make(map[string]interface{})
-	propcontroller["moid"] = item.Moid
-	propcontroller["object_type"] = item.ObjectType
-	propcontroller["selector"] = item.Selector
+	propguid := make(map[string]interface{})
+	propguid["moid"] = item.Moid
+	propguid["object_type"] = item.ObjectType
+	propguid["selector"] = item.Selector
 
-	propcontrollers = append(propcontrollers, propcontroller)
-	return propcontrollers
+	propguids = append(propguids, propguid)
+	return propguids
 }
-func flattenMapStoragePureHostRef(p *models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageControllerRef(p *models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var prophostgroups []map[string]interface{}
+	var propstoragecontrollers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	prophostgroup := make(map[string]interface{})
-	prophostgroup["moid"] = item.Moid
-	prophostgroup["object_type"] = item.ObjectType
-	prophostgroup["selector"] = item.Selector
+	propstoragecontroller := make(map[string]interface{})
+	propstoragecontroller["moid"] = item.Moid
+	propstoragecontroller["object_type"] = item.ObjectType
+	propstoragecontroller["selector"] = item.Selector
 
-	prophostgroups = append(prophostgroups, prophostgroup)
-	return prophostgroups
+	propstoragecontrollers = append(propstoragecontrollers, propstoragecontroller)
+	return propstoragecontrollers
 }
-func flattenListStorageInitiator(p []*models.StorageInitiator, d *schema.ResourceData) []map[string]interface{} {
-	var propinitiatorss []map[string]interface{}
+func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+	var propcompletedphasess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propinitiators := make(map[string]interface{})
-		propinitiators["iqn"] = item.Iqn
-		propinitiators["name"] = item.Name
-		propinitiators["object_type"] = item.ObjectType
-		propinitiators["type"] = item.Type
-		propinitiators["wwn"] = item.Wwn
-		propinitiatorss = append(propinitiatorss, propinitiators)
+		propcompletedphases := make(map[string]interface{})
+		propcompletedphases["name"] = item.Name
+		propcompletedphases["object_type"] = item.ObjectType
+		propcompletedphasess = append(propcompletedphasess, propcompletedphases)
 	}
-	return propinitiatorss
+	return propcompletedphasess
 }
-func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
 
-	var propstorageutilizations []map[string]interface{}
+	var propcurrentphases []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propstorageutilization := make(map[string]interface{})
-	propstorageutilization["available"] = item.Available
-	propstorageutilization["data_reduction"] = item.DataReduction
-	propstorageutilization["free"] = item.Free
-	propstorageutilization["object_type"] = item.ObjectType
-	propstorageutilization["snapshot"] = item.Snapshot
-	propstorageutilization["thin_provisioned"] = item.ThinProvisioned
-	propstorageutilization["total"] = item.Total
-	propstorageutilization["total_reduction"] = item.TotalReduction
-	propstorageutilization["used"] = item.Used
-	propstorageutilization["volume"] = item.Volume
+	propcurrentphase := make(map[string]interface{})
+	propcurrentphase["name"] = item.Name
+	propcurrentphase["object_type"] = item.ObjectType
 
-	propstorageutilizations = append(propstorageutilizations, propstorageutilization)
-	return propstorageutilizations
+	propcurrentphases = append(propcurrentphases, propcurrentphase)
+	return propcurrentphases
 }
-func flattenMapRecoveryBackupProfileRef(p *models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapApplianceImageBundleRef(p *models.ApplianceImageBundleRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propbackupprofiles []map[string]interface{}
+	var propimagebundles []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propbackupprofile := make(map[string]interface{})
-	propbackupprofile["moid"] = item.Moid
-	propbackupprofile["object_type"] = item.ObjectType
-	propbackupprofile["selector"] = item.Selector
+	propimagebundle := make(map[string]interface{})
+	propimagebundle["moid"] = item.Moid
+	propimagebundle["object_type"] = item.ObjectType
+	propimagebundle["selector"] = item.Selector
 
-	propbackupprofiles = append(propbackupprofiles, propbackupprofile)
-	return propbackupprofiles
+	propimagebundles = append(propimagebundles, propimagebundle)
+	return propimagebundles
 }
-func flattenMapRecoveryOnDemandBackupRef(p *models.RecoveryOnDemandBackupRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenListInventoryGenericInventoryRef(p []*models.InventoryGenericInventoryRef, d *schema.ResourceData) []map[string]interface{} {
+	var propgenericinventorys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propgenericinventory := make(map[string]interface{})
+		propgenericinventory["moid"] = item.Moid
+		propgenericinventory["object_type"] = item.ObjectType
+		propgenericinventory["selector"] = item.Selector
+		propgenericinventorys = append(propgenericinventorys, propgenericinventory)
+	}
+	return propgenericinventorys
+}
+func flattenMapStorageEnclosureRef(p *models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propnr0ondemandbackups []map[string]interface{}
+	var propstorageenclosures []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propnr0ondemandbackup := make(map[string]interface{})
-	propnr0ondemandbackup["moid"] = item.Moid
-	propnr0ondemandbackup["object_type"] = item.ObjectType
-	propnr0ondemandbackup["selector"] = item.Selector
+	propstorageenclosure := make(map[string]interface{})
+	propstorageenclosure["moid"] = item.Moid
+	propstorageenclosure["object_type"] = item.ObjectType
+	propstorageenclosure["selector"] = item.Selector
 
-	propnr0ondemandbackups = append(propnr0ondemandbackups, propnr0ondemandbackup)
-	return propnr0ondemandbackups
+	propstorageenclosures = append(propstorageenclosures, propstorageenclosure)
+	return propstorageenclosures
 }
-func flattenListRecoveryConfigResultEntryRef(p []*models.RecoveryConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresultentriess []map[string]interface{}
+func flattenListIaasLicenseKeysInfo(p []*models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
+	var proplicensekeysinfos []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propresultentries := make(map[string]interface{})
-		propresultentries["moid"] = item.Moid
-		propresultentries["object_type"] = item.ObjectType
-		propresultentries["selector"] = item.Selector
-		propresultentriess = append(propresultentriess, propresultentries)
+		proplicensekeysinfo := make(map[string]interface{})
+		proplicensekeysinfo["count"] = item.Count
+		proplicensekeysinfo["expiration_date"] = item.ExpirationDate
+		proplicensekeysinfo["license_id"] = item.LicenseID
+		proplicensekeysinfo["object_type"] = item.ObjectType
+		proplicensekeysinfo["pid"] = item.Pid
+		proplicensekeysinfos = append(proplicensekeysinfos, proplicensekeysinfo)
 	}
-	return propresultentriess
+	return proplicensekeysinfos
 }
-func flattenListNiaapiRevisionInfo(p []*models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
-	var proprevisioninfos []map[string]interface{}
+func flattenListIaasLicenseUtilizationInfo(p []*models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
+	var proplicenseutilizationinfos []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		proprevisioninfo := make(map[string]interface{})
-		proprevisioninfo["date_published"] = item.DatePublished
-		proprevisioninfo["object_type"] = item.ObjectType
-		proprevisioninfo["revision_comment"] = item.RevisionComment
-		proprevisioninfo["revision_no"] = item.RevisionNo
-		proprevisioninfos = append(proprevisioninfos, proprevisioninfo)
+		proplicenseutilizationinfo := make(map[string]interface{})
+		proplicenseutilizationinfo["actual_used"] = item.ActualUsed
+		proplicenseutilizationinfo["label"] = item.Label
+		proplicenseutilizationinfo["licensed_limit"] = item.LicensedLimit
+		proplicenseutilizationinfo["object_type"] = item.ObjectType
+		proplicenseutilizationinfo["sku"] = item.Sku
+		proplicenseutilizationinfos = append(proplicenseutilizationinfos, proplicenseutilizationinfo)
 	}
-	return proprevisioninfos
+	return proplicenseutilizationinfos
 }
-func flattenListEquipmentIoCardRef(p []*models.EquipmentIoCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var propiomss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propioms := make(map[string]interface{})
-		propioms["moid"] = item.Moid
-		propioms["object_type"] = item.ObjectType
-		propioms["selector"] = item.Selector
-		propiomss = append(propiomss, propioms)
-	}
-	return propiomss
-}
-func flattenListStorageSasExpanderRef(p []*models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsasexpanderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propsasexpanders := make(map[string]interface{})
-		propsasexpanders["moid"] = item.Moid
-		propsasexpanders["object_type"] = item.ObjectType
-		propsasexpanders["selector"] = item.Selector
-		propsasexpanderss = append(propsasexpanderss, propsasexpanders)
-	}
-	return propsasexpanderss
-}
-func flattenListEquipmentSystemIoControllerRef(p []*models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsiocss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propsiocs := make(map[string]interface{})
-		propsiocs["moid"] = item.Moid
-		propsiocs["object_type"] = item.ObjectType
-		propsiocs["selector"] = item.Selector
-		propsiocss = append(propsiocss, propsiocs)
-	}
-	return propsiocss
-}
-func flattenListStorageEnclosureRef(p []*models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
-	var propstorageenclosuress []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propstorageenclosures := make(map[string]interface{})
-		propstorageenclosures["moid"] = item.Moid
-		propstorageenclosures["object_type"] = item.ObjectType
-		propstorageenclosures["selector"] = item.Selector
-		propstorageenclosuress = append(propstorageenclosuress, propstorageenclosures)
-	}
-	return propstorageenclosuress
-}
-func flattenListPortGroupRef(p []*models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propportgroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propportgroups := make(map[string]interface{})
-		propportgroups["moid"] = item.Moid
-		propportgroups["object_type"] = item.ObjectType
-		propportgroups["selector"] = item.Selector
-		propportgroupss = append(propportgroupss, propportgroups)
-	}
-	return propportgroupss
-}
-func flattenMapMemoryPersistentMemoryConfigResultRef(p *models.MemoryPersistentMemoryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
 
-	var propmemorypersistentmemoryconfigresults []map[string]interface{}
+	var proppostdetails []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propmemorypersistentmemoryconfigresult := make(map[string]interface{})
-	propmemorypersistentmemoryconfigresult["moid"] = item.Moid
-	propmemorypersistentmemoryconfigresult["object_type"] = item.ObjectType
-	propmemorypersistentmemoryconfigresult["selector"] = item.Selector
+	proppostdetail := make(map[string]interface{})
+	proppostdetail["description"] = item.Description
+	proppostdetail["link"] = item.Link
+	proppostdetail["object_type"] = item.ObjectType
+	proppostdetail["release_note_link"] = item.ReleaseNoteLink
+	proppostdetail["release_note_link_title"] = item.ReleaseNoteLinkTitle
+	proppostdetail["software_download_link"] = item.SoftwareDownloadLink
+	proppostdetail["software_download_link_title"] = item.SoftwareDownloadLinkTitle
+	proppostdetail["title"] = item.Title
+	proppostdetail["version"] = item.Version
 
-	propmemorypersistentmemoryconfigresults = append(propmemorypersistentmemoryconfigresults, propmemorypersistentmemoryconfigresult)
-	return propmemorypersistentmemoryconfigresults
+	proppostdetails = append(proppostdetails, proppostdetail)
+	return proppostdetails
 }
-func flattenMapEquipmentSystemIoControllerRef(p *models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageProtectionGroupRef(p *models.StorageProtectionGroupRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propequipmentsystemiocontrollers []map[string]interface{}
+	var propprotectiongroups []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propequipmentsystemiocontroller := make(map[string]interface{})
-	propequipmentsystemiocontroller["moid"] = item.Moid
-	propequipmentsystemiocontroller["object_type"] = item.ObjectType
-	propequipmentsystemiocontroller["selector"] = item.Selector
+	propprotectiongroup := make(map[string]interface{})
+	propprotectiongroup["moid"] = item.Moid
+	propprotectiongroup["object_type"] = item.ObjectType
+	propprotectiongroup["selector"] = item.Selector
 
-	propequipmentsystemiocontrollers = append(propequipmentsystemiocontrollers, propequipmentsystemiocontroller)
-	return propequipmentsystemiocontrollers
+	propprotectiongroups = append(propprotectiongroups, propprotectiongroup)
+	return propprotectiongroups
+}
+func flattenListStorageReplicationBlackout(p []*models.StorageReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
+	var propreplicationblackoutintervalss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propreplicationblackoutintervals := make(map[string]interface{})
+		propreplicationblackoutintervals["object_type"] = item.ObjectType
+		propreplicationblackoutintervalss = append(propreplicationblackoutintervalss, propreplicationblackoutintervals)
+	}
+	return propreplicationblackoutintervalss
+}
+func flattenListAdapterUnitRef(p []*models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var propadapterss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propadapters := make(map[string]interface{})
+		propadapters["moid"] = item.Moid
+		propadapters["object_type"] = item.ObjectType
+		propadapters["selector"] = item.Selector
+		propadapterss = append(propadapterss, propadapters)
+	}
+	return propadapterss
+}
+func flattenMapBiosBootModeRef(p *models.BiosBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbiosbootmodes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbiosbootmode := make(map[string]interface{})
+	propbiosbootmode["moid"] = item.Moid
+	propbiosbootmode["object_type"] = item.ObjectType
+	propbiosbootmode["selector"] = item.Selector
+
+	propbiosbootmodes = append(propbiosbootmodes, propbiosbootmode)
+	return propbiosbootmodes
+}
+func flattenListBiosUnitRef(p []*models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var propbiosunitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propbiosunits := make(map[string]interface{})
+		propbiosunits["moid"] = item.Moid
+		propbiosunits["object_type"] = item.ObjectType
+		propbiosunits["selector"] = item.Selector
+		propbiosunitss = append(propbiosunitss, propbiosunits)
+	}
+	return propbiosunitss
+}
+func flattenMapManagementControllerRef(p *models.ManagementControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbmcs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbmc := make(map[string]interface{})
+	propbmc["moid"] = item.Moid
+	propbmc["object_type"] = item.ObjectType
+	propbmc["selector"] = item.Selector
+
+	propbmcs = append(propbmcs, propbmc)
+	return propbmcs
+}
+func flattenMapBootDeviceBootModeRef(p *models.BootDeviceBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbootdevicebootmodes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbootdevicebootmode := make(map[string]interface{})
+	propbootdevicebootmode["moid"] = item.Moid
+	propbootdevicebootmode["object_type"] = item.ObjectType
+	propbootdevicebootmode["selector"] = item.Selector
+
+	propbootdevicebootmodes = append(propbootdevicebootmodes, propbootdevicebootmode)
+	return propbootdevicebootmodes
+}
+func flattenListEquipmentFanModuleRef(p []*models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
+	var propfanmoduless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propfanmodules := make(map[string]interface{})
+		propfanmodules["moid"] = item.Moid
+		propfanmodules["object_type"] = item.ObjectType
+		propfanmodules["selector"] = item.Selector
+		propfanmoduless = append(propfanmoduless, propfanmodules)
+	}
+	return propfanmoduless
+}
+func flattenListInventoryGenericInventoryHolderRef(p []*models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
+	var propgenericinventoryholderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propgenericinventoryholders := make(map[string]interface{})
+		propgenericinventoryholders["moid"] = item.Moid
+		propgenericinventoryholders["object_type"] = item.ObjectType
+		propgenericinventoryholders["selector"] = item.Selector
+		propgenericinventoryholderss = append(propgenericinventoryholderss, propgenericinventoryholders)
+	}
+	return propgenericinventoryholderss
 }
 func flattenListComputeIPAddress(p []*models.ComputeIPAddress, d *schema.ResourceData) []map[string]interface{} {
 	var propkvmipaddressess []map[string]interface{}
@@ -6214,419 +5351,185 @@ func flattenListComputeIPAddress(p []*models.ComputeIPAddress, d *schema.Resourc
 	}
 	return propkvmipaddressess
 }
-func flattenListCondHclStatusDetailRef(p []*models.CondHclStatusDetailRef, d *schema.ResourceData) []map[string]interface{} {
-	var propdetailss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propdetails := make(map[string]interface{})
-		propdetails["moid"] = item.Moid
-		propdetails["object_type"] = item.ObjectType
-		propdetails["selector"] = item.Selector
-		propdetailss = append(propdetailss, propdetails)
-	}
-	return propdetailss
-}
-func flattenMapMemoryPersistentMemoryConfigurationRef(p *models.MemoryPersistentMemoryConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentLocatorLedRef(p *models.EquipmentLocatorLedRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propmemorypersistentmemoryconfigurations []map[string]interface{}
+	var proplocatorleds []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propmemorypersistentmemoryconfiguration := make(map[string]interface{})
-	propmemorypersistentmemoryconfiguration["moid"] = item.Moid
-	propmemorypersistentmemoryconfiguration["object_type"] = item.ObjectType
-	propmemorypersistentmemoryconfiguration["selector"] = item.Selector
+	proplocatorled := make(map[string]interface{})
+	proplocatorled["moid"] = item.Moid
+	proplocatorled["object_type"] = item.ObjectType
+	proplocatorled["selector"] = item.Selector
 
-	propmemorypersistentmemoryconfigurations = append(propmemorypersistentmemoryconfigurations, propmemorypersistentmemoryconfiguration)
-	return propmemorypersistentmemoryconfigurations
+	proplocatorleds = append(proplocatorleds, proplocatorled)
+	return proplocatorleds
 }
-func flattenListMemoryPersistentMemoryNamespaceRef(p []*models.MemoryPersistentMemoryNamespaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppersistentmemorynamespacess []map[string]interface{}
+func flattenListPciDeviceRef(p []*models.PciDeviceRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppcidevicess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		proppersistentmemorynamespaces := make(map[string]interface{})
-		proppersistentmemorynamespaces["moid"] = item.Moid
-		proppersistentmemorynamespaces["object_type"] = item.ObjectType
-		proppersistentmemorynamespaces["selector"] = item.Selector
-		proppersistentmemorynamespacess = append(proppersistentmemorynamespacess, proppersistentmemorynamespaces)
+		proppcidevices := make(map[string]interface{})
+		proppcidevices["moid"] = item.Moid
+		proppcidevices["object_type"] = item.ObjectType
+		proppcidevices["selector"] = item.Selector
+		proppcidevicess = append(proppcidevicess, proppcidevices)
 	}
-	return proppersistentmemorynamespacess
+	return proppcidevicess
 }
-func flattenListHyperflexAlarmRef(p []*models.HyperflexAlarmRef, d *schema.ResourceData) []map[string]interface{} {
-	var propalarms []map[string]interface{}
+func flattenListEquipmentPsuRef(p []*models.EquipmentPsuRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppsuss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propalarm := make(map[string]interface{})
-		propalarm["moid"] = item.Moid
-		propalarm["object_type"] = item.ObjectType
-		propalarm["selector"] = item.Selector
-		propalarms = append(propalarms, propalarm)
+		proppsus := make(map[string]interface{})
+		proppsus["moid"] = item.Moid
+		proppsus["object_type"] = item.ObjectType
+		proppsus["selector"] = item.Selector
+		proppsuss = append(proppsuss, proppsus)
 	}
-	return propalarms
+	return proppsuss
 }
-func flattenMapHyperflexHealthRef(p *models.HyperflexHealthRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentRackEnclosureSlotRef(p *models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var prophealths []map[string]interface{}
+	var proprackenclosureslots []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	prophealth := make(map[string]interface{})
-	prophealth["moid"] = item.Moid
-	prophealth["object_type"] = item.ObjectType
-	prophealth["selector"] = item.Selector
+	proprackenclosureslot := make(map[string]interface{})
+	proprackenclosureslot["moid"] = item.Moid
+	proprackenclosureslot["object_type"] = item.ObjectType
+	proprackenclosureslot["selector"] = item.Selector
 
-	prophealths = append(prophealths, prophealth)
-	return prophealths
+	proprackenclosureslots = append(proprackenclosureslots, proprackenclosureslot)
+	return proprackenclosureslots
 }
-func flattenListHyperflexNodeRef(p []*models.HyperflexNodeRef, d *schema.ResourceData) []map[string]interface{} {
-	var propnodess []map[string]interface{}
+func flattenListStorageSasExpanderRef(p []*models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsasexpanderss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propnodes := make(map[string]interface{})
-		propnodes["moid"] = item.Moid
-		propnodes["object_type"] = item.ObjectType
-		propnodes["selector"] = item.Selector
-		propnodess = append(propnodess, propnodes)
+		propsasexpanders := make(map[string]interface{})
+		propsasexpanders["moid"] = item.Moid
+		propsasexpanders["object_type"] = item.ObjectType
+		propsasexpanders["selector"] = item.Selector
+		propsasexpanderss = append(propsasexpanderss, propsasexpanders)
 	}
-	return propnodess
+	return propsasexpanderss
 }
-func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageEnclosureRef(p []*models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+	var propstorageenclosuress []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propstorageenclosures := make(map[string]interface{})
+		propstorageenclosures["moid"] = item.Moid
+		propstorageenclosures["object_type"] = item.ObjectType
+		propstorageenclosures["selector"] = item.Selector
+		propstorageenclosuress = append(propstorageenclosuress, propstorageenclosures)
+	}
+	return propstorageenclosuress
+}
+func flattenMapTopSystemRef(p *models.TopSystemRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propsummarys []map[string]interface{}
+	var proptopsystems []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propsummary := make(map[string]interface{})
-	propsummary["active_nodes"] = item.ActiveNodes
-	propsummary["address"] = item.Address
-	propsummary["boottime"] = item.Boottime
-	propsummary["cluster_access_policy"] = item.ClusterAccessPolicy
-	propsummary["compression_savings"] = item.CompressionSavings
-	propsummary["data_replication_compliance"] = item.DataReplicationCompliance
-	propsummary["data_replication_factor"] = item.DataReplicationFactor
-	propsummary["deduplication_savings"] = item.DeduplicationSavings
-	propsummary["downtime"] = item.Downtime
-	propsummary["free_capacity"] = item.FreeCapacity
-	propsummary["healing_info"] = (func(p *models.HyperflexStPlatformClusterHealingInfo, d *schema.ResourceData) []map[string]interface{} {
+	proptopsystem := make(map[string]interface{})
+	proptopsystem["moid"] = item.Moid
+	proptopsystem["object_type"] = item.ObjectType
+	proptopsystem["selector"] = item.Selector
 
-		var prophealinginfos []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		prophealinginfo := make(map[string]interface{})
-		prophealinginfo["estimated_completion_time_in_seconds"] = item.EstimatedCompletionTimeInSeconds
-		prophealinginfo["in_progress"] = item.InProgress
-		prophealinginfo["messages"] = item.Messages
-		prophealinginfo["messages_iterator"] = item.MessagesIterator
-		prophealinginfo["messages_size"] = item.MessagesSize
-		prophealinginfo["object_type"] = item.ObjectType
-		prophealinginfo["percent_complete"] = item.PercentComplete
-
-		prophealinginfos = append(prophealinginfos, prophealinginfo)
-		return prophealinginfos
-	})(item.HealingInfo, d)
-	propsummary["name"] = item.Name
-	propsummary["object_type"] = item.ObjectType
-	propsummary["resiliency_details"] = item.ResiliencyDetails
-	propsummary["resiliency_details_size"] = item.ResiliencyDetailsSize
-	propsummary["resiliency_info"] = (func(p *models.HyperflexStPlatformClusterResiliencyInfo, d *schema.ResourceData) []map[string]interface{} {
-
-		var propresiliencyinfos []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		propresiliencyinfo := make(map[string]interface{})
-		propresiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
-		propresiliencyinfo["messages"] = item.Messages
-		propresiliencyinfo["messages_iterator"] = item.MessagesIterator
-		propresiliencyinfo["messages_size"] = item.MessagesSize
-		propresiliencyinfo["node_failures_tolerable"] = item.NodeFailuresTolerable
-		propresiliencyinfo["object_type"] = item.ObjectType
-		propresiliencyinfo["ssd_failures_tolerable"] = item.SsdFailuresTolerable
-		propresiliencyinfo["state"] = item.State
-
-		propresiliencyinfos = append(propresiliencyinfos, propresiliencyinfo)
-		return propresiliencyinfos
-	})(item.ResiliencyInfo, d)
-	propsummary["space_status"] = item.SpaceStatus
-	propsummary["state"] = item.State
-	propsummary["total_capacity"] = item.TotalCapacity
-	propsummary["total_savings"] = item.TotalSavings
-	propsummary["uptime"] = item.Uptime
-	propsummary["used_capacity"] = item.UsedCapacity
-
-	propsummarys = append(propsummarys, propsummary)
-	return propsummarys
+	proptopsystems = append(proptopsystems, proptopsystem)
+	return proptopsystems
 }
-func flattenMapAssetClusterMemberRef(p *models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageArrayControllerRef(p *models.StorageArrayControllerRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propclustermembers []map[string]interface{}
+	var propcontrollers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propclustermember := make(map[string]interface{})
-	propclustermember["moid"] = item.Moid
-	propclustermember["object_type"] = item.ObjectType
-	propclustermember["selector"] = item.Selector
+	propcontroller := make(map[string]interface{})
+	propcontroller["moid"] = item.Moid
+	propcontroller["object_type"] = item.ObjectType
+	propcontroller["selector"] = item.Selector
 
-	propclustermembers = append(propclustermembers, propclustermember)
-	return propclustermembers
+	propcontrollers = append(propcontrollers, propcontroller)
+	return propcontrollers
 }
-func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEtherPhysicalPortRef(p []*models.EtherPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var propethernetportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propethernetports := make(map[string]interface{})
+		propethernetports["moid"] = item.Moid
+		propethernetports["object_type"] = item.ObjectType
+		propethernetports["selector"] = item.Selector
+		propethernetportss = append(propethernetportss, propethernetports)
+	}
+	return propethernetportss
+}
+func flattenMapPortGroupRef(p *models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propips []map[string]interface{}
+	var propportgroups []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propip := make(map[string]interface{})
-	propip["address"] = item.Address
-	propip["fqdn"] = item.Fqdn
-	propip["ip"] = item.IP
-	propip["object_type"] = item.ObjectType
+	propportgroup := make(map[string]interface{})
+	propportgroup["moid"] = item.Moid
+	propportgroup["object_type"] = item.ObjectType
+	propportgroup["selector"] = item.Selector
 
-	propips = append(propips, propip)
-	return propips
+	propportgroups = append(propportgroups, propportgroup)
+	return propportgroups
 }
-func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.ResourceData) []map[string]interface{} {
-
-	var propidentitys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propidentity := make(map[string]interface{})
-	propidentity["links"] = (func(p []*models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
-		var proplinkss []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			proplinks := make(map[string]interface{})
-			proplinks["comments"] = item.Comments
-			proplinks["href"] = item.Href
-			proplinks["method"] = item.Method
-			proplinks["object_type"] = item.ObjectType
-			proplinks["rel"] = item.Rel
-			proplinkss = append(proplinkss, proplinks)
-		}
-		return proplinkss
-	})(item.Links, d)
-	propidentity["object_type"] = item.ObjectType
-	propidentity["uuid"] = item.UUID
-
-	propidentitys = append(propidentitys, propidentity)
-	return propidentitys
-}
-func flattenListHyperflexConfigResultEntryRef(p []*models.HyperflexConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresultentriess []map[string]interface{}
+func flattenListMemoryPersistentMemoryUnitRef(p []*models.MemoryPersistentMemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppersistentmemoryunitss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propresultentries := make(map[string]interface{})
-		propresultentries["moid"] = item.Moid
-		propresultentries["object_type"] = item.ObjectType
-		propresultentries["selector"] = item.Selector
-		propresultentriess = append(propresultentriess, propresultentries)
+		proppersistentmemoryunits := make(map[string]interface{})
+		proppersistentmemoryunits["moid"] = item.Moid
+		proppersistentmemoryunits["object_type"] = item.ObjectType
+		proppersistentmemoryunits["selector"] = item.Selector
+		proppersistentmemoryunitss = append(proppersistentmemoryunitss, proppersistentmemoryunits)
 	}
-	return propresultentriess
+	return proppersistentmemoryunitss
 }
-func flattenListStorageEnclosureDiskSlotEpRef(p []*models.StorageEnclosureDiskSlotEpRef, d *schema.ResourceData) []map[string]interface{} {
-	var propenclosurediskslotss []map[string]interface{}
+func flattenListMemoryUnitRef(p []*models.MemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var propunitss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propenclosurediskslots := make(map[string]interface{})
-		propenclosurediskslots["moid"] = item.Moid
-		propenclosurediskslots["object_type"] = item.ObjectType
-		propenclosurediskslots["selector"] = item.Selector
-		propenclosurediskslotss = append(propenclosurediskslotss, propenclosurediskslots)
+		propunits := make(map[string]interface{})
+		propunits["moid"] = item.Moid
+		propunits["object_type"] = item.ObjectType
+		propunits["selector"] = item.Selector
+		propunitss = append(propunitss, propunits)
 	}
-	return propenclosurediskslotss
-}
-func flattenListStorageEnclosureDiskRef(p []*models.StorageEnclosureDiskRef, d *schema.ResourceData) []map[string]interface{} {
-	var propenclosurediskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propenclosuredisks := make(map[string]interface{})
-		propenclosuredisks["moid"] = item.Moid
-		propenclosuredisks["object_type"] = item.ObjectType
-		propenclosuredisks["selector"] = item.Selector
-		propenclosurediskss = append(propenclosurediskss, propenclosuredisks)
-	}
-	return propenclosurediskss
-}
-func flattenListWorkflowDynamicWorkflowActionTaskList(p []*models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
-	var propworkflowactiontasklistss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propworkflowactiontasklists := make(map[string]interface{})
-		propworkflowactiontasklists["action"] = item.Action
-		propworkflowactiontasklists["object_type"] = item.ObjectType
-		propworkflowactiontasklists["tasks"] = item.Tasks
-		propworkflowactiontasklistss = append(propworkflowactiontasklistss, propworkflowactiontasklists)
-	}
-	return propworkflowactiontasklistss
-}
-func flattenListStorageFlexFlashControllerPropsRef(p []*models.StorageFlexFlashControllerPropsRef, d *schema.ResourceData) []map[string]interface{} {
-	var propflexflashcontrollerpropss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propflexflashcontrollerprops := make(map[string]interface{})
-		propflexflashcontrollerprops["moid"] = item.Moid
-		propflexflashcontrollerprops["object_type"] = item.ObjectType
-		propflexflashcontrollerprops["selector"] = item.Selector
-		propflexflashcontrollerpropss = append(propflexflashcontrollerpropss, propflexflashcontrollerprops)
-	}
-	return propflexflashcontrollerpropss
-}
-func flattenListStorageFlexFlashPhysicalDriveRef(p []*models.StorageFlexFlashPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var propflexflashphysicaldrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propflexflashphysicaldrives := make(map[string]interface{})
-		propflexflashphysicaldrives["moid"] = item.Moid
-		propflexflashphysicaldrives["object_type"] = item.ObjectType
-		propflexflashphysicaldrives["selector"] = item.Selector
-		propflexflashphysicaldrivess = append(propflexflashphysicaldrivess, propflexflashphysicaldrives)
-	}
-	return propflexflashphysicaldrivess
-}
-func flattenListStorageFlexFlashVirtualDriveRef(p []*models.StorageFlexFlashVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var propflexflashvirtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propflexflashvirtualdrives := make(map[string]interface{})
-		propflexflashvirtualdrives["moid"] = item.Moid
-		propflexflashvirtualdrives["object_type"] = item.ObjectType
-		propflexflashvirtualdrives["selector"] = item.Selector
-		propflexflashvirtualdrivess = append(propflexflashvirtualdrivess, propflexflashvirtualdrives)
-	}
-	return propflexflashvirtualdrivess
-}
-func flattenMapGraphicsCardRef(p *models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propgraphicscards []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propgraphicscard := make(map[string]interface{})
-	propgraphicscard["moid"] = item.Moid
-	propgraphicscard["object_type"] = item.ObjectType
-	propgraphicscard["selector"] = item.Selector
-
-	propgraphicscards = append(propgraphicscards, propgraphicscard)
-	return propgraphicscards
-}
-func flattenMapPciSwitchRef(p *models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proppciswitchs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proppciswitch := make(map[string]interface{})
-	proppciswitch["moid"] = item.Moid
-	proppciswitch["object_type"] = item.ObjectType
-	proppciswitch["selector"] = item.Selector
-
-	proppciswitchs = append(proppciswitchs, proppciswitch)
-	return proppciswitchs
-}
-func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
-	var propgrouppermissionroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propgrouppermissionroles := make(map[string]interface{})
-		propgrouppermissionroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-
-			var propgroups []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			propgroup := make(map[string]interface{})
-			propgroup["moid"] = item.Moid
-			propgroup["object_type"] = item.ObjectType
-
-			propgroups = append(propgroups, propgroup)
-			return propgroups
-		})(item.Group, d)
-		propgrouppermissionroles["object_type"] = item.ObjectType
-		propgrouppermissionroles["orgs"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-			var proporgss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				proporgs := make(map[string]interface{})
-				proporgs["moid"] = item.Moid
-				proporgs["object_type"] = item.ObjectType
-				proporgss = append(proporgss, proporgs)
-			}
-			return proporgss
-		})(item.Orgs, d)
-		propgrouppermissionroless = append(propgrouppermissionroless, propgrouppermissionroles)
-	}
-	return propgrouppermissionroless
-}
-func flattenMapResourceMembershipHolderRef(p *models.ResourceMembershipHolderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propholders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propholder := make(map[string]interface{})
-	propholder["moid"] = item.Moid
-	propholder["object_type"] = item.ObjectType
-	propholder["selector"] = item.Selector
-
-	propholders = append(propholders, propholder)
-	return propholders
+	return propunitss
 }
 func flattenMapLicenseAccountLicenseDataRef(p *models.LicenseAccountLicenseDataRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -6643,50 +5546,127 @@ func flattenMapLicenseAccountLicenseDataRef(p *models.LicenseAccountLicenseDataR
 	propaccountlicensedatas = append(propaccountlicensedatas, propaccountlicensedata)
 	return propaccountlicensedatas
 }
-func flattenMapApplianceDataExportPolicyRef(p *models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageFlexFlashControllerRef(p *models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propparentconfigs []map[string]interface{}
+	var propstorageflexflashcontrollers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propparentconfig := make(map[string]interface{})
-	propparentconfig["moid"] = item.Moid
-	propparentconfig["object_type"] = item.ObjectType
-	propparentconfig["selector"] = item.Selector
+	propstorageflexflashcontroller := make(map[string]interface{})
+	propstorageflexflashcontroller["moid"] = item.Moid
+	propstorageflexflashcontroller["object_type"] = item.ObjectType
+	propstorageflexflashcontroller["selector"] = item.Selector
 
-	propparentconfigs = append(propparentconfigs, propparentconfig)
-	return propparentconfigs
+	propstorageflexflashcontrollers = append(propstorageflexflashcontrollers, propstorageflexflashcontroller)
+	return propstorageflexflashcontrollers
 }
-func flattenListApplianceDataExportPolicyRef(p []*models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsubconfigss []map[string]interface{}
+func flattenMapStorageVirtualDriveRef(p *models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstoragevirtualdrives []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstoragevirtualdrive := make(map[string]interface{})
+	propstoragevirtualdrive["moid"] = item.Moid
+	propstoragevirtualdrive["object_type"] = item.ObjectType
+	propstoragevirtualdrive["selector"] = item.Selector
+
+	propstoragevirtualdrives = append(propstoragevirtualdrives, propstoragevirtualdrive)
+	return propstoragevirtualdrives
+}
+func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstorageutilizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstorageutilization := make(map[string]interface{})
+	propstorageutilization["available"] = item.Available
+	propstorageutilization["free"] = item.Free
+	propstorageutilization["object_type"] = item.ObjectType
+	propstorageutilization["total"] = item.Total
+	propstorageutilization["used"] = item.Used
+
+	propstorageutilizations = append(propstorageutilizations, propstorageutilization)
+	return propstorageutilizations
+}
+func flattenListPciLinkRef(p []*models.PciLinkRef, d *schema.ResourceData) []map[string]interface{} {
+	var proplinkss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propsubconfigs := make(map[string]interface{})
-		propsubconfigs["moid"] = item.Moid
-		propsubconfigs["object_type"] = item.ObjectType
-		propsubconfigs["selector"] = item.Selector
-		propsubconfigss = append(propsubconfigss, propsubconfigs)
+		proplinks := make(map[string]interface{})
+		proplinks["moid"] = item.Moid
+		proplinks["object_type"] = item.ObjectType
+		proplinks["selector"] = item.Selector
+		proplinkss = append(proplinkss, proplinks)
 	}
-	return propsubconfigss
+	return proplinkss
 }
-func flattenMapIamServiceProviderRef(p *models.IamServiceProviderRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryNamespaceConfigResultRef(p []*models.MemoryPersistentMemoryNamespaceConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+	var proppersistentmemorynamespaceconfigresultss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proppersistentmemorynamespaceconfigresults := make(map[string]interface{})
+		proppersistentmemorynamespaceconfigresults["moid"] = item.Moid
+		proppersistentmemorynamespaceconfigresults["object_type"] = item.ObjectType
+		proppersistentmemorynamespaceconfigresults["selector"] = item.Selector
+		proppersistentmemorynamespaceconfigresultss = append(proppersistentmemorynamespaceconfigresultss, proppersistentmemorynamespaceconfigresults)
+	}
+	return proppersistentmemorynamespaceconfigresultss
+}
+func flattenListEquipmentSwitchCardRef(p []*models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var propcardss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcards := make(map[string]interface{})
+		propcards["moid"] = item.Moid
+		propcards["object_type"] = item.ObjectType
+		propcards["selector"] = item.Selector
+		propcardss = append(propcardss, propcards)
+	}
+	return propcardss
+}
+func flattenMapManagementEntityRef(p *models.ManagementEntityRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propserviceproviders []map[string]interface{}
+	var propmanagemententitys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propserviceprovider := make(map[string]interface{})
-	propserviceprovider["moid"] = item.Moid
-	propserviceprovider["object_type"] = item.ObjectType
-	propserviceprovider["selector"] = item.Selector
+	propmanagemententity := make(map[string]interface{})
+	propmanagemententity["moid"] = item.Moid
+	propmanagemententity["object_type"] = item.ObjectType
+	propmanagemententity["selector"] = item.Selector
 
-	propserviceproviders = append(propserviceproviders, propserviceprovider)
-	return propserviceproviders
+	propmanagemententitys = append(propmanagemententitys, propmanagemententity)
+	return propmanagemententitys
+}
+func flattenMapFirmwareRunningFirmwareRef(p *models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propucsmrunningfirmwares []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propucsmrunningfirmware := make(map[string]interface{})
+	propucsmrunningfirmware["moid"] = item.Moid
+	propucsmrunningfirmware["object_type"] = item.ObjectType
+	propucsmrunningfirmware["selector"] = item.Selector
+
+	propucsmrunningfirmwares = append(propucsmrunningfirmwares, propucsmrunningfirmware)
+	return propucsmrunningfirmwares
 }
 func flattenListStorageFlexUtilPhysicalDriveRef(p []*models.StorageFlexUtilPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
 	var propflexutilphysicaldrivess []map[string]interface{}
@@ -6718,6 +5698,132 @@ func flattenListStorageFlexUtilVirtualDriveRef(p []*models.StorageFlexUtilVirtua
 	}
 	return propflexutilvirtualdrivess
 }
+func flattenMapFirmwareUpgradeRef(p *models.FirmwareUpgradeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propupgrades []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propupgrade := make(map[string]interface{})
+	propupgrade["moid"] = item.Moid
+	propupgrade["object_type"] = item.ObjectType
+	propupgrade["selector"] = item.Selector
+
+	propupgrades = append(propupgrades, propupgrade)
+	return propupgrades
+}
+func flattenMapEquipmentChassisRef(p *models.EquipmentChassisRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propequipmentchassiss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propequipmentchassis := make(map[string]interface{})
+	propequipmentchassis["moid"] = item.Moid
+	propequipmentchassis["object_type"] = item.ObjectType
+	propequipmentchassis["selector"] = item.Selector
+
+	propequipmentchassiss = append(propequipmentchassiss, propequipmentchassis)
+	return propequipmentchassiss
+}
+func flattenListEquipmentIoExpanderRef(p []*models.EquipmentIoExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+	var propequipmentioexpanderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propequipmentioexpanders := make(map[string]interface{})
+		propequipmentioexpanders["moid"] = item.Moid
+		propequipmentioexpanders["object_type"] = item.ObjectType
+		propequipmentioexpanders["selector"] = item.Selector
+		propequipmentioexpanderss = append(propequipmentioexpanderss, propequipmentioexpanders)
+	}
+	return propequipmentioexpanderss
+}
+func flattenListForecastDefinitionRef(p []*models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdefinitions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdefinition := make(map[string]interface{})
+		propdefinition["moid"] = item.Moid
+		propdefinition["object_type"] = item.ObjectType
+		propdefinition["selector"] = item.Selector
+		propdefinitions = append(propdefinitions, propdefinition)
+	}
+	return propdefinitions
+}
+func flattenListStorageEnclosureDiskSlotEpRef(p []*models.StorageEnclosureDiskSlotEpRef, d *schema.ResourceData) []map[string]interface{} {
+	var propenclosurediskslotss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propenclosurediskslots := make(map[string]interface{})
+		propenclosurediskslots["moid"] = item.Moid
+		propenclosurediskslots["object_type"] = item.ObjectType
+		propenclosurediskslots["selector"] = item.Selector
+		propenclosurediskslotss = append(propenclosurediskslotss, propenclosurediskslots)
+	}
+	return propenclosurediskslotss
+}
+func flattenListStorageEnclosureDiskRef(p []*models.StorageEnclosureDiskRef, d *schema.ResourceData) []map[string]interface{} {
+	var propenclosurediskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propenclosuredisks := make(map[string]interface{})
+		propenclosuredisks["moid"] = item.Moid
+		propenclosuredisks["object_type"] = item.ObjectType
+		propenclosuredisks["selector"] = item.Selector
+		propenclosurediskss = append(propenclosurediskss, propenclosuredisks)
+	}
+	return propenclosurediskss
+}
+func flattenMapGraphicsCardRef(p *models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propgraphicscards []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propgraphicscard := make(map[string]interface{})
+	propgraphicscard["moid"] = item.Moid
+	propgraphicscard["object_type"] = item.ObjectType
+	propgraphicscard["selector"] = item.Selector
+
+	propgraphicscards = append(propgraphicscards, propgraphicscard)
+	return propgraphicscards
+}
+func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
+	var propansiblepackagess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propansiblepackages := make(map[string]interface{})
+		propansiblepackages["file_path"] = item.FilePath
+		propansiblepackages["file_sha"] = item.FileSha
+		propansiblepackages["file_size"] = item.FileSize
+		propansiblepackages["file_time"] = item.FileTime
+		propansiblepackages["filename"] = item.Filename
+		propansiblepackages["name"] = item.Name
+		propansiblepackages["object_type"] = item.ObjectType
+		propansiblepackages["package_type"] = item.PackageType
+		propansiblepackages["version"] = item.Version
+		propansiblepackagess = append(propansiblepackagess, propansiblepackages)
+	}
+	return propansiblepackagess
+}
 func flattenMapNiatelemetryNiaInventoryRef(p *models.NiatelemetryNiaInventoryRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var propdevices []map[string]interface{}
@@ -6733,37 +5839,20 @@ func flattenMapNiatelemetryNiaInventoryRef(p *models.NiatelemetryNiaInventoryRef
 	propdevices = append(propdevices, propdevice)
 	return propdevices
 }
-func flattenMapAssetDeviceConnectionRef(p *models.AssetDeviceConnectionRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
 
-	var propdeviceregistrations []map[string]interface{}
+	var propserverconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propdeviceregistration := make(map[string]interface{})
-	propdeviceregistration["moid"] = item.Moid
-	propdeviceregistration["object_type"] = item.ObjectType
-	propdeviceregistration["selector"] = item.Selector
+	propserverconfig := make(map[string]interface{})
+	propserverconfig["asset_tag"] = item.AssetTag
+	propserverconfig["object_type"] = item.ObjectType
+	propserverconfig["user_label"] = item.UserLabel
 
-	propdeviceregistrations = append(propdeviceregistrations, propdeviceregistration)
-	return propdeviceregistrations
-}
-func flattenListPolicyinventoryJobInfo(p []*models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
-	var propjobinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propjobinfo := make(map[string]interface{})
-		propjobinfo["execution_status"] = item.ExecutionStatus
-		propjobinfo["last_scheduled_time"] = item.LastScheduledTime
-		propjobinfo["object_type"] = item.ObjectType
-		propjobinfo["policy_id"] = item.PolicyID
-		propjobinfo["policy_name"] = item.PolicyName
-		propjobinfos = append(propjobinfos, propjobinfo)
-	}
-	return propjobinfos
+	propserverconfigs = append(propserverconfigs, propserverconfig)
+	return propserverconfigs
 }
 func flattenListStoragePhysicalDiskUsageRef(p []*models.StoragePhysicalDiskUsageRef, d *schema.ResourceData) []map[string]interface{} {
 	var propphysicaldiskusagess []map[string]interface{}
@@ -6809,201 +5898,6 @@ func flattenMapStorageVirtualDriveExtensionRef(p *models.StorageVirtualDriveExte
 
 	propvirtualdriveextensions = append(propvirtualdriveextensions, propvirtualdriveextension)
 	return propvirtualdriveextensions
-}
-func flattenMapPortSubGroupRef(p *models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propportsubgroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propportsubgroup := make(map[string]interface{})
-	propportsubgroup["moid"] = item.Moid
-	propportsubgroup["object_type"] = item.ObjectType
-	propportsubgroup["selector"] = item.Selector
-
-	propportsubgroups = append(propportsubgroups, propportsubgroup)
-	return propportsubgroups
-}
-func flattenListApplianceKeyValuePair(p []*models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
-	var propcapabilitiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcapabilities := make(map[string]interface{})
-		propcapabilities["key"] = item.Key
-		propcapabilities["object_type"] = item.ObjectType
-		propcapabilities["value"] = item.Value
-		propcapabilitiess = append(propcapabilitiess, propcapabilities)
-	}
-	return propcapabilitiess
-}
-func flattenListAdapterUnitRef(p []*models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var propadapterss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propadapters := make(map[string]interface{})
-		propadapters["moid"] = item.Moid
-		propadapters["object_type"] = item.ObjectType
-		propadapters["selector"] = item.Selector
-		propadapterss = append(propadapterss, propadapters)
-	}
-	return propadapterss
-}
-func flattenListBiosUnitRef(p []*models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var propbiosunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propbiosunits := make(map[string]interface{})
-		propbiosunits["moid"] = item.Moid
-		propbiosunits["object_type"] = item.ObjectType
-		propbiosunits["selector"] = item.Selector
-		propbiosunitss = append(propbiosunitss, propbiosunits)
-	}
-	return propbiosunitss
-}
-func flattenListEquipmentIoExpanderRef(p []*models.EquipmentIoExpanderRef, d *schema.ResourceData) []map[string]interface{} {
-	var propequipmentioexpanderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propequipmentioexpanders := make(map[string]interface{})
-		propequipmentioexpanders["moid"] = item.Moid
-		propequipmentioexpanders["object_type"] = item.ObjectType
-		propequipmentioexpanders["selector"] = item.Selector
-		propequipmentioexpanderss = append(propequipmentioexpanderss, propequipmentioexpanders)
-	}
-	return propequipmentioexpanderss
-}
-func flattenListInventoryGenericInventoryHolderRef(p []*models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
-	var propgenericinventoryholderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propgenericinventoryholders := make(map[string]interface{})
-		propgenericinventoryholders["moid"] = item.Moid
-		propgenericinventoryholders["object_type"] = item.ObjectType
-		propgenericinventoryholders["selector"] = item.Selector
-		propgenericinventoryholderss = append(propgenericinventoryholderss, propgenericinventoryholders)
-	}
-	return propgenericinventoryholderss
-}
-func flattenListPciDeviceRef(p []*models.PciDeviceRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppcidevicess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppcidevices := make(map[string]interface{})
-		proppcidevices["moid"] = item.Moid
-		proppcidevices["object_type"] = item.ObjectType
-		proppcidevices["selector"] = item.Selector
-		proppcidevicess = append(proppcidevicess, proppcidevices)
-	}
-	return proppcidevicess
-}
-func flattenMapTopSystemRef(p *models.TopSystemRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proptopsystems []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proptopsystem := make(map[string]interface{})
-	proptopsystem["moid"] = item.Moid
-	proptopsystem["object_type"] = item.ObjectType
-	proptopsystem["selector"] = item.Selector
-
-	proptopsystems = append(proptopsystems, proptopsystem)
-	return proptopsystems
-}
-func flattenMapStorageFlexUtilControllerRef(p *models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propstorageflexutilcontrollers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propstorageflexutilcontroller := make(map[string]interface{})
-	propstorageflexutilcontroller["moid"] = item.Moid
-	propstorageflexutilcontroller["object_type"] = item.ObjectType
-	propstorageflexutilcontroller["selector"] = item.Selector
-
-	propstorageflexutilcontrollers = append(propstorageflexutilcontrollers, propstorageflexutilcontroller)
-	return propstorageflexutilcontrollers
-}
-func flattenMapResourceGroupRef(p *models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propgroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propgroup := make(map[string]interface{})
-	propgroup["moid"] = item.Moid
-	propgroup["object_type"] = item.ObjectType
-	propgroup["selector"] = item.Selector
-
-	propgroups = append(propgroups, propgroup)
-	return propgroups
-}
-func flattenListMemoryPersistentMemoryUnitRef(p []*models.MemoryPersistentMemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppersistentmemoryunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		proppersistentmemoryunits := make(map[string]interface{})
-		proppersistentmemoryunits["moid"] = item.Moid
-		proppersistentmemoryunits["object_type"] = item.ObjectType
-		proppersistentmemoryunits["selector"] = item.Selector
-		proppersistentmemoryunitss = append(proppersistentmemoryunitss, proppersistentmemoryunits)
-	}
-	return proppersistentmemoryunitss
-}
-func flattenListMemoryUnitRef(p []*models.MemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var propunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propunits := make(map[string]interface{})
-		propunits["moid"] = item.Moid
-		propunits["object_type"] = item.ObjectType
-		propunits["selector"] = item.Selector
-		propunitss = append(propunitss, propunits)
-	}
-	return propunitss
-}
-func flattenListIamResourcePermissionRef(p []*models.IamResourcePermissionRef, d *schema.ResourceData) []map[string]interface{} {
-	var propresourcepermissionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propresourcepermissions := make(map[string]interface{})
-		propresourcepermissions["moid"] = item.Moid
-		propresourcepermissions["object_type"] = item.ObjectType
-		propresourcepermissions["selector"] = item.Selector
-		propresourcepermissionss = append(propresourcepermissionss, propresourcepermissions)
-	}
-	return propresourcepermissionss
 }
 func flattenListEquipmentTpmRef(p []*models.EquipmentTpmRef, d *schema.ResourceData) []map[string]interface{} {
 	var propequipmenttpmss []map[string]interface{}
@@ -7155,6 +6049,86 @@ func flattenListStorageFlexUtilControllerRef(p []*models.StorageFlexUtilControll
 	}
 	return propstorageflexutilcontrollerss
 }
+func flattenMapIamSessionRef(p *models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsessionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsessions := make(map[string]interface{})
+	propsessions["moid"] = item.Moid
+	propsessions["object_type"] = item.ObjectType
+	propsessions["selector"] = item.Selector
+
+	propsessionss = append(propsessionss, propsessions)
+	return propsessionss
+}
+func flattenMapBiosUnitRef(p *models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbiosunits []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbiosunit := make(map[string]interface{})
+	propbiosunit["moid"] = item.Moid
+	propbiosunit["object_type"] = item.ObjectType
+	propbiosunit["selector"] = item.Selector
+
+	propbiosunits = append(propbiosunits, propbiosunit)
+	return propbiosunits
+}
+func flattenListNetworkElementRef(p []*models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
+	var propnetworkelementss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propnetworkelements := make(map[string]interface{})
+		propnetworkelements["moid"] = item.Moid
+		propnetworkelements["object_type"] = item.ObjectType
+		propnetworkelements["selector"] = item.Selector
+		propnetworkelementss = append(propnetworkelementss, propnetworkelements)
+	}
+	return propnetworkelementss
+}
+func flattenListIamResourcePermissionRef(p []*models.IamResourcePermissionRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresourcepermissionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propresourcepermissions := make(map[string]interface{})
+		propresourcepermissions["moid"] = item.Moid
+		propresourcepermissions["object_type"] = item.ObjectType
+		propresourcepermissions["selector"] = item.Selector
+		propresourcepermissionss = append(propresourcepermissionss, propresourcepermissions)
+	}
+	return propresourcepermissionss
+}
+func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
+	var propconnectorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propconnectors := make(map[string]interface{})
+		propconnectors["connector_feature"] = item.ConnectorFeature
+		propconnectors["dependency_names"] = item.DependencyNames
+		propconnectors["downloaded_version"] = item.DownloadedVersion
+		propconnectors["name"] = item.Name
+		propconnectors["object_type"] = item.ObjectType
+		propconnectors["services"] = item.Services
+		propconnectors["state"] = item.State
+		propconnectors["version"] = item.Version
+		propconnectorss = append(propconnectorss, propconnectors)
+	}
+	return propconnectorss
+}
 func flattenMapStorageProtectionGroupSnapshotRef(p *models.StorageProtectionGroupSnapshotRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var propprotectiongroupsnapshots []map[string]interface{}
@@ -7170,116 +6144,320 @@ func flattenMapStorageProtectionGroupSnapshotRef(p *models.StorageProtectionGrou
 	propprotectiongroupsnapshots = append(propprotectiongroupsnapshots, propprotectiongroupsnapshot)
 	return propprotectiongroupsnapshots
 }
-func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
-	var propansiblepackagess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propansiblepackages := make(map[string]interface{})
-		propansiblepackages["file_path"] = item.FilePath
-		propansiblepackages["file_sha"] = item.FileSha
-		propansiblepackages["file_size"] = item.FileSize
-		propansiblepackages["file_time"] = item.FileTime
-		propansiblepackages["filename"] = item.Filename
-		propansiblepackages["name"] = item.Name
-		propansiblepackages["object_type"] = item.ObjectType
-		propansiblepackages["package_type"] = item.PackageType
-		propansiblepackages["version"] = item.Version
-		propansiblepackagess = append(propansiblepackagess, propansiblepackages)
-	}
-	return propansiblepackagess
-}
-func flattenListManagementInterfaceRef(p []*models.ManagementInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var propmanagementinterfacess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propmanagementinterfaces := make(map[string]interface{})
-		propmanagementinterfaces["moid"] = item.Moid
-		propmanagementinterfaces["object_type"] = item.ObjectType
-		propmanagementinterfaces["selector"] = item.Selector
-		propmanagementinterfacess = append(propmanagementinterfacess, propmanagementinterfaces)
-	}
-	return propmanagementinterfacess
-}
-func flattenMapStorageSasExpanderRef(p *models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageVolumeRef(p *models.StorageVolumeRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propstoragesasexpanders []map[string]interface{}
+	var propvolumes []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propstoragesasexpander := make(map[string]interface{})
-	propstoragesasexpander["moid"] = item.Moid
-	propstoragesasexpander["object_type"] = item.ObjectType
-	propstoragesasexpander["selector"] = item.Selector
+	propvolume := make(map[string]interface{})
+	propvolume["moid"] = item.Moid
+	propvolume["object_type"] = item.ObjectType
+	propvolume["selector"] = item.Selector
 
-	propstoragesasexpanders = append(propstoragesasexpanders, propstoragesasexpander)
-	return propstoragesasexpanders
+	propvolumes = append(propvolumes, propvolume)
+	return propvolumes
 }
-func flattenMapEquipmentSwitchCardRef(p *models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentFanModuleRef(p *models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propequipmentswitchcards []map[string]interface{}
+	var propequipmentfanmodules []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propequipmentswitchcard := make(map[string]interface{})
-	propequipmentswitchcard["moid"] = item.Moid
-	propequipmentswitchcard["object_type"] = item.ObjectType
-	propequipmentswitchcard["selector"] = item.Selector
+	propequipmentfanmodule := make(map[string]interface{})
+	propequipmentfanmodule["moid"] = item.Moid
+	propequipmentfanmodule["object_type"] = item.ObjectType
+	propequipmentfanmodule["selector"] = item.Selector
 
-	propequipmentswitchcards = append(propequipmentswitchcards, propequipmentswitchcard)
-	return propequipmentswitchcards
+	propequipmentfanmodules = append(propequipmentfanmodules, propequipmentfanmodule)
+	return propequipmentfanmodules
 }
-func flattenListFcPhysicalPortRef(p []*models.FcPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var propfcportss []map[string]interface{}
+func flattenListStorageFlexFlashControllerPropsRef(p []*models.StorageFlexFlashControllerPropsRef, d *schema.ResourceData) []map[string]interface{} {
+	var propflexflashcontrollerpropss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propfcports := make(map[string]interface{})
-		propfcports["moid"] = item.Moid
-		propfcports["object_type"] = item.ObjectType
-		propfcports["selector"] = item.Selector
-		propfcportss = append(propfcportss, propfcports)
+		propflexflashcontrollerprops := make(map[string]interface{})
+		propflexflashcontrollerprops["moid"] = item.Moid
+		propflexflashcontrollerprops["object_type"] = item.ObjectType
+		propflexflashcontrollerprops["selector"] = item.Selector
+		propflexflashcontrollerpropss = append(propflexflashcontrollerpropss, propflexflashcontrollerprops)
 	}
-	return propfcportss
+	return propflexflashcontrollerpropss
 }
-func flattenListPortSubGroupRef(p []*models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsubgroupss []map[string]interface{}
+func flattenListStorageFlexFlashPhysicalDriveRef(p []*models.StorageFlexFlashPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var propflexflashphysicaldrivess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propsubgroups := make(map[string]interface{})
-		propsubgroups["moid"] = item.Moid
-		propsubgroups["object_type"] = item.ObjectType
-		propsubgroups["selector"] = item.Selector
-		propsubgroupss = append(propsubgroupss, propsubgroups)
+		propflexflashphysicaldrives := make(map[string]interface{})
+		propflexflashphysicaldrives["moid"] = item.Moid
+		propflexflashphysicaldrives["object_type"] = item.ObjectType
+		propflexflashphysicaldrives["selector"] = item.Selector
+		propflexflashphysicaldrivess = append(propflexflashphysicaldrivess, propflexflashphysicaldrives)
 	}
-	return propsubgroupss
+	return propflexflashphysicaldrivess
 }
-func flattenListMemoryPersistentMemoryNamespaceConfigResultRef(p []*models.MemoryPersistentMemoryNamespaceConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-	var proppersistentmemorynamespaceconfigresultss []map[string]interface{}
+func flattenListStorageFlexFlashVirtualDriveRef(p []*models.StorageFlexFlashVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var propflexflashvirtualdrivess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		proppersistentmemorynamespaceconfigresults := make(map[string]interface{})
-		proppersistentmemorynamespaceconfigresults["moid"] = item.Moid
-		proppersistentmemorynamespaceconfigresults["object_type"] = item.ObjectType
-		proppersistentmemorynamespaceconfigresults["selector"] = item.Selector
-		proppersistentmemorynamespaceconfigresultss = append(proppersistentmemorynamespaceconfigresultss, proppersistentmemorynamespaceconfigresults)
+		propflexflashvirtualdrives := make(map[string]interface{})
+		propflexflashvirtualdrives["moid"] = item.Moid
+		propflexflashvirtualdrives["object_type"] = item.ObjectType
+		propflexflashvirtualdrives["selector"] = item.Selector
+		propflexflashvirtualdrivess = append(propflexflashvirtualdrivess, propflexflashvirtualdrives)
 	}
-	return proppersistentmemorynamespaceconfigresultss
+	return propflexflashvirtualdrivess
+}
+func flattenListApplianceKeyValuePair(p []*models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
+	var propcapabilitiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcapabilities := make(map[string]interface{})
+		propcapabilities["key"] = item.Key
+		propcapabilities["object_type"] = item.ObjectType
+		propcapabilities["value"] = item.Value
+		propcapabilitiess = append(propcapabilitiess, propcapabilities)
+	}
+	return propcapabilitiess
+}
+func flattenMapAdapterUnitRef(p *models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propadapterunits []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propadapterunit := make(map[string]interface{})
+	propadapterunit["moid"] = item.Moid
+	propadapterunit["object_type"] = item.ObjectType
+	propadapterunit["selector"] = item.Selector
+
+	propadapterunits = append(propadapterunits, propadapterunit)
+	return propadapterunits
+}
+func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
+
+	var propdisks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propdisk := make(map[string]interface{})
+	propdisk["free"] = item.Free
+	propdisk["name"] = item.Name
+	propdisk["object_type"] = item.ObjectType
+	propdisk["total"] = item.Total
+	propdisk["used"] = item.Used
+
+	propdisks = append(propdisks, propdisk)
+	return propdisks
+}
+func flattenMapNiatelemetryNiaLicenseStateRef(p *models.NiatelemetryNiaLicenseStateRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proplicensestates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proplicensestate := make(map[string]interface{})
+	proplicensestate["moid"] = item.Moid
+	proplicensestate["object_type"] = item.ObjectType
+	proplicensestate["selector"] = item.Selector
+
+	proplicensestates = append(proplicensestates, proplicensestate)
+	return proplicensestates
+}
+func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+	var propgrouppermissionroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propgrouppermissionroles := make(map[string]interface{})
+		propgrouppermissionroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+
+			var propgroups []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			propgroup := make(map[string]interface{})
+			propgroup["moid"] = item.Moid
+			propgroup["object_type"] = item.ObjectType
+
+			propgroups = append(propgroups, propgroup)
+			return propgroups
+		})(item.Group, d)
+		propgrouppermissionroles["object_type"] = item.ObjectType
+		propgrouppermissionroles["orgs"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+			var proporgss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				proporgs := make(map[string]interface{})
+				proporgs["moid"] = item.Moid
+				proporgs["object_type"] = item.ObjectType
+				proporgss = append(proporgss, proporgs)
+			}
+			return proporgss
+		})(item.Orgs, d)
+		propgrouppermissionroless = append(propgrouppermissionroless, propgrouppermissionroles)
+	}
+	return propgrouppermissionroless
+}
+func flattenMapResourceMembershipHolderRef(p *models.ResourceMembershipHolderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propholders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propholder := make(map[string]interface{})
+	propholder["moid"] = item.Moid
+	propholder["object_type"] = item.ObjectType
+	propholder["selector"] = item.Selector
+
+	propholders = append(propholders, propholder)
+	return propholders
+}
+func flattenListServerConfigResultEntryRef(p []*models.ServerConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresultentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propresultentries := make(map[string]interface{})
+		propresultentries["moid"] = item.Moid
+		propresultentries["object_type"] = item.ObjectType
+		propresultentries["selector"] = item.Selector
+		propresultentriess = append(propresultentriess, propresultentries)
+	}
+	return propresultentriess
+}
+func flattenMapForecastCatalogRef(p *models.ForecastCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcatalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcatalog := make(map[string]interface{})
+	propcatalog["moid"] = item.Moid
+	propcatalog["object_type"] = item.ObjectType
+	propcatalog["selector"] = item.Selector
+
+	propcatalogs = append(propcatalogs, propcatalog)
+	return propcatalogs
+}
+func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
+
+	var propcontexts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propcontext := make(map[string]interface{})
+	propcontext["entity_data"] = item.EntityData
+	propcontext["entity_moid"] = item.EntityMoid
+	propcontext["entity_name"] = item.EntityName
+	propcontext["entity_type"] = item.EntityType
+	propcontext["object_type"] = item.ObjectType
+
+	propcontexts = append(propcontexts, propcontext)
+	return propcontexts
+}
+func flattenMapEquipmentSystemIoControllerRef(p *models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propequipmentsystemiocontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propequipmentsystemiocontroller := make(map[string]interface{})
+	propequipmentsystemiocontroller["moid"] = item.Moid
+	propequipmentsystemiocontroller["object_type"] = item.ObjectType
+	propequipmentsystemiocontroller["selector"] = item.Selector
+
+	propequipmentsystemiocontrollers = append(propequipmentsystemiocontrollers, propequipmentsystemiocontroller)
+	return propequipmentsystemiocontrollers
+}
+func flattenListPortGroupRef(p []*models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propportgroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propportgroups := make(map[string]interface{})
+		propportgroups["moid"] = item.Moid
+		propportgroups["object_type"] = item.ObjectType
+		propportgroups["selector"] = item.Selector
+		propportgroupss = append(propportgroupss, propportgroups)
+	}
+	return propportgroupss
+}
+func flattenListStorageSasPortRef(p []*models.StorageSasPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsasportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsasports := make(map[string]interface{})
+		propsasports["moid"] = item.Moid
+		propsasports["object_type"] = item.ObjectType
+		propsasports["selector"] = item.Selector
+		propsasportss = append(propsasportss, propsasports)
+	}
+	return propsasportss
+}
+func flattenListCondHclStatusDetailRef(p []*models.CondHclStatusDetailRef, d *schema.ResourceData) []map[string]interface{} {
+	var propdetailss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propdetails := make(map[string]interface{})
+		propdetails["moid"] = item.Moid
+		propdetails["object_type"] = item.ObjectType
+		propdetails["selector"] = item.Selector
+		propdetailss = append(propdetailss, propdetails)
+	}
+	return propdetailss
+}
+func flattenMapInventoryBaseRef(p *models.InventoryBaseRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmanagedobjects []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmanagedobject := make(map[string]interface{})
+	propmanagedobject["moid"] = item.Moid
+	propmanagedobject["object_type"] = item.ObjectType
+	propmanagedobject["selector"] = item.Selector
+
+	propmanagedobjects = append(propmanagedobjects, propmanagedobject)
+	return propmanagedobjects
 }
 func flattenListResourceMembershipRef(p []*models.ResourceMembershipRef, d *schema.ResourceData) []map[string]interface{} {
 	var propmembershipss []map[string]interface{}
@@ -7296,20 +6474,113 @@ func flattenListResourceMembershipRef(p []*models.ResourceMembershipRef, d *sche
 	}
 	return propmembershipss
 }
-func flattenListWorkflowTaskRetryInfo(p []*models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
-	var proptaskinstidlists []map[string]interface{}
+func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
+	var propaccountpermissionss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		proptaskinstidlist := make(map[string]interface{})
-		proptaskinstidlist["object_type"] = item.ObjectType
-		proptaskinstidlist["status"] = item.Status
-		proptaskinstidlist["task_inst_id"] = item.TaskInstID
-		proptaskinstidlists = append(proptaskinstidlists, proptaskinstidlist)
+		propaccountpermissions := make(map[string]interface{})
+		propaccountpermissions["account_identifier"] = item.AccountIdentifier
+		propaccountpermissions["account_name"] = item.AccountName
+		propaccountpermissions["account_status"] = item.AccountStatus
+		propaccountpermissions["object_type"] = item.ObjectType
+		propaccountpermissions["permissions"] = (func(p []*models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
+			var proppermissionss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				proppermissions := make(map[string]interface{})
+				proppermissions["object_type"] = item.ObjectType
+				proppermissions["permission_identifier"] = item.PermissionIdentifier
+				proppermissions["permission_name"] = item.PermissionName
+				proppermissionss = append(proppermissionss, proppermissions)
+			}
+			return proppermissionss
+		})(item.Permissions, d)
+		propaccountpermissionss = append(propaccountpermissionss, propaccountpermissions)
 	}
-	return proptaskinstidlists
+	return propaccountpermissionss
+}
+func flattenMapMemoryPersistentMemoryRegionRef(p *models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmemorypersistentmemoryregions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmemorypersistentmemoryregion := make(map[string]interface{})
+	propmemorypersistentmemoryregion["moid"] = item.Moid
+	propmemorypersistentmemoryregion["object_type"] = item.ObjectType
+	propmemorypersistentmemoryregion["selector"] = item.Selector
+
+	propmemorypersistentmemoryregions = append(propmemorypersistentmemoryregions, propmemorypersistentmemoryregion)
+	return propmemorypersistentmemoryregions
+}
+func flattenMapResourceGroupRef(p *models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propgroup := make(map[string]interface{})
+	propgroup["moid"] = item.Moid
+	propgroup["object_type"] = item.ObjectType
+	propgroup["selector"] = item.Selector
+
+	propgroups = append(propgroups, propgroup)
+	return propgroups
+}
+func flattenMapPciSwitchRef(p *models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppciswitchs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proppciswitch := make(map[string]interface{})
+	proppciswitch["moid"] = item.Moid
+	proppciswitch["object_type"] = item.ObjectType
+	proppciswitch["selector"] = item.Selector
+
+	proppciswitchs = append(proppciswitchs, proppciswitch)
+	return proppciswitchs
+}
+func flattenListPolicyinventoryJobInfo(p []*models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
+	var propjobinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propjobinfo := make(map[string]interface{})
+		propjobinfo["execution_status"] = item.ExecutionStatus
+		propjobinfo["last_scheduled_time"] = item.LastScheduledTime
+		propjobinfo["object_type"] = item.ObjectType
+		propjobinfo["policy_id"] = item.PolicyID
+		propjobinfo["policy_name"] = item.PolicyName
+		propjobinfos = append(propjobinfos, propjobinfo)
+	}
+	return propjobinfos
+}
+func flattenMapNetworkElementRef(p *models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnetworkelements []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnetworkelement := make(map[string]interface{})
+	propnetworkelement["moid"] = item.Moid
+	propnetworkelement["object_type"] = item.ObjectType
+	propnetworkelement["selector"] = item.Selector
+
+	propnetworkelements = append(propnetworkelements, propnetworkelement)
+	return propnetworkelements
 }
 func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7382,6 +6653,621 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 	propsudis = append(propsudis, propsudi)
 	return propsudis
 }
+func flattenMapCommIPV4Interface(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnodeipv4configs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnodeipv4config := make(map[string]interface{})
+	propnodeipv4config["gateway"] = item.Gateway
+	propnodeipv4config["ip_address"] = item.IPAddress
+	propnodeipv4config["netmask"] = item.Netmask
+	propnodeipv4config["object_type"] = item.ObjectType
+
+	propnodeipv4configs = append(propnodeipv4configs, propnodeipv4config)
+	return propnodeipv4configs
+}
+func flattenMapHclOperatingSystemVendorRef(p *models.HclOperatingSystemVendorRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propvendors []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propvendor := make(map[string]interface{})
+	propvendor["moid"] = item.Moid
+	propvendor["object_type"] = item.ObjectType
+	propvendor["selector"] = item.Selector
+
+	propvendors = append(propvendors, propvendor)
+	return propvendors
+}
+func flattenMapApplianceDataExportPolicyRef(p *models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propparentconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propparentconfig := make(map[string]interface{})
+	propparentconfig["moid"] = item.Moid
+	propparentconfig["object_type"] = item.ObjectType
+	propparentconfig["selector"] = item.Selector
+
+	propparentconfigs = append(propparentconfigs, propparentconfig)
+	return propparentconfigs
+}
+func flattenListApplianceDataExportPolicyRef(p []*models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsubconfigss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsubconfigs := make(map[string]interface{})
+		propsubconfigs["moid"] = item.Moid
+		propsubconfigs["object_type"] = item.ObjectType
+		propsubconfigs["selector"] = item.Selector
+		propsubconfigss = append(propsubconfigss, propsubconfigs)
+	}
+	return propsubconfigss
+}
+func flattenListComputeBladeRef(p []*models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
+	var propcomputebladess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcomputeblades := make(map[string]interface{})
+		propcomputeblades["moid"] = item.Moid
+		propcomputeblades["object_type"] = item.ObjectType
+		propcomputeblades["selector"] = item.Selector
+		propcomputebladess = append(propcomputebladess, propcomputeblades)
+	}
+	return propcomputebladess
+}
+func flattenListComputeRackUnitRef(p []*models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var propcomputerackunitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcomputerackunits := make(map[string]interface{})
+		propcomputerackunits["moid"] = item.Moid
+		propcomputerackunits["object_type"] = item.ObjectType
+		propcomputerackunits["selector"] = item.Selector
+		propcomputerackunitss = append(propcomputerackunitss, propcomputerackunits)
+	}
+	return propcomputerackunitss
+}
+func flattenListAdapterExtEthInterfaceRef(p []*models.AdapterExtEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var propextethifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propextethifs := make(map[string]interface{})
+		propextethifs["moid"] = item.Moid
+		propextethifs["object_type"] = item.ObjectType
+		propextethifs["selector"] = item.Selector
+		propextethifss = append(propextethifss, propextethifs)
+	}
+	return propextethifss
+}
+func flattenListAdapterHostEthInterfaceRef(p []*models.AdapterHostEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophostethifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		prophostethifs := make(map[string]interface{})
+		prophostethifs["moid"] = item.Moid
+		prophostethifs["object_type"] = item.ObjectType
+		prophostethifs["selector"] = item.Selector
+		prophostethifss = append(prophostethifss, prophostethifs)
+	}
+	return prophostethifss
+}
+func flattenListAdapterHostFcInterfaceRef(p []*models.AdapterHostFcInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophostfcifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		prophostfcifs := make(map[string]interface{})
+		prophostfcifs["moid"] = item.Moid
+		prophostfcifs["object_type"] = item.ObjectType
+		prophostfcifs["selector"] = item.Selector
+		prophostfcifss = append(prophostfcifss, prophostfcifs)
+	}
+	return prophostfcifss
+}
+func flattenListAdapterHostIscsiInterfaceRef(p []*models.AdapterHostIscsiInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var prophostiscsiifss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		prophostiscsiifs := make(map[string]interface{})
+		prophostiscsiifs["moid"] = item.Moid
+		prophostiscsiifs["object_type"] = item.ObjectType
+		prophostiscsiifs["selector"] = item.Selector
+		prophostiscsiifss = append(prophostiscsiifss, prophostiscsiifs)
+	}
+	return prophostiscsiifss
+}
+func flattenMapEquipmentSharedIoModuleRef(p *models.EquipmentSharedIoModuleRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propequipmentsharediomodules []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propequipmentsharediomodule := make(map[string]interface{})
+	propequipmentsharediomodule["moid"] = item.Moid
+	propequipmentsharediomodule["object_type"] = item.ObjectType
+	propequipmentsharediomodule["selector"] = item.Selector
+
+	propequipmentsharediomodules = append(propequipmentsharediomodules, propequipmentsharediomodule)
+	return propequipmentsharediomodules
+}
+func flattenMapEquipmentSwitchCardRef(p *models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propequipmentswitchcards []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propequipmentswitchcard := make(map[string]interface{})
+	propequipmentswitchcard["moid"] = item.Moid
+	propequipmentswitchcard["object_type"] = item.ObjectType
+	propequipmentswitchcard["selector"] = item.Selector
+
+	propequipmentswitchcards = append(propequipmentswitchcards, propequipmentswitchcard)
+	return propequipmentswitchcards
+}
+func flattenListFcPhysicalPortRef(p []*models.FcPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var propfcportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propfcports := make(map[string]interface{})
+		propfcports["moid"] = item.Moid
+		propfcports["object_type"] = item.ObjectType
+		propfcports["selector"] = item.Selector
+		propfcportss = append(propfcportss, propfcports)
+	}
+	return propfcportss
+}
+func flattenListPortSubGroupRef(p []*models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsubgroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsubgroups := make(map[string]interface{})
+		propsubgroups["moid"] = item.Moid
+		propsubgroups["object_type"] = item.ObjectType
+		propsubgroups["selector"] = item.Selector
+		propsubgroupss = append(propsubgroupss, propsubgroups)
+	}
+	return propsubgroupss
+}
+func flattenMapEquipmentRackEnclosureRef(p *models.EquipmentRackEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propequipmentrackenclosures []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propequipmentrackenclosure := make(map[string]interface{})
+	propequipmentrackenclosure["moid"] = item.Moid
+	propequipmentrackenclosure["object_type"] = item.ObjectType
+	propequipmentrackenclosure["selector"] = item.Selector
+
+	propequipmentrackenclosures = append(propequipmentrackenclosures, propequipmentrackenclosure)
+	return propequipmentrackenclosures
+}
+func flattenListEquipmentFanRef(p []*models.EquipmentFanRef, d *schema.ResourceData) []map[string]interface{} {
+	var propfanss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propfans := make(map[string]interface{})
+		propfans["moid"] = item.Moid
+		propfans["object_type"] = item.ObjectType
+		propfans["selector"] = item.Selector
+		propfanss = append(propfanss, propfans)
+	}
+	return propfanss
+}
+func flattenMapPortSubGroupRef(p *models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propportsubgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propportsubgroup := make(map[string]interface{})
+	propportsubgroup["moid"] = item.Moid
+	propportsubgroup["object_type"] = item.ObjectType
+	propportsubgroup["selector"] = item.Selector
+
+	propportsubgroups = append(propportsubgroups, propportsubgroup)
+	return propportsubgroups
+}
+func flattenMapStoragePureHostRef(p *models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var prophostgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	prophostgroup := make(map[string]interface{})
+	prophostgroup["moid"] = item.Moid
+	prophostgroup["object_type"] = item.ObjectType
+	prophostgroup["selector"] = item.Selector
+
+	prophostgroups = append(prophostgroups, prophostgroup)
+	return prophostgroups
+}
+func flattenListStorageInitiator(p []*models.StorageInitiator, d *schema.ResourceData) []map[string]interface{} {
+	var propinitiatorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propinitiators := make(map[string]interface{})
+		propinitiators["iqn"] = item.Iqn
+		propinitiators["name"] = item.Name
+		propinitiators["object_type"] = item.ObjectType
+		propinitiators["type"] = item.Type
+		propinitiators["wwn"] = item.Wwn
+		propinitiatorss = append(propinitiatorss, propinitiators)
+	}
+	return propinitiatorss
+}
+func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstorageutilizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstorageutilization := make(map[string]interface{})
+	propstorageutilization["available"] = item.Available
+	propstorageutilization["data_reduction"] = item.DataReduction
+	propstorageutilization["free"] = item.Free
+	propstorageutilization["object_type"] = item.ObjectType
+	propstorageutilization["snapshot"] = item.Snapshot
+	propstorageutilization["thin_provisioned"] = item.ThinProvisioned
+	propstorageutilization["total"] = item.Total
+	propstorageutilization["total_reduction"] = item.TotalReduction
+	propstorageutilization["used"] = item.Used
+	propstorageutilization["volume"] = item.Volume
+
+	propstorageutilizations = append(propstorageutilizations, propstorageutilization)
+	return propstorageutilizations
+}
+func flattenListGraphicsControllerRef(p []*models.GraphicsControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var propgraphicscontrollerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propgraphicscontrollers := make(map[string]interface{})
+		propgraphicscontrollers["moid"] = item.Moid
+		propgraphicscontrollers["object_type"] = item.ObjectType
+		propgraphicscontrollers["selector"] = item.Selector
+		propgraphicscontrollerss = append(propgraphicscontrollerss, propgraphicscontrollers)
+	}
+	return propgraphicscontrollerss
+}
+func flattenListIamEndPointPrivilegeRef(p []*models.IamEndPointPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
+	var propendpointprivilegess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propendpointprivileges := make(map[string]interface{})
+		propendpointprivileges["moid"] = item.Moid
+		propendpointprivileges["object_type"] = item.ObjectType
+		propendpointprivileges["selector"] = item.Selector
+		propendpointprivilegess = append(propendpointprivilegess, propendpointprivileges)
+	}
+	return propendpointprivilegess
+}
+func flattenMapIamServiceProviderRef(p *models.IamServiceProviderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propserviceproviders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propserviceprovider := make(map[string]interface{})
+	propserviceprovider["moid"] = item.Moid
+	propserviceprovider["object_type"] = item.ObjectType
+	propserviceprovider["selector"] = item.Selector
+
+	propserviceproviders = append(propserviceproviders, propserviceprovider)
+	return propserviceproviders
+}
+func flattenListWorkflowTaskRetryInfo(p []*models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
+	var proptaskinstidlists []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proptaskinstidlist := make(map[string]interface{})
+		proptaskinstidlist["object_type"] = item.ObjectType
+		proptaskinstidlist["status"] = item.Status
+		proptaskinstidlist["task_inst_id"] = item.TaskInstID
+		proptaskinstidlists = append(proptaskinstidlists, proptaskinstidlist)
+	}
+	return proptaskinstidlists
+}
+func flattenListNiaapiRevisionInfo(p []*models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
+	var proprevisioninfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		proprevisioninfo := make(map[string]interface{})
+		proprevisioninfo["date_published"] = item.DatePublished
+		proprevisioninfo["object_type"] = item.ObjectType
+		proprevisioninfo["revision_comment"] = item.RevisionComment
+		proprevisioninfo["revision_no"] = item.RevisionNo
+		proprevisioninfos = append(proprevisioninfos, proprevisioninfo)
+	}
+	return proprevisioninfos
+}
+func flattenMapMemoryArrayRef(p *models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propmemoryarrays []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propmemoryarray := make(map[string]interface{})
+	propmemoryarray["moid"] = item.Moid
+	propmemoryarray["object_type"] = item.ObjectType
+	propmemoryarray["selector"] = item.Selector
+
+	propmemoryarrays = append(propmemoryarrays, propmemoryarray)
+	return propmemoryarrays
+}
+func flattenMapStorageFlexUtilControllerRef(p *models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstorageflexutilcontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstorageflexutilcontroller := make(map[string]interface{})
+	propstorageflexutilcontroller["moid"] = item.Moid
+	propstorageflexutilcontroller["object_type"] = item.ObjectType
+	propstorageflexutilcontroller["selector"] = item.Selector
+
+	propstorageflexutilcontrollers = append(propstorageflexutilcontrollers, propstorageflexutilcontroller)
+	return propstorageflexutilcontrollers
+}
+func flattenListManagementInterfaceRef(p []*models.ManagementInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var propmanagementinterfacess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propmanagementinterfaces := make(map[string]interface{})
+		propmanagementinterfaces["moid"] = item.Moid
+		propmanagementinterfaces["object_type"] = item.ObjectType
+		propmanagementinterfaces["selector"] = item.Selector
+		propmanagementinterfacess = append(propmanagementinterfacess, propmanagementinterfaces)
+	}
+	return propmanagementinterfacess
+}
+func flattenMapStorageSasExpanderRef(p *models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propstoragesasexpanders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propstoragesasexpander := make(map[string]interface{})
+	propstoragesasexpander["moid"] = item.Moid
+	propstoragesasexpander["object_type"] = item.ObjectType
+	propstoragesasexpander["selector"] = item.Selector
+
+	propstoragesasexpanders = append(propstoragesasexpanders, propstoragesasexpander)
+	return propstoragesasexpanders
+}
+func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
+
+	var propschedules []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propschedule := make(map[string]interface{})
+	propschedule["day_of_month"] = item.DayOfMonth
+	propschedule["day_of_week"] = item.DayOfWeek
+	propschedule["month_of_year"] = item.MonthOfYear
+	propschedule["object_type"] = item.ObjectType
+	propschedule["repeat_interval"] = item.RepeatInterval
+	propschedule["time_of_day"] = item.TimeOfDay
+	propschedule["time_zone"] = item.TimeZone
+	propschedule["week_of_month"] = item.WeekOfMonth
+
+	propschedules = append(propschedules, propschedule)
+	return propschedules
+}
+func flattenListEquipmentIoCardRef(p []*models.EquipmentIoCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var propiomss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propioms := make(map[string]interface{})
+		propioms["moid"] = item.Moid
+		propioms["object_type"] = item.ObjectType
+		propioms["selector"] = item.Selector
+		propiomss = append(propiomss, propioms)
+	}
+	return propiomss
+}
+func flattenListEquipmentSystemIoControllerRef(p []*models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var propsiocss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propsiocs := make(map[string]interface{})
+		propsiocs["moid"] = item.Moid
+		propsiocs["object_type"] = item.ObjectType
+		propsiocs["selector"] = item.Selector
+		propsiocss = append(propsiocss, propsiocs)
+	}
+	return propsiocss
+}
+func flattenMapCondHclStatusRef(p *models.CondHclStatusRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var prophclstatuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	prophclstatus := make(map[string]interface{})
+	prophclstatus["moid"] = item.Moid
+	prophclstatus["object_type"] = item.ObjectType
+	prophclstatus["selector"] = item.Selector
+
+	prophclstatuss = append(prophclstatuss, prophclstatus)
+	return prophclstatuss
+}
+func flattenListOsConfigurationFileRef(p []*models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
+	var propconfigurationfiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propconfigurationfiles := make(map[string]interface{})
+		propconfigurationfiles["moid"] = item.Moid
+		propconfigurationfiles["object_type"] = item.ObjectType
+		propconfigurationfiles["selector"] = item.Selector
+		propconfigurationfiless = append(propconfigurationfiless, propconfigurationfiles)
+	}
+	return propconfigurationfiless
+}
+func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, d *schema.ResourceData) []map[string]interface{} {
+
+	var propapics []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propapic := make(map[string]interface{})
+	propapic["anyllregex"] = item.Anyllregex
+	propapic["currentlltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+
+		var propcurrentlltrains []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		propcurrentlltrain := make(map[string]interface{})
+		propcurrentlltrain["object_type"] = item.ObjectType
+		propcurrentlltrain["regex"] = item.Regex
+		propcurrentlltrain["software_version"] = item.SoftwareVersion
+
+		propcurrentlltrains = append(propcurrentlltrains, propcurrentlltrain)
+		return propcurrentlltrains
+	})(item.Currentlltrain, d)
+	propapic["latestsltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+
+		var proplatestsltrains []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		proplatestsltrain := make(map[string]interface{})
+		proplatestsltrain["object_type"] = item.ObjectType
+		proplatestsltrain["regex"] = item.Regex
+		proplatestsltrain["software_version"] = item.SoftwareVersion
+
+		proplatestsltrains = append(proplatestsltrains, proplatestsltrain)
+		return proplatestsltrains
+	})(item.Latestsltrain, d)
+	propapic["object_type"] = item.ObjectType
+	propapic["sltrain"] = (func(p []*models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+		var propsltrains []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			propsltrain := make(map[string]interface{})
+			propsltrain["object_type"] = item.ObjectType
+			propsltrain["regex"] = item.Regex
+			propsltrain["software_version"] = item.SoftwareVersion
+			propsltrains = append(propsltrains, propsltrain)
+		}
+		return propsltrains
+	})(item.Sltrain, d)
+	propapic["upcominglltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+
+		var propupcominglltrains []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		propupcominglltrain := make(map[string]interface{})
+		propupcominglltrain["object_type"] = item.ObjectType
+		propupcominglltrain["regex"] = item.Regex
+		propupcominglltrain["software_version"] = item.SoftwareVersion
+
+		propupcominglltrains = append(propupcominglltrains, propupcominglltrain)
+		return propupcominglltrains
+	})(item.Upcominglltrain, d)
+
+	propapics = append(propapics, propapic)
+	return propapics
+}
+func flattenMapMemoryPersistentMemoryConfigResultRef(p *models.MemoryPersistentMemoryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proppersistentmemoryconfigresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proppersistentmemoryconfigresult := make(map[string]interface{})
+	proppersistentmemoryconfigresult["moid"] = item.Moid
+	proppersistentmemoryconfigresult["object_type"] = item.ObjectType
+	proppersistentmemoryconfigresult["selector"] = item.Selector
+
+	proppersistentmemoryconfigresults = append(proppersistentmemoryconfigresults, proppersistentmemoryconfigresult)
+	return proppersistentmemoryconfigresults
+}
 func flattenListMemoryPersistentMemoryRegionRef(p []*models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
 	var proppersistentmemoryregionss []map[string]interface{}
 	if p == nil {
@@ -7396,6 +7282,97 @@ func flattenListMemoryPersistentMemoryRegionRef(p []*models.MemoryPersistentMemo
 		proppersistentmemoryregionss = append(proppersistentmemoryregionss, proppersistentmemoryregions)
 	}
 	return proppersistentmemoryregionss
+}
+func flattenMapStorageHostRef(p *models.StorageHostRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var prophosts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	prophost := make(map[string]interface{})
+	prophost["moid"] = item.Moid
+	prophost["object_type"] = item.ObjectType
+	prophost["selector"] = item.Selector
+
+	prophosts = append(prophosts, prophost)
+	return prophosts
+}
+func flattenMapIamAppRegistrationRef(p *models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propappregistrations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propappregistration := make(map[string]interface{})
+	propappregistration["moid"] = item.Moid
+	propappregistration["object_type"] = item.ObjectType
+	propappregistration["selector"] = item.Selector
+
+	propappregistrations = append(propappregistrations, propappregistration)
+	return propappregistrations
+}
+func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []map[string]interface{} {
+
+	var propusermetas []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propusermeta := make(map[string]interface{})
+	propusermeta["device_model"] = item.DeviceModel
+	propusermeta["object_type"] = item.ObjectType
+	propusermeta["user_agent"] = item.UserAgent
+
+	propusermetas = append(propusermetas, propusermeta)
+	return propusermetas
+}
+func flattenListNiaapiDetail(p []*models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
+	var propcontents []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propcontent := make(map[string]interface{})
+		propcontent["chksum"] = item.Chksum
+		propcontent["filename"] = item.Filename
+		propcontent["name"] = item.Name
+		propcontent["object_type"] = item.ObjectType
+		propcontents = append(propcontents, propcontent)
+	}
+	return propcontents
+}
+func flattenListEquipmentRackEnclosureSlotRef(p []*models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
+	var propslotss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propslots := make(map[string]interface{})
+		propslots["moid"] = item.Moid
+		propslots["object_type"] = item.ObjectType
+		propslots["selector"] = item.Selector
+		propslotss = append(propslotss, propslots)
+	}
+	return propslotss
+}
+func flattenListWorkflowDynamicWorkflowActionTaskList(p []*models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
+	var propworkflowactiontasklistss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propworkflowactiontasklists := make(map[string]interface{})
+		propworkflowactiontasklists["action"] = item.Action
+		propworkflowactiontasklists["object_type"] = item.ObjectType
+		propworkflowactiontasklists["tasks"] = item.Tasks
+		propworkflowactiontasklistss = append(propworkflowactiontasklistss, propworkflowactiontasklists)
+	}
+	return propworkflowactiontasklistss
 }
 func flattenMapLicenseCustomerOpRef(p *models.LicenseCustomerOpRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7442,65 +7419,152 @@ func flattenMapLicenseSmartlicenseTokenRef(p *models.LicenseSmartlicenseTokenRef
 	propsmartlicensetokens = append(propsmartlicensetokens, propsmartlicensetoken)
 	return propsmartlicensetokens
 }
-func flattenMapForecastCatalogRef(p *models.ForecastCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastDefinitionRef(p *models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propcatalogs []map[string]interface{}
+	var propforecastdefs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propcatalog := make(map[string]interface{})
-	propcatalog["moid"] = item.Moid
-	propcatalog["object_type"] = item.ObjectType
-	propcatalog["selector"] = item.Selector
+	propforecastdef := make(map[string]interface{})
+	propforecastdef["moid"] = item.Moid
+	propforecastdef["object_type"] = item.ObjectType
+	propforecastdef["selector"] = item.Selector
 
-	propcatalogs = append(propcatalogs, propcatalog)
-	return propcatalogs
+	propforecastdefs = append(propforecastdefs, propforecastdef)
+	return propforecastdefs
 }
-func flattenMapBiosBootModeRef(p *models.BiosBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
 
-	var propbiosbootmodes []map[string]interface{}
+	var propmodels []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propbiosbootmode := make(map[string]interface{})
-	propbiosbootmode["moid"] = item.Moid
-	propbiosbootmode["object_type"] = item.ObjectType
-	propbiosbootmode["selector"] = item.Selector
+	propmodel := make(map[string]interface{})
+	propmodel["accuracy"] = item.Accuracy
+	propmodel["model_data"] = item.ModelData
+	propmodel["model_type"] = item.ModelType
+	propmodel["object_type"] = item.ObjectType
 
-	propbiosbootmodes = append(propbiosbootmodes, propbiosbootmode)
-	return propbiosbootmodes
+	propmodels = append(propmodels, propmodel)
+	return propmodels
 }
-func flattenMapBootDeviceBootModeRef(p *models.BootDeviceBootModeRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propbootdevicebootmodes []map[string]interface{}
+func flattenListHyperflexAlarmRef(p []*models.HyperflexAlarmRef, d *schema.ResourceData) []map[string]interface{} {
+	var propalarms []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	item := *p
-	propbootdevicebootmode := make(map[string]interface{})
-	propbootdevicebootmode["moid"] = item.Moid
-	propbootdevicebootmode["object_type"] = item.ObjectType
-	propbootdevicebootmode["selector"] = item.Selector
-
-	propbootdevicebootmodes = append(propbootdevicebootmodes, propbootdevicebootmode)
-	return propbootdevicebootmodes
+	for _, item := range p {
+		item := *item
+		propalarm := make(map[string]interface{})
+		propalarm["moid"] = item.Moid
+		propalarm["object_type"] = item.ObjectType
+		propalarm["selector"] = item.Selector
+		propalarms = append(propalarms, propalarm)
+	}
+	return propalarms
 }
-func flattenMapEquipmentRackEnclosureSlotRef(p *models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexHealthRef(p *models.HyperflexHealthRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var proprackenclosureslots []map[string]interface{}
+	var prophealths []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	proprackenclosureslot := make(map[string]interface{})
-	proprackenclosureslot["moid"] = item.Moid
-	proprackenclosureslot["object_type"] = item.ObjectType
-	proprackenclosureslot["selector"] = item.Selector
+	prophealth := make(map[string]interface{})
+	prophealth["moid"] = item.Moid
+	prophealth["object_type"] = item.ObjectType
+	prophealth["selector"] = item.Selector
 
-	proprackenclosureslots = append(proprackenclosureslots, proprackenclosureslot)
-	return proprackenclosureslots
+	prophealths = append(prophealths, prophealth)
+	return prophealths
+}
+func flattenListHyperflexNodeRef(p []*models.HyperflexNodeRef, d *schema.ResourceData) []map[string]interface{} {
+	var propnodess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		propnodes := make(map[string]interface{})
+		propnodes["moid"] = item.Moid
+		propnodes["object_type"] = item.ObjectType
+		propnodes["selector"] = item.Selector
+		propnodess = append(propnodess, propnodes)
+	}
+	return propnodess
+}
+func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceData) []map[string]interface{} {
+
+	var propsummarys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propsummary := make(map[string]interface{})
+	propsummary["active_nodes"] = item.ActiveNodes
+	propsummary["address"] = item.Address
+	propsummary["boottime"] = item.Boottime
+	propsummary["cluster_access_policy"] = item.ClusterAccessPolicy
+	propsummary["compression_savings"] = item.CompressionSavings
+	propsummary["data_replication_compliance"] = item.DataReplicationCompliance
+	propsummary["data_replication_factor"] = item.DataReplicationFactor
+	propsummary["deduplication_savings"] = item.DeduplicationSavings
+	propsummary["downtime"] = item.Downtime
+	propsummary["free_capacity"] = item.FreeCapacity
+	propsummary["healing_info"] = (func(p *models.HyperflexStPlatformClusterHealingInfo, d *schema.ResourceData) []map[string]interface{} {
+
+		var prophealinginfos []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		prophealinginfo := make(map[string]interface{})
+		prophealinginfo["estimated_completion_time_in_seconds"] = item.EstimatedCompletionTimeInSeconds
+		prophealinginfo["in_progress"] = item.InProgress
+		prophealinginfo["messages"] = item.Messages
+		prophealinginfo["messages_iterator"] = item.MessagesIterator
+		prophealinginfo["messages_size"] = item.MessagesSize
+		prophealinginfo["object_type"] = item.ObjectType
+		prophealinginfo["percent_complete"] = item.PercentComplete
+
+		prophealinginfos = append(prophealinginfos, prophealinginfo)
+		return prophealinginfos
+	})(item.HealingInfo, d)
+	propsummary["name"] = item.Name
+	propsummary["object_type"] = item.ObjectType
+	propsummary["resiliency_details"] = item.ResiliencyDetails
+	propsummary["resiliency_details_size"] = item.ResiliencyDetailsSize
+	propsummary["resiliency_info"] = (func(p *models.HyperflexStPlatformClusterResiliencyInfo, d *schema.ResourceData) []map[string]interface{} {
+
+		var propresiliencyinfos []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		propresiliencyinfo := make(map[string]interface{})
+		propresiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
+		propresiliencyinfo["messages"] = item.Messages
+		propresiliencyinfo["messages_iterator"] = item.MessagesIterator
+		propresiliencyinfo["messages_size"] = item.MessagesSize
+		propresiliencyinfo["node_failures_tolerable"] = item.NodeFailuresTolerable
+		propresiliencyinfo["object_type"] = item.ObjectType
+		propresiliencyinfo["ssd_failures_tolerable"] = item.SsdFailuresTolerable
+		propresiliencyinfo["state"] = item.State
+
+		propresiliencyinfos = append(propresiliencyinfos, propresiliencyinfo)
+		return propresiliencyinfos
+	})(item.ResiliencyInfo, d)
+	propsummary["space_status"] = item.SpaceStatus
+	propsummary["state"] = item.State
+	propsummary["total_capacity"] = item.TotalCapacity
+	propsummary["total_savings"] = item.TotalSavings
+	propsummary["uptime"] = item.Uptime
+	propsummary["used_capacity"] = item.UsedCapacity
+
+	propsummarys = append(propsummarys, propsummary)
+	return propsummarys
 }
 func flattenListMetaAccessPrivilege(p []*models.MetaAccessPrivilege, d *schema.ResourceData) []map[string]interface{} {
 	var propaccessprivilegess []map[string]interface{}
@@ -7551,245 +7615,181 @@ func flattenListMetaRelationshipDefinition(p []*models.MetaRelationshipDefinitio
 	}
 	return proprelationshipss
 }
-func flattenMapBiosUnitRef(p *models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propbiosunits []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propbiosunit := make(map[string]interface{})
-	propbiosunit["moid"] = item.Moid
-	propbiosunit["object_type"] = item.ObjectType
-	propbiosunit["selector"] = item.Selector
-
-	propbiosunits = append(propbiosunits, propbiosunit)
-	return propbiosunits
-}
-func flattenListPciLinkRef(p []*models.PciLinkRef, d *schema.ResourceData) []map[string]interface{} {
-	var proplinkss []map[string]interface{}
+func flattenListHyperflexConfigResultEntryRef(p []*models.HyperflexConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresultentriess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		proplinks := make(map[string]interface{})
-		proplinks["moid"] = item.Moid
-		proplinks["object_type"] = item.ObjectType
-		proplinks["selector"] = item.Selector
-		proplinkss = append(proplinkss, proplinks)
+		propresultentries := make(map[string]interface{})
+		propresultentries["moid"] = item.Moid
+		propresultentries["object_type"] = item.ObjectType
+		propresultentries["selector"] = item.Selector
+		propresultentriess = append(propresultentriess, propresultentries)
 	}
-	return proplinkss
+	return propresultentriess
 }
-func flattenMapIamAppRegistrationRef(p *models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryGenericInventoryHolderRef(p *models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var propappregistrations []map[string]interface{}
+	var propinventorygenericinventoryholders []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	propappregistration := make(map[string]interface{})
-	propappregistration["moid"] = item.Moid
-	propappregistration["object_type"] = item.ObjectType
-	propappregistration["selector"] = item.Selector
+	propinventorygenericinventoryholder := make(map[string]interface{})
+	propinventorygenericinventoryholder["moid"] = item.Moid
+	propinventorygenericinventoryholder["object_type"] = item.ObjectType
+	propinventorygenericinventoryholder["selector"] = item.Selector
 
-	propappregistrations = append(propappregistrations, propappregistration)
-	return propappregistrations
+	propinventorygenericinventoryholders = append(propinventorygenericinventoryholders, propinventorygenericinventoryholder)
+	return propinventorygenericinventoryholders
 }
-func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []map[string]interface{} {
-
-	var propusermetas []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propusermeta := make(map[string]interface{})
-	propusermeta["device_model"] = item.DeviceModel
-	propusermeta["object_type"] = item.ObjectType
-	propusermeta["user_agent"] = item.UserAgent
-
-	propusermetas = append(propusermetas, propusermeta)
-	return propusermetas
-}
-func flattenListStorageReplicationBlackout(p []*models.StorageReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
-	var propreplicationblackoutintervalss []map[string]interface{}
+func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+	var proppermissionroless []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propreplicationblackoutintervals := make(map[string]interface{})
-		propreplicationblackoutintervals["object_type"] = item.ObjectType
-		propreplicationblackoutintervalss = append(propreplicationblackoutintervalss, propreplicationblackoutintervals)
-	}
-	return propreplicationblackoutintervalss
-}
-func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
-	var propconnectorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propconnectors := make(map[string]interface{})
-		propconnectors["connector_feature"] = item.ConnectorFeature
-		propconnectors["dependency_names"] = item.DependencyNames
-		propconnectors["downloaded_version"] = item.DownloadedVersion
-		propconnectors["name"] = item.Name
-		propconnectors["object_type"] = item.ObjectType
-		propconnectors["services"] = item.Services
-		propconnectors["state"] = item.State
-		propconnectors["version"] = item.Version
-		propconnectorss = append(propconnectorss, propconnectors)
-	}
-	return propconnectorss
-}
-func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
-	var propcompletedphasess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcompletedphases := make(map[string]interface{})
-		propcompletedphases["name"] = item.Name
-		propcompletedphases["object_type"] = item.ObjectType
-		propcompletedphasess = append(propcompletedphasess, propcompletedphases)
-	}
-	return propcompletedphasess
-}
-func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+		proppermissionroles := make(map[string]interface{})
+		proppermissionroles["object_type"] = item.ObjectType
+		proppermissionroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 
-	var propcurrentphases []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propcurrentphase := make(map[string]interface{})
-	propcurrentphase["name"] = item.Name
-	propcurrentphase["object_type"] = item.ObjectType
+			var proppermissions []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			proppermission := make(map[string]interface{})
+			proppermission["moid"] = item.Moid
+			proppermission["object_type"] = item.ObjectType
 
-	propcurrentphases = append(propcurrentphases, propcurrentphase)
-	return propcurrentphases
-}
-func flattenMapApplianceImageBundleRef(p *models.ApplianceImageBundleRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propimagebundles []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propimagebundle := make(map[string]interface{})
-	propimagebundle["moid"] = item.Moid
-	propimagebundle["object_type"] = item.ObjectType
-	propimagebundle["selector"] = item.Selector
-
-	propimagebundles = append(propimagebundles, propimagebundle)
-	return propimagebundles
-}
-func flattenListGraphicsControllerRef(p []*models.GraphicsControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var propgraphicscontrollerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propgraphicscontrollers := make(map[string]interface{})
-		propgraphicscontrollers["moid"] = item.Moid
-		propgraphicscontrollers["object_type"] = item.ObjectType
-		propgraphicscontrollers["selector"] = item.Selector
-		propgraphicscontrollerss = append(propgraphicscontrollerss, propgraphicscontrollers)
-	}
-	return propgraphicscontrollerss
-}
-func flattenListEquipmentSwitchCardRef(p []*models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var propcardss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propcards := make(map[string]interface{})
-		propcards["moid"] = item.Moid
-		propcards["object_type"] = item.ObjectType
-		propcards["selector"] = item.Selector
-		propcardss = append(propcardss, propcards)
-	}
-	return propcardss
-}
-func flattenMapManagementEntityRef(p *models.ManagementEntityRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propmanagemententitys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propmanagemententity := make(map[string]interface{})
-	propmanagemententity["moid"] = item.Moid
-	propmanagemententity["object_type"] = item.ObjectType
-	propmanagemententity["selector"] = item.Selector
-
-	propmanagemententitys = append(propmanagemententitys, propmanagemententity)
-	return propmanagemententitys
-}
-func flattenMapFirmwareRunningFirmwareRef(p *models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var propucsmrunningfirmwares []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	propucsmrunningfirmware := make(map[string]interface{})
-	propucsmrunningfirmware["moid"] = item.Moid
-	propucsmrunningfirmware["object_type"] = item.ObjectType
-	propucsmrunningfirmware["selector"] = item.Selector
-
-	propucsmrunningfirmwares = append(propucsmrunningfirmwares, propucsmrunningfirmware)
-	return propucsmrunningfirmwares
-}
-func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
-	var propaccountpermissionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		propaccountpermissions := make(map[string]interface{})
-		propaccountpermissions["account_identifier"] = item.AccountIdentifier
-		propaccountpermissions["account_name"] = item.AccountName
-		propaccountpermissions["account_status"] = item.AccountStatus
-		propaccountpermissions["object_type"] = item.ObjectType
-		propaccountpermissions["permissions"] = (func(p []*models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
-			var proppermissionss []map[string]interface{}
+			proppermissions = append(proppermissions, proppermission)
+			return proppermissions
+		})(item.Permission, d)
+		proppermissionroles["roles"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+			var proproless []map[string]interface{}
 			if p == nil {
 				return nil
 			}
 			for _, item := range p {
 				item := *item
-				proppermissions := make(map[string]interface{})
-				proppermissions["object_type"] = item.ObjectType
-				proppermissions["permission_identifier"] = item.PermissionIdentifier
-				proppermissions["permission_name"] = item.PermissionName
-				proppermissionss = append(proppermissionss, proppermissions)
+				proproles := make(map[string]interface{})
+				proproles["moid"] = item.Moid
+				proproles["object_type"] = item.ObjectType
+				proproless = append(proproless, proproles)
 			}
-			return proppermissionss
-		})(item.Permissions, d)
-		propaccountpermissionss = append(propaccountpermissionss, propaccountpermissions)
+			return proproless
+		})(item.Roles, d)
+		proppermissionroless = append(proppermissionroless, proppermissionroles)
 	}
-	return propaccountpermissionss
+	return proppermissionroless
 }
-func flattenListStorageSasPortRef(p []*models.StorageSasPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var propsasportss []map[string]interface{}
+func flattenMapRecoveryBackupProfileRef(p *models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propbackupprofiles []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propbackupprofile := make(map[string]interface{})
+	propbackupprofile["moid"] = item.Moid
+	propbackupprofile["object_type"] = item.ObjectType
+	propbackupprofile["selector"] = item.Selector
+
+	propbackupprofiles = append(propbackupprofiles, propbackupprofile)
+	return propbackupprofiles
+}
+func flattenMapRecoveryOnDemandBackupRef(p *models.RecoveryOnDemandBackupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propnr0ondemandbackups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propnr0ondemandbackup := make(map[string]interface{})
+	propnr0ondemandbackup["moid"] = item.Moid
+	propnr0ondemandbackup["object_type"] = item.ObjectType
+	propnr0ondemandbackup["selector"] = item.Selector
+
+	propnr0ondemandbackups = append(propnr0ondemandbackups, propnr0ondemandbackup)
+	return propnr0ondemandbackups
+}
+func flattenListRecoveryConfigResultEntryRef(p []*models.RecoveryConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var propresultentriess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		propsasports := make(map[string]interface{})
-		propsasports["moid"] = item.Moid
-		propsasports["object_type"] = item.ObjectType
-		propsasports["selector"] = item.Selector
-		propsasportss = append(propsasportss, propsasports)
+		propresultentries := make(map[string]interface{})
+		propresultentries["moid"] = item.Moid
+		propresultentries["object_type"] = item.ObjectType
+		propresultentries["selector"] = item.Selector
+		propresultentriess = append(propresultentriess, propresultentries)
 	}
-	return propsasportss
+	return propresultentriess
+}
+func flattenMapAssetClusterMemberRef(p *models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var propclustermembers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propclustermember := make(map[string]interface{})
+	propclustermember["moid"] = item.Moid
+	propclustermember["object_type"] = item.ObjectType
+	propclustermember["selector"] = item.Selector
+
+	propclustermembers = append(propclustermembers, propclustermember)
+	return propclustermembers
+}
+func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
+
+	var propips []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propip := make(map[string]interface{})
+	propip["address"] = item.Address
+	propip["fqdn"] = item.Fqdn
+	propip["ip"] = item.IP
+	propip["object_type"] = item.ObjectType
+
+	propips = append(propips, propip)
+	return propips
+}
+func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.ResourceData) []map[string]interface{} {
+
+	var propidentitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	propidentity := make(map[string]interface{})
+	propidentity["links"] = (func(p []*models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
+		var proplinkss []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			proplinks := make(map[string]interface{})
+			proplinks["comments"] = item.Comments
+			proplinks["href"] = item.Href
+			proplinks["method"] = item.Method
+			proplinks["object_type"] = item.ObjectType
+			proplinks["rel"] = item.Rel
+			proplinkss = append(proplinkss, proplinks)
+		}
+		return proplinkss
+	})(item.Links, d)
+	propidentity["object_type"] = item.ObjectType
+	propidentity["uuid"] = item.UUID
+
+	propidentitys = append(propidentitys, propidentity)
+	return propidentitys
 }

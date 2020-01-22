@@ -6,6 +6,7 @@ import (
 	"reflect"
 
 	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
