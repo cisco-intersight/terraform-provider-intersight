@@ -52,7 +52,7 @@ type HyperflexClusterNetworkPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G'. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.
 	//
@@ -95,7 +95,7 @@ func (m *HyperflexClusterNetworkPolicy) UnmarshalJSON(raw []byte) error {
 
 		MgmtVlan *HyperflexNamedVlan `json:"MgmtVlan,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		UplinkSpeed *string `json:"UplinkSpeed,omitempty"`
 
@@ -149,7 +149,7 @@ func (m HyperflexClusterNetworkPolicy) MarshalJSON() ([]byte, error) {
 
 		MgmtVlan *HyperflexNamedVlan `json:"MgmtVlan,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		UplinkSpeed *string `json:"UplinkSpeed,omitempty"`
 

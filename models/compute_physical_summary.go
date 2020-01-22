@@ -48,7 +48,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	DeviceMoID string `json:"DeviceMoId,omitempty"`
 
-	// dn
+	// The Distinguished Name unambiguously identifies an object in the system.
+	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
@@ -66,7 +67,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	IPV4Address string `json:"Ipv4Address,omitempty"`
 
-	// kvm Ip addresses
+	// KVM address of the device.
+	//
 	// Read Only: true
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
@@ -93,7 +95,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// num adaptors
+	// Total number of Adaptors available.
+	//
 	// Read Only: true
 	NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
@@ -101,15 +104,18 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	NumCPUCores int64 `json:"NumCpuCores,omitempty"`
 
-	// num Cpu cores enabled
+	// Number of CPU cores enabled.
+	//
 	// Read Only: true
 	NumCPUCoresEnabled int64 `json:"NumCpuCoresEnabled,omitempty"`
 
-	// num cpus
+	// Total number of CPU's available.
+	//
 	// Read Only: true
 	NumCpus int64 `json:"NumCpus,omitempty"`
 
-	// num eth host interfaces
+	// Number of Ethernet Host Interfaces.
+	//
 	// Read Only: true
 	NumEthHostInterfaces int64 `json:"NumEthHostInterfaces,omitempty"`
 
@@ -117,7 +123,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	NumFcHostInterfaces int64 `json:"NumFcHostInterfaces,omitempty"`
 
-	// num threads
+	// Number of threads enabled.
+	//
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
@@ -133,7 +140,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	Operability string `json:"Operability,omitempty"`
 
-	// platform type
+	// Platform type of the device.
+	//
 	// Read Only: true
 	PlatformType string `json:"PlatformType,omitempty"`
 
@@ -150,7 +158,8 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	Revision string `json:"Revision,omitempty"`
 
-	// rn
+	// The Relative Name uniquely identifies an object within a given context.
+	//
 	// Read Only: true
 	Rn string `json:"Rn,omitempty"`
 
@@ -175,7 +184,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	SlotID int64 `json:"SlotId,omitempty"`
 
-	// Specifies the source object type for View MO.
+	// The source object type of this view MO.
 	//
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`

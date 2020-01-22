@@ -3,6 +3,10 @@ resource "intersight_boot_precision_policy" "boot_precision1" {
   description              = "test policy"
   configured_boot_mode     = "Legacy"
   enforce_uefi_secure_boot = false
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   boot_devices {
     enabled     = true
     name        = "scu-device-hdd"

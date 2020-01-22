@@ -37,7 +37,7 @@ type HyperflexSoftwareVersionPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Desired server firmware version to apply on the HyperFlex Cluster.
 	//
@@ -66,7 +66,7 @@ func (m *HyperflexSoftwareVersionPolicy) UnmarshalJSON(raw []byte) error {
 
 		HxdpVersionInfo *SoftwareHyperflexDistributableRef `json:"HxdpVersionInfo,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 
@@ -108,7 +108,7 @@ func (m HyperflexSoftwareVersionPolicy) MarshalJSON() ([]byte, error) {
 
 		HxdpVersionInfo *SoftwareHyperflexDistributableRef `json:"HxdpVersionInfo,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 

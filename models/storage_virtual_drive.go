@@ -79,7 +79,8 @@ type StorageVirtualDrive struct {
 	// Read Only: true
 	NumBlocks string `json:"NumBlocks,omitempty"`
 
-	// oper state
+	// It shows the current operational state of Virtual drive.
+	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 

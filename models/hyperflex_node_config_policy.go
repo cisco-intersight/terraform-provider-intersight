@@ -42,14 +42,15 @@ type HyperflexNodeConfigPolicy struct {
 	//
 	// A dash (-) will be appended to the prefix followed by the node number to form a hostname.
 	// This default naming scheme can be manually overridden in the node configuration.
-	// The maximum length of a prefix is 60 and must only contain alphanumeric characters or dash (-).
+	// The maximum length of a prefix is 60, must only contain alphanumeric characters or dash (-), and must
+	// start with an alphanumeric character.
 	//
 	//
 	NodeNamePrefix string `json:"NodeNamePrefix,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -73,7 +74,7 @@ func (m *HyperflexNodeConfigPolicy) UnmarshalJSON(raw []byte) error {
 
 		NodeNamePrefix string `json:"NodeNamePrefix,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -115,7 +116,7 @@ func (m HyperflexNodeConfigPolicy) MarshalJSON() ([]byte, error) {
 
 		NodeNamePrefix string `json:"NodeNamePrefix,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 	}
 
 	dataAO1.ClusterProfiles = m.ClusterProfiles

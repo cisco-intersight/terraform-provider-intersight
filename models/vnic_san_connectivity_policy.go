@@ -24,13 +24,13 @@ type VnicSanConnectivityPolicy struct {
 
 	// A collection of references to the [vnic.FcIf](mo://vnic.FcIf) Managed Object.
 	//
-	// When this managed object is deleted, the referenced [vnic.FcIf](mo://vnic.FcIf) MOs unset their reference to this deleted MO.
+	// When this managed object is deleted, the referenced [vnic.FcIf](mo://vnic.FcIf) MOs on the other side of the relationship are deleted.
 	//
 	FcIfs []*VnicFcIfRef `json:"FcIfs"`
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the server profile.
 	//
@@ -50,7 +50,7 @@ func (m *VnicSanConnectivityPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		FcIfs []*VnicFcIfRef `json:"FcIfs"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
@@ -80,7 +80,7 @@ func (m VnicSanConnectivityPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		FcIfs []*VnicFcIfRef `json:"FcIfs"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}

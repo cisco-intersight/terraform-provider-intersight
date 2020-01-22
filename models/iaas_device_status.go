@@ -6,10 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // IaasDeviceStatus Iaas:Device Status
@@ -29,6 +32,12 @@ type IaasDeviceStatus struct {
 	//
 	// Read Only: true
 	AccountType string `json:"AccountType,omitempty"`
+
+	// Describes if the device is claimed in Intersight or not.
+	//
+	// Read Only: true
+	// Enum: [Unknown Yes No Not Applicable]
+	ClaimStatus string `json:"ClaimStatus,omitempty"`
 
 	// Describes about the connection status between the UCSD and the actual end device.
 	//
@@ -88,6 +97,8 @@ func (m *IaasDeviceStatus) UnmarshalJSON(raw []byte) error {
 
 		AccountType string `json:"AccountType,omitempty"`
 
+		ClaimStatus string `json:"ClaimStatus,omitempty"`
+
 		ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
 		DeviceModel string `json:"DeviceModel,omitempty"`
@@ -111,6 +122,8 @@ func (m *IaasDeviceStatus) UnmarshalJSON(raw []byte) error {
 	m.AccountName = dataAO1.AccountName
 
 	m.AccountType = dataAO1.AccountType
+
+	m.ClaimStatus = dataAO1.ClaimStatus
 
 	m.ConnectionStatus = dataAO1.ConnectionStatus
 
@@ -146,6 +159,8 @@ func (m IaasDeviceStatus) MarshalJSON() ([]byte, error) {
 
 		AccountType string `json:"AccountType,omitempty"`
 
+		ClaimStatus string `json:"ClaimStatus,omitempty"`
+
 		ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
 		DeviceModel string `json:"DeviceModel,omitempty"`
@@ -166,6 +181,8 @@ func (m IaasDeviceStatus) MarshalJSON() ([]byte, error) {
 	dataAO1.AccountName = m.AccountName
 
 	dataAO1.AccountType = m.AccountType
+
+	dataAO1.ClaimStatus = m.ClaimStatus
 
 	dataAO1.ConnectionStatus = m.ConnectionStatus
 
@@ -201,6 +218,10 @@ func (m *IaasDeviceStatus) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateClaimStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateGUID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -208,6 +229,40 @@ func (m *IaasDeviceStatus) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var iaasDeviceStatusTypeClaimStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Unknown","Yes","No","Not Applicable"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		iaasDeviceStatusTypeClaimStatusPropEnum = append(iaasDeviceStatusTypeClaimStatusPropEnum, v)
+	}
+}
+
+// property enum
+func (m *IaasDeviceStatus) validateClaimStatusEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, iaasDeviceStatusTypeClaimStatusPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *IaasDeviceStatus) validateClaimStatus(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ClaimStatus) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateClaimStatusEnum("ClaimStatus", "body", m.ClaimStatus); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -32,30 +32,45 @@ import (
 //
 // swagger:model contentGrammar
 type ContentGrammar struct {
-	ContentGrammarAO0P0
+	MoBaseComplexType
+
+	ContentGrammarAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *ContentGrammar) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 ContentGrammarAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.ContentGrammarAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 ContentGrammarAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.ContentGrammarAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m ContentGrammar) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.ContentGrammarAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.ContentGrammarAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -64,8 +79,12 @@ func (m ContentGrammar) MarshalJSON() ([]byte, error) {
 func (m *ContentGrammar) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with ContentGrammarAO0P0
-	if err := m.ContentGrammarAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with ContentGrammarAO1P1
+	if err := m.ContentGrammarAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -93,9 +112,9 @@ func (m *ContentGrammar) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// ContentGrammarAO0P0 content grammar a o0 p0
-// swagger:model ContentGrammarAO0P0
-type ContentGrammarAO0P0 struct {
+// ContentGrammarAO1P1 content grammar a o1 p1
+// swagger:model ContentGrammarAO1P1
+type ContentGrammarAO1P1 struct {
 
 	// The list of parameter definitions, if found in a given API/device response,
 	// makes the content handlers to treat the response as error response.
@@ -103,23 +122,13 @@ type ContentGrammarAO0P0 struct {
 	// This is optional parameter.
 	//
 	//
-	ErrorParameters []*ContentParameter `json:"ErrorParameters"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+	ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 	// The list of parameter definitions that mark the parameters to be
 	// extracted using this grammar specification.
 	//
 	//
-	Parameters []*ContentParameter `json:"Parameters"`
+	Parameters []*ContentBaseParameter `json:"Parameters"`
 
 	// The collection of complex types definitions used in this grammar
 	// specification.
@@ -130,12 +139,12 @@ type ContentGrammarAO0P0 struct {
 	//
 	Types []*ContentComplexType `json:"Types"`
 
-	// content grammar a o0 p0
-	ContentGrammarAO0P0 map[string]interface{} `json:"-"`
+	// content grammar a o1 p1
+	ContentGrammarAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *ContentGrammarAO0P0) UnmarshalJSON(data []byte) error {
+func (m *ContentGrammarAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -145,23 +154,13 @@ func (m *ContentGrammarAO0P0) UnmarshalJSON(data []byte) error {
 		// This is optional parameter.
 		//
 		//
-		ErrorParameters []*ContentParameter `json:"ErrorParameters"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 		// The list of parameter definitions that mark the parameters to be
 		// extracted using this grammar specification.
 		//
 		//
-		Parameters []*ContentParameter `json:"Parameters"`
+		Parameters []*ContentBaseParameter `json:"Parameters"`
 
 		// The collection of complex types definitions used in this grammar
 		// specification.
@@ -175,11 +174,9 @@ func (m *ContentGrammarAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv ContentGrammarAO0P0
+	var rcv ContentGrammarAO1P1
 
 	rcv.ErrorParameters = stage1.ErrorParameters
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Parameters = stage1.Parameters
 
@@ -195,8 +192,6 @@ func (m *ContentGrammarAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "ErrorParameters")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Parameters")
 
 	delete(stage2, "Types")
@@ -211,14 +206,14 @@ func (m *ContentGrammarAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.ContentGrammarAO0P0 = result
+		m.ContentGrammarAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m ContentGrammarAO0P0) MarshalJSON() ([]byte, error) {
+func (m ContentGrammarAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The list of parameter definitions, if found in a given API/device response,
@@ -227,23 +222,13 @@ func (m ContentGrammarAO0P0) MarshalJSON() ([]byte, error) {
 		// This is optional parameter.
 		//
 		//
-		ErrorParameters []*ContentParameter `json:"ErrorParameters"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 		// The list of parameter definitions that mark the parameters to be
 		// extracted using this grammar specification.
 		//
 		//
-		Parameters []*ContentParameter `json:"Parameters"`
+		Parameters []*ContentBaseParameter `json:"Parameters"`
 
 		// The collection of complex types definitions used in this grammar
 		// specification.
@@ -257,8 +242,6 @@ func (m ContentGrammarAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.ErrorParameters = m.ErrorParameters
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Parameters = m.Parameters
 
 	stage1.Types = m.Types
@@ -269,12 +252,12 @@ func (m ContentGrammarAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.ContentGrammarAO0P0) == 0 {
+	if len(m.ContentGrammarAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.ContentGrammarAO0P0)
+	additional, err := json.Marshal(m.ContentGrammarAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -288,8 +271,8 @@ func (m ContentGrammarAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this content grammar a o0 p0
-func (m *ContentGrammarAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this content grammar a o1 p1
+func (m *ContentGrammarAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateErrorParameters(formats); err != nil {
@@ -310,7 +293,7 @@ func (m *ContentGrammarAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ContentGrammarAO0P0) validateErrorParameters(formats strfmt.Registry) error {
+func (m *ContentGrammarAO1P1) validateErrorParameters(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ErrorParameters) { // not required
 		return nil
@@ -335,7 +318,7 @@ func (m *ContentGrammarAO0P0) validateErrorParameters(formats strfmt.Registry) e
 	return nil
 }
 
-func (m *ContentGrammarAO0P0) validateParameters(formats strfmt.Registry) error {
+func (m *ContentGrammarAO1P1) validateParameters(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Parameters) { // not required
 		return nil
@@ -360,7 +343,7 @@ func (m *ContentGrammarAO0P0) validateParameters(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *ContentGrammarAO0P0) validateTypes(formats strfmt.Registry) error {
+func (m *ContentGrammarAO1P1) validateTypes(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Types) { // not required
 		return nil
@@ -386,7 +369,7 @@ func (m *ContentGrammarAO0P0) validateTypes(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *ContentGrammarAO0P0) MarshalBinary() ([]byte, error) {
+func (m *ContentGrammarAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -394,8 +377,8 @@ func (m *ContentGrammarAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *ContentGrammarAO0P0) UnmarshalBinary(b []byte) error {
-	var res ContentGrammarAO0P0
+func (m *ContentGrammarAO1P1) UnmarshalBinary(b []byte) error {
+	var res ContentGrammarAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

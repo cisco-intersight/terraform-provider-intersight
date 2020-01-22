@@ -33,6 +33,14 @@ type HyperflexCluster struct {
 	// Read Only: true
 	Alarm []*HyperflexAlarmRef `json:"Alarm"`
 
+	// The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.
+	//
+	// Default value is math.MaxInt32 to indicate that the capacity runway is "Unknown" for a cluster that is not connected or with not sufficient data.
+	//
+	//
+	// Read Only: true
+	CapacityRunway int64 `json:"CapacityRunway,omitempty"`
+
 	// The name of this HyperFlex cluster.
 	//
 	// Read Only: true
@@ -140,6 +148,16 @@ type HyperflexCluster struct {
 	// Read Only: true
 	Summary *HyperflexSummary `json:"Summary,omitempty"`
 
+	// The storage utilization percentage is computed based on total capacity and current capacity utilization.
+	//
+	// Read Only: true
+	UtilizationPercentage float32 `json:"UtilizationPercentage,omitempty"`
+
+	// The storage utilization trend percentage represents the trend in percentage computed using the first and last point from historical data.
+	//
+	// Read Only: true
+	UtilizationTrendPercentage float32 `json:"UtilizationTrendPercentage,omitempty"`
+
 	// The number of virtual machines present on this cluster.
 	//
 	// Read Only: true
@@ -158,6 +176,8 @@ func (m *HyperflexCluster) UnmarshalJSON(raw []byte) error {
 	// AO1
 	var dataAO1 struct {
 		Alarm []*HyperflexAlarmRef `json:"Alarm"`
+
+		CapacityRunway int64 `json:"CapacityRunway,omitempty"`
 
 		ClusterName string `json:"ClusterName,omitempty"`
 
@@ -191,6 +211,10 @@ func (m *HyperflexCluster) UnmarshalJSON(raw []byte) error {
 
 		Summary *HyperflexSummary `json:"Summary,omitempty"`
 
+		UtilizationPercentage float32 `json:"UtilizationPercentage,omitempty"`
+
+		UtilizationTrendPercentage float32 `json:"UtilizationTrendPercentage,omitempty"`
+
 		VMCount int64 `json:"VmCount,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -198,6 +222,8 @@ func (m *HyperflexCluster) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.Alarm = dataAO1.Alarm
+
+	m.CapacityRunway = dataAO1.CapacityRunway
 
 	m.ClusterName = dataAO1.ClusterName
 
@@ -231,6 +257,10 @@ func (m *HyperflexCluster) UnmarshalJSON(raw []byte) error {
 
 	m.Summary = dataAO1.Summary
 
+	m.UtilizationPercentage = dataAO1.UtilizationPercentage
+
+	m.UtilizationTrendPercentage = dataAO1.UtilizationTrendPercentage
+
 	m.VMCount = dataAO1.VMCount
 
 	return nil
@@ -248,6 +278,8 @@ func (m HyperflexCluster) MarshalJSON() ([]byte, error) {
 
 	var dataAO1 struct {
 		Alarm []*HyperflexAlarmRef `json:"Alarm"`
+
+		CapacityRunway int64 `json:"CapacityRunway,omitempty"`
 
 		ClusterName string `json:"ClusterName,omitempty"`
 
@@ -281,10 +313,16 @@ func (m HyperflexCluster) MarshalJSON() ([]byte, error) {
 
 		Summary *HyperflexSummary `json:"Summary,omitempty"`
 
+		UtilizationPercentage float32 `json:"UtilizationPercentage,omitempty"`
+
+		UtilizationTrendPercentage float32 `json:"UtilizationTrendPercentage,omitempty"`
+
 		VMCount int64 `json:"VmCount,omitempty"`
 	}
 
 	dataAO1.Alarm = m.Alarm
+
+	dataAO1.CapacityRunway = m.CapacityRunway
 
 	dataAO1.ClusterName = m.ClusterName
 
@@ -317,6 +355,10 @@ func (m HyperflexCluster) MarshalJSON() ([]byte, error) {
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
 	dataAO1.Summary = m.Summary
+
+	dataAO1.UtilizationPercentage = m.UtilizationPercentage
+
+	dataAO1.UtilizationTrendPercentage = m.UtilizationTrendPercentage
 
 	dataAO1.VMCount = m.VMCount
 

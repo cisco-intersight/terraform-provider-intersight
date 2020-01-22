@@ -20,7 +20,7 @@ a specific number of partitions. For each cloud environment these numbers will b
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name of the domain-group.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `partition1`:(int)The partition number domain group related messages are produced for 'Partition1' category service topics.
 * `partition2`:(int)In a cloud environment this parameter will indicate to which partition number domain group related messages are produced for 'Partition2' category service topics.
 * `partition3`:(int)In a cloud environment this parameter will indicate to which partition number domain group related messages are produced for 'Partition3' category service topics.

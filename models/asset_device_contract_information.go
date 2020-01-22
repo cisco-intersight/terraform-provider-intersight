@@ -138,6 +138,11 @@ type AssetDeviceContractInformation struct {
 	// Format: date-time
 	ServiceStartDate strfmt.DateTime `json:"ServiceStartDate,omitempty"`
 
+	// Internal property used for triggering and tracking actions for contract information.
+	//
+	// Enum: [Update OK Failed Retry]
+	StateContract *string `json:"StateContract,omitempty"`
+
 	// End date for the warranty that covers the Cisco device.
 	//
 	// Read Only: true
@@ -204,6 +209,8 @@ func (m *AssetDeviceContractInformation) UnmarshalJSON(raw []byte) error {
 
 		ServiceStartDate strfmt.DateTime `json:"ServiceStartDate,omitempty"`
 
+		StateContract *string `json:"StateContract,omitempty"`
+
 		WarrantyEndDate string `json:"WarrantyEndDate,omitempty"`
 
 		WarrantyType string `json:"WarrantyType,omitempty"`
@@ -255,6 +262,8 @@ func (m *AssetDeviceContractInformation) UnmarshalJSON(raw []byte) error {
 	m.ServiceSku = dataAO1.ServiceSku
 
 	m.ServiceStartDate = dataAO1.ServiceStartDate
+
+	m.StateContract = dataAO1.StateContract
 
 	m.WarrantyEndDate = dataAO1.WarrantyEndDate
 
@@ -318,6 +327,8 @@ func (m AssetDeviceContractInformation) MarshalJSON() ([]byte, error) {
 
 		ServiceStartDate strfmt.DateTime `json:"ServiceStartDate,omitempty"`
 
+		StateContract *string `json:"StateContract,omitempty"`
+
 		WarrantyEndDate string `json:"WarrantyEndDate,omitempty"`
 
 		WarrantyType string `json:"WarrantyType,omitempty"`
@@ -366,6 +377,8 @@ func (m AssetDeviceContractInformation) MarshalJSON() ([]byte, error) {
 	dataAO1.ServiceSku = m.ServiceSku
 
 	dataAO1.ServiceStartDate = m.ServiceStartDate
+
+	dataAO1.StateContract = m.StateContract
 
 	dataAO1.WarrantyEndDate = m.WarrantyEndDate
 
@@ -430,6 +443,10 @@ func (m *AssetDeviceContractInformation) Validate(formats strfmt.Registry) error
 	}
 
 	if err := m.validateServiceStartDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStateContract(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -669,6 +686,40 @@ func (m *AssetDeviceContractInformation) validateServiceStartDate(formats strfmt
 	}
 
 	if err := validate.FormatOf("ServiceStartDate", "body", "date-time", m.ServiceStartDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var assetDeviceContractInformationTypeStateContractPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Update","OK","Failed","Retry"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		assetDeviceContractInformationTypeStateContractPropEnum = append(assetDeviceContractInformationTypeStateContractPropEnum, v)
+	}
+}
+
+// property enum
+func (m *AssetDeviceContractInformation) validateStateContractEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, assetDeviceContractInformationTypeStateContractPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *AssetDeviceContractInformation) validateStateContract(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.StateContract) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateStateContractEnum("StateContract", "body", *m.StateContract); err != nil {
 		return err
 	}
 

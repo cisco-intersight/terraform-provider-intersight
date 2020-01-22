@@ -22,30 +22,45 @@ import (
 //
 // swagger:model hclProduct
 type HclProduct struct {
-	HclProductAO0P0
+	MoBaseComplexType
+
+	HclProductAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *HclProduct) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 HclProductAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.HclProductAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 HclProductAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.HclProductAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m HclProduct) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.HclProductAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.HclProductAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m HclProduct) MarshalJSON() ([]byte, error) {
 func (m *HclProduct) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with HclProductAO0P0
-	if err := m.HclProductAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with HclProductAO1P1
+	if err := m.HclProductAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,9 +102,9 @@ func (m *HclProduct) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// HclProductAO0P0 hcl product a o0 p0
-// swagger:model HclProductAO0P0
-type HclProductAO0P0 struct {
+// HclProductAO1P1 hcl product a o1 p1
+// swagger:model HclProductAO1P1
+type HclProductAO1P1 struct {
 
 	// Supported driver names of the product.
 	//
@@ -109,16 +128,6 @@ type HclProductAO0P0 struct {
 	//
 	Model string `json:"Model,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Revision of the adapter model.
 	//
 	Revision string `json:"Revision,omitempty"`
@@ -131,12 +140,12 @@ type HclProductAO0P0 struct {
 	//
 	Vendor string `json:"Vendor,omitempty"`
 
-	// hcl product a o0 p0
-	HclProductAO0P0 map[string]interface{} `json:"-"`
+	// hcl product a o1 p1
+	HclProductAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
+func (m *HclProductAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -162,16 +171,6 @@ func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		Model string `json:"Model,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Revision of the adapter model.
 		//
 		Revision string `json:"Revision,omitempty"`
@@ -187,7 +186,7 @@ func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv HclProductAO0P0
+	var rcv HclProductAO1P1
 
 	rcv.DriverNames = stage1.DriverNames
 
@@ -198,8 +197,6 @@ func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.ID = stage1.ID
 
 	rcv.Model = stage1.Model
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Revision = stage1.Revision
 
@@ -225,8 +222,6 @@ func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Model")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Revision")
 
 	delete(stage2, "Type")
@@ -243,14 +238,14 @@ func (m *HclProductAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.HclProductAO0P0 = result
+		m.HclProductAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m HclProductAO0P0) MarshalJSON() ([]byte, error) {
+func (m HclProductAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Supported driver names of the product.
@@ -275,16 +270,6 @@ func (m HclProductAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		Model string `json:"Model,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Revision of the adapter model.
 		//
 		Revision string `json:"Revision,omitempty"`
@@ -308,8 +293,6 @@ func (m HclProductAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Model = m.Model
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Revision = m.Revision
 
 	stage1.Type = m.Type
@@ -322,12 +305,12 @@ func (m HclProductAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.HclProductAO0P0) == 0 {
+	if len(m.HclProductAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.HclProductAO0P0)
+	additional, err := json.Marshal(m.HclProductAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -341,8 +324,8 @@ func (m HclProductAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this hcl product a o0 p0
-func (m *HclProductAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this hcl product a o1 p1
+func (m *HclProductAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateErrorCode(formats); err != nil {
@@ -359,7 +342,7 @@ func (m *HclProductAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var hclProductAO0P0TypeErrorCodePropEnum []interface{}
+var hclProductAO1P1TypeErrorCodePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -367,82 +350,82 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		hclProductAO0P0TypeErrorCodePropEnum = append(hclProductAO0P0TypeErrorCodePropEnum, v)
+		hclProductAO1P1TypeErrorCodePropEnum = append(hclProductAO1P1TypeErrorCodePropEnum, v)
 	}
 }
 
 const (
 
-	// HclProductAO0P0ErrorCodeSuccess captures enum value "Success"
-	HclProductAO0P0ErrorCodeSuccess string = "Success"
+	// HclProductAO1P1ErrorCodeSuccess captures enum value "Success"
+	HclProductAO1P1ErrorCodeSuccess string = "Success"
 
-	// HclProductAO0P0ErrorCodeUnknown captures enum value "Unknown"
-	HclProductAO0P0ErrorCodeUnknown string = "Unknown"
+	// HclProductAO1P1ErrorCodeUnknown captures enum value "Unknown"
+	HclProductAO1P1ErrorCodeUnknown string = "Unknown"
 
-	// HclProductAO0P0ErrorCodeUnknownServer captures enum value "UnknownServer"
-	HclProductAO0P0ErrorCodeUnknownServer string = "UnknownServer"
+	// HclProductAO1P1ErrorCodeUnknownServer captures enum value "UnknownServer"
+	HclProductAO1P1ErrorCodeUnknownServer string = "UnknownServer"
 
-	// HclProductAO0P0ErrorCodeInvalidUcsVersion captures enum value "InvalidUcsVersion"
-	HclProductAO0P0ErrorCodeInvalidUcsVersion string = "InvalidUcsVersion"
+	// HclProductAO1P1ErrorCodeInvalidUcsVersion captures enum value "InvalidUcsVersion"
+	HclProductAO1P1ErrorCodeInvalidUcsVersion string = "InvalidUcsVersion"
 
-	// HclProductAO0P0ErrorCodeProcessorNotSupported captures enum value "ProcessorNotSupported"
-	HclProductAO0P0ErrorCodeProcessorNotSupported string = "ProcessorNotSupported"
+	// HclProductAO1P1ErrorCodeProcessorNotSupported captures enum value "ProcessorNotSupported"
+	HclProductAO1P1ErrorCodeProcessorNotSupported string = "ProcessorNotSupported"
 
-	// HclProductAO0P0ErrorCodeOSNotSupported captures enum value "OSNotSupported"
-	HclProductAO0P0ErrorCodeOSNotSupported string = "OSNotSupported"
+	// HclProductAO1P1ErrorCodeOSNotSupported captures enum value "OSNotSupported"
+	HclProductAO1P1ErrorCodeOSNotSupported string = "OSNotSupported"
 
-	// HclProductAO0P0ErrorCodeOSUnknown captures enum value "OSUnknown"
-	HclProductAO0P0ErrorCodeOSUnknown string = "OSUnknown"
+	// HclProductAO1P1ErrorCodeOSUnknown captures enum value "OSUnknown"
+	HclProductAO1P1ErrorCodeOSUnknown string = "OSUnknown"
 
-	// HclProductAO0P0ErrorCodeUCSVersionNotSupported captures enum value "UCSVersionNotSupported"
-	HclProductAO0P0ErrorCodeUCSVersionNotSupported string = "UCSVersionNotSupported"
+	// HclProductAO1P1ErrorCodeUCSVersionNotSupported captures enum value "UCSVersionNotSupported"
+	HclProductAO1P1ErrorCodeUCSVersionNotSupported string = "UCSVersionNotSupported"
 
-	// HclProductAO0P0ErrorCodeUcsVersionServerOSCombinationNotSupported captures enum value "UcsVersionServerOSCombinationNotSupported"
-	HclProductAO0P0ErrorCodeUcsVersionServerOSCombinationNotSupported string = "UcsVersionServerOSCombinationNotSupported"
+	// HclProductAO1P1ErrorCodeUcsVersionServerOSCombinationNotSupported captures enum value "UcsVersionServerOSCombinationNotSupported"
+	HclProductAO1P1ErrorCodeUcsVersionServerOSCombinationNotSupported string = "UcsVersionServerOSCombinationNotSupported"
 
-	// HclProductAO0P0ErrorCodeProductUnknown captures enum value "ProductUnknown"
-	HclProductAO0P0ErrorCodeProductUnknown string = "ProductUnknown"
+	// HclProductAO1P1ErrorCodeProductUnknown captures enum value "ProductUnknown"
+	HclProductAO1P1ErrorCodeProductUnknown string = "ProductUnknown"
 
-	// HclProductAO0P0ErrorCodeProductNotSupported captures enum value "ProductNotSupported"
-	HclProductAO0P0ErrorCodeProductNotSupported string = "ProductNotSupported"
+	// HclProductAO1P1ErrorCodeProductNotSupported captures enum value "ProductNotSupported"
+	HclProductAO1P1ErrorCodeProductNotSupported string = "ProductNotSupported"
 
-	// HclProductAO0P0ErrorCodeDriverNameNotSupported captures enum value "DriverNameNotSupported"
-	HclProductAO0P0ErrorCodeDriverNameNotSupported string = "DriverNameNotSupported"
+	// HclProductAO1P1ErrorCodeDriverNameNotSupported captures enum value "DriverNameNotSupported"
+	HclProductAO1P1ErrorCodeDriverNameNotSupported string = "DriverNameNotSupported"
 
-	// HclProductAO0P0ErrorCodeFirmwareVersionNotSupported captures enum value "FirmwareVersionNotSupported"
-	HclProductAO0P0ErrorCodeFirmwareVersionNotSupported string = "FirmwareVersionNotSupported"
+	// HclProductAO1P1ErrorCodeFirmwareVersionNotSupported captures enum value "FirmwareVersionNotSupported"
+	HclProductAO1P1ErrorCodeFirmwareVersionNotSupported string = "FirmwareVersionNotSupported"
 
-	// HclProductAO0P0ErrorCodeDriverVersionNotSupported captures enum value "DriverVersionNotSupported"
-	HclProductAO0P0ErrorCodeDriverVersionNotSupported string = "DriverVersionNotSupported"
+	// HclProductAO1P1ErrorCodeDriverVersionNotSupported captures enum value "DriverVersionNotSupported"
+	HclProductAO1P1ErrorCodeDriverVersionNotSupported string = "DriverVersionNotSupported"
 
-	// HclProductAO0P0ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported captures enum value "FirmwareVersionDriverVersionCombinationNotSupported"
-	HclProductAO0P0ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported string = "FirmwareVersionDriverVersionCombinationNotSupported"
+	// HclProductAO1P1ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported captures enum value "FirmwareVersionDriverVersionCombinationNotSupported"
+	HclProductAO1P1ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported string = "FirmwareVersionDriverVersionCombinationNotSupported"
 
-	// HclProductAO0P0ErrorCodeFirmwareVersionAndDriverVersionNotSupported captures enum value "FirmwareVersionAndDriverVersionNotSupported"
-	HclProductAO0P0ErrorCodeFirmwareVersionAndDriverVersionNotSupported string = "FirmwareVersionAndDriverVersionNotSupported"
+	// HclProductAO1P1ErrorCodeFirmwareVersionAndDriverVersionNotSupported captures enum value "FirmwareVersionAndDriverVersionNotSupported"
+	HclProductAO1P1ErrorCodeFirmwareVersionAndDriverVersionNotSupported string = "FirmwareVersionAndDriverVersionNotSupported"
 
-	// HclProductAO0P0ErrorCodeFirmwareVersionAndDriverNameNotSupported captures enum value "FirmwareVersionAndDriverNameNotSupported"
-	HclProductAO0P0ErrorCodeFirmwareVersionAndDriverNameNotSupported string = "FirmwareVersionAndDriverNameNotSupported"
+	// HclProductAO1P1ErrorCodeFirmwareVersionAndDriverNameNotSupported captures enum value "FirmwareVersionAndDriverNameNotSupported"
+	HclProductAO1P1ErrorCodeFirmwareVersionAndDriverNameNotSupported string = "FirmwareVersionAndDriverNameNotSupported"
 
-	// HclProductAO0P0ErrorCodeInternalError captures enum value "InternalError"
-	HclProductAO0P0ErrorCodeInternalError string = "InternalError"
+	// HclProductAO1P1ErrorCodeInternalError captures enum value "InternalError"
+	HclProductAO1P1ErrorCodeInternalError string = "InternalError"
 
-	// HclProductAO0P0ErrorCodeMarshallingError captures enum value "MarshallingError"
-	HclProductAO0P0ErrorCodeMarshallingError string = "MarshallingError"
+	// HclProductAO1P1ErrorCodeMarshallingError captures enum value "MarshallingError"
+	HclProductAO1P1ErrorCodeMarshallingError string = "MarshallingError"
 
-	// HclProductAO0P0ErrorCodeExempted captures enum value "Exempted"
-	HclProductAO0P0ErrorCodeExempted string = "Exempted"
+	// HclProductAO1P1ErrorCodeExempted captures enum value "Exempted"
+	HclProductAO1P1ErrorCodeExempted string = "Exempted"
 )
 
 // prop value enum
-func (m *HclProductAO0P0) validateErrorCodeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, hclProductAO0P0TypeErrorCodePropEnum); err != nil {
+func (m *HclProductAO1P1) validateErrorCodeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, hclProductAO1P1TypeErrorCodePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *HclProductAO0P0) validateErrorCode(formats strfmt.Registry) error {
+func (m *HclProductAO1P1) validateErrorCode(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ErrorCode) { // not required
 		return nil
@@ -456,7 +439,7 @@ func (m *HclProductAO0P0) validateErrorCode(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *HclProductAO0P0) validateFirmwares(formats strfmt.Registry) error {
+func (m *HclProductAO1P1) validateFirmwares(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Firmwares) { // not required
 		return nil
@@ -482,7 +465,7 @@ func (m *HclProductAO0P0) validateFirmwares(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *HclProductAO0P0) MarshalBinary() ([]byte, error) {
+func (m *HclProductAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -490,8 +473,8 @@ func (m *HclProductAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *HclProductAO0P0) UnmarshalBinary(b []byte) error {
-	var res HclProductAO0P0
+func (m *HclProductAO1P1) UnmarshalBinary(b []byte) error {
+	var res HclProductAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

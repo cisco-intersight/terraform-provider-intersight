@@ -18,7 +18,7 @@ import (
 
 // IpmioverlanPolicy IPMI Over LAN
 //
-// IPMI Over LAN Policy
+// Intelligent Platform Management Interface Over LAN Policy.
 //
 // swagger:model ipmioverlanPolicy
 type IpmioverlanPolicy struct {
@@ -39,14 +39,14 @@ type IpmioverlanPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The highest privilege level that can be assigned to an IPMI session on a server.
 	//
 	// Enum: [admin user read-only]
 	Privilege *string `json:"Privilege,omitempty"`
 
-	// Relationship to the profile object
+	// Relationship to the profile object.
 	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
@@ -68,7 +68,7 @@ func (m *IpmioverlanPolicy) UnmarshalJSON(raw []byte) error {
 
 		IsEncryptionKeySet *bool `json:"IsEncryptionKeySet,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Privilege *string `json:"Privilege,omitempty"`
 
@@ -110,7 +110,7 @@ func (m IpmioverlanPolicy) MarshalJSON() ([]byte, error) {
 
 		IsEncryptionKeySet *bool `json:"IsEncryptionKeySet,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Privilege *string `json:"Privilege,omitempty"`
 

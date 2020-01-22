@@ -21,30 +21,45 @@ import (
 //
 // swagger:model feedbackFeedbackData
 type FeedbackFeedbackData struct {
-	FeedbackFeedbackDataAO0P0
+	MoBaseComplexType
+
+	FeedbackFeedbackDataAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *FeedbackFeedbackData) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 FeedbackFeedbackDataAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.FeedbackFeedbackDataAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 FeedbackFeedbackDataAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.FeedbackFeedbackDataAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m FeedbackFeedbackData) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.FeedbackFeedbackDataAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.FeedbackFeedbackDataAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m FeedbackFeedbackData) MarshalJSON() ([]byte, error) {
 func (m *FeedbackFeedbackData) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with FeedbackFeedbackDataAO0P0
-	if err := m.FeedbackFeedbackDataAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with FeedbackFeedbackDataAO1P1
+	if err := m.FeedbackFeedbackDataAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,13 @@ func (m *FeedbackFeedbackData) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// FeedbackFeedbackDataAO0P0 feedback feedback data a o0 p0
-// swagger:model FeedbackFeedbackDataAO0P0
-type FeedbackFeedbackDataAO0P0 struct {
+// FeedbackFeedbackDataAO1P1 feedback feedback data a o1 p1
+// swagger:model FeedbackFeedbackDataAO1P1
+type FeedbackFeedbackDataAO1P1 struct {
+
+	// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
+	//
+	AccountName string `json:"AccountName,omitempty"`
 
 	// Text of the feedback as provided by the user, if it is a bug or a comment.
 	//
@@ -103,16 +126,6 @@ type FeedbackFeedbackDataAO0P0 struct {
 	//
 	FollowUp *bool `json:"FollowUp,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Bunch of last traceId for reproducing user last activity.
 	//
 	TraceIds interface{} `json:"TraceIds,omitempty"`
@@ -122,14 +135,18 @@ type FeedbackFeedbackDataAO0P0 struct {
 	// Enum: [Evaluation Bug]
 	Type *string `json:"Type,omitempty"`
 
-	// feedback feedback data a o0 p0
-	FeedbackFeedbackDataAO0P0 map[string]interface{} `json:"-"`
+	// feedback feedback data a o1 p1
+	FeedbackFeedbackDataAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
+func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
+
+		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
+		//
+		AccountName string `json:"AccountName,omitempty"`
 
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
 		//
@@ -148,16 +165,6 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		FollowUp *bool `json:"FollowUp,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Bunch of last traceId for reproducing user last activity.
 		//
 		TraceIds interface{} `json:"TraceIds,omitempty"`
@@ -170,7 +177,9 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv FeedbackFeedbackDataAO0P0
+	var rcv FeedbackFeedbackDataAO1P1
+
+	rcv.AccountName = stage1.AccountName
 
 	rcv.Comment = stage1.Comment
 
@@ -179,8 +188,6 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.Evaluation = stage1.Evaluation
 
 	rcv.FollowUp = stage1.FollowUp
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.TraceIds = stage1.TraceIds
 
@@ -194,6 +201,8 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	delete(stage2, "AccountName")
+
 	delete(stage2, "Comment")
 
 	delete(stage2, "Email")
@@ -201,8 +210,6 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 	delete(stage2, "Evaluation")
 
 	delete(stage2, "FollowUp")
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "TraceIds")
 
@@ -218,15 +225,19 @@ func (m *FeedbackFeedbackDataAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.FeedbackFeedbackDataAO0P0 = result
+		m.FeedbackFeedbackDataAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
+func (m FeedbackFeedbackDataAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
+
+		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
+		//
+		AccountName string `json:"AccountName,omitempty"`
 
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
 		//
@@ -245,16 +256,6 @@ func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		FollowUp *bool `json:"FollowUp,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Bunch of last traceId for reproducing user last activity.
 		//
 		TraceIds interface{} `json:"TraceIds,omitempty"`
@@ -265,6 +266,8 @@ func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
 		Type *string `json:"Type,omitempty"`
 	}
 
+	stage1.AccountName = m.AccountName
+
 	stage1.Comment = m.Comment
 
 	stage1.Email = m.Email
@@ -272,8 +275,6 @@ func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
 	stage1.Evaluation = m.Evaluation
 
 	stage1.FollowUp = m.FollowUp
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.TraceIds = m.TraceIds
 
@@ -285,12 +286,12 @@ func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.FeedbackFeedbackDataAO0P0) == 0 {
+	if len(m.FeedbackFeedbackDataAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.FeedbackFeedbackDataAO0P0)
+	additional, err := json.Marshal(m.FeedbackFeedbackDataAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -304,8 +305,8 @@ func (m FeedbackFeedbackDataAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this feedback feedback data a o0 p0
-func (m *FeedbackFeedbackDataAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this feedback feedback data a o1 p1
+func (m *FeedbackFeedbackDataAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEvaluation(formats); err != nil {
@@ -322,7 +323,7 @@ func (m *FeedbackFeedbackDataAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var feedbackFeedbackDataAO0P0TypeEvaluationPropEnum []interface{}
+var feedbackFeedbackDataAO1P1TypeEvaluationPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -330,34 +331,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		feedbackFeedbackDataAO0P0TypeEvaluationPropEnum = append(feedbackFeedbackDataAO0P0TypeEvaluationPropEnum, v)
+		feedbackFeedbackDataAO1P1TypeEvaluationPropEnum = append(feedbackFeedbackDataAO1P1TypeEvaluationPropEnum, v)
 	}
 }
 
 const (
 
-	// FeedbackFeedbackDataAO0P0EvaluationExcellent captures enum value "Excellent"
-	FeedbackFeedbackDataAO0P0EvaluationExcellent string = "Excellent"
+	// FeedbackFeedbackDataAO1P1EvaluationExcellent captures enum value "Excellent"
+	FeedbackFeedbackDataAO1P1EvaluationExcellent string = "Excellent"
 
-	// FeedbackFeedbackDataAO0P0EvaluationPoor captures enum value "Poor"
-	FeedbackFeedbackDataAO0P0EvaluationPoor string = "Poor"
+	// FeedbackFeedbackDataAO1P1EvaluationPoor captures enum value "Poor"
+	FeedbackFeedbackDataAO1P1EvaluationPoor string = "Poor"
 
-	// FeedbackFeedbackDataAO0P0EvaluationFair captures enum value "Fair"
-	FeedbackFeedbackDataAO0P0EvaluationFair string = "Fair"
+	// FeedbackFeedbackDataAO1P1EvaluationFair captures enum value "Fair"
+	FeedbackFeedbackDataAO1P1EvaluationFair string = "Fair"
 
-	// FeedbackFeedbackDataAO0P0EvaluationGood captures enum value "Good"
-	FeedbackFeedbackDataAO0P0EvaluationGood string = "Good"
+	// FeedbackFeedbackDataAO1P1EvaluationGood captures enum value "Good"
+	FeedbackFeedbackDataAO1P1EvaluationGood string = "Good"
 )
 
 // prop value enum
-func (m *FeedbackFeedbackDataAO0P0) validateEvaluationEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, feedbackFeedbackDataAO0P0TypeEvaluationPropEnum); err != nil {
+func (m *FeedbackFeedbackDataAO1P1) validateEvaluationEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, feedbackFeedbackDataAO1P1TypeEvaluationPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *FeedbackFeedbackDataAO0P0) validateEvaluation(formats strfmt.Registry) error {
+func (m *FeedbackFeedbackDataAO1P1) validateEvaluation(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Evaluation) { // not required
 		return nil
@@ -371,7 +372,7 @@ func (m *FeedbackFeedbackDataAO0P0) validateEvaluation(formats strfmt.Registry) 
 	return nil
 }
 
-var feedbackFeedbackDataAO0P0TypeTypePropEnum []interface{}
+var feedbackFeedbackDataAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -379,28 +380,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		feedbackFeedbackDataAO0P0TypeTypePropEnum = append(feedbackFeedbackDataAO0P0TypeTypePropEnum, v)
+		feedbackFeedbackDataAO1P1TypeTypePropEnum = append(feedbackFeedbackDataAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// FeedbackFeedbackDataAO0P0TypeEvaluation captures enum value "Evaluation"
-	FeedbackFeedbackDataAO0P0TypeEvaluation string = "Evaluation"
+	// FeedbackFeedbackDataAO1P1TypeEvaluation captures enum value "Evaluation"
+	FeedbackFeedbackDataAO1P1TypeEvaluation string = "Evaluation"
 
-	// FeedbackFeedbackDataAO0P0TypeBug captures enum value "Bug"
-	FeedbackFeedbackDataAO0P0TypeBug string = "Bug"
+	// FeedbackFeedbackDataAO1P1TypeBug captures enum value "Bug"
+	FeedbackFeedbackDataAO1P1TypeBug string = "Bug"
 )
 
 // prop value enum
-func (m *FeedbackFeedbackDataAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, feedbackFeedbackDataAO0P0TypeTypePropEnum); err != nil {
+func (m *FeedbackFeedbackDataAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, feedbackFeedbackDataAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *FeedbackFeedbackDataAO0P0) validateType(formats strfmt.Registry) error {
+func (m *FeedbackFeedbackDataAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -415,7 +416,7 @@ func (m *FeedbackFeedbackDataAO0P0) validateType(formats strfmt.Registry) error 
 }
 
 // MarshalBinary interface implementation
-func (m *FeedbackFeedbackDataAO0P0) MarshalBinary() ([]byte, error) {
+func (m *FeedbackFeedbackDataAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -423,8 +424,8 @@ func (m *FeedbackFeedbackDataAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *FeedbackFeedbackDataAO0P0) UnmarshalBinary(b []byte) error {
-	var res FeedbackFeedbackDataAO0P0
+func (m *FeedbackFeedbackDataAO1P1) UnmarshalBinary(b []byte) error {
+	var res FeedbackFeedbackDataAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

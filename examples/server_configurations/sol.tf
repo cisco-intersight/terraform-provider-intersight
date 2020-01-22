@@ -8,6 +8,10 @@ resource "intersight_sol_policy" "sol1" {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"
   }
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 /*

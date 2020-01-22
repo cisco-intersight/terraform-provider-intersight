@@ -57,6 +57,11 @@ type MemoryArray struct {
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
+	// This represents all the persistent memory modules found in a memory array of a server.
+	//
+	// Read Only: true
+	PersistentMemoryUnits []*MemoryPersistentMemoryUnitRef `json:"PersistentMemoryUnits"`
+
 	// presence
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
@@ -66,7 +71,8 @@ type MemoryArray struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// units
+	// This represents all the DIMMs found in a memory array of a server. This includes both regular DIMMs and persistent memory modules.
+	//
 	// Read Only: true
 	Units []*MemoryUnitRef `json:"Units"`
 }
@@ -98,6 +104,8 @@ func (m *MemoryArray) UnmarshalJSON(raw []byte) error {
 
 		OperPowerState string `json:"OperPowerState,omitempty"`
 
+		PersistentMemoryUnits []*MemoryPersistentMemoryUnitRef `json:"PersistentMemoryUnits"`
+
 		Presence string `json:"Presence,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
@@ -123,6 +131,8 @@ func (m *MemoryArray) UnmarshalJSON(raw []byte) error {
 	m.MaxDevices = dataAO1.MaxDevices
 
 	m.OperPowerState = dataAO1.OperPowerState
+
+	m.PersistentMemoryUnits = dataAO1.PersistentMemoryUnits
 
 	m.Presence = dataAO1.Presence
 
@@ -160,6 +170,8 @@ func (m MemoryArray) MarshalJSON() ([]byte, error) {
 
 		OperPowerState string `json:"OperPowerState,omitempty"`
 
+		PersistentMemoryUnits []*MemoryPersistentMemoryUnitRef `json:"PersistentMemoryUnits"`
+
 		Presence string `json:"Presence,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
@@ -182,6 +194,8 @@ func (m MemoryArray) MarshalJSON() ([]byte, error) {
 	dataAO1.MaxDevices = m.MaxDevices
 
 	dataAO1.OperPowerState = m.OperPowerState
+
+	dataAO1.PersistentMemoryUnits = m.PersistentMemoryUnits
 
 	dataAO1.Presence = m.Presence
 
@@ -208,6 +222,10 @@ func (m *MemoryArray) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateComputeBoard(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePersistentMemoryUnits(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -238,6 +256,31 @@ func (m *MemoryArray) validateComputeBoard(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *MemoryArray) validatePersistentMemoryUnits(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PersistentMemoryUnits) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.PersistentMemoryUnits); i++ {
+		if swag.IsZero(m.PersistentMemoryUnits[i]) { // not required
+			continue
+		}
+
+		if m.PersistentMemoryUnits[i] != nil {
+			if err := m.PersistentMemoryUnits[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("PersistentMemoryUnits" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

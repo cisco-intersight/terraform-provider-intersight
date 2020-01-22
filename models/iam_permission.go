@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// IamPermission Iam:Permission
+// IamPermission Role
 //
 // Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
 //
@@ -31,7 +31,6 @@ type IamPermission struct {
 
 	// The informative description about each permission.
 	//
-	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// The end point roles assigned to this permission. The user can perform end point operations like GUI/CLI cross launch.
@@ -43,9 +42,12 @@ type IamPermission struct {
 	//
 	Name string `json:"Name,omitempty"`
 
+	// The resource and roles assigned to this permission. Resource role specifies the organization and the collection of roles the permission has on the organization.
+	//
+	ResourceRoles []*IamResourceRolesRef `json:"ResourceRoles"`
+
 	// The roles assigned to this permission. Role is a collection of privilege sets. Roles are assigned to a user using the permission object.
 	//
-	// Read Only: true
 	Roles []*IamRoleRef `json:"Roles"`
 
 	// A collection of references to the [iam.UserGroup](mo://iam.UserGroup) Managed Object.
@@ -80,6 +82,8 @@ func (m *IamPermission) UnmarshalJSON(raw []byte) error {
 
 		Name string `json:"Name,omitempty"`
 
+		ResourceRoles []*IamResourceRolesRef `json:"ResourceRoles"`
+
 		Roles []*IamRoleRef `json:"Roles"`
 
 		UserGroups []*IamUserGroupRef `json:"UserGroups"`
@@ -97,6 +101,8 @@ func (m *IamPermission) UnmarshalJSON(raw []byte) error {
 	m.EndPointRoles = dataAO1.EndPointRoles
 
 	m.Name = dataAO1.Name
+
+	m.ResourceRoles = dataAO1.ResourceRoles
 
 	m.Roles = dataAO1.Roles
 
@@ -126,6 +132,8 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 
 		Name string `json:"Name,omitempty"`
 
+		ResourceRoles []*IamResourceRolesRef `json:"ResourceRoles"`
+
 		Roles []*IamRoleRef `json:"Roles"`
 
 		UserGroups []*IamUserGroupRef `json:"UserGroups"`
@@ -140,6 +148,8 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 	dataAO1.EndPointRoles = m.EndPointRoles
 
 	dataAO1.Name = m.Name
+
+	dataAO1.ResourceRoles = m.ResourceRoles
 
 	dataAO1.Roles = m.Roles
 
@@ -170,6 +180,10 @@ func (m *IamPermission) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateEndPointRoles(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateResourceRoles(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -224,6 +238,31 @@ func (m *IamPermission) validateEndPointRoles(formats strfmt.Registry) error {
 			if err := m.EndPointRoles[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("EndPointRoles" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *IamPermission) validateResourceRoles(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ResourceRoles) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ResourceRoles); i++ {
+		if swag.IsZero(m.ResourceRoles[i]) { // not required
+			continue
+		}
+
+		if m.ResourceRoles[i] != nil {
+			if err := m.ResourceRoles[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("ResourceRoles" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -37,14 +37,20 @@ type ComputePhysical struct {
 	// fault summary
 	FaultSummary int64 `json:"FaultSummary,omitempty"`
 
-	// kvm Ip addresses
+	// KVM address of the device.
+	//
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
 	// memory speed
 	// Read Only: true
 	MemorySpeed string `json:"MemorySpeed,omitempty"`
 
-	// num adaptors
+	// Management address of the server.
+	//
+	MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
+
+	// Total number of Adaptors available.
+	//
 	// Read Only: true
 	NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
@@ -52,15 +58,18 @@ type ComputePhysical struct {
 	// Read Only: true
 	NumCPUCores int64 `json:"NumCpuCores,omitempty"`
 
-	// num Cpu cores enabled
+	// Number of CPU cores enabled.
+	//
 	// Read Only: true
 	NumCPUCoresEnabled int64 `json:"NumCpuCoresEnabled,omitempty"`
 
-	// num cpus
+	// Total number of CPU's available.
+	//
 	// Read Only: true
 	NumCpus int64 `json:"NumCpus,omitempty"`
 
-	// num eth host interfaces
+	// Number of Ethernet Host Interfaces.
+	//
 	// Read Only: true
 	NumEthHostInterfaces int64 `json:"NumEthHostInterfaces,omitempty"`
 
@@ -68,7 +77,8 @@ type ComputePhysical struct {
 	// Read Only: true
 	NumFcHostInterfaces int64 `json:"NumFcHostInterfaces,omitempty"`
 
-	// num threads
+	// Number of threads enabled.
+	//
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
@@ -84,7 +94,8 @@ type ComputePhysical struct {
 	// Read Only: true
 	Operability string `json:"Operability,omitempty"`
 
-	// platform type
+	// Platform type of the device.
+	//
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// presence
@@ -130,6 +141,8 @@ func (m *ComputePhysical) UnmarshalJSON(raw []byte) error {
 		KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
 		MemorySpeed string `json:"MemorySpeed,omitempty"`
+
+		MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
 
 		NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
@@ -178,6 +191,8 @@ func (m *ComputePhysical) UnmarshalJSON(raw []byte) error {
 	m.KvmIPAddresses = dataAO1.KvmIPAddresses
 
 	m.MemorySpeed = dataAO1.MemorySpeed
+
+	m.MgmtIPAddress = dataAO1.MgmtIPAddress
 
 	m.NumAdaptors = dataAO1.NumAdaptors
 
@@ -237,6 +252,8 @@ func (m ComputePhysical) MarshalJSON() ([]byte, error) {
 
 		MemorySpeed string `json:"MemorySpeed,omitempty"`
 
+		MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
+
 		NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
 		NumCPUCores int64 `json:"NumCpuCores,omitempty"`
@@ -281,6 +298,8 @@ func (m ComputePhysical) MarshalJSON() ([]byte, error) {
 	dataAO1.KvmIPAddresses = m.KvmIPAddresses
 
 	dataAO1.MemorySpeed = m.MemorySpeed
+
+	dataAO1.MgmtIPAddress = m.MgmtIPAddress
 
 	dataAO1.NumAdaptors = m.NumAdaptors
 

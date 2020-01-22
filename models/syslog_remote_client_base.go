@@ -21,30 +21,45 @@ import (
 //
 // swagger:model syslogRemoteClientBase
 type SyslogRemoteClientBase struct {
-	SyslogRemoteClientBaseAO0P0
+	MoBaseComplexType
+
+	SyslogRemoteClientBaseAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *SyslogRemoteClientBase) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 SyslogRemoteClientBaseAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.SyslogRemoteClientBaseAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 SyslogRemoteClientBaseAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.SyslogRemoteClientBaseAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m SyslogRemoteClientBase) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.SyslogRemoteClientBaseAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.SyslogRemoteClientBaseAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m SyslogRemoteClientBase) MarshalJSON() ([]byte, error) {
 func (m *SyslogRemoteClientBase) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with SyslogRemoteClientBaseAO0P0
-	if err := m.SyslogRemoteClientBaseAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with SyslogRemoteClientBaseAO1P1
+	if err := m.SyslogRemoteClientBaseAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *SyslogRemoteClientBase) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// SyslogRemoteClientBaseAO0P0 syslog remote client base a o0 p0
-// swagger:model SyslogRemoteClientBaseAO0P0
-type SyslogRemoteClientBaseAO0P0 struct {
+// SyslogRemoteClientBaseAO1P1 syslog remote client base a o1 p1
+// swagger:model SyslogRemoteClientBaseAO1P1
+type SyslogRemoteClientBaseAO1P1 struct {
 
 	// Enables/disables remote logging for the endpoint If enabled, log messages will be sent to the syslog server mentioned in the Hostname/IP Address field.
 	//
@@ -99,16 +118,6 @@ type SyslogRemoteClientBaseAO0P0 struct {
 	// Enum: [warning emergency alert critical error notice informational debug]
 	MinSeverity *string `json:"MinSeverity,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Port number used for logging on syslog server.
 	//
 	Port int64 `json:"Port,omitempty"`
@@ -118,12 +127,12 @@ type SyslogRemoteClientBaseAO0P0 struct {
 	// Enum: [udp tcp]
 	Protocol *string `json:"Protocol,omitempty"`
 
-	// syslog remote client base a o0 p0
-	SyslogRemoteClientBaseAO0P0 map[string]interface{} `json:"-"`
+	// syslog remote client base a o1 p1
+	SyslogRemoteClientBaseAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *SyslogRemoteClientBaseAO0P0) UnmarshalJSON(data []byte) error {
+func (m *SyslogRemoteClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -140,16 +149,6 @@ func (m *SyslogRemoteClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Port number used for logging on syslog server.
 		//
 		Port int64 `json:"Port,omitempty"`
@@ -162,15 +161,13 @@ func (m *SyslogRemoteClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv SyslogRemoteClientBaseAO0P0
+	var rcv SyslogRemoteClientBaseAO1P1
 
 	rcv.Enabled = stage1.Enabled
 
 	rcv.Hostname = stage1.Hostname
 
 	rcv.MinSeverity = stage1.MinSeverity
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Port = stage1.Port
 
@@ -190,8 +187,6 @@ func (m *SyslogRemoteClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MinSeverity")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Port")
 
 	delete(stage2, "Protocol")
@@ -206,14 +201,14 @@ func (m *SyslogRemoteClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.SyslogRemoteClientBaseAO0P0 = result
+		m.SyslogRemoteClientBaseAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m SyslogRemoteClientBaseAO0P0) MarshalJSON() ([]byte, error) {
+func (m SyslogRemoteClientBaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enables/disables remote logging for the endpoint If enabled, log messages will be sent to the syslog server mentioned in the Hostname/IP Address field.
@@ -228,16 +223,6 @@ func (m SyslogRemoteClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Port number used for logging on syslog server.
 		//
@@ -255,8 +240,6 @@ func (m SyslogRemoteClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.MinSeverity = m.MinSeverity
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Port = m.Port
 
 	stage1.Protocol = m.Protocol
@@ -267,12 +250,12 @@ func (m SyslogRemoteClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.SyslogRemoteClientBaseAO0P0) == 0 {
+	if len(m.SyslogRemoteClientBaseAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.SyslogRemoteClientBaseAO0P0)
+	additional, err := json.Marshal(m.SyslogRemoteClientBaseAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -286,8 +269,8 @@ func (m SyslogRemoteClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this syslog remote client base a o0 p0
-func (m *SyslogRemoteClientBaseAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this syslog remote client base a o1 p1
+func (m *SyslogRemoteClientBaseAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMinSeverity(formats); err != nil {
@@ -304,7 +287,7 @@ func (m *SyslogRemoteClientBaseAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var syslogRemoteClientBaseAO0P0TypeMinSeverityPropEnum []interface{}
+var syslogRemoteClientBaseAO1P1TypeMinSeverityPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -312,46 +295,46 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		syslogRemoteClientBaseAO0P0TypeMinSeverityPropEnum = append(syslogRemoteClientBaseAO0P0TypeMinSeverityPropEnum, v)
+		syslogRemoteClientBaseAO1P1TypeMinSeverityPropEnum = append(syslogRemoteClientBaseAO1P1TypeMinSeverityPropEnum, v)
 	}
 }
 
 const (
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityWarning captures enum value "warning"
-	SyslogRemoteClientBaseAO0P0MinSeverityWarning string = "warning"
+	// SyslogRemoteClientBaseAO1P1MinSeverityWarning captures enum value "warning"
+	SyslogRemoteClientBaseAO1P1MinSeverityWarning string = "warning"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityEmergency captures enum value "emergency"
-	SyslogRemoteClientBaseAO0P0MinSeverityEmergency string = "emergency"
+	// SyslogRemoteClientBaseAO1P1MinSeverityEmergency captures enum value "emergency"
+	SyslogRemoteClientBaseAO1P1MinSeverityEmergency string = "emergency"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityAlert captures enum value "alert"
-	SyslogRemoteClientBaseAO0P0MinSeverityAlert string = "alert"
+	// SyslogRemoteClientBaseAO1P1MinSeverityAlert captures enum value "alert"
+	SyslogRemoteClientBaseAO1P1MinSeverityAlert string = "alert"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityCritical captures enum value "critical"
-	SyslogRemoteClientBaseAO0P0MinSeverityCritical string = "critical"
+	// SyslogRemoteClientBaseAO1P1MinSeverityCritical captures enum value "critical"
+	SyslogRemoteClientBaseAO1P1MinSeverityCritical string = "critical"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityError captures enum value "error"
-	SyslogRemoteClientBaseAO0P0MinSeverityError string = "error"
+	// SyslogRemoteClientBaseAO1P1MinSeverityError captures enum value "error"
+	SyslogRemoteClientBaseAO1P1MinSeverityError string = "error"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityNotice captures enum value "notice"
-	SyslogRemoteClientBaseAO0P0MinSeverityNotice string = "notice"
+	// SyslogRemoteClientBaseAO1P1MinSeverityNotice captures enum value "notice"
+	SyslogRemoteClientBaseAO1P1MinSeverityNotice string = "notice"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityInformational captures enum value "informational"
-	SyslogRemoteClientBaseAO0P0MinSeverityInformational string = "informational"
+	// SyslogRemoteClientBaseAO1P1MinSeverityInformational captures enum value "informational"
+	SyslogRemoteClientBaseAO1P1MinSeverityInformational string = "informational"
 
-	// SyslogRemoteClientBaseAO0P0MinSeverityDebug captures enum value "debug"
-	SyslogRemoteClientBaseAO0P0MinSeverityDebug string = "debug"
+	// SyslogRemoteClientBaseAO1P1MinSeverityDebug captures enum value "debug"
+	SyslogRemoteClientBaseAO1P1MinSeverityDebug string = "debug"
 )
 
 // prop value enum
-func (m *SyslogRemoteClientBaseAO0P0) validateMinSeverityEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, syslogRemoteClientBaseAO0P0TypeMinSeverityPropEnum); err != nil {
+func (m *SyslogRemoteClientBaseAO1P1) validateMinSeverityEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, syslogRemoteClientBaseAO1P1TypeMinSeverityPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SyslogRemoteClientBaseAO0P0) validateMinSeverity(formats strfmt.Registry) error {
+func (m *SyslogRemoteClientBaseAO1P1) validateMinSeverity(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MinSeverity) { // not required
 		return nil
@@ -365,7 +348,7 @@ func (m *SyslogRemoteClientBaseAO0P0) validateMinSeverity(formats strfmt.Registr
 	return nil
 }
 
-var syslogRemoteClientBaseAO0P0TypeProtocolPropEnum []interface{}
+var syslogRemoteClientBaseAO1P1TypeProtocolPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -373,28 +356,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		syslogRemoteClientBaseAO0P0TypeProtocolPropEnum = append(syslogRemoteClientBaseAO0P0TypeProtocolPropEnum, v)
+		syslogRemoteClientBaseAO1P1TypeProtocolPropEnum = append(syslogRemoteClientBaseAO1P1TypeProtocolPropEnum, v)
 	}
 }
 
 const (
 
-	// SyslogRemoteClientBaseAO0P0ProtocolUDP captures enum value "udp"
-	SyslogRemoteClientBaseAO0P0ProtocolUDP string = "udp"
+	// SyslogRemoteClientBaseAO1P1ProtocolUDP captures enum value "udp"
+	SyslogRemoteClientBaseAO1P1ProtocolUDP string = "udp"
 
-	// SyslogRemoteClientBaseAO0P0ProtocolTCP captures enum value "tcp"
-	SyslogRemoteClientBaseAO0P0ProtocolTCP string = "tcp"
+	// SyslogRemoteClientBaseAO1P1ProtocolTCP captures enum value "tcp"
+	SyslogRemoteClientBaseAO1P1ProtocolTCP string = "tcp"
 )
 
 // prop value enum
-func (m *SyslogRemoteClientBaseAO0P0) validateProtocolEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, syslogRemoteClientBaseAO0P0TypeProtocolPropEnum); err != nil {
+func (m *SyslogRemoteClientBaseAO1P1) validateProtocolEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, syslogRemoteClientBaseAO1P1TypeProtocolPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SyslogRemoteClientBaseAO0P0) validateProtocol(formats strfmt.Registry) error {
+func (m *SyslogRemoteClientBaseAO1P1) validateProtocol(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Protocol) { // not required
 		return nil
@@ -409,7 +392,7 @@ func (m *SyslogRemoteClientBaseAO0P0) validateProtocol(formats strfmt.Registry) 
 }
 
 // MarshalBinary interface implementation
-func (m *SyslogRemoteClientBaseAO0P0) MarshalBinary() ([]byte, error) {
+func (m *SyslogRemoteClientBaseAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -417,8 +400,8 @@ func (m *SyslogRemoteClientBaseAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SyslogRemoteClientBaseAO0P0) UnmarshalBinary(b []byte) error {
-	var res SyslogRemoteClientBaseAO0P0
+func (m *SyslogRemoteClientBaseAO1P1) UnmarshalBinary(b []byte) error {
+	var res SyslogRemoteClientBaseAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

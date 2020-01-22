@@ -20,8 +20,8 @@ The following arguments can be used to get data of already created objects in In
 * `hyperv_host_count`:(int)Total HyperV hosts in UCSD.
 * `local_group_count`:(int)Total local groups in UCSD.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `standard_catalog_count`:(int)Total standard catalogs in UCSD.
 * `user_count`:(int)Total user accounts in UCSD.
-* `vm_count`:(int)Total VMs in UCSD.
+* `vm_count`:(int)Total Virtual machines in UCSD.
 * `vdc_count`:(int)Total virtual datacenters in UCSD.

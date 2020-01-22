@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -20,68 +18,26 @@ import (
 //
 // swagger:model inventoryDeviceInfo
 type InventoryDeviceInfo struct {
-	MoBaseMo
+	PolicyinventoryAbstractDeviceInfo
 
-	// Indicates the index of the last received event.
-	//
-	// Read Only: true
-	EventCounter int64 `json:"EventCounter,omitempty"`
-
-	// Indicates whether the event counter enabled for the device.
-	//
-	// Read Only: true
-	EventCounterEnabled *bool `json:"EventCounterEnabled,omitempty"`
-
-	// The time interval (in hours) between job runs.
-	//
-	// Read Only: true
-	Interval int64 `json:"Interval,omitempty"`
-
-	// Information regarding all inventory collection jobs for the device.
-	//
-	// Read Only: true
-	JobInfo []*InventoryJobInfo `json:"JobInfo"`
-
-	// Relationship to the device registration object.
-	//
-	// Read Only: true
-	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
+	InventoryDeviceInfoAllOf1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *InventoryDeviceInfo) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MoBaseMo
+	var aO0 PolicyinventoryAbstractDeviceInfo
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MoBaseMo = aO0
+	m.PolicyinventoryAbstractDeviceInfo = aO0
 
 	// AO1
-	var dataAO1 struct {
-		EventCounter int64 `json:"EventCounter,omitempty"`
-
-		EventCounterEnabled *bool `json:"EventCounterEnabled,omitempty"`
-
-		Interval int64 `json:"Interval,omitempty"`
-
-		JobInfo []*InventoryJobInfo `json:"JobInfo"`
-
-		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
-	}
-	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
+	var aO1 InventoryDeviceInfoAllOf1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
 		return err
 	}
-
-	m.EventCounter = dataAO1.EventCounter
-
-	m.EventCounterEnabled = dataAO1.EventCounterEnabled
-
-	m.Interval = dataAO1.Interval
-
-	m.JobInfo = dataAO1.JobInfo
-
-	m.RegisteredDevice = dataAO1.RegisteredDevice
+	m.InventoryDeviceInfoAllOf1 = aO1
 
 	return nil
 }
@@ -90,39 +46,17 @@ func (m *InventoryDeviceInfo) UnmarshalJSON(raw []byte) error {
 func (m InventoryDeviceInfo) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MoBaseMo)
+	aO0, err := swag.WriteJSON(m.PolicyinventoryAbstractDeviceInfo)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 
-	var dataAO1 struct {
-		EventCounter int64 `json:"EventCounter,omitempty"`
-
-		EventCounterEnabled *bool `json:"EventCounterEnabled,omitempty"`
-
-		Interval int64 `json:"Interval,omitempty"`
-
-		JobInfo []*InventoryJobInfo `json:"JobInfo"`
-
-		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
+	aO1, err := swag.WriteJSON(m.InventoryDeviceInfoAllOf1)
+	if err != nil {
+		return nil, err
 	}
-
-	dataAO1.EventCounter = m.EventCounter
-
-	dataAO1.EventCounterEnabled = m.EventCounterEnabled
-
-	dataAO1.Interval = m.Interval
-
-	dataAO1.JobInfo = m.JobInfo
-
-	dataAO1.RegisteredDevice = m.RegisteredDevice
-
-	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
-	if errAO1 != nil {
-		return nil, errAO1
-	}
-	_parts = append(_parts, jsonDataAO1)
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -131,65 +65,15 @@ func (m InventoryDeviceInfo) MarshalJSON() ([]byte, error) {
 func (m *InventoryDeviceInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MoBaseMo
-	if err := m.MoBaseMo.Validate(formats); err != nil {
+	// validation for a type composition with PolicyinventoryAbstractDeviceInfo
+	if err := m.PolicyinventoryAbstractDeviceInfo.Validate(formats); err != nil {
 		res = append(res, err)
 	}
-
-	if err := m.validateJobInfo(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRegisteredDevice(formats); err != nil {
-		res = append(res, err)
-	}
+	// validation for a type composition with InventoryDeviceInfoAllOf1
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *InventoryDeviceInfo) validateJobInfo(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.JobInfo) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.JobInfo); i++ {
-		if swag.IsZero(m.JobInfo[i]) { // not required
-			continue
-		}
-
-		if m.JobInfo[i] != nil {
-			if err := m.JobInfo[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("JobInfo" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *InventoryDeviceInfo) validateRegisteredDevice(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.RegisteredDevice) { // not required
-		return nil
-	}
-
-	if m.RegisteredDevice != nil {
-		if err := m.RegisteredDevice.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("RegisteredDevice")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -210,3 +94,7 @@ func (m *InventoryDeviceInfo) UnmarshalBinary(b []byte) error {
 	*m = res
 	return nil
 }
+
+// InventoryDeviceInfoAllOf1 inventory device info all of1
+// swagger:model InventoryDeviceInfoAllOf1
+type InventoryDeviceInfoAllOf1 interface{}

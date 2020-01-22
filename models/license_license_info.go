@@ -88,11 +88,11 @@ type LicenseLicenseInfo struct {
 	LicenseState string `json:"LicenseState,omitempty"`
 
 	// The name of the Intersight license entitlement.
-	// For example, this property may be set to 'Essentials'.
+	// For example, this property may be set to 'Essential'.
 	//
 	//
 	// Read Only: true
-	// Enum: [Essential]
+	// Enum: [Base Essential Standard Advantage]
 	LicenseType string `json:"LicenseType,omitempty"`
 
 	// The date and time when the licenseState entered the TrialPeriod or OutOfCompliance state.
@@ -357,7 +357,7 @@ var licenseLicenseInfoTypeLicenseTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Essential"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

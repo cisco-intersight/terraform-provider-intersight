@@ -21,30 +21,45 @@ import (
 //
 // swagger:model snmpUser
 type SnmpUser struct {
-	SnmpUserAO0P0
+	MoBaseComplexType
+
+	SnmpUserAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *SnmpUser) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 SnmpUserAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.SnmpUserAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 SnmpUserAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.SnmpUserAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m SnmpUser) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.SnmpUserAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.SnmpUserAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m SnmpUser) MarshalJSON() ([]byte, error) {
 func (m *SnmpUser) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with SnmpUserAO0P0
-	if err := m.SnmpUserAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with SnmpUserAO1P1
+	if err := m.SnmpUserAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *SnmpUser) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// SnmpUserAO0P0 snmp user a o0 p0
-// swagger:model SnmpUserAO0P0
-type SnmpUserAO0P0 struct {
+// SnmpUserAO1P1 snmp user a o1 p1
+// swagger:model SnmpUserAO1P1
+type SnmpUserAO1P1 struct {
 
 	// Authorization password for the user.
 	//
@@ -108,16 +127,6 @@ type SnmpUserAO0P0 struct {
 	//
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Privacy password for the user.
 	//
 	PrivacyPassword string `json:"PrivacyPassword,omitempty"`
@@ -132,12 +141,12 @@ type SnmpUserAO0P0 struct {
 	// Enum: [AuthPriv NoAuthNoPriv AuthNoPriv]
 	SecurityLevel *string `json:"SecurityLevel,omitempty"`
 
-	// snmp user a o0 p0
-	SnmpUserAO0P0 map[string]interface{} `json:"-"`
+	// snmp user a o1 p1
+	SnmpUserAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
+func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -163,16 +172,6 @@ func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Privacy password for the user.
 		//
 		PrivacyPassword string `json:"PrivacyPassword,omitempty"`
@@ -190,7 +189,7 @@ func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv SnmpUserAO0P0
+	var rcv SnmpUserAO1P1
 
 	rcv.AuthPassword = stage1.AuthPassword
 
@@ -201,8 +200,6 @@ func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.IsPrivacyPasswordSet = stage1.IsPrivacyPasswordSet
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.PrivacyPassword = stage1.PrivacyPassword
 
@@ -228,8 +225,6 @@ func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "PrivacyPassword")
 
 	delete(stage2, "PrivacyType")
@@ -246,14 +241,14 @@ func (m *SnmpUserAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.SnmpUserAO0P0 = result
+		m.SnmpUserAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m SnmpUserAO0P0) MarshalJSON() ([]byte, error) {
+func (m SnmpUserAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Authorization password for the user.
@@ -277,16 +272,6 @@ func (m SnmpUserAO0P0) MarshalJSON() ([]byte, error) {
 		// SNMP username. Must have a minimum of 1 and and a maximum of 31 characters.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Privacy password for the user.
 		//
@@ -313,8 +298,6 @@ func (m SnmpUserAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.PrivacyPassword = m.PrivacyPassword
 
 	stage1.PrivacyType = m.PrivacyType
@@ -327,12 +310,12 @@ func (m SnmpUserAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.SnmpUserAO0P0) == 0 {
+	if len(m.SnmpUserAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.SnmpUserAO0P0)
+	additional, err := json.Marshal(m.SnmpUserAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -346,8 +329,8 @@ func (m SnmpUserAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this snmp user a o0 p0
-func (m *SnmpUserAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this snmp user a o1 p1
+func (m *SnmpUserAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAuthType(formats); err != nil {
@@ -368,7 +351,7 @@ func (m *SnmpUserAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var snmpUserAO0P0TypeAuthTypePropEnum []interface{}
+var snmpUserAO1P1TypeAuthTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -376,31 +359,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		snmpUserAO0P0TypeAuthTypePropEnum = append(snmpUserAO0P0TypeAuthTypePropEnum, v)
+		snmpUserAO1P1TypeAuthTypePropEnum = append(snmpUserAO1P1TypeAuthTypePropEnum, v)
 	}
 }
 
 const (
 
-	// SnmpUserAO0P0AuthTypeNA captures enum value "NA"
-	SnmpUserAO0P0AuthTypeNA string = "NA"
+	// SnmpUserAO1P1AuthTypeNA captures enum value "NA"
+	SnmpUserAO1P1AuthTypeNA string = "NA"
 
-	// SnmpUserAO0P0AuthTypeMD5 captures enum value "MD5"
-	SnmpUserAO0P0AuthTypeMD5 string = "MD5"
+	// SnmpUserAO1P1AuthTypeMD5 captures enum value "MD5"
+	SnmpUserAO1P1AuthTypeMD5 string = "MD5"
 
-	// SnmpUserAO0P0AuthTypeSHA captures enum value "SHA"
-	SnmpUserAO0P0AuthTypeSHA string = "SHA"
+	// SnmpUserAO1P1AuthTypeSHA captures enum value "SHA"
+	SnmpUserAO1P1AuthTypeSHA string = "SHA"
 )
 
 // prop value enum
-func (m *SnmpUserAO0P0) validateAuthTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, snmpUserAO0P0TypeAuthTypePropEnum); err != nil {
+func (m *SnmpUserAO1P1) validateAuthTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, snmpUserAO1P1TypeAuthTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SnmpUserAO0P0) validateAuthType(formats strfmt.Registry) error {
+func (m *SnmpUserAO1P1) validateAuthType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AuthType) { // not required
 		return nil
@@ -414,7 +397,7 @@ func (m *SnmpUserAO0P0) validateAuthType(formats strfmt.Registry) error {
 	return nil
 }
 
-var snmpUserAO0P0TypePrivacyTypePropEnum []interface{}
+var snmpUserAO1P1TypePrivacyTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -422,31 +405,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		snmpUserAO0P0TypePrivacyTypePropEnum = append(snmpUserAO0P0TypePrivacyTypePropEnum, v)
+		snmpUserAO1P1TypePrivacyTypePropEnum = append(snmpUserAO1P1TypePrivacyTypePropEnum, v)
 	}
 }
 
 const (
 
-	// SnmpUserAO0P0PrivacyTypeNA captures enum value "NA"
-	SnmpUserAO0P0PrivacyTypeNA string = "NA"
+	// SnmpUserAO1P1PrivacyTypeNA captures enum value "NA"
+	SnmpUserAO1P1PrivacyTypeNA string = "NA"
 
-	// SnmpUserAO0P0PrivacyTypeDES captures enum value "DES"
-	SnmpUserAO0P0PrivacyTypeDES string = "DES"
+	// SnmpUserAO1P1PrivacyTypeDES captures enum value "DES"
+	SnmpUserAO1P1PrivacyTypeDES string = "DES"
 
-	// SnmpUserAO0P0PrivacyTypeAES captures enum value "AES"
-	SnmpUserAO0P0PrivacyTypeAES string = "AES"
+	// SnmpUserAO1P1PrivacyTypeAES captures enum value "AES"
+	SnmpUserAO1P1PrivacyTypeAES string = "AES"
 )
 
 // prop value enum
-func (m *SnmpUserAO0P0) validatePrivacyTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, snmpUserAO0P0TypePrivacyTypePropEnum); err != nil {
+func (m *SnmpUserAO1P1) validatePrivacyTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, snmpUserAO1P1TypePrivacyTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SnmpUserAO0P0) validatePrivacyType(formats strfmt.Registry) error {
+func (m *SnmpUserAO1P1) validatePrivacyType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.PrivacyType) { // not required
 		return nil
@@ -460,7 +443,7 @@ func (m *SnmpUserAO0P0) validatePrivacyType(formats strfmt.Registry) error {
 	return nil
 }
 
-var snmpUserAO0P0TypeSecurityLevelPropEnum []interface{}
+var snmpUserAO1P1TypeSecurityLevelPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -468,31 +451,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		snmpUserAO0P0TypeSecurityLevelPropEnum = append(snmpUserAO0P0TypeSecurityLevelPropEnum, v)
+		snmpUserAO1P1TypeSecurityLevelPropEnum = append(snmpUserAO1P1TypeSecurityLevelPropEnum, v)
 	}
 }
 
 const (
 
-	// SnmpUserAO0P0SecurityLevelAuthPriv captures enum value "AuthPriv"
-	SnmpUserAO0P0SecurityLevelAuthPriv string = "AuthPriv"
+	// SnmpUserAO1P1SecurityLevelAuthPriv captures enum value "AuthPriv"
+	SnmpUserAO1P1SecurityLevelAuthPriv string = "AuthPriv"
 
-	// SnmpUserAO0P0SecurityLevelNoAuthNoPriv captures enum value "NoAuthNoPriv"
-	SnmpUserAO0P0SecurityLevelNoAuthNoPriv string = "NoAuthNoPriv"
+	// SnmpUserAO1P1SecurityLevelNoAuthNoPriv captures enum value "NoAuthNoPriv"
+	SnmpUserAO1P1SecurityLevelNoAuthNoPriv string = "NoAuthNoPriv"
 
-	// SnmpUserAO0P0SecurityLevelAuthNoPriv captures enum value "AuthNoPriv"
-	SnmpUserAO0P0SecurityLevelAuthNoPriv string = "AuthNoPriv"
+	// SnmpUserAO1P1SecurityLevelAuthNoPriv captures enum value "AuthNoPriv"
+	SnmpUserAO1P1SecurityLevelAuthNoPriv string = "AuthNoPriv"
 )
 
 // prop value enum
-func (m *SnmpUserAO0P0) validateSecurityLevelEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, snmpUserAO0P0TypeSecurityLevelPropEnum); err != nil {
+func (m *SnmpUserAO1P1) validateSecurityLevelEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, snmpUserAO1P1TypeSecurityLevelPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SnmpUserAO0P0) validateSecurityLevel(formats strfmt.Registry) error {
+func (m *SnmpUserAO1P1) validateSecurityLevel(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.SecurityLevel) { // not required
 		return nil
@@ -507,7 +490,7 @@ func (m *SnmpUserAO0P0) validateSecurityLevel(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *SnmpUserAO0P0) MarshalBinary() ([]byte, error) {
+func (m *SnmpUserAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -515,8 +498,8 @@ func (m *SnmpUserAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SnmpUserAO0P0) UnmarshalBinary(b []byte) error {
-	var res SnmpUserAO0P0
+func (m *SnmpUserAO1P1) UnmarshalBinary(b []byte) error {
+	var res SnmpUserAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

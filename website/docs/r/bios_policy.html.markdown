@@ -114,7 +114,7 @@ The following arguments are supported:
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the concrete policy.
 * `numa_optimized`:(string)BIOS Token for setting NUMA optimized configuration.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)(Computed)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `onboard10gbit_lom`:(string)BIOS Token for setting Onboard 10Gbit LOM configuration.
 * `onboard_gbit_lom`:(string)BIOS Token for setting Onboard Gbit LOM configuration.
 * `onboard_scu_storage_support`:(string)BIOS Token for setting Onboard SCU Storage Support configuration.
@@ -122,7 +122,7 @@ The following arguments are supported:
 * `organization`:(Array with Maximum of one item) -Relationship to the Organization that owns the Managed Object.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
-  + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+  + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `os_boot_watchdog_timer`:(string)BIOS Token for setting OS Boot Watchdog Timer configuration.
 * `os_boot_watchdog_timer_policy`:(string)BIOS Token for setting OS Boot Watchdog Timer Policy configuration.
@@ -135,6 +135,11 @@ This complex property has following sub-properties:
 * `pch_usb30mode`:(string)BIOS Token for setting xHCI Mode configuration.
 * `pci_option_ro_ms`:(string)BIOS Token for setting All PCIe Slots OptionROM configuration.
 * `pci_rom_clp`:(string)BIOS Token for setting PCI ROM CLP configuration.
+* `permission_resources`:(Array)(Computed)A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.
+This complex property has following sub-properties:
+  + `moid`:(string)(Computed)The Moid of the referenced REST resource.
+  + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
+  + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `pop_support`:(string)BIOS Token for setting Power ON Password configuration.
 * `post_error_pause`:(string)BIOS Token for setting POST Error Pause configuration.
 * `processor_c1e`:(string)BIOS Token for setting Processor C1E configuration.
@@ -144,7 +149,7 @@ This complex property has following sub-properties:
 * `profiles`:(Array)Relationship to the profile objects.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
-  + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+  + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `psata`:(string)BIOS Token for setting P-SATA mode configuration.
 * `pstate_coord_type`:(string)BIOS Token for setting P-STATE Coordination configuration.

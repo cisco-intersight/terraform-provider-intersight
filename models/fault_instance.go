@@ -28,11 +28,13 @@ type FaultInstance struct {
 	// Read Only: true
 	AffectedDn string `json:"AffectedDn,omitempty"`
 
-	// affected mo Id
+	// Managed object Id which was affected.
+	//
 	// Read Only: true
 	AffectedMoID string `json:"AffectedMoId,omitempty"`
 
-	// affected mo type
+	// Managed object type which was affected.
+	//
 	// Read Only: true
 	AffectedMoType string `json:"AffectedMoType,omitempty"`
 
@@ -52,7 +54,8 @@ type FaultInstance struct {
 	// Read Only: true
 	CreationTime string `json:"CreationTime,omitempty"`
 
-	// description
+	// Short summary of the fault found.
+	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
@@ -81,7 +84,8 @@ type FaultInstance struct {
 	// Read Only: true
 	Rule string `json:"Rule,omitempty"`
 
-	// severity
+	// Severity of the fault found.
+	//
 	// Read Only: true
 	Severity string `json:"Severity,omitempty"`
 }

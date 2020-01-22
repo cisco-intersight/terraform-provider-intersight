@@ -4,7 +4,10 @@ resource "intersight_iam_ldap_policy" "ldap1" {
   enabled                = true
   enable_dns             = true
   user_search_precedence = "LocalUserDb"
-
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   base_properties {
     attribute                  = "CiscoAvPair"
     base_dn                    = "DC=QATCSLABTPI02,DC=cisco,DC=com"
@@ -31,7 +34,10 @@ resource "intersight_iam_ldap_policy" "ldap2" {
   enabled                = true
   enable_dns             = true
   user_search_precedence = "LocalUserDb"
-
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   base_properties {
     attribute                  = "CiscoAvPair"
     base_dn                    = "DC=QATCSLABTPI02,DC=cisco,DC=com"

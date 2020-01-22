@@ -20,30 +20,45 @@ import (
 //
 // swagger:model workflowEnumEntry
 type WorkflowEnumEntry struct {
-	WorkflowEnumEntryAO0P0
+	MoBaseComplexType
+
+	WorkflowEnumEntryAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *WorkflowEnumEntry) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 WorkflowEnumEntryAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.WorkflowEnumEntryAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 WorkflowEnumEntryAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.WorkflowEnumEntryAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m WorkflowEnumEntry) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.WorkflowEnumEntryAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.WorkflowEnumEntryAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m WorkflowEnumEntry) MarshalJSON() ([]byte, error) {
 func (m *WorkflowEnumEntry) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with WorkflowEnumEntryAO0P0
-	if err := m.WorkflowEnumEntryAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with WorkflowEnumEntryAO1P1
+	if err := m.WorkflowEnumEntryAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,50 +100,30 @@ func (m *WorkflowEnumEntry) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// WorkflowEnumEntryAO0P0 workflow enum entry a o0 p0
-// swagger:model WorkflowEnumEntryAO0P0
-type WorkflowEnumEntryAO0P0 struct {
+// WorkflowEnumEntryAO1P1 workflow enum entry a o1 p1
+// swagger:model WorkflowEnumEntryAO1P1
+type WorkflowEnumEntryAO1P1 struct {
 
 	// Label for the enum value. A user friendly short string to identify the enum value.
 	//
 	Label string `json:"Label,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
 	//
 	Value string `json:"Value,omitempty"`
 
-	// workflow enum entry a o0 p0
-	WorkflowEnumEntryAO0P0 map[string]interface{} `json:"-"`
+	// workflow enum entry a o1 p1
+	WorkflowEnumEntryAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *WorkflowEnumEntryAO0P0) UnmarshalJSON(data []byte) error {
+func (m *WorkflowEnumEntryAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// Label for the enum value. A user friendly short string to identify the enum value.
 		//
 		Label string `json:"Label,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
 		//
@@ -133,11 +132,9 @@ func (m *WorkflowEnumEntryAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv WorkflowEnumEntryAO0P0
+	var rcv WorkflowEnumEntryAO1P1
 
 	rcv.Label = stage1.Label
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Value = stage1.Value
 
@@ -151,8 +148,6 @@ func (m *WorkflowEnumEntryAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Label")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Value")
 
 	// stage 3, add additional properties values
@@ -165,29 +160,19 @@ func (m *WorkflowEnumEntryAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.WorkflowEnumEntryAO0P0 = result
+		m.WorkflowEnumEntryAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m WorkflowEnumEntryAO0P0) MarshalJSON() ([]byte, error) {
+func (m WorkflowEnumEntryAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Label for the enum value. A user friendly short string to identify the enum value.
 		//
 		Label string `json:"Label,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
 		//
@@ -195,8 +180,6 @@ func (m WorkflowEnumEntryAO0P0) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Label = m.Label
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.Value = m.Value
 
@@ -206,12 +189,12 @@ func (m WorkflowEnumEntryAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.WorkflowEnumEntryAO0P0) == 0 {
+	if len(m.WorkflowEnumEntryAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.WorkflowEnumEntryAO0P0)
+	additional, err := json.Marshal(m.WorkflowEnumEntryAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -225,13 +208,13 @@ func (m WorkflowEnumEntryAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this workflow enum entry a o0 p0
-func (m *WorkflowEnumEntryAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this workflow enum entry a o1 p1
+func (m *WorkflowEnumEntryAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *WorkflowEnumEntryAO0P0) MarshalBinary() ([]byte, error) {
+func (m *WorkflowEnumEntryAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -239,8 +222,8 @@ func (m *WorkflowEnumEntryAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *WorkflowEnumEntryAO0P0) UnmarshalBinary(b []byte) error {
-	var res WorkflowEnumEntryAO0P0
+func (m *WorkflowEnumEntryAO1P1) UnmarshalBinary(b []byte) error {
+	var res WorkflowEnumEntryAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

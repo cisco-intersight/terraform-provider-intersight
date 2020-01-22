@@ -36,6 +36,10 @@ type AssetClusterMember struct {
 	// Enum: [Unknown Primary Secondary]
 	Leadership string `json:"Leadership,omitempty"`
 
+	// Devices lock their leadership on failure to heartbeat with peers. Value acts as a third party tie breaker in election between nodes. Intersight enforces that only one cluster member exists with this value set to true.
+	//
+	LockedLeader *bool `json:"LockedLeader,omitempty"`
+
 	// The unique identity of the member within the cluster. The identity is retrieved from the platform and reported by the device connector at connection time.
 	//
 	// Read Only: true
@@ -67,6 +71,8 @@ func (m *AssetClusterMember) UnmarshalJSON(raw []byte) error {
 
 		Leadership string `json:"Leadership,omitempty"`
 
+		LockedLeader *bool `json:"LockedLeader,omitempty"`
+
 		MemberIdentity string `json:"MemberIdentity,omitempty"`
 
 		ParentClusterMemberIdentity string `json:"ParentClusterMemberIdentity,omitempty"`
@@ -80,6 +86,8 @@ func (m *AssetClusterMember) UnmarshalJSON(raw []byte) error {
 	m.Device = dataAO1.Device
 
 	m.Leadership = dataAO1.Leadership
+
+	m.LockedLeader = dataAO1.LockedLeader
 
 	m.MemberIdentity = dataAO1.MemberIdentity
 
@@ -105,6 +113,8 @@ func (m AssetClusterMember) MarshalJSON() ([]byte, error) {
 
 		Leadership string `json:"Leadership,omitempty"`
 
+		LockedLeader *bool `json:"LockedLeader,omitempty"`
+
 		MemberIdentity string `json:"MemberIdentity,omitempty"`
 
 		ParentClusterMemberIdentity string `json:"ParentClusterMemberIdentity,omitempty"`
@@ -115,6 +125,8 @@ func (m AssetClusterMember) MarshalJSON() ([]byte, error) {
 	dataAO1.Device = m.Device
 
 	dataAO1.Leadership = m.Leadership
+
+	dataAO1.LockedLeader = m.LockedLeader
 
 	dataAO1.MemberIdentity = m.MemberIdentity
 

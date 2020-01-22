@@ -22,30 +22,45 @@ import (
 //
 // swagger:model sdcardPartition
 type SdcardPartition struct {
-	SdcardPartitionAO0P0
+	MoBaseComplexType
+
+	SdcardPartitionAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *SdcardPartition) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 SdcardPartitionAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.SdcardPartitionAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 SdcardPartitionAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.SdcardPartitionAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m SdcardPartition) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.SdcardPartitionAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.SdcardPartitionAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m SdcardPartition) MarshalJSON() ([]byte, error) {
 func (m *SdcardPartition) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with SdcardPartitionAO0P0
-	if err := m.SdcardPartitionAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with SdcardPartitionAO1P1
+	if err := m.SdcardPartitionAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,19 +102,9 @@ func (m *SdcardPartition) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// SdcardPartitionAO0P0 sdcard partition a o0 p0
-// swagger:model SdcardPartitionAO0P0
-type SdcardPartitionAO0P0 struct {
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+// SdcardPartitionAO1P1 sdcard partition a o1 p1
+// swagger:model SdcardPartitionAO1P1
+type SdcardPartitionAO1P1 struct {
 
 	// This specifies the type of the partition. Allowed values are OS, Utility.
 	//
@@ -106,24 +115,14 @@ type SdcardPartitionAO0P0 struct {
 	//
 	VirtualDrives []*SdcardVirtualDrive `json:"VirtualDrives"`
 
-	// sdcard partition a o0 p0
-	SdcardPartitionAO0P0 map[string]interface{} `json:"-"`
+	// sdcard partition a o1 p1
+	SdcardPartitionAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *SdcardPartitionAO0P0) UnmarshalJSON(data []byte) error {
+func (m *SdcardPartitionAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// This specifies the type of the partition. Allowed values are OS, Utility.
 		//
@@ -137,9 +136,7 @@ func (m *SdcardPartitionAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv SdcardPartitionAO0P0
-
-	rcv.ObjectType = stage1.ObjectType
+	var rcv SdcardPartitionAO1P1
 
 	rcv.Type = stage1.Type
 
@@ -152,8 +149,6 @@ func (m *SdcardPartitionAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage2); err != nil {
 		return err
 	}
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "Type")
 
@@ -169,25 +164,15 @@ func (m *SdcardPartitionAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.SdcardPartitionAO0P0 = result
+		m.SdcardPartitionAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m SdcardPartitionAO0P0) MarshalJSON() ([]byte, error) {
+func (m SdcardPartitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// This specifies the type of the partition. Allowed values are OS, Utility.
 		//
@@ -199,8 +184,6 @@ func (m SdcardPartitionAO0P0) MarshalJSON() ([]byte, error) {
 		VirtualDrives []*SdcardVirtualDrive `json:"VirtualDrives"`
 	}
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Type = m.Type
 
 	stage1.VirtualDrives = m.VirtualDrives
@@ -211,12 +194,12 @@ func (m SdcardPartitionAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.SdcardPartitionAO0P0) == 0 {
+	if len(m.SdcardPartitionAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.SdcardPartitionAO0P0)
+	additional, err := json.Marshal(m.SdcardPartitionAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -230,8 +213,8 @@ func (m SdcardPartitionAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this sdcard partition a o0 p0
-func (m *SdcardPartitionAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this sdcard partition a o1 p1
+func (m *SdcardPartitionAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateType(formats); err != nil {
@@ -248,7 +231,7 @@ func (m *SdcardPartitionAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var sdcardPartitionAO0P0TypeTypePropEnum []interface{}
+var sdcardPartitionAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -256,28 +239,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		sdcardPartitionAO0P0TypeTypePropEnum = append(sdcardPartitionAO0P0TypeTypePropEnum, v)
+		sdcardPartitionAO1P1TypeTypePropEnum = append(sdcardPartitionAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// SdcardPartitionAO0P0TypeOS captures enum value "OS"
-	SdcardPartitionAO0P0TypeOS string = "OS"
+	// SdcardPartitionAO1P1TypeOS captures enum value "OS"
+	SdcardPartitionAO1P1TypeOS string = "OS"
 
-	// SdcardPartitionAO0P0TypeUtility captures enum value "Utility"
-	SdcardPartitionAO0P0TypeUtility string = "Utility"
+	// SdcardPartitionAO1P1TypeUtility captures enum value "Utility"
+	SdcardPartitionAO1P1TypeUtility string = "Utility"
 )
 
 // prop value enum
-func (m *SdcardPartitionAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, sdcardPartitionAO0P0TypeTypePropEnum); err != nil {
+func (m *SdcardPartitionAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, sdcardPartitionAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SdcardPartitionAO0P0) validateType(formats strfmt.Registry) error {
+func (m *SdcardPartitionAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -291,7 +274,7 @@ func (m *SdcardPartitionAO0P0) validateType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *SdcardPartitionAO0P0) validateVirtualDrives(formats strfmt.Registry) error {
+func (m *SdcardPartitionAO1P1) validateVirtualDrives(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.VirtualDrives) { // not required
 		return nil
@@ -317,7 +300,7 @@ func (m *SdcardPartitionAO0P0) validateVirtualDrives(formats strfmt.Registry) er
 }
 
 // MarshalBinary interface implementation
-func (m *SdcardPartitionAO0P0) MarshalBinary() ([]byte, error) {
+func (m *SdcardPartitionAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -325,8 +308,8 @@ func (m *SdcardPartitionAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SdcardPartitionAO0P0) UnmarshalBinary(b []byte) error {
-	var res SdcardPartitionAO0P0
+func (m *SdcardPartitionAO1P1) UnmarshalBinary(b []byte) error {
+	var res SdcardPartitionAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

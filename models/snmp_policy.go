@@ -43,7 +43,7 @@ type SnmpPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -93,7 +93,7 @@ func (m *SnmpPolicy) UnmarshalJSON(raw []byte) error {
 
 		EngineID string `json:"EngineId,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -159,7 +159,7 @@ func (m SnmpPolicy) MarshalJSON() ([]byte, error) {
 
 		EngineID string `json:"EngineId,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

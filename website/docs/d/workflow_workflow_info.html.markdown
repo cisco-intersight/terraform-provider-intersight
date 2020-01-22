@@ -21,12 +21,13 @@ The following arguments can be used to get data of already created objects in In
 * `meta_version`:(int)Version of the workflow metadata for which this workflow execution was started.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)A name of the workflow execution instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `progress`:(float)This field indicates percentage of workflow task execution.
 * `src`:(string)The source microservice name which is the owner for this workflow.
 * `start_time`:(string)The time when the workflow was started for execution.
 * `status`:(string)A status of the workflow (RUNNING, WAITING, COMPLETED, TIME_OUT, FAILED).
 * `success_workflow_cleanup_duration`:(int)The duration in hours after which the workflow info for successful workflow will be removed from database.
+* `trace_id`:(string)The trace id to keep track of workflow execution.
 * `type`:(string)A type of the workflow (serverconfig, ansible_monitoring).
 * `user_id`:(string)The user identifier which indicates the user that started this workflow.
 * `wait_reason`:(string)Denotes the reason workflow is in waiting status.

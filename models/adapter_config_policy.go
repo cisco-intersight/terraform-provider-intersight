@@ -24,7 +24,7 @@ type AdapterConfigPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the server profile.
 	//
@@ -46,7 +46,7 @@ func (m *AdapterConfigPolicy) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -76,7 +76,7 @@ func (m AdapterConfigPolicy) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

@@ -24,11 +24,13 @@ type InventoryBase struct {
 	// Read Only: true
 	DeviceMoID string `json:"DeviceMoId,omitempty"`
 
-	// dn
+	// The Distinguished Name unambiguously identifies an object in the system.
+	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
-	// rn
+	// The Relative Name uniquely identifies an object within a given context.
+	//
 	// Read Only: true
 	Rn string `json:"Rn,omitempty"`
 }

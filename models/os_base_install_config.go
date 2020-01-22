@@ -7,6 +7,7 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -28,7 +29,7 @@ type OsBaseInstallConfig struct {
 	// for those additional placeholders are provided here.
 	//
 	//
-	AdditionalParameters interface{} `json:"AdditionalParameters,omitempty"`
+	AdditionalParameters []*OsPlaceHolder `json:"AdditionalParameters"`
 
 	// Answers provided by user for the unattended OS installation.
 	//
@@ -47,10 +48,10 @@ type OsBaseInstallConfig struct {
 	// Enum: [vMedia]
 	InstallMethod *string `json:"InstallMethod,omitempty"`
 
-	// The name of the OS install configuration.
+	// Parameters specific to selected OS.
 	//
 	//
-	Name string `json:"Name,omitempty"`
+	OperatingSystemParameters *OsOperatingSystemParameters `json:"OperatingSystemParameters,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -64,7 +65,7 @@ func (m *OsBaseInstallConfig) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		AdditionalParameters interface{} `json:"AdditionalParameters,omitempty"`
+		AdditionalParameters []*OsPlaceHolder `json:"AdditionalParameters"`
 
 		Answers *OsAnswers `json:"Answers,omitempty"`
 
@@ -72,7 +73,7 @@ func (m *OsBaseInstallConfig) UnmarshalJSON(raw []byte) error {
 
 		InstallMethod *string `json:"InstallMethod,omitempty"`
 
-		Name string `json:"Name,omitempty"`
+		OperatingSystemParameters *OsOperatingSystemParameters `json:"OperatingSystemParameters,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -86,7 +87,7 @@ func (m *OsBaseInstallConfig) UnmarshalJSON(raw []byte) error {
 
 	m.InstallMethod = dataAO1.InstallMethod
 
-	m.Name = dataAO1.Name
+	m.OperatingSystemParameters = dataAO1.OperatingSystemParameters
 
 	return nil
 }
@@ -102,7 +103,7 @@ func (m OsBaseInstallConfig) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		AdditionalParameters interface{} `json:"AdditionalParameters,omitempty"`
+		AdditionalParameters []*OsPlaceHolder `json:"AdditionalParameters"`
 
 		Answers *OsAnswers `json:"Answers,omitempty"`
 
@@ -110,7 +111,7 @@ func (m OsBaseInstallConfig) MarshalJSON() ([]byte, error) {
 
 		InstallMethod *string `json:"InstallMethod,omitempty"`
 
-		Name string `json:"Name,omitempty"`
+		OperatingSystemParameters *OsOperatingSystemParameters `json:"OperatingSystemParameters,omitempty"`
 	}
 
 	dataAO1.AdditionalParameters = m.AdditionalParameters
@@ -121,7 +122,7 @@ func (m OsBaseInstallConfig) MarshalJSON() ([]byte, error) {
 
 	dataAO1.InstallMethod = m.InstallMethod
 
-	dataAO1.Name = m.Name
+	dataAO1.OperatingSystemParameters = m.OperatingSystemParameters
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -141,6 +142,10 @@ func (m *OsBaseInstallConfig) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateAdditionalParameters(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateAnswers(formats); err != nil {
 		res = append(res, err)
 	}
@@ -149,9 +154,38 @@ func (m *OsBaseInstallConfig) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateOperatingSystemParameters(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *OsBaseInstallConfig) validateAdditionalParameters(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AdditionalParameters) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.AdditionalParameters); i++ {
+		if swag.IsZero(m.AdditionalParameters[i]) { // not required
+			continue
+		}
+
+		if m.AdditionalParameters[i] != nil {
+			if err := m.AdditionalParameters[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("AdditionalParameters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -202,6 +236,24 @@ func (m *OsBaseInstallConfig) validateInstallMethod(formats strfmt.Registry) err
 	// value enum
 	if err := m.validateInstallMethodEnum("InstallMethod", "body", *m.InstallMethod); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *OsBaseInstallConfig) validateOperatingSystemParameters(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OperatingSystemParameters) { // not required
+		return nil
+	}
+
+	if m.OperatingSystemParameters != nil {
+		if err := m.OperatingSystemParameters.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("OperatingSystemParameters")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -56,6 +56,14 @@ type ManagementInterface struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
+	// Switch Id of the interface.
+	//
+	SwitchID string `json:"SwitchId,omitempty"`
+
+	// Status of UEM connection.
+	//
+	UemConnStatus string `json:"UemConnStatus,omitempty"`
+
 	// Virtual hostname configured for the interface in case of clustered environment.
 	//
 	VirtualHostName string `json:"VirtualHostName,omitempty"`
@@ -86,6 +94,10 @@ func (m *ManagementInterface) UnmarshalJSON(raw []byte) error {
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
+		SwitchID string `json:"SwitchId,omitempty"`
+
+		UemConnStatus string `json:"UemConnStatus,omitempty"`
+
 		VirtualHostName string `json:"VirtualHostName,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -105,6 +117,10 @@ func (m *ManagementInterface) UnmarshalJSON(raw []byte) error {
 	m.Mask = dataAO1.Mask
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
+
+	m.SwitchID = dataAO1.SwitchID
+
+	m.UemConnStatus = dataAO1.UemConnStatus
 
 	m.VirtualHostName = dataAO1.VirtualHostName
 
@@ -136,6 +152,10 @@ func (m ManagementInterface) MarshalJSON() ([]byte, error) {
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
+		SwitchID string `json:"SwitchId,omitempty"`
+
+		UemConnStatus string `json:"UemConnStatus,omitempty"`
+
 		VirtualHostName string `json:"VirtualHostName,omitempty"`
 	}
 
@@ -152,6 +172,10 @@ func (m ManagementInterface) MarshalJSON() ([]byte, error) {
 	dataAO1.Mask = m.Mask
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
+
+	dataAO1.SwitchID = m.SwitchID
+
+	dataAO1.UemConnStatus = m.UemConnStatus
 
 	dataAO1.VirtualHostName = m.VirtualHostName
 

@@ -21,30 +21,45 @@ import (
 //
 // swagger:model metaAccessPrivilege
 type MetaAccessPrivilege struct {
-	MetaAccessPrivilegeAO0P0
+	MoBaseComplexType
+
+	MetaAccessPrivilegeAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *MetaAccessPrivilege) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MetaAccessPrivilegeAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MetaAccessPrivilegeAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 MetaAccessPrivilegeAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.MetaAccessPrivilegeAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m MetaAccessPrivilege) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MetaAccessPrivilegeAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.MetaAccessPrivilegeAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m MetaAccessPrivilege) MarshalJSON() ([]byte, error) {
 func (m *MetaAccessPrivilege) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MetaAccessPrivilegeAO0P0
-	if err := m.MetaAccessPrivilegeAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with MetaAccessPrivilegeAO1P1
+	if err := m.MetaAccessPrivilegeAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *MetaAccessPrivilege) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// MetaAccessPrivilegeAO0P0 meta access privilege a o0 p0
-// swagger:model MetaAccessPrivilegeAO0P0
-type MetaAccessPrivilegeAO0P0 struct {
+// MetaAccessPrivilegeAO1P1 meta access privilege a o1 p1
+// swagger:model MetaAccessPrivilegeAO1P1
+type MetaAccessPrivilegeAO1P1 struct {
 
 	// The type of CRUD operation (create, read, update, delete) for which an access privilege is required.
 	//
@@ -92,27 +111,17 @@ type MetaAccessPrivilegeAO0P0 struct {
 	// Enum: [Update Create Read Delete]
 	Method string `json:"Method,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// The name of the privilege which is required to invoke the specified CRUD method.
 	//
 	// Read Only: true
 	Privilege string `json:"Privilege,omitempty"`
 
-	// meta access privilege a o0 p0
-	MetaAccessPrivilegeAO0P0 map[string]interface{} `json:"-"`
+	// meta access privilege a o1 p1
+	MetaAccessPrivilegeAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *MetaAccessPrivilegeAO0P0) UnmarshalJSON(data []byte) error {
+func (m *MetaAccessPrivilegeAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -122,16 +131,6 @@ func (m *MetaAccessPrivilegeAO0P0) UnmarshalJSON(data []byte) error {
 		// Enum: [Update Create Read Delete]
 		Method string `json:"Method,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// The name of the privilege which is required to invoke the specified CRUD method.
 		//
 		// Read Only: true
@@ -140,11 +139,9 @@ func (m *MetaAccessPrivilegeAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv MetaAccessPrivilegeAO0P0
+	var rcv MetaAccessPrivilegeAO1P1
 
 	rcv.Method = stage1.Method
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Privilege = stage1.Privilege
 
@@ -158,8 +155,6 @@ func (m *MetaAccessPrivilegeAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Method")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Privilege")
 
 	// stage 3, add additional properties values
@@ -172,14 +167,14 @@ func (m *MetaAccessPrivilegeAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.MetaAccessPrivilegeAO0P0 = result
+		m.MetaAccessPrivilegeAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m MetaAccessPrivilegeAO0P0) MarshalJSON() ([]byte, error) {
+func (m MetaAccessPrivilegeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The type of CRUD operation (create, read, update, delete) for which an access privilege is required.
@@ -187,16 +182,6 @@ func (m MetaAccessPrivilegeAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		// Enum: [Update Create Read Delete]
 		Method string `json:"Method,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The name of the privilege which is required to invoke the specified CRUD method.
 		//
@@ -206,8 +191,6 @@ func (m MetaAccessPrivilegeAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Method = m.Method
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Privilege = m.Privilege
 
 	// make JSON object for known properties
@@ -216,12 +199,12 @@ func (m MetaAccessPrivilegeAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.MetaAccessPrivilegeAO0P0) == 0 {
+	if len(m.MetaAccessPrivilegeAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.MetaAccessPrivilegeAO0P0)
+	additional, err := json.Marshal(m.MetaAccessPrivilegeAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -235,8 +218,8 @@ func (m MetaAccessPrivilegeAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this meta access privilege a o0 p0
-func (m *MetaAccessPrivilegeAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this meta access privilege a o1 p1
+func (m *MetaAccessPrivilegeAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMethod(formats); err != nil {
@@ -249,7 +232,7 @@ func (m *MetaAccessPrivilegeAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var metaAccessPrivilegeAO0P0TypeMethodPropEnum []interface{}
+var metaAccessPrivilegeAO1P1TypeMethodPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -257,34 +240,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		metaAccessPrivilegeAO0P0TypeMethodPropEnum = append(metaAccessPrivilegeAO0P0TypeMethodPropEnum, v)
+		metaAccessPrivilegeAO1P1TypeMethodPropEnum = append(metaAccessPrivilegeAO1P1TypeMethodPropEnum, v)
 	}
 }
 
 const (
 
-	// MetaAccessPrivilegeAO0P0MethodUpdate captures enum value "Update"
-	MetaAccessPrivilegeAO0P0MethodUpdate string = "Update"
+	// MetaAccessPrivilegeAO1P1MethodUpdate captures enum value "Update"
+	MetaAccessPrivilegeAO1P1MethodUpdate string = "Update"
 
-	// MetaAccessPrivilegeAO0P0MethodCreate captures enum value "Create"
-	MetaAccessPrivilegeAO0P0MethodCreate string = "Create"
+	// MetaAccessPrivilegeAO1P1MethodCreate captures enum value "Create"
+	MetaAccessPrivilegeAO1P1MethodCreate string = "Create"
 
-	// MetaAccessPrivilegeAO0P0MethodRead captures enum value "Read"
-	MetaAccessPrivilegeAO0P0MethodRead string = "Read"
+	// MetaAccessPrivilegeAO1P1MethodRead captures enum value "Read"
+	MetaAccessPrivilegeAO1P1MethodRead string = "Read"
 
-	// MetaAccessPrivilegeAO0P0MethodDelete captures enum value "Delete"
-	MetaAccessPrivilegeAO0P0MethodDelete string = "Delete"
+	// MetaAccessPrivilegeAO1P1MethodDelete captures enum value "Delete"
+	MetaAccessPrivilegeAO1P1MethodDelete string = "Delete"
 )
 
 // prop value enum
-func (m *MetaAccessPrivilegeAO0P0) validateMethodEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, metaAccessPrivilegeAO0P0TypeMethodPropEnum); err != nil {
+func (m *MetaAccessPrivilegeAO1P1) validateMethodEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, metaAccessPrivilegeAO1P1TypeMethodPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *MetaAccessPrivilegeAO0P0) validateMethod(formats strfmt.Registry) error {
+func (m *MetaAccessPrivilegeAO1P1) validateMethod(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Method) { // not required
 		return nil
@@ -299,7 +282,7 @@ func (m *MetaAccessPrivilegeAO0P0) validateMethod(formats strfmt.Registry) error
 }
 
 // MarshalBinary interface implementation
-func (m *MetaAccessPrivilegeAO0P0) MarshalBinary() ([]byte, error) {
+func (m *MetaAccessPrivilegeAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -307,8 +290,8 @@ func (m *MetaAccessPrivilegeAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *MetaAccessPrivilegeAO0P0) UnmarshalBinary(b []byte) error {
-	var res MetaAccessPrivilegeAO0P0
+func (m *MetaAccessPrivilegeAO1P1) UnmarshalBinary(b []byte) error {
+	var res MetaAccessPrivilegeAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

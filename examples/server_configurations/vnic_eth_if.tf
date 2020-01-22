@@ -1,6 +1,10 @@
 resource "intersight_vnic_eth_adapter_policy" "v_eth_adapter1" {
   name = "v_eth_adapter1"
   rss_settings = true
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   vxlan_settings {
     enabled = false
   }
@@ -42,6 +46,10 @@ resource "intersight_vnic_eth_adapter_policy" "v_eth_adapter1" {
 
 resource "intersight_vnic_eth_network_policy" "v_eth_network1" {
   name = "v_eth_network1"
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   vlan_settings {
     default_vlan = 1
     mode         = "ACCESS"
@@ -54,10 +62,18 @@ resource "intersight_vnic_eth_qos_policy" "v_eth_qos1" {
   rate_limit     = 0
   cos            = 0
   trust_host_cos = false
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 resource "intersight_vnic_lan_connectivity_policy" "vnic_lan1" {
   name = "vnic_lan1"
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"
@@ -67,6 +83,10 @@ resource "intersight_vnic_lan_connectivity_policy" "vnic_lan1" {
 resource "intersight_vnic_eth_if" "eth1" {
   name  = "eth0"
   order = 0
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   placement {
     id     = "1"
     pci_link = 0
@@ -101,6 +121,10 @@ resource "intersight_vnic_eth_if" "eth1" {
 resource "intersight_vnic_eth_if" "eth2" {
   name  = "eth1"
   order = 0
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   placement {
     id     = "1"
     pci_link = 1
@@ -135,6 +159,10 @@ resource "intersight_vnic_eth_if" "eth2" {
 resource "intersight_vnic_eth_if" "eth3" {
   name  = "eth0"
   order = 0
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   placement {
     id     = "MLOM"
     pci_link = 0
@@ -169,6 +197,10 @@ resource "intersight_vnic_eth_if" "eth3" {
 resource "intersight_vnic_eth_if" "eth4" {
   name  = "eth1"
   order = 1
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   placement {
     id     = "MLOM"
     pci_link = 0

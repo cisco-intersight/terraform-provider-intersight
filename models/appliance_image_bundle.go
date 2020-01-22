@@ -136,6 +136,17 @@ type ApplianceImageBundle struct {
 	// Read Only: true
 	UpgradeGracePeriod int64 `json:"UpgradeGracePeriod,omitempty"`
 
+	// Duration (in minutes) for which services will be disrupted.
+	//
+	// Read Only: true
+	UpgradeImpactDuration int64 `json:"UpgradeImpactDuration,omitempty"`
+
+	// UpgradeImpactEnum is used to indicate the kind of impact the upgrade has on currently running services on the appliance.
+	//
+	// Read Only: true
+	// Enum: [None Disruptive Disruptive-reboot]
+	UpgradeImpactEnum string `json:"UpgradeImpactEnum,omitempty"`
+
 	// Start date of the software upgrade process.
 	//
 	// Read Only: true
@@ -199,6 +210,10 @@ func (m *ApplianceImageBundle) UnmarshalJSON(raw []byte) error {
 
 		UpgradeGracePeriod int64 `json:"UpgradeGracePeriod,omitempty"`
 
+		UpgradeImpactDuration int64 `json:"UpgradeImpactDuration,omitempty"`
+
+		UpgradeImpactEnum string `json:"UpgradeImpactEnum,omitempty"`
+
 		UpgradeStartTime strfmt.DateTime `json:"UpgradeStartTime,omitempty"`
 
 		Version string `json:"Version,omitempty"`
@@ -246,6 +261,10 @@ func (m *ApplianceImageBundle) UnmarshalJSON(raw []byte) error {
 	m.UpgradeEndTime = dataAO1.UpgradeEndTime
 
 	m.UpgradeGracePeriod = dataAO1.UpgradeGracePeriod
+
+	m.UpgradeImpactDuration = dataAO1.UpgradeImpactDuration
+
+	m.UpgradeImpactEnum = dataAO1.UpgradeImpactEnum
 
 	m.UpgradeStartTime = dataAO1.UpgradeStartTime
 
@@ -305,6 +324,10 @@ func (m ApplianceImageBundle) MarshalJSON() ([]byte, error) {
 
 		UpgradeGracePeriod int64 `json:"UpgradeGracePeriod,omitempty"`
 
+		UpgradeImpactDuration int64 `json:"UpgradeImpactDuration,omitempty"`
+
+		UpgradeImpactEnum string `json:"UpgradeImpactEnum,omitempty"`
+
 		UpgradeStartTime strfmt.DateTime `json:"UpgradeStartTime,omitempty"`
 
 		Version string `json:"Version,omitempty"`
@@ -349,6 +372,10 @@ func (m ApplianceImageBundle) MarshalJSON() ([]byte, error) {
 	dataAO1.UpgradeEndTime = m.UpgradeEndTime
 
 	dataAO1.UpgradeGracePeriod = m.UpgradeGracePeriod
+
+	dataAO1.UpgradeImpactDuration = m.UpgradeImpactDuration
+
+	dataAO1.UpgradeImpactEnum = m.UpgradeImpactEnum
 
 	dataAO1.UpgradeStartTime = m.UpgradeStartTime
 
@@ -417,6 +444,10 @@ func (m *ApplianceImageBundle) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUpgradeEndTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpgradeImpactEnum(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -709,6 +740,40 @@ func (m *ApplianceImageBundle) validateUpgradeEndTime(formats strfmt.Registry) e
 	}
 
 	if err := validate.FormatOf("UpgradeEndTime", "body", "date-time", m.UpgradeEndTime.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var applianceImageBundleTypeUpgradeImpactEnumPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["None","Disruptive","Disruptive-reboot"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		applianceImageBundleTypeUpgradeImpactEnumPropEnum = append(applianceImageBundleTypeUpgradeImpactEnumPropEnum, v)
+	}
+}
+
+// property enum
+func (m *ApplianceImageBundle) validateUpgradeImpactEnumEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, applianceImageBundleTypeUpgradeImpactEnumPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ApplianceImageBundle) validateUpgradeImpactEnum(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpgradeImpactEnum) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateUpgradeImpactEnumEnum("UpgradeImpactEnum", "body", m.UpgradeImpactEnum); err != nil {
 		return err
 	}
 

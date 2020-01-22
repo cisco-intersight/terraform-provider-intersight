@@ -1,7 +1,10 @@
 resource "intersight_sdcard_policy" "sdcard1" {
   name        = "sdcard1"
   description = "test policy"
-
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   partitions {
     type        = "OS"
     object_type = "sdcard.Partition"

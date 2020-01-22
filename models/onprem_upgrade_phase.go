@@ -23,30 +23,45 @@ import (
 //
 // swagger:model onpremUpgradePhase
 type OnpremUpgradePhase struct {
-	OnpremUpgradePhaseAO0P0
+	MoBaseComplexType
+
+	OnpremUpgradePhaseAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *OnpremUpgradePhase) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 OnpremUpgradePhaseAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.OnpremUpgradePhaseAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 OnpremUpgradePhaseAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.OnpremUpgradePhaseAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m OnpremUpgradePhase) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.OnpremUpgradePhaseAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.OnpremUpgradePhaseAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -55,8 +70,12 @@ func (m OnpremUpgradePhase) MarshalJSON() ([]byte, error) {
 func (m *OnpremUpgradePhase) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with OnpremUpgradePhaseAO0P0
-	if err := m.OnpremUpgradePhaseAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with OnpremUpgradePhaseAO1P1
+	if err := m.OnpremUpgradePhaseAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -84,9 +103,9 @@ func (m *OnpremUpgradePhase) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// OnpremUpgradePhaseAO0P0 onprem upgrade phase a o0 p0
-// swagger:model OnpremUpgradePhaseAO0P0
-type OnpremUpgradePhaseAO0P0 struct {
+// OnpremUpgradePhaseAO1P1 onprem upgrade phase a o1 p1
+// swagger:model OnpremUpgradePhaseAO1P1
+type OnpremUpgradePhaseAO1P1 struct {
 
 	// Name of the upgrade phase.
 	//
@@ -94,22 +113,12 @@ type OnpremUpgradePhaseAO0P0 struct {
 	// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// onprem upgrade phase a o0 p0
-	OnpremUpgradePhaseAO0P0 map[string]interface{} `json:"-"`
+	// onprem upgrade phase a o1 p1
+	OnpremUpgradePhaseAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *OnpremUpgradePhaseAO0P0) UnmarshalJSON(data []byte) error {
+func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -118,25 +127,13 @@ func (m *OnpremUpgradePhaseAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv OnpremUpgradePhaseAO0P0
+	var rcv OnpremUpgradePhaseAO1P1
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -148,8 +145,6 @@ func (m *OnpremUpgradePhaseAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -160,14 +155,14 @@ func (m *OnpremUpgradePhaseAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.OnpremUpgradePhaseAO0P0 = result
+		m.OnpremUpgradePhaseAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m OnpremUpgradePhaseAO0P0) MarshalJSON() ([]byte, error) {
+func (m OnpremUpgradePhaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name of the upgrade phase.
@@ -175,21 +170,9 @@ func (m OnpremUpgradePhaseAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
-	stage1.ObjectType = m.ObjectType
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -197,12 +180,12 @@ func (m OnpremUpgradePhaseAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.OnpremUpgradePhaseAO0P0) == 0 {
+	if len(m.OnpremUpgradePhaseAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.OnpremUpgradePhaseAO0P0)
+	additional, err := json.Marshal(m.OnpremUpgradePhaseAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -216,8 +199,8 @@ func (m OnpremUpgradePhaseAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this onprem upgrade phase a o0 p0
-func (m *OnpremUpgradePhaseAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this onprem upgrade phase a o1 p1
+func (m *OnpremUpgradePhaseAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateName(formats); err != nil {
@@ -230,7 +213,7 @@ func (m *OnpremUpgradePhaseAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var onpremUpgradePhaseAO0P0TypeNamePropEnum []interface{}
+var onpremUpgradePhaseAO1P1TypeNamePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -238,52 +221,52 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		onpremUpgradePhaseAO0P0TypeNamePropEnum = append(onpremUpgradePhaseAO0P0TypeNamePropEnum, v)
+		onpremUpgradePhaseAO1P1TypeNamePropEnum = append(onpremUpgradePhaseAO1P1TypeNamePropEnum, v)
 	}
 }
 
 const (
 
-	// OnpremUpgradePhaseAO0P0NameInit captures enum value "init"
-	OnpremUpgradePhaseAO0P0NameInit string = "init"
+	// OnpremUpgradePhaseAO1P1NameInit captures enum value "init"
+	OnpremUpgradePhaseAO1P1NameInit string = "init"
 
-	// OnpremUpgradePhaseAO0P0NamePrepare captures enum value "Prepare"
-	OnpremUpgradePhaseAO0P0NamePrepare string = "Prepare"
+	// OnpremUpgradePhaseAO1P1NamePrepare captures enum value "Prepare"
+	OnpremUpgradePhaseAO1P1NamePrepare string = "Prepare"
 
-	// OnpremUpgradePhaseAO0P0NameServiceLoad captures enum value "ServiceLoad"
-	OnpremUpgradePhaseAO0P0NameServiceLoad string = "ServiceLoad"
+	// OnpremUpgradePhaseAO1P1NameServiceLoad captures enum value "ServiceLoad"
+	OnpremUpgradePhaseAO1P1NameServiceLoad string = "ServiceLoad"
 
-	// OnpremUpgradePhaseAO0P0NameUILoad captures enum value "UiLoad"
-	OnpremUpgradePhaseAO0P0NameUILoad string = "UiLoad"
+	// OnpremUpgradePhaseAO1P1NameUILoad captures enum value "UiLoad"
+	OnpremUpgradePhaseAO1P1NameUILoad string = "UiLoad"
 
-	// OnpremUpgradePhaseAO0P0NameGenerateConfig captures enum value "GenerateConfig"
-	OnpremUpgradePhaseAO0P0NameGenerateConfig string = "GenerateConfig"
+	// OnpremUpgradePhaseAO1P1NameGenerateConfig captures enum value "GenerateConfig"
+	OnpremUpgradePhaseAO1P1NameGenerateConfig string = "GenerateConfig"
 
-	// OnpremUpgradePhaseAO0P0NameDeployService captures enum value "DeployService"
-	OnpremUpgradePhaseAO0P0NameDeployService string = "DeployService"
+	// OnpremUpgradePhaseAO1P1NameDeployService captures enum value "DeployService"
+	OnpremUpgradePhaseAO1P1NameDeployService string = "DeployService"
 
-	// OnpremUpgradePhaseAO0P0NameSuccess captures enum value "Success"
-	OnpremUpgradePhaseAO0P0NameSuccess string = "Success"
+	// OnpremUpgradePhaseAO1P1NameSuccess captures enum value "Success"
+	OnpremUpgradePhaseAO1P1NameSuccess string = "Success"
 
-	// OnpremUpgradePhaseAO0P0NameFail captures enum value "Fail"
-	OnpremUpgradePhaseAO0P0NameFail string = "Fail"
+	// OnpremUpgradePhaseAO1P1NameFail captures enum value "Fail"
+	OnpremUpgradePhaseAO1P1NameFail string = "Fail"
 
-	// OnpremUpgradePhaseAO0P0NameCancel captures enum value "Cancel"
-	OnpremUpgradePhaseAO0P0NameCancel string = "Cancel"
+	// OnpremUpgradePhaseAO1P1NameCancel captures enum value "Cancel"
+	OnpremUpgradePhaseAO1P1NameCancel string = "Cancel"
 
-	// OnpremUpgradePhaseAO0P0NameTelemetry captures enum value "Telemetry"
-	OnpremUpgradePhaseAO0P0NameTelemetry string = "Telemetry"
+	// OnpremUpgradePhaseAO1P1NameTelemetry captures enum value "Telemetry"
+	OnpremUpgradePhaseAO1P1NameTelemetry string = "Telemetry"
 )
 
 // prop value enum
-func (m *OnpremUpgradePhaseAO0P0) validateNameEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, onpremUpgradePhaseAO0P0TypeNamePropEnum); err != nil {
+func (m *OnpremUpgradePhaseAO1P1) validateNameEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, onpremUpgradePhaseAO1P1TypeNamePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *OnpremUpgradePhaseAO0P0) validateName(formats strfmt.Registry) error {
+func (m *OnpremUpgradePhaseAO1P1) validateName(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Name) { // not required
 		return nil
@@ -298,7 +281,7 @@ func (m *OnpremUpgradePhaseAO0P0) validateName(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *OnpremUpgradePhaseAO0P0) MarshalBinary() ([]byte, error) {
+func (m *OnpremUpgradePhaseAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -306,8 +289,8 @@ func (m *OnpremUpgradePhaseAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *OnpremUpgradePhaseAO0P0) UnmarshalBinary(b []byte) error {
-	var res OnpremUpgradePhaseAO0P0
+func (m *OnpremUpgradePhaseAO1P1) UnmarshalBinary(b []byte) error {
+	var res OnpremUpgradePhaseAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -17,7 +17,7 @@ import (
 
 // AssetManagedDevice Managed Device
 //
-// Attributes for Managed Device in Intersight and it maintains the relationship to the Device Connector Manager (Intersight appliance platform type tagged with 'Intersight Assist') Device Registration. It is possible to add Managed Devices within an Account and later associated to DeviceConnectorManager. Once attached to Device Connector Manager, Device Connector for the Managed Device type is started on the OnPrem and status related to it is maintained in the ManagedDeviceStatus MO. If the Device Connector Manager is deleted, Managed Device continues to exist and can be associated to a different Device Connector Manager subsequently.
+// Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
 //
 // swagger:model assetManagedDevice
 type AssetManagedDevice struct {
@@ -31,14 +31,18 @@ type AssetManagedDevice struct {
 	//
 	Credential *CommCredential `json:"Credential,omitempty"`
 
-	// Device Connector Manager (Intersight Appliance Device Connector tagged as 'Intersight Assist') within the asset Device Registration.
+	// Intersight Assist Appliance Device within the asset Device Registration.
 	//
 	DeviceConnectorManager *AssetDeviceRegistrationRef `json:"DeviceConnectorManager,omitempty"`
 
-	// Type of the Device such as VMware, Pure Storage.
+	// Type of the Device such as VMware, Pure Storage supported by Intersight Assist.
 	//
-	// Enum: [PureStorage VMware]
-	DeviceType *string `json:"DeviceType,omitempty"`
+	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	DeviceType string `json:"DeviceType,omitempty"`
+
+	// Ignore Certificates with protocol https for connecting to the Managed Device. It is not used for other protocols.
+	//
+	IgnoreCert *bool `json:"IgnoreCert,omitempty"`
 
 	// Device is Enabled/Disabled.
 	//
@@ -48,17 +52,29 @@ type AssetManagedDevice struct {
 	//
 	ManagementAddress string `json:"ManagementAddress,omitempty"`
 
-	// Name defined by the administrator for easier identification.
+	// Port to use for connecting to the Managed Device. Port is optional. If not specified, default port for protocol is used.
 	//
-	Name string `json:"Name,omitempty"`
+	Port int64 `json:"Port,omitempty"`
+
+	// Protocol to use for connecting to the Managed Device.
+	//
+	// Enum: [https http]
+	Protocol *string `json:"Protocol,omitempty"`
 
 	// ManagedDevice once auto claimed within the asset Device Registration.
 	//
+	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Status of communication releated to Managed Device.
 	//
+	// Read Only: true
 	Status *AssetManagedDeviceStatus `json:"Status,omitempty"`
+
+	// Worklfow managed object reference associated with managed device. No managed device operations are supported, in case of associated worklfow is in progress.
+	//
+	// Read Only: true
+	WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -78,17 +94,23 @@ func (m *AssetManagedDevice) UnmarshalJSON(raw []byte) error {
 
 		DeviceConnectorManager *AssetDeviceRegistrationRef `json:"DeviceConnectorManager,omitempty"`
 
-		DeviceType *string `json:"DeviceType,omitempty"`
+		DeviceType string `json:"DeviceType,omitempty"`
+
+		IgnoreCert *bool `json:"IgnoreCert,omitempty"`
 
 		IsEnabled *bool `json:"IsEnabled,omitempty"`
 
 		ManagementAddress string `json:"ManagementAddress,omitempty"`
 
-		Name string `json:"Name,omitempty"`
+		Port int64 `json:"Port,omitempty"`
+
+		Protocol *string `json:"Protocol,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Status *AssetManagedDeviceStatus `json:"Status,omitempty"`
+
+		WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -102,15 +124,21 @@ func (m *AssetManagedDevice) UnmarshalJSON(raw []byte) error {
 
 	m.DeviceType = dataAO1.DeviceType
 
+	m.IgnoreCert = dataAO1.IgnoreCert
+
 	m.IsEnabled = dataAO1.IsEnabled
 
 	m.ManagementAddress = dataAO1.ManagementAddress
 
-	m.Name = dataAO1.Name
+	m.Port = dataAO1.Port
+
+	m.Protocol = dataAO1.Protocol
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
 	m.Status = dataAO1.Status
+
+	m.WorkflowInfo = dataAO1.WorkflowInfo
 
 	return nil
 }
@@ -132,17 +160,23 @@ func (m AssetManagedDevice) MarshalJSON() ([]byte, error) {
 
 		DeviceConnectorManager *AssetDeviceRegistrationRef `json:"DeviceConnectorManager,omitempty"`
 
-		DeviceType *string `json:"DeviceType,omitempty"`
+		DeviceType string `json:"DeviceType,omitempty"`
+
+		IgnoreCert *bool `json:"IgnoreCert,omitempty"`
 
 		IsEnabled *bool `json:"IsEnabled,omitempty"`
 
 		ManagementAddress string `json:"ManagementAddress,omitempty"`
 
-		Name string `json:"Name,omitempty"`
+		Port int64 `json:"Port,omitempty"`
+
+		Protocol *string `json:"Protocol,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Status *AssetManagedDeviceStatus `json:"Status,omitempty"`
+
+		WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 	}
 
 	dataAO1.Account = m.Account
@@ -153,15 +187,21 @@ func (m AssetManagedDevice) MarshalJSON() ([]byte, error) {
 
 	dataAO1.DeviceType = m.DeviceType
 
+	dataAO1.IgnoreCert = m.IgnoreCert
+
 	dataAO1.IsEnabled = m.IsEnabled
 
 	dataAO1.ManagementAddress = m.ManagementAddress
 
-	dataAO1.Name = m.Name
+	dataAO1.Port = m.Port
+
+	dataAO1.Protocol = m.Protocol
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
 	dataAO1.Status = m.Status
+
+	dataAO1.WorkflowInfo = m.WorkflowInfo
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -197,11 +237,19 @@ func (m *AssetManagedDevice) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateProtocol(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRegisteredDevice(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateWorkflowInfo(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -269,7 +317,7 @@ var assetManagedDeviceTypeDeviceTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["PureStorage","VMware"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -292,7 +340,41 @@ func (m *AssetManagedDevice) validateDeviceType(formats strfmt.Registry) error {
 	}
 
 	// value enum
-	if err := m.validateDeviceTypeEnum("DeviceType", "body", *m.DeviceType); err != nil {
+	if err := m.validateDeviceTypeEnum("DeviceType", "body", m.DeviceType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var assetManagedDeviceTypeProtocolPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["https","http"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		assetManagedDeviceTypeProtocolPropEnum = append(assetManagedDeviceTypeProtocolPropEnum, v)
+	}
+}
+
+// property enum
+func (m *AssetManagedDevice) validateProtocolEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, assetManagedDeviceTypeProtocolPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *AssetManagedDevice) validateProtocol(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Protocol) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateProtocolEnum("Protocol", "body", *m.Protocol); err != nil {
 		return err
 	}
 
@@ -327,6 +409,24 @@ func (m *AssetManagedDevice) validateStatus(formats strfmt.Registry) error {
 		if err := m.Status.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("Status")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AssetManagedDevice) validateWorkflowInfo(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.WorkflowInfo) { // not required
+		return nil
+	}
+
+	if m.WorkflowInfo != nil {
+		if err := m.WorkflowInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("WorkflowInfo")
 			}
 			return err
 		}

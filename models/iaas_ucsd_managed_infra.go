@@ -77,7 +77,7 @@ type IaasUcsdManagedInfra struct {
 	// Read Only: true
 	VdcCount int64 `json:"VdcCount,omitempty"`
 
-	// Total VMs in UCSD.
+	// Total Virtual machines in UCSD.
 	//
 	// Read Only: true
 	VMCount int64 `json:"VmCount,omitempty"`

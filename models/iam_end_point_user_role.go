@@ -48,7 +48,7 @@ type IamEndPointUserRole struct {
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// Password for the user
+	// Valid login password of the user.
 	//
 	Password string `json:"Password,omitempty"`
 }

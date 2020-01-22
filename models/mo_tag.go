@@ -21,30 +21,45 @@ import (
 //
 // swagger:model moTag
 type MoTag struct {
-	MoTagAO0P0
+	MoBaseComplexType
+
+	MoTagAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *MoTag) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MoTagAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MoTagAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 MoTagAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.MoTagAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m MoTag) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MoTagAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.MoTagAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m MoTag) MarshalJSON() ([]byte, error) {
 func (m *MoTag) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MoTagAO0P0
-	if err := m.MoTagAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with MoTagAO1P1
+	if err := m.MoTagAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,50 +101,30 @@ func (m *MoTag) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// MoTagAO0P0 mo tag a o0 p0
-// swagger:model MoTagAO0P0
-type MoTagAO0P0 struct {
+// MoTagAO1P1 mo tag a o1 p1
+// swagger:model MoTagAO1P1
+type MoTagAO1P1 struct {
 
 	// The string representation of a tag key.
 	//
 	Key string `json:"Key,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// The string representation of a tag value.
 	//
 	Value string `json:"Value,omitempty"`
 
-	// mo tag a o0 p0
-	MoTagAO0P0 map[string]interface{} `json:"-"`
+	// mo tag a o1 p1
+	MoTagAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *MoTagAO0P0) UnmarshalJSON(data []byte) error {
+func (m *MoTagAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// The string representation of a tag key.
 		//
 		Key string `json:"Key,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The string representation of a tag value.
 		//
@@ -134,11 +133,9 @@ func (m *MoTagAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv MoTagAO0P0
+	var rcv MoTagAO1P1
 
 	rcv.Key = stage1.Key
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Value = stage1.Value
 
@@ -152,8 +149,6 @@ func (m *MoTagAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Key")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Value")
 
 	// stage 3, add additional properties values
@@ -166,29 +161,19 @@ func (m *MoTagAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.MoTagAO0P0 = result
+		m.MoTagAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m MoTagAO0P0) MarshalJSON() ([]byte, error) {
+func (m MoTagAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The string representation of a tag key.
 		//
 		Key string `json:"Key,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The string representation of a tag value.
 		//
@@ -196,8 +181,6 @@ func (m MoTagAO0P0) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Key = m.Key
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.Value = m.Value
 
@@ -207,12 +190,12 @@ func (m MoTagAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.MoTagAO0P0) == 0 {
+	if len(m.MoTagAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.MoTagAO0P0)
+	additional, err := json.Marshal(m.MoTagAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -226,13 +209,13 @@ func (m MoTagAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this mo tag a o0 p0
-func (m *MoTagAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this mo tag a o1 p1
+func (m *MoTagAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *MoTagAO0P0) MarshalBinary() ([]byte, error) {
+func (m *MoTagAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -240,8 +223,8 @@ func (m *MoTagAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *MoTagAO0P0) UnmarshalBinary(b []byte) error {
-	var res MoTagAO0P0
+func (m *MoTagAO1P1) UnmarshalBinary(b []byte) error {
+	var res MoTagAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -50,6 +50,19 @@ type WorkflowBatchAPIExecutor struct {
 	//
 	Name string `json:"Name,omitempty"`
 
+	// All the possible outcomes of this task are captured here. Outcomes property
+	// is a collection property of type workflow.Outcome objects.
+	//
+	// The outcomes can be mapped to the message to be shown. The outcomes are
+	// evaluated in the order they are given. At the end of the outcomes list,
+	// an catchall success/fail outcome can be added with condition as 'true'.
+	//
+	// This is an optional
+	// property and if not specified the task will be marked as success.
+	//
+	//
+	Outcomes interface{} `json:"Outcomes,omitempty"`
+
 	// Intersight Orchestrator allows the extraction of required values from API
 	// responses using the API response grammar. These extracted values can be mapped
 	// to task output parameters defined in task definition.
@@ -94,6 +107,8 @@ func (m *WorkflowBatchAPIExecutor) UnmarshalJSON(raw []byte) error {
 
 		Name string `json:"Name,omitempty"`
 
+		Outcomes interface{} `json:"Outcomes,omitempty"`
+
 		Output interface{} `json:"Output,omitempty"`
 
 		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
@@ -111,6 +126,8 @@ func (m *WorkflowBatchAPIExecutor) UnmarshalJSON(raw []byte) error {
 	m.Description = dataAO1.Description
 
 	m.Name = dataAO1.Name
+
+	m.Outcomes = dataAO1.Outcomes
 
 	m.Output = dataAO1.Output
 
@@ -140,6 +157,8 @@ func (m WorkflowBatchAPIExecutor) MarshalJSON() ([]byte, error) {
 
 		Name string `json:"Name,omitempty"`
 
+		Outcomes interface{} `json:"Outcomes,omitempty"`
+
 		Output interface{} `json:"Output,omitempty"`
 
 		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
@@ -154,6 +173,8 @@ func (m WorkflowBatchAPIExecutor) MarshalJSON() ([]byte, error) {
 	dataAO1.Description = m.Description
 
 	dataAO1.Name = m.Name
+
+	dataAO1.Outcomes = m.Outcomes
 
 	dataAO1.Output = m.Output
 

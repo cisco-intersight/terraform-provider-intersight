@@ -20,30 +20,45 @@ import (
 //
 // swagger:model adapterAdapterConfig
 type AdapterAdapterConfig struct {
-	AdapterAdapterConfigAO0P0
+	MoBaseComplexType
+
+	AdapterAdapterConfigAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *AdapterAdapterConfig) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 AdapterAdapterConfigAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.AdapterAdapterConfigAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 AdapterAdapterConfigAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.AdapterAdapterConfigAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m AdapterAdapterConfig) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.AdapterAdapterConfigAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.AdapterAdapterConfigAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m AdapterAdapterConfig) MarshalJSON() ([]byte, error) {
 func (m *AdapterAdapterConfig) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with AdapterAdapterConfigAO0P0
-	if err := m.AdapterAdapterConfigAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with AdapterAdapterConfigAO1P1
+	if err := m.AdapterAdapterConfigAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *AdapterAdapterConfig) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// AdapterAdapterConfigAO0P0 adapter adapter config a o0 p0
-// swagger:model AdapterAdapterConfigAO0P0
-type AdapterAdapterConfigAO0P0 struct {
+// AdapterAdapterConfigAO1P1 adapter adapter config a o1 p1
+// swagger:model AdapterAdapterConfigAO1P1
+type AdapterAdapterConfigAO1P1 struct {
 
 	// Global Ethernet settings for this adapter.
 	//
@@ -93,26 +112,20 @@ type AdapterAdapterConfigAO0P0 struct {
 	//
 	FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
-	// The concrete type of this complex type.
+	// Port Channel settings for this adapter.
 	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+	PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 	// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
 	//
 	SlotID string `json:"SlotId,omitempty"`
 
-	// adapter adapter config a o0 p0
-	AdapterAdapterConfigAO0P0 map[string]interface{} `json:"-"`
+	// adapter adapter config a o1 p1
+	AdapterAdapterConfigAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *AdapterAdapterConfigAO0P0) UnmarshalJSON(data []byte) error {
+func (m *AdapterAdapterConfigAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -124,15 +137,9 @@ func (m *AdapterAdapterConfigAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
-		// The concrete type of this complex type.
+		// Port Channel settings for this adapter.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 		// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
 		//
@@ -141,13 +148,13 @@ func (m *AdapterAdapterConfigAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv AdapterAdapterConfigAO0P0
+	var rcv AdapterAdapterConfigAO1P1
 
 	rcv.EthSettings = stage1.EthSettings
 
 	rcv.FcSettings = stage1.FcSettings
 
-	rcv.ObjectType = stage1.ObjectType
+	rcv.PortChannelSettings = stage1.PortChannelSettings
 
 	rcv.SlotID = stage1.SlotID
 
@@ -163,7 +170,7 @@ func (m *AdapterAdapterConfigAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "FcSettings")
 
-	delete(stage2, "ObjectType")
+	delete(stage2, "PortChannelSettings")
 
 	delete(stage2, "SlotId")
 
@@ -177,14 +184,14 @@ func (m *AdapterAdapterConfigAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.AdapterAdapterConfigAO0P0 = result
+		m.AdapterAdapterConfigAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m AdapterAdapterConfigAO0P0) MarshalJSON() ([]byte, error) {
+func (m AdapterAdapterConfigAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Global Ethernet settings for this adapter.
@@ -195,15 +202,9 @@ func (m AdapterAdapterConfigAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
-		// The concrete type of this complex type.
+		// Port Channel settings for this adapter.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 		// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
 		//
@@ -214,7 +215,7 @@ func (m AdapterAdapterConfigAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.FcSettings = m.FcSettings
 
-	stage1.ObjectType = m.ObjectType
+	stage1.PortChannelSettings = m.PortChannelSettings
 
 	stage1.SlotID = m.SlotID
 
@@ -224,12 +225,12 @@ func (m AdapterAdapterConfigAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.AdapterAdapterConfigAO0P0) == 0 {
+	if len(m.AdapterAdapterConfigAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.AdapterAdapterConfigAO0P0)
+	additional, err := json.Marshal(m.AdapterAdapterConfigAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -243,8 +244,8 @@ func (m AdapterAdapterConfigAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this adapter adapter config a o0 p0
-func (m *AdapterAdapterConfigAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this adapter adapter config a o1 p1
+func (m *AdapterAdapterConfigAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEthSettings(formats); err != nil {
@@ -255,13 +256,17 @@ func (m *AdapterAdapterConfigAO0P0) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePortChannelSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-func (m *AdapterAdapterConfigAO0P0) validateEthSettings(formats strfmt.Registry) error {
+func (m *AdapterAdapterConfigAO1P1) validateEthSettings(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.EthSettings) { // not required
 		return nil
@@ -279,7 +284,7 @@ func (m *AdapterAdapterConfigAO0P0) validateEthSettings(formats strfmt.Registry)
 	return nil
 }
 
-func (m *AdapterAdapterConfigAO0P0) validateFcSettings(formats strfmt.Registry) error {
+func (m *AdapterAdapterConfigAO1P1) validateFcSettings(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.FcSettings) { // not required
 		return nil
@@ -297,8 +302,26 @@ func (m *AdapterAdapterConfigAO0P0) validateFcSettings(formats strfmt.Registry) 
 	return nil
 }
 
+func (m *AdapterAdapterConfigAO1P1) validatePortChannelSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PortChannelSettings) { // not required
+		return nil
+	}
+
+	if m.PortChannelSettings != nil {
+		if err := m.PortChannelSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("PortChannelSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
-func (m *AdapterAdapterConfigAO0P0) MarshalBinary() ([]byte, error) {
+func (m *AdapterAdapterConfigAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -306,8 +329,8 @@ func (m *AdapterAdapterConfigAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *AdapterAdapterConfigAO0P0) UnmarshalBinary(b []byte) error {
-	var res AdapterAdapterConfigAO0P0
+func (m *AdapterAdapterConfigAO1P1) UnmarshalBinary(b []byte) error {
+	var res AdapterAdapterConfigAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

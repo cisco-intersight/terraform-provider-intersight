@@ -15,7 +15,8 @@ The following arguments can be used to get data of already created objects in In
 * `default_version`:(bool)When true this will be the workflow version that is used when a specific workflow definition version is not specified. The default version is used when user executes a workflow without specifying a version or when workflow is included in another workflow without a specific version. The very first workflow definition created with a name will be set as the default version, after that user can explicitly set any version of the workflow definition as the default version.
 * `description`:(string)The description for this workflow.
 * `label`:(string)A user friendly short name to identify the workflow.
+* `license_entitlement`:(string)License entitlement required to run this workflow. It is calculated based on the highest license requirement of all its tasks.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name for this workflow. You can have multiple version of the workflow with the same name.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `version`:(int)The version of the workflow to support multiple versions.

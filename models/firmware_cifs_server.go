@@ -21,30 +21,45 @@ import (
 //
 // swagger:model firmwareCifsServer
 type FirmwareCifsServer struct {
-	FirmwareCifsServerAO0P0
+	MoBaseComplexType
+
+	FirmwareCifsServerAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *FirmwareCifsServer) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 FirmwareCifsServerAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.FirmwareCifsServerAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 FirmwareCifsServerAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.FirmwareCifsServerAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m FirmwareCifsServer) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.FirmwareCifsServerAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.FirmwareCifsServerAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m FirmwareCifsServer) MarshalJSON() ([]byte, error) {
 func (m *FirmwareCifsServer) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with FirmwareCifsServerAO0P0
-	if err := m.FirmwareCifsServerAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with FirmwareCifsServerAO1P1
+	if err := m.FirmwareCifsServerAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,24 +101,14 @@ func (m *FirmwareCifsServer) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// FirmwareCifsServerAO0P0 firmware cifs server a o0 p0
-// swagger:model FirmwareCifsServerAO0P0
-type FirmwareCifsServerAO0P0 struct {
+// FirmwareCifsServerAO1P1 firmware cifs server a o1 p1
+// swagger:model FirmwareCifsServerAO1P1
+type FirmwareCifsServerAO1P1 struct {
 
 	// Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.
 	//
 	// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 	MountOptions *string `json:"MountOptions,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
 	//
@@ -113,12 +122,12 @@ type FirmwareCifsServerAO0P0 struct {
 	//
 	RemoteShare string `json:"RemoteShare,omitempty"`
 
-	// firmware cifs server a o0 p0
-	FirmwareCifsServerAO0P0 map[string]interface{} `json:"-"`
+	// firmware cifs server a o1 p1
+	FirmwareCifsServerAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *FirmwareCifsServerAO0P0) UnmarshalJSON(data []byte) error {
+func (m *FirmwareCifsServerAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -126,16 +135,6 @@ func (m *FirmwareCifsServerAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		MountOptions *string `json:"MountOptions,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
 		//
@@ -152,11 +151,9 @@ func (m *FirmwareCifsServerAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv FirmwareCifsServerAO0P0
+	var rcv FirmwareCifsServerAO1P1
 
 	rcv.MountOptions = stage1.MountOptions
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.RemoteFile = stage1.RemoteFile
 
@@ -174,8 +171,6 @@ func (m *FirmwareCifsServerAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MountOptions")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "RemoteFile")
 
 	delete(stage2, "RemoteIp")
@@ -192,30 +187,20 @@ func (m *FirmwareCifsServerAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.FirmwareCifsServerAO0P0 = result
+		m.FirmwareCifsServerAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m FirmwareCifsServerAO0P0) MarshalJSON() ([]byte, error) {
+func (m FirmwareCifsServerAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.
 		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		MountOptions *string `json:"MountOptions,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
 		//
@@ -232,8 +217,6 @@ func (m FirmwareCifsServerAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.MountOptions = m.MountOptions
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.RemoteFile = m.RemoteFile
 
 	stage1.RemoteIP = m.RemoteIP
@@ -246,12 +229,12 @@ func (m FirmwareCifsServerAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.FirmwareCifsServerAO0P0) == 0 {
+	if len(m.FirmwareCifsServerAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.FirmwareCifsServerAO0P0)
+	additional, err := json.Marshal(m.FirmwareCifsServerAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -265,8 +248,8 @@ func (m FirmwareCifsServerAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this firmware cifs server a o0 p0
-func (m *FirmwareCifsServerAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this firmware cifs server a o1 p1
+func (m *FirmwareCifsServerAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMountOptions(formats); err != nil {
@@ -279,7 +262,7 @@ func (m *FirmwareCifsServerAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var firmwareCifsServerAO0P0TypeMountOptionsPropEnum []interface{}
+var firmwareCifsServerAO1P1TypeMountOptionsPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -287,43 +270,43 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		firmwareCifsServerAO0P0TypeMountOptionsPropEnum = append(firmwareCifsServerAO0P0TypeMountOptionsPropEnum, v)
+		firmwareCifsServerAO1P1TypeMountOptionsPropEnum = append(firmwareCifsServerAO1P1TypeMountOptionsPropEnum, v)
 	}
 }
 
 const (
 
-	// FirmwareCifsServerAO0P0MountOptionsNone captures enum value "none"
-	FirmwareCifsServerAO0P0MountOptionsNone string = "none"
+	// FirmwareCifsServerAO1P1MountOptionsNone captures enum value "none"
+	FirmwareCifsServerAO1P1MountOptionsNone string = "none"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlm captures enum value "ntlm"
-	FirmwareCifsServerAO0P0MountOptionsNtlm string = "ntlm"
+	// FirmwareCifsServerAO1P1MountOptionsNtlm captures enum value "ntlm"
+	FirmwareCifsServerAO1P1MountOptionsNtlm string = "ntlm"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlmi captures enum value "ntlmi"
-	FirmwareCifsServerAO0P0MountOptionsNtlmi string = "ntlmi"
+	// FirmwareCifsServerAO1P1MountOptionsNtlmi captures enum value "ntlmi"
+	FirmwareCifsServerAO1P1MountOptionsNtlmi string = "ntlmi"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlmv2 captures enum value "ntlmv2"
-	FirmwareCifsServerAO0P0MountOptionsNtlmv2 string = "ntlmv2"
+	// FirmwareCifsServerAO1P1MountOptionsNtlmv2 captures enum value "ntlmv2"
+	FirmwareCifsServerAO1P1MountOptionsNtlmv2 string = "ntlmv2"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlmv2i captures enum value "ntlmv2i"
-	FirmwareCifsServerAO0P0MountOptionsNtlmv2i string = "ntlmv2i"
+	// FirmwareCifsServerAO1P1MountOptionsNtlmv2i captures enum value "ntlmv2i"
+	FirmwareCifsServerAO1P1MountOptionsNtlmv2i string = "ntlmv2i"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlmssp captures enum value "ntlmssp"
-	FirmwareCifsServerAO0P0MountOptionsNtlmssp string = "ntlmssp"
+	// FirmwareCifsServerAO1P1MountOptionsNtlmssp captures enum value "ntlmssp"
+	FirmwareCifsServerAO1P1MountOptionsNtlmssp string = "ntlmssp"
 
-	// FirmwareCifsServerAO0P0MountOptionsNtlmsspi captures enum value "ntlmsspi"
-	FirmwareCifsServerAO0P0MountOptionsNtlmsspi string = "ntlmsspi"
+	// FirmwareCifsServerAO1P1MountOptionsNtlmsspi captures enum value "ntlmsspi"
+	FirmwareCifsServerAO1P1MountOptionsNtlmsspi string = "ntlmsspi"
 )
 
 // prop value enum
-func (m *FirmwareCifsServerAO0P0) validateMountOptionsEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, firmwareCifsServerAO0P0TypeMountOptionsPropEnum); err != nil {
+func (m *FirmwareCifsServerAO1P1) validateMountOptionsEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, firmwareCifsServerAO1P1TypeMountOptionsPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *FirmwareCifsServerAO0P0) validateMountOptions(formats strfmt.Registry) error {
+func (m *FirmwareCifsServerAO1P1) validateMountOptions(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MountOptions) { // not required
 		return nil
@@ -338,7 +321,7 @@ func (m *FirmwareCifsServerAO0P0) validateMountOptions(formats strfmt.Registry) 
 }
 
 // MarshalBinary interface implementation
-func (m *FirmwareCifsServerAO0P0) MarshalBinary() ([]byte, error) {
+func (m *FirmwareCifsServerAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -346,8 +329,8 @@ func (m *FirmwareCifsServerAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *FirmwareCifsServerAO0P0) UnmarshalBinary(b []byte) error {
-	var res FirmwareCifsServerAO0P0
+func (m *FirmwareCifsServerAO1P1) UnmarshalBinary(b []byte) error {
+	var res FirmwareCifsServerAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

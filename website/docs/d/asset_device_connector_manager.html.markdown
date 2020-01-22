@@ -3,15 +3,14 @@ layout: "intersight"
 page_title: "Intersight: intersight_asset_device_connector_manager"
 sidebar_current: "docs-intersight-data-source-assetDeviceConnectorManager"
 description: |-
-Maintains the Device Connector Manager, other attributes and its Managed Device Status information.
+Information pertaining to a Registered Intersight Assist Appliance Device in Intersight.
 
 ---
 
 # Data Source: intersight_asset_device_connector_manager
-Maintains the Device Connector Manager, other attributes and its Managed Device Status information.
+Information pertaining to a Registered Intersight Assist Appliance Device in Intersight.
 
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-* `version`:(string)Version of the Device Connector Manager. Version format is same as that of Equinox Device Connector.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.

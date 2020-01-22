@@ -30,6 +30,10 @@ type NetworkconfigPolicy struct {
 	//
 	AlternateIpv6dnsServer string `json:"AlternateIpv6dnsServer,omitempty"`
 
+	// The appliance account to which the appliance Network Connectivity policy belongs.
+	//
+	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 	// The domain name appended to a hostname for a Dynamic DNS (DDNS) update. If left blank, only a hostname is sent to the DDNS update request.
 	//
 	DynamicDNSDomain string `json:"DynamicDnsDomain,omitempty"`
@@ -50,9 +54,9 @@ type NetworkconfigPolicy struct {
 	//
 	EnableIpv6dnsFromDhcp *bool `json:"EnableIpv6dnsFromDhcp,omitempty"`
 
-	// Relationship to the Organization that owns the Managed Object.
+	// The organization to which the Network Connectivity policy belongs.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// IP address of the primary DNS server.
 	//
@@ -82,6 +86,8 @@ func (m *NetworkconfigPolicy) UnmarshalJSON(raw []byte) error {
 
 		AlternateIpv6dnsServer string `json:"AlternateIpv6dnsServer,omitempty"`
 
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		DynamicDNSDomain string `json:"DynamicDnsDomain,omitempty"`
 
 		EnableDynamicDNS *bool `json:"EnableDynamicDns,omitempty"`
@@ -92,7 +98,7 @@ func (m *NetworkconfigPolicy) UnmarshalJSON(raw []byte) error {
 
 		EnableIpv6dnsFromDhcp *bool `json:"EnableIpv6dnsFromDhcp,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PreferredIpv4dnsServer string `json:"PreferredIpv4dnsServer,omitempty"`
 
@@ -107,6 +113,8 @@ func (m *NetworkconfigPolicy) UnmarshalJSON(raw []byte) error {
 	m.AlternateIpv4dnsServer = dataAO1.AlternateIpv4dnsServer
 
 	m.AlternateIpv6dnsServer = dataAO1.AlternateIpv6dnsServer
+
+	m.ApplianceAccount = dataAO1.ApplianceAccount
 
 	m.DynamicDNSDomain = dataAO1.DynamicDNSDomain
 
@@ -144,6 +152,8 @@ func (m NetworkconfigPolicy) MarshalJSON() ([]byte, error) {
 
 		AlternateIpv6dnsServer string `json:"AlternateIpv6dnsServer,omitempty"`
 
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		DynamicDNSDomain string `json:"DynamicDnsDomain,omitempty"`
 
 		EnableDynamicDNS *bool `json:"EnableDynamicDns,omitempty"`
@@ -154,7 +164,7 @@ func (m NetworkconfigPolicy) MarshalJSON() ([]byte, error) {
 
 		EnableIpv6dnsFromDhcp *bool `json:"EnableIpv6dnsFromDhcp,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PreferredIpv4dnsServer string `json:"PreferredIpv4dnsServer,omitempty"`
 
@@ -166,6 +176,8 @@ func (m NetworkconfigPolicy) MarshalJSON() ([]byte, error) {
 	dataAO1.AlternateIpv4dnsServer = m.AlternateIpv4dnsServer
 
 	dataAO1.AlternateIpv6dnsServer = m.AlternateIpv6dnsServer
+
+	dataAO1.ApplianceAccount = m.ApplianceAccount
 
 	dataAO1.DynamicDNSDomain = m.DynamicDNSDomain
 
@@ -203,6 +215,10 @@ func (m *NetworkconfigPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateApplianceAccount(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrganization(formats); err != nil {
 		res = append(res, err)
 	}
@@ -214,6 +230,24 @@ func (m *NetworkconfigPolicy) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *NetworkconfigPolicy) validateApplianceAccount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ApplianceAccount) { // not required
+		return nil
+	}
+
+	if m.ApplianceAccount != nil {
+		if err := m.ApplianceAccount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ApplianceAccount")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -31,6 +31,11 @@ type ApplianceSystemInfo struct {
 	// Enum: [ Connected NotConnected Unclaimed]
 	CloudConnStatus string `json:"CloudConnStatus,omitempty"`
 
+	// Current running deployment size for the Intersight Appliance cluster. Eg. small, medium, large etc.
+	//
+	// Read Only: true
+	DeploymentSize string `json:"DeploymentSize,omitempty"`
+
 	// Publicly accessible FQDN or IP address of the Intersight Appliance.
 	//
 	// Read Only: true
@@ -76,6 +81,8 @@ func (m *ApplianceSystemInfo) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		CloudConnStatus string `json:"CloudConnStatus,omitempty"`
 
+		DeploymentSize string `json:"DeploymentSize,omitempty"`
+
 		Hostname string `json:"Hostname,omitempty"`
 
 		InitDone *bool `json:"InitDone,omitempty"`
@@ -93,6 +100,8 @@ func (m *ApplianceSystemInfo) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.CloudConnStatus = dataAO1.CloudConnStatus
+
+	m.DeploymentSize = dataAO1.DeploymentSize
 
 	m.Hostname = dataAO1.Hostname
 
@@ -122,6 +131,8 @@ func (m ApplianceSystemInfo) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		CloudConnStatus string `json:"CloudConnStatus,omitempty"`
 
+		DeploymentSize string `json:"DeploymentSize,omitempty"`
+
 		Hostname string `json:"Hostname,omitempty"`
 
 		InitDone *bool `json:"InitDone,omitempty"`
@@ -136,6 +147,8 @@ func (m ApplianceSystemInfo) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.CloudConnStatus = m.CloudConnStatus
+
+	dataAO1.DeploymentSize = m.DeploymentSize
 
 	dataAO1.Hostname = m.Hostname
 

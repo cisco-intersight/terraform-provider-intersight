@@ -18,7 +18,7 @@ The following arguments can be used to get data of already created objects in In
 * `mo_type`:(string)The object type of the REST resource that was created, modified or deleted.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `object_moid`:(string)The Moid of the REST resource that was created, modified or deleted.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `source_ip`:(string)The source IP of the client.
 * `timestamp`:(string)The creation time of AuditRecordLocal, which is the time when the affected MO was created/modified/deleted.
 * `trace_id`:(string)The trace id of the request that was used to create, modify or delete a REST resource.A trace id is a unique identifier for one particular REST request. It may be used for troubleshooting purposeby the Intersight technical support team.

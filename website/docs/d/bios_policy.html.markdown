@@ -114,7 +114,7 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the concrete policy.
 * `numa_optimized`:(string)BIOS Token for setting NUMA optimized configuration.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `onboard10gbit_lom`:(string)BIOS Token for setting Onboard 10Gbit LOM configuration.
 * `onboard_gbit_lom`:(string)BIOS Token for setting Onboard Gbit LOM configuration.
 * `onboard_scu_storage_support`:(string)BIOS Token for setting Onboard SCU Storage Support configuration.

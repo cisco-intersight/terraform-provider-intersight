@@ -42,7 +42,7 @@ type VnicFcIf struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Enables retention of LUN ID associations in memory until they are manually cleared.
 	//
@@ -78,7 +78,7 @@ func (m *VnicFcIf) UnmarshalJSON(raw []byte) error {
 
 		Order int64 `json:"Order,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PersistentBindings *bool `json:"PersistentBindings,omitempty"`
 
@@ -132,7 +132,7 @@ func (m VnicFcIf) MarshalJSON() ([]byte, error) {
 
 		Order int64 `json:"Order,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PersistentBindings *bool `json:"PersistentBindings,omitempty"`
 

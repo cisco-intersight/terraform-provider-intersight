@@ -16,6 +16,10 @@ resource "intersight_storage_storage_policy" "storage_storage1" {
     size = 285148
     write_policy = "WriteThrough"
   }
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 resource "intersight_storage_storage_policy" "storage_storage2" {
@@ -52,6 +56,10 @@ resource "intersight_storage_storage_policy" "storage_storage2" {
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"
+  }
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
   }
 }
 

@@ -1,16 +1,22 @@
 resource "intersight_softwarerepository_operating_system_file" "osf1" {
-  version = "ESXi 6.5 U2"
-  description = "ESXi6.5U2 without answers"
-  name = "ESXi6.5 w/o cifs 21"
+  version = "ESXi 6.7 U2"
+  description = "ESXi6.7U2 without answers"
+  name = "ESXi6.7 w/o cifs 21"
   source {
     additional_properties = jsonencode({
-      RemoteIp = "10.197.110.132"
-      RemoteShare = "/nfs"
-      RemoteFile = "esx65u2.iso"
+      RemoteIp = "10.225.79.79"
+      RemoteShare = "/Public/iso"
+      RemoteFile = "esx67u2.iso"
+      Username = "user"
+      Password = "ChangeMe"
+      MountOption = "sec=ntlm"
     })
-    object_type = "softwarerepository.NfsServer"
+    object_type = "softwarerepository.CifsServer"
   }
   vendor = "VMware"
+  catalog {
+    moid = "5dde4cb06567612d3063467a"
+  }
 }
 
 resource "intersight_softwarerepository_operating_system_file" "osf2" {
@@ -29,4 +35,7 @@ resource "intersight_softwarerepository_operating_system_file" "osf2" {
   vendor = "VMware"
   version = "ESXi 6.0 U3"
   description = "ESXi6.0-CIFS"
+  catalog {
+    moid = "5dde4cb06567612d3063467a"
+  }
 }

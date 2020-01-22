@@ -18,30 +18,45 @@ import (
 // VmediaMapping Vmedia:Mapping
 // swagger:model vmediaMapping
 type VmediaMapping struct {
-	VmediaMappingAO0P0
+	MoBaseComplexType
+
+	VmediaMappingAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VmediaMapping) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VmediaMappingAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VmediaMappingAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 VmediaMappingAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.VmediaMappingAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m VmediaMapping) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VmediaMappingAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.VmediaMappingAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -50,8 +65,12 @@ func (m VmediaMapping) MarshalJSON() ([]byte, error) {
 func (m *VmediaMapping) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VmediaMappingAO0P0
-	if err := m.VmediaMappingAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with VmediaMappingAO1P1
+	if err := m.VmediaMappingAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -79,9 +98,9 @@ func (m *VmediaMapping) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// VmediaMappingAO0P0 vmedia mapping a o0 p0
-// swagger:model VmediaMappingAO0P0
-type VmediaMappingAO0P0 struct {
+// VmediaMappingAO1P1 vmedia mapping a o1 p1
+// swagger:model VmediaMappingAO1P1
+type VmediaMappingAO1P1 struct {
 
 	// Type of Authentication protocol when CIFS is used for communication with the remote server.
 	//
@@ -109,16 +128,6 @@ type VmediaMappingAO0P0 struct {
 	// Enum: [nfs cifs http https]
 	MountProtocol *string `json:"MountProtocol,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Password associated with the username.
 	//
 	Password string `json:"Password,omitempty"`
@@ -127,7 +136,7 @@ type VmediaMappingAO0P0 struct {
 	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
-	// Path to the location of the image on the remote server. Preferred format is /path/.
+	// URL path to the location of the image on the remote server. The preferred format is '/path/'.
 	//
 	RemotePath string `json:"RemotePath,omitempty"`
 
@@ -139,12 +148,12 @@ type VmediaMappingAO0P0 struct {
 	//
 	VolumeName string `json:"VolumeName,omitempty"`
 
-	// vmedia mapping a o0 p0
-	VmediaMappingAO0P0 map[string]interface{} `json:"-"`
+	// vmedia mapping a o1 p1
+	VmediaMappingAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
+func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -174,16 +183,6 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 		// Enum: [nfs cifs http https]
 		MountProtocol *string `json:"MountProtocol,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Password associated with the username.
 		//
 		Password string `json:"Password,omitempty"`
@@ -192,7 +191,7 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
-		// Path to the location of the image on the remote server. Preferred format is /path/.
+		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
 		//
 		RemotePath string `json:"RemotePath,omitempty"`
 
@@ -207,7 +206,7 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv VmediaMappingAO0P0
+	var rcv VmediaMappingAO1P1
 
 	rcv.AuthenticationProtocol = stage1.AuthenticationProtocol
 
@@ -220,8 +219,6 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.MountOptions = stage1.MountOptions
 
 	rcv.MountProtocol = stage1.MountProtocol
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Password = stage1.Password
 
@@ -253,8 +250,6 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MountProtocol")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Password")
 
 	delete(stage2, "RemoteFile")
@@ -275,14 +270,14 @@ func (m *VmediaMappingAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.VmediaMappingAO0P0 = result
+		m.VmediaMappingAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
+func (m VmediaMappingAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Type of Authentication protocol when CIFS is used for communication with the remote server.
@@ -311,16 +306,6 @@ func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
 		// Enum: [nfs cifs http https]
 		MountProtocol *string `json:"MountProtocol,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Password associated with the username.
 		//
 		Password string `json:"Password,omitempty"`
@@ -329,7 +314,7 @@ func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
-		// Path to the location of the image on the remote server. Preferred format is /path/.
+		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
 		//
 		RemotePath string `json:"RemotePath,omitempty"`
 
@@ -354,8 +339,6 @@ func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.MountProtocol = m.MountProtocol
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Password = m.Password
 
 	stage1.RemoteFile = m.RemoteFile
@@ -372,12 +355,12 @@ func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.VmediaMappingAO0P0) == 0 {
+	if len(m.VmediaMappingAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.VmediaMappingAO0P0)
+	additional, err := json.Marshal(m.VmediaMappingAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -391,8 +374,8 @@ func (m VmediaMappingAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this vmedia mapping a o0 p0
-func (m *VmediaMappingAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this vmedia mapping a o1 p1
+func (m *VmediaMappingAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAuthenticationProtocol(formats); err != nil {
@@ -413,7 +396,7 @@ func (m *VmediaMappingAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var vmediaMappingAO0P0TypeAuthenticationProtocolPropEnum []interface{}
+var vmediaMappingAO1P1TypeAuthenticationProtocolPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -421,43 +404,43 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vmediaMappingAO0P0TypeAuthenticationProtocolPropEnum = append(vmediaMappingAO0P0TypeAuthenticationProtocolPropEnum, v)
+		vmediaMappingAO1P1TypeAuthenticationProtocolPropEnum = append(vmediaMappingAO1P1TypeAuthenticationProtocolPropEnum, v)
 	}
 }
 
 const (
 
-	// VmediaMappingAO0P0AuthenticationProtocolNone captures enum value "none"
-	VmediaMappingAO0P0AuthenticationProtocolNone string = "none"
+	// VmediaMappingAO1P1AuthenticationProtocolNone captures enum value "none"
+	VmediaMappingAO1P1AuthenticationProtocolNone string = "none"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlm captures enum value "ntlm"
-	VmediaMappingAO0P0AuthenticationProtocolNtlm string = "ntlm"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlm captures enum value "ntlm"
+	VmediaMappingAO1P1AuthenticationProtocolNtlm string = "ntlm"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlmi captures enum value "ntlmi"
-	VmediaMappingAO0P0AuthenticationProtocolNtlmi string = "ntlmi"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlmi captures enum value "ntlmi"
+	VmediaMappingAO1P1AuthenticationProtocolNtlmi string = "ntlmi"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlmv2 captures enum value "ntlmv2"
-	VmediaMappingAO0P0AuthenticationProtocolNtlmv2 string = "ntlmv2"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlmv2 captures enum value "ntlmv2"
+	VmediaMappingAO1P1AuthenticationProtocolNtlmv2 string = "ntlmv2"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlmv2i captures enum value "ntlmv2i"
-	VmediaMappingAO0P0AuthenticationProtocolNtlmv2i string = "ntlmv2i"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlmv2i captures enum value "ntlmv2i"
+	VmediaMappingAO1P1AuthenticationProtocolNtlmv2i string = "ntlmv2i"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlmssp captures enum value "ntlmssp"
-	VmediaMappingAO0P0AuthenticationProtocolNtlmssp string = "ntlmssp"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlmssp captures enum value "ntlmssp"
+	VmediaMappingAO1P1AuthenticationProtocolNtlmssp string = "ntlmssp"
 
-	// VmediaMappingAO0P0AuthenticationProtocolNtlmsspi captures enum value "ntlmsspi"
-	VmediaMappingAO0P0AuthenticationProtocolNtlmsspi string = "ntlmsspi"
+	// VmediaMappingAO1P1AuthenticationProtocolNtlmsspi captures enum value "ntlmsspi"
+	VmediaMappingAO1P1AuthenticationProtocolNtlmsspi string = "ntlmsspi"
 )
 
 // prop value enum
-func (m *VmediaMappingAO0P0) validateAuthenticationProtocolEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vmediaMappingAO0P0TypeAuthenticationProtocolPropEnum); err != nil {
+func (m *VmediaMappingAO1P1) validateAuthenticationProtocolEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vmediaMappingAO1P1TypeAuthenticationProtocolPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VmediaMappingAO0P0) validateAuthenticationProtocol(formats strfmt.Registry) error {
+func (m *VmediaMappingAO1P1) validateAuthenticationProtocol(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AuthenticationProtocol) { // not required
 		return nil
@@ -471,7 +454,7 @@ func (m *VmediaMappingAO0P0) validateAuthenticationProtocol(formats strfmt.Regis
 	return nil
 }
 
-var vmediaMappingAO0P0TypeDeviceTypePropEnum []interface{}
+var vmediaMappingAO1P1TypeDeviceTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -479,28 +462,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vmediaMappingAO0P0TypeDeviceTypePropEnum = append(vmediaMappingAO0P0TypeDeviceTypePropEnum, v)
+		vmediaMappingAO1P1TypeDeviceTypePropEnum = append(vmediaMappingAO1P1TypeDeviceTypePropEnum, v)
 	}
 }
 
 const (
 
-	// VmediaMappingAO0P0DeviceTypeCdd captures enum value "cdd"
-	VmediaMappingAO0P0DeviceTypeCdd string = "cdd"
+	// VmediaMappingAO1P1DeviceTypeCdd captures enum value "cdd"
+	VmediaMappingAO1P1DeviceTypeCdd string = "cdd"
 
-	// VmediaMappingAO0P0DeviceTypeHdd captures enum value "hdd"
-	VmediaMappingAO0P0DeviceTypeHdd string = "hdd"
+	// VmediaMappingAO1P1DeviceTypeHdd captures enum value "hdd"
+	VmediaMappingAO1P1DeviceTypeHdd string = "hdd"
 )
 
 // prop value enum
-func (m *VmediaMappingAO0P0) validateDeviceTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vmediaMappingAO0P0TypeDeviceTypePropEnum); err != nil {
+func (m *VmediaMappingAO1P1) validateDeviceTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vmediaMappingAO1P1TypeDeviceTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VmediaMappingAO0P0) validateDeviceType(formats strfmt.Registry) error {
+func (m *VmediaMappingAO1P1) validateDeviceType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.DeviceType) { // not required
 		return nil
@@ -514,7 +497,7 @@ func (m *VmediaMappingAO0P0) validateDeviceType(formats strfmt.Registry) error {
 	return nil
 }
 
-var vmediaMappingAO0P0TypeMountProtocolPropEnum []interface{}
+var vmediaMappingAO1P1TypeMountProtocolPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -522,34 +505,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vmediaMappingAO0P0TypeMountProtocolPropEnum = append(vmediaMappingAO0P0TypeMountProtocolPropEnum, v)
+		vmediaMappingAO1P1TypeMountProtocolPropEnum = append(vmediaMappingAO1P1TypeMountProtocolPropEnum, v)
 	}
 }
 
 const (
 
-	// VmediaMappingAO0P0MountProtocolNfs captures enum value "nfs"
-	VmediaMappingAO0P0MountProtocolNfs string = "nfs"
+	// VmediaMappingAO1P1MountProtocolNfs captures enum value "nfs"
+	VmediaMappingAO1P1MountProtocolNfs string = "nfs"
 
-	// VmediaMappingAO0P0MountProtocolCifs captures enum value "cifs"
-	VmediaMappingAO0P0MountProtocolCifs string = "cifs"
+	// VmediaMappingAO1P1MountProtocolCifs captures enum value "cifs"
+	VmediaMappingAO1P1MountProtocolCifs string = "cifs"
 
-	// VmediaMappingAO0P0MountProtocolHTTP captures enum value "http"
-	VmediaMappingAO0P0MountProtocolHTTP string = "http"
+	// VmediaMappingAO1P1MountProtocolHTTP captures enum value "http"
+	VmediaMappingAO1P1MountProtocolHTTP string = "http"
 
-	// VmediaMappingAO0P0MountProtocolHTTPS captures enum value "https"
-	VmediaMappingAO0P0MountProtocolHTTPS string = "https"
+	// VmediaMappingAO1P1MountProtocolHTTPS captures enum value "https"
+	VmediaMappingAO1P1MountProtocolHTTPS string = "https"
 )
 
 // prop value enum
-func (m *VmediaMappingAO0P0) validateMountProtocolEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vmediaMappingAO0P0TypeMountProtocolPropEnum); err != nil {
+func (m *VmediaMappingAO1P1) validateMountProtocolEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vmediaMappingAO1P1TypeMountProtocolPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VmediaMappingAO0P0) validateMountProtocol(formats strfmt.Registry) error {
+func (m *VmediaMappingAO1P1) validateMountProtocol(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MountProtocol) { // not required
 		return nil
@@ -564,7 +547,7 @@ func (m *VmediaMappingAO0P0) validateMountProtocol(formats strfmt.Registry) erro
 }
 
 // MarshalBinary interface implementation
-func (m *VmediaMappingAO0P0) MarshalBinary() ([]byte, error) {
+func (m *VmediaMappingAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -572,8 +555,8 @@ func (m *VmediaMappingAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *VmediaMappingAO0P0) UnmarshalBinary(b []byte) error {
-	var res VmediaMappingAO0P0
+func (m *VmediaMappingAO1P1) UnmarshalBinary(b []byte) error {
+	var res VmediaMappingAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

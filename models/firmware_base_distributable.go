@@ -63,7 +63,7 @@ type FirmwareBaseDistributable struct {
 
 	// The vendor or publisher of this file.
 	//
-	Vendor string `json:"Vendor,omitempty"`
+	Vendor *string `json:"Vendor,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -95,7 +95,7 @@ func (m *FirmwareBaseDistributable) UnmarshalJSON(raw []byte) error {
 
 		SupportedModels []string `json:"SupportedModels"`
 
-		Vendor string `json:"Vendor,omitempty"`
+		Vendor *string `json:"Vendor,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -153,7 +153,7 @@ func (m FirmwareBaseDistributable) MarshalJSON() ([]byte, error) {
 
 		SupportedModels []string `json:"SupportedModels"`
 
-		Vendor string `json:"Vendor,omitempty"`
+		Vendor *string `json:"Vendor,omitempty"`
 	}
 
 	dataAO1.BundleType = m.BundleType

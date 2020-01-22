@@ -34,9 +34,14 @@ type OsInstall struct {
 	//
 	Image *SoftwarerepositoryOperatingSystemFileRef `json:"Image,omitempty"`
 
+	// The name of the OS install configuration.
+	//
+	//
+	Name string `json:"Name,omitempty"`
+
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Location of the Intersight OS Deployment Utilityimage, if the user has downloaded and available locally, to be used for this OS install configuration. This image is applicable for vMedia install method.
 	// Cisco publishes a OS Deployment Utility image that bootstraps and installs the user provided operating system images along with answers for unattended instllation.
@@ -75,7 +80,9 @@ func (m *OsInstall) UnmarshalJSON(raw []byte) error {
 
 		Image *SoftwarerepositoryOperatingSystemFileRef `json:"Image,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Name string `json:"Name,omitempty"`
+
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OsduImage *FirmwareServerConfigurationUtilityDistributableRef `json:"OsduImage,omitempty"`
 
@@ -92,6 +99,8 @@ func (m *OsInstall) UnmarshalJSON(raw []byte) error {
 	m.ConfigurationFile = dataAO1.ConfigurationFile
 
 	m.Image = dataAO1.Image
+
+	m.Name = dataAO1.Name
 
 	m.Organization = dataAO1.Organization
 
@@ -121,7 +130,9 @@ func (m OsInstall) MarshalJSON() ([]byte, error) {
 
 		Image *SoftwarerepositoryOperatingSystemFileRef `json:"Image,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Name string `json:"Name,omitempty"`
+
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OsduImage *FirmwareServerConfigurationUtilityDistributableRef `json:"OsduImage,omitempty"`
 
@@ -135,6 +146,8 @@ func (m OsInstall) MarshalJSON() ([]byte, error) {
 	dataAO1.ConfigurationFile = m.ConfigurationFile
 
 	dataAO1.Image = m.Image
+
+	dataAO1.Name = m.Name
 
 	dataAO1.Organization = m.Organization
 

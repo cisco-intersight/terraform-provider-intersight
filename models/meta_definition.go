@@ -60,10 +60,22 @@ type MetaDefinition struct {
 	// Read Only: true
 	ParentClass string `json:"ParentClass,omitempty"`
 
+	// Boolean flag to specify whether instances of this class type can be specified in permissions for instance based access control. Permissions can be created for entire Intersight account or to a subset of resources (instance based access control). In the first release, permissions are supported for entire account or for a subset of organizations.
+	//
+	//
+	// Read Only: true
+	PermissionSupported *bool `json:"PermissionSupported,omitempty"`
+
 	// Meta definition for the properties in the meta class and from all classes in the inheritance hierarchy.
 	//
 	// Read Only: true
 	Properties []*MetaPropDefinition `json:"Properties"`
+
+	// Boolean flag to specify whether instances of this class type can be assigned to resource groups that are part of an organization for access control. Inventoried physical/logical objects which needs access control should have rbacResource=yes. These objects are not part of any organization by default like device registrations and should be assigned to organizations for access control. Profiles, policies, workflow definitions which are created by specifying organization need not have this flag set.
+	//
+	//
+	// Read Only: true
+	RbacResource *bool `json:"RbacResource,omitempty"`
 
 	// Meta definition for the relationship in the meta class.
 	//
@@ -106,7 +118,11 @@ func (m *MetaDefinition) UnmarshalJSON(raw []byte) error {
 
 		ParentClass string `json:"ParentClass,omitempty"`
 
+		PermissionSupported *bool `json:"PermissionSupported,omitempty"`
+
 		Properties []*MetaPropDefinition `json:"Properties"`
+
+		RbacResource *bool `json:"RbacResource,omitempty"`
 
 		Relationships []*MetaRelationshipDefinition `json:"Relationships"`
 
@@ -132,7 +148,11 @@ func (m *MetaDefinition) UnmarshalJSON(raw []byte) error {
 
 	m.ParentClass = dataAO1.ParentClass
 
+	m.PermissionSupported = dataAO1.PermissionSupported
+
 	m.Properties = dataAO1.Properties
+
+	m.RbacResource = dataAO1.RbacResource
 
 	m.Relationships = dataAO1.Relationships
 
@@ -168,7 +188,11 @@ func (m MetaDefinition) MarshalJSON() ([]byte, error) {
 
 		ParentClass string `json:"ParentClass,omitempty"`
 
+		PermissionSupported *bool `json:"PermissionSupported,omitempty"`
+
 		Properties []*MetaPropDefinition `json:"Properties"`
+
+		RbacResource *bool `json:"RbacResource,omitempty"`
 
 		Relationships []*MetaRelationshipDefinition `json:"Relationships"`
 
@@ -191,7 +215,11 @@ func (m MetaDefinition) MarshalJSON() ([]byte, error) {
 
 	dataAO1.ParentClass = m.ParentClass
 
+	dataAO1.PermissionSupported = m.PermissionSupported
+
 	dataAO1.Properties = m.Properties
+
+	dataAO1.RbacResource = m.RbacResource
 
 	dataAO1.Relationships = m.Relationships
 

@@ -23,13 +23,14 @@ import (
 type TamAdvisoryInfo struct {
 	MoBaseMo
 
+	// The account associated with Advisory count.
+	//
+	// Read Only: true
+	Account *IamAccountRef `json:"Account,omitempty"`
+
 	// Reference to the source Intersight advisory.
 	//
 	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
-
-	// Relationship to the Organization that owns the Managed Object.
-	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
 
 	// Current state of the advisory for the owner. Indicates if the user is interested in getting updates for the advisory.
 	//
@@ -48,9 +49,9 @@ func (m *TamAdvisoryInfo) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
@@ -58,9 +59,9 @@ func (m *TamAdvisoryInfo) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
-	m.Advisory = dataAO1.Advisory
+	m.Account = dataAO1.Account
 
-	m.Organization = dataAO1.Organization
+	m.Advisory = dataAO1.Advisory
 
 	m.State = dataAO1.State
 
@@ -78,16 +79,16 @@ func (m TamAdvisoryInfo) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
 
-	dataAO1.Advisory = m.Advisory
+	dataAO1.Account = m.Account
 
-	dataAO1.Organization = m.Organization
+	dataAO1.Advisory = m.Advisory
 
 	dataAO1.State = m.State
 
@@ -109,11 +110,11 @@ func (m *TamAdvisoryInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateAdvisory(formats); err != nil {
+	if err := m.validateAccount(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateOrganization(formats); err != nil {
+	if err := m.validateAdvisory(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -127,6 +128,24 @@ func (m *TamAdvisoryInfo) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *TamAdvisoryInfo) validateAccount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Account) { // not required
+		return nil
+	}
+
+	if m.Account != nil {
+		if err := m.Account.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Account")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *TamAdvisoryInfo) validateAdvisory(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Advisory) { // not required
@@ -137,24 +156,6 @@ func (m *TamAdvisoryInfo) validateAdvisory(formats strfmt.Registry) error {
 		if err := m.Advisory.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("Advisory")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *TamAdvisoryInfo) validateOrganization(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Organization) { // not required
-		return nil
-	}
-
-	if m.Organization != nil {
-		if err := m.Organization.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("Organization")
 			}
 			return err
 		}

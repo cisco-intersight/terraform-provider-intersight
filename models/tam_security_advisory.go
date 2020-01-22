@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // TamSecurityAdvisory Tam:Security Advisory
@@ -24,41 +26,73 @@ type TamSecurityAdvisory struct {
 
 	// An array of actions that are to be taken when a given managed object matches the criteria specified for being affected by an alert definition.
 	//
-	// Read Only: true
 	Actions []*TamAction `json:"Actions"`
+
+	// Cisco generated identifier for the published security advisory.
+	//
+	//
+	AdvisoryID string `json:"AdvisoryId,omitempty"`
 
 	// An array of data sources that are used to provide data for queries used to identify an Intersight alert applicability.
 	//
-	// Read Only: true
 	APIDataSources []*TamAPIDataSource `json:"ApiDataSources"`
 
-	// CVE (https://cve.mitre.org/about/faqs.html) identifier for the security Advisory.
+	// CVSS version 3 base score for the security Advisory.
 	//
 	//
-	// Read Only: true
-	CveID string `json:"CveId,omitempty"`
+	BaseScore float64 `json:"BaseScore,omitempty"`
+
+	// CVE (https://cve.mitre.org/about/faqs.html) identifiers associated with the published security Advisory.
+	//
+	//
+	CveIds []string `json:"CveIds"`
+
+	// Date when the security advisory was first published by Cisco.
+	//
+	//
+	// Format: date-time
+	DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
+
+	// Date when the security advisory was last updated by Cisco.
+	//
+	//
+	// Format: date-time
+	DateUpdated strfmt.DateTime `json:"DateUpdated,omitempty"`
+
+	// CVSS version 3 environmental score for the security Advisory.
+	//
+	//
+	EnvironmentalScore float64 `json:"EnvironmentalScore,omitempty"`
 
 	// A link to an external URL describing security Advisory in more details.
 	//
 	//
-	// Read Only: true
 	ExternalURL string `json:"ExternalUrl,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Recommended action to resolve the security advisory.
 	//
 	//
-	// Read Only: true
 	Recommendation string `json:"Recommendation,omitempty"`
 
-	// CVSS score for the security Advisory.
+	// Cisco assigned status of the published advisory based on whether the investigation is complete or on-going.
 	//
 	//
-	// Read Only: true
-	Score float32 `json:"Score,omitempty"`
+	// Enum: [interim final]
+	Status *string `json:"Status,omitempty"`
+
+	// CVSS version 3 temporal score for the security Advisory.
+	//
+	//
+	TemporalScore float64 `json:"TemporalScore,omitempty"`
+
+	// Cisco assigned advisory version after latest revision.
+	//
+	//
+	Version string `json:"Version,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -74,17 +108,31 @@ func (m *TamSecurityAdvisory) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Actions []*TamAction `json:"Actions"`
 
+		AdvisoryID string `json:"AdvisoryId,omitempty"`
+
 		APIDataSources []*TamAPIDataSource `json:"ApiDataSources"`
 
-		CveID string `json:"CveId,omitempty"`
+		BaseScore float64 `json:"BaseScore,omitempty"`
+
+		CveIds []string `json:"CveIds"`
+
+		DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
+
+		DateUpdated strfmt.DateTime `json:"DateUpdated,omitempty"`
+
+		EnvironmentalScore float64 `json:"EnvironmentalScore,omitempty"`
 
 		ExternalURL string `json:"ExternalUrl,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Recommendation string `json:"Recommendation,omitempty"`
 
-		Score float32 `json:"Score,omitempty"`
+		Status *string `json:"Status,omitempty"`
+
+		TemporalScore float64 `json:"TemporalScore,omitempty"`
+
+		Version string `json:"Version,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -92,9 +140,19 @@ func (m *TamSecurityAdvisory) UnmarshalJSON(raw []byte) error {
 
 	m.Actions = dataAO1.Actions
 
+	m.AdvisoryID = dataAO1.AdvisoryID
+
 	m.APIDataSources = dataAO1.APIDataSources
 
-	m.CveID = dataAO1.CveID
+	m.BaseScore = dataAO1.BaseScore
+
+	m.CveIds = dataAO1.CveIds
+
+	m.DatePublished = dataAO1.DatePublished
+
+	m.DateUpdated = dataAO1.DateUpdated
+
+	m.EnvironmentalScore = dataAO1.EnvironmentalScore
 
 	m.ExternalURL = dataAO1.ExternalURL
 
@@ -102,7 +160,11 @@ func (m *TamSecurityAdvisory) UnmarshalJSON(raw []byte) error {
 
 	m.Recommendation = dataAO1.Recommendation
 
-	m.Score = dataAO1.Score
+	m.Status = dataAO1.Status
+
+	m.TemporalScore = dataAO1.TemporalScore
+
+	m.Version = dataAO1.Version
 
 	return nil
 }
@@ -120,24 +182,48 @@ func (m TamSecurityAdvisory) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Actions []*TamAction `json:"Actions"`
 
+		AdvisoryID string `json:"AdvisoryId,omitempty"`
+
 		APIDataSources []*TamAPIDataSource `json:"ApiDataSources"`
 
-		CveID string `json:"CveId,omitempty"`
+		BaseScore float64 `json:"BaseScore,omitempty"`
+
+		CveIds []string `json:"CveIds"`
+
+		DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
+
+		DateUpdated strfmt.DateTime `json:"DateUpdated,omitempty"`
+
+		EnvironmentalScore float64 `json:"EnvironmentalScore,omitempty"`
 
 		ExternalURL string `json:"ExternalUrl,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Recommendation string `json:"Recommendation,omitempty"`
 
-		Score float32 `json:"Score,omitempty"`
+		Status *string `json:"Status,omitempty"`
+
+		TemporalScore float64 `json:"TemporalScore,omitempty"`
+
+		Version string `json:"Version,omitempty"`
 	}
 
 	dataAO1.Actions = m.Actions
 
+	dataAO1.AdvisoryID = m.AdvisoryID
+
 	dataAO1.APIDataSources = m.APIDataSources
 
-	dataAO1.CveID = m.CveID
+	dataAO1.BaseScore = m.BaseScore
+
+	dataAO1.CveIds = m.CveIds
+
+	dataAO1.DatePublished = m.DatePublished
+
+	dataAO1.DateUpdated = m.DateUpdated
+
+	dataAO1.EnvironmentalScore = m.EnvironmentalScore
 
 	dataAO1.ExternalURL = m.ExternalURL
 
@@ -145,7 +231,11 @@ func (m TamSecurityAdvisory) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Recommendation = m.Recommendation
 
-	dataAO1.Score = m.Score
+	dataAO1.Status = m.Status
+
+	dataAO1.TemporalScore = m.TemporalScore
+
+	dataAO1.Version = m.Version
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -173,7 +263,19 @@ func (m *TamSecurityAdvisory) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDatePublished(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDateUpdated(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrganization(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStatus(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -233,6 +335,32 @@ func (m *TamSecurityAdvisory) validateAPIDataSources(formats strfmt.Registry) er
 	return nil
 }
 
+func (m *TamSecurityAdvisory) validateDatePublished(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DatePublished) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("DatePublished", "body", "date-time", m.DatePublished.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *TamSecurityAdvisory) validateDateUpdated(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DateUpdated) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("DateUpdated", "body", "date-time", m.DateUpdated.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *TamSecurityAdvisory) validateOrganization(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Organization) { // not required
@@ -246,6 +374,40 @@ func (m *TamSecurityAdvisory) validateOrganization(formats strfmt.Registry) erro
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var tamSecurityAdvisoryTypeStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["interim","final"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		tamSecurityAdvisoryTypeStatusPropEnum = append(tamSecurityAdvisoryTypeStatusPropEnum, v)
+	}
+}
+
+// property enum
+func (m *TamSecurityAdvisory) validateStatusEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, tamSecurityAdvisoryTypeStatusPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *TamSecurityAdvisory) validateStatus(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Status) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateStatusEnum("Status", "body", *m.Status); err != nil {
+		return err
 	}
 
 	return nil

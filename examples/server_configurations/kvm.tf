@@ -6,6 +6,10 @@ resource "intersight_kvm_policy" "kvm1" {
   remote_port               = 2069
   enable_video_encryption   = true
   enable_local_server_video = true
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"

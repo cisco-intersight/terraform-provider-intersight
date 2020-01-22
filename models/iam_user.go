@@ -23,10 +23,15 @@ import (
 type IamUser struct {
 	MoBaseMo
 
-	// Current API keys of the user. API keys are used to programatically perform API calls.
+	// Current user's API keys. API keys are used to programatically perform API calls.
 	//
 	// Read Only: true
 	APIKeys []*IamAPIKeyRef `json:"ApiKeys"`
+
+	// List of registered OAuth2 applications created by the User.
+	//
+	// Read Only: true
+	AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
 
 	// IP address from which the user last logged in to Intersight.
 	//
@@ -77,11 +82,19 @@ type IamUser struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
+	// Collection of the available OAuthTokens.
+	// Each OAuthToken lives 30 days unless it is deleted manually by User.
+	// OAuthToken is created when Login performed via OAuth Client (AppRegistration).
+	// OAuthToken itself is not sensitive data since it doesn't contain salt, salt is stored in Vault.
+	//
+	// Read Only: true
+	OauthTokens []*IamOAuthTokenRef `json:"OauthTokens"`
+
 	// Permissions assigned to the user. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
 	//
 	Permissions []*IamPermissionRef `json:"Permissions"`
 
-	// Current web sessions of the user. After a user logs into Intersight, a session object is created. This session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
+	// Current user's web sessions. After a user logs into Intersight, a session object is created. This session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
 	//
 	// Read Only: true
 	Sessions []*IamSessionRef `json:"Sessions"`
@@ -105,6 +118,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		APIKeys []*IamAPIKeyRef `json:"ApiKeys"`
 
+		AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
+
 		ClientIPAddress string `json:"ClientIpAddress,omitempty"`
 
 		Email string `json:"Email,omitempty"`
@@ -123,6 +138,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 
 		Name string `json:"Name,omitempty"`
 
+		OauthTokens []*IamOAuthTokenRef `json:"OauthTokens"`
+
 		Permissions []*IamPermissionRef `json:"Permissions"`
 
 		Sessions []*IamSessionRef `json:"Sessions"`
@@ -134,6 +151,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.APIKeys = dataAO1.APIKeys
+
+	m.AppRegistrations = dataAO1.AppRegistrations
 
 	m.ClientIPAddress = dataAO1.ClientIPAddress
 
@@ -152,6 +171,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 	m.LocalUserPassword = dataAO1.LocalUserPassword
 
 	m.Name = dataAO1.Name
+
+	m.OauthTokens = dataAO1.OauthTokens
 
 	m.Permissions = dataAO1.Permissions
 
@@ -175,6 +196,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		APIKeys []*IamAPIKeyRef `json:"ApiKeys"`
 
+		AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
+
 		ClientIPAddress string `json:"ClientIpAddress,omitempty"`
 
 		Email string `json:"Email,omitempty"`
@@ -193,6 +216,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 
 		Name string `json:"Name,omitempty"`
 
+		OauthTokens []*IamOAuthTokenRef `json:"OauthTokens"`
+
 		Permissions []*IamPermissionRef `json:"Permissions"`
 
 		Sessions []*IamSessionRef `json:"Sessions"`
@@ -201,6 +226,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.APIKeys = m.APIKeys
+
+	dataAO1.AppRegistrations = m.AppRegistrations
 
 	dataAO1.ClientIPAddress = m.ClientIPAddress
 
@@ -219,6 +246,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 	dataAO1.LocalUserPassword = m.LocalUserPassword
 
 	dataAO1.Name = m.Name
+
+	dataAO1.OauthTokens = m.OauthTokens
 
 	dataAO1.Permissions = m.Permissions
 
@@ -248,6 +277,10 @@ func (m *IamUser) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateAppRegistrations(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateIdp(formats); err != nil {
 		res = append(res, err)
 	}
@@ -261,6 +294,10 @@ func (m *IamUser) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLocalUserPassword(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOauthTokens(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -293,6 +330,31 @@ func (m *IamUser) validateAPIKeys(formats strfmt.Registry) error {
 			if err := m.APIKeys[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ApiKeys" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *IamUser) validateAppRegistrations(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AppRegistrations) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.AppRegistrations); i++ {
+		if swag.IsZero(m.AppRegistrations[i]) { // not required
+			continue
+		}
+
+		if m.AppRegistrations[i] != nil {
+			if err := m.AppRegistrations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("AppRegistrations" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -365,6 +427,31 @@ func (m *IamUser) validateLocalUserPassword(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *IamUser) validateOauthTokens(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OauthTokens) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.OauthTokens); i++ {
+		if swag.IsZero(m.OauthTokens[i]) { // not required
+			continue
+		}
+
+		if m.OauthTokens[i] != nil {
+			if err := m.OauthTokens[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("OauthTokens" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

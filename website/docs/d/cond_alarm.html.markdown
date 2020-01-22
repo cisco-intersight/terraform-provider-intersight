@@ -24,6 +24,6 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `ms_affected_object`:(string)A unique key for the alarm from the managed system's point of view. For example, in the case of UCS, this is the fault's dn.
 * `name`:(string)Uniquely identifies the type of alarm. For alarms originating from Intersight, this will be a descriptive name. For alarms that are mapped from faults, the name will be derived from fault properties. For example, alarms mapped from UCS faults will use a prefix of UCS and appended with the fault code.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `orig_severity`:(string)The original severity when the alarm was first created.
 * `severity`:(string)The severity of the alarm. Valid values are Critical, Warning, Info, and Cleared.

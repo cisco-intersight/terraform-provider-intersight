@@ -24,30 +24,45 @@ import (
 //
 // swagger:model osAnswers
 type OsAnswers struct {
-	OsAnswersAO0P0
+	MoBaseComplexType
+
+	OsAnswersAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *OsAnswers) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 OsAnswersAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.OsAnswersAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 OsAnswersAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.OsAnswersAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m OsAnswers) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.OsAnswersAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.OsAnswersAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -56,8 +71,12 @@ func (m OsAnswers) MarshalJSON() ([]byte, error) {
 func (m *OsAnswers) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with OsAnswersAO0P0
-	if err := m.OsAnswersAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with OsAnswersAO1P1
+	if err := m.OsAnswersAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,9 +104,9 @@ func (m *OsAnswers) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// OsAnswersAO0P0 os answers a o0 p0
-// swagger:model OsAnswersAO0P0
-type OsAnswersAO0P0 struct {
+// OsAnswersAO1P1 os answers a o1 p1
+// swagger:model OsAnswersAO1P1
+type OsAnswersAO1P1 struct {
 
 	// If the source of the answers is a static file, the content of the file is stored as value
 	// in this property.
@@ -97,34 +116,23 @@ type OsAnswersAO0P0 struct {
 	//
 	AnswerFile string `json:"AnswerFile,omitempty"`
 
-	// Hostname to be configured for the server in the OS. Hostname property is required
-	// when the 'Source' property has been set to 'Template'.
-	//
-	// Please note that this property will be ignored for the answer instance used
-	// inside the os.InstallTemplate MO since this property must have unique value for
-	// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-	// this property specified in os.Install MO will be considered for the installation.
+	// Hostname to be configured for the server in the OS.
 	//
 	//
 	Hostname string `json:"Hostname,omitempty"`
 
-	// IP configuration type. Values are Static or Dynamic when the Source property is set to Template.
+	// IP configuration type. Values are Static or Dynamic configuration of IP.
 	//
 	// In case of static IP configuration, IP address, gateway and other details need
 	// to be populated. In case of dynamic the IP configuration is obtained dynamically
 	// from DHCP.
 	//
 	//
-	// Enum: [static dynamic]
+	// Enum: [static DHCP]
 	IPConfigType *string `json:"IpConfigType,omitempty"`
 
 	// In case of static IP configuration, IP address, netmask and gateway details are
 	// provided.
-	//
-	// Please note that this property will be ignored for the answer instance used
-	// inside the os.InstallTemplate MO since this property must have unique value for
-	// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-	// this property specified in os.Install MO will be considered for the installation.
 	//
 	//
 	IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
@@ -137,24 +145,17 @@ type OsAnswersAO0P0 struct {
 	// is root password set
 	IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
-	// IP address of the name server to be configured in the OS in case the 'Source'
-	// property has been set to 'Template'.
+	// IP address of the name server to be configured in the OS.
 	//
 	//
 	Nameserver string `json:"Nameserver,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
+	// The product key to be used for a specific version of Windows installation.
 	//
 	//
-	ObjectType string `json:"ObjectType,omitempty"`
+	ProductKey string `json:"ProductKey,omitempty"`
 
-	// Password to be set for root/administrator user in case the 'Source'
-	// property has been set to 'Template'.
+	// Password to be configured for the root / administrator user in the OS.
 	//
 	//
 	RootPassword string `json:"RootPassword,omitempty"`
@@ -169,15 +170,15 @@ type OsAnswersAO0P0 struct {
 	// as os.Answers MO.
 	//
 	//
-	// Enum: [Embedded File]
+	// Enum: [None Embedded File Template]
 	Source *string `json:"Source,omitempty"`
 
-	// os answers a o0 p0
-	OsAnswersAO0P0 map[string]interface{} `json:"-"`
+	// os answers a o1 p1
+	OsAnswersAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
+func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -189,34 +190,23 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		AnswerFile string `json:"AnswerFile,omitempty"`
 
-		// Hostname to be configured for the server in the OS. Hostname property is required
-		// when the 'Source' property has been set to 'Template'.
-		//
-		// Please note that this property will be ignored for the answer instance used
-		// inside the os.InstallTemplate MO since this property must have unique value for
-		// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-		// this property specified in os.Install MO will be considered for the installation.
+		// Hostname to be configured for the server in the OS.
 		//
 		//
 		Hostname string `json:"Hostname,omitempty"`
 
-		// IP configuration type. Values are Static or Dynamic when the Source property is set to Template.
+		// IP configuration type. Values are Static or Dynamic configuration of IP.
 		//
 		// In case of static IP configuration, IP address, gateway and other details need
 		// to be populated. In case of dynamic the IP configuration is obtained dynamically
 		// from DHCP.
 		//
 		//
-		// Enum: [static dynamic]
+		// Enum: [static DHCP]
 		IPConfigType *string `json:"IpConfigType,omitempty"`
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		//
-		// Please note that this property will be ignored for the answer instance used
-		// inside the os.InstallTemplate MO since this property must have unique value for
-		// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-		// this property specified in os.Install MO will be considered for the installation.
 		//
 		//
 		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
@@ -229,24 +219,17 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 		// is root password set
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
-		// IP address of the name server to be configured in the OS in case the 'Source'
-		// property has been set to 'Template'.
+		// IP address of the name server to be configured in the OS.
 		//
 		//
 		Nameserver string `json:"Nameserver,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
+		// The product key to be used for a specific version of Windows installation.
 		//
 		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		ProductKey string `json:"ProductKey,omitempty"`
 
-		// Password to be set for root/administrator user in case the 'Source'
-		// property has been set to 'Template'.
+		// Password to be configured for the root / administrator user in the OS.
 		//
 		//
 		RootPassword string `json:"RootPassword,omitempty"`
@@ -261,13 +244,13 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 		// as os.Answers MO.
 		//
 		//
-		// Enum: [Embedded File]
+		// Enum: [None Embedded File Template]
 		Source *string `json:"Source,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv OsAnswersAO0P0
+	var rcv OsAnswersAO1P1
 
 	rcv.AnswerFile = stage1.AnswerFile
 
@@ -283,7 +266,7 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 
 	rcv.Nameserver = stage1.Nameserver
 
-	rcv.ObjectType = stage1.ObjectType
+	rcv.ProductKey = stage1.ProductKey
 
 	rcv.RootPassword = stage1.RootPassword
 
@@ -311,7 +294,7 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Nameserver")
 
-	delete(stage2, "ObjectType")
+	delete(stage2, "ProductKey")
 
 	delete(stage2, "RootPassword")
 
@@ -327,14 +310,14 @@ func (m *OsAnswersAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.OsAnswersAO0P0 = result
+		m.OsAnswersAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
+func (m OsAnswersAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// If the source of the answers is a static file, the content of the file is stored as value
@@ -345,34 +328,23 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		AnswerFile string `json:"AnswerFile,omitempty"`
 
-		// Hostname to be configured for the server in the OS. Hostname property is required
-		// when the 'Source' property has been set to 'Template'.
-		//
-		// Please note that this property will be ignored for the answer instance used
-		// inside the os.InstallTemplate MO since this property must have unique value for
-		// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-		// this property specified in os.Install MO will be considered for the installation.
+		// Hostname to be configured for the server in the OS.
 		//
 		//
 		Hostname string `json:"Hostname,omitempty"`
 
-		// IP configuration type. Values are Static or Dynamic when the Source property is set to Template.
+		// IP configuration type. Values are Static or Dynamic configuration of IP.
 		//
 		// In case of static IP configuration, IP address, gateway and other details need
 		// to be populated. In case of dynamic the IP configuration is obtained dynamically
 		// from DHCP.
 		//
 		//
-		// Enum: [static dynamic]
+		// Enum: [static DHCP]
 		IPConfigType *string `json:"IpConfigType,omitempty"`
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		//
-		// Please note that this property will be ignored for the answer instance used
-		// inside the os.InstallTemplate MO since this property must have unique value for
-		// each server and is irrelevant in a reusable os.InstallTemplate MO. The value of
-		// this property specified in os.Install MO will be considered for the installation.
 		//
 		//
 		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
@@ -385,24 +357,17 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 		// is root password set
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
-		// IP address of the name server to be configured in the OS in case the 'Source'
-		// property has been set to 'Template'.
+		// IP address of the name server to be configured in the OS.
 		//
 		//
 		Nameserver string `json:"Nameserver,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
+		// The product key to be used for a specific version of Windows installation.
 		//
 		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		ProductKey string `json:"ProductKey,omitempty"`
 
-		// Password to be set for root/administrator user in case the 'Source'
-		// property has been set to 'Template'.
+		// Password to be configured for the root / administrator user in the OS.
 		//
 		//
 		RootPassword string `json:"RootPassword,omitempty"`
@@ -417,7 +382,7 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 		// as os.Answers MO.
 		//
 		//
-		// Enum: [Embedded File]
+		// Enum: [None Embedded File Template]
 		Source *string `json:"Source,omitempty"`
 	}
 
@@ -435,7 +400,7 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Nameserver = m.Nameserver
 
-	stage1.ObjectType = m.ObjectType
+	stage1.ProductKey = m.ProductKey
 
 	stage1.RootPassword = m.RootPassword
 
@@ -447,12 +412,12 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.OsAnswersAO0P0) == 0 {
+	if len(m.OsAnswersAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.OsAnswersAO0P0)
+	additional, err := json.Marshal(m.OsAnswersAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -466,8 +431,8 @@ func (m OsAnswersAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this os answers a o0 p0
-func (m *OsAnswersAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this os answers a o1 p1
+func (m *OsAnswersAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateIPConfigType(formats); err != nil {
@@ -488,36 +453,36 @@ func (m *OsAnswersAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var osAnswersAO0P0TypeIPConfigTypePropEnum []interface{}
+var osAnswersAO1P1TypeIPConfigTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["static","dynamic"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["static","DHCP"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		osAnswersAO0P0TypeIPConfigTypePropEnum = append(osAnswersAO0P0TypeIPConfigTypePropEnum, v)
+		osAnswersAO1P1TypeIPConfigTypePropEnum = append(osAnswersAO1P1TypeIPConfigTypePropEnum, v)
 	}
 }
 
 const (
 
-	// OsAnswersAO0P0IPConfigTypeStatic captures enum value "static"
-	OsAnswersAO0P0IPConfigTypeStatic string = "static"
+	// OsAnswersAO1P1IPConfigTypeStatic captures enum value "static"
+	OsAnswersAO1P1IPConfigTypeStatic string = "static"
 
-	// OsAnswersAO0P0IPConfigTypeDynamic captures enum value "dynamic"
-	OsAnswersAO0P0IPConfigTypeDynamic string = "dynamic"
+	// OsAnswersAO1P1IPConfigTypeDHCP captures enum value "DHCP"
+	OsAnswersAO1P1IPConfigTypeDHCP string = "DHCP"
 )
 
 // prop value enum
-func (m *OsAnswersAO0P0) validateIPConfigTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, osAnswersAO0P0TypeIPConfigTypePropEnum); err != nil {
+func (m *OsAnswersAO1P1) validateIPConfigTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, osAnswersAO1P1TypeIPConfigTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *OsAnswersAO0P0) validateIPConfigType(formats strfmt.Registry) error {
+func (m *OsAnswersAO1P1) validateIPConfigType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.IPConfigType) { // not required
 		return nil
@@ -531,7 +496,7 @@ func (m *OsAnswersAO0P0) validateIPConfigType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *OsAnswersAO0P0) validateIPV4Config(formats strfmt.Registry) error {
+func (m *OsAnswersAO1P1) validateIPV4Config(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.IPV4Config) { // not required
 		return nil
@@ -549,36 +514,42 @@ func (m *OsAnswersAO0P0) validateIPV4Config(formats strfmt.Registry) error {
 	return nil
 }
 
-var osAnswersAO0P0TypeSourcePropEnum []interface{}
+var osAnswersAO1P1TypeSourcePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Embedded","File"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["None","Embedded","File","Template"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		osAnswersAO0P0TypeSourcePropEnum = append(osAnswersAO0P0TypeSourcePropEnum, v)
+		osAnswersAO1P1TypeSourcePropEnum = append(osAnswersAO1P1TypeSourcePropEnum, v)
 	}
 }
 
 const (
 
-	// OsAnswersAO0P0SourceEmbedded captures enum value "Embedded"
-	OsAnswersAO0P0SourceEmbedded string = "Embedded"
+	// OsAnswersAO1P1SourceNone captures enum value "None"
+	OsAnswersAO1P1SourceNone string = "None"
 
-	// OsAnswersAO0P0SourceFile captures enum value "File"
-	OsAnswersAO0P0SourceFile string = "File"
+	// OsAnswersAO1P1SourceEmbedded captures enum value "Embedded"
+	OsAnswersAO1P1SourceEmbedded string = "Embedded"
+
+	// OsAnswersAO1P1SourceFile captures enum value "File"
+	OsAnswersAO1P1SourceFile string = "File"
+
+	// OsAnswersAO1P1SourceTemplate captures enum value "Template"
+	OsAnswersAO1P1SourceTemplate string = "Template"
 )
 
 // prop value enum
-func (m *OsAnswersAO0P0) validateSourceEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, osAnswersAO0P0TypeSourcePropEnum); err != nil {
+func (m *OsAnswersAO1P1) validateSourceEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, osAnswersAO1P1TypeSourcePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *OsAnswersAO0P0) validateSource(formats strfmt.Registry) error {
+func (m *OsAnswersAO1P1) validateSource(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Source) { // not required
 		return nil
@@ -593,7 +564,7 @@ func (m *OsAnswersAO0P0) validateSource(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *OsAnswersAO0P0) MarshalBinary() ([]byte, error) {
+func (m *OsAnswersAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -601,8 +572,8 @@ func (m *OsAnswersAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *OsAnswersAO0P0) UnmarshalBinary(b []byte) error {
-	var res OsAnswersAO0P0
+func (m *OsAnswersAO1P1) UnmarshalBinary(b []byte) error {
+	var res OsAnswersAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

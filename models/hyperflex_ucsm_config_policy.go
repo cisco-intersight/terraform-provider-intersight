@@ -42,7 +42,7 @@ type HyperflexUcsmConfigPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The server firmware bundle version used for server components such as CIMC, adapters, BIOS, etc.
 	//
@@ -66,7 +66,7 @@ func (m *HyperflexUcsmConfigPolicy) UnmarshalJSON(raw []byte) error {
 
 		MacPrefixRange *HyperflexMacAddrPrefixRange `json:"MacPrefixRange,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 	}
@@ -104,7 +104,7 @@ func (m HyperflexUcsmConfigPolicy) MarshalJSON() ([]byte, error) {
 
 		MacPrefixRange *HyperflexMacAddrPrefixRange `json:"MacPrefixRange,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 	}

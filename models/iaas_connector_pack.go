@@ -20,6 +20,11 @@ import (
 type IaasConnectorPack struct {
 	MoBaseMo
 
+	// Complete version of the connector pack including build number.
+	//
+	// Read Only: true
+	CompleteVersion string `json:"CompleteVersion,omitempty"`
+
 	// List of dependent connectors on the UCSD for this connector. For example BigData depends on UCS Connector.
 	//
 	// Read Only: true
@@ -64,6 +69,8 @@ func (m *IaasConnectorPack) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		CompleteVersion string `json:"CompleteVersion,omitempty"`
+
 		DependencyNames []string `json:"DependencyNames"`
 
 		DownloadedVersion string `json:"DownloadedVersion,omitempty"`
@@ -79,6 +86,8 @@ func (m *IaasConnectorPack) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.CompleteVersion = dataAO1.CompleteVersion
 
 	m.DependencyNames = dataAO1.DependencyNames
 
@@ -106,6 +115,8 @@ func (m IaasConnectorPack) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		CompleteVersion string `json:"CompleteVersion,omitempty"`
+
 		DependencyNames []string `json:"DependencyNames"`
 
 		DownloadedVersion string `json:"DownloadedVersion,omitempty"`
@@ -118,6 +129,8 @@ func (m IaasConnectorPack) MarshalJSON() ([]byte, error) {
 
 		Version string `json:"Version,omitempty"`
 	}
+
+	dataAO1.CompleteVersion = m.CompleteVersion
 
 	dataAO1.DependencyNames = m.DependencyNames
 

@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -38,6 +40,11 @@ type ApplianceSetupInfo struct {
 	//
 	// Read Only: true
 	BuildType string `json:"BuildType,omitempty"`
+
+	// The array of capabilities, that enable key-value metadata for Intersight Appliance. For example, Intersight Assist is one of the capabilities.
+	//
+	// Read Only: true
+	Capabilities []*ApplianceKeyValuePair `json:"Capabilities"`
 
 	// URL of the Intersight to which this Intersight Appliance is connected to.
 	//
@@ -76,6 +83,8 @@ func (m *ApplianceSetupInfo) UnmarshalJSON(raw []byte) error {
 
 		BuildType string `json:"BuildType,omitempty"`
 
+		Capabilities []*ApplianceKeyValuePair `json:"Capabilities"`
+
 		CloudURL string `json:"CloudUrl,omitempty"`
 
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
@@ -91,6 +100,8 @@ func (m *ApplianceSetupInfo) UnmarshalJSON(raw []byte) error {
 	m.Account = dataAO1.Account
 
 	m.BuildType = dataAO1.BuildType
+
+	m.Capabilities = dataAO1.Capabilities
 
 	m.CloudURL = dataAO1.CloudURL
 
@@ -118,6 +129,8 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 
 		BuildType string `json:"BuildType,omitempty"`
 
+		Capabilities []*ApplianceKeyValuePair `json:"Capabilities"`
+
 		CloudURL string `json:"CloudUrl,omitempty"`
 
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
@@ -130,6 +143,8 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.Account = m.Account
 
 	dataAO1.BuildType = m.BuildType
+
+	dataAO1.Capabilities = m.Capabilities
 
 	dataAO1.CloudURL = m.CloudURL
 
@@ -161,6 +176,10 @@ func (m *ApplianceSetupInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateCapabilities(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateEndTime(formats); err != nil {
 		res = append(res, err)
 	}
@@ -188,6 +207,31 @@ func (m *ApplianceSetupInfo) validateAccount(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *ApplianceSetupInfo) validateCapabilities(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Capabilities) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Capabilities); i++ {
+		if swag.IsZero(m.Capabilities[i]) { // not required
+			continue
+		}
+
+		if m.Capabilities[i] != nil {
+			if err := m.Capabilities[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Capabilities" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

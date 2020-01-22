@@ -14,12 +14,12 @@ View MO which aggregates information pertaining to a network element from mutipl
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_inband_interface_state`:(string)
 * `device_mo_id`:(string)
-* `dn`:(string)
+* `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
 * `fault_summary`:(int)
 * `firmware`:(string)Running firmware information.
 * `ipv4_address`:(string)IP version 4 address is saved in this property.
-* `inband_ip_address`:(string)
-* `inband_ip_gateway`:(string)
+* `inband_ip_address`:(string)The Inband IP address of the network Element.
+* `inband_ip_gateway`:(string)The Inband IP Gateway of the network Element.
 * `inband_ip_mask`:(string)
 * `inband_vlan`:(int)
 * `model`:(string)This field identifies the model of the given component.
@@ -32,15 +32,15 @@ The following arguments can be used to get data of already created objects in In
 * `num_fc_ports`:(int)Total number of FC ports.
 * `num_fc_ports_configured`:(int)Total number of configured FC ports.
 * `num_fc_ports_link_up`:(int)Total number of FC ports which are UP.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `out_of_band_ip_address`:(string)
 * `out_of_band_ip_gateway`:(string)
 * `out_of_band_ip_mask`:(string)
 * `out_of_band_mac`:(string)
 * `revision`:(string)
-* `rn`:(string)
+* `rn`:(string)The Relative Name uniquely identifies an object within a given context.
 * `serial`:(string)This field identifies the serial of the given component.
-* `source_object_type`:(string)Specifies the source object type for View MO.
-* `switch_id`:(string)
+* `source_object_type`:(string)The source object type of this view MO.
+* `switch_id`:(string)The Switch Id of the network Element.
 * `vendor`:(string)This field identifies the vendor of the given component.
 * `version`:(string)Version holds the firmware version related information.

@@ -20,30 +20,45 @@ import (
 //
 // swagger:model pkixDistinguishedName
 type PkixDistinguishedName struct {
-	PkixDistinguishedNameAO0P0
+	MoBaseComplexType
+
+	PkixDistinguishedNameAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *PkixDistinguishedName) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 PkixDistinguishedNameAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.PkixDistinguishedNameAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 PkixDistinguishedNameAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.PkixDistinguishedNameAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m PkixDistinguishedName) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.PkixDistinguishedNameAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.PkixDistinguishedNameAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m PkixDistinguishedName) MarshalJSON() ([]byte, error) {
 func (m *PkixDistinguishedName) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with PkixDistinguishedNameAO0P0
-	if err := m.PkixDistinguishedNameAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with PkixDistinguishedNameAO1P1
+	if err := m.PkixDistinguishedNameAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *PkixDistinguishedName) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// PkixDistinguishedNameAO0P0 pkix distinguished name a o0 p0
-// swagger:model PkixDistinguishedNameAO0P0
-type PkixDistinguishedNameAO0P0 struct {
+// PkixDistinguishedNameAO1P1 pkix distinguished name a o1 p1
+// swagger:model PkixDistinguishedNameAO1P1
+type PkixDistinguishedNameAO1P1 struct {
 
 	// A required component that identifies a person or an object.
 	//
@@ -100,16 +119,6 @@ type PkixDistinguishedNameAO0P0 struct {
 	// Read Only: true
 	Locality []string `json:"Locality"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Identifier for the organization in which the entity resides.
 	//
 	// Read Only: true
@@ -125,12 +134,12 @@ type PkixDistinguishedNameAO0P0 struct {
 	// Read Only: true
 	State []string `json:"State"`
 
-	// pkix distinguished name a o0 p0
-	PkixDistinguishedNameAO0P0 map[string]interface{} `json:"-"`
+	// pkix distinguished name a o1 p1
+	PkixDistinguishedNameAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *PkixDistinguishedNameAO0P0) UnmarshalJSON(data []byte) error {
+func (m *PkixDistinguishedNameAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -148,16 +157,6 @@ func (m *PkixDistinguishedNameAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Read Only: true
 		Locality []string `json:"Locality"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Identifier for the organization in which the entity resides.
 		//
@@ -177,15 +176,13 @@ func (m *PkixDistinguishedNameAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv PkixDistinguishedNameAO0P0
+	var rcv PkixDistinguishedNameAO1P1
 
 	rcv.CommonName = stage1.CommonName
 
 	rcv.Country = stage1.Country
 
 	rcv.Locality = stage1.Locality
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Organization = stage1.Organization
 
@@ -207,8 +204,6 @@ func (m *PkixDistinguishedNameAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Locality")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Organization")
 
 	delete(stage2, "OrganizationalUnit")
@@ -225,14 +220,14 @@ func (m *PkixDistinguishedNameAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.PkixDistinguishedNameAO0P0 = result
+		m.PkixDistinguishedNameAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m PkixDistinguishedNameAO0P0) MarshalJSON() ([]byte, error) {
+func (m PkixDistinguishedNameAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// A required component that identifies a person or an object.
@@ -249,16 +244,6 @@ func (m PkixDistinguishedNameAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		// Read Only: true
 		Locality []string `json:"Locality"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Identifier for the organization in which the entity resides.
 		//
@@ -282,8 +267,6 @@ func (m PkixDistinguishedNameAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Locality = m.Locality
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Organization = m.Organization
 
 	stage1.OrganizationalUnit = m.OrganizationalUnit
@@ -296,12 +279,12 @@ func (m PkixDistinguishedNameAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.PkixDistinguishedNameAO0P0) == 0 {
+	if len(m.PkixDistinguishedNameAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.PkixDistinguishedNameAO0P0)
+	additional, err := json.Marshal(m.PkixDistinguishedNameAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -315,13 +298,13 @@ func (m PkixDistinguishedNameAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this pkix distinguished name a o0 p0
-func (m *PkixDistinguishedNameAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this pkix distinguished name a o1 p1
+func (m *PkixDistinguishedNameAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *PkixDistinguishedNameAO0P0) MarshalBinary() ([]byte, error) {
+func (m *PkixDistinguishedNameAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -329,8 +312,8 @@ func (m *PkixDistinguishedNameAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PkixDistinguishedNameAO0P0) UnmarshalBinary(b []byte) error {
-	var res PkixDistinguishedNameAO0P0
+func (m *PkixDistinguishedNameAO1P1) UnmarshalBinary(b []byte) error {
+	var res PkixDistinguishedNameAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

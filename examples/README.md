@@ -12,12 +12,12 @@ Steps to define variable values:
 
 ```hcl-terraform
 // provider intersight
-api_key = "ABCDEFGHIJKLMNOPQRST1234567890"
+api_key = "ChangeMe"
 // ipmi over lay policy props
-encryption_key = "123456"
+encryption_key = "ChangeMe"
 // snmp policy props
-auth_password = "cisco1234"
-privacy_password = "cisco1234"
+auth_password = "ChangeMe"
+privacy_password = "ChangeMe"
 ```
 ***NOTE:*** These steps will hide secret from directly being visible in the tf files ONLY. They will still be visible as 
 plain text in the state files.  

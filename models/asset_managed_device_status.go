@@ -21,30 +21,45 @@ import (
 //
 // swagger:model assetManagedDeviceStatus
 type AssetManagedDeviceStatus struct {
-	AssetManagedDeviceStatusAO0P0
+	MoBaseComplexType
+
+	AssetManagedDeviceStatusAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *AssetManagedDeviceStatus) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 AssetManagedDeviceStatusAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.AssetManagedDeviceStatusAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 AssetManagedDeviceStatusAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.AssetManagedDeviceStatusAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m AssetManagedDeviceStatus) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.AssetManagedDeviceStatusAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.AssetManagedDeviceStatusAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m AssetManagedDeviceStatus) MarshalJSON() ([]byte, error) {
 func (m *AssetManagedDeviceStatus) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with AssetManagedDeviceStatusAO0P0
-	if err := m.AssetManagedDeviceStatusAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with AssetManagedDeviceStatusAO1P1
+	if err := m.AssetManagedDeviceStatusAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *AssetManagedDeviceStatus) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// AssetManagedDeviceStatusAO0P0 asset managed device status a o0 p0
-// swagger:model AssetManagedDeviceStatusAO0P0
-type AssetManagedDeviceStatusAO0P0 struct {
+// AssetManagedDeviceStatusAO1P1 asset managed device status a o1 p1
+// swagger:model AssetManagedDeviceStatusAO1P1
+type AssetManagedDeviceStatusAO1P1 struct {
 
 	// Port used for the connection to the Cloud by the Device Connector for the Managed Device.
 	//
@@ -107,35 +126,25 @@ type AssetManagedDeviceStatusAO0P0 struct {
 	//
 	ErrorReason string `json:"ErrorReason,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// Maintains the Process pid of the the Device Connector for the Managed Device.
+	// Maintains the process pid of the Device Connector for the Managed Device.
 	//
 	ProcessID int64 `json:"ProcessId,omitempty"`
 
-	// Port used for receiving requests from Device Connector Manager by the Device Connector for the Managed Device.
+	// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
 	//
 	ServerPort int64 `json:"ServerPort,omitempty"`
 
 	// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
 	//
-	// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure]
+	// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 	State *string `json:"State,omitempty"`
 
-	// asset managed device status a o0 p0
-	AssetManagedDeviceStatusAO0P0 map[string]interface{} `json:"-"`
+	// asset managed device status a o1 p1
+	AssetManagedDeviceStatusAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *AssetManagedDeviceStatusAO0P0) UnmarshalJSON(data []byte) error {
+func (m *AssetManagedDeviceStatusAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -160,33 +169,23 @@ func (m *AssetManagedDeviceStatusAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		ErrorReason string `json:"ErrorReason,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// Maintains the Process pid of the the Device Connector for the Managed Device.
+		// Maintains the process pid of the Device Connector for the Managed Device.
 		//
 		ProcessID int64 `json:"ProcessId,omitempty"`
 
-		// Port used for receiving requests from Device Connector Manager by the Device Connector for the Managed Device.
+		// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
 		//
 		ServerPort int64 `json:"ServerPort,omitempty"`
 
 		// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
 		//
-		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure]
+		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 		State *string `json:"State,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv AssetManagedDeviceStatusAO0P0
+	var rcv AssetManagedDeviceStatusAO1P1
 
 	rcv.CloudPort = stage1.CloudPort
 
@@ -197,8 +196,6 @@ func (m *AssetManagedDeviceStatusAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.ErrorCode = stage1.ErrorCode
 
 	rcv.ErrorReason = stage1.ErrorReason
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.ProcessID = stage1.ProcessID
 
@@ -224,8 +221,6 @@ func (m *AssetManagedDeviceStatusAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "ErrorReason")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "ProcessId")
 
 	delete(stage2, "ServerPort")
@@ -242,14 +237,14 @@ func (m *AssetManagedDeviceStatusAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.AssetManagedDeviceStatusAO0P0 = result
+		m.AssetManagedDeviceStatusAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m AssetManagedDeviceStatusAO0P0) MarshalJSON() ([]byte, error) {
+func (m AssetManagedDeviceStatusAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Port used for the connection to the Cloud by the Device Connector for the Managed Device.
@@ -273,27 +268,17 @@ func (m AssetManagedDeviceStatusAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		ErrorReason string `json:"ErrorReason,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// Maintains the Process pid of the the Device Connector for the Managed Device.
+		// Maintains the process pid of the Device Connector for the Managed Device.
 		//
 		ProcessID int64 `json:"ProcessId,omitempty"`
 
-		// Port used for receiving requests from Device Connector Manager by the Device Connector for the Managed Device.
+		// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
 		//
 		ServerPort int64 `json:"ServerPort,omitempty"`
 
 		// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
 		//
-		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure]
+		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 		State *string `json:"State,omitempty"`
 	}
 
@@ -307,8 +292,6 @@ func (m AssetManagedDeviceStatusAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.ErrorReason = m.ErrorReason
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.ProcessID = m.ProcessID
 
 	stage1.ServerPort = m.ServerPort
@@ -321,12 +304,12 @@ func (m AssetManagedDeviceStatusAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.AssetManagedDeviceStatusAO0P0) == 0 {
+	if len(m.AssetManagedDeviceStatusAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.AssetManagedDeviceStatusAO0P0)
+	additional, err := json.Marshal(m.AssetManagedDeviceStatusAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -340,8 +323,8 @@ func (m AssetManagedDeviceStatusAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this asset managed device status a o0 p0
-func (m *AssetManagedDeviceStatusAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this asset managed device status a o1 p1
+func (m *AssetManagedDeviceStatusAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateConnectionStatus(formats); err != nil {
@@ -358,7 +341,7 @@ func (m *AssetManagedDeviceStatusAO0P0) Validate(formats strfmt.Registry) error 
 	return nil
 }
 
-var assetManagedDeviceStatusAO0P0TypeConnectionStatusPropEnum []interface{}
+var assetManagedDeviceStatusAO1P1TypeConnectionStatusPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -366,31 +349,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		assetManagedDeviceStatusAO0P0TypeConnectionStatusPropEnum = append(assetManagedDeviceStatusAO0P0TypeConnectionStatusPropEnum, v)
+		assetManagedDeviceStatusAO1P1TypeConnectionStatusPropEnum = append(assetManagedDeviceStatusAO1P1TypeConnectionStatusPropEnum, v)
 	}
 }
 
 const (
 
-	// AssetManagedDeviceStatusAO0P0ConnectionStatusUnknown captures enum value "Unknown"
-	AssetManagedDeviceStatusAO0P0ConnectionStatusUnknown string = "Unknown"
+	// AssetManagedDeviceStatusAO1P1ConnectionStatusUnknown captures enum value "Unknown"
+	AssetManagedDeviceStatusAO1P1ConnectionStatusUnknown string = "Unknown"
 
-	// AssetManagedDeviceStatusAO0P0ConnectionStatusSuccess captures enum value "Success"
-	AssetManagedDeviceStatusAO0P0ConnectionStatusSuccess string = "Success"
+	// AssetManagedDeviceStatusAO1P1ConnectionStatusSuccess captures enum value "Success"
+	AssetManagedDeviceStatusAO1P1ConnectionStatusSuccess string = "Success"
 
-	// AssetManagedDeviceStatusAO0P0ConnectionStatusFailure captures enum value "Failure"
-	AssetManagedDeviceStatusAO0P0ConnectionStatusFailure string = "Failure"
+	// AssetManagedDeviceStatusAO1P1ConnectionStatusFailure captures enum value "Failure"
+	AssetManagedDeviceStatusAO1P1ConnectionStatusFailure string = "Failure"
 )
 
 // prop value enum
-func (m *AssetManagedDeviceStatusAO0P0) validateConnectionStatusEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, assetManagedDeviceStatusAO0P0TypeConnectionStatusPropEnum); err != nil {
+func (m *AssetManagedDeviceStatusAO1P1) validateConnectionStatusEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, assetManagedDeviceStatusAO1P1TypeConnectionStatusPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *AssetManagedDeviceStatusAO0P0) validateConnectionStatus(formats strfmt.Registry) error {
+func (m *AssetManagedDeviceStatusAO1P1) validateConnectionStatus(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ConnectionStatus) { // not required
 		return nil
@@ -404,60 +387,63 @@ func (m *AssetManagedDeviceStatusAO0P0) validateConnectionStatus(formats strfmt.
 	return nil
 }
 
-var assetManagedDeviceStatusAO0P0TypeStatePropEnum []interface{}
+var assetManagedDeviceStatusAO1P1TypeStatePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["New","StartSent","StartSentFailure","StartSuccess","StartFailure","UpdateSentFailure","UpdateSent","DeleteSentFailure","DeleteInProgress","DeleteFailure"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["New","StartSent","StartSentFailure","StartSuccess","StartFailure","UpdateSentFailure","UpdateSent","DeleteSentFailure","DeleteInProgress","DeleteFailure","DeleteSuccess"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		assetManagedDeviceStatusAO0P0TypeStatePropEnum = append(assetManagedDeviceStatusAO0P0TypeStatePropEnum, v)
+		assetManagedDeviceStatusAO1P1TypeStatePropEnum = append(assetManagedDeviceStatusAO1P1TypeStatePropEnum, v)
 	}
 }
 
 const (
 
-	// AssetManagedDeviceStatusAO0P0StateNew captures enum value "New"
-	AssetManagedDeviceStatusAO0P0StateNew string = "New"
+	// AssetManagedDeviceStatusAO1P1StateNew captures enum value "New"
+	AssetManagedDeviceStatusAO1P1StateNew string = "New"
 
-	// AssetManagedDeviceStatusAO0P0StateStartSent captures enum value "StartSent"
-	AssetManagedDeviceStatusAO0P0StateStartSent string = "StartSent"
+	// AssetManagedDeviceStatusAO1P1StateStartSent captures enum value "StartSent"
+	AssetManagedDeviceStatusAO1P1StateStartSent string = "StartSent"
 
-	// AssetManagedDeviceStatusAO0P0StateStartSentFailure captures enum value "StartSentFailure"
-	AssetManagedDeviceStatusAO0P0StateStartSentFailure string = "StartSentFailure"
+	// AssetManagedDeviceStatusAO1P1StateStartSentFailure captures enum value "StartSentFailure"
+	AssetManagedDeviceStatusAO1P1StateStartSentFailure string = "StartSentFailure"
 
-	// AssetManagedDeviceStatusAO0P0StateStartSuccess captures enum value "StartSuccess"
-	AssetManagedDeviceStatusAO0P0StateStartSuccess string = "StartSuccess"
+	// AssetManagedDeviceStatusAO1P1StateStartSuccess captures enum value "StartSuccess"
+	AssetManagedDeviceStatusAO1P1StateStartSuccess string = "StartSuccess"
 
-	// AssetManagedDeviceStatusAO0P0StateStartFailure captures enum value "StartFailure"
-	AssetManagedDeviceStatusAO0P0StateStartFailure string = "StartFailure"
+	// AssetManagedDeviceStatusAO1P1StateStartFailure captures enum value "StartFailure"
+	AssetManagedDeviceStatusAO1P1StateStartFailure string = "StartFailure"
 
-	// AssetManagedDeviceStatusAO0P0StateUpdateSentFailure captures enum value "UpdateSentFailure"
-	AssetManagedDeviceStatusAO0P0StateUpdateSentFailure string = "UpdateSentFailure"
+	// AssetManagedDeviceStatusAO1P1StateUpdateSentFailure captures enum value "UpdateSentFailure"
+	AssetManagedDeviceStatusAO1P1StateUpdateSentFailure string = "UpdateSentFailure"
 
-	// AssetManagedDeviceStatusAO0P0StateUpdateSent captures enum value "UpdateSent"
-	AssetManagedDeviceStatusAO0P0StateUpdateSent string = "UpdateSent"
+	// AssetManagedDeviceStatusAO1P1StateUpdateSent captures enum value "UpdateSent"
+	AssetManagedDeviceStatusAO1P1StateUpdateSent string = "UpdateSent"
 
-	// AssetManagedDeviceStatusAO0P0StateDeleteSentFailure captures enum value "DeleteSentFailure"
-	AssetManagedDeviceStatusAO0P0StateDeleteSentFailure string = "DeleteSentFailure"
+	// AssetManagedDeviceStatusAO1P1StateDeleteSentFailure captures enum value "DeleteSentFailure"
+	AssetManagedDeviceStatusAO1P1StateDeleteSentFailure string = "DeleteSentFailure"
 
-	// AssetManagedDeviceStatusAO0P0StateDeleteInProgress captures enum value "DeleteInProgress"
-	AssetManagedDeviceStatusAO0P0StateDeleteInProgress string = "DeleteInProgress"
+	// AssetManagedDeviceStatusAO1P1StateDeleteInProgress captures enum value "DeleteInProgress"
+	AssetManagedDeviceStatusAO1P1StateDeleteInProgress string = "DeleteInProgress"
 
-	// AssetManagedDeviceStatusAO0P0StateDeleteFailure captures enum value "DeleteFailure"
-	AssetManagedDeviceStatusAO0P0StateDeleteFailure string = "DeleteFailure"
+	// AssetManagedDeviceStatusAO1P1StateDeleteFailure captures enum value "DeleteFailure"
+	AssetManagedDeviceStatusAO1P1StateDeleteFailure string = "DeleteFailure"
+
+	// AssetManagedDeviceStatusAO1P1StateDeleteSuccess captures enum value "DeleteSuccess"
+	AssetManagedDeviceStatusAO1P1StateDeleteSuccess string = "DeleteSuccess"
 )
 
 // prop value enum
-func (m *AssetManagedDeviceStatusAO0P0) validateStateEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, assetManagedDeviceStatusAO0P0TypeStatePropEnum); err != nil {
+func (m *AssetManagedDeviceStatusAO1P1) validateStateEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, assetManagedDeviceStatusAO1P1TypeStatePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *AssetManagedDeviceStatusAO0P0) validateState(formats strfmt.Registry) error {
+func (m *AssetManagedDeviceStatusAO1P1) validateState(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.State) { // not required
 		return nil
@@ -472,7 +458,7 @@ func (m *AssetManagedDeviceStatusAO0P0) validateState(formats strfmt.Registry) e
 }
 
 // MarshalBinary interface implementation
-func (m *AssetManagedDeviceStatusAO0P0) MarshalBinary() ([]byte, error) {
+func (m *AssetManagedDeviceStatusAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -480,8 +466,8 @@ func (m *AssetManagedDeviceStatusAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *AssetManagedDeviceStatusAO0P0) UnmarshalBinary(b []byte) error {
-	var res AssetManagedDeviceStatusAO0P0
+func (m *AssetManagedDeviceStatusAO1P1) UnmarshalBinary(b []byte) error {
+	var res AssetManagedDeviceStatusAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

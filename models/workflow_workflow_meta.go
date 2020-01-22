@@ -37,7 +37,7 @@ type WorkflowWorkflowMeta struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The workflow output parameters.
 	//
@@ -86,7 +86,7 @@ func (m *WorkflowWorkflowMeta) UnmarshalJSON(raw []byte) error {
 
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
 
@@ -148,7 +148,7 @@ func (m WorkflowWorkflowMeta) MarshalJSON() ([]byte, error) {
 
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
 

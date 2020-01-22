@@ -47,7 +47,7 @@ type ServerProfile struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The WorkflowInfos in the workflow engine that are running for this server Profile.
 	//
@@ -76,7 +76,7 @@ func (m *ServerProfile) UnmarshalJSON(raw []byte) error {
 
 		ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 	}
@@ -122,7 +122,7 @@ func (m ServerProfile) MarshalJSON() ([]byte, error) {
 
 		ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 	}

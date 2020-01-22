@@ -27,7 +27,7 @@ type HclServiceStatus struct {
 	//
 	ExemptionFileVersion string `json:"ExemptionFileVersion,omitempty"`
 
-	// A field to uniquely identify the document with the satus.
+	// A field to uniquely identify the document with the status.
 	//
 	Identity string `json:"Identity,omitempty"`
 

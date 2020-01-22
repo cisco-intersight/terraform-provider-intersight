@@ -22,30 +22,45 @@ import (
 //
 // swagger:model moVersionContext
 type MoVersionContext struct {
-	MoVersionContextAO0P0
+	MoBaseComplexType
+
+	MoVersionContextAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *MoVersionContext) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MoVersionContextAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MoVersionContextAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 MoVersionContextAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.MoVersionContextAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m MoVersionContext) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MoVersionContextAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.MoVersionContextAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m MoVersionContext) MarshalJSON() ([]byte, error) {
 func (m *MoVersionContext) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MoVersionContextAO0P0
-	if err := m.MoVersionContextAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with MoVersionContextAO1P1
+	if err := m.MoVersionContextAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,9 +102,9 @@ func (m *MoVersionContext) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// MoVersionContextAO0P0 mo version context a o0 p0
-// swagger:model MoVersionContextAO0P0
-type MoVersionContextAO0P0 struct {
+// MoVersionContextAO1P1 mo version context a o1 p1
+// swagger:model MoVersionContextAO1P1
+type MoVersionContextAO1P1 struct {
 
 	// A collection of objects that have reference to this versioned object.
 	// The lifecycle of the versioned object is based on the interestedMos list;
@@ -94,16 +113,6 @@ type MoVersionContextAO0P0 struct {
 	//
 	// Read Only: true
 	InterestedMos []*MoMoRef `json:"InterestedMos"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// A reference to the original Managed Object.
 	//
@@ -130,12 +139,12 @@ type MoVersionContextAO0P0 struct {
 	// Enum: [Modified Configured Deployed]
 	VersionType string `json:"VersionType,omitempty"`
 
-	// mo version context a o0 p0
-	MoVersionContextAO0P0 map[string]interface{} `json:"-"`
+	// mo version context a o1 p1
+	MoVersionContextAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *MoVersionContextAO0P0) UnmarshalJSON(data []byte) error {
+func (m *MoVersionContextAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -146,16 +155,6 @@ func (m *MoVersionContextAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Read Only: true
 		InterestedMos []*MoMoRef `json:"InterestedMos"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// A reference to the original Managed Object.
 		//
@@ -185,11 +184,9 @@ func (m *MoVersionContextAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv MoVersionContextAO0P0
+	var rcv MoVersionContextAO1P1
 
 	rcv.InterestedMos = stage1.InterestedMos
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.RefMo = stage1.RefMo
 
@@ -209,8 +206,6 @@ func (m *MoVersionContextAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "InterestedMos")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "RefMo")
 
 	delete(stage2, "Timestamp")
@@ -229,14 +224,14 @@ func (m *MoVersionContextAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.MoVersionContextAO0P0 = result
+		m.MoVersionContextAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m MoVersionContextAO0P0) MarshalJSON() ([]byte, error) {
+func (m MoVersionContextAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// A collection of objects that have reference to this versioned object.
@@ -246,16 +241,6 @@ func (m MoVersionContextAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		// Read Only: true
 		InterestedMos []*MoMoRef `json:"InterestedMos"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// A reference to the original Managed Object.
 		//
@@ -285,8 +270,6 @@ func (m MoVersionContextAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.InterestedMos = m.InterestedMos
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.RefMo = m.RefMo
 
 	stage1.Timestamp = m.Timestamp
@@ -301,12 +284,12 @@ func (m MoVersionContextAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.MoVersionContextAO0P0) == 0 {
+	if len(m.MoVersionContextAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.MoVersionContextAO0P0)
+	additional, err := json.Marshal(m.MoVersionContextAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -320,8 +303,8 @@ func (m MoVersionContextAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this mo version context a o0 p0
-func (m *MoVersionContextAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this mo version context a o1 p1
+func (m *MoVersionContextAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateInterestedMos(formats); err != nil {
@@ -346,7 +329,7 @@ func (m *MoVersionContextAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *MoVersionContextAO0P0) validateInterestedMos(formats strfmt.Registry) error {
+func (m *MoVersionContextAO1P1) validateInterestedMos(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.InterestedMos) { // not required
 		return nil
@@ -371,7 +354,7 @@ func (m *MoVersionContextAO0P0) validateInterestedMos(formats strfmt.Registry) e
 	return nil
 }
 
-func (m *MoVersionContextAO0P0) validateRefMo(formats strfmt.Registry) error {
+func (m *MoVersionContextAO1P1) validateRefMo(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.RefMo) { // not required
 		return nil
@@ -389,7 +372,7 @@ func (m *MoVersionContextAO0P0) validateRefMo(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *MoVersionContextAO0P0) validateTimestamp(formats strfmt.Registry) error {
+func (m *MoVersionContextAO1P1) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -402,7 +385,7 @@ func (m *MoVersionContextAO0P0) validateTimestamp(formats strfmt.Registry) error
 	return nil
 }
 
-var moVersionContextAO0P0TypeVersionTypePropEnum []interface{}
+var moVersionContextAO1P1TypeVersionTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -410,31 +393,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		moVersionContextAO0P0TypeVersionTypePropEnum = append(moVersionContextAO0P0TypeVersionTypePropEnum, v)
+		moVersionContextAO1P1TypeVersionTypePropEnum = append(moVersionContextAO1P1TypeVersionTypePropEnum, v)
 	}
 }
 
 const (
 
-	// MoVersionContextAO0P0VersionTypeModified captures enum value "Modified"
-	MoVersionContextAO0P0VersionTypeModified string = "Modified"
+	// MoVersionContextAO1P1VersionTypeModified captures enum value "Modified"
+	MoVersionContextAO1P1VersionTypeModified string = "Modified"
 
-	// MoVersionContextAO0P0VersionTypeConfigured captures enum value "Configured"
-	MoVersionContextAO0P0VersionTypeConfigured string = "Configured"
+	// MoVersionContextAO1P1VersionTypeConfigured captures enum value "Configured"
+	MoVersionContextAO1P1VersionTypeConfigured string = "Configured"
 
-	// MoVersionContextAO0P0VersionTypeDeployed captures enum value "Deployed"
-	MoVersionContextAO0P0VersionTypeDeployed string = "Deployed"
+	// MoVersionContextAO1P1VersionTypeDeployed captures enum value "Deployed"
+	MoVersionContextAO1P1VersionTypeDeployed string = "Deployed"
 )
 
 // prop value enum
-func (m *MoVersionContextAO0P0) validateVersionTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, moVersionContextAO0P0TypeVersionTypePropEnum); err != nil {
+func (m *MoVersionContextAO1P1) validateVersionTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, moVersionContextAO1P1TypeVersionTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *MoVersionContextAO0P0) validateVersionType(formats strfmt.Registry) error {
+func (m *MoVersionContextAO1P1) validateVersionType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.VersionType) { // not required
 		return nil
@@ -449,7 +432,7 @@ func (m *MoVersionContextAO0P0) validateVersionType(formats strfmt.Registry) err
 }
 
 // MarshalBinary interface implementation
-func (m *MoVersionContextAO0P0) MarshalBinary() ([]byte, error) {
+func (m *MoVersionContextAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -457,8 +440,8 @@ func (m *MoVersionContextAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *MoVersionContextAO0P0) UnmarshalBinary(b []byte) error {
-	var res MoVersionContextAO0P0
+func (m *MoVersionContextAO1P1) UnmarshalBinary(b []byte) error {
+	var res MoVersionContextAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

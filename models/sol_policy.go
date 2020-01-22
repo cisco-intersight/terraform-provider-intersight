@@ -40,7 +40,7 @@ type SolPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -68,7 +68,7 @@ func (m *SolPolicy) UnmarshalJSON(raw []byte) error {
 
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -110,7 +110,7 @@ func (m SolPolicy) MarshalJSON() ([]byte, error) {
 
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

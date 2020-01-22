@@ -40,7 +40,7 @@ type EquipmentDeviceSummary struct {
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
-	// Specifies the source object type for View MO.
+	// The source object type of this view MO.
 	//
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`

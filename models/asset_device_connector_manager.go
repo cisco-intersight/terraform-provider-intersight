@@ -6,41 +6,24 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
-// AssetDeviceConnectorManager Device Connector Manager
+// AssetDeviceConnectorManager Asset:Device Connector Manager
 //
-// Maintains the Device Connector Manager, other attributes and its Managed Device Status information.
+// Information pertaining to a Registered Intersight Assist Appliance Device in Intersight.
 //
 // swagger:model assetDeviceConnectorManager
 type AssetDeviceConnectorManager struct {
 	MoBaseMo
 
-	// The hostname of the Device Connector Manager. This will match the deviceHostname in the asset DeviceRegistration.
-	//
-	// Read Only: true
-	DeviceHostname []string `json:"DeviceHostname"`
-
-	// Identifiers for the Managed Devices managed by this Device Connector Manager.
-	//
-	// Read Only: true
-	ManagedDevices []*AssetManagedDeviceRef `json:"ManagedDevices"`
-
-	// Registered Device Connector Manager within asset Device Registration.
+	// Registered Intersight Assist Device within the asset Device Registration.
 	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
-
-	// Version of the Device Connector Manager. Version format is same as that of Equinox Device Connector.
-	//
-	// Read Only: true
-	Version string `json:"Version,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -54,25 +37,13 @@ func (m *AssetDeviceConnectorManager) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		DeviceHostname []string `json:"DeviceHostname"`
-
-		ManagedDevices []*AssetManagedDeviceRef `json:"ManagedDevices"`
-
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
-
-		Version string `json:"Version,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
 
-	m.DeviceHostname = dataAO1.DeviceHostname
-
-	m.ManagedDevices = dataAO1.ManagedDevices
-
 	m.RegisteredDevice = dataAO1.RegisteredDevice
-
-	m.Version = dataAO1.Version
 
 	return nil
 }
@@ -88,22 +59,10 @@ func (m AssetDeviceConnectorManager) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		DeviceHostname []string `json:"DeviceHostname"`
-
-		ManagedDevices []*AssetManagedDeviceRef `json:"ManagedDevices"`
-
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
-
-		Version string `json:"Version,omitempty"`
 	}
 
-	dataAO1.DeviceHostname = m.DeviceHostname
-
-	dataAO1.ManagedDevices = m.ManagedDevices
-
 	dataAO1.RegisteredDevice = m.RegisteredDevice
-
-	dataAO1.Version = m.Version
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -123,10 +82,6 @@ func (m *AssetDeviceConnectorManager) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateManagedDevices(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateRegisteredDevice(formats); err != nil {
 		res = append(res, err)
 	}
@@ -134,31 +89,6 @@ func (m *AssetDeviceConnectorManager) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *AssetDeviceConnectorManager) validateManagedDevices(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ManagedDevices) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ManagedDevices); i++ {
-		if swag.IsZero(m.ManagedDevices[i]) { // not required
-			continue
-		}
-
-		if m.ManagedDevices[i] != nil {
-			if err := m.ManagedDevices[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ManagedDevices" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

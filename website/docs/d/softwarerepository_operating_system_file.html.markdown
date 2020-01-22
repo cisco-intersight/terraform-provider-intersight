@@ -19,7 +19,7 @@ The following arguments can be used to get data of already created objects in In
 * `md5sum`:(string)The md5sum checksum of the file. This information is available for all Cisco distributed images and files imported to the local repository.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name of the file. It is populated as part of the image import operation.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `sha512sum`:(string)The sha512sum of the file. This information is available for all Cisco distributed images and files imported to the local repository.
 * `size`:(int)The size (in bytes) of the file. This information is available for all Cisco distributed images and files imported to the local repository.
 * `software_advisory_url`:(string)The software advisory, if any, provided by the vendor for this file.

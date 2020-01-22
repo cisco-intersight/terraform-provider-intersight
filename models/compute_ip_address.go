@@ -21,30 +21,45 @@ import (
 //
 // swagger:model computeIpAddress
 type ComputeIPAddress struct {
-	ComputeIPAddressAO0P0
+	MoBaseComplexType
+
+	ComputeIPAddressAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *ComputeIPAddress) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 ComputeIPAddressAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.ComputeIPAddressAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 ComputeIPAddressAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.ComputeIPAddressAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m ComputeIPAddress) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.ComputeIPAddressAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.ComputeIPAddressAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m ComputeIPAddress) MarshalJSON() ([]byte, error) {
 func (m *ComputeIPAddress) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with ComputeIPAddressAO0P0
-	if err := m.ComputeIPAddressAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with ComputeIPAddressAO1P1
+	if err := m.ComputeIPAddressAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *ComputeIPAddress) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// ComputeIPAddressAO0P0 compute IP address a o0 p0
-// swagger:model ComputeIPAddressAO0P0
-type ComputeIPAddressAO0P0 struct {
+// ComputeIPAddressAO1P1 compute IP address a o1 p1
+// swagger:model ComputeIPAddressAO1P1
+type ComputeIPAddressAO1P1 struct {
 
 	// address
 	// Read Only: true
@@ -120,16 +139,6 @@ type ComputeIPAddressAO0P0 struct {
 	// Enum: [Outband Inband]
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// subnet
 	// Read Only: true
 	Subnet string `json:"Subnet,omitempty"`
@@ -139,12 +148,12 @@ type ComputeIPAddressAO0P0 struct {
 	// Enum: [MgmtInterface VnicIpV4StaticAddr VnicIpV4PooledAddr VnicIpV4MgmtPooledAddr VnicIpV6StaticAddr VnicIpV6MgmtPooledAddr VnicIpV4ProfDerivedAddr]
 	Type string `json:"Type,omitempty"`
 
-	// compute IP address a o0 p0
-	ComputeIPAddressAO0P0 map[string]interface{} `json:"-"`
+	// compute IP address a o1 p1
+	ComputeIPAddressAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
+func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -182,16 +191,6 @@ func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
 		// Enum: [Outband Inband]
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// subnet
 		// Read Only: true
 		Subnet string `json:"Subnet,omitempty"`
@@ -204,7 +203,7 @@ func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv ComputeIPAddressAO0P0
+	var rcv ComputeIPAddressAO1P1
 
 	rcv.Address = stage1.Address
 
@@ -221,8 +220,6 @@ func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.KvmPort = stage1.KvmPort
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Subnet = stage1.Subnet
 
@@ -252,8 +249,6 @@ func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Subnet")
 
 	delete(stage2, "Type")
@@ -268,14 +263,14 @@ func (m *ComputeIPAddressAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.ComputeIPAddressAO0P0 = result
+		m.ComputeIPAddressAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m ComputeIPAddressAO0P0) MarshalJSON() ([]byte, error) {
+func (m ComputeIPAddressAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// address
@@ -312,16 +307,6 @@ func (m ComputeIPAddressAO0P0) MarshalJSON() ([]byte, error) {
 		// Enum: [Outband Inband]
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// subnet
 		// Read Only: true
 		Subnet string `json:"Subnet,omitempty"`
@@ -348,8 +333,6 @@ func (m ComputeIPAddressAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Subnet = m.Subnet
 
 	stage1.Type = m.Type
@@ -360,12 +343,12 @@ func (m ComputeIPAddressAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.ComputeIPAddressAO0P0) == 0 {
+	if len(m.ComputeIPAddressAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.ComputeIPAddressAO0P0)
+	additional, err := json.Marshal(m.ComputeIPAddressAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -379,8 +362,8 @@ func (m ComputeIPAddressAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this compute IP address a o0 p0
-func (m *ComputeIPAddressAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this compute IP address a o1 p1
+func (m *ComputeIPAddressAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCategory(formats); err != nil {
@@ -401,7 +384,7 @@ func (m *ComputeIPAddressAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var computeIpAddressAO0P0TypeCategoryPropEnum []interface{}
+var computeIpAddressAO1P1TypeCategoryPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -409,28 +392,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		computeIpAddressAO0P0TypeCategoryPropEnum = append(computeIpAddressAO0P0TypeCategoryPropEnum, v)
+		computeIpAddressAO1P1TypeCategoryPropEnum = append(computeIpAddressAO1P1TypeCategoryPropEnum, v)
 	}
 }
 
 const (
 
-	// ComputeIPAddressAO0P0CategoryEquipment captures enum value "Equipment"
-	ComputeIPAddressAO0P0CategoryEquipment string = "Equipment"
+	// ComputeIPAddressAO1P1CategoryEquipment captures enum value "Equipment"
+	ComputeIPAddressAO1P1CategoryEquipment string = "Equipment"
 
-	// ComputeIPAddressAO0P0CategoryServiceProfile captures enum value "ServiceProfile"
-	ComputeIPAddressAO0P0CategoryServiceProfile string = "ServiceProfile"
+	// ComputeIPAddressAO1P1CategoryServiceProfile captures enum value "ServiceProfile"
+	ComputeIPAddressAO1P1CategoryServiceProfile string = "ServiceProfile"
 )
 
 // prop value enum
-func (m *ComputeIPAddressAO0P0) validateCategoryEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, computeIpAddressAO0P0TypeCategoryPropEnum); err != nil {
+func (m *ComputeIPAddressAO1P1) validateCategoryEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, computeIpAddressAO1P1TypeCategoryPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *ComputeIPAddressAO0P0) validateCategory(formats strfmt.Registry) error {
+func (m *ComputeIPAddressAO1P1) validateCategory(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Category) { // not required
 		return nil
@@ -444,7 +427,7 @@ func (m *ComputeIPAddressAO0P0) validateCategory(formats strfmt.Registry) error 
 	return nil
 }
 
-var computeIpAddressAO0P0TypeNamePropEnum []interface{}
+var computeIpAddressAO1P1TypeNamePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -452,28 +435,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		computeIpAddressAO0P0TypeNamePropEnum = append(computeIpAddressAO0P0TypeNamePropEnum, v)
+		computeIpAddressAO1P1TypeNamePropEnum = append(computeIpAddressAO1P1TypeNamePropEnum, v)
 	}
 }
 
 const (
 
-	// ComputeIPAddressAO0P0NameOutband captures enum value "Outband"
-	ComputeIPAddressAO0P0NameOutband string = "Outband"
+	// ComputeIPAddressAO1P1NameOutband captures enum value "Outband"
+	ComputeIPAddressAO1P1NameOutband string = "Outband"
 
-	// ComputeIPAddressAO0P0NameInband captures enum value "Inband"
-	ComputeIPAddressAO0P0NameInband string = "Inband"
+	// ComputeIPAddressAO1P1NameInband captures enum value "Inband"
+	ComputeIPAddressAO1P1NameInband string = "Inband"
 )
 
 // prop value enum
-func (m *ComputeIPAddressAO0P0) validateNameEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, computeIpAddressAO0P0TypeNamePropEnum); err != nil {
+func (m *ComputeIPAddressAO1P1) validateNameEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, computeIpAddressAO1P1TypeNamePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *ComputeIPAddressAO0P0) validateName(formats strfmt.Registry) error {
+func (m *ComputeIPAddressAO1P1) validateName(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Name) { // not required
 		return nil
@@ -487,7 +470,7 @@ func (m *ComputeIPAddressAO0P0) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-var computeIpAddressAO0P0TypeTypePropEnum []interface{}
+var computeIpAddressAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -495,43 +478,43 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		computeIpAddressAO0P0TypeTypePropEnum = append(computeIpAddressAO0P0TypeTypePropEnum, v)
+		computeIpAddressAO1P1TypeTypePropEnum = append(computeIpAddressAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// ComputeIPAddressAO0P0TypeMgmtInterface captures enum value "MgmtInterface"
-	ComputeIPAddressAO0P0TypeMgmtInterface string = "MgmtInterface"
+	// ComputeIPAddressAO1P1TypeMgmtInterface captures enum value "MgmtInterface"
+	ComputeIPAddressAO1P1TypeMgmtInterface string = "MgmtInterface"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV4StaticAddr captures enum value "VnicIpV4StaticAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV4StaticAddr string = "VnicIpV4StaticAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV4StaticAddr captures enum value "VnicIpV4StaticAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV4StaticAddr string = "VnicIpV4StaticAddr"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV4PooledAddr captures enum value "VnicIpV4PooledAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV4PooledAddr string = "VnicIpV4PooledAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV4PooledAddr captures enum value "VnicIpV4PooledAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV4PooledAddr string = "VnicIpV4PooledAddr"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV4MgmtPooledAddr captures enum value "VnicIpV4MgmtPooledAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV4MgmtPooledAddr string = "VnicIpV4MgmtPooledAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV4MgmtPooledAddr captures enum value "VnicIpV4MgmtPooledAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV4MgmtPooledAddr string = "VnicIpV4MgmtPooledAddr"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV6StaticAddr captures enum value "VnicIpV6StaticAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV6StaticAddr string = "VnicIpV6StaticAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV6StaticAddr captures enum value "VnicIpV6StaticAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV6StaticAddr string = "VnicIpV6StaticAddr"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV6MgmtPooledAddr captures enum value "VnicIpV6MgmtPooledAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV6MgmtPooledAddr string = "VnicIpV6MgmtPooledAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV6MgmtPooledAddr captures enum value "VnicIpV6MgmtPooledAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV6MgmtPooledAddr string = "VnicIpV6MgmtPooledAddr"
 
-	// ComputeIPAddressAO0P0TypeVnicIPV4ProfDerivedAddr captures enum value "VnicIpV4ProfDerivedAddr"
-	ComputeIPAddressAO0P0TypeVnicIPV4ProfDerivedAddr string = "VnicIpV4ProfDerivedAddr"
+	// ComputeIPAddressAO1P1TypeVnicIPV4ProfDerivedAddr captures enum value "VnicIpV4ProfDerivedAddr"
+	ComputeIPAddressAO1P1TypeVnicIPV4ProfDerivedAddr string = "VnicIpV4ProfDerivedAddr"
 )
 
 // prop value enum
-func (m *ComputeIPAddressAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, computeIpAddressAO0P0TypeTypePropEnum); err != nil {
+func (m *ComputeIPAddressAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, computeIpAddressAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *ComputeIPAddressAO0P0) validateType(formats strfmt.Registry) error {
+func (m *ComputeIPAddressAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -546,7 +529,7 @@ func (m *ComputeIPAddressAO0P0) validateType(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *ComputeIPAddressAO0P0) MarshalBinary() ([]byte, error) {
+func (m *ComputeIPAddressAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -554,8 +537,8 @@ func (m *ComputeIPAddressAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *ComputeIPAddressAO0P0) UnmarshalBinary(b []byte) error {
-	var res ComputeIPAddressAO0P0
+func (m *ComputeIPAddressAO1P1) UnmarshalBinary(b []byte) error {
+	var res ComputeIPAddressAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -14,6 +14,9 @@ func SuppressDiffAdditionProps(k, old, new string, d *schema.ResourceData) bool 
 	if old == "null" && new == "" {
 		return true
 	}
+	if new == "" {
+		new = "{}"
+	}
 	var oldJson = make(map[string]interface{})
 	var newJson = make(map[string]interface{})
 	err := json.Unmarshal([]byte(old), &oldJson)

@@ -21,30 +21,45 @@ import (
 //
 // swagger:model firmwareDirectDownload
 type FirmwareDirectDownload struct {
-	FirmwareDirectDownloadAO0P0
+	MoBaseComplexType
+
+	FirmwareDirectDownloadAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *FirmwareDirectDownload) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 FirmwareDirectDownloadAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.FirmwareDirectDownloadAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 FirmwareDirectDownloadAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.FirmwareDirectDownloadAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m FirmwareDirectDownload) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.FirmwareDirectDownloadAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.FirmwareDirectDownloadAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m FirmwareDirectDownload) MarshalJSON() ([]byte, error) {
 func (m *FirmwareDirectDownload) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with FirmwareDirectDownloadAO0P0
-	if err := m.FirmwareDirectDownloadAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with FirmwareDirectDownloadAO1P1
+	if err := m.FirmwareDirectDownloadAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *FirmwareDirectDownload) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// FirmwareDirectDownloadAO0P0 firmware direct download a o0 p0
-// swagger:model FirmwareDirectDownloadAO0P0
-type FirmwareDirectDownloadAO0P0 struct {
+// FirmwareDirectDownloadAO1P1 firmware direct download a o1 p1
+// swagger:model FirmwareDirectDownloadAO1P1
+type FirmwareDirectDownloadAO1P1 struct {
 
 	// HTTP Server option when the image source is a local https server.
 	//
@@ -97,16 +116,6 @@ type FirmwareDirectDownloadAO0P0 struct {
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Password as configured on the local https server.
 	//
@@ -121,12 +130,12 @@ type FirmwareDirectDownloadAO0P0 struct {
 	//
 	Username string `json:"Username,omitempty"`
 
-	// firmware direct download a o0 p0
-	FirmwareDirectDownloadAO0P0 map[string]interface{} `json:"-"`
+	// firmware direct download a o1 p1
+	FirmwareDirectDownloadAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *FirmwareDirectDownloadAO0P0) UnmarshalJSON(data []byte) error {
+func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -141,16 +150,6 @@ func (m *FirmwareDirectDownloadAO0P0) UnmarshalJSON(data []byte) error {
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Password as configured on the local https server.
 		//
@@ -168,15 +167,13 @@ func (m *FirmwareDirectDownloadAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv FirmwareDirectDownloadAO0P0
+	var rcv FirmwareDirectDownloadAO1P1
 
 	rcv.HTTPServer = stage1.HTTPServer
 
 	rcv.ImageSource = stage1.ImageSource
 
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Password = stage1.Password
 
@@ -198,8 +195,6 @@ func (m *FirmwareDirectDownloadAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "IsPasswordSet")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Password")
 
 	delete(stage2, "Upgradeoption")
@@ -216,14 +211,14 @@ func (m *FirmwareDirectDownloadAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.FirmwareDirectDownloadAO0P0 = result
+		m.FirmwareDirectDownloadAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m FirmwareDirectDownloadAO0P0) MarshalJSON() ([]byte, error) {
+func (m FirmwareDirectDownloadAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// HTTP Server option when the image source is a local https server.
@@ -237,16 +232,6 @@ func (m FirmwareDirectDownloadAO0P0) MarshalJSON() ([]byte, error) {
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Password as configured on the local https server.
 		//
@@ -268,8 +253,6 @@ func (m FirmwareDirectDownloadAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.IsPasswordSet = m.IsPasswordSet
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Password = m.Password
 
 	stage1.Upgradeoption = m.Upgradeoption
@@ -282,12 +265,12 @@ func (m FirmwareDirectDownloadAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.FirmwareDirectDownloadAO0P0) == 0 {
+	if len(m.FirmwareDirectDownloadAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.FirmwareDirectDownloadAO0P0)
+	additional, err := json.Marshal(m.FirmwareDirectDownloadAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -301,8 +284,8 @@ func (m FirmwareDirectDownloadAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this firmware direct download a o0 p0
-func (m *FirmwareDirectDownloadAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this firmware direct download a o1 p1
+func (m *FirmwareDirectDownloadAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateHTTPServer(formats); err != nil {
@@ -323,7 +306,7 @@ func (m *FirmwareDirectDownloadAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *FirmwareDirectDownloadAO0P0) validateHTTPServer(formats strfmt.Registry) error {
+func (m *FirmwareDirectDownloadAO1P1) validateHTTPServer(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.HTTPServer) { // not required
 		return nil
@@ -341,7 +324,7 @@ func (m *FirmwareDirectDownloadAO0P0) validateHTTPServer(formats strfmt.Registry
 	return nil
 }
 
-var firmwareDirectDownloadAO0P0TypeImageSourcePropEnum []interface{}
+var firmwareDirectDownloadAO1P1TypeImageSourcePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -349,28 +332,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		firmwareDirectDownloadAO0P0TypeImageSourcePropEnum = append(firmwareDirectDownloadAO0P0TypeImageSourcePropEnum, v)
+		firmwareDirectDownloadAO1P1TypeImageSourcePropEnum = append(firmwareDirectDownloadAO1P1TypeImageSourcePropEnum, v)
 	}
 }
 
 const (
 
-	// FirmwareDirectDownloadAO0P0ImageSourceCisco captures enum value "cisco"
-	FirmwareDirectDownloadAO0P0ImageSourceCisco string = "cisco"
+	// FirmwareDirectDownloadAO1P1ImageSourceCisco captures enum value "cisco"
+	FirmwareDirectDownloadAO1P1ImageSourceCisco string = "cisco"
 
-	// FirmwareDirectDownloadAO0P0ImageSourceLocalHTTP captures enum value "localHttp"
-	FirmwareDirectDownloadAO0P0ImageSourceLocalHTTP string = "localHttp"
+	// FirmwareDirectDownloadAO1P1ImageSourceLocalHTTP captures enum value "localHttp"
+	FirmwareDirectDownloadAO1P1ImageSourceLocalHTTP string = "localHttp"
 )
 
 // prop value enum
-func (m *FirmwareDirectDownloadAO0P0) validateImageSourceEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, firmwareDirectDownloadAO0P0TypeImageSourcePropEnum); err != nil {
+func (m *FirmwareDirectDownloadAO1P1) validateImageSourceEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, firmwareDirectDownloadAO1P1TypeImageSourcePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *FirmwareDirectDownloadAO0P0) validateImageSource(formats strfmt.Registry) error {
+func (m *FirmwareDirectDownloadAO1P1) validateImageSource(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ImageSource) { // not required
 		return nil
@@ -384,7 +367,7 @@ func (m *FirmwareDirectDownloadAO0P0) validateImageSource(formats strfmt.Registr
 	return nil
 }
 
-var firmwareDirectDownloadAO0P0TypeUpgradeoptionPropEnum []interface{}
+var firmwareDirectDownloadAO1P1TypeUpgradeoptionPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -392,34 +375,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		firmwareDirectDownloadAO0P0TypeUpgradeoptionPropEnum = append(firmwareDirectDownloadAO0P0TypeUpgradeoptionPropEnum, v)
+		firmwareDirectDownloadAO1P1TypeUpgradeoptionPropEnum = append(firmwareDirectDownloadAO1P1TypeUpgradeoptionPropEnum, v)
 	}
 }
 
 const (
 
-	// FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeMountOnly captures enum value "sd_upgrade_mount_only"
-	FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeMountOnly string = "sd_upgrade_mount_only"
+	// FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeMountOnly captures enum value "sd_upgrade_mount_only"
+	FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeMountOnly string = "sd_upgrade_mount_only"
 
-	// FirmwareDirectDownloadAO0P0UpgradeoptionSdDownloadOnly captures enum value "sd_download_only"
-	FirmwareDirectDownloadAO0P0UpgradeoptionSdDownloadOnly string = "sd_download_only"
+	// FirmwareDirectDownloadAO1P1UpgradeoptionSdDownloadOnly captures enum value "sd_download_only"
+	FirmwareDirectDownloadAO1P1UpgradeoptionSdDownloadOnly string = "sd_download_only"
 
-	// FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeOnly captures enum value "sd_upgrade_only"
-	FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeOnly string = "sd_upgrade_only"
+	// FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeOnly captures enum value "sd_upgrade_only"
+	FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeOnly string = "sd_upgrade_only"
 
-	// FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeFull captures enum value "sd_upgrade_full"
-	FirmwareDirectDownloadAO0P0UpgradeoptionSdUpgradeFull string = "sd_upgrade_full"
+	// FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeFull captures enum value "sd_upgrade_full"
+	FirmwareDirectDownloadAO1P1UpgradeoptionSdUpgradeFull string = "sd_upgrade_full"
 )
 
 // prop value enum
-func (m *FirmwareDirectDownloadAO0P0) validateUpgradeoptionEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, firmwareDirectDownloadAO0P0TypeUpgradeoptionPropEnum); err != nil {
+func (m *FirmwareDirectDownloadAO1P1) validateUpgradeoptionEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, firmwareDirectDownloadAO1P1TypeUpgradeoptionPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *FirmwareDirectDownloadAO0P0) validateUpgradeoption(formats strfmt.Registry) error {
+func (m *FirmwareDirectDownloadAO1P1) validateUpgradeoption(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Upgradeoption) { // not required
 		return nil
@@ -434,7 +417,7 @@ func (m *FirmwareDirectDownloadAO0P0) validateUpgradeoption(formats strfmt.Regis
 }
 
 // MarshalBinary interface implementation
-func (m *FirmwareDirectDownloadAO0P0) MarshalBinary() ([]byte, error) {
+func (m *FirmwareDirectDownloadAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -442,8 +425,8 @@ func (m *FirmwareDirectDownloadAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *FirmwareDirectDownloadAO0P0) UnmarshalBinary(b []byte) error {
-	var res FirmwareDirectDownloadAO0P0
+func (m *FirmwareDirectDownloadAO1P1) UnmarshalBinary(b []byte) error {
+	var res FirmwareDirectDownloadAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -21,30 +21,45 @@ import (
 //
 // swagger:model workflowPrimitiveDataProperty
 type WorkflowPrimitiveDataProperty struct {
-	WorkflowPrimitiveDataPropertyAO0P0
+	MoBaseComplexType
+
+	WorkflowPrimitiveDataPropertyAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *WorkflowPrimitiveDataProperty) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 WorkflowPrimitiveDataPropertyAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.WorkflowPrimitiveDataPropertyAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 WorkflowPrimitiveDataPropertyAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.WorkflowPrimitiveDataPropertyAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m WorkflowPrimitiveDataProperty) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.WorkflowPrimitiveDataPropertyAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.WorkflowPrimitiveDataPropertyAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m WorkflowPrimitiveDataProperty) MarshalJSON() ([]byte, error) {
 func (m *WorkflowPrimitiveDataProperty) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with WorkflowPrimitiveDataPropertyAO0P0
-	if err := m.WorkflowPrimitiveDataPropertyAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with WorkflowPrimitiveDataPropertyAO1P1
+	if err := m.WorkflowPrimitiveDataPropertyAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,23 +101,13 @@ func (m *WorkflowPrimitiveDataProperty) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// WorkflowPrimitiveDataPropertyAO0P0 workflow primitive data property a o0 p0
-// swagger:model WorkflowPrimitiveDataPropertyAO0P0
-type WorkflowPrimitiveDataPropertyAO0P0 struct {
+// WorkflowPrimitiveDataPropertyAO1P1 workflow primitive data property a o1 p1
+// swagger:model WorkflowPrimitiveDataPropertyAO1P1
+type WorkflowPrimitiveDataPropertyAO1P1 struct {
 
 	// Constraints that must be applied to the parameter value supplied for this data type.
 	//
 	Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Intersight allows the secure properties to be used as task input/output. The values of
 	// these properties are encrypted and stored in Intersight.
@@ -113,28 +122,18 @@ type WorkflowPrimitiveDataPropertyAO0P0 struct {
 	// Enum: [string integer float boolean json enum]
 	Type *string `json:"Type,omitempty"`
 
-	// workflow primitive data property a o0 p0
-	WorkflowPrimitiveDataPropertyAO0P0 map[string]interface{} `json:"-"`
+	// workflow primitive data property a o1 p1
+	WorkflowPrimitiveDataPropertyAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *WorkflowPrimitiveDataPropertyAO0P0) UnmarshalJSON(data []byte) error {
+func (m *WorkflowPrimitiveDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// Constraints that must be applied to the parameter value supplied for this data type.
 		//
 		Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Intersight allows the secure properties to be used as task input/output. The values of
 		// these properties are encrypted and stored in Intersight.
@@ -152,11 +151,9 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv WorkflowPrimitiveDataPropertyAO0P0
+	var rcv WorkflowPrimitiveDataPropertyAO1P1
 
 	rcv.Constraints = stage1.Constraints
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Secure = stage1.Secure
 
@@ -172,8 +169,6 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Constraints")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Secure")
 
 	delete(stage2, "Type")
@@ -188,29 +183,19 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.WorkflowPrimitiveDataPropertyAO0P0 = result
+		m.WorkflowPrimitiveDataPropertyAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m WorkflowPrimitiveDataPropertyAO0P0) MarshalJSON() ([]byte, error) {
+func (m WorkflowPrimitiveDataPropertyAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Constraints that must be applied to the parameter value supplied for this data type.
 		//
 		Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Intersight allows the secure properties to be used as task input/output. The values of
 		// these properties are encrypted and stored in Intersight.
@@ -228,8 +213,6 @@ func (m WorkflowPrimitiveDataPropertyAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Constraints = m.Constraints
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Secure = m.Secure
 
 	stage1.Type = m.Type
@@ -240,12 +223,12 @@ func (m WorkflowPrimitiveDataPropertyAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.WorkflowPrimitiveDataPropertyAO0P0) == 0 {
+	if len(m.WorkflowPrimitiveDataPropertyAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.WorkflowPrimitiveDataPropertyAO0P0)
+	additional, err := json.Marshal(m.WorkflowPrimitiveDataPropertyAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -259,8 +242,8 @@ func (m WorkflowPrimitiveDataPropertyAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this workflow primitive data property a o0 p0
-func (m *WorkflowPrimitiveDataPropertyAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this workflow primitive data property a o1 p1
+func (m *WorkflowPrimitiveDataPropertyAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateConstraints(formats); err != nil {
@@ -277,7 +260,7 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) Validate(formats strfmt.Registry) e
 	return nil
 }
 
-func (m *WorkflowPrimitiveDataPropertyAO0P0) validateConstraints(formats strfmt.Registry) error {
+func (m *WorkflowPrimitiveDataPropertyAO1P1) validateConstraints(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Constraints) { // not required
 		return nil
@@ -295,7 +278,7 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) validateConstraints(formats strfmt.
 	return nil
 }
 
-var workflowPrimitiveDataPropertyAO0P0TypeTypePropEnum []interface{}
+var workflowPrimitiveDataPropertyAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -303,40 +286,40 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		workflowPrimitiveDataPropertyAO0P0TypeTypePropEnum = append(workflowPrimitiveDataPropertyAO0P0TypeTypePropEnum, v)
+		workflowPrimitiveDataPropertyAO1P1TypeTypePropEnum = append(workflowPrimitiveDataPropertyAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeString captures enum value "string"
-	WorkflowPrimitiveDataPropertyAO0P0TypeString string = "string"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeString captures enum value "string"
+	WorkflowPrimitiveDataPropertyAO1P1TypeString string = "string"
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeInteger captures enum value "integer"
-	WorkflowPrimitiveDataPropertyAO0P0TypeInteger string = "integer"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeInteger captures enum value "integer"
+	WorkflowPrimitiveDataPropertyAO1P1TypeInteger string = "integer"
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeFloat captures enum value "float"
-	WorkflowPrimitiveDataPropertyAO0P0TypeFloat string = "float"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeFloat captures enum value "float"
+	WorkflowPrimitiveDataPropertyAO1P1TypeFloat string = "float"
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeBoolean captures enum value "boolean"
-	WorkflowPrimitiveDataPropertyAO0P0TypeBoolean string = "boolean"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeBoolean captures enum value "boolean"
+	WorkflowPrimitiveDataPropertyAO1P1TypeBoolean string = "boolean"
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeJSON captures enum value "json"
-	WorkflowPrimitiveDataPropertyAO0P0TypeJSON string = "json"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeJSON captures enum value "json"
+	WorkflowPrimitiveDataPropertyAO1P1TypeJSON string = "json"
 
-	// WorkflowPrimitiveDataPropertyAO0P0TypeEnum captures enum value "enum"
-	WorkflowPrimitiveDataPropertyAO0P0TypeEnum string = "enum"
+	// WorkflowPrimitiveDataPropertyAO1P1TypeEnum captures enum value "enum"
+	WorkflowPrimitiveDataPropertyAO1P1TypeEnum string = "enum"
 )
 
 // prop value enum
-func (m *WorkflowPrimitiveDataPropertyAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, workflowPrimitiveDataPropertyAO0P0TypeTypePropEnum); err != nil {
+func (m *WorkflowPrimitiveDataPropertyAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowPrimitiveDataPropertyAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *WorkflowPrimitiveDataPropertyAO0P0) validateType(formats strfmt.Registry) error {
+func (m *WorkflowPrimitiveDataPropertyAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -351,7 +334,7 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) validateType(formats strfmt.Registr
 }
 
 // MarshalBinary interface implementation
-func (m *WorkflowPrimitiveDataPropertyAO0P0) MarshalBinary() ([]byte, error) {
+func (m *WorkflowPrimitiveDataPropertyAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -359,8 +342,8 @@ func (m *WorkflowPrimitiveDataPropertyAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *WorkflowPrimitiveDataPropertyAO0P0) UnmarshalBinary(b []byte) error {
-	var res WorkflowPrimitiveDataPropertyAO0P0
+func (m *WorkflowPrimitiveDataPropertyAO1P1) UnmarshalBinary(b []byte) error {
+	var res WorkflowPrimitiveDataPropertyAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

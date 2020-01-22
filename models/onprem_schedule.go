@@ -24,30 +24,45 @@ import (
 //
 // swagger:model onpremSchedule
 type OnpremSchedule struct {
-	OnpremScheduleAO0P0
+	MoBaseComplexType
+
+	OnpremScheduleAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *OnpremSchedule) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 OnpremScheduleAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.OnpremScheduleAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 OnpremScheduleAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.OnpremScheduleAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m OnpremSchedule) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.OnpremScheduleAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.OnpremScheduleAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -56,8 +71,12 @@ func (m OnpremSchedule) MarshalJSON() ([]byte, error) {
 func (m *OnpremSchedule) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with OnpremScheduleAO0P0
-	if err := m.OnpremScheduleAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with OnpremScheduleAO1P1
+	if err := m.OnpremScheduleAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,9 +104,9 @@ func (m *OnpremSchedule) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// OnpremScheduleAO0P0 onprem schedule a o0 p0
-// swagger:model OnpremScheduleAO0P0
-type OnpremScheduleAO0P0 struct {
+// OnpremScheduleAO1P1 onprem schedule a o1 p1
+// swagger:model OnpremScheduleAO1P1
+type OnpremScheduleAO1P1 struct {
 
 	// Schedule a task on a specific day of the month. Valid values are 1 through 31. If monthOfYear is specified, then dayOfMonth value must be valid for that month. DayOfMonth may not be set when dayOfWeek is specfied.
 	//
@@ -100,16 +119,6 @@ type OnpremScheduleAO0P0 struct {
 	// Schedule a task on a specific month of the year. Valid values are 1 through 12, with 1 being January.
 	//
 	MonthOfYear int64 `json:"MonthOfYear,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Schedule a task to run periodically at an interval. Default unit of the RepeatInterval is in minutes. If the RepeateInterval value is set, then all other properties are ignored by the scheduler. RepeateInterval constraints are enforced by the services that use the schedule. Each service has pre-configured service specific properties for enforcing minimum and maximum values of the RepeatInterval.
 	//
@@ -128,12 +137,12 @@ type OnpremScheduleAO0P0 struct {
 	//
 	WeekOfMonth int64 `json:"WeekOfMonth,omitempty"`
 
-	// onprem schedule a o0 p0
-	OnpremScheduleAO0P0 map[string]interface{} `json:"-"`
+	// onprem schedule a o1 p1
+	OnpremScheduleAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *OnpremScheduleAO0P0) UnmarshalJSON(data []byte) error {
+func (m *OnpremScheduleAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -148,16 +157,6 @@ func (m *OnpremScheduleAO0P0) UnmarshalJSON(data []byte) error {
 		// Schedule a task on a specific month of the year. Valid values are 1 through 12, with 1 being January.
 		//
 		MonthOfYear int64 `json:"MonthOfYear,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Schedule a task to run periodically at an interval. Default unit of the RepeatInterval is in minutes. If the RepeateInterval value is set, then all other properties are ignored by the scheduler. RepeateInterval constraints are enforced by the services that use the schedule. Each service has pre-configured service specific properties for enforcing minimum and maximum values of the RepeatInterval.
 		//
@@ -179,15 +178,13 @@ func (m *OnpremScheduleAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv OnpremScheduleAO0P0
+	var rcv OnpremScheduleAO1P1
 
 	rcv.DayOfMonth = stage1.DayOfMonth
 
 	rcv.DayOfWeek = stage1.DayOfWeek
 
 	rcv.MonthOfYear = stage1.MonthOfYear
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.RepeatInterval = stage1.RepeatInterval
 
@@ -211,8 +208,6 @@ func (m *OnpremScheduleAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MonthOfYear")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "RepeatInterval")
 
 	delete(stage2, "TimeOfDay")
@@ -231,14 +226,14 @@ func (m *OnpremScheduleAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.OnpremScheduleAO0P0 = result
+		m.OnpremScheduleAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m OnpremScheduleAO0P0) MarshalJSON() ([]byte, error) {
+func (m OnpremScheduleAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Schedule a task on a specific day of the month. Valid values are 1 through 31. If monthOfYear is specified, then dayOfMonth value must be valid for that month. DayOfMonth may not be set when dayOfWeek is specfied.
@@ -252,16 +247,6 @@ func (m OnpremScheduleAO0P0) MarshalJSON() ([]byte, error) {
 		// Schedule a task on a specific month of the year. Valid values are 1 through 12, with 1 being January.
 		//
 		MonthOfYear int64 `json:"MonthOfYear,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Schedule a task to run periodically at an interval. Default unit of the RepeatInterval is in minutes. If the RepeateInterval value is set, then all other properties are ignored by the scheduler. RepeateInterval constraints are enforced by the services that use the schedule. Each service has pre-configured service specific properties for enforcing minimum and maximum values of the RepeatInterval.
 		//
@@ -287,8 +272,6 @@ func (m OnpremScheduleAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.MonthOfYear = m.MonthOfYear
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.RepeatInterval = m.RepeatInterval
 
 	stage1.TimeOfDay = m.TimeOfDay
@@ -303,12 +286,12 @@ func (m OnpremScheduleAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.OnpremScheduleAO0P0) == 0 {
+	if len(m.OnpremScheduleAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.OnpremScheduleAO0P0)
+	additional, err := json.Marshal(m.OnpremScheduleAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -322,8 +305,8 @@ func (m OnpremScheduleAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this onprem schedule a o0 p0
-func (m *OnpremScheduleAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this onprem schedule a o1 p1
+func (m *OnpremScheduleAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateTimeZone(formats); err != nil {
@@ -336,7 +319,7 @@ func (m *OnpremScheduleAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var onpremScheduleAO0P0TypeTimeZonePropEnum []interface{}
+var onpremScheduleAO1P1TypeTimeZonePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -344,775 +327,775 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		onpremScheduleAO0P0TypeTimeZonePropEnum = append(onpremScheduleAO0P0TypeTimeZonePropEnum, v)
+		onpremScheduleAO1P1TypeTimeZonePropEnum = append(onpremScheduleAO1P1TypeTimeZonePropEnum, v)
 	}
 }
 
 const (
 
-	// OnpremScheduleAO0P0TimeZonePacificNiue captures enum value "Pacific/Niue"
-	OnpremScheduleAO0P0TimeZonePacificNiue string = "Pacific/Niue"
+	// OnpremScheduleAO1P1TimeZonePacificNiue captures enum value "Pacific/Niue"
+	OnpremScheduleAO1P1TimeZonePacificNiue string = "Pacific/Niue"
 
-	// OnpremScheduleAO0P0TimeZonePacificPagoPago captures enum value "Pacific/Pago_Pago"
-	OnpremScheduleAO0P0TimeZonePacificPagoPago string = "Pacific/Pago_Pago"
+	// OnpremScheduleAO1P1TimeZonePacificPagoPago captures enum value "Pacific/Pago_Pago"
+	OnpremScheduleAO1P1TimeZonePacificPagoPago string = "Pacific/Pago_Pago"
 
-	// OnpremScheduleAO0P0TimeZonePacificHonolulu captures enum value "Pacific/Honolulu"
-	OnpremScheduleAO0P0TimeZonePacificHonolulu string = "Pacific/Honolulu"
+	// OnpremScheduleAO1P1TimeZonePacificHonolulu captures enum value "Pacific/Honolulu"
+	OnpremScheduleAO1P1TimeZonePacificHonolulu string = "Pacific/Honolulu"
 
-	// OnpremScheduleAO0P0TimeZonePacificRarotonga captures enum value "Pacific/Rarotonga"
-	OnpremScheduleAO0P0TimeZonePacificRarotonga string = "Pacific/Rarotonga"
+	// OnpremScheduleAO1P1TimeZonePacificRarotonga captures enum value "Pacific/Rarotonga"
+	OnpremScheduleAO1P1TimeZonePacificRarotonga string = "Pacific/Rarotonga"
 
-	// OnpremScheduleAO0P0TimeZonePacificTahiti captures enum value "Pacific/Tahiti"
-	OnpremScheduleAO0P0TimeZonePacificTahiti string = "Pacific/Tahiti"
+	// OnpremScheduleAO1P1TimeZonePacificTahiti captures enum value "Pacific/Tahiti"
+	OnpremScheduleAO1P1TimeZonePacificTahiti string = "Pacific/Tahiti"
 
-	// OnpremScheduleAO0P0TimeZonePacificMarquesas captures enum value "Pacific/Marquesas"
-	OnpremScheduleAO0P0TimeZonePacificMarquesas string = "Pacific/Marquesas"
+	// OnpremScheduleAO1P1TimeZonePacificMarquesas captures enum value "Pacific/Marquesas"
+	OnpremScheduleAO1P1TimeZonePacificMarquesas string = "Pacific/Marquesas"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaAnchorage captures enum value "America/Anchorage"
-	OnpremScheduleAO0P0TimeZoneAmericaAnchorage string = "America/Anchorage"
+	// OnpremScheduleAO1P1TimeZoneAmericaAnchorage captures enum value "America/Anchorage"
+	OnpremScheduleAO1P1TimeZoneAmericaAnchorage string = "America/Anchorage"
 
-	// OnpremScheduleAO0P0TimeZonePacificGambier captures enum value "Pacific/Gambier"
-	OnpremScheduleAO0P0TimeZonePacificGambier string = "Pacific/Gambier"
+	// OnpremScheduleAO1P1TimeZonePacificGambier captures enum value "Pacific/Gambier"
+	OnpremScheduleAO1P1TimeZonePacificGambier string = "Pacific/Gambier"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaLosAngeles captures enum value "America/Los_Angeles"
-	OnpremScheduleAO0P0TimeZoneAmericaLosAngeles string = "America/Los_Angeles"
+	// OnpremScheduleAO1P1TimeZoneAmericaLosAngeles captures enum value "America/Los_Angeles"
+	OnpremScheduleAO1P1TimeZoneAmericaLosAngeles string = "America/Los_Angeles"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaTijuana captures enum value "America/Tijuana"
-	OnpremScheduleAO0P0TimeZoneAmericaTijuana string = "America/Tijuana"
+	// OnpremScheduleAO1P1TimeZoneAmericaTijuana captures enum value "America/Tijuana"
+	OnpremScheduleAO1P1TimeZoneAmericaTijuana string = "America/Tijuana"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaVancouver captures enum value "America/Vancouver"
-	OnpremScheduleAO0P0TimeZoneAmericaVancouver string = "America/Vancouver"
+	// OnpremScheduleAO1P1TimeZoneAmericaVancouver captures enum value "America/Vancouver"
+	OnpremScheduleAO1P1TimeZoneAmericaVancouver string = "America/Vancouver"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaWhitehorse captures enum value "America/Whitehorse"
-	OnpremScheduleAO0P0TimeZoneAmericaWhitehorse string = "America/Whitehorse"
+	// OnpremScheduleAO1P1TimeZoneAmericaWhitehorse captures enum value "America/Whitehorse"
+	OnpremScheduleAO1P1TimeZoneAmericaWhitehorse string = "America/Whitehorse"
 
-	// OnpremScheduleAO0P0TimeZonePacificPitcairn captures enum value "Pacific/Pitcairn"
-	OnpremScheduleAO0P0TimeZonePacificPitcairn string = "Pacific/Pitcairn"
+	// OnpremScheduleAO1P1TimeZonePacificPitcairn captures enum value "Pacific/Pitcairn"
+	OnpremScheduleAO1P1TimeZonePacificPitcairn string = "Pacific/Pitcairn"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaDawsonCreek captures enum value "America/Dawson_Creek"
-	OnpremScheduleAO0P0TimeZoneAmericaDawsonCreek string = "America/Dawson_Creek"
+	// OnpremScheduleAO1P1TimeZoneAmericaDawsonCreek captures enum value "America/Dawson_Creek"
+	OnpremScheduleAO1P1TimeZoneAmericaDawsonCreek string = "America/Dawson_Creek"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaDenver captures enum value "America/Denver"
-	OnpremScheduleAO0P0TimeZoneAmericaDenver string = "America/Denver"
+	// OnpremScheduleAO1P1TimeZoneAmericaDenver captures enum value "America/Denver"
+	OnpremScheduleAO1P1TimeZoneAmericaDenver string = "America/Denver"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaEdmonton captures enum value "America/Edmonton"
-	OnpremScheduleAO0P0TimeZoneAmericaEdmonton string = "America/Edmonton"
+	// OnpremScheduleAO1P1TimeZoneAmericaEdmonton captures enum value "America/Edmonton"
+	OnpremScheduleAO1P1TimeZoneAmericaEdmonton string = "America/Edmonton"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaHermosillo captures enum value "America/Hermosillo"
-	OnpremScheduleAO0P0TimeZoneAmericaHermosillo string = "America/Hermosillo"
+	// OnpremScheduleAO1P1TimeZoneAmericaHermosillo captures enum value "America/Hermosillo"
+	OnpremScheduleAO1P1TimeZoneAmericaHermosillo string = "America/Hermosillo"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMazatlan captures enum value "America/Mazatlan"
-	OnpremScheduleAO0P0TimeZoneAmericaMazatlan string = "America/Mazatlan"
+	// OnpremScheduleAO1P1TimeZoneAmericaMazatlan captures enum value "America/Mazatlan"
+	OnpremScheduleAO1P1TimeZoneAmericaMazatlan string = "America/Mazatlan"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPhoenix captures enum value "America/Phoenix"
-	OnpremScheduleAO0P0TimeZoneAmericaPhoenix string = "America/Phoenix"
+	// OnpremScheduleAO1P1TimeZoneAmericaPhoenix captures enum value "America/Phoenix"
+	OnpremScheduleAO1P1TimeZoneAmericaPhoenix string = "America/Phoenix"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaYellowknife captures enum value "America/Yellowknife"
-	OnpremScheduleAO0P0TimeZoneAmericaYellowknife string = "America/Yellowknife"
+	// OnpremScheduleAO1P1TimeZoneAmericaYellowknife captures enum value "America/Yellowknife"
+	OnpremScheduleAO1P1TimeZoneAmericaYellowknife string = "America/Yellowknife"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBelize captures enum value "America/Belize"
-	OnpremScheduleAO0P0TimeZoneAmericaBelize string = "America/Belize"
+	// OnpremScheduleAO1P1TimeZoneAmericaBelize captures enum value "America/Belize"
+	OnpremScheduleAO1P1TimeZoneAmericaBelize string = "America/Belize"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaChicago captures enum value "America/Chicago"
-	OnpremScheduleAO0P0TimeZoneAmericaChicago string = "America/Chicago"
+	// OnpremScheduleAO1P1TimeZoneAmericaChicago captures enum value "America/Chicago"
+	OnpremScheduleAO1P1TimeZoneAmericaChicago string = "America/Chicago"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCostaRica captures enum value "America/Costa_Rica"
-	OnpremScheduleAO0P0TimeZoneAmericaCostaRica string = "America/Costa_Rica"
+	// OnpremScheduleAO1P1TimeZoneAmericaCostaRica captures enum value "America/Costa_Rica"
+	OnpremScheduleAO1P1TimeZoneAmericaCostaRica string = "America/Costa_Rica"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaElSalvador captures enum value "America/El_Salvador"
-	OnpremScheduleAO0P0TimeZoneAmericaElSalvador string = "America/El_Salvador"
+	// OnpremScheduleAO1P1TimeZoneAmericaElSalvador captures enum value "America/El_Salvador"
+	OnpremScheduleAO1P1TimeZoneAmericaElSalvador string = "America/El_Salvador"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaGuatemala captures enum value "America/Guatemala"
-	OnpremScheduleAO0P0TimeZoneAmericaGuatemala string = "America/Guatemala"
+	// OnpremScheduleAO1P1TimeZoneAmericaGuatemala captures enum value "America/Guatemala"
+	OnpremScheduleAO1P1TimeZoneAmericaGuatemala string = "America/Guatemala"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaManagua captures enum value "America/Managua"
-	OnpremScheduleAO0P0TimeZoneAmericaManagua string = "America/Managua"
+	// OnpremScheduleAO1P1TimeZoneAmericaManagua captures enum value "America/Managua"
+	OnpremScheduleAO1P1TimeZoneAmericaManagua string = "America/Managua"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMexicoCity captures enum value "America/Mexico_City"
-	OnpremScheduleAO0P0TimeZoneAmericaMexicoCity string = "America/Mexico_City"
+	// OnpremScheduleAO1P1TimeZoneAmericaMexicoCity captures enum value "America/Mexico_City"
+	OnpremScheduleAO1P1TimeZoneAmericaMexicoCity string = "America/Mexico_City"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaRegina captures enum value "America/Regina"
-	OnpremScheduleAO0P0TimeZoneAmericaRegina string = "America/Regina"
+	// OnpremScheduleAO1P1TimeZoneAmericaRegina captures enum value "America/Regina"
+	OnpremScheduleAO1P1TimeZoneAmericaRegina string = "America/Regina"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaTegucigalpa captures enum value "America/Tegucigalpa"
-	OnpremScheduleAO0P0TimeZoneAmericaTegucigalpa string = "America/Tegucigalpa"
+	// OnpremScheduleAO1P1TimeZoneAmericaTegucigalpa captures enum value "America/Tegucigalpa"
+	OnpremScheduleAO1P1TimeZoneAmericaTegucigalpa string = "America/Tegucigalpa"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaWinnipeg captures enum value "America/Winnipeg"
-	OnpremScheduleAO0P0TimeZoneAmericaWinnipeg string = "America/Winnipeg"
+	// OnpremScheduleAO1P1TimeZoneAmericaWinnipeg captures enum value "America/Winnipeg"
+	OnpremScheduleAO1P1TimeZoneAmericaWinnipeg string = "America/Winnipeg"
 
-	// OnpremScheduleAO0P0TimeZonePacificGalapagos captures enum value "Pacific/Galapagos"
-	OnpremScheduleAO0P0TimeZonePacificGalapagos string = "Pacific/Galapagos"
+	// OnpremScheduleAO1P1TimeZonePacificGalapagos captures enum value "Pacific/Galapagos"
+	OnpremScheduleAO1P1TimeZonePacificGalapagos string = "Pacific/Galapagos"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBogota captures enum value "America/Bogota"
-	OnpremScheduleAO0P0TimeZoneAmericaBogota string = "America/Bogota"
+	// OnpremScheduleAO1P1TimeZoneAmericaBogota captures enum value "America/Bogota"
+	OnpremScheduleAO1P1TimeZoneAmericaBogota string = "America/Bogota"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCancun captures enum value "America/Cancun"
-	OnpremScheduleAO0P0TimeZoneAmericaCancun string = "America/Cancun"
+	// OnpremScheduleAO1P1TimeZoneAmericaCancun captures enum value "America/Cancun"
+	OnpremScheduleAO1P1TimeZoneAmericaCancun string = "America/Cancun"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCayman captures enum value "America/Cayman"
-	OnpremScheduleAO0P0TimeZoneAmericaCayman string = "America/Cayman"
+	// OnpremScheduleAO1P1TimeZoneAmericaCayman captures enum value "America/Cayman"
+	OnpremScheduleAO1P1TimeZoneAmericaCayman string = "America/Cayman"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaGuayaquil captures enum value "America/Guayaquil"
-	OnpremScheduleAO0P0TimeZoneAmericaGuayaquil string = "America/Guayaquil"
+	// OnpremScheduleAO1P1TimeZoneAmericaGuayaquil captures enum value "America/Guayaquil"
+	OnpremScheduleAO1P1TimeZoneAmericaGuayaquil string = "America/Guayaquil"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaHavana captures enum value "America/Havana"
-	OnpremScheduleAO0P0TimeZoneAmericaHavana string = "America/Havana"
+	// OnpremScheduleAO1P1TimeZoneAmericaHavana captures enum value "America/Havana"
+	OnpremScheduleAO1P1TimeZoneAmericaHavana string = "America/Havana"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaIqaluit captures enum value "America/Iqaluit"
-	OnpremScheduleAO0P0TimeZoneAmericaIqaluit string = "America/Iqaluit"
+	// OnpremScheduleAO1P1TimeZoneAmericaIqaluit captures enum value "America/Iqaluit"
+	OnpremScheduleAO1P1TimeZoneAmericaIqaluit string = "America/Iqaluit"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaJamaica captures enum value "America/Jamaica"
-	OnpremScheduleAO0P0TimeZoneAmericaJamaica string = "America/Jamaica"
+	// OnpremScheduleAO1P1TimeZoneAmericaJamaica captures enum value "America/Jamaica"
+	OnpremScheduleAO1P1TimeZoneAmericaJamaica string = "America/Jamaica"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaLima captures enum value "America/Lima"
-	OnpremScheduleAO0P0TimeZoneAmericaLima string = "America/Lima"
+	// OnpremScheduleAO1P1TimeZoneAmericaLima captures enum value "America/Lima"
+	OnpremScheduleAO1P1TimeZoneAmericaLima string = "America/Lima"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaNassau captures enum value "America/Nassau"
-	OnpremScheduleAO0P0TimeZoneAmericaNassau string = "America/Nassau"
+	// OnpremScheduleAO1P1TimeZoneAmericaNassau captures enum value "America/Nassau"
+	OnpremScheduleAO1P1TimeZoneAmericaNassau string = "America/Nassau"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaNewYork captures enum value "America/New_York"
-	OnpremScheduleAO0P0TimeZoneAmericaNewYork string = "America/New_York"
+	// OnpremScheduleAO1P1TimeZoneAmericaNewYork captures enum value "America/New_York"
+	OnpremScheduleAO1P1TimeZoneAmericaNewYork string = "America/New_York"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPanama captures enum value "America/Panama"
-	OnpremScheduleAO0P0TimeZoneAmericaPanama string = "America/Panama"
+	// OnpremScheduleAO1P1TimeZoneAmericaPanama captures enum value "America/Panama"
+	OnpremScheduleAO1P1TimeZoneAmericaPanama string = "America/Panama"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPortAuPrince captures enum value "America/Port-au-Prince"
-	OnpremScheduleAO0P0TimeZoneAmericaPortAuPrince string = "America/Port-au-Prince"
+	// OnpremScheduleAO1P1TimeZoneAmericaPortAuPrince captures enum value "America/Port-au-Prince"
+	OnpremScheduleAO1P1TimeZoneAmericaPortAuPrince string = "America/Port-au-Prince"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaRioBranco captures enum value "America/Rio_Branco"
-	OnpremScheduleAO0P0TimeZoneAmericaRioBranco string = "America/Rio_Branco"
+	// OnpremScheduleAO1P1TimeZoneAmericaRioBranco captures enum value "America/Rio_Branco"
+	OnpremScheduleAO1P1TimeZoneAmericaRioBranco string = "America/Rio_Branco"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaToronto captures enum value "America/Toronto"
-	OnpremScheduleAO0P0TimeZoneAmericaToronto string = "America/Toronto"
+	// OnpremScheduleAO1P1TimeZoneAmericaToronto captures enum value "America/Toronto"
+	OnpremScheduleAO1P1TimeZoneAmericaToronto string = "America/Toronto"
 
-	// OnpremScheduleAO0P0TimeZonePacificEaster captures enum value "Pacific/Easter"
-	OnpremScheduleAO0P0TimeZonePacificEaster string = "Pacific/Easter"
+	// OnpremScheduleAO1P1TimeZonePacificEaster captures enum value "Pacific/Easter"
+	OnpremScheduleAO1P1TimeZonePacificEaster string = "Pacific/Easter"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCaracas captures enum value "America/Caracas"
-	OnpremScheduleAO0P0TimeZoneAmericaCaracas string = "America/Caracas"
+	// OnpremScheduleAO1P1TimeZoneAmericaCaracas captures enum value "America/Caracas"
+	OnpremScheduleAO1P1TimeZoneAmericaCaracas string = "America/Caracas"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaAsuncion captures enum value "America/Asuncion"
-	OnpremScheduleAO0P0TimeZoneAmericaAsuncion string = "America/Asuncion"
+	// OnpremScheduleAO1P1TimeZoneAmericaAsuncion captures enum value "America/Asuncion"
+	OnpremScheduleAO1P1TimeZoneAmericaAsuncion string = "America/Asuncion"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBarbados captures enum value "America/Barbados"
-	OnpremScheduleAO0P0TimeZoneAmericaBarbados string = "America/Barbados"
+	// OnpremScheduleAO1P1TimeZoneAmericaBarbados captures enum value "America/Barbados"
+	OnpremScheduleAO1P1TimeZoneAmericaBarbados string = "America/Barbados"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBoaVista captures enum value "America/Boa_Vista"
-	OnpremScheduleAO0P0TimeZoneAmericaBoaVista string = "America/Boa_Vista"
+	// OnpremScheduleAO1P1TimeZoneAmericaBoaVista captures enum value "America/Boa_Vista"
+	OnpremScheduleAO1P1TimeZoneAmericaBoaVista string = "America/Boa_Vista"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCampoGrande captures enum value "America/Campo_Grande"
-	OnpremScheduleAO0P0TimeZoneAmericaCampoGrande string = "America/Campo_Grande"
+	// OnpremScheduleAO1P1TimeZoneAmericaCampoGrande captures enum value "America/Campo_Grande"
+	OnpremScheduleAO1P1TimeZoneAmericaCampoGrande string = "America/Campo_Grande"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCuiaba captures enum value "America/Cuiaba"
-	OnpremScheduleAO0P0TimeZoneAmericaCuiaba string = "America/Cuiaba"
+	// OnpremScheduleAO1P1TimeZoneAmericaCuiaba captures enum value "America/Cuiaba"
+	OnpremScheduleAO1P1TimeZoneAmericaCuiaba string = "America/Cuiaba"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCuracao captures enum value "America/Curacao"
-	OnpremScheduleAO0P0TimeZoneAmericaCuracao string = "America/Curacao"
+	// OnpremScheduleAO1P1TimeZoneAmericaCuracao captures enum value "America/Curacao"
+	OnpremScheduleAO1P1TimeZoneAmericaCuracao string = "America/Curacao"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaGrandTurk captures enum value "America/Grand_Turk"
-	OnpremScheduleAO0P0TimeZoneAmericaGrandTurk string = "America/Grand_Turk"
+	// OnpremScheduleAO1P1TimeZoneAmericaGrandTurk captures enum value "America/Grand_Turk"
+	OnpremScheduleAO1P1TimeZoneAmericaGrandTurk string = "America/Grand_Turk"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaGuyana captures enum value "America/Guyana"
-	OnpremScheduleAO0P0TimeZoneAmericaGuyana string = "America/Guyana"
+	// OnpremScheduleAO1P1TimeZoneAmericaGuyana captures enum value "America/Guyana"
+	OnpremScheduleAO1P1TimeZoneAmericaGuyana string = "America/Guyana"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaHalifax captures enum value "America/Halifax"
-	OnpremScheduleAO0P0TimeZoneAmericaHalifax string = "America/Halifax"
+	// OnpremScheduleAO1P1TimeZoneAmericaHalifax captures enum value "America/Halifax"
+	OnpremScheduleAO1P1TimeZoneAmericaHalifax string = "America/Halifax"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaLaPaz captures enum value "America/La_Paz"
-	OnpremScheduleAO0P0TimeZoneAmericaLaPaz string = "America/La_Paz"
+	// OnpremScheduleAO1P1TimeZoneAmericaLaPaz captures enum value "America/La_Paz"
+	OnpremScheduleAO1P1TimeZoneAmericaLaPaz string = "America/La_Paz"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaManaus captures enum value "America/Manaus"
-	OnpremScheduleAO0P0TimeZoneAmericaManaus string = "America/Manaus"
+	// OnpremScheduleAO1P1TimeZoneAmericaManaus captures enum value "America/Manaus"
+	OnpremScheduleAO1P1TimeZoneAmericaManaus string = "America/Manaus"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMartinique captures enum value "America/Martinique"
-	OnpremScheduleAO0P0TimeZoneAmericaMartinique string = "America/Martinique"
+	// OnpremScheduleAO1P1TimeZoneAmericaMartinique captures enum value "America/Martinique"
+	OnpremScheduleAO1P1TimeZoneAmericaMartinique string = "America/Martinique"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPortOfSpain captures enum value "America/Port_of_Spain"
-	OnpremScheduleAO0P0TimeZoneAmericaPortOfSpain string = "America/Port_of_Spain"
+	// OnpremScheduleAO1P1TimeZoneAmericaPortOfSpain captures enum value "America/Port_of_Spain"
+	OnpremScheduleAO1P1TimeZoneAmericaPortOfSpain string = "America/Port_of_Spain"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPortoVelho captures enum value "America/Porto_Velho"
-	OnpremScheduleAO0P0TimeZoneAmericaPortoVelho string = "America/Porto_Velho"
+	// OnpremScheduleAO1P1TimeZoneAmericaPortoVelho captures enum value "America/Porto_Velho"
+	OnpremScheduleAO1P1TimeZoneAmericaPortoVelho string = "America/Porto_Velho"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaPuertoRico captures enum value "America/Puerto_Rico"
-	OnpremScheduleAO0P0TimeZoneAmericaPuertoRico string = "America/Puerto_Rico"
+	// OnpremScheduleAO1P1TimeZoneAmericaPuertoRico captures enum value "America/Puerto_Rico"
+	OnpremScheduleAO1P1TimeZoneAmericaPuertoRico string = "America/Puerto_Rico"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaSantoDomingo captures enum value "America/Santo_Domingo"
-	OnpremScheduleAO0P0TimeZoneAmericaSantoDomingo string = "America/Santo_Domingo"
+	// OnpremScheduleAO1P1TimeZoneAmericaSantoDomingo captures enum value "America/Santo_Domingo"
+	OnpremScheduleAO1P1TimeZoneAmericaSantoDomingo string = "America/Santo_Domingo"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaThule captures enum value "America/Thule"
-	OnpremScheduleAO0P0TimeZoneAmericaThule string = "America/Thule"
+	// OnpremScheduleAO1P1TimeZoneAmericaThule captures enum value "America/Thule"
+	OnpremScheduleAO1P1TimeZoneAmericaThule string = "America/Thule"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticBermuda captures enum value "Atlantic/Bermuda"
-	OnpremScheduleAO0P0TimeZoneAtlanticBermuda string = "Atlantic/Bermuda"
+	// OnpremScheduleAO1P1TimeZoneAtlanticBermuda captures enum value "Atlantic/Bermuda"
+	OnpremScheduleAO1P1TimeZoneAtlanticBermuda string = "Atlantic/Bermuda"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaStJohns captures enum value "America/St_Johns"
-	OnpremScheduleAO0P0TimeZoneAmericaStJohns string = "America/St_Johns"
+	// OnpremScheduleAO1P1TimeZoneAmericaStJohns captures enum value "America/St_Johns"
+	OnpremScheduleAO1P1TimeZoneAmericaStJohns string = "America/St_Johns"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaAraguaina captures enum value "America/Araguaina"
-	OnpremScheduleAO0P0TimeZoneAmericaAraguaina string = "America/Araguaina"
+	// OnpremScheduleAO1P1TimeZoneAmericaAraguaina captures enum value "America/Araguaina"
+	OnpremScheduleAO1P1TimeZoneAmericaAraguaina string = "America/Araguaina"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaArgentinaBuenosAires captures enum value "America/Argentina/Buenos_Aires"
-	OnpremScheduleAO0P0TimeZoneAmericaArgentinaBuenosAires string = "America/Argentina/Buenos_Aires"
+	// OnpremScheduleAO1P1TimeZoneAmericaArgentinaBuenosAires captures enum value "America/Argentina/Buenos_Aires"
+	OnpremScheduleAO1P1TimeZoneAmericaArgentinaBuenosAires string = "America/Argentina/Buenos_Aires"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBahia captures enum value "America/Bahia"
-	OnpremScheduleAO0P0TimeZoneAmericaBahia string = "America/Bahia"
+	// OnpremScheduleAO1P1TimeZoneAmericaBahia captures enum value "America/Bahia"
+	OnpremScheduleAO1P1TimeZoneAmericaBahia string = "America/Bahia"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaBelem captures enum value "America/Belem"
-	OnpremScheduleAO0P0TimeZoneAmericaBelem string = "America/Belem"
+	// OnpremScheduleAO1P1TimeZoneAmericaBelem captures enum value "America/Belem"
+	OnpremScheduleAO1P1TimeZoneAmericaBelem string = "America/Belem"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaCayenne captures enum value "America/Cayenne"
-	OnpremScheduleAO0P0TimeZoneAmericaCayenne string = "America/Cayenne"
+	// OnpremScheduleAO1P1TimeZoneAmericaCayenne captures enum value "America/Cayenne"
+	OnpremScheduleAO1P1TimeZoneAmericaCayenne string = "America/Cayenne"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaFortaleza captures enum value "America/Fortaleza"
-	OnpremScheduleAO0P0TimeZoneAmericaFortaleza string = "America/Fortaleza"
+	// OnpremScheduleAO1P1TimeZoneAmericaFortaleza captures enum value "America/Fortaleza"
+	OnpremScheduleAO1P1TimeZoneAmericaFortaleza string = "America/Fortaleza"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaGodthab captures enum value "America/Godthab"
-	OnpremScheduleAO0P0TimeZoneAmericaGodthab string = "America/Godthab"
+	// OnpremScheduleAO1P1TimeZoneAmericaGodthab captures enum value "America/Godthab"
+	OnpremScheduleAO1P1TimeZoneAmericaGodthab string = "America/Godthab"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMaceio captures enum value "America/Maceio"
-	OnpremScheduleAO0P0TimeZoneAmericaMaceio string = "America/Maceio"
+	// OnpremScheduleAO1P1TimeZoneAmericaMaceio captures enum value "America/Maceio"
+	OnpremScheduleAO1P1TimeZoneAmericaMaceio string = "America/Maceio"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMiquelon captures enum value "America/Miquelon"
-	OnpremScheduleAO0P0TimeZoneAmericaMiquelon string = "America/Miquelon"
+	// OnpremScheduleAO1P1TimeZoneAmericaMiquelon captures enum value "America/Miquelon"
+	OnpremScheduleAO1P1TimeZoneAmericaMiquelon string = "America/Miquelon"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaMontevideo captures enum value "America/Montevideo"
-	OnpremScheduleAO0P0TimeZoneAmericaMontevideo string = "America/Montevideo"
+	// OnpremScheduleAO1P1TimeZoneAmericaMontevideo captures enum value "America/Montevideo"
+	OnpremScheduleAO1P1TimeZoneAmericaMontevideo string = "America/Montevideo"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaParamaribo captures enum value "America/Paramaribo"
-	OnpremScheduleAO0P0TimeZoneAmericaParamaribo string = "America/Paramaribo"
+	// OnpremScheduleAO1P1TimeZoneAmericaParamaribo captures enum value "America/Paramaribo"
+	OnpremScheduleAO1P1TimeZoneAmericaParamaribo string = "America/Paramaribo"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaRecife captures enum value "America/Recife"
-	OnpremScheduleAO0P0TimeZoneAmericaRecife string = "America/Recife"
+	// OnpremScheduleAO1P1TimeZoneAmericaRecife captures enum value "America/Recife"
+	OnpremScheduleAO1P1TimeZoneAmericaRecife string = "America/Recife"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaSantiago captures enum value "America/Santiago"
-	OnpremScheduleAO0P0TimeZoneAmericaSantiago string = "America/Santiago"
+	// OnpremScheduleAO1P1TimeZoneAmericaSantiago captures enum value "America/Santiago"
+	OnpremScheduleAO1P1TimeZoneAmericaSantiago string = "America/Santiago"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaSaoPaulo captures enum value "America/Sao_Paulo"
-	OnpremScheduleAO0P0TimeZoneAmericaSaoPaulo string = "America/Sao_Paulo"
+	// OnpremScheduleAO1P1TimeZoneAmericaSaoPaulo captures enum value "America/Sao_Paulo"
+	OnpremScheduleAO1P1TimeZoneAmericaSaoPaulo string = "America/Sao_Paulo"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaPalmer captures enum value "Antarctica/Palmer"
-	OnpremScheduleAO0P0TimeZoneAntarcticaPalmer string = "Antarctica/Palmer"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaPalmer captures enum value "Antarctica/Palmer"
+	OnpremScheduleAO1P1TimeZoneAntarcticaPalmer string = "Antarctica/Palmer"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaRothera captures enum value "Antarctica/Rothera"
-	OnpremScheduleAO0P0TimeZoneAntarcticaRothera string = "Antarctica/Rothera"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaRothera captures enum value "Antarctica/Rothera"
+	OnpremScheduleAO1P1TimeZoneAntarcticaRothera string = "Antarctica/Rothera"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticStanley captures enum value "Atlantic/Stanley"
-	OnpremScheduleAO0P0TimeZoneAtlanticStanley string = "Atlantic/Stanley"
+	// OnpremScheduleAO1P1TimeZoneAtlanticStanley captures enum value "Atlantic/Stanley"
+	OnpremScheduleAO1P1TimeZoneAtlanticStanley string = "Atlantic/Stanley"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaNoronha captures enum value "America/Noronha"
-	OnpremScheduleAO0P0TimeZoneAmericaNoronha string = "America/Noronha"
+	// OnpremScheduleAO1P1TimeZoneAmericaNoronha captures enum value "America/Noronha"
+	OnpremScheduleAO1P1TimeZoneAmericaNoronha string = "America/Noronha"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticSouthGeorgia captures enum value "Atlantic/South_Georgia"
-	OnpremScheduleAO0P0TimeZoneAtlanticSouthGeorgia string = "Atlantic/South_Georgia"
+	// OnpremScheduleAO1P1TimeZoneAtlanticSouthGeorgia captures enum value "Atlantic/South_Georgia"
+	OnpremScheduleAO1P1TimeZoneAtlanticSouthGeorgia string = "Atlantic/South_Georgia"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaScoresbysund captures enum value "America/Scoresbysund"
-	OnpremScheduleAO0P0TimeZoneAmericaScoresbysund string = "America/Scoresbysund"
+	// OnpremScheduleAO1P1TimeZoneAmericaScoresbysund captures enum value "America/Scoresbysund"
+	OnpremScheduleAO1P1TimeZoneAmericaScoresbysund string = "America/Scoresbysund"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticAzores captures enum value "Atlantic/Azores"
-	OnpremScheduleAO0P0TimeZoneAtlanticAzores string = "Atlantic/Azores"
+	// OnpremScheduleAO1P1TimeZoneAtlanticAzores captures enum value "Atlantic/Azores"
+	OnpremScheduleAO1P1TimeZoneAtlanticAzores string = "Atlantic/Azores"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticCapeVerde captures enum value "Atlantic/Cape_Verde"
-	OnpremScheduleAO0P0TimeZoneAtlanticCapeVerde string = "Atlantic/Cape_Verde"
+	// OnpremScheduleAO1P1TimeZoneAtlanticCapeVerde captures enum value "Atlantic/Cape_Verde"
+	OnpremScheduleAO1P1TimeZoneAtlanticCapeVerde string = "Atlantic/Cape_Verde"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaAbidjan captures enum value "Africa/Abidjan"
-	OnpremScheduleAO0P0TimeZoneAfricaAbidjan string = "Africa/Abidjan"
+	// OnpremScheduleAO1P1TimeZoneAfricaAbidjan captures enum value "Africa/Abidjan"
+	OnpremScheduleAO1P1TimeZoneAfricaAbidjan string = "Africa/Abidjan"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaAccra captures enum value "Africa/Accra"
-	OnpremScheduleAO0P0TimeZoneAfricaAccra string = "Africa/Accra"
+	// OnpremScheduleAO1P1TimeZoneAfricaAccra captures enum value "Africa/Accra"
+	OnpremScheduleAO1P1TimeZoneAfricaAccra string = "Africa/Accra"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaBissau captures enum value "Africa/Bissau"
-	OnpremScheduleAO0P0TimeZoneAfricaBissau string = "Africa/Bissau"
+	// OnpremScheduleAO1P1TimeZoneAfricaBissau captures enum value "Africa/Bissau"
+	OnpremScheduleAO1P1TimeZoneAfricaBissau string = "Africa/Bissau"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaCasablanca captures enum value "Africa/Casablanca"
-	OnpremScheduleAO0P0TimeZoneAfricaCasablanca string = "Africa/Casablanca"
+	// OnpremScheduleAO1P1TimeZoneAfricaCasablanca captures enum value "Africa/Casablanca"
+	OnpremScheduleAO1P1TimeZoneAfricaCasablanca string = "Africa/Casablanca"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaElAaiun captures enum value "Africa/El_Aaiun"
-	OnpremScheduleAO0P0TimeZoneAfricaElAaiun string = "Africa/El_Aaiun"
+	// OnpremScheduleAO1P1TimeZoneAfricaElAaiun captures enum value "Africa/El_Aaiun"
+	OnpremScheduleAO1P1TimeZoneAfricaElAaiun string = "Africa/El_Aaiun"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaMonrovia captures enum value "Africa/Monrovia"
-	OnpremScheduleAO0P0TimeZoneAfricaMonrovia string = "Africa/Monrovia"
+	// OnpremScheduleAO1P1TimeZoneAfricaMonrovia captures enum value "Africa/Monrovia"
+	OnpremScheduleAO1P1TimeZoneAfricaMonrovia string = "Africa/Monrovia"
 
-	// OnpremScheduleAO0P0TimeZoneAmericaDanmarkshavn captures enum value "America/Danmarkshavn"
-	OnpremScheduleAO0P0TimeZoneAmericaDanmarkshavn string = "America/Danmarkshavn"
+	// OnpremScheduleAO1P1TimeZoneAmericaDanmarkshavn captures enum value "America/Danmarkshavn"
+	OnpremScheduleAO1P1TimeZoneAmericaDanmarkshavn string = "America/Danmarkshavn"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticCanary captures enum value "Atlantic/Canary"
-	OnpremScheduleAO0P0TimeZoneAtlanticCanary string = "Atlantic/Canary"
+	// OnpremScheduleAO1P1TimeZoneAtlanticCanary captures enum value "Atlantic/Canary"
+	OnpremScheduleAO1P1TimeZoneAtlanticCanary string = "Atlantic/Canary"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticFaroe captures enum value "Atlantic/Faroe"
-	OnpremScheduleAO0P0TimeZoneAtlanticFaroe string = "Atlantic/Faroe"
+	// OnpremScheduleAO1P1TimeZoneAtlanticFaroe captures enum value "Atlantic/Faroe"
+	OnpremScheduleAO1P1TimeZoneAtlanticFaroe string = "Atlantic/Faroe"
 
-	// OnpremScheduleAO0P0TimeZoneAtlanticReykjavik captures enum value "Atlantic/Reykjavik"
-	OnpremScheduleAO0P0TimeZoneAtlanticReykjavik string = "Atlantic/Reykjavik"
+	// OnpremScheduleAO1P1TimeZoneAtlanticReykjavik captures enum value "Atlantic/Reykjavik"
+	OnpremScheduleAO1P1TimeZoneAtlanticReykjavik string = "Atlantic/Reykjavik"
 
-	// OnpremScheduleAO0P0TimeZoneEtcGMT captures enum value "Etc/GMT"
-	OnpremScheduleAO0P0TimeZoneEtcGMT string = "Etc/GMT"
+	// OnpremScheduleAO1P1TimeZoneEtcGMT captures enum value "Etc/GMT"
+	OnpremScheduleAO1P1TimeZoneEtcGMT string = "Etc/GMT"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeDublin captures enum value "Europe/Dublin"
-	OnpremScheduleAO0P0TimeZoneEuropeDublin string = "Europe/Dublin"
+	// OnpremScheduleAO1P1TimeZoneEuropeDublin captures enum value "Europe/Dublin"
+	OnpremScheduleAO1P1TimeZoneEuropeDublin string = "Europe/Dublin"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeLisbon captures enum value "Europe/Lisbon"
-	OnpremScheduleAO0P0TimeZoneEuropeLisbon string = "Europe/Lisbon"
+	// OnpremScheduleAO1P1TimeZoneEuropeLisbon captures enum value "Europe/Lisbon"
+	OnpremScheduleAO1P1TimeZoneEuropeLisbon string = "Europe/Lisbon"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeLondon captures enum value "Europe/London"
-	OnpremScheduleAO0P0TimeZoneEuropeLondon string = "Europe/London"
+	// OnpremScheduleAO1P1TimeZoneEuropeLondon captures enum value "Europe/London"
+	OnpremScheduleAO1P1TimeZoneEuropeLondon string = "Europe/London"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaAlgiers captures enum value "Africa/Algiers"
-	OnpremScheduleAO0P0TimeZoneAfricaAlgiers string = "Africa/Algiers"
+	// OnpremScheduleAO1P1TimeZoneAfricaAlgiers captures enum value "Africa/Algiers"
+	OnpremScheduleAO1P1TimeZoneAfricaAlgiers string = "Africa/Algiers"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaCeuta captures enum value "Africa/Ceuta"
-	OnpremScheduleAO0P0TimeZoneAfricaCeuta string = "Africa/Ceuta"
+	// OnpremScheduleAO1P1TimeZoneAfricaCeuta captures enum value "Africa/Ceuta"
+	OnpremScheduleAO1P1TimeZoneAfricaCeuta string = "Africa/Ceuta"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaLagos captures enum value "Africa/Lagos"
-	OnpremScheduleAO0P0TimeZoneAfricaLagos string = "Africa/Lagos"
+	// OnpremScheduleAO1P1TimeZoneAfricaLagos captures enum value "Africa/Lagos"
+	OnpremScheduleAO1P1TimeZoneAfricaLagos string = "Africa/Lagos"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaNdjamena captures enum value "Africa/Ndjamena"
-	OnpremScheduleAO0P0TimeZoneAfricaNdjamena string = "Africa/Ndjamena"
+	// OnpremScheduleAO1P1TimeZoneAfricaNdjamena captures enum value "Africa/Ndjamena"
+	OnpremScheduleAO1P1TimeZoneAfricaNdjamena string = "Africa/Ndjamena"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaTunis captures enum value "Africa/Tunis"
-	OnpremScheduleAO0P0TimeZoneAfricaTunis string = "Africa/Tunis"
+	// OnpremScheduleAO1P1TimeZoneAfricaTunis captures enum value "Africa/Tunis"
+	OnpremScheduleAO1P1TimeZoneAfricaTunis string = "Africa/Tunis"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaWindhoek captures enum value "Africa/Windhoek"
-	OnpremScheduleAO0P0TimeZoneAfricaWindhoek string = "Africa/Windhoek"
+	// OnpremScheduleAO1P1TimeZoneAfricaWindhoek captures enum value "Africa/Windhoek"
+	OnpremScheduleAO1P1TimeZoneAfricaWindhoek string = "Africa/Windhoek"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeAmsterdam captures enum value "Europe/Amsterdam"
-	OnpremScheduleAO0P0TimeZoneEuropeAmsterdam string = "Europe/Amsterdam"
+	// OnpremScheduleAO1P1TimeZoneEuropeAmsterdam captures enum value "Europe/Amsterdam"
+	OnpremScheduleAO1P1TimeZoneEuropeAmsterdam string = "Europe/Amsterdam"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeAndorra captures enum value "Europe/Andorra"
-	OnpremScheduleAO0P0TimeZoneEuropeAndorra string = "Europe/Andorra"
+	// OnpremScheduleAO1P1TimeZoneEuropeAndorra captures enum value "Europe/Andorra"
+	OnpremScheduleAO1P1TimeZoneEuropeAndorra string = "Europe/Andorra"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeBelgrade captures enum value "Europe/Belgrade"
-	OnpremScheduleAO0P0TimeZoneEuropeBelgrade string = "Europe/Belgrade"
+	// OnpremScheduleAO1P1TimeZoneEuropeBelgrade captures enum value "Europe/Belgrade"
+	OnpremScheduleAO1P1TimeZoneEuropeBelgrade string = "Europe/Belgrade"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeBerlin captures enum value "Europe/Berlin"
-	OnpremScheduleAO0P0TimeZoneEuropeBerlin string = "Europe/Berlin"
+	// OnpremScheduleAO1P1TimeZoneEuropeBerlin captures enum value "Europe/Berlin"
+	OnpremScheduleAO1P1TimeZoneEuropeBerlin string = "Europe/Berlin"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeBrussels captures enum value "Europe/Brussels"
-	OnpremScheduleAO0P0TimeZoneEuropeBrussels string = "Europe/Brussels"
+	// OnpremScheduleAO1P1TimeZoneEuropeBrussels captures enum value "Europe/Brussels"
+	OnpremScheduleAO1P1TimeZoneEuropeBrussels string = "Europe/Brussels"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeBudapest captures enum value "Europe/Budapest"
-	OnpremScheduleAO0P0TimeZoneEuropeBudapest string = "Europe/Budapest"
+	// OnpremScheduleAO1P1TimeZoneEuropeBudapest captures enum value "Europe/Budapest"
+	OnpremScheduleAO1P1TimeZoneEuropeBudapest string = "Europe/Budapest"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeCopenhagen captures enum value "Europe/Copenhagen"
-	OnpremScheduleAO0P0TimeZoneEuropeCopenhagen string = "Europe/Copenhagen"
+	// OnpremScheduleAO1P1TimeZoneEuropeCopenhagen captures enum value "Europe/Copenhagen"
+	OnpremScheduleAO1P1TimeZoneEuropeCopenhagen string = "Europe/Copenhagen"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeGibraltar captures enum value "Europe/Gibraltar"
-	OnpremScheduleAO0P0TimeZoneEuropeGibraltar string = "Europe/Gibraltar"
+	// OnpremScheduleAO1P1TimeZoneEuropeGibraltar captures enum value "Europe/Gibraltar"
+	OnpremScheduleAO1P1TimeZoneEuropeGibraltar string = "Europe/Gibraltar"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeLuxembourg captures enum value "Europe/Luxembourg"
-	OnpremScheduleAO0P0TimeZoneEuropeLuxembourg string = "Europe/Luxembourg"
+	// OnpremScheduleAO1P1TimeZoneEuropeLuxembourg captures enum value "Europe/Luxembourg"
+	OnpremScheduleAO1P1TimeZoneEuropeLuxembourg string = "Europe/Luxembourg"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeMadrid captures enum value "Europe/Madrid"
-	OnpremScheduleAO0P0TimeZoneEuropeMadrid string = "Europe/Madrid"
+	// OnpremScheduleAO1P1TimeZoneEuropeMadrid captures enum value "Europe/Madrid"
+	OnpremScheduleAO1P1TimeZoneEuropeMadrid string = "Europe/Madrid"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeMalta captures enum value "Europe/Malta"
-	OnpremScheduleAO0P0TimeZoneEuropeMalta string = "Europe/Malta"
+	// OnpremScheduleAO1P1TimeZoneEuropeMalta captures enum value "Europe/Malta"
+	OnpremScheduleAO1P1TimeZoneEuropeMalta string = "Europe/Malta"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeMonaco captures enum value "Europe/Monaco"
-	OnpremScheduleAO0P0TimeZoneEuropeMonaco string = "Europe/Monaco"
+	// OnpremScheduleAO1P1TimeZoneEuropeMonaco captures enum value "Europe/Monaco"
+	OnpremScheduleAO1P1TimeZoneEuropeMonaco string = "Europe/Monaco"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeOslo captures enum value "Europe/Oslo"
-	OnpremScheduleAO0P0TimeZoneEuropeOslo string = "Europe/Oslo"
+	// OnpremScheduleAO1P1TimeZoneEuropeOslo captures enum value "Europe/Oslo"
+	OnpremScheduleAO1P1TimeZoneEuropeOslo string = "Europe/Oslo"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeParis captures enum value "Europe/Paris"
-	OnpremScheduleAO0P0TimeZoneEuropeParis string = "Europe/Paris"
+	// OnpremScheduleAO1P1TimeZoneEuropeParis captures enum value "Europe/Paris"
+	OnpremScheduleAO1P1TimeZoneEuropeParis string = "Europe/Paris"
 
-	// OnpremScheduleAO0P0TimeZoneEuropePrague captures enum value "Europe/Prague"
-	OnpremScheduleAO0P0TimeZoneEuropePrague string = "Europe/Prague"
+	// OnpremScheduleAO1P1TimeZoneEuropePrague captures enum value "Europe/Prague"
+	OnpremScheduleAO1P1TimeZoneEuropePrague string = "Europe/Prague"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeRome captures enum value "Europe/Rome"
-	OnpremScheduleAO0P0TimeZoneEuropeRome string = "Europe/Rome"
+	// OnpremScheduleAO1P1TimeZoneEuropeRome captures enum value "Europe/Rome"
+	OnpremScheduleAO1P1TimeZoneEuropeRome string = "Europe/Rome"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeStockholm captures enum value "Europe/Stockholm"
-	OnpremScheduleAO0P0TimeZoneEuropeStockholm string = "Europe/Stockholm"
+	// OnpremScheduleAO1P1TimeZoneEuropeStockholm captures enum value "Europe/Stockholm"
+	OnpremScheduleAO1P1TimeZoneEuropeStockholm string = "Europe/Stockholm"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeTirane captures enum value "Europe/Tirane"
-	OnpremScheduleAO0P0TimeZoneEuropeTirane string = "Europe/Tirane"
+	// OnpremScheduleAO1P1TimeZoneEuropeTirane captures enum value "Europe/Tirane"
+	OnpremScheduleAO1P1TimeZoneEuropeTirane string = "Europe/Tirane"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeVienna captures enum value "Europe/Vienna"
-	OnpremScheduleAO0P0TimeZoneEuropeVienna string = "Europe/Vienna"
+	// OnpremScheduleAO1P1TimeZoneEuropeVienna captures enum value "Europe/Vienna"
+	OnpremScheduleAO1P1TimeZoneEuropeVienna string = "Europe/Vienna"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeWarsaw captures enum value "Europe/Warsaw"
-	OnpremScheduleAO0P0TimeZoneEuropeWarsaw string = "Europe/Warsaw"
+	// OnpremScheduleAO1P1TimeZoneEuropeWarsaw captures enum value "Europe/Warsaw"
+	OnpremScheduleAO1P1TimeZoneEuropeWarsaw string = "Europe/Warsaw"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeZurich captures enum value "Europe/Zurich"
-	OnpremScheduleAO0P0TimeZoneEuropeZurich string = "Europe/Zurich"
+	// OnpremScheduleAO1P1TimeZoneEuropeZurich captures enum value "Europe/Zurich"
+	OnpremScheduleAO1P1TimeZoneEuropeZurich string = "Europe/Zurich"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaCairo captures enum value "Africa/Cairo"
-	OnpremScheduleAO0P0TimeZoneAfricaCairo string = "Africa/Cairo"
+	// OnpremScheduleAO1P1TimeZoneAfricaCairo captures enum value "Africa/Cairo"
+	OnpremScheduleAO1P1TimeZoneAfricaCairo string = "Africa/Cairo"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaJohannesburg captures enum value "Africa/Johannesburg"
-	OnpremScheduleAO0P0TimeZoneAfricaJohannesburg string = "Africa/Johannesburg"
+	// OnpremScheduleAO1P1TimeZoneAfricaJohannesburg captures enum value "Africa/Johannesburg"
+	OnpremScheduleAO1P1TimeZoneAfricaJohannesburg string = "Africa/Johannesburg"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaMaputo captures enum value "Africa/Maputo"
-	OnpremScheduleAO0P0TimeZoneAfricaMaputo string = "Africa/Maputo"
+	// OnpremScheduleAO1P1TimeZoneAfricaMaputo captures enum value "Africa/Maputo"
+	OnpremScheduleAO1P1TimeZoneAfricaMaputo string = "Africa/Maputo"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaTripoli captures enum value "Africa/Tripoli"
-	OnpremScheduleAO0P0TimeZoneAfricaTripoli string = "Africa/Tripoli"
+	// OnpremScheduleAO1P1TimeZoneAfricaTripoli captures enum value "Africa/Tripoli"
+	OnpremScheduleAO1P1TimeZoneAfricaTripoli string = "Africa/Tripoli"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaAmman captures enum value "Asia/Amman"
-	OnpremScheduleAO0P0TimeZoneAsiaAmman string = "Asia/Amman"
+	// OnpremScheduleAO1P1TimeZoneAsiaAmman captures enum value "Asia/Amman"
+	OnpremScheduleAO1P1TimeZoneAsiaAmman string = "Asia/Amman"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBeirut captures enum value "Asia/Beirut"
-	OnpremScheduleAO0P0TimeZoneAsiaBeirut string = "Asia/Beirut"
+	// OnpremScheduleAO1P1TimeZoneAsiaBeirut captures enum value "Asia/Beirut"
+	OnpremScheduleAO1P1TimeZoneAsiaBeirut string = "Asia/Beirut"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaDamascus captures enum value "Asia/Damascus"
-	OnpremScheduleAO0P0TimeZoneAsiaDamascus string = "Asia/Damascus"
+	// OnpremScheduleAO1P1TimeZoneAsiaDamascus captures enum value "Asia/Damascus"
+	OnpremScheduleAO1P1TimeZoneAsiaDamascus string = "Asia/Damascus"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaGaza captures enum value "Asia/Gaza"
-	OnpremScheduleAO0P0TimeZoneAsiaGaza string = "Asia/Gaza"
+	// OnpremScheduleAO1P1TimeZoneAsiaGaza captures enum value "Asia/Gaza"
+	OnpremScheduleAO1P1TimeZoneAsiaGaza string = "Asia/Gaza"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaJerusalem captures enum value "Asia/Jerusalem"
-	OnpremScheduleAO0P0TimeZoneAsiaJerusalem string = "Asia/Jerusalem"
+	// OnpremScheduleAO1P1TimeZoneAsiaJerusalem captures enum value "Asia/Jerusalem"
+	OnpremScheduleAO1P1TimeZoneAsiaJerusalem string = "Asia/Jerusalem"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaNicosia captures enum value "Asia/Nicosia"
-	OnpremScheduleAO0P0TimeZoneAsiaNicosia string = "Asia/Nicosia"
+	// OnpremScheduleAO1P1TimeZoneAsiaNicosia captures enum value "Asia/Nicosia"
+	OnpremScheduleAO1P1TimeZoneAsiaNicosia string = "Asia/Nicosia"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeAthens captures enum value "Europe/Athens"
-	OnpremScheduleAO0P0TimeZoneEuropeAthens string = "Europe/Athens"
+	// OnpremScheduleAO1P1TimeZoneEuropeAthens captures enum value "Europe/Athens"
+	OnpremScheduleAO1P1TimeZoneEuropeAthens string = "Europe/Athens"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeBucharest captures enum value "Europe/Bucharest"
-	OnpremScheduleAO0P0TimeZoneEuropeBucharest string = "Europe/Bucharest"
+	// OnpremScheduleAO1P1TimeZoneEuropeBucharest captures enum value "Europe/Bucharest"
+	OnpremScheduleAO1P1TimeZoneEuropeBucharest string = "Europe/Bucharest"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeChisinau captures enum value "Europe/Chisinau"
-	OnpremScheduleAO0P0TimeZoneEuropeChisinau string = "Europe/Chisinau"
+	// OnpremScheduleAO1P1TimeZoneEuropeChisinau captures enum value "Europe/Chisinau"
+	OnpremScheduleAO1P1TimeZoneEuropeChisinau string = "Europe/Chisinau"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeHelsinki captures enum value "Europe/Helsinki"
-	OnpremScheduleAO0P0TimeZoneEuropeHelsinki string = "Europe/Helsinki"
+	// OnpremScheduleAO1P1TimeZoneEuropeHelsinki captures enum value "Europe/Helsinki"
+	OnpremScheduleAO1P1TimeZoneEuropeHelsinki string = "Europe/Helsinki"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeIstanbul captures enum value "Europe/Istanbul"
-	OnpremScheduleAO0P0TimeZoneEuropeIstanbul string = "Europe/Istanbul"
+	// OnpremScheduleAO1P1TimeZoneEuropeIstanbul captures enum value "Europe/Istanbul"
+	OnpremScheduleAO1P1TimeZoneEuropeIstanbul string = "Europe/Istanbul"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeKaliningrad captures enum value "Europe/Kaliningrad"
-	OnpremScheduleAO0P0TimeZoneEuropeKaliningrad string = "Europe/Kaliningrad"
+	// OnpremScheduleAO1P1TimeZoneEuropeKaliningrad captures enum value "Europe/Kaliningrad"
+	OnpremScheduleAO1P1TimeZoneEuropeKaliningrad string = "Europe/Kaliningrad"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeKiev captures enum value "Europe/Kiev"
-	OnpremScheduleAO0P0TimeZoneEuropeKiev string = "Europe/Kiev"
+	// OnpremScheduleAO1P1TimeZoneEuropeKiev captures enum value "Europe/Kiev"
+	OnpremScheduleAO1P1TimeZoneEuropeKiev string = "Europe/Kiev"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeRiga captures enum value "Europe/Riga"
-	OnpremScheduleAO0P0TimeZoneEuropeRiga string = "Europe/Riga"
+	// OnpremScheduleAO1P1TimeZoneEuropeRiga captures enum value "Europe/Riga"
+	OnpremScheduleAO1P1TimeZoneEuropeRiga string = "Europe/Riga"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeSofia captures enum value "Europe/Sofia"
-	OnpremScheduleAO0P0TimeZoneEuropeSofia string = "Europe/Sofia"
+	// OnpremScheduleAO1P1TimeZoneEuropeSofia captures enum value "Europe/Sofia"
+	OnpremScheduleAO1P1TimeZoneEuropeSofia string = "Europe/Sofia"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeTallinn captures enum value "Europe/Tallinn"
-	OnpremScheduleAO0P0TimeZoneEuropeTallinn string = "Europe/Tallinn"
+	// OnpremScheduleAO1P1TimeZoneEuropeTallinn captures enum value "Europe/Tallinn"
+	OnpremScheduleAO1P1TimeZoneEuropeTallinn string = "Europe/Tallinn"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeVilnius captures enum value "Europe/Vilnius"
-	OnpremScheduleAO0P0TimeZoneEuropeVilnius string = "Europe/Vilnius"
+	// OnpremScheduleAO1P1TimeZoneEuropeVilnius captures enum value "Europe/Vilnius"
+	OnpremScheduleAO1P1TimeZoneEuropeVilnius string = "Europe/Vilnius"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaKhartoum captures enum value "Africa/Khartoum"
-	OnpremScheduleAO0P0TimeZoneAfricaKhartoum string = "Africa/Khartoum"
+	// OnpremScheduleAO1P1TimeZoneAfricaKhartoum captures enum value "Africa/Khartoum"
+	OnpremScheduleAO1P1TimeZoneAfricaKhartoum string = "Africa/Khartoum"
 
-	// OnpremScheduleAO0P0TimeZoneAfricaNairobi captures enum value "Africa/Nairobi"
-	OnpremScheduleAO0P0TimeZoneAfricaNairobi string = "Africa/Nairobi"
+	// OnpremScheduleAO1P1TimeZoneAfricaNairobi captures enum value "Africa/Nairobi"
+	OnpremScheduleAO1P1TimeZoneAfricaNairobi string = "Africa/Nairobi"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaSyowa captures enum value "Antarctica/Syowa"
-	OnpremScheduleAO0P0TimeZoneAntarcticaSyowa string = "Antarctica/Syowa"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaSyowa captures enum value "Antarctica/Syowa"
+	OnpremScheduleAO1P1TimeZoneAntarcticaSyowa string = "Antarctica/Syowa"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBaghdad captures enum value "Asia/Baghdad"
-	OnpremScheduleAO0P0TimeZoneAsiaBaghdad string = "Asia/Baghdad"
+	// OnpremScheduleAO1P1TimeZoneAsiaBaghdad captures enum value "Asia/Baghdad"
+	OnpremScheduleAO1P1TimeZoneAsiaBaghdad string = "Asia/Baghdad"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaQatar captures enum value "Asia/Qatar"
-	OnpremScheduleAO0P0TimeZoneAsiaQatar string = "Asia/Qatar"
+	// OnpremScheduleAO1P1TimeZoneAsiaQatar captures enum value "Asia/Qatar"
+	OnpremScheduleAO1P1TimeZoneAsiaQatar string = "Asia/Qatar"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaRiyadh captures enum value "Asia/Riyadh"
-	OnpremScheduleAO0P0TimeZoneAsiaRiyadh string = "Asia/Riyadh"
+	// OnpremScheduleAO1P1TimeZoneAsiaRiyadh captures enum value "Asia/Riyadh"
+	OnpremScheduleAO1P1TimeZoneAsiaRiyadh string = "Asia/Riyadh"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeMinsk captures enum value "Europe/Minsk"
-	OnpremScheduleAO0P0TimeZoneEuropeMinsk string = "Europe/Minsk"
+	// OnpremScheduleAO1P1TimeZoneEuropeMinsk captures enum value "Europe/Minsk"
+	OnpremScheduleAO1P1TimeZoneEuropeMinsk string = "Europe/Minsk"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeMoscow captures enum value "Europe/Moscow"
-	OnpremScheduleAO0P0TimeZoneEuropeMoscow string = "Europe/Moscow"
+	// OnpremScheduleAO1P1TimeZoneEuropeMoscow captures enum value "Europe/Moscow"
+	OnpremScheduleAO1P1TimeZoneEuropeMoscow string = "Europe/Moscow"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaTehran captures enum value "Asia/Tehran"
-	OnpremScheduleAO0P0TimeZoneAsiaTehran string = "Asia/Tehran"
+	// OnpremScheduleAO1P1TimeZoneAsiaTehran captures enum value "Asia/Tehran"
+	OnpremScheduleAO1P1TimeZoneAsiaTehran string = "Asia/Tehran"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBaku captures enum value "Asia/Baku"
-	OnpremScheduleAO0P0TimeZoneAsiaBaku string = "Asia/Baku"
+	// OnpremScheduleAO1P1TimeZoneAsiaBaku captures enum value "Asia/Baku"
+	OnpremScheduleAO1P1TimeZoneAsiaBaku string = "Asia/Baku"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaDubai captures enum value "Asia/Dubai"
-	OnpremScheduleAO0P0TimeZoneAsiaDubai string = "Asia/Dubai"
+	// OnpremScheduleAO1P1TimeZoneAsiaDubai captures enum value "Asia/Dubai"
+	OnpremScheduleAO1P1TimeZoneAsiaDubai string = "Asia/Dubai"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaTbilisi captures enum value "Asia/Tbilisi"
-	OnpremScheduleAO0P0TimeZoneAsiaTbilisi string = "Asia/Tbilisi"
+	// OnpremScheduleAO1P1TimeZoneAsiaTbilisi captures enum value "Asia/Tbilisi"
+	OnpremScheduleAO1P1TimeZoneAsiaTbilisi string = "Asia/Tbilisi"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaYerevan captures enum value "Asia/Yerevan"
-	OnpremScheduleAO0P0TimeZoneAsiaYerevan string = "Asia/Yerevan"
+	// OnpremScheduleAO1P1TimeZoneAsiaYerevan captures enum value "Asia/Yerevan"
+	OnpremScheduleAO1P1TimeZoneAsiaYerevan string = "Asia/Yerevan"
 
-	// OnpremScheduleAO0P0TimeZoneEuropeSamara captures enum value "Europe/Samara"
-	OnpremScheduleAO0P0TimeZoneEuropeSamara string = "Europe/Samara"
+	// OnpremScheduleAO1P1TimeZoneEuropeSamara captures enum value "Europe/Samara"
+	OnpremScheduleAO1P1TimeZoneEuropeSamara string = "Europe/Samara"
 
-	// OnpremScheduleAO0P0TimeZoneIndianMahe captures enum value "Indian/Mahe"
-	OnpremScheduleAO0P0TimeZoneIndianMahe string = "Indian/Mahe"
+	// OnpremScheduleAO1P1TimeZoneIndianMahe captures enum value "Indian/Mahe"
+	OnpremScheduleAO1P1TimeZoneIndianMahe string = "Indian/Mahe"
 
-	// OnpremScheduleAO0P0TimeZoneIndianMauritius captures enum value "Indian/Mauritius"
-	OnpremScheduleAO0P0TimeZoneIndianMauritius string = "Indian/Mauritius"
+	// OnpremScheduleAO1P1TimeZoneIndianMauritius captures enum value "Indian/Mauritius"
+	OnpremScheduleAO1P1TimeZoneIndianMauritius string = "Indian/Mauritius"
 
-	// OnpremScheduleAO0P0TimeZoneIndianReunion captures enum value "Indian/Reunion"
-	OnpremScheduleAO0P0TimeZoneIndianReunion string = "Indian/Reunion"
+	// OnpremScheduleAO1P1TimeZoneIndianReunion captures enum value "Indian/Reunion"
+	OnpremScheduleAO1P1TimeZoneIndianReunion string = "Indian/Reunion"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKabul captures enum value "Asia/Kabul"
-	OnpremScheduleAO0P0TimeZoneAsiaKabul string = "Asia/Kabul"
+	// OnpremScheduleAO1P1TimeZoneAsiaKabul captures enum value "Asia/Kabul"
+	OnpremScheduleAO1P1TimeZoneAsiaKabul string = "Asia/Kabul"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaMawson captures enum value "Antarctica/Mawson"
-	OnpremScheduleAO0P0TimeZoneAntarcticaMawson string = "Antarctica/Mawson"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaMawson captures enum value "Antarctica/Mawson"
+	OnpremScheduleAO1P1TimeZoneAntarcticaMawson string = "Antarctica/Mawson"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaAqtau captures enum value "Asia/Aqtau"
-	OnpremScheduleAO0P0TimeZoneAsiaAqtau string = "Asia/Aqtau"
+	// OnpremScheduleAO1P1TimeZoneAsiaAqtau captures enum value "Asia/Aqtau"
+	OnpremScheduleAO1P1TimeZoneAsiaAqtau string = "Asia/Aqtau"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaAqtobe captures enum value "Asia/Aqtobe"
-	OnpremScheduleAO0P0TimeZoneAsiaAqtobe string = "Asia/Aqtobe"
+	// OnpremScheduleAO1P1TimeZoneAsiaAqtobe captures enum value "Asia/Aqtobe"
+	OnpremScheduleAO1P1TimeZoneAsiaAqtobe string = "Asia/Aqtobe"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaAshgabat captures enum value "Asia/Ashgabat"
-	OnpremScheduleAO0P0TimeZoneAsiaAshgabat string = "Asia/Ashgabat"
+	// OnpremScheduleAO1P1TimeZoneAsiaAshgabat captures enum value "Asia/Ashgabat"
+	OnpremScheduleAO1P1TimeZoneAsiaAshgabat string = "Asia/Ashgabat"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaDushanbe captures enum value "Asia/Dushanbe"
-	OnpremScheduleAO0P0TimeZoneAsiaDushanbe string = "Asia/Dushanbe"
+	// OnpremScheduleAO1P1TimeZoneAsiaDushanbe captures enum value "Asia/Dushanbe"
+	OnpremScheduleAO1P1TimeZoneAsiaDushanbe string = "Asia/Dushanbe"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKarachi captures enum value "Asia/Karachi"
-	OnpremScheduleAO0P0TimeZoneAsiaKarachi string = "Asia/Karachi"
+	// OnpremScheduleAO1P1TimeZoneAsiaKarachi captures enum value "Asia/Karachi"
+	OnpremScheduleAO1P1TimeZoneAsiaKarachi string = "Asia/Karachi"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaTashkent captures enum value "Asia/Tashkent"
-	OnpremScheduleAO0P0TimeZoneAsiaTashkent string = "Asia/Tashkent"
+	// OnpremScheduleAO1P1TimeZoneAsiaTashkent captures enum value "Asia/Tashkent"
+	OnpremScheduleAO1P1TimeZoneAsiaTashkent string = "Asia/Tashkent"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaYekaterinburg captures enum value "Asia/Yekaterinburg"
-	OnpremScheduleAO0P0TimeZoneAsiaYekaterinburg string = "Asia/Yekaterinburg"
+	// OnpremScheduleAO1P1TimeZoneAsiaYekaterinburg captures enum value "Asia/Yekaterinburg"
+	OnpremScheduleAO1P1TimeZoneAsiaYekaterinburg string = "Asia/Yekaterinburg"
 
-	// OnpremScheduleAO0P0TimeZoneIndianKerguelen captures enum value "Indian/Kerguelen"
-	OnpremScheduleAO0P0TimeZoneIndianKerguelen string = "Indian/Kerguelen"
+	// OnpremScheduleAO1P1TimeZoneIndianKerguelen captures enum value "Indian/Kerguelen"
+	OnpremScheduleAO1P1TimeZoneIndianKerguelen string = "Indian/Kerguelen"
 
-	// OnpremScheduleAO0P0TimeZoneIndianMaldives captures enum value "Indian/Maldives"
-	OnpremScheduleAO0P0TimeZoneIndianMaldives string = "Indian/Maldives"
+	// OnpremScheduleAO1P1TimeZoneIndianMaldives captures enum value "Indian/Maldives"
+	OnpremScheduleAO1P1TimeZoneIndianMaldives string = "Indian/Maldives"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaCalcutta captures enum value "Asia/Calcutta"
-	OnpremScheduleAO0P0TimeZoneAsiaCalcutta string = "Asia/Calcutta"
+	// OnpremScheduleAO1P1TimeZoneAsiaCalcutta captures enum value "Asia/Calcutta"
+	OnpremScheduleAO1P1TimeZoneAsiaCalcutta string = "Asia/Calcutta"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKolkata captures enum value "Asia/Kolkata"
-	OnpremScheduleAO0P0TimeZoneAsiaKolkata string = "Asia/Kolkata"
+	// OnpremScheduleAO1P1TimeZoneAsiaKolkata captures enum value "Asia/Kolkata"
+	OnpremScheduleAO1P1TimeZoneAsiaKolkata string = "Asia/Kolkata"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaColombo captures enum value "Asia/Colombo"
-	OnpremScheduleAO0P0TimeZoneAsiaColombo string = "Asia/Colombo"
+	// OnpremScheduleAO1P1TimeZoneAsiaColombo captures enum value "Asia/Colombo"
+	OnpremScheduleAO1P1TimeZoneAsiaColombo string = "Asia/Colombo"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKatmandu captures enum value "Asia/Katmandu"
-	OnpremScheduleAO0P0TimeZoneAsiaKatmandu string = "Asia/Katmandu"
+	// OnpremScheduleAO1P1TimeZoneAsiaKatmandu captures enum value "Asia/Katmandu"
+	OnpremScheduleAO1P1TimeZoneAsiaKatmandu string = "Asia/Katmandu"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaVostok captures enum value "Antarctica/Vostok"
-	OnpremScheduleAO0P0TimeZoneAntarcticaVostok string = "Antarctica/Vostok"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaVostok captures enum value "Antarctica/Vostok"
+	OnpremScheduleAO1P1TimeZoneAntarcticaVostok string = "Antarctica/Vostok"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaAlmaty captures enum value "Asia/Almaty"
-	OnpremScheduleAO0P0TimeZoneAsiaAlmaty string = "Asia/Almaty"
+	// OnpremScheduleAO1P1TimeZoneAsiaAlmaty captures enum value "Asia/Almaty"
+	OnpremScheduleAO1P1TimeZoneAsiaAlmaty string = "Asia/Almaty"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBishkek captures enum value "Asia/Bishkek"
-	OnpremScheduleAO0P0TimeZoneAsiaBishkek string = "Asia/Bishkek"
+	// OnpremScheduleAO1P1TimeZoneAsiaBishkek captures enum value "Asia/Bishkek"
+	OnpremScheduleAO1P1TimeZoneAsiaBishkek string = "Asia/Bishkek"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaDhaka captures enum value "Asia/Dhaka"
-	OnpremScheduleAO0P0TimeZoneAsiaDhaka string = "Asia/Dhaka"
+	// OnpremScheduleAO1P1TimeZoneAsiaDhaka captures enum value "Asia/Dhaka"
+	OnpremScheduleAO1P1TimeZoneAsiaDhaka string = "Asia/Dhaka"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaOmsk captures enum value "Asia/Omsk"
-	OnpremScheduleAO0P0TimeZoneAsiaOmsk string = "Asia/Omsk"
+	// OnpremScheduleAO1P1TimeZoneAsiaOmsk captures enum value "Asia/Omsk"
+	OnpremScheduleAO1P1TimeZoneAsiaOmsk string = "Asia/Omsk"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaThimphu captures enum value "Asia/Thimphu"
-	OnpremScheduleAO0P0TimeZoneAsiaThimphu string = "Asia/Thimphu"
+	// OnpremScheduleAO1P1TimeZoneAsiaThimphu captures enum value "Asia/Thimphu"
+	OnpremScheduleAO1P1TimeZoneAsiaThimphu string = "Asia/Thimphu"
 
-	// OnpremScheduleAO0P0TimeZoneIndianChagos captures enum value "Indian/Chagos"
-	OnpremScheduleAO0P0TimeZoneIndianChagos string = "Indian/Chagos"
+	// OnpremScheduleAO1P1TimeZoneIndianChagos captures enum value "Indian/Chagos"
+	OnpremScheduleAO1P1TimeZoneIndianChagos string = "Indian/Chagos"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaRangoon captures enum value "Asia/Rangoon"
-	OnpremScheduleAO0P0TimeZoneAsiaRangoon string = "Asia/Rangoon"
+	// OnpremScheduleAO1P1TimeZoneAsiaRangoon captures enum value "Asia/Rangoon"
+	OnpremScheduleAO1P1TimeZoneAsiaRangoon string = "Asia/Rangoon"
 
-	// OnpremScheduleAO0P0TimeZoneIndianCocos captures enum value "Indian/Cocos"
-	OnpremScheduleAO0P0TimeZoneIndianCocos string = "Indian/Cocos"
+	// OnpremScheduleAO1P1TimeZoneIndianCocos captures enum value "Indian/Cocos"
+	OnpremScheduleAO1P1TimeZoneIndianCocos string = "Indian/Cocos"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaDavis captures enum value "Antarctica/Davis"
-	OnpremScheduleAO0P0TimeZoneAntarcticaDavis string = "Antarctica/Davis"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaDavis captures enum value "Antarctica/Davis"
+	OnpremScheduleAO1P1TimeZoneAntarcticaDavis string = "Antarctica/Davis"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBangkok captures enum value "Asia/Bangkok"
-	OnpremScheduleAO0P0TimeZoneAsiaBangkok string = "Asia/Bangkok"
+	// OnpremScheduleAO1P1TimeZoneAsiaBangkok captures enum value "Asia/Bangkok"
+	OnpremScheduleAO1P1TimeZoneAsiaBangkok string = "Asia/Bangkok"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaHovd captures enum value "Asia/Hovd"
-	OnpremScheduleAO0P0TimeZoneAsiaHovd string = "Asia/Hovd"
+	// OnpremScheduleAO1P1TimeZoneAsiaHovd captures enum value "Asia/Hovd"
+	OnpremScheduleAO1P1TimeZoneAsiaHovd string = "Asia/Hovd"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaJakarta captures enum value "Asia/Jakarta"
-	OnpremScheduleAO0P0TimeZoneAsiaJakarta string = "Asia/Jakarta"
+	// OnpremScheduleAO1P1TimeZoneAsiaJakarta captures enum value "Asia/Jakarta"
+	OnpremScheduleAO1P1TimeZoneAsiaJakarta string = "Asia/Jakarta"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKrasnoyarsk captures enum value "Asia/Krasnoyarsk"
-	OnpremScheduleAO0P0TimeZoneAsiaKrasnoyarsk string = "Asia/Krasnoyarsk"
+	// OnpremScheduleAO1P1TimeZoneAsiaKrasnoyarsk captures enum value "Asia/Krasnoyarsk"
+	OnpremScheduleAO1P1TimeZoneAsiaKrasnoyarsk string = "Asia/Krasnoyarsk"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaSaigon captures enum value "Asia/Saigon"
-	OnpremScheduleAO0P0TimeZoneAsiaSaigon string = "Asia/Saigon"
+	// OnpremScheduleAO1P1TimeZoneAsiaSaigon captures enum value "Asia/Saigon"
+	OnpremScheduleAO1P1TimeZoneAsiaSaigon string = "Asia/Saigon"
 
-	// OnpremScheduleAO0P0TimeZoneIndianChristmas captures enum value "Indian/Christmas"
-	OnpremScheduleAO0P0TimeZoneIndianChristmas string = "Indian/Christmas"
+	// OnpremScheduleAO1P1TimeZoneIndianChristmas captures enum value "Indian/Christmas"
+	OnpremScheduleAO1P1TimeZoneIndianChristmas string = "Indian/Christmas"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaCasey captures enum value "Antarctica/Casey"
-	OnpremScheduleAO0P0TimeZoneAntarcticaCasey string = "Antarctica/Casey"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaCasey captures enum value "Antarctica/Casey"
+	OnpremScheduleAO1P1TimeZoneAntarcticaCasey string = "Antarctica/Casey"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaBrunei captures enum value "Asia/Brunei"
-	OnpremScheduleAO0P0TimeZoneAsiaBrunei string = "Asia/Brunei"
+	// OnpremScheduleAO1P1TimeZoneAsiaBrunei captures enum value "Asia/Brunei"
+	OnpremScheduleAO1P1TimeZoneAsiaBrunei string = "Asia/Brunei"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaChoibalsan captures enum value "Asia/Choibalsan"
-	OnpremScheduleAO0P0TimeZoneAsiaChoibalsan string = "Asia/Choibalsan"
+	// OnpremScheduleAO1P1TimeZoneAsiaChoibalsan captures enum value "Asia/Choibalsan"
+	OnpremScheduleAO1P1TimeZoneAsiaChoibalsan string = "Asia/Choibalsan"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaHongKong captures enum value "Asia/Hong_Kong"
-	OnpremScheduleAO0P0TimeZoneAsiaHongKong string = "Asia/Hong_Kong"
+	// OnpremScheduleAO1P1TimeZoneAsiaHongKong captures enum value "Asia/Hong_Kong"
+	OnpremScheduleAO1P1TimeZoneAsiaHongKong string = "Asia/Hong_Kong"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaIrkutsk captures enum value "Asia/Irkutsk"
-	OnpremScheduleAO0P0TimeZoneAsiaIrkutsk string = "Asia/Irkutsk"
+	// OnpremScheduleAO1P1TimeZoneAsiaIrkutsk captures enum value "Asia/Irkutsk"
+	OnpremScheduleAO1P1TimeZoneAsiaIrkutsk string = "Asia/Irkutsk"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKualaLumpur captures enum value "Asia/Kuala_Lumpur"
-	OnpremScheduleAO0P0TimeZoneAsiaKualaLumpur string = "Asia/Kuala_Lumpur"
+	// OnpremScheduleAO1P1TimeZoneAsiaKualaLumpur captures enum value "Asia/Kuala_Lumpur"
+	OnpremScheduleAO1P1TimeZoneAsiaKualaLumpur string = "Asia/Kuala_Lumpur"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaMacau captures enum value "Asia/Macau"
-	OnpremScheduleAO0P0TimeZoneAsiaMacau string = "Asia/Macau"
+	// OnpremScheduleAO1P1TimeZoneAsiaMacau captures enum value "Asia/Macau"
+	OnpremScheduleAO1P1TimeZoneAsiaMacau string = "Asia/Macau"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaMakassar captures enum value "Asia/Makassar"
-	OnpremScheduleAO0P0TimeZoneAsiaMakassar string = "Asia/Makassar"
+	// OnpremScheduleAO1P1TimeZoneAsiaMakassar captures enum value "Asia/Makassar"
+	OnpremScheduleAO1P1TimeZoneAsiaMakassar string = "Asia/Makassar"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaManila captures enum value "Asia/Manila"
-	OnpremScheduleAO0P0TimeZoneAsiaManila string = "Asia/Manila"
+	// OnpremScheduleAO1P1TimeZoneAsiaManila captures enum value "Asia/Manila"
+	OnpremScheduleAO1P1TimeZoneAsiaManila string = "Asia/Manila"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaShanghai captures enum value "Asia/Shanghai"
-	OnpremScheduleAO0P0TimeZoneAsiaShanghai string = "Asia/Shanghai"
+	// OnpremScheduleAO1P1TimeZoneAsiaShanghai captures enum value "Asia/Shanghai"
+	OnpremScheduleAO1P1TimeZoneAsiaShanghai string = "Asia/Shanghai"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaSingapore captures enum value "Asia/Singapore"
-	OnpremScheduleAO0P0TimeZoneAsiaSingapore string = "Asia/Singapore"
+	// OnpremScheduleAO1P1TimeZoneAsiaSingapore captures enum value "Asia/Singapore"
+	OnpremScheduleAO1P1TimeZoneAsiaSingapore string = "Asia/Singapore"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaTaipei captures enum value "Asia/Taipei"
-	OnpremScheduleAO0P0TimeZoneAsiaTaipei string = "Asia/Taipei"
+	// OnpremScheduleAO1P1TimeZoneAsiaTaipei captures enum value "Asia/Taipei"
+	OnpremScheduleAO1P1TimeZoneAsiaTaipei string = "Asia/Taipei"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaUlaanbaatar captures enum value "Asia/Ulaanbaatar"
-	OnpremScheduleAO0P0TimeZoneAsiaUlaanbaatar string = "Asia/Ulaanbaatar"
+	// OnpremScheduleAO1P1TimeZoneAsiaUlaanbaatar captures enum value "Asia/Ulaanbaatar"
+	OnpremScheduleAO1P1TimeZoneAsiaUlaanbaatar string = "Asia/Ulaanbaatar"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaPerth captures enum value "Australia/Perth"
-	OnpremScheduleAO0P0TimeZoneAustraliaPerth string = "Australia/Perth"
+	// OnpremScheduleAO1P1TimeZoneAustraliaPerth captures enum value "Australia/Perth"
+	OnpremScheduleAO1P1TimeZoneAustraliaPerth string = "Australia/Perth"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaPyongyang captures enum value "Asia/Pyongyang"
-	OnpremScheduleAO0P0TimeZoneAsiaPyongyang string = "Asia/Pyongyang"
+	// OnpremScheduleAO1P1TimeZoneAsiaPyongyang captures enum value "Asia/Pyongyang"
+	OnpremScheduleAO1P1TimeZoneAsiaPyongyang string = "Asia/Pyongyang"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaDili captures enum value "Asia/Dili"
-	OnpremScheduleAO0P0TimeZoneAsiaDili string = "Asia/Dili"
+	// OnpremScheduleAO1P1TimeZoneAsiaDili captures enum value "Asia/Dili"
+	OnpremScheduleAO1P1TimeZoneAsiaDili string = "Asia/Dili"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaJayapura captures enum value "Asia/Jayapura"
-	OnpremScheduleAO0P0TimeZoneAsiaJayapura string = "Asia/Jayapura"
+	// OnpremScheduleAO1P1TimeZoneAsiaJayapura captures enum value "Asia/Jayapura"
+	OnpremScheduleAO1P1TimeZoneAsiaJayapura string = "Asia/Jayapura"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaSeoul captures enum value "Asia/Seoul"
-	OnpremScheduleAO0P0TimeZoneAsiaSeoul string = "Asia/Seoul"
+	// OnpremScheduleAO1P1TimeZoneAsiaSeoul captures enum value "Asia/Seoul"
+	OnpremScheduleAO1P1TimeZoneAsiaSeoul string = "Asia/Seoul"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaTokyo captures enum value "Asia/Tokyo"
-	OnpremScheduleAO0P0TimeZoneAsiaTokyo string = "Asia/Tokyo"
+	// OnpremScheduleAO1P1TimeZoneAsiaTokyo captures enum value "Asia/Tokyo"
+	OnpremScheduleAO1P1TimeZoneAsiaTokyo string = "Asia/Tokyo"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaYakutsk captures enum value "Asia/Yakutsk"
-	OnpremScheduleAO0P0TimeZoneAsiaYakutsk string = "Asia/Yakutsk"
+	// OnpremScheduleAO1P1TimeZoneAsiaYakutsk captures enum value "Asia/Yakutsk"
+	OnpremScheduleAO1P1TimeZoneAsiaYakutsk string = "Asia/Yakutsk"
 
-	// OnpremScheduleAO0P0TimeZonePacificPalau captures enum value "Pacific/Palau"
-	OnpremScheduleAO0P0TimeZonePacificPalau string = "Pacific/Palau"
+	// OnpremScheduleAO1P1TimeZonePacificPalau captures enum value "Pacific/Palau"
+	OnpremScheduleAO1P1TimeZonePacificPalau string = "Pacific/Palau"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaAdelaide captures enum value "Australia/Adelaide"
-	OnpremScheduleAO0P0TimeZoneAustraliaAdelaide string = "Australia/Adelaide"
+	// OnpremScheduleAO1P1TimeZoneAustraliaAdelaide captures enum value "Australia/Adelaide"
+	OnpremScheduleAO1P1TimeZoneAustraliaAdelaide string = "Australia/Adelaide"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaDarwin captures enum value "Australia/Darwin"
-	OnpremScheduleAO0P0TimeZoneAustraliaDarwin string = "Australia/Darwin"
+	// OnpremScheduleAO1P1TimeZoneAustraliaDarwin captures enum value "Australia/Darwin"
+	OnpremScheduleAO1P1TimeZoneAustraliaDarwin string = "Australia/Darwin"
 
-	// OnpremScheduleAO0P0TimeZoneAntarcticaDumontDUrville captures enum value "Antarctica/DumontDUrville"
-	OnpremScheduleAO0P0TimeZoneAntarcticaDumontDUrville string = "Antarctica/DumontDUrville"
+	// OnpremScheduleAO1P1TimeZoneAntarcticaDumontDUrville captures enum value "Antarctica/DumontDUrville"
+	OnpremScheduleAO1P1TimeZoneAntarcticaDumontDUrville string = "Antarctica/DumontDUrville"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaMagadan captures enum value "Asia/Magadan"
-	OnpremScheduleAO0P0TimeZoneAsiaMagadan string = "Asia/Magadan"
+	// OnpremScheduleAO1P1TimeZoneAsiaMagadan captures enum value "Asia/Magadan"
+	OnpremScheduleAO1P1TimeZoneAsiaMagadan string = "Asia/Magadan"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaVladivostok captures enum value "Asia/Vladivostok"
-	OnpremScheduleAO0P0TimeZoneAsiaVladivostok string = "Asia/Vladivostok"
+	// OnpremScheduleAO1P1TimeZoneAsiaVladivostok captures enum value "Asia/Vladivostok"
+	OnpremScheduleAO1P1TimeZoneAsiaVladivostok string = "Asia/Vladivostok"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaBrisbane captures enum value "Australia/Brisbane"
-	OnpremScheduleAO0P0TimeZoneAustraliaBrisbane string = "Australia/Brisbane"
+	// OnpremScheduleAO1P1TimeZoneAustraliaBrisbane captures enum value "Australia/Brisbane"
+	OnpremScheduleAO1P1TimeZoneAustraliaBrisbane string = "Australia/Brisbane"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaHobart captures enum value "Australia/Hobart"
-	OnpremScheduleAO0P0TimeZoneAustraliaHobart string = "Australia/Hobart"
+	// OnpremScheduleAO1P1TimeZoneAustraliaHobart captures enum value "Australia/Hobart"
+	OnpremScheduleAO1P1TimeZoneAustraliaHobart string = "Australia/Hobart"
 
-	// OnpremScheduleAO0P0TimeZoneAustraliaSydney captures enum value "Australia/Sydney"
-	OnpremScheduleAO0P0TimeZoneAustraliaSydney string = "Australia/Sydney"
+	// OnpremScheduleAO1P1TimeZoneAustraliaSydney captures enum value "Australia/Sydney"
+	OnpremScheduleAO1P1TimeZoneAustraliaSydney string = "Australia/Sydney"
 
-	// OnpremScheduleAO0P0TimeZonePacificChuuk captures enum value "Pacific/Chuuk"
-	OnpremScheduleAO0P0TimeZonePacificChuuk string = "Pacific/Chuuk"
+	// OnpremScheduleAO1P1TimeZonePacificChuuk captures enum value "Pacific/Chuuk"
+	OnpremScheduleAO1P1TimeZonePacificChuuk string = "Pacific/Chuuk"
 
-	// OnpremScheduleAO0P0TimeZonePacificGuam captures enum value "Pacific/Guam"
-	OnpremScheduleAO0P0TimeZonePacificGuam string = "Pacific/Guam"
+	// OnpremScheduleAO1P1TimeZonePacificGuam captures enum value "Pacific/Guam"
+	OnpremScheduleAO1P1TimeZonePacificGuam string = "Pacific/Guam"
 
-	// OnpremScheduleAO0P0TimeZonePacificPortMoresby captures enum value "Pacific/Port_Moresby"
-	OnpremScheduleAO0P0TimeZonePacificPortMoresby string = "Pacific/Port_Moresby"
+	// OnpremScheduleAO1P1TimeZonePacificPortMoresby captures enum value "Pacific/Port_Moresby"
+	OnpremScheduleAO1P1TimeZonePacificPortMoresby string = "Pacific/Port_Moresby"
 
-	// OnpremScheduleAO0P0TimeZonePacificEfate captures enum value "Pacific/Efate"
-	OnpremScheduleAO0P0TimeZonePacificEfate string = "Pacific/Efate"
+	// OnpremScheduleAO1P1TimeZonePacificEfate captures enum value "Pacific/Efate"
+	OnpremScheduleAO1P1TimeZonePacificEfate string = "Pacific/Efate"
 
-	// OnpremScheduleAO0P0TimeZonePacificGuadalcanal captures enum value "Pacific/Guadalcanal"
-	OnpremScheduleAO0P0TimeZonePacificGuadalcanal string = "Pacific/Guadalcanal"
+	// OnpremScheduleAO1P1TimeZonePacificGuadalcanal captures enum value "Pacific/Guadalcanal"
+	OnpremScheduleAO1P1TimeZonePacificGuadalcanal string = "Pacific/Guadalcanal"
 
-	// OnpremScheduleAO0P0TimeZonePacificKosrae captures enum value "Pacific/Kosrae"
-	OnpremScheduleAO0P0TimeZonePacificKosrae string = "Pacific/Kosrae"
+	// OnpremScheduleAO1P1TimeZonePacificKosrae captures enum value "Pacific/Kosrae"
+	OnpremScheduleAO1P1TimeZonePacificKosrae string = "Pacific/Kosrae"
 
-	// OnpremScheduleAO0P0TimeZonePacificNorfolk captures enum value "Pacific/Norfolk"
-	OnpremScheduleAO0P0TimeZonePacificNorfolk string = "Pacific/Norfolk"
+	// OnpremScheduleAO1P1TimeZonePacificNorfolk captures enum value "Pacific/Norfolk"
+	OnpremScheduleAO1P1TimeZonePacificNorfolk string = "Pacific/Norfolk"
 
-	// OnpremScheduleAO0P0TimeZonePacificNoumea captures enum value "Pacific/Noumea"
-	OnpremScheduleAO0P0TimeZonePacificNoumea string = "Pacific/Noumea"
+	// OnpremScheduleAO1P1TimeZonePacificNoumea captures enum value "Pacific/Noumea"
+	OnpremScheduleAO1P1TimeZonePacificNoumea string = "Pacific/Noumea"
 
-	// OnpremScheduleAO0P0TimeZonePacificPohnpei captures enum value "Pacific/Pohnpei"
-	OnpremScheduleAO0P0TimeZonePacificPohnpei string = "Pacific/Pohnpei"
+	// OnpremScheduleAO1P1TimeZonePacificPohnpei captures enum value "Pacific/Pohnpei"
+	OnpremScheduleAO1P1TimeZonePacificPohnpei string = "Pacific/Pohnpei"
 
-	// OnpremScheduleAO0P0TimeZoneAsiaKamchatka captures enum value "Asia/Kamchatka"
-	OnpremScheduleAO0P0TimeZoneAsiaKamchatka string = "Asia/Kamchatka"
+	// OnpremScheduleAO1P1TimeZoneAsiaKamchatka captures enum value "Asia/Kamchatka"
+	OnpremScheduleAO1P1TimeZoneAsiaKamchatka string = "Asia/Kamchatka"
 
-	// OnpremScheduleAO0P0TimeZonePacificAuckland captures enum value "Pacific/Auckland"
-	OnpremScheduleAO0P0TimeZonePacificAuckland string = "Pacific/Auckland"
+	// OnpremScheduleAO1P1TimeZonePacificAuckland captures enum value "Pacific/Auckland"
+	OnpremScheduleAO1P1TimeZonePacificAuckland string = "Pacific/Auckland"
 
-	// OnpremScheduleAO0P0TimeZonePacificFiji captures enum value "Pacific/Fiji"
-	OnpremScheduleAO0P0TimeZonePacificFiji string = "Pacific/Fiji"
+	// OnpremScheduleAO1P1TimeZonePacificFiji captures enum value "Pacific/Fiji"
+	OnpremScheduleAO1P1TimeZonePacificFiji string = "Pacific/Fiji"
 
-	// OnpremScheduleAO0P0TimeZonePacificFunafuti captures enum value "Pacific/Funafuti"
-	OnpremScheduleAO0P0TimeZonePacificFunafuti string = "Pacific/Funafuti"
+	// OnpremScheduleAO1P1TimeZonePacificFunafuti captures enum value "Pacific/Funafuti"
+	OnpremScheduleAO1P1TimeZonePacificFunafuti string = "Pacific/Funafuti"
 
-	// OnpremScheduleAO0P0TimeZonePacificKwajalein captures enum value "Pacific/Kwajalein"
-	OnpremScheduleAO0P0TimeZonePacificKwajalein string = "Pacific/Kwajalein"
+	// OnpremScheduleAO1P1TimeZonePacificKwajalein captures enum value "Pacific/Kwajalein"
+	OnpremScheduleAO1P1TimeZonePacificKwajalein string = "Pacific/Kwajalein"
 
-	// OnpremScheduleAO0P0TimeZonePacificMajuro captures enum value "Pacific/Majuro"
-	OnpremScheduleAO0P0TimeZonePacificMajuro string = "Pacific/Majuro"
+	// OnpremScheduleAO1P1TimeZonePacificMajuro captures enum value "Pacific/Majuro"
+	OnpremScheduleAO1P1TimeZonePacificMajuro string = "Pacific/Majuro"
 
-	// OnpremScheduleAO0P0TimeZonePacificNauru captures enum value "Pacific/Nauru"
-	OnpremScheduleAO0P0TimeZonePacificNauru string = "Pacific/Nauru"
+	// OnpremScheduleAO1P1TimeZonePacificNauru captures enum value "Pacific/Nauru"
+	OnpremScheduleAO1P1TimeZonePacificNauru string = "Pacific/Nauru"
 
-	// OnpremScheduleAO0P0TimeZonePacificTarawa captures enum value "Pacific/Tarawa"
-	OnpremScheduleAO0P0TimeZonePacificTarawa string = "Pacific/Tarawa"
+	// OnpremScheduleAO1P1TimeZonePacificTarawa captures enum value "Pacific/Tarawa"
+	OnpremScheduleAO1P1TimeZonePacificTarawa string = "Pacific/Tarawa"
 
-	// OnpremScheduleAO0P0TimeZonePacificWake captures enum value "Pacific/Wake"
-	OnpremScheduleAO0P0TimeZonePacificWake string = "Pacific/Wake"
+	// OnpremScheduleAO1P1TimeZonePacificWake captures enum value "Pacific/Wake"
+	OnpremScheduleAO1P1TimeZonePacificWake string = "Pacific/Wake"
 
-	// OnpremScheduleAO0P0TimeZonePacificWallis captures enum value "Pacific/Wallis"
-	OnpremScheduleAO0P0TimeZonePacificWallis string = "Pacific/Wallis"
+	// OnpremScheduleAO1P1TimeZonePacificWallis captures enum value "Pacific/Wallis"
+	OnpremScheduleAO1P1TimeZonePacificWallis string = "Pacific/Wallis"
 
-	// OnpremScheduleAO0P0TimeZonePacificApia captures enum value "Pacific/Apia"
-	OnpremScheduleAO0P0TimeZonePacificApia string = "Pacific/Apia"
+	// OnpremScheduleAO1P1TimeZonePacificApia captures enum value "Pacific/Apia"
+	OnpremScheduleAO1P1TimeZonePacificApia string = "Pacific/Apia"
 
-	// OnpremScheduleAO0P0TimeZonePacificEnderbury captures enum value "Pacific/Enderbury"
-	OnpremScheduleAO0P0TimeZonePacificEnderbury string = "Pacific/Enderbury"
+	// OnpremScheduleAO1P1TimeZonePacificEnderbury captures enum value "Pacific/Enderbury"
+	OnpremScheduleAO1P1TimeZonePacificEnderbury string = "Pacific/Enderbury"
 
-	// OnpremScheduleAO0P0TimeZonePacificFakaofo captures enum value "Pacific/Fakaofo"
-	OnpremScheduleAO0P0TimeZonePacificFakaofo string = "Pacific/Fakaofo"
+	// OnpremScheduleAO1P1TimeZonePacificFakaofo captures enum value "Pacific/Fakaofo"
+	OnpremScheduleAO1P1TimeZonePacificFakaofo string = "Pacific/Fakaofo"
 
-	// OnpremScheduleAO0P0TimeZonePacificTongatapu captures enum value "Pacific/Tongatapu"
-	OnpremScheduleAO0P0TimeZonePacificTongatapu string = "Pacific/Tongatapu"
+	// OnpremScheduleAO1P1TimeZonePacificTongatapu captures enum value "Pacific/Tongatapu"
+	OnpremScheduleAO1P1TimeZonePacificTongatapu string = "Pacific/Tongatapu"
 
-	// OnpremScheduleAO0P0TimeZonePacificKiritimati captures enum value "Pacific/Kiritimati"
-	OnpremScheduleAO0P0TimeZonePacificKiritimati string = "Pacific/Kiritimati"
+	// OnpremScheduleAO1P1TimeZonePacificKiritimati captures enum value "Pacific/Kiritimati"
+	OnpremScheduleAO1P1TimeZonePacificKiritimati string = "Pacific/Kiritimati"
 )
 
 // prop value enum
-func (m *OnpremScheduleAO0P0) validateTimeZoneEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, onpremScheduleAO0P0TypeTimeZonePropEnum); err != nil {
+func (m *OnpremScheduleAO1P1) validateTimeZoneEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, onpremScheduleAO1P1TypeTimeZonePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *OnpremScheduleAO0P0) validateTimeZone(formats strfmt.Registry) error {
+func (m *OnpremScheduleAO1P1) validateTimeZone(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.TimeZone) { // not required
 		return nil
@@ -1127,7 +1110,7 @@ func (m *OnpremScheduleAO0P0) validateTimeZone(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *OnpremScheduleAO0P0) MarshalBinary() ([]byte, error) {
+func (m *OnpremScheduleAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -1135,8 +1118,8 @@ func (m *OnpremScheduleAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *OnpremScheduleAO0P0) UnmarshalBinary(b []byte) error {
-	var res OnpremScheduleAO0P0
+func (m *OnpremScheduleAO1P1) UnmarshalBinary(b []byte) error {
+	var res OnpremScheduleAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

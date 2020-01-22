@@ -10,6 +10,10 @@ resource "intersight_networkconfig_policy" "network_config1" {
   alternate_ipv6dns_server = "::"
   dynamic_dns_domain       = ""
   enable_ipv4dns_from_dhcp = false
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 resource "intersight_networkconfig_policy" "network_config2" {
@@ -24,6 +28,10 @@ resource "intersight_networkconfig_policy" "network_config2" {
   dynamic_dns_domain       = "qw12"
   alternate_ipv6dns_server = "::"
   preferred_ipv6dns_server = "::"
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"

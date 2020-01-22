@@ -22,6 +22,11 @@ import (
 type IamAccount struct {
 	MoBaseMo
 
+	// List of registered OAuth2 applications created from the account.
+	//
+	// Read Only: true
+	AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
+
 	// The domain Groups are configured in an account for scaling purpose. Currently, only onboarding-device account has multiple domain groups and other accounts have only one domain group per account.
 	//
 	// Read Only: true
@@ -71,6 +76,11 @@ type IamAccount struct {
 	// Read Only: true
 	Roles []*IamRoleRef `json:"Roles"`
 
+	// Holder for organization aggregated permissions and global account permissions.
+	//
+	// Read Only: true
+	SecurityHolder *IamSecurityHolderRef `json:"SecurityHolder,omitempty"`
+
 	// Session related configuration limits.
 	//
 	// Read Only: true
@@ -80,6 +90,18 @@ type IamAccount struct {
 	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
+
+	// A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.
+	//
+	// When this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.
+	//
+	Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
+
+	// A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.
+	//
+	// When this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.
+	//
+	Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -93,6 +115,8 @@ func (m *IamAccount) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
+
 		DomainGroups []*IamDomainGroupRef `json:"DomainGroups"`
 
 		EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
@@ -113,13 +137,21 @@ func (m *IamAccount) UnmarshalJSON(raw []byte) error {
 
 		Roles []*IamRoleRef `json:"Roles"`
 
+		SecurityHolder *IamSecurityHolderRef `json:"SecurityHolder,omitempty"`
+
 		SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
 
 		Status string `json:"Status,omitempty"`
+
+		Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
+
+		Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.AppRegistrations = dataAO1.AppRegistrations
 
 	m.DomainGroups = dataAO1.DomainGroups
 
@@ -141,9 +173,15 @@ func (m *IamAccount) UnmarshalJSON(raw []byte) error {
 
 	m.Roles = dataAO1.Roles
 
+	m.SecurityHolder = dataAO1.SecurityHolder
+
 	m.SessionLimits = dataAO1.SessionLimits
 
 	m.Status = dataAO1.Status
+
+	m.Nr0Encrypt = dataAO1.Nr0Encrypt
+
+	m.Nr1Decrypt = dataAO1.Nr1Decrypt
 
 	return nil
 }
@@ -159,6 +197,8 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
+
 		DomainGroups []*IamDomainGroupRef `json:"DomainGroups"`
 
 		EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
@@ -179,10 +219,18 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 
 		Roles []*IamRoleRef `json:"Roles"`
 
+		SecurityHolder *IamSecurityHolderRef `json:"SecurityHolder,omitempty"`
+
 		SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
 
 		Status string `json:"Status,omitempty"`
+
+		Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
+
+		Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
 	}
+
+	dataAO1.AppRegistrations = m.AppRegistrations
 
 	dataAO1.DomainGroups = m.DomainGroups
 
@@ -204,9 +252,15 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Roles = m.Roles
 
+	dataAO1.SecurityHolder = m.SecurityHolder
+
 	dataAO1.SessionLimits = m.SessionLimits
 
 	dataAO1.Status = m.Status
+
+	dataAO1.Nr0Encrypt = m.Nr0Encrypt
+
+	dataAO1.Nr1Decrypt = m.Nr1Decrypt
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -223,6 +277,10 @@ func (m *IamAccount) Validate(formats strfmt.Registry) error {
 
 	// validation for a type composition with MoBaseMo
 	if err := m.MoBaseMo.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAppRegistrations(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -262,13 +320,50 @@ func (m *IamAccount) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateSecurityHolder(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateSessionLimits(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNr0Encrypt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNr1Decrypt(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *IamAccount) validateAppRegistrations(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AppRegistrations) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.AppRegistrations); i++ {
+		if swag.IsZero(m.AppRegistrations[i]) { // not required
+			continue
+		}
+
+		if m.AppRegistrations[i] != nil {
+			if err := m.AppRegistrations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("AppRegistrations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -490,6 +585,24 @@ func (m *IamAccount) validateRoles(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *IamAccount) validateSecurityHolder(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SecurityHolder) { // not required
+		return nil
+	}
+
+	if m.SecurityHolder != nil {
+		if err := m.SecurityHolder.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("SecurityHolder")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *IamAccount) validateSessionLimits(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.SessionLimits) { // not required
@@ -500,6 +613,42 @@ func (m *IamAccount) validateSessionLimits(formats strfmt.Registry) error {
 		if err := m.SessionLimits.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("SessionLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IamAccount) validateNr0Encrypt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Nr0Encrypt) { // not required
+		return nil
+	}
+
+	if m.Nr0Encrypt != nil {
+		if err := m.Nr0Encrypt.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("_0_Encrypt")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IamAccount) validateNr1Decrypt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Nr1Decrypt) { // not required
+		return nil
+	}
+
+	if m.Nr1Decrypt != nil {
+		if err := m.Nr1Decrypt.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("_1_Decrypt")
 			}
 			return err
 		}

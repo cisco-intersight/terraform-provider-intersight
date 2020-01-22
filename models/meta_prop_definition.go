@@ -21,30 +21,45 @@ import (
 //
 // swagger:model metaPropDefinition
 type MetaPropDefinition struct {
-	MetaPropDefinitionAO0P0
+	MoBaseComplexType
+
+	MetaPropDefinitionAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *MetaPropDefinition) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MetaPropDefinitionAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MetaPropDefinitionAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 MetaPropDefinitionAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.MetaPropDefinitionAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m MetaPropDefinition) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MetaPropDefinitionAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.MetaPropDefinitionAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m MetaPropDefinition) MarshalJSON() ([]byte, error) {
 func (m *MetaPropDefinition) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MetaPropDefinitionAO0P0
-	if err := m.MetaPropDefinitionAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with MetaPropDefinitionAO1P1
+	if err := m.MetaPropDefinitionAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *MetaPropDefinition) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// MetaPropDefinitionAO0P0 meta prop definition a o0 p0
-// swagger:model MetaPropDefinitionAO0P0
-type MetaPropDefinitionAO0P0 struct {
+// MetaPropDefinitionAO1P1 meta prop definition a o1 p1
+// swagger:model MetaPropDefinitionAO1P1
+type MetaPropDefinitionAO1P1 struct {
 
 	// API access control for the property. Examples are NoAccess, ReadOnly, CreateOnly etc.
 	//
@@ -97,23 +116,13 @@ type MetaPropDefinitionAO0P0 struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 	//
 	// For example, Encrypted or Cleartext.
 	//
 	//
 	// Read Only: true
-	// Enum: [ClearText Encrypted]
+	// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
 	OpSecurity string `json:"OpSecurity,omitempty"`
 
 	// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -121,12 +130,12 @@ type MetaPropDefinitionAO0P0 struct {
 	// Read Only: true
 	SearchWeight float32 `json:"SearchWeight,omitempty"`
 
-	// meta prop definition a o0 p0
-	MetaPropDefinitionAO0P0 map[string]interface{} `json:"-"`
+	// meta prop definition a o1 p1
+	MetaPropDefinitionAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *MetaPropDefinitionAO0P0) UnmarshalJSON(data []byte) error {
+func (m *MetaPropDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -141,23 +150,13 @@ func (m *MetaPropDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 		//
 		// For example, Encrypted or Cleartext.
 		//
 		//
 		// Read Only: true
-		// Enum: [ClearText Encrypted]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -168,13 +167,11 @@ func (m *MetaPropDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv MetaPropDefinitionAO0P0
+	var rcv MetaPropDefinitionAO1P1
 
 	rcv.APIAccess = stage1.APIAccess
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.OpSecurity = stage1.OpSecurity
 
@@ -192,8 +189,6 @@ func (m *MetaPropDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "OpSecurity")
 
 	delete(stage2, "SearchWeight")
@@ -208,14 +203,14 @@ func (m *MetaPropDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.MetaPropDefinitionAO0P0 = result
+		m.MetaPropDefinitionAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m MetaPropDefinitionAO0P0) MarshalJSON() ([]byte, error) {
+func (m MetaPropDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// API access control for the property. Examples are NoAccess, ReadOnly, CreateOnly etc.
@@ -229,23 +224,13 @@ func (m MetaPropDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 		//
 		// For example, Encrypted or Cleartext.
 		//
 		//
 		// Read Only: true
-		// Enum: [ClearText Encrypted]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -258,8 +243,6 @@ func (m MetaPropDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.OpSecurity = m.OpSecurity
 
 	stage1.SearchWeight = m.SearchWeight
@@ -270,12 +253,12 @@ func (m MetaPropDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.MetaPropDefinitionAO0P0) == 0 {
+	if len(m.MetaPropDefinitionAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.MetaPropDefinitionAO0P0)
+	additional, err := json.Marshal(m.MetaPropDefinitionAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -289,8 +272,8 @@ func (m MetaPropDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this meta prop definition a o0 p0
-func (m *MetaPropDefinitionAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this meta prop definition a o1 p1
+func (m *MetaPropDefinitionAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAPIAccess(formats); err != nil {
@@ -307,7 +290,7 @@ func (m *MetaPropDefinitionAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var metaPropDefinitionAO0P0TypeAPIAccessPropEnum []interface{}
+var metaPropDefinitionAO1P1TypeAPIAccessPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -315,40 +298,40 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		metaPropDefinitionAO0P0TypeAPIAccessPropEnum = append(metaPropDefinitionAO0P0TypeAPIAccessPropEnum, v)
+		metaPropDefinitionAO1P1TypeAPIAccessPropEnum = append(metaPropDefinitionAO1P1TypeAPIAccessPropEnum, v)
 	}
 }
 
 const (
 
-	// MetaPropDefinitionAO0P0APIAccessNoAccess captures enum value "NoAccess"
-	MetaPropDefinitionAO0P0APIAccessNoAccess string = "NoAccess"
+	// MetaPropDefinitionAO1P1APIAccessNoAccess captures enum value "NoAccess"
+	MetaPropDefinitionAO1P1APIAccessNoAccess string = "NoAccess"
 
-	// MetaPropDefinitionAO0P0APIAccessReadOnly captures enum value "ReadOnly"
-	MetaPropDefinitionAO0P0APIAccessReadOnly string = "ReadOnly"
+	// MetaPropDefinitionAO1P1APIAccessReadOnly captures enum value "ReadOnly"
+	MetaPropDefinitionAO1P1APIAccessReadOnly string = "ReadOnly"
 
-	// MetaPropDefinitionAO0P0APIAccessCreateOnly captures enum value "CreateOnly"
-	MetaPropDefinitionAO0P0APIAccessCreateOnly string = "CreateOnly"
+	// MetaPropDefinitionAO1P1APIAccessCreateOnly captures enum value "CreateOnly"
+	MetaPropDefinitionAO1P1APIAccessCreateOnly string = "CreateOnly"
 
-	// MetaPropDefinitionAO0P0APIAccessReadWrite captures enum value "ReadWrite"
-	MetaPropDefinitionAO0P0APIAccessReadWrite string = "ReadWrite"
+	// MetaPropDefinitionAO1P1APIAccessReadWrite captures enum value "ReadWrite"
+	MetaPropDefinitionAO1P1APIAccessReadWrite string = "ReadWrite"
 
-	// MetaPropDefinitionAO0P0APIAccessWriteOnly captures enum value "WriteOnly"
-	MetaPropDefinitionAO0P0APIAccessWriteOnly string = "WriteOnly"
+	// MetaPropDefinitionAO1P1APIAccessWriteOnly captures enum value "WriteOnly"
+	MetaPropDefinitionAO1P1APIAccessWriteOnly string = "WriteOnly"
 
-	// MetaPropDefinitionAO0P0APIAccessReadOnCreate captures enum value "ReadOnCreate"
-	MetaPropDefinitionAO0P0APIAccessReadOnCreate string = "ReadOnCreate"
+	// MetaPropDefinitionAO1P1APIAccessReadOnCreate captures enum value "ReadOnCreate"
+	MetaPropDefinitionAO1P1APIAccessReadOnCreate string = "ReadOnCreate"
 )
 
 // prop value enum
-func (m *MetaPropDefinitionAO0P0) validateAPIAccessEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, metaPropDefinitionAO0P0TypeAPIAccessPropEnum); err != nil {
+func (m *MetaPropDefinitionAO1P1) validateAPIAccessEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, metaPropDefinitionAO1P1TypeAPIAccessPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *MetaPropDefinitionAO0P0) validateAPIAccess(formats strfmt.Registry) error {
+func (m *MetaPropDefinitionAO1P1) validateAPIAccess(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.APIAccess) { // not required
 		return nil
@@ -362,36 +345,42 @@ func (m *MetaPropDefinitionAO0P0) validateAPIAccess(formats strfmt.Registry) err
 	return nil
 }
 
-var metaPropDefinitionAO0P0TypeOpSecurityPropEnum []interface{}
+var metaPropDefinitionAO1P1TypeOpSecurityPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ClearText","Encrypted"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ClearText","Encrypted","Pbkdf2","Bcrypt"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		metaPropDefinitionAO0P0TypeOpSecurityPropEnum = append(metaPropDefinitionAO0P0TypeOpSecurityPropEnum, v)
+		metaPropDefinitionAO1P1TypeOpSecurityPropEnum = append(metaPropDefinitionAO1P1TypeOpSecurityPropEnum, v)
 	}
 }
 
 const (
 
-	// MetaPropDefinitionAO0P0OpSecurityClearText captures enum value "ClearText"
-	MetaPropDefinitionAO0P0OpSecurityClearText string = "ClearText"
+	// MetaPropDefinitionAO1P1OpSecurityClearText captures enum value "ClearText"
+	MetaPropDefinitionAO1P1OpSecurityClearText string = "ClearText"
 
-	// MetaPropDefinitionAO0P0OpSecurityEncrypted captures enum value "Encrypted"
-	MetaPropDefinitionAO0P0OpSecurityEncrypted string = "Encrypted"
+	// MetaPropDefinitionAO1P1OpSecurityEncrypted captures enum value "Encrypted"
+	MetaPropDefinitionAO1P1OpSecurityEncrypted string = "Encrypted"
+
+	// MetaPropDefinitionAO1P1OpSecurityPbkdf2 captures enum value "Pbkdf2"
+	MetaPropDefinitionAO1P1OpSecurityPbkdf2 string = "Pbkdf2"
+
+	// MetaPropDefinitionAO1P1OpSecurityBcrypt captures enum value "Bcrypt"
+	MetaPropDefinitionAO1P1OpSecurityBcrypt string = "Bcrypt"
 )
 
 // prop value enum
-func (m *MetaPropDefinitionAO0P0) validateOpSecurityEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, metaPropDefinitionAO0P0TypeOpSecurityPropEnum); err != nil {
+func (m *MetaPropDefinitionAO1P1) validateOpSecurityEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, metaPropDefinitionAO1P1TypeOpSecurityPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *MetaPropDefinitionAO0P0) validateOpSecurity(formats strfmt.Registry) error {
+func (m *MetaPropDefinitionAO1P1) validateOpSecurity(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.OpSecurity) { // not required
 		return nil
@@ -406,7 +395,7 @@ func (m *MetaPropDefinitionAO0P0) validateOpSecurity(formats strfmt.Registry) er
 }
 
 // MarshalBinary interface implementation
-func (m *MetaPropDefinitionAO0P0) MarshalBinary() ([]byte, error) {
+func (m *MetaPropDefinitionAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -414,8 +403,8 @@ func (m *MetaPropDefinitionAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *MetaPropDefinitionAO0P0) UnmarshalBinary(b []byte) error {
-	var res MetaPropDefinitionAO0P0
+func (m *MetaPropDefinitionAO1P1) UnmarshalBinary(b []byte) error {
+	var res MetaPropDefinitionAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -22,7 +22,6 @@ type SoftwareHyperflexDistributable struct {
 
 	// The catalog where this image is present.
 	//
-	// Read Only: true
 	Catalog *SoftwarerepositoryCatalogRef `json:"Catalog,omitempty"`
 }
 

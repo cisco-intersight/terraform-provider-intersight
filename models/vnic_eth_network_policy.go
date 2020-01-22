@@ -22,7 +22,7 @@ type VnicEthNetworkPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// VLAN configuration for the virtual interface.
 	//
@@ -40,7 +40,7 @@ func (m *VnicEthNetworkPolicy) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		VlanSettings *VnicVlanSettings `json:"VlanSettings,omitempty"`
 	}
@@ -66,7 +66,7 @@ func (m VnicEthNetworkPolicy) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		VlanSettings *VnicVlanSettings `json:"VlanSettings,omitempty"`
 	}

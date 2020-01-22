@@ -27,13 +27,21 @@ type TamAdvisoryInstance struct {
 	//
 	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
-	// Moid of the Intersight MO affected by the alert.
+	// Reference to the Intersight managed object afftected by the advisory.
+	//
+	AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
+
+	// Moid of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
 	//
 	AffectedObjectMoid string `json:"AffectedObjectMoid,omitempty"`
 
-	// Object type of the Intersight MO affected by the alert.
+	// Object type of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
 	//
 	AffectedObjectType string `json:"AffectedObjectType,omitempty"`
+
+	// Device registation reference for the managed object affected by a given advisory instance. The managed object itself is represented using 'affectedObject' reference.
+	//
+	DeviceRegistration *AssetDeviceRegistrationRef `json:"DeviceRegistration,omitempty"`
 
 	// Timestamp when a state change was observed on this advisory instnace.
 	//
@@ -46,10 +54,6 @@ type TamAdvisoryInstance struct {
 	// Read Only: true
 	// Format: date-time
 	LastVerifiedTime strfmt.DateTime `json:"LastVerifiedTime,omitempty"`
-
-	// Relationship to the Organization that owns the Managed Object.
-	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
 
 	// Current state of the advisory instance (Active/Cleared/Unknown etc.).
 	//
@@ -70,15 +74,17 @@ func (m *TamAdvisoryInstance) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
+		AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
+
 		AffectedObjectMoid string `json:"AffectedObjectMoid,omitempty"`
 
 		AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
+		DeviceRegistration *AssetDeviceRegistrationRef `json:"DeviceRegistration,omitempty"`
+
 		LastStateChangeTime strfmt.DateTime `json:"LastStateChangeTime,omitempty"`
 
 		LastVerifiedTime strfmt.DateTime `json:"LastVerifiedTime,omitempty"`
-
-		Organization *IamAccountRef `json:"Organization,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
@@ -88,15 +94,17 @@ func (m *TamAdvisoryInstance) UnmarshalJSON(raw []byte) error {
 
 	m.Advisory = dataAO1.Advisory
 
+	m.AffectedObject = dataAO1.AffectedObject
+
 	m.AffectedObjectMoid = dataAO1.AffectedObjectMoid
 
 	m.AffectedObjectType = dataAO1.AffectedObjectType
 
+	m.DeviceRegistration = dataAO1.DeviceRegistration
+
 	m.LastStateChangeTime = dataAO1.LastStateChangeTime
 
 	m.LastVerifiedTime = dataAO1.LastVerifiedTime
-
-	m.Organization = dataAO1.Organization
 
 	m.State = dataAO1.State
 
@@ -116,30 +124,34 @@ func (m TamAdvisoryInstance) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
+		AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
+
 		AffectedObjectMoid string `json:"AffectedObjectMoid,omitempty"`
 
 		AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
+		DeviceRegistration *AssetDeviceRegistrationRef `json:"DeviceRegistration,omitempty"`
+
 		LastStateChangeTime strfmt.DateTime `json:"LastStateChangeTime,omitempty"`
 
 		LastVerifiedTime strfmt.DateTime `json:"LastVerifiedTime,omitempty"`
-
-		Organization *IamAccountRef `json:"Organization,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
 
 	dataAO1.Advisory = m.Advisory
 
+	dataAO1.AffectedObject = m.AffectedObject
+
 	dataAO1.AffectedObjectMoid = m.AffectedObjectMoid
 
 	dataAO1.AffectedObjectType = m.AffectedObjectType
 
+	dataAO1.DeviceRegistration = m.DeviceRegistration
+
 	dataAO1.LastStateChangeTime = m.LastStateChangeTime
 
 	dataAO1.LastVerifiedTime = m.LastVerifiedTime
-
-	dataAO1.Organization = m.Organization
 
 	dataAO1.State = m.State
 
@@ -165,15 +177,19 @@ func (m *TamAdvisoryInstance) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateAffectedObject(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDeviceRegistration(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLastStateChangeTime(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateLastVerifiedTime(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateOrganization(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -205,6 +221,42 @@ func (m *TamAdvisoryInstance) validateAdvisory(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *TamAdvisoryInstance) validateAffectedObject(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AffectedObject) { // not required
+		return nil
+	}
+
+	if m.AffectedObject != nil {
+		if err := m.AffectedObject.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("AffectedObject")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *TamAdvisoryInstance) validateDeviceRegistration(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DeviceRegistration) { // not required
+		return nil
+	}
+
+	if m.DeviceRegistration != nil {
+		if err := m.DeviceRegistration.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("DeviceRegistration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *TamAdvisoryInstance) validateLastStateChangeTime(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.LastStateChangeTime) { // not required
@@ -226,24 +278,6 @@ func (m *TamAdvisoryInstance) validateLastVerifiedTime(formats strfmt.Registry) 
 
 	if err := validate.FormatOf("LastVerifiedTime", "body", "date-time", m.LastVerifiedTime.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *TamAdvisoryInstance) validateOrganization(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Organization) { // not required
-		return nil
-	}
-
-	if m.Organization != nil {
-		if err := m.Organization.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("Organization")
-			}
-			return err
-		}
 	}
 
 	return nil

@@ -20,30 +20,45 @@ import (
 //
 // swagger:model niaapiDetail
 type NiaapiDetail struct {
-	NiaapiDetailAO0P0
+	MoBaseComplexType
+
+	NiaapiDetailAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *NiaapiDetail) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 NiaapiDetailAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.NiaapiDetailAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 NiaapiDetailAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.NiaapiDetailAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m NiaapiDetail) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.NiaapiDetailAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.NiaapiDetailAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m NiaapiDetail) MarshalJSON() ([]byte, error) {
 func (m *NiaapiDetail) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with NiaapiDetailAO0P0
-	if err := m.NiaapiDetailAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with NiaapiDetailAO1P1
+	if err := m.NiaapiDetailAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *NiaapiDetail) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// NiaapiDetailAO0P0 niaapi detail a o0 p0
-// swagger:model NiaapiDetailAO0P0
-type NiaapiDetailAO0P0 struct {
+// NiaapiDetailAO1P1 niaapi detail a o1 p1
+// swagger:model NiaapiDetailAO1P1
+type NiaapiDetailAO1P1 struct {
 
 	// Checksum of this part of Content.
 	//
@@ -97,22 +116,12 @@ type NiaapiDetailAO0P0 struct {
 	//
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// niaapi detail a o0 p0
-	NiaapiDetailAO0P0 map[string]interface{} `json:"-"`
+	// niaapi detail a o1 p1
+	NiaapiDetailAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *NiaapiDetailAO0P0) UnmarshalJSON(data []byte) error {
+func (m *NiaapiDetailAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -127,29 +136,17 @@ func (m *NiaapiDetailAO0P0) UnmarshalJSON(data []byte) error {
 		// The name of this Content.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv NiaapiDetailAO0P0
+	var rcv NiaapiDetailAO1P1
 
 	rcv.Chksum = stage1.Chksum
 
 	rcv.Filename = stage1.Filename
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -165,8 +162,6 @@ func (m *NiaapiDetailAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -177,14 +172,14 @@ func (m *NiaapiDetailAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.NiaapiDetailAO0P0 = result
+		m.NiaapiDetailAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m NiaapiDetailAO0P0) MarshalJSON() ([]byte, error) {
+func (m NiaapiDetailAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Checksum of this part of Content.
@@ -198,16 +193,6 @@ func (m NiaapiDetailAO0P0) MarshalJSON() ([]byte, error) {
 		// The name of this Content.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Chksum = m.Chksum
@@ -216,20 +201,18 @@ func (m NiaapiDetailAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(m.NiaapiDetailAO0P0) == 0 {
+	if len(m.NiaapiDetailAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.NiaapiDetailAO0P0)
+	additional, err := json.Marshal(m.NiaapiDetailAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -243,13 +226,13 @@ func (m NiaapiDetailAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this niaapi detail a o0 p0
-func (m *NiaapiDetailAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this niaapi detail a o1 p1
+func (m *NiaapiDetailAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *NiaapiDetailAO0P0) MarshalBinary() ([]byte, error) {
+func (m *NiaapiDetailAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -257,8 +240,8 @@ func (m *NiaapiDetailAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *NiaapiDetailAO0P0) UnmarshalBinary(b []byte) error {
-	var res NiaapiDetailAO0P0
+func (m *NiaapiDetailAO1P1) UnmarshalBinary(b []byte) error {
+	var res NiaapiDetailAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

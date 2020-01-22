@@ -22,30 +22,45 @@ import (
 //
 // swagger:model workflowProperties
 type WorkflowProperties struct {
-	WorkflowPropertiesAO0P0
+	MoBaseComplexType
+
+	WorkflowPropertiesAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *WorkflowProperties) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 WorkflowPropertiesAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.WorkflowPropertiesAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 WorkflowPropertiesAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.WorkflowPropertiesAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m WorkflowProperties) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.WorkflowPropertiesAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.WorkflowPropertiesAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m WorkflowProperties) MarshalJSON() ([]byte, error) {
 func (m *WorkflowProperties) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with WorkflowPropertiesAO0P0
-	if err := m.WorkflowPropertiesAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with WorkflowPropertiesAO1P1
+	if err := m.WorkflowPropertiesAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,23 +102,13 @@ func (m *WorkflowProperties) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// WorkflowPropertiesAO0P0 workflow properties a o0 p0
-// swagger:model WorkflowPropertiesAO0P0
-type WorkflowPropertiesAO0P0 struct {
+// WorkflowPropertiesAO1P1 workflow properties a o1 p1
+// swagger:model WorkflowPropertiesAO1P1
+type WorkflowPropertiesAO1P1 struct {
 
 	// The schema expected for input parameters for this task.
 	//
 	InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// The schema expected for output parameters for this task.
 	//
@@ -127,28 +136,18 @@ type WorkflowPropertiesAO0P0 struct {
 	// Enum: [Timeout Retry]
 	TimeoutPolicy *string `json:"TimeoutPolicy,omitempty"`
 
-	// workflow properties a o0 p0
-	WorkflowPropertiesAO0P0 map[string]interface{} `json:"-"`
+	// workflow properties a o1 p1
+	WorkflowPropertiesAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *WorkflowPropertiesAO0P0) UnmarshalJSON(data []byte) error {
+func (m *WorkflowPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// The schema expected for input parameters for this task.
 		//
 		InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The schema expected for output parameters for this task.
 		//
@@ -179,11 +178,9 @@ func (m *WorkflowPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv WorkflowPropertiesAO0P0
+	var rcv WorkflowPropertiesAO1P1
 
 	rcv.InputDefinition = stage1.InputDefinition
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.OutputDefinition = stage1.OutputDefinition
 
@@ -207,8 +204,6 @@ func (m *WorkflowPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "InputDefinition")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "OutputDefinition")
 
 	delete(stage2, "RetryCount")
@@ -231,29 +226,19 @@ func (m *WorkflowPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.WorkflowPropertiesAO0P0 = result
+		m.WorkflowPropertiesAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m WorkflowPropertiesAO0P0) MarshalJSON() ([]byte, error) {
+func (m WorkflowPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The schema expected for input parameters for this task.
 		//
 		InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The schema expected for output parameters for this task.
 		//
@@ -284,8 +269,6 @@ func (m WorkflowPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.InputDefinition = m.InputDefinition
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.OutputDefinition = m.OutputDefinition
 
 	stage1.RetryCount = m.RetryCount
@@ -304,12 +287,12 @@ func (m WorkflowPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.WorkflowPropertiesAO0P0) == 0 {
+	if len(m.WorkflowPropertiesAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.WorkflowPropertiesAO0P0)
+	additional, err := json.Marshal(m.WorkflowPropertiesAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -323,8 +306,8 @@ func (m WorkflowPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this workflow properties a o0 p0
-func (m *WorkflowPropertiesAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this workflow properties a o1 p1
+func (m *WorkflowPropertiesAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateInputDefinition(formats); err != nil {
@@ -349,7 +332,7 @@ func (m *WorkflowPropertiesAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *WorkflowPropertiesAO0P0) validateInputDefinition(formats strfmt.Registry) error {
+func (m *WorkflowPropertiesAO1P1) validateInputDefinition(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.InputDefinition) { // not required
 		return nil
@@ -374,7 +357,7 @@ func (m *WorkflowPropertiesAO0P0) validateInputDefinition(formats strfmt.Registr
 	return nil
 }
 
-func (m *WorkflowPropertiesAO0P0) validateOutputDefinition(formats strfmt.Registry) error {
+func (m *WorkflowPropertiesAO1P1) validateOutputDefinition(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.OutputDefinition) { // not required
 		return nil
@@ -399,7 +382,7 @@ func (m *WorkflowPropertiesAO0P0) validateOutputDefinition(formats strfmt.Regist
 	return nil
 }
 
-var workflowPropertiesAO0P0TypeRetryPolicyPropEnum []interface{}
+var workflowPropertiesAO1P1TypeRetryPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -407,25 +390,25 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		workflowPropertiesAO0P0TypeRetryPolicyPropEnum = append(workflowPropertiesAO0P0TypeRetryPolicyPropEnum, v)
+		workflowPropertiesAO1P1TypeRetryPolicyPropEnum = append(workflowPropertiesAO1P1TypeRetryPolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// WorkflowPropertiesAO0P0RetryPolicyFixed captures enum value "Fixed"
-	WorkflowPropertiesAO0P0RetryPolicyFixed string = "Fixed"
+	// WorkflowPropertiesAO1P1RetryPolicyFixed captures enum value "Fixed"
+	WorkflowPropertiesAO1P1RetryPolicyFixed string = "Fixed"
 )
 
 // prop value enum
-func (m *WorkflowPropertiesAO0P0) validateRetryPolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, workflowPropertiesAO0P0TypeRetryPolicyPropEnum); err != nil {
+func (m *WorkflowPropertiesAO1P1) validateRetryPolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowPropertiesAO1P1TypeRetryPolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *WorkflowPropertiesAO0P0) validateRetryPolicy(formats strfmt.Registry) error {
+func (m *WorkflowPropertiesAO1P1) validateRetryPolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.RetryPolicy) { // not required
 		return nil
@@ -439,7 +422,7 @@ func (m *WorkflowPropertiesAO0P0) validateRetryPolicy(formats strfmt.Registry) e
 	return nil
 }
 
-var workflowPropertiesAO0P0TypeTimeoutPolicyPropEnum []interface{}
+var workflowPropertiesAO1P1TypeTimeoutPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -447,28 +430,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		workflowPropertiesAO0P0TypeTimeoutPolicyPropEnum = append(workflowPropertiesAO0P0TypeTimeoutPolicyPropEnum, v)
+		workflowPropertiesAO1P1TypeTimeoutPolicyPropEnum = append(workflowPropertiesAO1P1TypeTimeoutPolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// WorkflowPropertiesAO0P0TimeoutPolicyTimeout captures enum value "Timeout"
-	WorkflowPropertiesAO0P0TimeoutPolicyTimeout string = "Timeout"
+	// WorkflowPropertiesAO1P1TimeoutPolicyTimeout captures enum value "Timeout"
+	WorkflowPropertiesAO1P1TimeoutPolicyTimeout string = "Timeout"
 
-	// WorkflowPropertiesAO0P0TimeoutPolicyRetry captures enum value "Retry"
-	WorkflowPropertiesAO0P0TimeoutPolicyRetry string = "Retry"
+	// WorkflowPropertiesAO1P1TimeoutPolicyRetry captures enum value "Retry"
+	WorkflowPropertiesAO1P1TimeoutPolicyRetry string = "Retry"
 )
 
 // prop value enum
-func (m *WorkflowPropertiesAO0P0) validateTimeoutPolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, workflowPropertiesAO0P0TypeTimeoutPolicyPropEnum); err != nil {
+func (m *WorkflowPropertiesAO1P1) validateTimeoutPolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowPropertiesAO1P1TypeTimeoutPolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *WorkflowPropertiesAO0P0) validateTimeoutPolicy(formats strfmt.Registry) error {
+func (m *WorkflowPropertiesAO1P1) validateTimeoutPolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.TimeoutPolicy) { // not required
 		return nil
@@ -483,7 +466,7 @@ func (m *WorkflowPropertiesAO0P0) validateTimeoutPolicy(formats strfmt.Registry)
 }
 
 // MarshalBinary interface implementation
-func (m *WorkflowPropertiesAO0P0) MarshalBinary() ([]byte, error) {
+func (m *WorkflowPropertiesAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -491,8 +474,8 @@ func (m *WorkflowPropertiesAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *WorkflowPropertiesAO0P0) UnmarshalBinary(b []byte) error {
-	var res WorkflowPropertiesAO0P0
+func (m *WorkflowPropertiesAO1P1) UnmarshalBinary(b []byte) error {
+	var res WorkflowPropertiesAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

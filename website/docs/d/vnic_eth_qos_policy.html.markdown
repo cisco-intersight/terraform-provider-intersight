@@ -17,6 +17,6 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `mtu`:(int)The Maximum Transmission Unit (MTU) or packet size that the virtual interface accepts.
 * `name`:(string)Name of the concrete policy.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-* `rate_limit`:(int)The value in Mbps (0-40000) to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `rate_limit`:(int)The value in Mbps (0-100000) to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
 * `trust_host_cos`:(bool)Enables usage of the Class of Service provided by the operating system.

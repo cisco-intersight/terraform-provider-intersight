@@ -13,10 +13,10 @@ A HyperFlex image distributed by Cisco.
 ## Argument Reference
 The following arguments are supported:
 * `bundle_type`:(string)(Computed)The bundle type of the image, as published on cisco.com.
-* `catalog`:(Array with Maximum of one item) -(Computed)The catalog where this image is present.
+* `catalog`:(Array with Maximum of one item) -The catalog where this image is present.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
-  + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+  + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `description`:(string)User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.
 * `download_count`:(int)(Computed)The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.
@@ -28,7 +28,12 @@ This complex property has following sub-properties:
 * `model`:(string)(Computed)The endpoint model for which this firmware image is applicable.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name of the file. It is populated as part of the image import operation.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)(Computed)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `permission_resources`:(Array)(Computed)A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.
+This complex property has following sub-properties:
+  + `moid`:(string)(Computed)The Moid of the referenced REST resource.
+  + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
+  + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `platform_type`:(string)(Computed)The platform type of the image.
 * `recommended_build`:(string)The build which is recommended by Cisco.
 * `release_notes_url`:(string)The url for the release notes of this image.

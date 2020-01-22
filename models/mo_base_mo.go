@@ -53,14 +53,12 @@ type MoBaseMo struct {
 	//
 	Moid string `json:"Moid,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
+	// The fully-qualified type of this managed object, i.e. the class name.
+	// This property is optional. The ObjectType is implied from the URL path.
+	// If specified, the value of objectType must match the class name specified in the URL path.
 	//
 	//
+	// Read Only: true
 	ObjectType string `json:"ObjectType,omitempty"`
 
 	// The array of owners which represent effective ownership of this object.
@@ -72,6 +70,16 @@ type MoBaseMo struct {
 	//
 	// Read Only: true
 	Parent *MoBaseMoRef `json:"Parent,omitempty"`
+
+	// A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.
+	// These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.
+	// All logical and physical resources part of an organization will have organization in PermissionResources field.
+	// If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will
+	// have PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.
+	// All profiles/policies created with in an organization will have the organization as PermissionResources.
+	//
+	// Read Only: true
+	PermissionResources []*MoBaseMoRef `json:"PermissionResources"`
 
 	// Intersight provides pre-built workflows, tasks and policies to end users through global catalogs.
 	// Objects that are made available through global catalogs are said to have a 'shared' ownership. Shared objects are either made globally available to all end users or restricted to end users based on their license entitlement. Users can use this property to differentiate the scope (global or a specific license tier) to which a shared MO belongs.
@@ -111,6 +119,8 @@ func (m *MoBaseMo) UnmarshalJSON(raw []byte) error {
 
 		Parent *MoBaseMoRef `json:"Parent,omitempty"`
 
+		PermissionResources []*MoBaseMoRef `json:"PermissionResources"`
+
 		SharedScope string `json:"SharedScope,omitempty"`
 
 		Tags []*MoTag `json:"Tags"`
@@ -138,6 +148,8 @@ func (m *MoBaseMo) UnmarshalJSON(raw []byte) error {
 	m.Owners = dataAO0.Owners
 
 	m.Parent = dataAO0.Parent
+
+	m.PermissionResources = dataAO0.PermissionResources
 
 	m.SharedScope = dataAO0.SharedScope
 
@@ -171,6 +183,8 @@ func (m MoBaseMo) MarshalJSON() ([]byte, error) {
 
 		Parent *MoBaseMoRef `json:"Parent,omitempty"`
 
+		PermissionResources []*MoBaseMoRef `json:"PermissionResources"`
+
 		SharedScope string `json:"SharedScope,omitempty"`
 
 		Tags []*MoTag `json:"Tags"`
@@ -195,6 +209,8 @@ func (m MoBaseMo) MarshalJSON() ([]byte, error) {
 	dataAO0.Owners = m.Owners
 
 	dataAO0.Parent = m.Parent
+
+	dataAO0.PermissionResources = m.PermissionResources
 
 	dataAO0.SharedScope = m.SharedScope
 
@@ -228,6 +244,10 @@ func (m *MoBaseMo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateParent(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePermissionResources(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -309,6 +329,31 @@ func (m *MoBaseMo) validateParent(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *MoBaseMo) validatePermissionResources(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PermissionResources) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.PermissionResources); i++ {
+		if swag.IsZero(m.PermissionResources[i]) { // not required
+			continue
+		}
+
+		if m.PermissionResources[i] != nil {
+			if err := m.PermissionResources[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("PermissionResources" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

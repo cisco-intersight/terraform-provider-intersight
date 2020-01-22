@@ -21,30 +21,45 @@ import (
 //
 // swagger:model snmpTrap
 type SnmpTrap struct {
-	SnmpTrapAO0P0
+	MoBaseComplexType
+
+	SnmpTrapAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *SnmpTrap) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 SnmpTrapAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.SnmpTrapAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 SnmpTrapAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.SnmpTrapAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m SnmpTrap) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.SnmpTrapAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.SnmpTrapAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m SnmpTrap) MarshalJSON() ([]byte, error) {
 func (m *SnmpTrap) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with SnmpTrapAO0P0
-	if err := m.SnmpTrapAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with SnmpTrapAO1P1
+	if err := m.SnmpTrapAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *SnmpTrap) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// SnmpTrapAO0P0 snmp trap a o0 p0
-// swagger:model SnmpTrapAO0P0
-type SnmpTrapAO0P0 struct {
+// SnmpTrapAO1P1 snmp trap a o1 p1
+// swagger:model SnmpTrapAO1P1
+type SnmpTrapAO1P1 struct {
 
 	// Address to which the SNMP trap information is sent.
 	//
@@ -93,16 +112,6 @@ type SnmpTrapAO0P0 struct {
 	// Enables/disables the trap on the server If enabled, trap is active on the server.
 	//
 	Enabled *bool `json:"Enabled,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
 	//
@@ -122,12 +131,12 @@ type SnmpTrapAO0P0 struct {
 	// Enum: [V3 V2]
 	Version *string `json:"Version,omitempty"`
 
-	// snmp trap a o0 p0
-	SnmpTrapAO0P0 map[string]interface{} `json:"-"`
+	// snmp trap a o1 p1
+	SnmpTrapAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *SnmpTrapAO0P0) UnmarshalJSON(data []byte) error {
+func (m *SnmpTrapAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -138,16 +147,6 @@ func (m *SnmpTrapAO0P0) UnmarshalJSON(data []byte) error {
 		// Enables/disables the trap on the server If enabled, trap is active on the server.
 		//
 		Enabled *bool `json:"Enabled,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
 		//
@@ -170,13 +169,11 @@ func (m *SnmpTrapAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv SnmpTrapAO0P0
+	var rcv SnmpTrapAO1P1
 
 	rcv.Destination = stage1.Destination
 
 	rcv.Enabled = stage1.Enabled
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Port = stage1.Port
 
@@ -198,8 +195,6 @@ func (m *SnmpTrapAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Enabled")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Port")
 
 	delete(stage2, "Type")
@@ -218,14 +213,14 @@ func (m *SnmpTrapAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.SnmpTrapAO0P0 = result
+		m.SnmpTrapAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m SnmpTrapAO0P0) MarshalJSON() ([]byte, error) {
+func (m SnmpTrapAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Address to which the SNMP trap information is sent.
@@ -235,16 +230,6 @@ func (m SnmpTrapAO0P0) MarshalJSON() ([]byte, error) {
 		// Enables/disables the trap on the server If enabled, trap is active on the server.
 		//
 		Enabled *bool `json:"Enabled,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
 		//
@@ -269,8 +254,6 @@ func (m SnmpTrapAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Enabled = m.Enabled
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Port = m.Port
 
 	stage1.Type = m.Type
@@ -285,12 +268,12 @@ func (m SnmpTrapAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.SnmpTrapAO0P0) == 0 {
+	if len(m.SnmpTrapAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.SnmpTrapAO0P0)
+	additional, err := json.Marshal(m.SnmpTrapAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -304,8 +287,8 @@ func (m SnmpTrapAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this snmp trap a o0 p0
-func (m *SnmpTrapAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this snmp trap a o1 p1
+func (m *SnmpTrapAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateType(formats); err != nil {
@@ -322,7 +305,7 @@ func (m *SnmpTrapAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var snmpTrapAO0P0TypeTypePropEnum []interface{}
+var snmpTrapAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -330,28 +313,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		snmpTrapAO0P0TypeTypePropEnum = append(snmpTrapAO0P0TypeTypePropEnum, v)
+		snmpTrapAO1P1TypeTypePropEnum = append(snmpTrapAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// SnmpTrapAO0P0TypeTrap captures enum value "Trap"
-	SnmpTrapAO0P0TypeTrap string = "Trap"
+	// SnmpTrapAO1P1TypeTrap captures enum value "Trap"
+	SnmpTrapAO1P1TypeTrap string = "Trap"
 
-	// SnmpTrapAO0P0TypeInform captures enum value "Inform"
-	SnmpTrapAO0P0TypeInform string = "Inform"
+	// SnmpTrapAO1P1TypeInform captures enum value "Inform"
+	SnmpTrapAO1P1TypeInform string = "Inform"
 )
 
 // prop value enum
-func (m *SnmpTrapAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, snmpTrapAO0P0TypeTypePropEnum); err != nil {
+func (m *SnmpTrapAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, snmpTrapAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SnmpTrapAO0P0) validateType(formats strfmt.Registry) error {
+func (m *SnmpTrapAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -365,7 +348,7 @@ func (m *SnmpTrapAO0P0) validateType(formats strfmt.Registry) error {
 	return nil
 }
 
-var snmpTrapAO0P0TypeVersionPropEnum []interface{}
+var snmpTrapAO1P1TypeVersionPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -373,28 +356,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		snmpTrapAO0P0TypeVersionPropEnum = append(snmpTrapAO0P0TypeVersionPropEnum, v)
+		snmpTrapAO1P1TypeVersionPropEnum = append(snmpTrapAO1P1TypeVersionPropEnum, v)
 	}
 }
 
 const (
 
-	// SnmpTrapAO0P0VersionV3 captures enum value "V3"
-	SnmpTrapAO0P0VersionV3 string = "V3"
+	// SnmpTrapAO1P1VersionV3 captures enum value "V3"
+	SnmpTrapAO1P1VersionV3 string = "V3"
 
-	// SnmpTrapAO0P0VersionV2 captures enum value "V2"
-	SnmpTrapAO0P0VersionV2 string = "V2"
+	// SnmpTrapAO1P1VersionV2 captures enum value "V2"
+	SnmpTrapAO1P1VersionV2 string = "V2"
 )
 
 // prop value enum
-func (m *SnmpTrapAO0P0) validateVersionEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, snmpTrapAO0P0TypeVersionPropEnum); err != nil {
+func (m *SnmpTrapAO1P1) validateVersionEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, snmpTrapAO1P1TypeVersionPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SnmpTrapAO0P0) validateVersion(formats strfmt.Registry) error {
+func (m *SnmpTrapAO1P1) validateVersion(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Version) { // not required
 		return nil
@@ -409,7 +392,7 @@ func (m *SnmpTrapAO0P0) validateVersion(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *SnmpTrapAO0P0) MarshalBinary() ([]byte, error) {
+func (m *SnmpTrapAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -417,8 +400,8 @@ func (m *SnmpTrapAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SnmpTrapAO0P0) UnmarshalBinary(b []byte) error {
-	var res SnmpTrapAO0P0
+func (m *SnmpTrapAO1P1) UnmarshalBinary(b []byte) error {
+	var res SnmpTrapAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

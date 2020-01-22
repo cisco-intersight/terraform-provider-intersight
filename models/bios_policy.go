@@ -541,7 +541,7 @@ type BiosPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// BIOS Token for setting OS Boot Watchdog Timer configuration.
 	//
@@ -1505,7 +1505,7 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 		OnboardScuStorageSwStack *string `json:"OnboardScuStorageSwStack,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OsBootWatchdogTimer *string `json:"OsBootWatchdogTimer,omitempty"`
 
@@ -2535,7 +2535,7 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 		OnboardScuStorageSwStack *string `json:"OnboardScuStorageSwStack,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OsBootWatchdogTimer *string `json:"OsBootWatchdogTimer,omitempty"`
 
