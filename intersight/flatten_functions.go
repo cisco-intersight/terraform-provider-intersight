@@ -8,1462 +8,571 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func flattenMapOrganizationOrganizationRef(p *models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var organizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	organization := make(map[string]interface{})
-	organization["moid"] = item.Moid
-	organization["object_type"] = item.ObjectType
-	organization["selector"] = item.Selector
-
-	organizations = append(organizations, organization)
-	return organizations
-}
-func flattenListMoBaseMoRef(p []*models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
-	var permissionresourcess []map[string]interface{}
+func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
+	var settingss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		permissionresources := make(map[string]interface{})
-		permissionresources["moid"] = item.Moid
-		permissionresources["object_type"] = item.ObjectType
-		permissionresources["selector"] = item.Selector
-		permissionresourcess = append(permissionresourcess, permissionresources)
-	}
-	return permissionresourcess
-}
-func flattenListPolicyAbstractConfigProfileRef(p []*models.PolicyAbstractConfigProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var profiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		profiles := make(map[string]interface{})
-		profiles["moid"] = item.Moid
-		profiles["object_type"] = item.ObjectType
-		profiles["selector"] = item.Selector
-		profiless = append(profiless, profiles)
-	}
-	return profiless
-}
-func flattenListSnmpTrap(p []*models.SnmpTrap, d *schema.ResourceData) []map[string]interface{} {
-	var snmptrapss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		snmptraps := make(map[string]interface{})
-		delete(item.SnmpTrapAO1P1.SnmpTrapAO1P1, "ObjectType")
-		if len(item.SnmpTrapAO1P1.SnmpTrapAO1P1) != 0 {
+		settings := make(map[string]interface{})
 
-			j, err := json.Marshal(item.SnmpTrapAO1P1.SnmpTrapAO1P1)
+		if len(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1) != 0 {
+
+			j, err := json.Marshal(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1)
 			if err == nil {
-				snmptraps["additional_properties"] = string(j)
+				settings["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		snmptraps["destination"] = item.Destination
-		snmptraps["enabled"] = item.Enabled
-		snmptraps["object_type"] = item.ObjectType
-		snmptraps["port"] = item.Port
-		snmptraps["type"] = item.Type
-		snmptraps["user"] = item.User
-		snmptraps["version"] = item.Version
-		snmptrapss = append(snmptrapss, snmptraps)
-	}
-	return snmptrapss
-}
-func flattenListSnmpUser(p []*models.SnmpUser, d *schema.ResourceData) []map[string]interface{} {
-	var snmpuserss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		snmpusers := make(map[string]interface{})
-		delete(item.SnmpUserAO1P1.SnmpUserAO1P1, "ObjectType")
-		if len(item.SnmpUserAO1P1.SnmpUserAO1P1) != 0 {
+		settings["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
 
-			j, err := json.Marshal(item.SnmpUserAO1P1.SnmpUserAO1P1)
-			if err == nil {
-				snmpusers["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		auth_password_x := d.Get("snmp_users").([]interface{})
-		auth_password_y := auth_password_x[0].(map[string]interface{})
-		snmpusers["auth_password"] = auth_password_y["auth_password"]
-		snmpusers["auth_type"] = item.AuthType
-		snmpusers["is_auth_password_set"] = item.IsAuthPasswordSet
-		snmpusers["is_privacy_password_set"] = item.IsPrivacyPasswordSet
-		snmpusers["name"] = item.Name
-		snmpusers["object_type"] = item.ObjectType
-		privacy_password_x := d.Get("snmp_users").([]interface{})
-		privacy_password_y := privacy_password_x[0].(map[string]interface{})
-		snmpusers["privacy_password"] = privacy_password_y["privacy_password"]
-		snmpusers["privacy_type"] = item.PrivacyType
-		snmpusers["security_level"] = item.SecurityLevel
-		snmpuserss = append(snmpuserss, snmpusers)
-	}
-	return snmpuserss
-}
-func flattenListMoTag(p []*models.MoTag, d *schema.ResourceData) []map[string]interface{} {
-	var tagss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		tags := make(map[string]interface{})
-		delete(item.MoTagAO1P1.MoTagAO1P1, "ObjectType")
-		if len(item.MoTagAO1P1.MoTagAO1P1) != 0 {
-
-			j, err := json.Marshal(item.MoTagAO1P1.MoTagAO1P1)
-			if err == nil {
-				tags["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		tags["key"] = item.Key
-		tags["object_type"] = item.ObjectType
-		tags["value"] = item.Value
-		tagss = append(tagss, tags)
-	}
-	return tagss
-}
-func flattenMapIamAccountRef(p *models.IamAccountRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var accounts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	account := make(map[string]interface{})
-	account["moid"] = item.Moid
-	account["object_type"] = item.ObjectType
-	account["selector"] = item.Selector
-
-	accounts = append(accounts, account)
-	return accounts
-}
-func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
-
-	var credentials []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	credential := make(map[string]interface{})
-	delete(item.CommCredentialAO1P1.CommCredentialAO1P1, "ObjectType")
-	if len(item.CommCredentialAO1P1.CommCredentialAO1P1) != 0 {
-		j, err := json.Marshal(item.CommCredentialAO1P1.CommCredentialAO1P1)
-		if err == nil {
-			credential["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	credential["is_password_set"] = item.IsPasswordSet
-	credential["object_type"] = item.ObjectType
-	credential["password"] = item.Password
-	credential["username"] = item.Username
-
-	credentials = append(credentials, credential)
-	return credentials
-}
-func flattenMapAssetDeviceRegistrationRef(p *models.AssetDeviceRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var deviceconnectormanagers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	deviceconnectormanager := make(map[string]interface{})
-	deviceconnectormanager["moid"] = item.Moid
-	deviceconnectormanager["object_type"] = item.ObjectType
-	deviceconnectormanager["selector"] = item.Selector
-
-	deviceconnectormanagers = append(deviceconnectormanagers, deviceconnectormanager)
-	return deviceconnectormanagers
-}
-func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
-
-	var statuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	status := make(map[string]interface{})
-	delete(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1, "ObjectType")
-	if len(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1) != 0 {
-		j, err := json.Marshal(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1)
-		if err == nil {
-			status["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	status["cloud_port"] = item.CloudPort
-	status["connection_failure_reason"] = item.ConnectionFailureReason
-	status["connection_status"] = item.ConnectionStatus
-	status["error_code"] = item.ErrorCode
-	status["error_reason"] = item.ErrorReason
-	status["object_type"] = item.ObjectType
-	status["process_id"] = item.ProcessID
-	status["server_port"] = item.ServerPort
-	status["state"] = item.State
-
-	statuss = append(statuss, status)
-	return statuss
-}
-func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var workflowinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	workflowinfo := make(map[string]interface{})
-	workflowinfo["moid"] = item.Moid
-	workflowinfo["object_type"] = item.ObjectType
-	workflowinfo["selector"] = item.Selector
-
-	workflowinfos = append(workflowinfos, workflowinfo)
-	return workflowinfos
-}
-func flattenListHyperflexClusterProfileRef(p []*models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var clusterprofiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		clusterprofiles := make(map[string]interface{})
-		clusterprofiles["moid"] = item.Moid
-		clusterprofiles["object_type"] = item.ObjectType
-		clusterprofiles["selector"] = item.Selector
-		clusterprofiless = append(clusterprofiless, clusterprofiles)
-	}
-	return clusterprofiless
-}
-func flattenMapWorkflowCatalogRef(p *models.WorkflowCatalogRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var catalogs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	catalog := make(map[string]interface{})
-	catalog["moid"] = item.Moid
-	catalog["object_type"] = item.ObjectType
-	catalog["selector"] = item.Selector
-
-	catalogs = append(catalogs, catalog)
-	return catalogs
-}
-func flattenListWorkflowTaskDefinitionRef(p []*models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-	var implementedtaskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		implementedtasks := make(map[string]interface{})
-		implementedtasks["moid"] = item.Moid
-		implementedtasks["object_type"] = item.ObjectType
-		implementedtasks["selector"] = item.Selector
-		implementedtaskss = append(implementedtaskss, implementedtasks)
-	}
-	return implementedtaskss
-}
-func flattenMapWorkflowTaskDefinitionRef(p *models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var interfacetasks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	interfacetask := make(map[string]interface{})
-	interfacetask["moid"] = item.Moid
-	interfacetask["object_type"] = item.ObjectType
-	interfacetask["selector"] = item.Selector
-
-	interfacetasks = append(interfacetasks, interfacetask)
-	return interfacetasks
-}
-func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var internalpropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	internalproperties := make(map[string]interface{})
-	delete(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1, "ObjectType")
-	if len(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1)
-		if err == nil {
-			internalproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	internalproperties["base_task_type"] = item.BaseTaskType
-	internalproperties["constraints"] = item.Constraints
-	internalproperties["internal"] = item.Internal
-	internalproperties["object_type"] = item.ObjectType
-	internalproperties["owner"] = item.Owner
-
-	internalpropertiess = append(internalpropertiess, internalproperties)
-	return internalpropertiess
-}
-func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var propertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	properties := make(map[string]interface{})
-	delete(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1, "ObjectType")
-	if len(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1)
-		if err == nil {
-			properties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	properties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-		var inputdefinitions []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			inputdefinition := make(map[string]interface{})
-			inputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-				var NonReserveddefaults []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				NonReserveddefault := make(map[string]interface{})
-				NonReserveddefault["object_type"] = item.ObjectType
-				NonReserveddefault["override"] = item.Override
-				NonReserveddefault["value"] = item.Value
-
-				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
-				return NonReserveddefaults
-			})(item.Default, d)
-			inputdefinition["description"] = item.Description
-			inputdefinition["label"] = item.Label
-			inputdefinition["name"] = item.Name
-			inputdefinition["object_type"] = item.ObjectType
-			inputdefinition["required"] = item.Required
-			inputdefinitions = append(inputdefinitions, inputdefinition)
-		}
-		return inputdefinitions
-	})(item.InputDefinition, d)
-	properties["object_type"] = item.ObjectType
-	properties["output_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-		var outputdefinitions []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			outputdefinition := make(map[string]interface{})
-			outputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-				var NonReserveddefaults []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				NonReserveddefault := make(map[string]interface{})
-				NonReserveddefault["object_type"] = item.ObjectType
-				NonReserveddefault["override"] = item.Override
-				NonReserveddefault["value"] = item.Value
-
-				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
-				return NonReserveddefaults
-			})(item.Default, d)
-			outputdefinition["description"] = item.Description
-			outputdefinition["label"] = item.Label
-			outputdefinition["name"] = item.Name
-			outputdefinition["object_type"] = item.ObjectType
-			outputdefinition["required"] = item.Required
-			outputdefinitions = append(outputdefinitions, outputdefinition)
-		}
-		return outputdefinitions
-	})(item.OutputDefinition, d)
-	properties["retry_count"] = item.RetryCount
-	properties["retry_delay"] = item.RetryDelay
-	properties["retry_policy"] = item.RetryPolicy
-	properties["timeout"] = item.Timeout
-	properties["timeout_policy"] = item.TimeoutPolicy
-
-	propertiess = append(propertiess, properties)
-	return propertiess
-}
-func flattenMapSoftwarerepositoryCatalogRef(p *models.SoftwarerepositoryCatalogRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var catalogs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	catalog := make(map[string]interface{})
-	catalog["moid"] = item.Moid
-	catalog["object_type"] = item.ObjectType
-	catalog["selector"] = item.Selector
-
-	catalogs = append(catalogs, catalog)
-	return catalogs
-}
-func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServer, d *schema.ResourceData) []map[string]interface{} {
-
-	var sources []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	source := make(map[string]interface{})
-	delete(item.AO1, "ObjectType")
-	if len(item.AO1) != 0 {
-		j, err := json.Marshal(item.AO1)
-		if err == nil {
-			source["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	source["object_type"] = item.ObjectType
-
-	sources = append(sources, source)
-	return sources
-}
-func flattenMapComputeRackUnitRef(p *models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var assignedservers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	assignedserver := make(map[string]interface{})
-	assignedserver["moid"] = item.Moid
-	assignedserver["object_type"] = item.ObjectType
-	assignedserver["selector"] = item.Selector
-
-	assignedservers = append(assignedservers, assignedserver)
-	return assignedservers
-}
-func flattenListServerConfigChangeDetailRef(p []*models.ServerConfigChangeDetailRef, d *schema.ResourceData) []map[string]interface{} {
-	var configchangedetailss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		configchangedetails := make(map[string]interface{})
-		configchangedetails["moid"] = item.Moid
-		configchangedetails["object_type"] = item.ObjectType
-		configchangedetails["selector"] = item.Selector
-		configchangedetailss = append(configchangedetailss, configchangedetails)
-	}
-	return configchangedetailss
-}
-func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
-
-	var configchangess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configchanges := make(map[string]interface{})
-	delete(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1, "ObjectType")
-	if len(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1) != 0 {
-		j, err := json.Marshal(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1)
-		if err == nil {
-			configchanges["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	configchanges["changes"] = item.Changes
-	configchanges["disruptions"] = item.Disruptions
-	configchanges["object_type"] = item.ObjectType
-
-	configchangess = append(configchangess, configchanges)
-	return configchangess
-}
-func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
-
-	var configcontexts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configcontext := make(map[string]interface{})
-	delete(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1, "ObjectType")
-	if len(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1) != 0 {
-		j, err := json.Marshal(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1)
-		if err == nil {
-			configcontext["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	configcontext["config_state"] = item.ConfigState
-	configcontext["control_action"] = item.ControlAction
-	configcontext["error_state"] = item.ErrorState
-	configcontext["object_type"] = item.ObjectType
-	configcontext["oper_state"] = item.OperState
-
-	configcontexts = append(configcontexts, configcontext)
-	return configcontexts
-}
-func flattenMapServerConfigResultRef(p *models.ServerConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var configresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configresult := make(map[string]interface{})
-	configresult["moid"] = item.Moid
-	configresult["object_type"] = item.ObjectType
-	configresult["selector"] = item.Selector
-
-	configresults = append(configresults, configresult)
-	return configresults
-}
-func flattenListWorkflowWorkflowInfoRef(p []*models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var runningworkflowss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		runningworkflows := make(map[string]interface{})
-		runningworkflows["moid"] = item.Moid
-		runningworkflows["object_type"] = item.ObjectType
-		runningworkflows["selector"] = item.Selector
-		runningworkflowss = append(runningworkflowss, runningworkflows)
-	}
-	return runningworkflowss
-}
-func flattenMapPolicyAbstractProfileRef(p *models.PolicyAbstractProfileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var srctemplates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	srctemplate := make(map[string]interface{})
-	srctemplate["moid"] = item.Moid
-	srctemplate["object_type"] = item.ObjectType
-	srctemplate["selector"] = item.Selector
-
-	srctemplates = append(srctemplates, srctemplate)
-	return srctemplates
-}
-func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var vsansettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vsansettings := make(map[string]interface{})
-	delete(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1, "ObjectType")
-	if len(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1)
-		if err == nil {
-			vsansettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	vsansettings["id"] = item.ID
-	vsansettings["object_type"] = item.ObjectType
-
-	vsansettingss = append(vsansettingss, vsansettings)
-	return vsansettingss
-}
-func flattenListStorageLocalDisk(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
-	var dedicatedhotsparess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		dedicatedhotspares := make(map[string]interface{})
-		delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
-		if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
-			if err == nil {
-				dedicatedhotspares["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		dedicatedhotspares["object_type"] = item.ObjectType
-		dedicatedhotspares["slot_number"] = item.SlotNumber
-		dedicatedhotsparess = append(dedicatedhotsparess, dedicatedhotspares)
-	}
-	return dedicatedhotsparess
-}
-func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
-	var spangroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		spangroups := make(map[string]interface{})
-		delete(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1, "ObjectType")
-		if len(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1)
-			if err == nil {
-				spangroups["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		spangroups["disks"] = (func(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
-			var diskss []map[string]interface{}
+			var ethsettingss []map[string]interface{}
 			if p == nil {
 				return nil
 			}
-			for _, item := range p {
-				item := *item
-				disks := make(map[string]interface{})
-				delete(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1, "ObjectType")
-				if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
-
-					j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
-					if err == nil {
-						disks["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
+			item := *p
+			ethsettings := make(map[string]interface{})
+			delete(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1, "ObjectType")
+			if len(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1)
+				if err == nil {
+					ethsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
-				disks["object_type"] = item.ObjectType
-				disks["slot_number"] = item.SlotNumber
-				diskss = append(diskss, disks)
 			}
-			return diskss
-		})(item.Disks, d)
-		spangroups["object_type"] = item.ObjectType
-		spangroupss = append(spangroupss, spangroups)
+			ethsettings["lldp_enabled"] = item.LldpEnabled
+			ethsettings["object_type"] = item.ObjectType
+
+			ethsettingss = append(ethsettingss, ethsettings)
+			return ethsettingss
+		})(item.EthSettings, d)
+		settings["fc_settings"] = (func(p *models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
+
+			var fcsettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			fcsettings := make(map[string]interface{})
+			delete(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1, "ObjectType")
+			if len(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1)
+				if err == nil {
+					fcsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			fcsettings["fip_enabled"] = item.FipEnabled
+			fcsettings["object_type"] = item.ObjectType
+
+			fcsettingss = append(fcsettingss, fcsettings)
+			return fcsettingss
+		})(item.FcSettings, d)
+		settings["object_type"] = item.ObjectType
+		settings["port_channel_settings"] = (func(p *models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
+
+			var portchannelsettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			portchannelsettings := make(map[string]interface{})
+			delete(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1, "ObjectType")
+			if len(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1) != 0 {
+				j, err := json.Marshal(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1)
+				if err == nil {
+					portchannelsettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			portchannelsettings["enabled"] = item.Enabled
+			portchannelsettings["object_type"] = item.ObjectType
+
+			portchannelsettingss = append(portchannelsettingss, portchannelsettings)
+			return portchannelsettingss
+		})(item.PortChannelSettings, d)
+		settings["slot_id"] = item.SlotID
+		settingss = append(settingss, settings)
 	}
-	return spangroupss
+	return settingss
 }
-func flattenListStorageStoragePolicyRef(p []*models.StorageStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var storagepoliciess []map[string]interface{}
+func flattenListAdapterExtEthInterfaceRef(p []*models.AdapterExtEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var extethifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		storagepolicies := make(map[string]interface{})
-		storagepolicies["moid"] = item.Moid
-		storagepolicies["object_type"] = item.ObjectType
-		storagepolicies["selector"] = item.Selector
-		storagepoliciess = append(storagepoliciess, storagepolicies)
+		extethifs := make(map[string]interface{})
+		extethifs["moid"] = item.Moid
+		extethifs["object_type"] = item.ObjectType
+		extethifs["selector"] = item.Selector
+		extethifss = append(extethifss, extethifs)
 	}
-	return storagepoliciess
+	return extethifss
 }
-func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var arfssettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	arfssettings := make(map[string]interface{})
-	delete(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1, "ObjectType")
-	if len(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1)
-		if err == nil {
-			arfssettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	arfssettings["enabled"] = item.Enabled
-	arfssettings["object_type"] = item.ObjectType
-
-	arfssettingss = append(arfssettingss, arfssettings)
-	return arfssettingss
-}
-func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var completionqueuesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	completionqueuesettings := make(map[string]interface{})
-	delete(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1, "ObjectType")
-	if len(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1)
-		if err == nil {
-			completionqueuesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	completionqueuesettings["count"] = item.Count
-	completionqueuesettings["object_type"] = item.ObjectType
-	completionqueuesettings["ring_size"] = item.RingSize
-
-	completionqueuesettingss = append(completionqueuesettingss, completionqueuesettings)
-	return completionqueuesettingss
-}
-func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var interruptsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	interruptsettings := make(map[string]interface{})
-	delete(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1, "ObjectType")
-	if len(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1)
-		if err == nil {
-			interruptsettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	interruptsettings["coalescing_time"] = item.CoalescingTime
-	interruptsettings["coalescing_type"] = item.CoalescingType
-	interruptsettings["count"] = item.Count
-	interruptsettings["mode"] = item.Mode
-	interruptsettings["object_type"] = item.ObjectType
-
-	interruptsettingss = append(interruptsettingss, interruptsettings)
-	return interruptsettingss
-}
-func flattenMapVnicNvgreSettings(p *models.VnicNvgreSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var nvgresettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nvgresettings := make(map[string]interface{})
-	delete(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1, "ObjectType")
-	if len(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1)
-		if err == nil {
-			nvgresettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	nvgresettings["enabled"] = item.Enabled
-	nvgresettings["object_type"] = item.ObjectType
-
-	nvgresettingss = append(nvgresettingss, nvgresettings)
-	return nvgresettingss
-}
-func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var rocesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	rocesettings := make(map[string]interface{})
-	delete(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1, "ObjectType")
-	if len(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1)
-		if err == nil {
-			rocesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	rocesettings["enabled"] = item.Enabled
-	rocesettings["memory_regions"] = item.MemoryRegions
-	rocesettings["object_type"] = item.ObjectType
-	rocesettings["queue_pairs"] = item.QueuePairs
-	rocesettings["resource_groups"] = item.ResourceGroups
-
-	rocesettingss = append(rocesettingss, rocesettings)
-	return rocesettingss
-}
-func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var rxqueuesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	rxqueuesettings := make(map[string]interface{})
-	delete(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1, "ObjectType")
-	if len(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1)
-		if err == nil {
-			rxqueuesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	rxqueuesettings["count"] = item.Count
-	rxqueuesettings["object_type"] = item.ObjectType
-	rxqueuesettings["ring_size"] = item.RingSize
-
-	rxqueuesettingss = append(rxqueuesettingss, rxqueuesettings)
-	return rxqueuesettingss
-}
-func flattenMapVnicTCPOffloadSettings(p *models.VnicTCPOffloadSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var tcpoffloadsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	tcpoffloadsettings := make(map[string]interface{})
-	delete(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1, "ObjectType")
-	if len(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1)
-		if err == nil {
-			tcpoffloadsettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	tcpoffloadsettings["large_receive"] = item.LargeReceive
-	tcpoffloadsettings["large_send"] = item.LargeSend
-	tcpoffloadsettings["object_type"] = item.ObjectType
-	tcpoffloadsettings["rx_checksum"] = item.RxChecksum
-	tcpoffloadsettings["tx_checksum"] = item.TxChecksum
-
-	tcpoffloadsettingss = append(tcpoffloadsettingss, tcpoffloadsettings)
-	return tcpoffloadsettingss
-}
-func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var txqueuesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	txqueuesettings := make(map[string]interface{})
-	delete(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1, "ObjectType")
-	if len(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1)
-		if err == nil {
-			txqueuesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	txqueuesettings["count"] = item.Count
-	txqueuesettings["object_type"] = item.ObjectType
-	txqueuesettings["ring_size"] = item.RingSize
-
-	txqueuesettingss = append(txqueuesettingss, txqueuesettings)
-	return txqueuesettingss
-}
-func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var vxlansettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vxlansettings := make(map[string]interface{})
-	delete(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1, "ObjectType")
-	if len(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1)
-		if err == nil {
-			vxlansettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	vxlansettings["enabled"] = item.Enabled
-	vxlansettings["object_type"] = item.ObjectType
-
-	vxlansettingss = append(vxlansettingss, vxlansettings)
-	return vxlansettingss
-}
-func flattenListVnicFcIfRef(p []*models.VnicFcIfRef, d *schema.ResourceData) []map[string]interface{} {
-	var fcifss []map[string]interface{}
+func flattenListAdapterHostEthInterfaceRef(p []*models.AdapterHostEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var hostethifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		fcifs := make(map[string]interface{})
-		fcifs["moid"] = item.Moid
-		fcifs["object_type"] = item.ObjectType
-		fcifs["selector"] = item.Selector
-		fcifss = append(fcifss, fcifs)
+		hostethifs := make(map[string]interface{})
+		hostethifs["moid"] = item.Moid
+		hostethifs["object_type"] = item.ObjectType
+		hostethifs["selector"] = item.Selector
+		hostethifss = append(hostethifss, hostethifs)
 	}
-	return fcifss
+	return hostethifss
 }
-func flattenListIamAPIKeyRef(p []*models.IamAPIKeyRef, d *schema.ResourceData) []map[string]interface{} {
-	var apikeyss []map[string]interface{}
+func flattenListAdapterHostFcInterfaceRef(p []*models.AdapterHostFcInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var hostfcifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		apikeys := make(map[string]interface{})
-		apikeys["moid"] = item.Moid
-		apikeys["object_type"] = item.ObjectType
-		apikeys["selector"] = item.Selector
-		apikeyss = append(apikeyss, apikeys)
+		hostfcifs := make(map[string]interface{})
+		hostfcifs["moid"] = item.Moid
+		hostfcifs["object_type"] = item.ObjectType
+		hostfcifs["selector"] = item.Selector
+		hostfcifss = append(hostfcifss, hostfcifs)
 	}
-	return apikeyss
+	return hostfcifss
 }
-func flattenListIamAppRegistrationRef(p []*models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
-	var appregistrationss []map[string]interface{}
+func flattenListAdapterHostIscsiInterfaceRef(p []*models.AdapterHostIscsiInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var hostiscsiifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		appregistrations := make(map[string]interface{})
-		appregistrations["moid"] = item.Moid
-		appregistrations["object_type"] = item.ObjectType
-		appregistrations["selector"] = item.Selector
-		appregistrationss = append(appregistrationss, appregistrations)
+		hostiscsiifs := make(map[string]interface{})
+		hostiscsiifs["moid"] = item.Moid
+		hostiscsiifs["object_type"] = item.ObjectType
+		hostiscsiifs["selector"] = item.Selector
+		hostiscsiifss = append(hostiscsiifss, hostiscsiifs)
 	}
-	return appregistrationss
+	return hostiscsiifss
 }
-func flattenMapIamIdpRef(p *models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var idps []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	idp := make(map[string]interface{})
-	idp["moid"] = item.Moid
-	idp["object_type"] = item.ObjectType
-	idp["selector"] = item.Selector
-
-	idps = append(idps, idp)
-	return idps
-}
-func flattenMapIamIdpReferenceRef(p *models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var idpreferences []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	idpreference := make(map[string]interface{})
-	idpreference["moid"] = item.Moid
-	idpreference["object_type"] = item.ObjectType
-	idpreference["selector"] = item.Selector
-
-	idpreferences = append(idpreferences, idpreference)
-	return idpreferences
-}
-func flattenMapIamLocalUserPasswordRef(p *models.IamLocalUserPasswordRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var localuserpasswords []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	localuserpassword := make(map[string]interface{})
-	localuserpassword["moid"] = item.Moid
-	localuserpassword["object_type"] = item.ObjectType
-	localuserpassword["selector"] = item.Selector
-
-	localuserpasswords = append(localuserpasswords, localuserpassword)
-	return localuserpasswords
-}
-func flattenListIamOAuthTokenRef(p []*models.IamOAuthTokenRef, d *schema.ResourceData) []map[string]interface{} {
-	var oauthtokenss []map[string]interface{}
+func flattenListAdapterUnitRef(p []*models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var adapterss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		oauthtokens := make(map[string]interface{})
-		oauthtokens["moid"] = item.Moid
-		oauthtokens["object_type"] = item.ObjectType
-		oauthtokens["selector"] = item.Selector
-		oauthtokenss = append(oauthtokenss, oauthtokens)
+		adapters := make(map[string]interface{})
+		adapters["moid"] = item.Moid
+		adapters["object_type"] = item.ObjectType
+		adapters["selector"] = item.Selector
+		adapterss = append(adapterss, adapters)
 	}
-	return oauthtokenss
+	return adapterss
 }
-func flattenListIamPermissionRef(p []*models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
-	var permissionss []map[string]interface{}
+func flattenListApplianceDataExportPolicyRef(p []*models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var subconfigss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		permissions := make(map[string]interface{})
-		permissions["moid"] = item.Moid
-		permissions["object_type"] = item.ObjectType
-		permissions["selector"] = item.Selector
-		permissionss = append(permissionss, permissions)
+		subconfigs := make(map[string]interface{})
+		subconfigs["moid"] = item.Moid
+		subconfigs["object_type"] = item.ObjectType
+		subconfigs["selector"] = item.Selector
+		subconfigss = append(subconfigss, subconfigs)
 	}
-	return permissionss
+	return subconfigss
 }
-func flattenListIamSessionRef(p []*models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
-	var sessionss []map[string]interface{}
+func flattenListApplianceKeyValuePair(p []*models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitiess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		sessions := make(map[string]interface{})
-		sessions["moid"] = item.Moid
-		sessions["object_type"] = item.ObjectType
-		sessions["selector"] = item.Selector
-		sessionss = append(sessionss, sessions)
-	}
-	return sessionss
-}
-func flattenListIamEndPointUserRoleRef(p []*models.IamEndPointUserRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var endpointuserroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		endpointuserroles := make(map[string]interface{})
-		endpointuserroles["moid"] = item.Moid
-		endpointuserroles["object_type"] = item.ObjectType
-		endpointuserroles["selector"] = item.Selector
-		endpointuserroless = append(endpointuserroless, endpointuserroles)
-	}
-	return endpointuserroless
-}
-func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
+		capabilities := make(map[string]interface{})
 
-	var passwordpropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	passwordproperties := make(map[string]interface{})
-	delete(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1, "ObjectType")
-	if len(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1)
-		if err == nil {
-			passwordproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
+		if len(item.ApplianceKeyValuePairAO1P1.ApplianceKeyValuePairAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ApplianceKeyValuePairAO1P1.ApplianceKeyValuePairAO1P1)
+			if err == nil {
+				capabilities["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
 		}
+		capabilities["key"] = item.Key
+		capabilities["object_type"] = item.ObjectType
+		capabilities["value"] = item.Value
+		capabilitiess = append(capabilitiess, capabilities)
 	}
-	passwordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
-	passwordproperties["enforce_strong_password"] = item.EnforceStrongPassword
-	passwordproperties["grace_period"] = item.GracePeriod
-	passwordproperties["notification_period"] = item.NotificationPeriod
-	passwordproperties["object_type"] = item.ObjectType
-	passwordproperties["password_expiry_duration"] = item.PasswordExpiryDuration
-	passwordproperties["password_history"] = item.PasswordHistory
-
-	passwordpropertiess = append(passwordpropertiess, passwordproperties)
-	return passwordpropertiess
+	return capabilitiess
 }
-func flattenListIamEndPointRoleRef(p []*models.IamEndPointRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var endpointroles []map[string]interface{}
+func flattenListAssetClusterMemberRef(p []*models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
+	var clustermemberss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		endpointrole := make(map[string]interface{})
-		endpointrole["moid"] = item.Moid
-		endpointrole["object_type"] = item.ObjectType
-		endpointrole["selector"] = item.Selector
-		endpointroles = append(endpointroles, endpointrole)
+		clustermembers := make(map[string]interface{})
+		clustermembers["moid"] = item.Moid
+		clustermembers["object_type"] = item.ObjectType
+		clustermembers["selector"] = item.Selector
+		clustermemberss = append(clustermemberss, clustermembers)
 	}
-	return endpointroles
+	return clustermemberss
 }
-func flattenMapIamEndPointUserRef(p *models.IamEndPointUserRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var endpointusers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	endpointuser := make(map[string]interface{})
-	endpointuser["moid"] = item.Moid
-	endpointuser["object_type"] = item.ObjectType
-	endpointuser["selector"] = item.Selector
-
-	endpointusers = append(endpointusers, endpointuser)
-	return endpointusers
-}
-func flattenMapIamEndPointUserPolicyRef(p *models.IamEndPointUserPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var endpointuserpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	endpointuserpolicy := make(map[string]interface{})
-	endpointuserpolicy["moid"] = item.Moid
-	endpointuserpolicy["object_type"] = item.ObjectType
-	endpointuserpolicy["selector"] = item.Selector
-
-	endpointuserpolicys = append(endpointuserpolicys, endpointuserpolicy)
-	return endpointuserpolicys
-}
-func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
-
-	var extatraffics []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	extatraffic := make(map[string]interface{})
-	delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
-	if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
-		if err == nil {
-			extatraffic["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	extatraffic["name"] = item.Name
-	extatraffic["object_type"] = item.ObjectType
-	extatraffic["vlan_id"] = item.VlanID
-
-	extatraffics = append(extatraffics, extatraffic)
-	return extatraffics
-}
-func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
-
-	var basepropertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	baseproperties := make(map[string]interface{})
-	delete(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1, "ObjectType")
-	if len(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1) != 0 {
-		j, err := json.Marshal(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1)
-		if err == nil {
-			baseproperties["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	baseproperties["attribute"] = item.Attribute
-	baseproperties["base_dn"] = item.BaseDn
-	baseproperties["bind_dn"] = item.BindDn
-	baseproperties["bind_method"] = item.BindMethod
-	baseproperties["domain"] = item.Domain
-	baseproperties["enable_encryption"] = item.EnableEncryption
-	baseproperties["enable_group_authorization"] = item.EnableGroupAuthorization
-	baseproperties["filter"] = item.Filter
-	baseproperties["group_attribute"] = item.GroupAttribute
-	baseproperties["is_password_set"] = item.IsPasswordSet
-	baseproperties["nested_group_search_depth"] = item.NestedGroupSearchDepth
-	baseproperties["object_type"] = item.ObjectType
-	password_x := d.Get("base_properties").([]interface{})
-	password_y := password_x[0].(map[string]interface{})
-	baseproperties["password"] = password_y["password"]
-	baseproperties["timeout"] = item.Timeout
-
-	basepropertiess = append(basepropertiess, baseproperties)
-	return basepropertiess
-}
-func flattenMapIamLdapDNSParameters(p *models.IamLdapDNSParameters, d *schema.ResourceData) []map[string]interface{} {
-
-	var dnsparameterss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	dnsparameters := make(map[string]interface{})
-	delete(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1, "ObjectType")
-	if len(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1) != 0 {
-		j, err := json.Marshal(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1)
-		if err == nil {
-			dnsparameters["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	dnsparameters["object_type"] = item.ObjectType
-	dnsparameters["search_domain"] = item.SearchDomain
-	dnsparameters["search_forest"] = item.SearchForest
-	dnsparameters["source"] = item.Source
-
-	dnsparameterss = append(dnsparameterss, dnsparameters)
-	return dnsparameterss
-}
-func flattenListIamLdapGroupRef(p []*models.IamLdapGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var groupss []map[string]interface{}
+func flattenListBiosUnitRef(p []*models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var biosunitss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		groups := make(map[string]interface{})
-		groups["moid"] = item.Moid
-		groups["object_type"] = item.ObjectType
-		groups["selector"] = item.Selector
-		groupss = append(groupss, groups)
+		biosunits := make(map[string]interface{})
+		biosunits["moid"] = item.Moid
+		biosunits["object_type"] = item.ObjectType
+		biosunits["selector"] = item.Selector
+		biosunitss = append(biosunitss, biosunits)
 	}
-	return groupss
+	return biosunitss
 }
-func flattenListIamLdapProviderRef(p []*models.IamLdapProviderRef, d *schema.ResourceData) []map[string]interface{} {
-	var providerss []map[string]interface{}
+func flattenListBootDeviceBase(p []*models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
+	var bootdevicess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		providers := make(map[string]interface{})
-		providers["moid"] = item.Moid
-		providers["object_type"] = item.ObjectType
-		providers["selector"] = item.Selector
-		providerss = append(providerss, providers)
-	}
-	return providerss
-}
-func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
+		bootdevices := make(map[string]interface{})
 
-	var logicalavalabilityzoneconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	logicalavalabilityzoneconfig := make(map[string]interface{})
-	delete(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1, "ObjectType")
-	if len(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1)
-		if err == nil {
-			logicalavalabilityzoneconfig["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
+		if len(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1)
+			if err == nil {
+				bootdevices["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
 		}
+		bootdevices["enabled"] = item.Enabled
+		bootdevices["name"] = item.Name
+		bootdevices["object_type"] = item.ObjectType
+		bootdevicess = append(bootdevicess, bootdevices)
 	}
-	logicalavalabilityzoneconfig["auto_config"] = item.AutoConfig
-	logicalavalabilityzoneconfig["object_type"] = item.ObjectType
-
-	logicalavalabilityzoneconfigs = append(logicalavalabilityzoneconfigs, logicalavalabilityzoneconfig)
-	return logicalavalabilityzoneconfigs
+	return bootdevicess
 }
-func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
-
-	var certificates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	certificate := make(map[string]interface{})
-	delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
-	if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
-		j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
-		if err == nil {
-			certificate["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-		var issuers []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		issuer := make(map[string]interface{})
-		issuer["common_name"] = item.CommonName
-		issuer["country"] = item.Country
-		issuer["locality"] = item.Locality
-		issuer["object_type"] = item.ObjectType
-		issuer["organization"] = item.Organization
-		issuer["organizational_unit"] = item.OrganizationalUnit
-		issuer["state"] = item.State
-
-		issuers = append(issuers, issuer)
-		return issuers
-	})(item.Issuer, d)
-	certificate["object_type"] = item.ObjectType
-	certificate["pem_certificate"] = item.PemCertificate
-	certificate["sha256_fingerprint"] = item.Sha256Fingerprint
-	certificate["signature_algorithm"] = item.SignatureAlgorithm
-	certificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-		var subjects []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		subject := make(map[string]interface{})
-		subject["common_name"] = item.CommonName
-		subject["country"] = item.Country
-		subject["locality"] = item.Locality
-		subject["object_type"] = item.ObjectType
-		subject["organization"] = item.Organization
-		subject["organizational_unit"] = item.OrganizationalUnit
-		subject["state"] = item.State
-
-		subjects = append(subjects, subject)
-		return subjects
-	})(item.Subject, d)
-
-	certificates = append(certificates, certificate)
-	return certificates
-}
-func flattenMapIamCertificateRequestRef(p *models.IamCertificateRequestRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var certificaterequests []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	certificaterequest := make(map[string]interface{})
-	certificaterequest["moid"] = item.Moid
-	certificaterequest["object_type"] = item.ObjectType
-	certificaterequest["selector"] = item.Selector
-
-	certificaterequests = append(certificaterequests, certificaterequest)
-	return certificaterequests
-}
-func flattenMapHyperflexIPAddrRange(p *models.HyperflexIPAddrRange, d *schema.ResourceData) []map[string]interface{} {
-
-	var dataipranges []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	dataiprange := make(map[string]interface{})
-	delete(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1, "ObjectType")
-	if len(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1)
-		if err == nil {
-			dataiprange["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	dataiprange["end_addr"] = item.EndAddr
-	dataiprange["gateway"] = item.Gateway
-	dataiprange["netmask"] = item.Netmask
-	dataiprange["object_type"] = item.ObjectType
-	dataiprange["start_addr"] = item.StartAddr
-
-	dataipranges = append(dataipranges, dataiprange)
-	return dataipranges
-}
-func flattenMapIamSystemRef(p *models.IamSystemRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var systems []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	system := make(map[string]interface{})
-	system["moid"] = item.Moid
-	system["object_type"] = item.ObjectType
-	system["selector"] = item.Selector
-
-	systems = append(systems, system)
-	return systems
-}
-func flattenListIamUserLoginTimeRef(p []*models.IamUserLoginTimeRef, d *schema.ResourceData) []map[string]interface{} {
-	var userlogintimes []map[string]interface{}
+func flattenListComputeBladeRef(p []*models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
+	var bladess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		userlogintime := make(map[string]interface{})
-		userlogintime["moid"] = item.Moid
-		userlogintime["object_type"] = item.ObjectType
-		userlogintime["selector"] = item.Selector
-		userlogintimes = append(userlogintimes, userlogintime)
+		blades := make(map[string]interface{})
+		blades["moid"] = item.Moid
+		blades["object_type"] = item.ObjectType
+		blades["selector"] = item.Selector
+		bladess = append(bladess, blades)
 	}
-	return userlogintimes
+	return bladess
 }
-func flattenListIamUserPreferenceRef(p []*models.IamUserPreferenceRef, d *schema.ResourceData) []map[string]interface{} {
-	var userpreferencess []map[string]interface{}
+func flattenListComputeIPAddress(p []*models.ComputeIPAddress, d *schema.ResourceData) []map[string]interface{} {
+	var kvmipaddressess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		userpreferences := make(map[string]interface{})
-		userpreferences["moid"] = item.Moid
-		userpreferences["object_type"] = item.ObjectType
-		userpreferences["selector"] = item.Selector
-		userpreferencess = append(userpreferencess, userpreferences)
-	}
-	return userpreferencess
-}
-func flattenListIamUserGroupRef(p []*models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var usergroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		usergroups := make(map[string]interface{})
-		usergroups["moid"] = item.Moid
-		usergroups["object_type"] = item.ObjectType
-		usergroups["selector"] = item.Selector
-		usergroupss = append(usergroupss, usergroups)
-	}
-	return usergroupss
-}
-func flattenListIamUserRef(p []*models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
-	var userss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		users := make(map[string]interface{})
-		users["moid"] = item.Moid
-		users["object_type"] = item.ObjectType
-		users["selector"] = item.Selector
-		userss = append(userss, users)
-	}
-	return userss
-}
-func flattenMapHyperflexAppCatalogRef(p *models.HyperflexAppCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+		kvmipaddresses := make(map[string]interface{})
 
-	var appcatalogs []map[string]interface{}
+		if len(item.ComputeIPAddressAO1P1.ComputeIPAddressAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ComputeIPAddressAO1P1.ComputeIPAddressAO1P1)
+			if err == nil {
+				kvmipaddresses["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		kvmipaddresses["address"] = item.Address
+		kvmipaddresses["category"] = item.Category
+		kvmipaddresses["default_gateway"] = item.DefaultGateway
+		kvmipaddresses["dn"] = item.Dn
+		kvmipaddresses["http_port"] = item.HTTPPort
+		kvmipaddresses["https_port"] = item.HTTPSPort
+		kvmipaddresses["kvm_port"] = item.KvmPort
+		kvmipaddresses["name"] = item.Name
+		kvmipaddresses["object_type"] = item.ObjectType
+		kvmipaddresses["subnet"] = item.Subnet
+		kvmipaddresses["type"] = item.Type
+		kvmipaddressess = append(kvmipaddressess, kvmipaddresses)
+	}
+	return kvmipaddressess
+}
+func flattenListComputeRackUnitRef(p []*models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var computerackunitss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	item := *p
-	appcatalog := make(map[string]interface{})
-	appcatalog["moid"] = item.Moid
-	appcatalog["object_type"] = item.ObjectType
-	appcatalog["selector"] = item.Selector
-
-	appcatalogs = append(appcatalogs, appcatalog)
-	return appcatalogs
+	for _, item := range p {
+		item := *item
+		computerackunits := make(map[string]interface{})
+		computerackunits["moid"] = item.Moid
+		computerackunits["object_type"] = item.ObjectType
+		computerackunits["selector"] = item.Selector
+		computerackunitss = append(computerackunitss, computerackunits)
+	}
+	return computerackunitss
+}
+func flattenListCondHclStatusDetailRef(p []*models.CondHclStatusDetailRef, d *schema.ResourceData) []map[string]interface{} {
+	var detailss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		details := make(map[string]interface{})
+		details["moid"] = item.Moid
+		details["object_type"] = item.ObjectType
+		details["selector"] = item.Selector
+		detailss = append(detailss, details)
+	}
+	return detailss
+}
+func flattenListEquipmentFanModuleRef(p []*models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
+	var fanmoduless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		fanmodules := make(map[string]interface{})
+		fanmodules["moid"] = item.Moid
+		fanmodules["object_type"] = item.ObjectType
+		fanmodules["selector"] = item.Selector
+		fanmoduless = append(fanmoduless, fanmodules)
+	}
+	return fanmoduless
+}
+func flattenListEquipmentFanRef(p []*models.EquipmentFanRef, d *schema.ResourceData) []map[string]interface{} {
+	var fanss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		fans := make(map[string]interface{})
+		fans["moid"] = item.Moid
+		fans["object_type"] = item.ObjectType
+		fans["selector"] = item.Selector
+		fanss = append(fanss, fans)
+	}
+	return fanss
+}
+func flattenListEquipmentIoCardRef(p []*models.EquipmentIoCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var iomss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		ioms := make(map[string]interface{})
+		ioms["moid"] = item.Moid
+		ioms["object_type"] = item.ObjectType
+		ioms["selector"] = item.Selector
+		iomss = append(iomss, ioms)
+	}
+	return iomss
+}
+func flattenListEquipmentIoExpanderRef(p []*models.EquipmentIoExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentioexpanderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		equipmentioexpanders := make(map[string]interface{})
+		equipmentioexpanders["moid"] = item.Moid
+		equipmentioexpanders["object_type"] = item.ObjectType
+		equipmentioexpanders["selector"] = item.Selector
+		equipmentioexpanderss = append(equipmentioexpanderss, equipmentioexpanders)
+	}
+	return equipmentioexpanderss
+}
+func flattenListEquipmentPsuRef(p []*models.EquipmentPsuRef, d *schema.ResourceData) []map[string]interface{} {
+	var psuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		psus := make(map[string]interface{})
+		psus["moid"] = item.Moid
+		psus["object_type"] = item.ObjectType
+		psus["selector"] = item.Selector
+		psuss = append(psuss, psus)
+	}
+	return psuss
+}
+func flattenListEquipmentRackEnclosureSlotRef(p []*models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
+	var slotss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		slots := make(map[string]interface{})
+		slots["moid"] = item.Moid
+		slots["object_type"] = item.ObjectType
+		slots["selector"] = item.Selector
+		slotss = append(slotss, slots)
+	}
+	return slotss
+}
+func flattenListEquipmentSwitchCardRef(p []*models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var cardss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		cards := make(map[string]interface{})
+		cards["moid"] = item.Moid
+		cards["object_type"] = item.ObjectType
+		cards["selector"] = item.Selector
+		cardss = append(cardss, cards)
+	}
+	return cardss
+}
+func flattenListEquipmentSystemIoControllerRef(p []*models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var siocss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		siocs := make(map[string]interface{})
+		siocs["moid"] = item.Moid
+		siocs["object_type"] = item.ObjectType
+		siocs["selector"] = item.Selector
+		siocss = append(siocss, siocs)
+	}
+	return siocss
+}
+func flattenListEquipmentTpmRef(p []*models.EquipmentTpmRef, d *schema.ResourceData) []map[string]interface{} {
+	var equipmenttpmss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		equipmenttpms := make(map[string]interface{})
+		equipmenttpms["moid"] = item.Moid
+		equipmenttpms["object_type"] = item.ObjectType
+		equipmenttpms["selector"] = item.Selector
+		equipmenttpmss = append(equipmenttpmss, equipmenttpms)
+	}
+	return equipmenttpmss
+}
+func flattenListEtherPhysicalPortRef(p []*models.EtherPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var ethernetportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		ethernetports := make(map[string]interface{})
+		ethernetports["moid"] = item.Moid
+		ethernetports["object_type"] = item.ObjectType
+		ethernetports["selector"] = item.Selector
+		ethernetportss = append(ethernetportss, ethernetports)
+	}
+	return ethernetportss
+}
+func flattenListFcPhysicalPortRef(p []*models.FcPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var fcportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		fcports := make(map[string]interface{})
+		fcports["moid"] = item.Moid
+		fcports["object_type"] = item.ObjectType
+		fcports["selector"] = item.Selector
+		fcportss = append(fcportss, fcports)
+	}
+	return fcportss
+}
+func flattenListFirmwareRunningFirmwareRef(p []*models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
+	var runningfirmwares []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		runningfirmware := make(map[string]interface{})
+		runningfirmware["moid"] = item.Moid
+		runningfirmware["object_type"] = item.ObjectType
+		runningfirmware["selector"] = item.Selector
+		runningfirmwares = append(runningfirmwares, runningfirmware)
+	}
+	return runningfirmwares
+}
+func flattenListForecastDefinitionRef(p []*models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+	var definitions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		definition := make(map[string]interface{})
+		definition["moid"] = item.Moid
+		definition["object_type"] = item.ObjectType
+		definition["selector"] = item.Selector
+		definitions = append(definitions, definition)
+	}
+	return definitions
+}
+func flattenListGraphicsCardRef(p []*models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var graphicscardss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		graphicscards := make(map[string]interface{})
+		graphicscards["moid"] = item.Moid
+		graphicscards["object_type"] = item.ObjectType
+		graphicscards["selector"] = item.Selector
+		graphicscardss = append(graphicscardss, graphicscards)
+	}
+	return graphicscardss
+}
+func flattenListGraphicsControllerRef(p []*models.GraphicsControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var graphicscontrollerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		graphicscontrollers := make(map[string]interface{})
+		graphicscontrollers["moid"] = item.Moid
+		graphicscontrollers["object_type"] = item.ObjectType
+		graphicscontrollers["selector"] = item.Selector
+		graphicscontrollerss = append(graphicscontrollerss, graphicscontrollers)
+	}
+	return graphicscontrollerss
 }
 func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData) []map[string]interface{} {
 	var capabilityconstraintss []map[string]interface{}
@@ -1473,7 +582,7 @@ func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData)
 	for _, item := range p {
 		item := *item
 		capabilityconstraints := make(map[string]interface{})
-		delete(item.HclConstraintAO1P1.HclConstraintAO1P1, "ObjectType")
+
 		if len(item.HclConstraintAO1P1.HclConstraintAO1P1) != 0 {
 
 			j, err := json.Marshal(item.HclConstraintAO1P1.HclConstraintAO1P1)
@@ -1490,119 +599,269 @@ func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData)
 	}
 	return capabilityconstraintss
 }
-func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
-	var typedefinitions []map[string]interface{}
+func flattenListHclHyperflexSoftwareCompatibilityInfoRef(p []*models.HclHyperflexSoftwareCompatibilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexsoftwarecompatibilityinfoss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		typedefinition := make(map[string]interface{})
-		delete(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1, "ObjectType")
-		if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
+		hyperflexsoftwarecompatibilityinfos := make(map[string]interface{})
+		hyperflexsoftwarecompatibilityinfos["moid"] = item.Moid
+		hyperflexsoftwarecompatibilityinfos["object_type"] = item.ObjectType
+		hyperflexsoftwarecompatibilityinfos["selector"] = item.Selector
+		hyperflexsoftwarecompatibilityinfoss = append(hyperflexsoftwarecompatibilityinfoss, hyperflexsoftwarecompatibilityinfos)
+	}
+	return hyperflexsoftwarecompatibilityinfoss
+}
+func flattenListHclOperatingSystemRef(p []*models.HclOperatingSystemRef, d *schema.ResourceData) []map[string]interface{} {
+	var distributionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		distributions := make(map[string]interface{})
+		distributions["moid"] = item.Moid
+		distributions["object_type"] = item.ObjectType
+		distributions["selector"] = item.Selector
+		distributionss = append(distributionss, distributions)
+	}
+	return distributionss
+}
+func flattenListHyperflexAlarmRef(p []*models.HyperflexAlarmRef, d *schema.ResourceData) []map[string]interface{} {
+	var alarms []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		alarm := make(map[string]interface{})
+		alarm["moid"] = item.Moid
+		alarm["object_type"] = item.ObjectType
+		alarm["selector"] = item.Selector
+		alarms = append(alarms, alarm)
+	}
+	return alarms
+}
+func flattenListHyperflexCapabilityInfoRef(p []*models.HyperflexCapabilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexcapabilityinfoss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		hyperflexcapabilityinfos := make(map[string]interface{})
+		hyperflexcapabilityinfos["moid"] = item.Moid
+		hyperflexcapabilityinfos["object_type"] = item.ObjectType
+		hyperflexcapabilityinfos["selector"] = item.Selector
+		hyperflexcapabilityinfoss = append(hyperflexcapabilityinfoss, hyperflexcapabilityinfos)
+	}
+	return hyperflexcapabilityinfoss
+}
+func flattenListHyperflexClusterProfileRef(p []*models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var clusterprofiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		clusterprofiles := make(map[string]interface{})
+		clusterprofiles["moid"] = item.Moid
+		clusterprofiles["object_type"] = item.ObjectType
+		clusterprofiles["selector"] = item.Selector
+		clusterprofiless = append(clusterprofiless, clusterprofiles)
+	}
+	return clusterprofiless
+}
+func flattenListHyperflexConfigResultEntryRef(p []*models.HyperflexConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var resultentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resultentries := make(map[string]interface{})
+		resultentries["moid"] = item.Moid
+		resultentries["object_type"] = item.ObjectType
+		resultentries["selector"] = item.Selector
+		resultentriess = append(resultentriess, resultentries)
+	}
+	return resultentriess
+}
+func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
+	var featurelimitentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		featurelimitentries := make(map[string]interface{})
 
-			j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
+		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
 			if err == nil {
-				typedefinition["additional_properties"] = string(j)
+				featurelimitentries["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		typedefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+		featurelimitentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 
-			var NonReserveddefaults []map[string]interface{}
+			var constraints []map[string]interface{}
 			if p == nil {
 				return nil
 			}
 			item := *p
-			NonReserveddefault := make(map[string]interface{})
-			delete(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1, "ObjectType")
-			if len(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1) != 0 {
-				j, err := json.Marshal(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1)
+			constraint := make(map[string]interface{})
+			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
+			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
+				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
 				if err == nil {
-					NonReserveddefault["additional_properties"] = string(j)
+					constraint["additional_properties"] = string(j)
 				} else {
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
-			NonReserveddefault["object_type"] = item.ObjectType
-			NonReserveddefault["override"] = item.Override
-			NonReserveddefault["value"] = item.Value
+			constraint["hxdp_version"] = item.HxdpVersion
+			constraint["hypervisor_type"] = item.HypervisorType
+			constraint["mgmt_platform"] = item.MgmtPlatform
+			constraint["object_type"] = item.ObjectType
+			constraint["server_model"] = item.ServerModel
 
-			NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
-			return NonReserveddefaults
-		})(item.Default, d)
-		typedefinition["description"] = item.Description
-		typedefinition["label"] = item.Label
-		typedefinition["name"] = item.Name
-		typedefinition["object_type"] = item.ObjectType
-		typedefinition["required"] = item.Required
-		typedefinitions = append(typedefinitions, typedefinition)
+			constraints = append(constraints, constraint)
+			return constraints
+		})(item.Constraint, d)
+		featurelimitentries["name"] = item.Name
+		featurelimitentries["object_type"] = item.ObjectType
+		featurelimitentries["value"] = item.Value
+		featurelimitentriess = append(featurelimitentriess, featurelimitentries)
 	}
-	return typedefinitions
+	return featurelimitentriess
 }
-func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
-	var partitionss []map[string]interface{}
+func flattenListHyperflexHxZoneResiliencyInfoDt(p []*models.HyperflexHxZoneResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+	var zoneresiliencylists []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		partitions := make(map[string]interface{})
-		delete(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1, "ObjectType")
-		if len(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1) != 0 {
+		zoneresiliencylist := make(map[string]interface{})
 
-			j, err := json.Marshal(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1)
+		if len(item.HyperflexHxZoneResiliencyInfoDtAO1P1.HyperflexHxZoneResiliencyInfoDtAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexHxZoneResiliencyInfoDtAO1P1.HyperflexHxZoneResiliencyInfoDtAO1P1)
 			if err == nil {
-				partitions["additional_properties"] = string(j)
+				zoneresiliencylist["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		partitions["object_type"] = item.ObjectType
-		partitions["type"] = item.Type
-		partitions["virtual_drives"] = (func(p []*models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
-			var virtualdrivess []map[string]interface{}
+		zoneresiliencylist["name"] = item.Name
+		zoneresiliencylist["object_type"] = item.ObjectType
+		zoneresiliencylist["resiliency_info"] = (func(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+
+			var resiliencyinfos []map[string]interface{}
 			if p == nil {
 				return nil
 			}
-			for _, item := range p {
-				item := *item
-				virtualdrives := make(map[string]interface{})
-				delete(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1, "ObjectType")
-				if len(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1) != 0 {
-
-					j, err := json.Marshal(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1)
-					if err == nil {
-						virtualdrives["additional_properties"] = string(j)
-					} else {
-						log.Printf("Error occured while flattening and json parsing: %s", err)
-					}
+			item := *p
+			resiliencyinfo := make(map[string]interface{})
+			delete(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1, "ObjectType")
+			if len(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1) != 0 {
+				j, err := json.Marshal(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1)
+				if err == nil {
+					resiliencyinfo["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
-				virtualdrives["enable"] = item.Enable
-				virtualdrives["object_type"] = item.ObjectType
-				virtualdrivess = append(virtualdrivess, virtualdrives)
 			}
-			return virtualdrivess
-		})(item.VirtualDrives, d)
-		partitionss = append(partitionss, partitions)
-	}
-	return partitionss
-}
-func flattenMapIamUserGroupRef(p *models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
+			resiliencyinfo["data_replication_factor"] = item.DataReplicationFactor
+			resiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
+			resiliencyinfo["messages"] = item.Messages
+			resiliencyinfo["node_failures_tolerable"] = item.NodeFailuresTolerable
+			resiliencyinfo["object_type"] = item.ObjectType
+			resiliencyinfo["policy_compliance"] = item.PolicyCompliance
+			resiliencyinfo["resiliency_state"] = item.ResiliencyState
+			resiliencyinfo["ssd_failures_tolerable"] = item.SsdFailuresTolerable
 
-	var usergroups []map[string]interface{}
+			resiliencyinfos = append(resiliencyinfos, resiliencyinfo)
+			return resiliencyinfos
+		})(item.ResiliencyInfo, d)
+		zoneresiliencylists = append(zoneresiliencylists, zoneresiliencylist)
+	}
+	return zoneresiliencylists
+}
+func flattenListHyperflexHxdpVersionRef(p []*models.HyperflexHxdpVersionRef, d *schema.ResourceData) []map[string]interface{} {
+	var hxdpversionss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	item := *p
-	usergroup := make(map[string]interface{})
-	usergroup["moid"] = item.Moid
-	usergroup["object_type"] = item.ObjectType
-	usergroup["selector"] = item.Selector
+	for _, item := range p {
+		item := *item
+		hxdpversions := make(map[string]interface{})
+		hxdpversions["moid"] = item.Moid
+		hxdpversions["object_type"] = item.ObjectType
+		hxdpversions["selector"] = item.Selector
+		hxdpversionss = append(hxdpversionss, hxdpversions)
+	}
+	return hxdpversionss
+}
+func flattenListHyperflexNamedVlan(p []*models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+	var vmnetworkvlanss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		vmnetworkvlans := make(map[string]interface{})
 
-	usergroups = append(usergroups, usergroup)
-	return usergroups
+		if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
+
+			j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
+			if err == nil {
+				vmnetworkvlans["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		vmnetworkvlans["name"] = item.Name
+		vmnetworkvlans["object_type"] = item.ObjectType
+		vmnetworkvlans["vlan_id"] = item.VlanID
+		vmnetworkvlanss = append(vmnetworkvlanss, vmnetworkvlans)
+	}
+	return vmnetworkvlanss
+}
+func flattenListHyperflexNodeProfileRef(p []*models.HyperflexNodeProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var nodeprofileconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		nodeprofileconfig := make(map[string]interface{})
+		nodeprofileconfig["moid"] = item.Moid
+		nodeprofileconfig["object_type"] = item.ObjectType
+		nodeprofileconfig["selector"] = item.Selector
+		nodeprofileconfigs = append(nodeprofileconfigs, nodeprofileconfig)
+	}
+	return nodeprofileconfigs
+}
+func flattenListHyperflexNodeRef(p []*models.HyperflexNodeRef, d *schema.ResourceData) []map[string]interface{} {
+	var nodess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		nodes := make(map[string]interface{})
+		nodes["moid"] = item.Moid
+		nodes["object_type"] = item.ObjectType
+		nodes["selector"] = item.Selector
+		nodess = append(nodess, nodes)
+	}
+	return nodess
 }
 func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerFirmwareVersionEntry, d *schema.ResourceData) []map[string]interface{} {
 	var serverfirmwareversionentriess []map[string]interface{}
@@ -1612,7 +871,7 @@ func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerF
 	for _, item := range p {
 		item := *item
 		serverfirmwareversionentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
+
 		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
 
 			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
@@ -1656,168 +915,6 @@ func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerF
 	}
 	return serverfirmwareversionentriess
 }
-func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var vlansettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vlansettings := make(map[string]interface{})
-	delete(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1, "ObjectType")
-	if len(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1)
-		if err == nil {
-			vlansettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	vlansettings["default_vlan"] = item.DefaultVlan
-	vlansettings["mode"] = item.Mode
-	vlansettings["object_type"] = item.ObjectType
-
-	vlansettingss = append(vlansettingss, vlansettings)
-	return vlansettingss
-}
-func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.ResourceData) []map[string]interface{} {
-
-	var extatraffics []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	extatraffic := make(map[string]interface{})
-	delete(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1, "ObjectType")
-	if len(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1)
-		if err == nil {
-			extatraffic["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	extatraffic["name"] = item.Name
-	extatraffic["object_type"] = item.ObjectType
-	extatraffic["vsan_id"] = item.VsanID
-
-	extatraffics = append(extatraffics, extatraffic)
-	return extatraffics
-}
-func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *schema.ResourceData) []map[string]interface{} {
-
-	var wwxnprefixranges []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	wwxnprefixrange := make(map[string]interface{})
-	delete(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1, "ObjectType")
-	if len(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1)
-		if err == nil {
-			wwxnprefixrange["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	wwxnprefixrange["end_addr"] = item.EndAddr
-	wwxnprefixrange["object_type"] = item.ObjectType
-	wwxnprefixrange["start_addr"] = item.StartAddr
-
-	wwxnprefixranges = append(wwxnprefixranges, wwxnprefixrange)
-	return wwxnprefixranges
-}
-func flattenListRecoveryBackupProfileRef(p []*models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var backupprofiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		backupprofiles := make(map[string]interface{})
-		backupprofiles["moid"] = item.Moid
-		backupprofiles["object_type"] = item.ObjectType
-		backupprofiles["selector"] = item.Selector
-		backupprofiless = append(backupprofiless, backupprofiles)
-	}
-	return backupprofiless
-}
-func flattenMapRecoveryConfigResultRef(p *models.RecoveryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var configresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configresult := make(map[string]interface{})
-	configresult["moid"] = item.Moid
-	configresult["object_type"] = item.ObjectType
-	configresult["selector"] = item.Selector
-
-	configresults = append(configresults, configresult)
-	return configresults
-}
-func flattenListVnicEthIfRef(p []*models.VnicEthIfRef, d *schema.ResourceData) []map[string]interface{} {
-	var ethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		ethifs := make(map[string]interface{})
-		ethifs["moid"] = item.Moid
-		ethifs["object_type"] = item.ObjectType
-		ethifs["selector"] = item.Selector
-		ethifss = append(ethifss, ethifs)
-	}
-	return ethifss
-}
-func flattenMapSoftwareHyperflexDistributableRef(p *models.SoftwareHyperflexDistributableRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var hxdpversioninfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	hxdpversioninfo := make(map[string]interface{})
-	hxdpversioninfo["moid"] = item.Moid
-	hxdpversioninfo["object_type"] = item.ObjectType
-	hxdpversioninfo["selector"] = item.Selector
-
-	hxdpversioninfos = append(hxdpversioninfos, hxdpversioninfo)
-	return hxdpversioninfos
-}
-func flattenMapFirmwareDistributableRef(p *models.FirmwareDistributableRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var serverfirmwareversioninfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	serverfirmwareversioninfo := make(map[string]interface{})
-	serverfirmwareversioninfo["moid"] = item.Moid
-	serverfirmwareversioninfo["object_type"] = item.ObjectType
-	serverfirmwareversioninfo["selector"] = item.Selector
-
-	serverfirmwareversioninfos = append(serverfirmwareversioninfos, serverfirmwareversioninfo)
-	return serverfirmwareversioninfos
-}
-func flattenMapIamLdapPolicyRef(p *models.IamLdapPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ldappolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ldappolicy := make(map[string]interface{})
-	ldappolicy["moid"] = item.Moid
-	ldappolicy["object_type"] = item.ObjectType
-	ldappolicy["selector"] = item.Selector
-
-	ldappolicys = append(ldappolicys, ldappolicy)
-	return ldappolicys
-}
 func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry, d *schema.ResourceData) []map[string]interface{} {
 	var servermodelentriess []map[string]interface{}
 	if p == nil {
@@ -1826,7 +923,7 @@ func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry,
 	for _, item := range p {
 		item := *item
 		servermodelentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
+
 		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
 
 			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
@@ -1869,247 +966,2139 @@ func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry,
 	}
 	return servermodelentriess
 }
-func flattenMapHyperflexFeatureLimitExternalRef(p *models.HyperflexFeatureLimitExternalRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var featurelimitexternals []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	featurelimitexternal := make(map[string]interface{})
-	featurelimitexternal["moid"] = item.Moid
-	featurelimitexternal["object_type"] = item.ObjectType
-	featurelimitexternal["selector"] = item.Selector
-
-	featurelimitexternals = append(featurelimitexternals, featurelimitexternal)
-	return featurelimitexternals
-}
-func flattenMapHyperflexFeatureLimitInternalRef(p *models.HyperflexFeatureLimitInternalRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var featurelimitinternals []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	featurelimitinternal := make(map[string]interface{})
-	featurelimitinternal["moid"] = item.Moid
-	featurelimitinternal["object_type"] = item.ObjectType
-	featurelimitinternal["selector"] = item.Selector
-
-	featurelimitinternals = append(featurelimitinternals, featurelimitinternal)
-	return featurelimitinternals
-}
-func flattenListHyperflexHxdpVersionRef(p []*models.HyperflexHxdpVersionRef, d *schema.ResourceData) []map[string]interface{} {
-	var hxdpversionss []map[string]interface{}
+func flattenListIaasConnectorPackRef(p []*models.IaasConnectorPackRef, d *schema.ResourceData) []map[string]interface{} {
+	var connectorpacks []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		hxdpversions := make(map[string]interface{})
-		hxdpversions["moid"] = item.Moid
-		hxdpversions["object_type"] = item.ObjectType
-		hxdpversions["selector"] = item.Selector
-		hxdpversionss = append(hxdpversionss, hxdpversions)
+		connectorpack := make(map[string]interface{})
+		connectorpack["moid"] = item.Moid
+		connectorpack["object_type"] = item.ObjectType
+		connectorpack["selector"] = item.Selector
+		connectorpacks = append(connectorpacks, connectorpack)
 	}
-	return hxdpversionss
+	return connectorpacks
 }
-func flattenListHyperflexCapabilityInfoRef(p []*models.HyperflexCapabilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexcapabilityinfoss []map[string]interface{}
+func flattenListIaasDeviceStatusRef(p []*models.IaasDeviceStatusRef, d *schema.ResourceData) []map[string]interface{} {
+	var devicestatuss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		hyperflexcapabilityinfos := make(map[string]interface{})
-		hyperflexcapabilityinfos["moid"] = item.Moid
-		hyperflexcapabilityinfos["object_type"] = item.ObjectType
-		hyperflexcapabilityinfos["selector"] = item.Selector
-		hyperflexcapabilityinfoss = append(hyperflexcapabilityinfoss, hyperflexcapabilityinfos)
+		devicestatus := make(map[string]interface{})
+		devicestatus["moid"] = item.Moid
+		devicestatus["object_type"] = item.ObjectType
+		devicestatus["selector"] = item.Selector
+		devicestatuss = append(devicestatuss, devicestatus)
 	}
-	return hyperflexcapabilityinfoss
+	return devicestatuss
 }
-func flattenListHclHyperflexSoftwareCompatibilityInfoRef(p []*models.HclHyperflexSoftwareCompatibilityInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexsoftwarecompatibilityinfoss []map[string]interface{}
+func flattenListIaasLicenseKeysInfo(p []*models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
+	var licensekeysinfos []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		hyperflexsoftwarecompatibilityinfos := make(map[string]interface{})
-		hyperflexsoftwarecompatibilityinfos["moid"] = item.Moid
-		hyperflexsoftwarecompatibilityinfos["object_type"] = item.ObjectType
-		hyperflexsoftwarecompatibilityinfos["selector"] = item.Selector
-		hyperflexsoftwarecompatibilityinfoss = append(hyperflexsoftwarecompatibilityinfoss, hyperflexsoftwarecompatibilityinfos)
-	}
-	return hyperflexsoftwarecompatibilityinfoss
-}
-func flattenMapHyperflexServerFirmwareVersionRef(p *models.HyperflexServerFirmwareVersionRef, d *schema.ResourceData) []map[string]interface{} {
+		licensekeysinfo := make(map[string]interface{})
 
-	var serverfirmwareversions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	serverfirmwareversion := make(map[string]interface{})
-	serverfirmwareversion["moid"] = item.Moid
-	serverfirmwareversion["object_type"] = item.ObjectType
-	serverfirmwareversion["selector"] = item.Selector
+		if len(item.IaasLicenseKeysInfoAO1P1.IaasLicenseKeysInfoAO1P1) != 0 {
 
-	serverfirmwareversions = append(serverfirmwareversions, serverfirmwareversion)
-	return serverfirmwareversions
-}
-func flattenMapHyperflexServerModelRef(p *models.HyperflexServerModelRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var servermodels []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	servermodel := make(map[string]interface{})
-	servermodel["moid"] = item.Moid
-	servermodel["object_type"] = item.ObjectType
-	servermodel["selector"] = item.Selector
-
-	servermodels = append(servermodels, servermodel)
-	return servermodels
-}
-func flattenMapVnicFcAdapterPolicyRef(p *models.VnicFcAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var fcadapterpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	fcadapterpolicy := make(map[string]interface{})
-	fcadapterpolicy["moid"] = item.Moid
-	fcadapterpolicy["object_type"] = item.ObjectType
-	fcadapterpolicy["selector"] = item.Selector
-
-	fcadapterpolicys = append(fcadapterpolicys, fcadapterpolicy)
-	return fcadapterpolicys
-}
-func flattenMapVnicFcNetworkPolicyRef(p *models.VnicFcNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var fcnetworkpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	fcnetworkpolicy := make(map[string]interface{})
-	fcnetworkpolicy["moid"] = item.Moid
-	fcnetworkpolicy["object_type"] = item.ObjectType
-	fcnetworkpolicy["selector"] = item.Selector
-
-	fcnetworkpolicys = append(fcnetworkpolicys, fcnetworkpolicy)
-	return fcnetworkpolicys
-}
-func flattenMapVnicFcQosPolicyRef(p *models.VnicFcQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var fcqospolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	fcqospolicy := make(map[string]interface{})
-	fcqospolicy["moid"] = item.Moid
-	fcqospolicy["object_type"] = item.ObjectType
-	fcqospolicy["selector"] = item.Selector
-
-	fcqospolicys = append(fcqospolicys, fcqospolicy)
-	return fcqospolicys
-}
-func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var placements []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	placement := make(map[string]interface{})
-	delete(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1, "ObjectType")
-	if len(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1)
-		if err == nil {
-			placement["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	placement["id"] = item.ID
-	placement["object_type"] = item.ObjectType
-	placement["pci_link"] = item.PciLink
-	placement["uplink"] = item.Uplink
-
-	placements = append(placements, placement)
-	return placements
-}
-func flattenMapVnicSanConnectivityPolicyRef(p *models.VnicSanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var sanconnectivitypolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	sanconnectivitypolicy := make(map[string]interface{})
-	sanconnectivitypolicy["moid"] = item.Moid
-	sanconnectivitypolicy["object_type"] = item.ObjectType
-	sanconnectivitypolicy["selector"] = item.Selector
-
-	sanconnectivitypolicys = append(sanconnectivitypolicys, sanconnectivitypolicy)
-	return sanconnectivitypolicys
-}
-func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.ResourceData) []map[string]interface{} {
-	var apidatasourcess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		apidatasources := make(map[string]interface{})
-		delete(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1, "ObjectType")
-		if len(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1) != 0 {
-
-			j, err := json.Marshal(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1)
+			j, err := json.Marshal(item.IaasLicenseKeysInfoAO1P1.IaasLicenseKeysInfoAO1P1)
 			if err == nil {
-				apidatasources["additional_properties"] = string(j)
+				licensekeysinfo["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		apidatasources["mo_type"] = item.MoType
-		apidatasources["name"] = item.Name
-		apidatasources["object_type"] = item.ObjectType
-		apidatasources["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
-			var queriess []map[string]interface{}
+		licensekeysinfo["count"] = item.Count
+		licensekeysinfo["expiration_date"] = item.ExpirationDate
+		licensekeysinfo["license_id"] = item.LicenseID
+		licensekeysinfo["object_type"] = item.ObjectType
+		licensekeysinfo["pid"] = item.Pid
+		licensekeysinfos = append(licensekeysinfos, licensekeysinfo)
+	}
+	return licensekeysinfos
+}
+func flattenListIaasLicenseUtilizationInfo(p []*models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
+	var licenseutilizationinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		licenseutilizationinfo := make(map[string]interface{})
+		licenseutilizationinfo["actual_used"] = item.ActualUsed
+
+		if len(item.IaasLicenseUtilizationInfoAO1P1.IaasLicenseUtilizationInfoAO1P1) != 0 {
+
+			j, err := json.Marshal(item.IaasLicenseUtilizationInfoAO1P1.IaasLicenseUtilizationInfoAO1P1)
+			if err == nil {
+				licenseutilizationinfo["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		licenseutilizationinfo["label"] = item.Label
+		licenseutilizationinfo["licensed_limit"] = item.LicensedLimit
+		licenseutilizationinfo["object_type"] = item.ObjectType
+		licenseutilizationinfo["sku"] = item.Sku
+		licenseutilizationinfos = append(licenseutilizationinfos, licenseutilizationinfo)
+	}
+	return licenseutilizationinfos
+}
+func flattenListIaasMostRunTasksRef(p []*models.IaasMostRunTasksRef, d *schema.ResourceData) []map[string]interface{} {
+	var mostruntaskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		mostruntasks := make(map[string]interface{})
+		mostruntasks["moid"] = item.Moid
+		mostruntasks["object_type"] = item.ObjectType
+		mostruntasks["selector"] = item.Selector
+		mostruntaskss = append(mostruntaskss, mostruntasks)
+	}
+	return mostruntaskss
+}
+func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
+	var accountpermissionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		accountpermissions := make(map[string]interface{})
+		accountpermissions["account_identifier"] = item.AccountIdentifier
+		accountpermissions["account_name"] = item.AccountName
+		accountpermissions["account_status"] = item.AccountStatus
+
+		if len(item.IamAccountPermissionsAO1P1.IamAccountPermissionsAO1P1) != 0 {
+
+			j, err := json.Marshal(item.IamAccountPermissionsAO1P1.IamAccountPermissionsAO1P1)
+			if err == nil {
+				accountpermissions["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		accountpermissions["object_type"] = item.ObjectType
+		accountpermissions["permissions"] = (func(p []*models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
+			var permissionss []map[string]interface{}
 			if p == nil {
 				return nil
 			}
 			for _, item := range p {
 				item := *item
-				queries := make(map[string]interface{})
-				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
-				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
+				permissions := make(map[string]interface{})
 
-					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
+				if len(item.IamPermissionReferenceAO1P1.IamPermissionReferenceAO1P1) != 0 {
+
+					j, err := json.Marshal(item.IamPermissionReferenceAO1P1.IamPermissionReferenceAO1P1)
 					if err == nil {
-						queries["additional_properties"] = string(j)
+						permissions["additional_properties"] = string(j)
 					} else {
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
-				queries["name"] = item.Name
-				queries["object_type"] = item.ObjectType
-				queries["priority"] = item.Priority
-				queries["query"] = item.Query
-				queriess = append(queriess, queries)
+				permissions["object_type"] = item.ObjectType
+				permissions["permission_identifier"] = item.PermissionIdentifier
+				permissions["permission_name"] = item.PermissionName
+				permissionss = append(permissionss, permissions)
 			}
-			return queriess
-		})(item.Queries, d)
-		apidatasources["type"] = item.Type
-		apidatasourcess = append(apidatasourcess, apidatasources)
+			return permissionss
+		})(item.Permissions, d)
+		accountpermissionss = append(accountpermissionss, accountpermissions)
 	}
-	return apidatasourcess
+	return accountpermissionss
+}
+func flattenListIamAPIKeyRef(p []*models.IamAPIKeyRef, d *schema.ResourceData) []map[string]interface{} {
+	var apikeyss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		apikeys := make(map[string]interface{})
+		apikeys["moid"] = item.Moid
+		apikeys["object_type"] = item.ObjectType
+		apikeys["selector"] = item.Selector
+		apikeyss = append(apikeyss, apikeys)
+	}
+	return apikeyss
+}
+func flattenListIamAppRegistrationRef(p []*models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+	var appregistrationss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		appregistrations := make(map[string]interface{})
+		appregistrations["moid"] = item.Moid
+		appregistrations["object_type"] = item.ObjectType
+		appregistrations["selector"] = item.Selector
+		appregistrationss = append(appregistrationss, appregistrations)
+	}
+	return appregistrationss
+}
+func flattenListIamDomainGroupRef(p []*models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var domaingroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		domaingroups := make(map[string]interface{})
+		domaingroups["moid"] = item.Moid
+		domaingroups["object_type"] = item.ObjectType
+		domaingroups["selector"] = item.Selector
+		domaingroupss = append(domaingroupss, domaingroups)
+	}
+	return domaingroupss
+}
+func flattenListIamEndPointPrivilegeRef(p []*models.IamEndPointPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
+	var endpointprivilegess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		endpointprivileges := make(map[string]interface{})
+		endpointprivileges["moid"] = item.Moid
+		endpointprivileges["object_type"] = item.ObjectType
+		endpointprivileges["selector"] = item.Selector
+		endpointprivilegess = append(endpointprivilegess, endpointprivileges)
+	}
+	return endpointprivilegess
+}
+func flattenListIamEndPointRoleRef(p []*models.IamEndPointRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var endpointroles []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		endpointrole := make(map[string]interface{})
+		endpointrole["moid"] = item.Moid
+		endpointrole["object_type"] = item.ObjectType
+		endpointrole["selector"] = item.Selector
+		endpointroles = append(endpointroles, endpointrole)
+	}
+	return endpointroles
+}
+func flattenListIamEndPointUserRoleRef(p []*models.IamEndPointUserRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var endpointuserroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		endpointuserroles := make(map[string]interface{})
+		endpointuserroles["moid"] = item.Moid
+		endpointuserroles["object_type"] = item.ObjectType
+		endpointuserroles["selector"] = item.Selector
+		endpointuserroless = append(endpointuserroless, endpointuserroles)
+	}
+	return endpointuserroless
+}
+func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+	var grouppermissionroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		grouppermissionroles := make(map[string]interface{})
+
+		if len(item.IamGroupPermissionToRolesAO1P1.IamGroupPermissionToRolesAO1P1) != 0 {
+
+			j, err := json.Marshal(item.IamGroupPermissionToRolesAO1P1.IamGroupPermissionToRolesAO1P1)
+			if err == nil {
+				grouppermissionroles["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		grouppermissionroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+
+			var groups []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			group := make(map[string]interface{})
+			delete(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1, "ObjectType")
+			if len(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1) != 0 {
+				j, err := json.Marshal(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1)
+				if err == nil {
+					group["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			group["moid"] = item.Moid
+			group["object_type"] = item.ObjectType
+
+			groups = append(groups, group)
+			return groups
+		})(item.Group, d)
+		grouppermissionroles["object_type"] = item.ObjectType
+		grouppermissionroles["orgs"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+			var orgss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				orgs := make(map[string]interface{})
+
+				if len(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1) != 0 {
+
+					j, err := json.Marshal(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1)
+					if err == nil {
+						orgs["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				orgs["moid"] = item.Moid
+				orgs["object_type"] = item.ObjectType
+				orgss = append(orgss, orgs)
+			}
+			return orgss
+		})(item.Orgs, d)
+		grouppermissionroless = append(grouppermissionroless, grouppermissionroles)
+	}
+	return grouppermissionroless
+}
+func flattenListIamIdpRef(p []*models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
+	var idpss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		idps := make(map[string]interface{})
+		idps["moid"] = item.Moid
+		idps["object_type"] = item.ObjectType
+		idps["selector"] = item.Selector
+		idpss = append(idpss, idps)
+	}
+	return idpss
+}
+func flattenListIamIdpReferenceRef(p []*models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
+	var idpreferencess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		idpreferences := make(map[string]interface{})
+		idpreferences["moid"] = item.Moid
+		idpreferences["object_type"] = item.ObjectType
+		idpreferences["selector"] = item.Selector
+		idpreferencess = append(idpreferencess, idpreferences)
+	}
+	return idpreferencess
+}
+func flattenListIamLdapGroupRef(p []*models.IamLdapGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var groupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		groups := make(map[string]interface{})
+		groups["moid"] = item.Moid
+		groups["object_type"] = item.ObjectType
+		groups["selector"] = item.Selector
+		groupss = append(groupss, groups)
+	}
+	return groupss
+}
+func flattenListIamLdapProviderRef(p []*models.IamLdapProviderRef, d *schema.ResourceData) []map[string]interface{} {
+	var providerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		providers := make(map[string]interface{})
+		providers["moid"] = item.Moid
+		providers["object_type"] = item.ObjectType
+		providers["selector"] = item.Selector
+		providerss = append(providerss, providers)
+	}
+	return providerss
+}
+func flattenListIamOAuthTokenRef(p []*models.IamOAuthTokenRef, d *schema.ResourceData) []map[string]interface{} {
+	var oauthtokenss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		oauthtokens := make(map[string]interface{})
+		oauthtokens["moid"] = item.Moid
+		oauthtokens["object_type"] = item.ObjectType
+		oauthtokens["selector"] = item.Selector
+		oauthtokenss = append(oauthtokenss, oauthtokens)
+	}
+	return oauthtokenss
+}
+func flattenListIamPermissionRef(p []*models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
+	var permissionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		permissions := make(map[string]interface{})
+		permissions["moid"] = item.Moid
+		permissions["object_type"] = item.ObjectType
+		permissions["selector"] = item.Selector
+		permissionss = append(permissionss, permissions)
+	}
+	return permissionss
+}
+func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+	var permissionroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		permissionroles := make(map[string]interface{})
+
+		if len(item.IamPermissionToRolesAO1P1.IamPermissionToRolesAO1P1) != 0 {
+
+			j, err := json.Marshal(item.IamPermissionToRolesAO1P1.IamPermissionToRolesAO1P1)
+			if err == nil {
+				permissionroles["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		permissionroles["object_type"] = item.ObjectType
+		permissionroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+
+			var permissions []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			permission := make(map[string]interface{})
+			delete(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1, "ObjectType")
+			if len(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1) != 0 {
+				j, err := json.Marshal(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1)
+				if err == nil {
+					permission["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			permission["moid"] = item.Moid
+			permission["object_type"] = item.ObjectType
+
+			permissions = append(permissions, permission)
+			return permissions
+		})(item.Permission, d)
+		permissionroles["roles"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+			var roless []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				roles := make(map[string]interface{})
+
+				if len(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1) != 0 {
+
+					j, err := json.Marshal(item.CmrfCmRfAO1P1.CmrfCmRfAO1P1)
+					if err == nil {
+						roles["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				roles["moid"] = item.Moid
+				roles["object_type"] = item.ObjectType
+				roless = append(roless, roles)
+			}
+			return roless
+		})(item.Roles, d)
+		permissionroless = append(permissionroless, permissionroles)
+	}
+	return permissionroless
+}
+func flattenListIamPrivilegeRef(p []*models.IamPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
+	var privilegess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		privileges := make(map[string]interface{})
+		privileges["moid"] = item.Moid
+		privileges["object_type"] = item.ObjectType
+		privileges["selector"] = item.Selector
+		privilegess = append(privilegess, privileges)
+	}
+	return privilegess
+}
+func flattenListIamPrivilegeSetRef(p []*models.IamPrivilegeSetRef, d *schema.ResourceData) []map[string]interface{} {
+	var privilegesetss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		privilegesets := make(map[string]interface{})
+		privilegesets["moid"] = item.Moid
+		privilegesets["object_type"] = item.ObjectType
+		privilegesets["selector"] = item.Selector
+		privilegesetss = append(privilegesetss, privilegesets)
+	}
+	return privilegesetss
+}
+func flattenListIamResourcePermissionRef(p []*models.IamResourcePermissionRef, d *schema.ResourceData) []map[string]interface{} {
+	var resourcepermissionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resourcepermissions := make(map[string]interface{})
+		resourcepermissions["moid"] = item.Moid
+		resourcepermissions["object_type"] = item.ObjectType
+		resourcepermissions["selector"] = item.Selector
+		resourcepermissionss = append(resourcepermissionss, resourcepermissions)
+	}
+	return resourcepermissionss
+}
+func flattenListIamResourceRolesRef(p []*models.IamResourceRolesRef, d *schema.ResourceData) []map[string]interface{} {
+	var resourceroless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resourceroles := make(map[string]interface{})
+		resourceroles["moid"] = item.Moid
+		resourceroles["object_type"] = item.ObjectType
+		resourceroles["selector"] = item.Selector
+		resourceroless = append(resourceroless, resourceroles)
+	}
+	return resourceroless
+}
+func flattenListIamRoleRef(p []*models.IamRoleRef, d *schema.ResourceData) []map[string]interface{} {
+	var roless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		roles := make(map[string]interface{})
+		roles["moid"] = item.Moid
+		roles["object_type"] = item.ObjectType
+		roles["selector"] = item.Selector
+		roless = append(roless, roles)
+	}
+	return roless
+}
+func flattenListIamSessionRef(p []*models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
+	var sessionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sessions := make(map[string]interface{})
+		sessions["moid"] = item.Moid
+		sessions["object_type"] = item.ObjectType
+		sessions["selector"] = item.Selector
+		sessionss = append(sessionss, sessions)
+	}
+	return sessionss
+}
+func flattenListIamUserGroupRef(p []*models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var usergroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		usergroups := make(map[string]interface{})
+		usergroups["moid"] = item.Moid
+		usergroups["object_type"] = item.ObjectType
+		usergroups["selector"] = item.Selector
+		usergroupss = append(usergroupss, usergroups)
+	}
+	return usergroupss
+}
+func flattenListIamUserLoginTimeRef(p []*models.IamUserLoginTimeRef, d *schema.ResourceData) []map[string]interface{} {
+	var userlogintimes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		userlogintime := make(map[string]interface{})
+		userlogintime["moid"] = item.Moid
+		userlogintime["object_type"] = item.ObjectType
+		userlogintime["selector"] = item.Selector
+		userlogintimes = append(userlogintimes, userlogintime)
+	}
+	return userlogintimes
+}
+func flattenListIamUserPreferenceRef(p []*models.IamUserPreferenceRef, d *schema.ResourceData) []map[string]interface{} {
+	var userpreferencess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		userpreferences := make(map[string]interface{})
+		userpreferences["moid"] = item.Moid
+		userpreferences["object_type"] = item.ObjectType
+		userpreferences["selector"] = item.Selector
+		userpreferencess = append(userpreferencess, userpreferences)
+	}
+	return userpreferencess
+}
+func flattenListIamUserRef(p []*models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
+	var userss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		users := make(map[string]interface{})
+		users["moid"] = item.Moid
+		users["object_type"] = item.ObjectType
+		users["selector"] = item.Selector
+		userss = append(userss, users)
+	}
+	return userss
+}
+func flattenListInventoryGenericInventoryHolderRef(p []*models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
+	var genericinventoryholderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		genericinventoryholders := make(map[string]interface{})
+		genericinventoryholders["moid"] = item.Moid
+		genericinventoryholders["object_type"] = item.ObjectType
+		genericinventoryholders["selector"] = item.Selector
+		genericinventoryholderss = append(genericinventoryholderss, genericinventoryholders)
+	}
+	return genericinventoryholderss
+}
+func flattenListInventoryGenericInventoryRef(p []*models.InventoryGenericInventoryRef, d *schema.ResourceData) []map[string]interface{} {
+	var genericinventorys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		genericinventory := make(map[string]interface{})
+		genericinventory["moid"] = item.Moid
+		genericinventory["object_type"] = item.ObjectType
+		genericinventory["selector"] = item.Selector
+		genericinventorys = append(genericinventorys, genericinventory)
+	}
+	return genericinventorys
+}
+func flattenListLicenseLicenseInfoRef(p []*models.LicenseLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var licenseinfoss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		licenseinfos := make(map[string]interface{})
+		licenseinfos["moid"] = item.Moid
+		licenseinfos["object_type"] = item.ObjectType
+		licenseinfos["selector"] = item.Selector
+		licenseinfoss = append(licenseinfoss, licenseinfos)
+	}
+	return licenseinfoss
+}
+func flattenListManagementInterfaceRef(p []*models.ManagementInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var managementinterfacess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		managementinterfaces := make(map[string]interface{})
+		managementinterfaces["moid"] = item.Moid
+		managementinterfaces["object_type"] = item.ObjectType
+		managementinterfaces["selector"] = item.Selector
+		managementinterfacess = append(managementinterfacess, managementinterfaces)
+	}
+	return managementinterfacess
+}
+func flattenListMemoryArrayRef(p []*models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
+	var memoryarrayss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		memoryarrays := make(map[string]interface{})
+		memoryarrays["moid"] = item.Moid
+		memoryarrays["object_type"] = item.ObjectType
+		memoryarrays["selector"] = item.Selector
+		memoryarrayss = append(memoryarrayss, memoryarrays)
+	}
+	return memoryarrayss
+}
+func flattenListMemoryPersistentMemoryNamespaceConfigResultRef(p []*models.MemoryPersistentMemoryNamespaceConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+	var persistentmemorynamespaceconfigresultss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		persistentmemorynamespaceconfigresults := make(map[string]interface{})
+		persistentmemorynamespaceconfigresults["moid"] = item.Moid
+		persistentmemorynamespaceconfigresults["object_type"] = item.ObjectType
+		persistentmemorynamespaceconfigresults["selector"] = item.Selector
+		persistentmemorynamespaceconfigresultss = append(persistentmemorynamespaceconfigresultss, persistentmemorynamespaceconfigresults)
+	}
+	return persistentmemorynamespaceconfigresultss
+}
+func flattenListMemoryPersistentMemoryNamespaceRef(p []*models.MemoryPersistentMemoryNamespaceRef, d *schema.ResourceData) []map[string]interface{} {
+	var persistentmemorynamespacess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		persistentmemorynamespaces := make(map[string]interface{})
+		persistentmemorynamespaces["moid"] = item.Moid
+		persistentmemorynamespaces["object_type"] = item.ObjectType
+		persistentmemorynamespaces["selector"] = item.Selector
+		persistentmemorynamespacess = append(persistentmemorynamespacess, persistentmemorynamespaces)
+	}
+	return persistentmemorynamespacess
+}
+func flattenListMemoryPersistentMemoryRegionRef(p []*models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
+	var persistentmemoryregionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		persistentmemoryregions := make(map[string]interface{})
+		persistentmemoryregions["moid"] = item.Moid
+		persistentmemoryregions["object_type"] = item.ObjectType
+		persistentmemoryregions["selector"] = item.Selector
+		persistentmemoryregionss = append(persistentmemoryregionss, persistentmemoryregions)
+	}
+	return persistentmemoryregionss
+}
+func flattenListMemoryPersistentMemoryUnitRef(p []*models.MemoryPersistentMemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var persistentmemoryunitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		persistentmemoryunits := make(map[string]interface{})
+		persistentmemoryunits["moid"] = item.Moid
+		persistentmemoryunits["object_type"] = item.ObjectType
+		persistentmemoryunits["selector"] = item.Selector
+		persistentmemoryunitss = append(persistentmemoryunitss, persistentmemoryunits)
+	}
+	return persistentmemoryunitss
+}
+func flattenListMemoryUnitRef(p []*models.MemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var unitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		units := make(map[string]interface{})
+		units["moid"] = item.Moid
+		units["object_type"] = item.ObjectType
+		units["selector"] = item.Selector
+		unitss = append(unitss, units)
+	}
+	return unitss
+}
+func flattenListMetaAccessPrivilege(p []*models.MetaAccessPrivilege, d *schema.ResourceData) []map[string]interface{} {
+	var accessprivilegess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		accessprivileges := make(map[string]interface{})
+
+		if len(item.MetaAccessPrivilegeAO1P1.MetaAccessPrivilegeAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MetaAccessPrivilegeAO1P1.MetaAccessPrivilegeAO1P1)
+			if err == nil {
+				accessprivileges["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		accessprivileges["method"] = item.Method
+		accessprivileges["object_type"] = item.ObjectType
+		accessprivileges["privilege"] = item.Privilege
+		accessprivilegess = append(accessprivilegess, accessprivileges)
+	}
+	return accessprivilegess
+}
+func flattenListMetaPropDefinition(p []*models.MetaPropDefinition, d *schema.ResourceData) []map[string]interface{} {
+	var propertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		properties := make(map[string]interface{})
+		properties["api_access"] = item.APIAccess
+
+		if len(item.MetaPropDefinitionAO1P1.MetaPropDefinitionAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MetaPropDefinitionAO1P1.MetaPropDefinitionAO1P1)
+			if err == nil {
+				properties["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		properties["name"] = item.Name
+		properties["object_type"] = item.ObjectType
+		properties["op_security"] = item.OpSecurity
+		properties["search_weight"] = item.SearchWeight
+		propertiess = append(propertiess, properties)
+	}
+	return propertiess
+}
+func flattenListMetaRelationshipDefinition(p []*models.MetaRelationshipDefinition, d *schema.ResourceData) []map[string]interface{} {
+	var relationshipss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		relationships := make(map[string]interface{})
+		relationships["api_access"] = item.APIAccess
+
+		if len(item.MetaRelationshipDefinitionAO1P1.MetaRelationshipDefinitionAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MetaRelationshipDefinitionAO1P1.MetaRelationshipDefinitionAO1P1)
+			if err == nil {
+				relationships["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		relationships["collection"] = item.Collection
+		relationships["name"] = item.Name
+		relationships["object_type"] = item.ObjectType
+		relationships["type"] = item.Type
+		relationshipss = append(relationshipss, relationships)
+	}
+	return relationshipss
+}
+func flattenListMoBaseMoRef(p []*models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
+	var permissionresourcess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		permissionresources := make(map[string]interface{})
+		permissionresources["moid"] = item.Moid
+		permissionresources["object_type"] = item.ObjectType
+		permissionresources["selector"] = item.Selector
+		permissionresourcess = append(permissionresourcess, permissionresources)
+	}
+	return permissionresourcess
+}
+func flattenListMoTag(p []*models.MoTag, d *schema.ResourceData) []map[string]interface{} {
+	var tagss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		tags := make(map[string]interface{})
+
+		if len(item.MoTagAO1P1.MoTagAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MoTagAO1P1.MoTagAO1P1)
+			if err == nil {
+				tags["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		tags["key"] = item.Key
+		tags["object_type"] = item.ObjectType
+		tags["value"] = item.Value
+		tagss = append(tagss, tags)
+	}
+	return tagss
+}
+func flattenListNetworkElementRef(p []*models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
+	var networkelementss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		networkelements := make(map[string]interface{})
+		networkelements["moid"] = item.Moid
+		networkelements["object_type"] = item.ObjectType
+		networkelements["selector"] = item.Selector
+		networkelementss = append(networkelementss, networkelements)
+	}
+	return networkelementss
+}
+func flattenListNiaapiDetail(p []*models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
+	var contents []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		content := make(map[string]interface{})
+
+		if len(item.NiaapiDetailAO1P1.NiaapiDetailAO1P1) != 0 {
+
+			j, err := json.Marshal(item.NiaapiDetailAO1P1.NiaapiDetailAO1P1)
+			if err == nil {
+				content["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		content["chksum"] = item.Chksum
+		content["filename"] = item.Filename
+		content["name"] = item.Name
+		content["object_type"] = item.ObjectType
+		contents = append(contents, content)
+	}
+	return contents
+}
+func flattenListNiaapiRevisionInfo(p []*models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
+	var revisioninfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		revisioninfo := make(map[string]interface{})
+
+		if len(item.NiaapiRevisionInfoAO1P1.NiaapiRevisionInfoAO1P1) != 0 {
+
+			j, err := json.Marshal(item.NiaapiRevisionInfoAO1P1.NiaapiRevisionInfoAO1P1)
+			if err == nil {
+				revisioninfo["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		revisioninfo["date_published"] = item.DatePublished
+		revisioninfo["object_type"] = item.ObjectType
+		revisioninfo["revision_comment"] = item.RevisionComment
+		revisioninfo["revision_no"] = item.RevisionNo
+		revisioninfos = append(revisioninfos, revisioninfo)
+	}
+	return revisioninfos
+}
+func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
+	var ansiblepackagess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		ansiblepackages := make(map[string]interface{})
+
+		if len(item.OnpremImagePackageAO1P1.OnpremImagePackageAO1P1) != 0 {
+
+			j, err := json.Marshal(item.OnpremImagePackageAO1P1.OnpremImagePackageAO1P1)
+			if err == nil {
+				ansiblepackages["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		ansiblepackages["file_path"] = item.FilePath
+		ansiblepackages["file_sha"] = item.FileSha
+		ansiblepackages["file_size"] = item.FileSize
+		ansiblepackages["file_time"] = item.FileTime
+		ansiblepackages["filename"] = item.Filename
+		ansiblepackages["name"] = item.Name
+		ansiblepackages["object_type"] = item.ObjectType
+		ansiblepackages["package_type"] = item.PackageType
+		ansiblepackages["version"] = item.Version
+		ansiblepackagess = append(ansiblepackagess, ansiblepackages)
+	}
+	return ansiblepackagess
+}
+func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+	var completedphasess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		completedphases := make(map[string]interface{})
+
+		if len(item.OnpremUpgradePhaseAO1P1.OnpremUpgradePhaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.OnpremUpgradePhaseAO1P1.OnpremUpgradePhaseAO1P1)
+			if err == nil {
+				completedphases["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		completedphases["name"] = item.Name
+		completedphases["object_type"] = item.ObjectType
+		completedphasess = append(completedphasess, completedphases)
+	}
+	return completedphasess
+}
+func flattenListOrganizationOrganizationRef(p []*models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
+	var organizationss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		organizations := make(map[string]interface{})
+		organizations["moid"] = item.Moid
+		organizations["object_type"] = item.ObjectType
+		organizations["selector"] = item.Selector
+		organizationss = append(organizationss, organizations)
+	}
+	return organizationss
+}
+func flattenListOsConfigurationFileRef(p []*models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
+	var configurationfiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		configurationfiles := make(map[string]interface{})
+		configurationfiles["moid"] = item.Moid
+		configurationfiles["object_type"] = item.ObjectType
+		configurationfiles["selector"] = item.Selector
+		configurationfiless = append(configurationfiless, configurationfiles)
+	}
+	return configurationfiless
+}
+func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
+	var placeholderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		placeholders := make(map[string]interface{})
+
+		if len(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1) != 0 {
+
+			j, err := json.Marshal(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1)
+			if err == nil {
+				placeholders["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		placeholders["is_value_set"] = item.IsValueSet
+		placeholders["object_type"] = item.ObjectType
+		placeholders["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
+
+			var NonReservedtypes []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			NonReservedtype := make(map[string]interface{})
+			delete(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1, "ObjectType")
+			if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
+				j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
+				if err == nil {
+					NonReservedtype["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			NonReservedtype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+				var NonReserveddefaults []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				NonReserveddefault := make(map[string]interface{})
+				NonReserveddefault["object_type"] = item.ObjectType
+				NonReserveddefault["override"] = item.Override
+				NonReserveddefault["value"] = item.Value
+
+				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
+				return NonReserveddefaults
+			})(item.Default, d)
+			NonReservedtype["description"] = item.Description
+			NonReservedtype["label"] = item.Label
+			NonReservedtype["name"] = item.Name
+			NonReservedtype["object_type"] = item.ObjectType
+			NonReservedtype["properties"] = (func(p *models.WorkflowPrimitiveDataProperty, d *schema.ResourceData) []map[string]interface{} {
+
+				var propertiess []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				properties := make(map[string]interface{})
+				properties["constraints"] = (func(p *models.WorkflowConstraints, d *schema.ResourceData) []map[string]interface{} {
+
+					var constraintss []map[string]interface{}
+					if p == nil {
+						return nil
+					}
+					item := *p
+					constraints := make(map[string]interface{})
+					constraints["enum_list"] = (func(p []*models.WorkflowEnumEntry, d *schema.ResourceData) []map[string]interface{} {
+						var enumlists []map[string]interface{}
+						if p == nil {
+							return nil
+						}
+						for _, item := range p {
+							item := *item
+							enumlist := make(map[string]interface{})
+							enumlist["label"] = item.Label
+							enumlist["object_type"] = item.ObjectType
+							enumlist["value"] = item.Value
+							enumlists = append(enumlists, enumlist)
+						}
+						return enumlists
+					})(item.EnumList, d)
+					constraints["max"] = item.Max
+					constraints["min"] = item.Min
+					constraints["object_type"] = item.ObjectType
+					constraints["regex"] = item.Regex
+
+					constraintss = append(constraintss, constraints)
+					return constraintss
+				})(item.Constraints, d)
+				properties["object_type"] = item.ObjectType
+				properties["secure"] = item.Secure
+				properties["type"] = item.Type
+
+				propertiess = append(propertiess, properties)
+				return propertiess
+			})(item.Properties, d)
+			NonReservedtype["required"] = item.Required
+
+			NonReservedtypes = append(NonReservedtypes, NonReservedtype)
+			return NonReservedtypes
+		})(item.Type, d)
+		placeholders["value"] = item.Value
+		placeholderss = append(placeholderss, placeholders)
+	}
+	return placeholderss
+}
+func flattenListOsPostInstallScriptRef(p []*models.OsPostInstallScriptRef, d *schema.ResourceData) []map[string]interface{} {
+	var postinstallscriptss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		postinstallscripts := make(map[string]interface{})
+		postinstallscripts["moid"] = item.Moid
+		postinstallscripts["object_type"] = item.ObjectType
+		postinstallscripts["selector"] = item.Selector
+		postinstallscriptss = append(postinstallscriptss, postinstallscripts)
+	}
+	return postinstallscriptss
+}
+func flattenListPciCoprocessorCardRef(p []*models.PciCoprocessorCardRef, d *schema.ResourceData) []map[string]interface{} {
+	var pcicoprocessorcardss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		pcicoprocessorcards := make(map[string]interface{})
+		pcicoprocessorcards["moid"] = item.Moid
+		pcicoprocessorcards["object_type"] = item.ObjectType
+		pcicoprocessorcards["selector"] = item.Selector
+		pcicoprocessorcardss = append(pcicoprocessorcardss, pcicoprocessorcards)
+	}
+	return pcicoprocessorcardss
+}
+func flattenListPciDeviceRef(p []*models.PciDeviceRef, d *schema.ResourceData) []map[string]interface{} {
+	var pcidevicess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		pcidevices := make(map[string]interface{})
+		pcidevices["moid"] = item.Moid
+		pcidevices["object_type"] = item.ObjectType
+		pcidevices["selector"] = item.Selector
+		pcidevicess = append(pcidevicess, pcidevices)
+	}
+	return pcidevicess
+}
+func flattenListPciLinkRef(p []*models.PciLinkRef, d *schema.ResourceData) []map[string]interface{} {
+	var linkss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		links := make(map[string]interface{})
+		links["moid"] = item.Moid
+		links["object_type"] = item.ObjectType
+		links["selector"] = item.Selector
+		linkss = append(linkss, links)
+	}
+	return linkss
+}
+func flattenListPciSwitchRef(p []*models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
+	var pciswitchs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		pciswitch := make(map[string]interface{})
+		pciswitch["moid"] = item.Moid
+		pciswitch["object_type"] = item.ObjectType
+		pciswitch["selector"] = item.Selector
+		pciswitchs = append(pciswitchs, pciswitch)
+	}
+	return pciswitchs
+}
+func flattenListPolicyAbstractConfigProfileRef(p []*models.PolicyAbstractConfigProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var profiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		profiles := make(map[string]interface{})
+		profiles["moid"] = item.Moid
+		profiles["object_type"] = item.ObjectType
+		profiles["selector"] = item.Selector
+		profiless = append(profiless, profiles)
+	}
+	return profiless
+}
+func flattenListPolicyinventoryJobInfo(p []*models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
+	var jobinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		jobinfo := make(map[string]interface{})
+
+		if len(item.PolicyinventoryJobInfoAO1P1.PolicyinventoryJobInfoAO1P1) != 0 {
+
+			j, err := json.Marshal(item.PolicyinventoryJobInfoAO1P1.PolicyinventoryJobInfoAO1P1)
+			if err == nil {
+				jobinfo["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		jobinfo["execution_status"] = item.ExecutionStatus
+		jobinfo["last_scheduled_time"] = item.LastScheduledTime
+		jobinfo["object_type"] = item.ObjectType
+		jobinfo["policy_id"] = item.PolicyID
+		jobinfo["policy_name"] = item.PolicyName
+		jobinfos = append(jobinfos, jobinfo)
+	}
+	return jobinfos
+}
+func flattenListPortGroupRef(p []*models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var portgroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		portgroups := make(map[string]interface{})
+		portgroups["moid"] = item.Moid
+		portgroups["object_type"] = item.ObjectType
+		portgroups["selector"] = item.Selector
+		portgroupss = append(portgroupss, portgroups)
+	}
+	return portgroupss
+}
+func flattenListPortSubGroupRef(p []*models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var subgroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		subgroups := make(map[string]interface{})
+		subgroups["moid"] = item.Moid
+		subgroups["object_type"] = item.ObjectType
+		subgroups["selector"] = item.Selector
+		subgroupss = append(subgroupss, subgroups)
+	}
+	return subgroupss
+}
+func flattenListProcessorUnitRef(p []*models.ProcessorUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var processorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		processors := make(map[string]interface{})
+		processors["moid"] = item.Moid
+		processors["object_type"] = item.ObjectType
+		processors["selector"] = item.Selector
+		processorss = append(processorss, processors)
+	}
+	return processorss
+}
+func flattenListRecoveryBackupProfileRef(p []*models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var backupprofiless []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		backupprofiles := make(map[string]interface{})
+		backupprofiles["moid"] = item.Moid
+		backupprofiles["object_type"] = item.ObjectType
+		backupprofiles["selector"] = item.Selector
+		backupprofiless = append(backupprofiless, backupprofiles)
+	}
+	return backupprofiless
+}
+func flattenListRecoveryConfigResultEntryRef(p []*models.RecoveryConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var resultentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resultentries := make(map[string]interface{})
+		resultentries["moid"] = item.Moid
+		resultentries["object_type"] = item.ObjectType
+		resultentries["selector"] = item.Selector
+		resultentriess = append(resultentriess, resultentries)
+	}
+	return resultentriess
+}
+func flattenListResourceGroupRef(p []*models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var resourcegroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resourcegroups := make(map[string]interface{})
+		resourcegroups["moid"] = item.Moid
+		resourcegroups["object_type"] = item.ObjectType
+		resourcegroups["selector"] = item.Selector
+		resourcegroupss = append(resourcegroupss, resourcegroups)
+	}
+	return resourcegroupss
+}
+func flattenListResourceMembershipRef(p []*models.ResourceMembershipRef, d *schema.ResourceData) []map[string]interface{} {
+	var membershipss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		memberships := make(map[string]interface{})
+		memberships["moid"] = item.Moid
+		memberships["object_type"] = item.ObjectType
+		memberships["selector"] = item.Selector
+		membershipss = append(membershipss, memberships)
+	}
+	return membershipss
+}
+func flattenListResourcePerTypeCombinedSelector(p []*models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
+	var pertypecombinedselectors []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		pertypecombinedselector := make(map[string]interface{})
+
+		if len(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1)
+			if err == nil {
+				pertypecombinedselector["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		pertypecombinedselector["combined_selector"] = item.CombinedSelector
+		pertypecombinedselector["empty_filter"] = item.EmptyFilter
+		pertypecombinedselector["object_type"] = item.ObjectType
+		pertypecombinedselector["selector_object_type"] = item.SelectorObjectType
+		pertypecombinedselectors = append(pertypecombinedselectors, pertypecombinedselector)
+	}
+	return pertypecombinedselectors
+}
+func flattenListResourceSelector(p []*models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
+	var selectorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		selectors := make(map[string]interface{})
+
+		if len(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1) != 0 {
+
+			j, err := json.Marshal(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1)
+			if err == nil {
+				selectors["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		selectors["object_type"] = item.ObjectType
+		selectors["selector"] = item.Selector
+		selectorss = append(selectorss, selectors)
+	}
+	return selectorss
+}
+func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
+	var partitionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		partitions := make(map[string]interface{})
+
+		if len(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SdcardPartitionAO1P1.SdcardPartitionAO1P1)
+			if err == nil {
+				partitions["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		partitions["object_type"] = item.ObjectType
+		partitions["type"] = item.Type
+		partitions["virtual_drives"] = (func(p []*models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
+			var virtualdrivess []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				virtualdrives := make(map[string]interface{})
+
+				if len(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1) != 0 {
+
+					j, err := json.Marshal(item.SdcardVirtualDriveAO1P1.SdcardVirtualDriveAO1P1)
+					if err == nil {
+						virtualdrives["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				virtualdrives["enable"] = item.Enable
+				virtualdrives["object_type"] = item.ObjectType
+				virtualdrivess = append(virtualdrivess, virtualdrives)
+			}
+			return virtualdrivess
+		})(item.VirtualDrives, d)
+		partitionss = append(partitionss, partitions)
+	}
+	return partitionss
+}
+func flattenListSecurityUnitRef(p []*models.SecurityUnitRef, d *schema.ResourceData) []map[string]interface{} {
+	var securityunitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		securityunits := make(map[string]interface{})
+		securityunits["moid"] = item.Moid
+		securityunits["object_type"] = item.ObjectType
+		securityunits["selector"] = item.Selector
+		securityunitss = append(securityunitss, securityunits)
+	}
+	return securityunitss
+}
+func flattenListServerConfigChangeDetailRef(p []*models.ServerConfigChangeDetailRef, d *schema.ResourceData) []map[string]interface{} {
+	var configchangedetailss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		configchangedetails := make(map[string]interface{})
+		configchangedetails["moid"] = item.Moid
+		configchangedetails["object_type"] = item.ObjectType
+		configchangedetails["selector"] = item.Selector
+		configchangedetailss = append(configchangedetailss, configchangedetails)
+	}
+	return configchangedetailss
+}
+func flattenListServerConfigResultEntryRef(p []*models.ServerConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
+	var resultentriess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		resultentries := make(map[string]interface{})
+		resultentries["moid"] = item.Moid
+		resultentries["object_type"] = item.ObjectType
+		resultentries["selector"] = item.Selector
+		resultentriess = append(resultentriess, resultentries)
+	}
+	return resultentriess
+}
+func flattenListSnmpTrap(p []*models.SnmpTrap, d *schema.ResourceData) []map[string]interface{} {
+	var snmptrapss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		snmptraps := make(map[string]interface{})
+
+		if len(item.SnmpTrapAO1P1.SnmpTrapAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SnmpTrapAO1P1.SnmpTrapAO1P1)
+			if err == nil {
+				snmptraps["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		snmptraps["destination"] = item.Destination
+		snmptraps["enabled"] = item.Enabled
+		snmptraps["object_type"] = item.ObjectType
+		snmptraps["port"] = item.Port
+		snmptraps["type"] = item.Type
+		snmptraps["user"] = item.User
+		snmptraps["version"] = item.Version
+		snmptrapss = append(snmptrapss, snmptraps)
+	}
+	return snmptrapss
+}
+func flattenListSnmpUser(p []*models.SnmpUser, d *schema.ResourceData) []map[string]interface{} {
+	var snmpuserss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		snmpusers := make(map[string]interface{})
+
+		if len(item.SnmpUserAO1P1.SnmpUserAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SnmpUserAO1P1.SnmpUserAO1P1)
+			if err == nil {
+				snmpusers["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		auth_password_x := d.Get("snmp_users").([]interface{})
+		auth_password_y := auth_password_x[0].(map[string]interface{})
+		snmpusers["auth_password"] = auth_password_y["auth_password"]
+		snmpusers["auth_type"] = item.AuthType
+		snmpusers["is_auth_password_set"] = item.IsAuthPasswordSet
+		snmpusers["is_privacy_password_set"] = item.IsPrivacyPasswordSet
+		snmpusers["name"] = item.Name
+		snmpusers["object_type"] = item.ObjectType
+		privacy_password_x := d.Get("snmp_users").([]interface{})
+		privacy_password_y := privacy_password_x[0].(map[string]interface{})
+		snmpusers["privacy_password"] = privacy_password_y["privacy_password"]
+		snmpusers["privacy_type"] = item.PrivacyType
+		snmpusers["security_level"] = item.SecurityLevel
+		snmpuserss = append(snmpuserss, snmpusers)
+	}
+	return snmpuserss
+}
+func flattenListStorageControllerRef(p []*models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var storagecontrollerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storagecontrollers := make(map[string]interface{})
+		storagecontrollers["moid"] = item.Moid
+		storagecontrollers["object_type"] = item.ObjectType
+		storagecontrollers["selector"] = item.Selector
+		storagecontrollerss = append(storagecontrollerss, storagecontrollers)
+	}
+	return storagecontrollerss
+}
+func flattenListStorageDiskGroupPolicyRef(p []*models.StorageDiskGroupPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var diskgrouppoliciess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		diskgrouppolicies := make(map[string]interface{})
+		diskgrouppolicies["moid"] = item.Moid
+		diskgrouppolicies["object_type"] = item.ObjectType
+		diskgrouppolicies["selector"] = item.Selector
+		diskgrouppoliciess = append(diskgrouppoliciess, diskgrouppolicies)
+	}
+	return diskgrouppoliciess
+}
+func flattenListStorageEnclosureDiskRef(p []*models.StorageEnclosureDiskRef, d *schema.ResourceData) []map[string]interface{} {
+	var enclosurediskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		enclosuredisks := make(map[string]interface{})
+		enclosuredisks["moid"] = item.Moid
+		enclosuredisks["object_type"] = item.ObjectType
+		enclosuredisks["selector"] = item.Selector
+		enclosurediskss = append(enclosurediskss, enclosuredisks)
+	}
+	return enclosurediskss
+}
+func flattenListStorageEnclosureDiskSlotEpRef(p []*models.StorageEnclosureDiskSlotEpRef, d *schema.ResourceData) []map[string]interface{} {
+	var enclosurediskslotss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		enclosurediskslots := make(map[string]interface{})
+		enclosurediskslots["moid"] = item.Moid
+		enclosurediskslots["object_type"] = item.ObjectType
+		enclosurediskslots["selector"] = item.Selector
+		enclosurediskslotss = append(enclosurediskslotss, enclosurediskslots)
+	}
+	return enclosurediskslotss
+}
+func flattenListStorageEnclosureRef(p []*models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+	var storageenclosuress []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storageenclosures := make(map[string]interface{})
+		storageenclosures["moid"] = item.Moid
+		storageenclosures["object_type"] = item.ObjectType
+		storageenclosures["selector"] = item.Selector
+		storageenclosuress = append(storageenclosuress, storageenclosures)
+	}
+	return storageenclosuress
+}
+func flattenListStorageFlexFlashControllerPropsRef(p []*models.StorageFlexFlashControllerPropsRef, d *schema.ResourceData) []map[string]interface{} {
+	var flexflashcontrollerpropss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		flexflashcontrollerprops := make(map[string]interface{})
+		flexflashcontrollerprops["moid"] = item.Moid
+		flexflashcontrollerprops["object_type"] = item.ObjectType
+		flexflashcontrollerprops["selector"] = item.Selector
+		flexflashcontrollerpropss = append(flexflashcontrollerpropss, flexflashcontrollerprops)
+	}
+	return flexflashcontrollerpropss
+}
+func flattenListStorageFlexFlashControllerRef(p []*models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var storageflexflashcontrollerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storageflexflashcontrollers := make(map[string]interface{})
+		storageflexflashcontrollers["moid"] = item.Moid
+		storageflexflashcontrollers["object_type"] = item.ObjectType
+		storageflexflashcontrollers["selector"] = item.Selector
+		storageflexflashcontrollerss = append(storageflexflashcontrollerss, storageflexflashcontrollers)
+	}
+	return storageflexflashcontrollerss
+}
+func flattenListStorageFlexFlashPhysicalDriveRef(p []*models.StorageFlexFlashPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var flexflashphysicaldrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		flexflashphysicaldrives := make(map[string]interface{})
+		flexflashphysicaldrives["moid"] = item.Moid
+		flexflashphysicaldrives["object_type"] = item.ObjectType
+		flexflashphysicaldrives["selector"] = item.Selector
+		flexflashphysicaldrivess = append(flexflashphysicaldrivess, flexflashphysicaldrives)
+	}
+	return flexflashphysicaldrivess
+}
+func flattenListStorageFlexFlashVirtualDriveRef(p []*models.StorageFlexFlashVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var flexflashvirtualdrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		flexflashvirtualdrives := make(map[string]interface{})
+		flexflashvirtualdrives["moid"] = item.Moid
+		flexflashvirtualdrives["object_type"] = item.ObjectType
+		flexflashvirtualdrives["selector"] = item.Selector
+		flexflashvirtualdrivess = append(flexflashvirtualdrivess, flexflashvirtualdrives)
+	}
+	return flexflashvirtualdrivess
+}
+func flattenListStorageFlexUtilControllerRef(p []*models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
+	var storageflexutilcontrollerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storageflexutilcontrollers := make(map[string]interface{})
+		storageflexutilcontrollers["moid"] = item.Moid
+		storageflexutilcontrollers["object_type"] = item.ObjectType
+		storageflexutilcontrollers["selector"] = item.Selector
+		storageflexutilcontrollerss = append(storageflexutilcontrollerss, storageflexutilcontrollers)
+	}
+	return storageflexutilcontrollerss
+}
+func flattenListStorageFlexUtilPhysicalDriveRef(p []*models.StorageFlexUtilPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var flexutilphysicaldrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		flexutilphysicaldrives := make(map[string]interface{})
+		flexutilphysicaldrives["moid"] = item.Moid
+		flexutilphysicaldrives["object_type"] = item.ObjectType
+		flexutilphysicaldrives["selector"] = item.Selector
+		flexutilphysicaldrivess = append(flexutilphysicaldrivess, flexutilphysicaldrives)
+	}
+	return flexutilphysicaldrivess
+}
+func flattenListStorageFlexUtilVirtualDriveRef(p []*models.StorageFlexUtilVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var flexutilvirtualdrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		flexutilvirtualdrives := make(map[string]interface{})
+		flexutilvirtualdrives["moid"] = item.Moid
+		flexutilvirtualdrives["object_type"] = item.ObjectType
+		flexutilvirtualdrives["selector"] = item.Selector
+		flexutilvirtualdrivess = append(flexutilvirtualdrivess, flexutilvirtualdrives)
+	}
+	return flexutilvirtualdrivess
+}
+func flattenListStorageInitiator(p []*models.StorageInitiator, d *schema.ResourceData) []map[string]interface{} {
+	var initiatorss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		initiators := make(map[string]interface{})
+
+		if len(item.StorageInitiatorAO1P1.StorageInitiatorAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageInitiatorAO1P1.StorageInitiatorAO1P1)
+			if err == nil {
+				initiators["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		initiators["iqn"] = item.Iqn
+		initiators["name"] = item.Name
+		initiators["object_type"] = item.ObjectType
+		initiators["type"] = item.Type
+		initiators["wwn"] = item.Wwn
+		initiatorss = append(initiatorss, initiators)
+	}
+	return initiatorss
+}
+func flattenListStorageLocalDisk(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+	var dedicatedhotsparess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		dedicatedhotspares := make(map[string]interface{})
+
+		if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
+			if err == nil {
+				dedicatedhotspares["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		dedicatedhotspares["object_type"] = item.ObjectType
+		dedicatedhotspares["slot_number"] = item.SlotNumber
+		dedicatedhotsparess = append(dedicatedhotsparess, dedicatedhotspares)
+	}
+	return dedicatedhotsparess
+}
+func flattenListStoragePhysicalDiskExtensionRef(p []*models.StoragePhysicalDiskExtensionRef, d *schema.ResourceData) []map[string]interface{} {
+	var physicaldiskextensionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		physicaldiskextensions := make(map[string]interface{})
+		physicaldiskextensions["moid"] = item.Moid
+		physicaldiskextensions["object_type"] = item.ObjectType
+		physicaldiskextensions["selector"] = item.Selector
+		physicaldiskextensionss = append(physicaldiskextensionss, physicaldiskextensions)
+	}
+	return physicaldiskextensionss
+}
+func flattenListStoragePhysicalDiskRef(p []*models.StoragePhysicalDiskRef, d *schema.ResourceData) []map[string]interface{} {
+	var physicaldiskss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		physicaldisks := make(map[string]interface{})
+		physicaldisks["moid"] = item.Moid
+		physicaldisks["object_type"] = item.ObjectType
+		physicaldisks["selector"] = item.Selector
+		physicaldiskss = append(physicaldiskss, physicaldisks)
+	}
+	return physicaldiskss
+}
+func flattenListStoragePhysicalDiskUsageRef(p []*models.StoragePhysicalDiskUsageRef, d *schema.ResourceData) []map[string]interface{} {
+	var physicaldiskusagess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		physicaldiskusages := make(map[string]interface{})
+		physicaldiskusages["moid"] = item.Moid
+		physicaldiskusages["object_type"] = item.ObjectType
+		physicaldiskusages["selector"] = item.Selector
+		physicaldiskusagess = append(physicaldiskusagess, physicaldiskusages)
+	}
+	return physicaldiskusagess
+}
+func flattenListStoragePureHostRef(p []*models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
+	var hostss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		hosts := make(map[string]interface{})
+		hosts["moid"] = item.Moid
+		hosts["object_type"] = item.ObjectType
+		hosts["selector"] = item.Selector
+		hostss = append(hostss, hosts)
+	}
+	return hostss
+}
+func flattenListStoragePureVolumeRef(p []*models.StoragePureVolumeRef, d *schema.ResourceData) []map[string]interface{} {
+	var volumess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		volumes := make(map[string]interface{})
+		volumes["moid"] = item.Moid
+		volumes["object_type"] = item.ObjectType
+		volumes["selector"] = item.Selector
+		volumess = append(volumess, volumes)
+	}
+	return volumess
+}
+func flattenListStorageReplicationBlackout(p []*models.StorageReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
+	var replicationblackoutintervalss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		replicationblackoutintervals := make(map[string]interface{})
+
+		if len(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1)
+			if err == nil {
+				replicationblackoutintervals["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		replicationblackoutintervals["object_type"] = item.ObjectType
+		replicationblackoutintervalss = append(replicationblackoutintervalss, replicationblackoutintervals)
+	}
+	return replicationblackoutintervalss
+}
+func flattenListStorageSasExpanderRef(p []*models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+	var sasexpanderss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sasexpanders := make(map[string]interface{})
+		sasexpanders["moid"] = item.Moid
+		sasexpanders["object_type"] = item.ObjectType
+		sasexpanders["selector"] = item.Selector
+		sasexpanderss = append(sasexpanderss, sasexpanders)
+	}
+	return sasexpanderss
+}
+func flattenListStorageSasPortRef(p []*models.StorageSasPortRef, d *schema.ResourceData) []map[string]interface{} {
+	var sasportss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sasports := make(map[string]interface{})
+		sasports["moid"] = item.Moid
+		sasports["object_type"] = item.ObjectType
+		sasports["selector"] = item.Selector
+		sasportss = append(sasportss, sasports)
+	}
+	return sasportss
+}
+func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
+	var spangroupss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		spangroups := make(map[string]interface{})
+
+		if len(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageSpanGroupAO1P1.StorageSpanGroupAO1P1)
+			if err == nil {
+				spangroups["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		spangroups["disks"] = (func(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+			var diskss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				disks := make(map[string]interface{})
+
+				if len(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1) != 0 {
+
+					j, err := json.Marshal(item.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1)
+					if err == nil {
+						disks["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				disks["object_type"] = item.ObjectType
+				disks["slot_number"] = item.SlotNumber
+				diskss = append(diskss, disks)
+			}
+			return diskss
+		})(item.Disks, d)
+		spangroups["object_type"] = item.ObjectType
+		spangroupss = append(spangroupss, spangroups)
+	}
+	return spangroupss
+}
+func flattenListStorageStoragePolicyRef(p []*models.StorageStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var storagepoliciess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storagepolicies := make(map[string]interface{})
+		storagepolicies["moid"] = item.Moid
+		storagepolicies["object_type"] = item.ObjectType
+		storagepolicies["selector"] = item.Selector
+		storagepoliciess = append(storagepoliciess, storagepolicies)
+	}
+	return storagepoliciess
+}
+func flattenListStorageVdMemberEpRef(p []*models.StorageVdMemberEpRef, d *schema.ResourceData) []map[string]interface{} {
+	var vdmemberepss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		vdmembereps := make(map[string]interface{})
+		vdmembereps["moid"] = item.Moid
+		vdmembereps["object_type"] = item.ObjectType
+		vdmembereps["selector"] = item.Selector
+		vdmemberepss = append(vdmemberepss, vdmembereps)
+	}
+	return vdmemberepss
+}
+func flattenListStorageVirtualDriveConfig(p []*models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
+	var virtualdrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		virtualdrives := make(map[string]interface{})
+		virtualdrives["access_policy"] = item.AccessPolicy
+
+		if len(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1)
+			if err == nil {
+				virtualdrives["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		virtualdrives["boot_drive"] = item.BootDrive
+		virtualdrives["disk_group_name"] = item.DiskGroupName
+		virtualdrives["disk_group_policy"] = item.DiskGroupPolicy
+		virtualdrives["drive_cache"] = item.DriveCache
+		virtualdrives["expand_to_available"] = item.ExpandToAvailable
+		virtualdrives["io_policy"] = item.IoPolicy
+		virtualdrives["name"] = item.Name
+		virtualdrives["object_type"] = item.ObjectType
+		virtualdrives["read_policy"] = item.ReadPolicy
+		virtualdrives["size"] = item.Size
+		virtualdrives["write_policy"] = item.WritePolicy
+		virtualdrivess = append(virtualdrivess, virtualdrives)
+	}
+	return virtualdrivess
+}
+func flattenListStorageVirtualDriveExtensionRef(p []*models.StorageVirtualDriveExtensionRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualdriveextensionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		virtualdriveextensions := make(map[string]interface{})
+		virtualdriveextensions["moid"] = item.Moid
+		virtualdriveextensions["object_type"] = item.ObjectType
+		virtualdriveextensions["selector"] = item.Selector
+		virtualdriveextensionss = append(virtualdriveextensionss, virtualdriveextensions)
+	}
+	return virtualdriveextensionss
+}
+func flattenListStorageVirtualDriveRef(p []*models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualdrivess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		virtualdrives := make(map[string]interface{})
+		virtualdrives["moid"] = item.Moid
+		virtualdrives["object_type"] = item.ObjectType
+		virtualdrives["selector"] = item.Selector
+		virtualdrivess = append(virtualdrivess, virtualdrives)
+	}
+	return virtualdrivess
+}
+func flattenListSyslogLocalClientBase(p []*models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
+	var localclientss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		localclients := make(map[string]interface{})
+
+		if len(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1)
+			if err == nil {
+				localclients["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		localclients["min_severity"] = item.MinSeverity
+		localclients["object_type"] = item.ObjectType
+		localclientss = append(localclientss, localclients)
+	}
+	return localclientss
+}
+func flattenListSyslogRemoteClientBase(p []*models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
+	var remoteclientss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		remoteclients := make(map[string]interface{})
+
+		if len(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1)
+			if err == nil {
+				remoteclients["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		remoteclients["enabled"] = item.Enabled
+		remoteclients["hostname"] = item.Hostname
+		remoteclients["min_severity"] = item.MinSeverity
+		remoteclients["object_type"] = item.ObjectType
+		remoteclients["port"] = item.Port
+		remoteclients["protocol"] = item.Protocol
+		remoteclientss = append(remoteclientss, remoteclients)
+	}
+	return remoteclientss
 }
 func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[string]interface{} {
 	var actionss []map[string]interface{}
@@ -2119,7 +3108,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 	for _, item := range p {
 		item := *item
 		actions := make(map[string]interface{})
-		delete(item.TamActionAO1P1.TamActionAO1P1, "ObjectType")
+
 		if len(item.TamActionAO1P1.TamActionAO1P1) != 0 {
 
 			j, err := json.Marshal(item.TamActionAO1P1.TamActionAO1P1)
@@ -2139,7 +3128,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 			for _, item := range p {
 				item := *item
 				identifiers := make(map[string]interface{})
-				delete(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1, "ObjectType")
+
 				if len(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1) != 0 {
 
 					j, err := json.Marshal(item.TamIdentifiersAO1P1.TamIdentifiersAO1P1)
@@ -2167,7 +3156,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 			for _, item := range p {
 				item := *item
 				queries := make(map[string]interface{})
-				delete(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1, "ObjectType")
+
 				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
 
 					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
@@ -2190,121 +3179,87 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 	}
 	return actionss
 }
-func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
-
-	var severitys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	severity := make(map[string]interface{})
-	delete(item.AO1, "ObjectType")
-	if len(item.AO1) != 0 {
-		j, err := json.Marshal(item.AO1)
-		if err == nil {
-			severity["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	severity["object_type"] = item.ObjectType
-
-	severitys = append(severitys, severity)
-	return severitys
-}
-func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
-
-	var macprefixranges []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	macprefixrange := make(map[string]interface{})
-	delete(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1, "ObjectType")
-	if len(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1) != 0 {
-		j, err := json.Marshal(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1)
-		if err == nil {
-			macprefixrange["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	macprefixrange["end_addr"] = item.EndAddr
-	macprefixrange["object_type"] = item.ObjectType
-	macprefixrange["start_addr"] = item.StartAddr
-
-	macprefixranges = append(macprefixranges, macprefixrange)
-	return macprefixranges
-}
-func flattenListHyperflexNamedVlan(p []*models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
-	var vmnetworkvlanss []map[string]interface{}
+func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.ResourceData) []map[string]interface{} {
+	var apidatasourcess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		vmnetworkvlans := make(map[string]interface{})
-		delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
-		if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
+		apidatasources := make(map[string]interface{})
 
-			j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
+		if len(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1) != 0 {
+
+			j, err := json.Marshal(item.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1)
 			if err == nil {
-				vmnetworkvlans["additional_properties"] = string(j)
+				apidatasources["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		vmnetworkvlans["name"] = item.Name
-		vmnetworkvlans["object_type"] = item.ObjectType
-		vmnetworkvlans["vlan_id"] = item.VlanID
-		vmnetworkvlanss = append(vmnetworkvlanss, vmnetworkvlans)
+		apidatasources["mo_type"] = item.MoType
+		apidatasources["name"] = item.Name
+		apidatasources["object_type"] = item.ObjectType
+		apidatasources["queries"] = (func(p []*models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
+			var queriess []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				queries := make(map[string]interface{})
+
+				if len(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1) != 0 {
+
+					j, err := json.Marshal(item.TamQueryEntryAO1P1.TamQueryEntryAO1P1)
+					if err == nil {
+						queries["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				queries["name"] = item.Name
+				queries["object_type"] = item.ObjectType
+				queries["priority"] = item.Priority
+				queries["query"] = item.Query
+				queriess = append(queriess, queries)
+			}
+			return queriess
+		})(item.Queries, d)
+		apidatasources["type"] = item.Type
+		apidatasourcess = append(apidatasourcess, apidatasources)
 	}
-	return vmnetworkvlanss
+	return apidatasourcess
 }
-func flattenMapIamPermissionRef(p *models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var permissions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	permission := make(map[string]interface{})
-	permission["moid"] = item.Moid
-	permission["object_type"] = item.ObjectType
-	permission["selector"] = item.Selector
-
-	permissions = append(permissions, permission)
-	return permissions
-}
-func flattenMapMoBaseMoRef(p *models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var resources []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	resource := make(map[string]interface{})
-	resource["moid"] = item.Moid
-	resource["object_type"] = item.ObjectType
-	resource["selector"] = item.Selector
-
-	resources = append(resources, resource)
-	return resources
-}
-func flattenListIamRoleRef(p []*models.IamRoleRef, d *schema.ResourceData) []map[string]interface{} {
-	var roless []map[string]interface{}
+func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
+	var connectorss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		roles := make(map[string]interface{})
-		roles["moid"] = item.Moid
-		roles["object_type"] = item.ObjectType
-		roles["selector"] = item.Selector
-		roless = append(roless, roles)
+		connectors := make(map[string]interface{})
+
+		if len(item.UcsdConnectorPackAO1P1.UcsdConnectorPackAO1P1) != 0 {
+
+			j, err := json.Marshal(item.UcsdConnectorPackAO1P1.UcsdConnectorPackAO1P1)
+			if err == nil {
+				connectors["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		connectors["connector_feature"] = item.ConnectorFeature
+		connectors["dependency_names"] = item.DependencyNames
+		connectors["downloaded_version"] = item.DownloadedVersion
+		connectors["name"] = item.Name
+		connectors["object_type"] = item.ObjectType
+		connectors["services"] = item.Services
+		connectors["state"] = item.State
+		connectors["version"] = item.Version
+		connectorss = append(connectorss, connectors)
 	}
-	return roless
+	return connectorss
 }
 func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData) []map[string]interface{} {
 	var mappingss []map[string]interface{}
@@ -2314,7 +3269,7 @@ func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData)
 	for _, item := range p {
 		item := *item
 		mappings := make(map[string]interface{})
-		delete(item.VmediaMappingAO1P1.VmediaMappingAO1P1, "ObjectType")
+
 		if len(item.VmediaMappingAO1P1.VmediaMappingAO1P1) != 0 {
 
 			j, err := json.Marshal(item.VmediaMappingAO1P1.VmediaMappingAO1P1)
@@ -2340,1054 +3295,35 @@ func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData)
 	}
 	return mappingss
 }
-func flattenMapIamUserRef(p *models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var users []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	user := make(map[string]interface{})
-	user["moid"] = item.Moid
-	user["object_type"] = item.ObjectType
-	user["selector"] = item.Selector
-
-	users = append(users, user)
-	return users
-}
-func flattenMapHyperflexClusterRef(p *models.HyperflexClusterRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var associatedclusters []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	associatedcluster := make(map[string]interface{})
-	associatedcluster["moid"] = item.Moid
-	associatedcluster["object_type"] = item.ObjectType
-	associatedcluster["selector"] = item.Selector
-
-	associatedclusters = append(associatedclusters, associatedcluster)
-	return associatedclusters
-}
-func flattenMapHyperflexAutoSupportPolicyRef(p *models.HyperflexAutoSupportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var autosupports []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	autosupport := make(map[string]interface{})
-	autosupport["moid"] = item.Moid
-	autosupport["object_type"] = item.ObjectType
-	autosupport["selector"] = item.Selector
-
-	autosupports = append(autosupports, autosupport)
-	return autosupports
-}
-func flattenMapHyperflexClusterNetworkPolicyRef(p *models.HyperflexClusterNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var clusternetworks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	clusternetwork := make(map[string]interface{})
-	clusternetwork["moid"] = item.Moid
-	clusternetwork["object_type"] = item.ObjectType
-	clusternetwork["selector"] = item.Selector
-
-	clusternetworks = append(clusternetworks, clusternetwork)
-	return clusternetworks
-}
-func flattenMapHyperflexClusterStoragePolicyRef(p *models.HyperflexClusterStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var clusterstorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	clusterstorage := make(map[string]interface{})
-	clusterstorage["moid"] = item.Moid
-	clusterstorage["object_type"] = item.ObjectType
-	clusterstorage["selector"] = item.Selector
-
-	clusterstorages = append(clusterstorages, clusterstorage)
-	return clusterstorages
-}
-func flattenMapHyperflexConfigResultRef(p *models.HyperflexConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var configresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configresult := make(map[string]interface{})
-	configresult["moid"] = item.Moid
-	configresult["object_type"] = item.ObjectType
-	configresult["selector"] = item.Selector
-
-	configresults = append(configresults, configresult)
-	return configresults
-}
-func flattenMapHyperflexExtFcStoragePolicyRef(p *models.HyperflexExtFcStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var extfcstorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	extfcstorage := make(map[string]interface{})
-	extfcstorage["moid"] = item.Moid
-	extfcstorage["object_type"] = item.ObjectType
-	extfcstorage["selector"] = item.Selector
-
-	extfcstorages = append(extfcstorages, extfcstorage)
-	return extfcstorages
-}
-func flattenMapHyperflexExtIscsiStoragePolicyRef(p *models.HyperflexExtIscsiStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var extiscsistorages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	extiscsistorage := make(map[string]interface{})
-	extiscsistorage["moid"] = item.Moid
-	extiscsistorage["object_type"] = item.ObjectType
-	extiscsistorage["selector"] = item.Selector
-
-	extiscsistorages = append(extiscsistorages, extiscsistorage)
-	return extiscsistorages
-}
-func flattenMapHyperflexLocalCredentialPolicyRef(p *models.HyperflexLocalCredentialPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var localcredentials []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	localcredential := make(map[string]interface{})
-	localcredential["moid"] = item.Moid
-	localcredential["object_type"] = item.ObjectType
-	localcredential["selector"] = item.Selector
-
-	localcredentials = append(localcredentials, localcredential)
-	return localcredentials
-}
-func flattenMapHyperflexNodeConfigPolicyRef(p *models.HyperflexNodeConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var nodeconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nodeconfig := make(map[string]interface{})
-	nodeconfig["moid"] = item.Moid
-	nodeconfig["object_type"] = item.ObjectType
-	nodeconfig["selector"] = item.Selector
-
-	nodeconfigs = append(nodeconfigs, nodeconfig)
-	return nodeconfigs
-}
-func flattenListHyperflexNodeProfileRef(p []*models.HyperflexNodeProfileRef, d *schema.ResourceData) []map[string]interface{} {
-	var nodeprofileconfigs []map[string]interface{}
+func flattenListVnicEthIfRef(p []*models.VnicEthIfRef, d *schema.ResourceData) []map[string]interface{} {
+	var ethifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		nodeprofileconfig := make(map[string]interface{})
-		nodeprofileconfig["moid"] = item.Moid
-		nodeprofileconfig["object_type"] = item.ObjectType
-		nodeprofileconfig["selector"] = item.Selector
-		nodeprofileconfigs = append(nodeprofileconfigs, nodeprofileconfig)
+		ethifs := make(map[string]interface{})
+		ethifs["moid"] = item.Moid
+		ethifs["object_type"] = item.ObjectType
+		ethifs["selector"] = item.Selector
+		ethifss = append(ethifss, ethifs)
 	}
-	return nodeprofileconfigs
+	return ethifss
 }
-func flattenMapHyperflexProxySettingPolicyRef(p *models.HyperflexProxySettingPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var proxysettings []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	proxysetting := make(map[string]interface{})
-	proxysetting["moid"] = item.Moid
-	proxysetting["object_type"] = item.ObjectType
-	proxysetting["selector"] = item.Selector
-
-	proxysettings = append(proxysettings, proxysetting)
-	return proxysettings
-}
-func flattenMapHyperflexSoftwareVersionPolicyRef(p *models.HyperflexSoftwareVersionPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var softwareversions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	softwareversion := make(map[string]interface{})
-	softwareversion["moid"] = item.Moid
-	softwareversion["object_type"] = item.ObjectType
-	softwareversion["selector"] = item.Selector
-
-	softwareversions = append(softwareversions, softwareversion)
-	return softwareversions
-}
-func flattenMapHyperflexSysConfigPolicyRef(p *models.HyperflexSysConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var sysconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	sysconfig := make(map[string]interface{})
-	sysconfig["moid"] = item.Moid
-	sysconfig["object_type"] = item.ObjectType
-	sysconfig["selector"] = item.Selector
-
-	sysconfigs = append(sysconfigs, sysconfig)
-	return sysconfigs
-}
-func flattenMapHyperflexUcsmConfigPolicyRef(p *models.HyperflexUcsmConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ucsmconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ucsmconfig := make(map[string]interface{})
-	ucsmconfig["moid"] = item.Moid
-	ucsmconfig["object_type"] = item.ObjectType
-	ucsmconfig["selector"] = item.Selector
-
-	ucsmconfigs = append(ucsmconfigs, ucsmconfig)
-	return ucsmconfigs
-}
-func flattenMapHyperflexVcenterConfigPolicyRef(p *models.HyperflexVcenterConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var vcenterconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vcenterconfig := make(map[string]interface{})
-	vcenterconfig["moid"] = item.Moid
-	vcenterconfig["object_type"] = item.ObjectType
-	vcenterconfig["selector"] = item.Selector
-
-	vcenterconfigs = append(vcenterconfigs, vcenterconfig)
-	return vcenterconfigs
-}
-func flattenMapHyperflexClusterProfileRef(p *models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var clusterprofiles []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	clusterprofile := make(map[string]interface{})
-	clusterprofile["moid"] = item.Moid
-	clusterprofile["object_type"] = item.ObjectType
-	clusterprofile["selector"] = item.Selector
-
-	clusterprofiles = append(clusterprofiles, clusterprofile)
-	return clusterprofiles
-}
-func flattenListStorageDiskGroupPolicyRef(p []*models.StorageDiskGroupPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var diskgrouppoliciess []map[string]interface{}
+func flattenListVnicFcIfRef(p []*models.VnicFcIfRef, d *schema.ResourceData) []map[string]interface{} {
+	var fcifss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		diskgrouppolicies := make(map[string]interface{})
-		diskgrouppolicies["moid"] = item.Moid
-		diskgrouppolicies["object_type"] = item.ObjectType
-		diskgrouppolicies["selector"] = item.Selector
-		diskgrouppoliciess = append(diskgrouppoliciess, diskgrouppolicies)
+		fcifs := make(map[string]interface{})
+		fcifs["moid"] = item.Moid
+		fcifs["object_type"] = item.ObjectType
+		fcifs["selector"] = item.Selector
+		fcifss = append(fcifss, fcifs)
 	}
-	return diskgrouppoliciess
-}
-func flattenListStorageVirtualDriveConfig(p []*models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
-	var virtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		virtualdrives := make(map[string]interface{})
-		virtualdrives["access_policy"] = item.AccessPolicy
-		delete(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1, "ObjectType")
-		if len(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1)
-			if err == nil {
-				virtualdrives["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		virtualdrives["boot_drive"] = item.BootDrive
-		virtualdrives["disk_group_name"] = item.DiskGroupName
-		virtualdrives["disk_group_policy"] = item.DiskGroupPolicy
-		virtualdrives["drive_cache"] = item.DriveCache
-		virtualdrives["expand_to_available"] = item.ExpandToAvailable
-		virtualdrives["io_policy"] = item.IoPolicy
-		virtualdrives["name"] = item.Name
-		virtualdrives["object_type"] = item.ObjectType
-		virtualdrives["read_policy"] = item.ReadPolicy
-		virtualdrives["size"] = item.Size
-		virtualdrives["write_policy"] = item.WritePolicy
-		virtualdrivess = append(virtualdrivess, virtualdrives)
-	}
-	return virtualdrivess
-}
-func flattenListBootDeviceBase(p []*models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
-	var bootdevicess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		bootdevices := make(map[string]interface{})
-		delete(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1, "ObjectType")
-		if len(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1) != 0 {
-
-			j, err := json.Marshal(item.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1)
-			if err == nil {
-				bootdevices["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		bootdevices["enabled"] = item.Enabled
-		bootdevices["name"] = item.Name
-		bootdevices["object_type"] = item.ObjectType
-		bootdevicess = append(bootdevicess, bootdevices)
-	}
-	return bootdevicess
-}
-func flattenMapIamQualifierRef(p *models.IamQualifierRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var qualifiers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	qualifier := make(map[string]interface{})
-	qualifier["moid"] = item.Moid
-	qualifier["object_type"] = item.ObjectType
-	qualifier["selector"] = item.Selector
-
-	qualifiers = append(qualifiers, qualifier)
-	return qualifiers
-}
-func flattenListOrganizationOrganizationRef(p []*models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
-	var organizationss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		organizations := make(map[string]interface{})
-		organizations["moid"] = item.Moid
-		organizations["object_type"] = item.ObjectType
-		organizations["selector"] = item.Selector
-		organizationss = append(organizationss, organizations)
-	}
-	return organizationss
-}
-func flattenListResourcePerTypeCombinedSelector(p []*models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
-	var pertypecombinedselectors []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		pertypecombinedselector := make(map[string]interface{})
-		delete(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1, "ObjectType")
-		if len(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1) != 0 {
-
-			j, err := json.Marshal(item.ResourcePerTypeCombinedSelectorAO1P1.ResourcePerTypeCombinedSelectorAO1P1)
-			if err == nil {
-				pertypecombinedselector["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		pertypecombinedselector["combined_selector"] = item.CombinedSelector
-		pertypecombinedselector["empty_filter"] = item.EmptyFilter
-		pertypecombinedselector["object_type"] = item.ObjectType
-		pertypecombinedselector["selector_object_type"] = item.SelectorObjectType
-		pertypecombinedselectors = append(pertypecombinedselectors, pertypecombinedselector)
-	}
-	return pertypecombinedselectors
-}
-func flattenListResourceSelector(p []*models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
-	var selectorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		selectors := make(map[string]interface{})
-		delete(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1, "ObjectType")
-		if len(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1) != 0 {
-
-			j, err := json.Marshal(item.ResourceSelectorAO1P1.ResourceSelectorAO1P1)
-			if err == nil {
-				selectors["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		selectors["object_type"] = item.ObjectType
-		selectors["selector"] = item.Selector
-		selectorss = append(selectorss, selectors)
-	}
-	return selectorss
-}
-func flattenListWorkflowMessage(p []*models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
-	var messages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		message := make(map[string]interface{})
-		delete(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1, "ObjectType")
-		if len(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1) != 0 {
-
-			j, err := json.Marshal(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1)
-			if err == nil {
-				message["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		message["message"] = item.Message
-		message["object_type"] = item.ObjectType
-		message["severity"] = item.Severity
-		messages = append(messages, message)
-	}
-	return messages
-}
-func flattenMapServerProfileRef(p *models.ServerProfileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var nr1profiles []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nr1profile := make(map[string]interface{})
-	nr1profile["moid"] = item.Moid
-	nr1profile["object_type"] = item.ObjectType
-	nr1profile["selector"] = item.Selector
-
-	nr1profiles = append(nr1profiles, nr1profile)
-	return nr1profiles
-}
-func flattenMapWorkflowTaskInfoRef(p *models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var parenttaskinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	parenttaskinfo := make(map[string]interface{})
-	parenttaskinfo["moid"] = item.Moid
-	parenttaskinfo["object_type"] = item.ObjectType
-	parenttaskinfo["selector"] = item.Selector
-
-	parenttaskinfos = append(parenttaskinfos, parenttaskinfo)
-	return parenttaskinfos
-}
-func flattenMapWorkflowPendingDynamicWorkflowInfoRef(p *models.WorkflowPendingDynamicWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var pendingdynamicworkflowinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	pendingdynamicworkflowinfo := make(map[string]interface{})
-	pendingdynamicworkflowinfo["moid"] = item.Moid
-	pendingdynamicworkflowinfo["object_type"] = item.ObjectType
-	pendingdynamicworkflowinfo["selector"] = item.Selector
-
-	pendingdynamicworkflowinfos = append(pendingdynamicworkflowinfos, pendingdynamicworkflowinfo)
-	return pendingdynamicworkflowinfos
-}
-func flattenListWorkflowTaskInfoRef(p []*models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var taskinfoss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		taskinfos := make(map[string]interface{})
-		taskinfos["moid"] = item.Moid
-		taskinfos["object_type"] = item.ObjectType
-		taskinfos["selector"] = item.Selector
-		taskinfoss = append(taskinfoss, taskinfos)
-	}
-	return taskinfoss
-}
-func flattenMapWorkflowWorkflowDefinitionRef(p *models.WorkflowWorkflowDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var workflowdefinitions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	workflowdefinition := make(map[string]interface{})
-	workflowdefinition["moid"] = item.Moid
-	workflowdefinition["object_type"] = item.ObjectType
-	workflowdefinition["selector"] = item.Selector
-
-	workflowdefinitions = append(workflowdefinitions, workflowdefinition)
-	return workflowdefinitions
-}
-func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]interface{} {
-
-	var cdns []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	cdn := make(map[string]interface{})
-	delete(item.VnicCdnAO1P1.VnicCdnAO1P1, "ObjectType")
-	if len(item.VnicCdnAO1P1.VnicCdnAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicCdnAO1P1.VnicCdnAO1P1)
-		if err == nil {
-			cdn["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	cdn["object_type"] = item.ObjectType
-	cdn["source"] = item.Source
-	cdn["value"] = item.Value
-
-	cdns = append(cdns, cdn)
-	return cdns
-}
-func flattenMapVnicEthAdapterPolicyRef(p *models.VnicEthAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ethadapterpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ethadapterpolicy := make(map[string]interface{})
-	ethadapterpolicy["moid"] = item.Moid
-	ethadapterpolicy["object_type"] = item.ObjectType
-	ethadapterpolicy["selector"] = item.Selector
-
-	ethadapterpolicys = append(ethadapterpolicys, ethadapterpolicy)
-	return ethadapterpolicys
-}
-func flattenMapVnicEthNetworkPolicyRef(p *models.VnicEthNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ethnetworkpolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ethnetworkpolicy := make(map[string]interface{})
-	ethnetworkpolicy["moid"] = item.Moid
-	ethnetworkpolicy["object_type"] = item.ObjectType
-	ethnetworkpolicy["selector"] = item.Selector
-
-	ethnetworkpolicys = append(ethnetworkpolicys, ethnetworkpolicy)
-	return ethnetworkpolicys
-}
-func flattenMapVnicEthQosPolicyRef(p *models.VnicEthQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ethqospolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ethqospolicy := make(map[string]interface{})
-	ethqospolicy["moid"] = item.Moid
-	ethqospolicy["object_type"] = item.ObjectType
-	ethqospolicy["selector"] = item.Selector
-
-	ethqospolicys = append(ethqospolicys, ethqospolicy)
-	return ethqospolicys
-}
-func flattenMapVnicLanConnectivityPolicyRef(p *models.VnicLanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var lanconnectivitypolicys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	lanconnectivitypolicy := make(map[string]interface{})
-	lanconnectivitypolicy["moid"] = item.Moid
-	lanconnectivitypolicy["object_type"] = item.ObjectType
-	lanconnectivitypolicy["selector"] = item.Selector
-
-	lanconnectivitypolicys = append(lanconnectivitypolicys, lanconnectivitypolicy)
-	return lanconnectivitypolicys
-}
-func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var usnicsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	usnicsettings := make(map[string]interface{})
-	delete(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1, "ObjectType")
-	if len(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1)
-		if err == nil {
-			usnicsettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	usnicsettings["cos"] = item.Cos
-	usnicsettings["count"] = item.Count
-	usnicsettings["object_type"] = item.ObjectType
-	usnicsettings["usnic_adapter_policy"] = item.UsnicAdapterPolicy
-
-	usnicsettingss = append(usnicsettingss, usnicsettings)
-	return usnicsettingss
-}
-func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var vmqsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vmqsettings := make(map[string]interface{})
-	delete(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1, "ObjectType")
-	if len(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1)
-		if err == nil {
-			vmqsettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	vmqsettings["enabled"] = item.Enabled
-	vmqsettings["object_type"] = item.ObjectType
-
-	vmqsettingss = append(vmqsettingss, vmqsettings)
-	return vmqsettingss
-}
-func flattenMapTamAdvisoryRef(p *models.TamAdvisoryRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var advisorys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	advisory := make(map[string]interface{})
-	advisory["moid"] = item.Moid
-	advisory["object_type"] = item.ObjectType
-	advisory["selector"] = item.Selector
-
-	advisorys = append(advisorys, advisory)
-	return advisorys
-}
-func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
-	var featurelimitentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		featurelimitentries := make(map[string]interface{})
-		delete(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1, "ObjectType")
-		if len(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1) != 0 {
-
-			j, err := json.Marshal(item.HyperflexAbstractAppSettingAO1P1.HyperflexAbstractAppSettingAO1P1)
-			if err == nil {
-				featurelimitentries["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		featurelimitentries["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
-
-			var constraints []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			constraint := make(map[string]interface{})
-			delete(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1, "ObjectType")
-			if len(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1) != 0 {
-				j, err := json.Marshal(item.HyperflexAppSettingConstraintAO1P1.HyperflexAppSettingConstraintAO1P1)
-				if err == nil {
-					constraint["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			constraint["hxdp_version"] = item.HxdpVersion
-			constraint["hypervisor_type"] = item.HypervisorType
-			constraint["mgmt_platform"] = item.MgmtPlatform
-			constraint["object_type"] = item.ObjectType
-			constraint["server_model"] = item.ServerModel
-
-			constraints = append(constraints, constraint)
-			return constraints
-		})(item.Constraint, d)
-		featurelimitentries["name"] = item.Name
-		featurelimitentries["object_type"] = item.ObjectType
-		featurelimitentries["value"] = item.Value
-		featurelimitentriess = append(featurelimitentriess, featurelimitentries)
-	}
-	return featurelimitentriess
-}
-func flattenListIamResourceRolesRef(p []*models.IamResourceRolesRef, d *schema.ResourceData) []map[string]interface{} {
-	var resourceroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		resourceroles := make(map[string]interface{})
-		resourceroles["moid"] = item.Moid
-		resourceroles["object_type"] = item.ObjectType
-		resourceroles["selector"] = item.Selector
-		resourceroless = append(resourceroless, resourceroles)
-	}
-	return resourceroless
-}
-func flattenListAssetClusterMemberRef(p []*models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
-	var clustermemberss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		clustermembers := make(map[string]interface{})
-		clustermembers["moid"] = item.Moid
-		clustermembers["object_type"] = item.ObjectType
-		clustermembers["selector"] = item.Selector
-		clustermemberss = append(clustermemberss, clustermembers)
-	}
-	return clustermemberss
-}
-func flattenMapAssetDeviceClaimRef(p *models.AssetDeviceClaimRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var deviceclaims []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	deviceclaim := make(map[string]interface{})
-	deviceclaim["moid"] = item.Moid
-	deviceclaim["object_type"] = item.ObjectType
-	deviceclaim["selector"] = item.Selector
-
-	deviceclaims = append(deviceclaims, deviceclaim)
-	return deviceclaims
-}
-func flattenMapAssetDeviceConfigurationRef(p *models.AssetDeviceConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var deviceconfigurations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	deviceconfiguration := make(map[string]interface{})
-	deviceconfiguration["moid"] = item.Moid
-	deviceconfiguration["object_type"] = item.ObjectType
-	deviceconfiguration["selector"] = item.Selector
-
-	deviceconfigurations = append(deviceconfigurations, deviceconfiguration)
-	return deviceconfigurations
-}
-func flattenMapIamDomainGroupRef(p *models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var domaingroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	domaingroup := make(map[string]interface{})
-	domaingroup["moid"] = item.Moid
-	domaingroup["object_type"] = item.ObjectType
-	domaingroup["selector"] = item.Selector
-
-	domaingroups = append(domaingroups, domaingroup)
-	return domaingroups
-}
-func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
-
-	var parentsignatures []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	parentsignature := make(map[string]interface{})
-	delete(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1, "ObjectType")
-	if len(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1) != 0 {
-		j, err := json.Marshal(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1)
-		if err == nil {
-			parentsignature["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	parentsignature["device_id"] = item.DeviceID
-	parentsignature["node_id"] = item.NodeID
-	parentsignature["object_type"] = item.ObjectType
-	parentsignature["signature"] = item.Signature
-
-	parentsignatures = append(parentsignatures, parentsignature)
-	return parentsignatures
-}
-func flattenMapAssetSecurityTokenRef(p *models.AssetSecurityTokenRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var securitytokens []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	securitytoken := make(map[string]interface{})
-	securitytoken["moid"] = item.Moid
-	securitytoken["object_type"] = item.ObjectType
-	securitytoken["selector"] = item.Selector
-
-	securitytokens = append(securitytokens, securitytoken)
-	return securitytokens
-}
-func flattenListWorkflowWorkflowTask(p []*models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
-	var taskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		tasks := make(map[string]interface{})
-		delete(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1, "ObjectType")
-		if len(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1) != 0 {
-
-			j, err := json.Marshal(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1)
-			if err == nil {
-				tasks["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		tasks["description"] = item.Description
-		tasks["label"] = item.Label
-		tasks["name"] = item.Name
-		tasks["object_type"] = item.ObjectType
-		taskss = append(taskss, tasks)
-	}
-	return taskss
-}
-func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
-
-	var validationinformations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	validationinformation := make(map[string]interface{})
-	delete(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1, "ObjectType")
-	if len(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1) != 0 {
-		j, err := json.Marshal(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1)
-		if err == nil {
-			validationinformation["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	validationinformation["object_type"] = item.ObjectType
-	validationinformation["state"] = item.State
-	validationinformation["validation_error"] = (func(p []*models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
-		var validationerrors []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		for _, item := range p {
-			item := *item
-			validationerror := make(map[string]interface{})
-			validationerror["error_log"] = item.ErrorLog
-			validationerror["field"] = item.Field
-			validationerror["object_type"] = item.ObjectType
-			validationerror["task_name"] = item.TaskName
-			validationerror["transition_name"] = item.TransitionName
-			validationerrors = append(validationerrors, validationerror)
-		}
-		return validationerrors
-	})(item.ValidationError, d)
-
-	validationinformations = append(validationinformations, validationinformation)
-	return validationinformations
-}
-func flattenMapHyperflexInstallerImageRef(p *models.HyperflexInstallerImageRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var installerimages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	installerimage := make(map[string]interface{})
-	installerimage["moid"] = item.Moid
-	installerimage["object_type"] = item.ObjectType
-	installerimage["selector"] = item.Selector
-
-	installerimages = append(installerimages, installerimage)
-	return installerimages
-}
-func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var errorrecoverysettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	errorrecoverysettings := make(map[string]interface{})
-	delete(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1, "ObjectType")
-	if len(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1)
-		if err == nil {
-			errorrecoverysettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	errorrecoverysettings["enabled"] = item.Enabled
-	errorrecoverysettings["io_retry_count"] = item.IoRetryCount
-	errorrecoverysettings["io_retry_timeout"] = item.IoRetryTimeout
-	errorrecoverysettings["link_down_timeout"] = item.LinkDownTimeout
-	errorrecoverysettings["object_type"] = item.ObjectType
-	errorrecoverysettings["port_down_timeout"] = item.PortDownTimeout
-
-	errorrecoverysettingss = append(errorrecoverysettingss, errorrecoverysettings)
-	return errorrecoverysettingss
-}
-func flattenMapVnicFlogiSettings(p *models.VnicFlogiSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var flogisettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	flogisettings := make(map[string]interface{})
-	delete(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1, "ObjectType")
-	if len(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1)
-		if err == nil {
-			flogisettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	flogisettings["object_type"] = item.ObjectType
-	flogisettings["retries"] = item.Retries
-	flogisettings["timeout"] = item.Timeout
-
-	flogisettingss = append(flogisettingss, flogisettings)
-	return flogisettingss
-}
-func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var interruptsettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	interruptsettings := make(map[string]interface{})
-	delete(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1, "ObjectType")
-	if len(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1)
-		if err == nil {
-			interruptsettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	interruptsettings["mode"] = item.Mode
-	interruptsettings["object_type"] = item.ObjectType
-
-	interruptsettingss = append(interruptsettingss, interruptsettings)
-	return interruptsettingss
-}
-func flattenMapVnicPlogiSettings(p *models.VnicPlogiSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var plogisettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	plogisettings := make(map[string]interface{})
-	delete(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1, "ObjectType")
-	if len(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1)
-		if err == nil {
-			plogisettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	plogisettings["object_type"] = item.ObjectType
-	plogisettings["retries"] = item.Retries
-	plogisettings["timeout"] = item.Timeout
-
-	plogisettingss = append(plogisettingss, plogisettings)
-	return plogisettingss
-}
-func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var rxqueuesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	rxqueuesettings := make(map[string]interface{})
-	delete(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1, "ObjectType")
-	if len(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1)
-		if err == nil {
-			rxqueuesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	rxqueuesettings["count"] = item.Count
-	rxqueuesettings["object_type"] = item.ObjectType
-	rxqueuesettings["ring_size"] = item.RingSize
-
-	rxqueuesettingss = append(rxqueuesettingss, rxqueuesettings)
-	return rxqueuesettingss
-}
-func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.ResourceData) []map[string]interface{} {
-
-	var scsiqueuesettingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	scsiqueuesettings := make(map[string]interface{})
-	delete(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1, "ObjectType")
-	if len(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1) != 0 {
-		j, err := json.Marshal(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1)
-		if err == nil {
-			scsiqueuesettings["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	scsiqueuesettings["count"] = item.Count
-	scsiqueuesettings["object_type"] = item.ObjectType
-	scsiqueuesettings["ring_size"] = item.RingSize
-
-	scsiqueuesettingss = append(scsiqueuesettingss, scsiqueuesettings)
-	return scsiqueuesettingss
+	return fcifss
 }
 func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []map[string]interface{} {
 	var batchs []map[string]interface{}
@@ -3397,7 +3333,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 	for _, item := range p {
 		item := *item
 		batch := make(map[string]interface{})
-		delete(item.WorkflowAPIAO1P1.WorkflowAPIAO1P1, "ObjectType")
+
 		if len(item.WorkflowAPIAO1P1.WorkflowAPIAO1P1) != 0 {
 
 			j, err := json.Marshal(item.WorkflowAPIAO1P1.WorkflowAPIAO1P1)
@@ -3511,808 +3447,202 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 	}
 	return batchs
 }
-func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
-
-	var algorithms []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	algorithm := make(map[string]interface{})
-	delete(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1, "ObjectType")
-	if len(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1)
-		if err == nil {
-			algorithm["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	algorithm["name"] = item.Name
-	algorithm["object_type"] = item.ObjectType
-
-	algorithms = append(algorithms, algorithm)
-	return algorithms
-}
-func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schema.ResourceData) []map[string]interface{} {
-
-	var schedules []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	schedule := make(map[string]interface{})
-	delete(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1, "ObjectType")
-	if len(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1) != 0 {
-		j, err := json.Marshal(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1)
-		if err == nil {
-			schedule["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	schedule["execution_time"] = item.ExecutionTime
-	schedule["frequency_unit"] = item.FrequencyUnit
-	schedule["hours"] = item.Hours
-	schedule["object_type"] = item.ObjectType
-
-	schedules = append(schedules, schedule)
-	return schedules
-}
-func flattenListSyslogLocalClientBase(p []*models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
-	var localclientss []map[string]interface{}
+func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+	var typedefinitions []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		localclients := make(map[string]interface{})
-		delete(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1, "ObjectType")
-		if len(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1) != 0 {
+		typedefinition := make(map[string]interface{})
 
-			j, err := json.Marshal(item.SyslogLocalClientBaseAO1P1.SyslogLocalClientBaseAO1P1)
+		if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
 			if err == nil {
-				localclients["additional_properties"] = string(j)
+				typedefinition["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		localclients["min_severity"] = item.MinSeverity
-		localclients["object_type"] = item.ObjectType
-		localclientss = append(localclientss, localclients)
+		typedefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+			var NonReserveddefaults []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			NonReserveddefault := make(map[string]interface{})
+			delete(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1, "ObjectType")
+			if len(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1) != 0 {
+				j, err := json.Marshal(item.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1)
+				if err == nil {
+					NonReserveddefault["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			NonReserveddefault["object_type"] = item.ObjectType
+			NonReserveddefault["override"] = item.Override
+			NonReserveddefault["value"] = item.Value
+
+			NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
+			return NonReserveddefaults
+		})(item.Default, d)
+		typedefinition["description"] = item.Description
+		typedefinition["label"] = item.Label
+		typedefinition["name"] = item.Name
+		typedefinition["object_type"] = item.ObjectType
+		typedefinition["required"] = item.Required
+		typedefinitions = append(typedefinitions, typedefinition)
 	}
-	return localclientss
+	return typedefinitions
 }
-func flattenListSyslogRemoteClientBase(p []*models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
-	var remoteclientss []map[string]interface{}
+func flattenListWorkflowDynamicWorkflowActionTaskList(p []*models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
+	var workflowactiontasklistss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		remoteclients := make(map[string]interface{})
-		delete(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1, "ObjectType")
-		if len(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1) != 0 {
+		workflowactiontasklists := make(map[string]interface{})
+		workflowactiontasklists["action"] = item.Action
 
-			j, err := json.Marshal(item.SyslogRemoteClientBaseAO1P1.SyslogRemoteClientBaseAO1P1)
+		if len(item.WorkflowDynamicWorkflowActionTaskListAO1P1.WorkflowDynamicWorkflowActionTaskListAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowDynamicWorkflowActionTaskListAO1P1.WorkflowDynamicWorkflowActionTaskListAO1P1)
 			if err == nil {
-				remoteclients["additional_properties"] = string(j)
+				workflowactiontasklists["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		remoteclients["enabled"] = item.Enabled
-		remoteclients["hostname"] = item.Hostname
-		remoteclients["min_severity"] = item.MinSeverity
-		remoteclients["object_type"] = item.ObjectType
-		remoteclients["port"] = item.Port
-		remoteclients["protocol"] = item.Protocol
-		remoteclientss = append(remoteclientss, remoteclients)
+		workflowactiontasklists["object_type"] = item.ObjectType
+		workflowactiontasklists["tasks"] = item.Tasks
+		workflowactiontasklistss = append(workflowactiontasklistss, workflowactiontasklists)
 	}
-	return remoteclientss
+	return workflowactiontasklistss
 }
-func flattenListIamDomainGroupRef(p []*models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var domaingroupss []map[string]interface{}
+func flattenListWorkflowMessage(p []*models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
+	var messages []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		domaingroups := make(map[string]interface{})
-		domaingroups["moid"] = item.Moid
-		domaingroups["object_type"] = item.ObjectType
-		domaingroups["selector"] = item.Selector
-		domaingroupss = append(domaingroupss, domaingroups)
-	}
-	return domaingroupss
-}
-func flattenListIamIdpReferenceRef(p []*models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
-	var idpreferencess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		idpreferences := make(map[string]interface{})
-		idpreferences["moid"] = item.Moid
-		idpreferences["object_type"] = item.ObjectType
-		idpreferences["selector"] = item.Selector
-		idpreferencess = append(idpreferencess, idpreferences)
-	}
-	return idpreferencess
-}
-func flattenListIamIdpRef(p []*models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
-	var idpss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		idps := make(map[string]interface{})
-		idps["moid"] = item.Moid
-		idps["object_type"] = item.ObjectType
-		idps["selector"] = item.Selector
-		idpss = append(idpss, idps)
-	}
-	return idpss
-}
-func flattenMapCryptEncryptRef(p *models.CryptEncryptRef, d *schema.ResourceData) []map[string]interface{} {
+		message := make(map[string]interface{})
 
-	var nr0encrypts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nr0encrypt := make(map[string]interface{})
-	nr0encrypt["moid"] = item.Moid
-	nr0encrypt["object_type"] = item.ObjectType
-	nr0encrypt["selector"] = item.Selector
+		if len(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1) != 0 {
 
-	nr0encrypts = append(nr0encrypts, nr0encrypt)
-	return nr0encrypts
-}
-func flattenMapCryptDecryptRef(p *models.CryptDecryptRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var nr1decrypts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nr1decrypt := make(map[string]interface{})
-	nr1decrypt["moid"] = item.Moid
-	nr1decrypt["object_type"] = item.ObjectType
-	nr1decrypt["selector"] = item.Selector
-
-	nr1decrypts = append(nr1decrypts, nr1decrypt)
-	return nr1decrypts
-}
-func flattenListIamPrivilegeSetRef(p []*models.IamPrivilegeSetRef, d *schema.ResourceData) []map[string]interface{} {
-	var privilegesetss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		privilegesets := make(map[string]interface{})
-		privilegesets["moid"] = item.Moid
-		privilegesets["object_type"] = item.ObjectType
-		privilegesets["selector"] = item.Selector
-		privilegesetss = append(privilegesetss, privilegesets)
-	}
-	return privilegesetss
-}
-func flattenListIamPrivilegeRef(p []*models.IamPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
-	var privilegess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		privileges := make(map[string]interface{})
-		privileges["moid"] = item.Moid
-		privileges["object_type"] = item.ObjectType
-		privileges["selector"] = item.Selector
-		privilegess = append(privilegess, privileges)
-	}
-	return privilegess
-}
-func flattenMapIamResourceLimitsRef(p *models.IamResourceLimitsRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var resourcelimitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	resourcelimits := make(map[string]interface{})
-	resourcelimits["moid"] = item.Moid
-	resourcelimits["object_type"] = item.ObjectType
-	resourcelimits["selector"] = item.Selector
-
-	resourcelimitss = append(resourcelimitss, resourcelimits)
-	return resourcelimitss
-}
-func flattenMapIamSecurityHolderRef(p *models.IamSecurityHolderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var securityholders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	securityholder := make(map[string]interface{})
-	securityholder["moid"] = item.Moid
-	securityholder["object_type"] = item.ObjectType
-	securityholder["selector"] = item.Selector
-
-	securityholders = append(securityholders, securityholder)
-	return securityholders
-}
-func flattenMapIamSessionLimitsRef(p *models.IamSessionLimitsRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var sessionlimitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	sessionlimits := make(map[string]interface{})
-	sessionlimits["moid"] = item.Moid
-	sessionlimits["object_type"] = item.ObjectType
-	sessionlimits["selector"] = item.Selector
-
-	sessionlimitss = append(sessionlimitss, sessionlimits)
-	return sessionlimitss
-}
-func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
-	var settingss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		settings := make(map[string]interface{})
-		delete(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1, "ObjectType")
-		if len(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1) != 0 {
-
-			j, err := json.Marshal(item.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1)
+			j, err := json.Marshal(item.WorkflowMessageAO1P1.WorkflowMessageAO1P1)
 			if err == nil {
-				settings["additional_properties"] = string(j)
+				message["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		settings["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var ethsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			ethsettings := make(map[string]interface{})
-			delete(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1, "ObjectType")
-			if len(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1)
-				if err == nil {
-					ethsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			ethsettings["lldp_enabled"] = item.LldpEnabled
-			ethsettings["object_type"] = item.ObjectType
-
-			ethsettingss = append(ethsettingss, ethsettings)
-			return ethsettingss
-		})(item.EthSettings, d)
-		settings["fc_settings"] = (func(p *models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var fcsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			fcsettings := make(map[string]interface{})
-			delete(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1, "ObjectType")
-			if len(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1)
-				if err == nil {
-					fcsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			fcsettings["fip_enabled"] = item.FipEnabled
-			fcsettings["object_type"] = item.ObjectType
-
-			fcsettingss = append(fcsettingss, fcsettings)
-			return fcsettingss
-		})(item.FcSettings, d)
-		settings["object_type"] = item.ObjectType
-		settings["port_channel_settings"] = (func(p *models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
-
-			var portchannelsettingss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			portchannelsettings := make(map[string]interface{})
-			delete(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1, "ObjectType")
-			if len(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1) != 0 {
-				j, err := json.Marshal(item.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1)
-				if err == nil {
-					portchannelsettings["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			portchannelsettings["enabled"] = item.Enabled
-			portchannelsettings["object_type"] = item.ObjectType
-
-			portchannelsettingss = append(portchannelsettingss, portchannelsettings)
-			return portchannelsettingss
-		})(item.PortChannelSettings, d)
-		settings["slot_id"] = item.SlotID
-		settingss = append(settingss, settings)
+		message["message"] = item.Message
+		message["object_type"] = item.ObjectType
+		message["severity"] = item.Severity
+		messages = append(messages, message)
 	}
-	return settingss
+	return messages
 }
-func flattenMapRecoveryBackupConfigPolicyRef(p *models.RecoveryBackupConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var backupconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	backupconfig := make(map[string]interface{})
-	backupconfig["moid"] = item.Moid
-	backupconfig["object_type"] = item.ObjectType
-	backupconfig["selector"] = item.Selector
-
-	backupconfigs = append(backupconfigs, backupconfig)
-	return backupconfigs
-}
-func flattenMapRecoveryScheduleConfigPolicyRef(p *models.RecoveryScheduleConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var scheduleconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	scheduleconfig := make(map[string]interface{})
-	scheduleconfig["moid"] = item.Moid
-	scheduleconfig["object_type"] = item.ObjectType
-	scheduleconfig["selector"] = item.Selector
-
-	scheduleconfigs = append(scheduleconfigs, scheduleconfig)
-	return scheduleconfigs
-}
-func flattenListIaasConnectorPackRef(p []*models.IaasConnectorPackRef, d *schema.ResourceData) []map[string]interface{} {
-	var connectorpacks []map[string]interface{}
+func flattenListWorkflowTaskDefinitionRef(p []*models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+	var implementedtaskss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		connectorpack := make(map[string]interface{})
-		connectorpack["moid"] = item.Moid
-		connectorpack["object_type"] = item.ObjectType
-		connectorpack["selector"] = item.Selector
-		connectorpacks = append(connectorpacks, connectorpack)
+		implementedtasks := make(map[string]interface{})
+		implementedtasks["moid"] = item.Moid
+		implementedtasks["object_type"] = item.ObjectType
+		implementedtasks["selector"] = item.Selector
+		implementedtaskss = append(implementedtaskss, implementedtasks)
 	}
-	return connectorpacks
+	return implementedtaskss
 }
-func flattenListIaasDeviceStatusRef(p []*models.IaasDeviceStatusRef, d *schema.ResourceData) []map[string]interface{} {
-	var devicestatuss []map[string]interface{}
+func flattenListWorkflowTaskInfoRef(p []*models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var taskinfoss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		devicestatus := make(map[string]interface{})
-		devicestatus["moid"] = item.Moid
-		devicestatus["object_type"] = item.ObjectType
-		devicestatus["selector"] = item.Selector
-		devicestatuss = append(devicestatuss, devicestatus)
+		taskinfos := make(map[string]interface{})
+		taskinfos["moid"] = item.Moid
+		taskinfos["object_type"] = item.ObjectType
+		taskinfos["selector"] = item.Selector
+		taskinfoss = append(taskinfoss, taskinfos)
 	}
-	return devicestatuss
+	return taskinfoss
 }
-func flattenMapIaasLicenseInfoRef(p *models.IaasLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var licenseinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	licenseinfo := make(map[string]interface{})
-	licenseinfo["moid"] = item.Moid
-	licenseinfo["object_type"] = item.ObjectType
-	licenseinfo["selector"] = item.Selector
-
-	licenseinfos = append(licenseinfos, licenseinfo)
-	return licenseinfos
-}
-func flattenListIaasMostRunTasksRef(p []*models.IaasMostRunTasksRef, d *schema.ResourceData) []map[string]interface{} {
-	var mostruntaskss []map[string]interface{}
+func flattenListWorkflowTaskRetryInfo(p []*models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
+	var taskinstidlists []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		mostruntasks := make(map[string]interface{})
-		mostruntasks["moid"] = item.Moid
-		mostruntasks["object_type"] = item.ObjectType
-		mostruntasks["selector"] = item.Selector
-		mostruntaskss = append(mostruntaskss, mostruntasks)
-	}
-	return mostruntaskss
-}
-func flattenMapIaasUcsdManagedInfraRef(p *models.IaasUcsdManagedInfraRef, d *schema.ResourceData) []map[string]interface{} {
+		taskinstidlist := make(map[string]interface{})
 
-	var ucsdmanagedinfras []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ucsdmanagedinfra := make(map[string]interface{})
-	ucsdmanagedinfra["moid"] = item.Moid
-	ucsdmanagedinfra["object_type"] = item.ObjectType
-	ucsdmanagedinfra["selector"] = item.Selector
+		if len(item.WorkflowTaskRetryInfoAO1P1.WorkflowTaskRetryInfoAO1P1) != 0 {
 
-	ucsdmanagedinfras = append(ucsdmanagedinfras, ucsdmanagedinfra)
-	return ucsdmanagedinfras
-}
-func flattenListResourceGroupRef(p []*models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var resourcegroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		resourcegroups := make(map[string]interface{})
-		resourcegroups["moid"] = item.Moid
-		resourcegroups["object_type"] = item.ObjectType
-		resourcegroups["selector"] = item.Selector
-		resourcegroupss = append(resourcegroupss, resourcegroups)
-	}
-	return resourcegroupss
-}
-func flattenMapIamCertificateRef(p *models.IamCertificateRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var certificates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	certificate := make(map[string]interface{})
-	certificate["moid"] = item.Moid
-	certificate["object_type"] = item.ObjectType
-	certificate["selector"] = item.Selector
-
-	certificates = append(certificates, certificate)
-	return certificates
-}
-func flattenMapIamPrivateKeySpecRef(p *models.IamPrivateKeySpecRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var privatekeyspecs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	privatekeyspec := make(map[string]interface{})
-	privatekeyspec["moid"] = item.Moid
-	privatekeyspec["object_type"] = item.ObjectType
-	privatekeyspec["selector"] = item.Selector
-
-	privatekeyspecs = append(privatekeyspecs, privatekeyspec)
-	return privatekeyspecs
-}
-func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-	var subjects []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	subject := make(map[string]interface{})
-	delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
-	if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
-		if err == nil {
-			subject["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	subject["common_name"] = item.CommonName
-	subject["country"] = item.Country
-	subject["locality"] = item.Locality
-	subject["object_type"] = item.ObjectType
-	subject["organization"] = item.Organization
-	subject["organizational_unit"] = item.OrganizationalUnit
-	subject["state"] = item.State
-
-	subjects = append(subjects, subject)
-	return subjects
-}
-func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
-
-	var subjectalternatenames []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	subjectalternatename := make(map[string]interface{})
-	delete(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1, "ObjectType")
-	if len(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1) != 0 {
-		j, err := json.Marshal(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1)
-		if err == nil {
-			subjectalternatename["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	subjectalternatename["dns_name"] = item.DNSName
-	subjectalternatename["email_address"] = item.EmailAddress
-	subjectalternatename["ip_address"] = item.IPAddress
-	subjectalternatename["object_type"] = item.ObjectType
-	subjectalternatename["uri"] = item.URI
-
-	subjectalternatenames = append(subjectalternatenames, subjectalternatename)
-	return subjectalternatenames
-}
-func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
-	var additionalparameterss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		additionalparameters := make(map[string]interface{})
-		delete(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1, "ObjectType")
-		if len(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1) != 0 {
-
-			j, err := json.Marshal(item.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1)
+			j, err := json.Marshal(item.WorkflowTaskRetryInfoAO1P1.WorkflowTaskRetryInfoAO1P1)
 			if err == nil {
-				additionalparameters["additional_properties"] = string(j)
+				taskinstidlist["additional_properties"] = string(j)
 			} else {
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
-		additionalparameters["is_value_set"] = item.IsValueSet
-		additionalparameters["object_type"] = item.ObjectType
-		additionalparameters["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
-
-			var NonReservedtypes []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			NonReservedtype := make(map[string]interface{})
-			delete(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1, "ObjectType")
-			if len(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1) != 0 {
-				j, err := json.Marshal(item.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1)
-				if err == nil {
-					NonReservedtype["additional_properties"] = string(j)
-				} else {
-					log.Printf("Error occured while flattening and json parsing: %s", err)
-				}
-			}
-			NonReservedtype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
-
-				var NonReserveddefaults []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				NonReserveddefault := make(map[string]interface{})
-				NonReserveddefault["object_type"] = item.ObjectType
-				NonReserveddefault["override"] = item.Override
-				NonReserveddefault["value"] = item.Value
-
-				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
-				return NonReserveddefaults
-			})(item.Default, d)
-			NonReservedtype["description"] = item.Description
-			NonReservedtype["label"] = item.Label
-			NonReservedtype["name"] = item.Name
-			NonReservedtype["object_type"] = item.ObjectType
-			NonReservedtype["properties"] = (func(p *models.WorkflowPrimitiveDataProperty, d *schema.ResourceData) []map[string]interface{} {
-
-				var propertiess []map[string]interface{}
-				if p == nil {
-					return nil
-				}
-				item := *p
-				properties := make(map[string]interface{})
-				properties["constraints"] = (func(p *models.WorkflowConstraints, d *schema.ResourceData) []map[string]interface{} {
-
-					var constraintss []map[string]interface{}
-					if p == nil {
-						return nil
-					}
-					item := *p
-					constraints := make(map[string]interface{})
-					constraints["enum_list"] = (func(p []*models.WorkflowEnumEntry, d *schema.ResourceData) []map[string]interface{} {
-						var enumlists []map[string]interface{}
-						if p == nil {
-							return nil
-						}
-						for _, item := range p {
-							item := *item
-							enumlist := make(map[string]interface{})
-							enumlist["label"] = item.Label
-							enumlist["object_type"] = item.ObjectType
-							enumlist["value"] = item.Value
-							enumlists = append(enumlists, enumlist)
-						}
-						return enumlists
-					})(item.EnumList, d)
-					constraints["max"] = item.Max
-					constraints["min"] = item.Min
-					constraints["object_type"] = item.ObjectType
-					constraints["regex"] = item.Regex
-
-					constraintss = append(constraintss, constraints)
-					return constraintss
-				})(item.Constraints, d)
-				properties["object_type"] = item.ObjectType
-				properties["secure"] = item.Secure
-				properties["type"] = item.Type
-
-				propertiess = append(propertiess, properties)
-				return propertiess
-			})(item.Properties, d)
-			NonReservedtype["required"] = item.Required
-
-			NonReservedtypes = append(NonReservedtypes, NonReservedtype)
-			return NonReservedtypes
-		})(item.Type, d)
-		additionalparameters["value"] = item.Value
-		additionalparameterss = append(additionalparameterss, additionalparameters)
+		taskinstidlist["object_type"] = item.ObjectType
+		taskinstidlist["status"] = item.Status
+		taskinstidlist["task_inst_id"] = item.TaskInstID
+		taskinstidlists = append(taskinstidlists, taskinstidlist)
 	}
-	return additionalparameterss
+	return taskinstidlists
 }
-func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[string]interface{} {
-
-	var answerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	answers := make(map[string]interface{})
-	delete(item.OsAnswersAO1P1.OsAnswersAO1P1, "ObjectType")
-	if len(item.OsAnswersAO1P1.OsAnswersAO1P1) != 0 {
-		j, err := json.Marshal(item.OsAnswersAO1P1.OsAnswersAO1P1)
-		if err == nil {
-			answers["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	answers["answer_file"] = item.AnswerFile
-	answers["hostname"] = item.Hostname
-	answers["ip_config_type"] = item.IPConfigType
-	answers["ipv4_config"] = (func(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
-
-		var ipv4configs []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		ipv4config := make(map[string]interface{})
-		ipv4config["gateway"] = item.Gateway
-		ipv4config["ip_address"] = item.IPAddress
-		ipv4config["netmask"] = item.Netmask
-		ipv4config["object_type"] = item.ObjectType
-
-		ipv4configs = append(ipv4configs, ipv4config)
-		return ipv4configs
-	})(item.IPV4Config, d)
-	answers["is_answer_file_set"] = item.IsAnswerFileSet
-	answers["is_root_password_set"] = item.IsRootPasswordSet
-	answers["nameserver"] = item.Nameserver
-	answers["object_type"] = item.ObjectType
-	answers["product_key"] = item.ProductKey
-	answers["root_password"] = item.RootPassword
-	answers["source"] = item.Source
-
-	answerss = append(answerss, answers)
-	return answerss
-}
-func flattenMapOsConfigurationFileRef(p *models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var configurationfiles []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	configurationfile := make(map[string]interface{})
-	configurationfile["moid"] = item.Moid
-	configurationfile["object_type"] = item.ObjectType
-	configurationfile["selector"] = item.Selector
-
-	configurationfiles = append(configurationfiles, configurationfile)
-	return configurationfiles
-}
-func flattenMapSoftwarerepositoryOperatingSystemFileRef(p *models.SoftwarerepositoryOperatingSystemFileRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var images []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	image := make(map[string]interface{})
-	image["moid"] = item.Moid
-	image["object_type"] = item.ObjectType
-	image["selector"] = item.Selector
-
-	images = append(images, image)
-	return images
-}
-func flattenMapOsOperatingSystemParameters(p *models.OsOperatingSystemParameters, d *schema.ResourceData) []map[string]interface{} {
-
-	var operatingsystemparameterss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	operatingsystemparameters := make(map[string]interface{})
-	delete(item.AO1, "ObjectType")
-	if len(item.AO1) != 0 {
-		j, err := json.Marshal(item.AO1)
-		if err == nil {
-			operatingsystemparameters["additional_properties"] = string(j)
-		} else {
-			log.Printf("Error occured while flattening and json parsing: %s", err)
-		}
-	}
-	operatingsystemparameters["object_type"] = item.ObjectType
-
-	operatingsystemparameterss = append(operatingsystemparameterss, operatingsystemparameters)
-	return operatingsystemparameterss
-}
-func flattenMapFirmwareServerConfigurationUtilityDistributableRef(p *models.FirmwareServerConfigurationUtilityDistributableRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var osduimages []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	osduimage := make(map[string]interface{})
-	osduimage["moid"] = item.Moid
-	osduimage["object_type"] = item.ObjectType
-	osduimage["selector"] = item.Selector
-
-	osduimages = append(osduimages, osduimage)
-	return osduimages
-}
-func flattenListOsPostInstallScriptRef(p []*models.OsPostInstallScriptRef, d *schema.ResourceData) []map[string]interface{} {
-	var postinstallscriptss []map[string]interface{}
+func flattenListWorkflowWorkflowInfoRef(p []*models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+	var runningworkflowss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	for _, item := range p {
 		item := *item
-		postinstallscripts := make(map[string]interface{})
-		postinstallscripts["moid"] = item.Moid
-		postinstallscripts["object_type"] = item.ObjectType
-		postinstallscripts["selector"] = item.Selector
-		postinstallscriptss = append(postinstallscriptss, postinstallscripts)
+		runningworkflows := make(map[string]interface{})
+		runningworkflows["moid"] = item.Moid
+		runningworkflows["object_type"] = item.ObjectType
+		runningworkflows["selector"] = item.Selector
+		runningworkflowss = append(runningworkflowss, runningworkflows)
 	}
-	return postinstallscriptss
+	return runningworkflowss
 }
-func flattenMapComputePhysicalRef(p *models.ComputePhysicalRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var servers []map[string]interface{}
+func flattenListWorkflowWorkflowTask(p []*models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
+	var taskss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	item := *p
-	server := make(map[string]interface{})
-	server["moid"] = item.Moid
-	server["object_type"] = item.ObjectType
-	server["selector"] = item.Selector
+	for _, item := range p {
+		item := *item
+		tasks := make(map[string]interface{})
 
-	servers = append(servers, server)
-	return servers
+		if len(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1) != 0 {
+
+			j, err := json.Marshal(item.WorkflowWorkflowTaskAO1P1.WorkflowWorkflowTaskAO1P1)
+			if err == nil {
+				tasks["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		tasks["description"] = item.Description
+		tasks["label"] = item.Label
+		tasks["name"] = item.Name
+		tasks["object_type"] = item.ObjectType
+		taskss = append(taskss, tasks)
+	}
+	return taskss
 }
 func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
 	var certificatess []map[string]interface{}
@@ -4322,7 +3652,7 @@ func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceD
 	for _, item := range p {
 		item := *item
 		certificates := make(map[string]interface{})
-		delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
+
 		if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
 
 			j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
@@ -4396,87 +3726,817 @@ func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceD
 	}
 	return certificatess
 }
-func flattenMapOsCatalogRef(p *models.OsCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAdapterUnitRef(p *models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var catalogs []map[string]interface{}
+	var adapterunits []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	catalog := make(map[string]interface{})
-	catalog["moid"] = item.Moid
-	catalog["object_type"] = item.ObjectType
-	catalog["selector"] = item.Selector
+	adapterunit := make(map[string]interface{})
+	adapterunit["moid"] = item.Moid
+	adapterunit["object_type"] = item.ObjectType
+	adapterunit["selector"] = item.Selector
 
-	catalogs = append(catalogs, catalog)
-	return catalogs
+	adapterunits = append(adapterunits, adapterunit)
+	return adapterunits
 }
-func flattenListHclOperatingSystemRef(p []*models.HclOperatingSystemRef, d *schema.ResourceData) []map[string]interface{} {
-	var distributionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		distributions := make(map[string]interface{})
-		distributions["moid"] = item.Moid
-		distributions["object_type"] = item.ObjectType
-		distributions["selector"] = item.Selector
-		distributionss = append(distributionss, distributions)
-	}
-	return distributionss
-}
-func flattenMapRecoveryAbstractBackupInfoRef(p *models.RecoveryAbstractBackupInfoRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapApplianceDataExportPolicyRef(p *models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var backupinfos []map[string]interface{}
+	var parentconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	backupinfo := make(map[string]interface{})
-	backupinfo["moid"] = item.Moid
-	backupinfo["object_type"] = item.ObjectType
-	backupinfo["selector"] = item.Selector
+	parentconfig := make(map[string]interface{})
+	parentconfig["moid"] = item.Moid
+	parentconfig["object_type"] = item.ObjectType
+	parentconfig["selector"] = item.Selector
 
-	backupinfos = append(backupinfos, backupinfo)
-	return backupinfos
+	parentconfigs = append(parentconfigs, parentconfig)
+	return parentconfigs
 }
-func flattenMapRecoveryConfigParams(p *models.RecoveryConfigParams, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapApplianceImageBundleRef(p *models.ApplianceImageBundleRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var configparamss []map[string]interface{}
+	var imagebundles []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	configparams := make(map[string]interface{})
-	delete(item.AO1, "ObjectType")
-	if len(item.AO1) != 0 {
-		j, err := json.Marshal(item.AO1)
+	imagebundle := make(map[string]interface{})
+	imagebundle["moid"] = item.Moid
+	imagebundle["object_type"] = item.ObjectType
+	imagebundle["selector"] = item.Selector
+
+	imagebundles = append(imagebundles, imagebundle)
+	return imagebundles
+}
+func flattenMapAssetClusterMemberRef(p *models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var clustermembers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	clustermember := make(map[string]interface{})
+	clustermember["moid"] = item.Moid
+	clustermember["object_type"] = item.ObjectType
+	clustermember["selector"] = item.Selector
+
+	clustermembers = append(clustermembers, clustermember)
+	return clustermembers
+}
+func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	var contracts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	contract := make(map[string]interface{})
+	delete(item.AssetContractInformationAO1P1.AssetContractInformationAO1P1, "ObjectType")
+	if len(item.AssetContractInformationAO1P1.AssetContractInformationAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetContractInformationAO1P1.AssetContractInformationAO1P1)
 		if err == nil {
-			configparams["additional_properties"] = string(j)
+			contract["additional_properties"] = string(j)
 		} else {
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
-	configparams["object_type"] = item.ObjectType
+	contract["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 
-	configparamss = append(configparamss, configparams)
-	return configparamss
+		var billtos []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		billto := make(map[string]interface{})
+		billto["address1"] = item.Address1
+		billto["address2"] = item.Address2
+		billto["city"] = item.City
+		billto["country"] = item.Country
+		billto["location"] = item.Location
+		billto["name"] = item.Name
+		billto["object_type"] = item.ObjectType
+		billto["postal_code"] = item.PostalCode
+		billto["state"] = item.State
+
+		billtos = append(billtos, billto)
+		return billtos
+	})(item.BillTo, d)
+	contract["bill_to_global_ultimate"] = (func(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
+
+		var billtoglobalultimates []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		billtoglobalultimate := make(map[string]interface{})
+		billtoglobalultimate["id"] = item.ID
+		billtoglobalultimate["name"] = item.Name
+		billtoglobalultimate["object_type"] = item.ObjectType
+
+		billtoglobalultimates = append(billtoglobalultimates, billtoglobalultimate)
+		return billtoglobalultimates
+	})(item.BillToGlobalUltimate, d)
+	contract["contract_number"] = item.ContractNumber
+	contract["line_status"] = item.LineStatus
+	contract["object_type"] = item.ObjectType
+
+	contracts = append(contracts, contract)
+	return contracts
 }
-func flattenMapRecoveryAbstractRestoreStatusRef(p *models.RecoveryAbstractRestoreStatusRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *schema.ResourceData) []map[string]interface{} {
 
-	var restorestatuss []map[string]interface{}
+	var endcustomers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	restorestatus := make(map[string]interface{})
-	restorestatus["moid"] = item.Moid
-	restorestatus["object_type"] = item.ObjectType
-	restorestatus["selector"] = item.Selector
+	endcustomer := make(map[string]interface{})
+	delete(item.AssetCustomerInformationAO1P1.AssetCustomerInformationAO1P1, "ObjectType")
+	if len(item.AssetCustomerInformationAO1P1.AssetCustomerInformationAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetCustomerInformationAO1P1.AssetCustomerInformationAO1P1)
+		if err == nil {
+			endcustomer["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	endcustomer["address"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 
-	restorestatuss = append(restorestatuss, restorestatus)
-	return restorestatuss
+		var addresss []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		address := make(map[string]interface{})
+		address["address1"] = item.Address1
+		address["address2"] = item.Address2
+		address["city"] = item.City
+		address["country"] = item.Country
+		address["location"] = item.Location
+		address["name"] = item.Name
+		address["object_type"] = item.ObjectType
+		address["postal_code"] = item.PostalCode
+		address["state"] = item.State
+
+		addresss = append(addresss, address)
+		return addresss
+	})(item.Address, d)
+	endcustomer["id"] = item.ID
+	endcustomer["name"] = item.Name
+	endcustomer["object_type"] = item.ObjectType
+
+	endcustomers = append(endcustomers, endcustomer)
+	return endcustomers
+}
+func flattenMapAssetDeviceClaimRef(p *models.AssetDeviceClaimRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var deviceclaims []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	deviceclaim := make(map[string]interface{})
+	deviceclaim["moid"] = item.Moid
+	deviceclaim["object_type"] = item.ObjectType
+	deviceclaim["selector"] = item.Selector
+
+	deviceclaims = append(deviceclaims, deviceclaim)
+	return deviceclaims
+}
+func flattenMapAssetDeviceConfigurationRef(p *models.AssetDeviceConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var deviceconfigurations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	deviceconfiguration := make(map[string]interface{})
+	deviceconfiguration["moid"] = item.Moid
+	deviceconfiguration["object_type"] = item.ObjectType
+	deviceconfiguration["selector"] = item.Selector
+
+	deviceconfigurations = append(deviceconfigurations, deviceconfiguration)
+	return deviceconfigurations
+}
+func flattenMapAssetDeviceConnectionRef(p *models.AssetDeviceConnectionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var deviceregistrations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	deviceregistration := make(map[string]interface{})
+	deviceregistration["moid"] = item.Moid
+	deviceregistration["object_type"] = item.ObjectType
+	deviceregistration["selector"] = item.Selector
+
+	deviceregistrations = append(deviceregistrations, deviceregistration)
+	return deviceregistrations
+}
+func flattenMapAssetDeviceRegistrationRef(p *models.AssetDeviceRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var deviceids []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	deviceid := make(map[string]interface{})
+	deviceid["moid"] = item.Moid
+	deviceid["object_type"] = item.ObjectType
+	deviceid["selector"] = item.Selector
+
+	deviceids = append(deviceids, deviceid)
+	return deviceids
+}
+func flattenMapAssetGlobalUltimate(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
+
+	var enduserglobalultimates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	enduserglobalultimate := make(map[string]interface{})
+	delete(item.AssetGlobalUltimateAO1P1.AssetGlobalUltimateAO1P1, "ObjectType")
+	if len(item.AssetGlobalUltimateAO1P1.AssetGlobalUltimateAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetGlobalUltimateAO1P1.AssetGlobalUltimateAO1P1)
+		if err == nil {
+			enduserglobalultimate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	enduserglobalultimate["id"] = item.ID
+	enduserglobalultimate["name"] = item.Name
+	enduserglobalultimate["object_type"] = item.ObjectType
+
+	enduserglobalultimates = append(enduserglobalultimates, enduserglobalultimate)
+	return enduserglobalultimates
+}
+func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
+
+	var statuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	status := make(map[string]interface{})
+	delete(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1, "ObjectType")
+	if len(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1)
+		if err == nil {
+			status["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	status["cloud_port"] = item.CloudPort
+	status["connection_failure_reason"] = item.ConnectionFailureReason
+	status["connection_status"] = item.ConnectionStatus
+	status["error_code"] = item.ErrorCode
+	status["error_reason"] = item.ErrorReason
+	status["object_type"] = item.ObjectType
+	status["process_id"] = item.ProcessID
+	status["server_port"] = item.ServerPort
+	status["state"] = item.State
+
+	statuss = append(statuss, status)
+	return statuss
+}
+func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
+
+	var parentsignatures []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	parentsignature := make(map[string]interface{})
+	delete(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1, "ObjectType")
+	if len(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetParentConnectionSignatureAO1P1.AssetParentConnectionSignatureAO1P1)
+		if err == nil {
+			parentsignature["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	parentsignature["device_id"] = item.DeviceID
+	parentsignature["node_id"] = item.NodeID
+	parentsignature["object_type"] = item.ObjectType
+	parentsignature["signature"] = item.Signature
+
+	parentsignatures = append(parentsignatures, parentsignature)
+	return parentsignatures
+}
+func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	var products []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	product := make(map[string]interface{})
+	delete(item.AssetProductInformationAO1P1.AssetProductInformationAO1P1, "ObjectType")
+	if len(item.AssetProductInformationAO1P1.AssetProductInformationAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetProductInformationAO1P1.AssetProductInformationAO1P1)
+		if err == nil {
+			product["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	product["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+
+		var billtos []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		billto := make(map[string]interface{})
+		billto["address1"] = item.Address1
+		billto["address2"] = item.Address2
+		billto["city"] = item.City
+		billto["country"] = item.Country
+		billto["location"] = item.Location
+		billto["name"] = item.Name
+		billto["object_type"] = item.ObjectType
+		billto["postal_code"] = item.PostalCode
+		billto["state"] = item.State
+
+		billtos = append(billtos, billto)
+		return billtos
+	})(item.BillTo, d)
+	product["description"] = item.Description
+	product["family"] = item.Family
+	product["group"] = item.Group
+	product["number"] = item.Number
+	product["object_type"] = item.ObjectType
+	product["ship_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+
+		var shiptos []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		shipto := make(map[string]interface{})
+		shipto["address1"] = item.Address1
+		shipto["address2"] = item.Address2
+		shipto["city"] = item.City
+		shipto["country"] = item.Country
+		shipto["location"] = item.Location
+		shipto["name"] = item.Name
+		shipto["object_type"] = item.ObjectType
+		shipto["postal_code"] = item.PostalCode
+		shipto["state"] = item.State
+
+		shiptos = append(shiptos, shipto)
+		return shiptos
+	})(item.ShipTo, d)
+	product["sub_type"] = item.SubType
+
+	products = append(products, product)
+	return products
+}
+func flattenMapAssetSecurityTokenRef(p *models.AssetSecurityTokenRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var securitytokens []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	securitytoken := make(map[string]interface{})
+	securitytoken["moid"] = item.Moid
+	securitytoken["object_type"] = item.ObjectType
+	securitytoken["selector"] = item.Selector
+
+	securitytokens = append(securitytokens, securitytoken)
+	return securitytokens
+}
+func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []map[string]interface{} {
+
+	var sudis []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sudi := make(map[string]interface{})
+	delete(item.AssetSudiInfoAO1P1.AssetSudiInfoAO1P1, "ObjectType")
+	if len(item.AssetSudiInfoAO1P1.AssetSudiInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.AssetSudiInfoAO1P1.AssetSudiInfoAO1P1)
+		if err == nil {
+			sudi["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	sudi["object_type"] = item.ObjectType
+	sudi["pid"] = item.Pid
+	sudi["serial_number"] = item.SerialNumber
+	sudi["signature"] = item.Signature
+	sudi["status"] = item.Status
+	sudi["sudi_certificate"] = (func(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+
+		var sudicertificates []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		sudicertificate := make(map[string]interface{})
+		sudicertificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+			var issuers []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			issuer := make(map[string]interface{})
+			issuer["common_name"] = item.CommonName
+			issuer["country"] = item.Country
+			issuer["locality"] = item.Locality
+			issuer["object_type"] = item.ObjectType
+			issuer["organization"] = item.Organization
+			issuer["organizational_unit"] = item.OrganizationalUnit
+			issuer["state"] = item.State
+
+			issuers = append(issuers, issuer)
+			return issuers
+		})(item.Issuer, d)
+		sudicertificate["object_type"] = item.ObjectType
+		sudicertificate["pem_certificate"] = item.PemCertificate
+		sudicertificate["sha256_fingerprint"] = item.Sha256Fingerprint
+		sudicertificate["signature_algorithm"] = item.SignatureAlgorithm
+		sudicertificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+			var subjects []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			subject := make(map[string]interface{})
+			subject["common_name"] = item.CommonName
+			subject["country"] = item.Country
+			subject["locality"] = item.Locality
+			subject["object_type"] = item.ObjectType
+			subject["organization"] = item.Organization
+			subject["organizational_unit"] = item.OrganizationalUnit
+			subject["state"] = item.State
+
+			subjects = append(subjects, subject)
+			return subjects
+		})(item.Subject, d)
+
+		sudicertificates = append(sudicertificates, sudicertificate)
+		return sudicertificates
+	})(item.SudiCertificate, d)
+
+	sudis = append(sudis, sudi)
+	return sudis
+}
+func flattenMapBiosBootModeRef(p *models.BiosBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var biosbootmodes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	biosbootmode := make(map[string]interface{})
+	biosbootmode["moid"] = item.Moid
+	biosbootmode["object_type"] = item.ObjectType
+	biosbootmode["selector"] = item.Selector
+
+	biosbootmodes = append(biosbootmodes, biosbootmode)
+	return biosbootmodes
+}
+func flattenMapBiosUnitRef(p *models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var biosunits []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	biosunit := make(map[string]interface{})
+	biosunit["moid"] = item.Moid
+	biosunit["object_type"] = item.ObjectType
+	biosunit["selector"] = item.Selector
+
+	biosunits = append(biosunits, biosunit)
+	return biosunits
+}
+func flattenMapBootDeviceBootModeRef(p *models.BootDeviceBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var bootdevicebootmodes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	bootdevicebootmode := make(map[string]interface{})
+	bootdevicebootmode["moid"] = item.Moid
+	bootdevicebootmode["object_type"] = item.ObjectType
+	bootdevicebootmode["selector"] = item.Selector
+
+	bootdevicebootmodes = append(bootdevicebootmodes, bootdevicebootmode)
+	return bootdevicebootmodes
+}
+func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
+
+	var credentials []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	credential := make(map[string]interface{})
+	delete(item.CommCredentialAO1P1.CommCredentialAO1P1, "ObjectType")
+	if len(item.CommCredentialAO1P1.CommCredentialAO1P1) != 0 {
+		j, err := json.Marshal(item.CommCredentialAO1P1.CommCredentialAO1P1)
+		if err == nil {
+			credential["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	credential["is_password_set"] = item.IsPasswordSet
+	credential["object_type"] = item.ObjectType
+	credential["password"] = item.Password
+	credential["username"] = item.Username
+
+	credentials = append(credentials, credential)
+	return credentials
+}
+func flattenMapCommIPV4Interface(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
+
+	var nodeipv4configs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	nodeipv4config := make(map[string]interface{})
+	delete(item.CommIPV4InterfaceAO1P1.CommIPV4InterfaceAO1P1, "ObjectType")
+	if len(item.CommIPV4InterfaceAO1P1.CommIPV4InterfaceAO1P1) != 0 {
+		j, err := json.Marshal(item.CommIPV4InterfaceAO1P1.CommIPV4InterfaceAO1P1)
+		if err == nil {
+			nodeipv4config["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	nodeipv4config["gateway"] = item.Gateway
+	nodeipv4config["ip_address"] = item.IPAddress
+	nodeipv4config["netmask"] = item.Netmask
+	nodeipv4config["object_type"] = item.ObjectType
+
+	nodeipv4configs = append(nodeipv4configs, nodeipv4config)
+	return nodeipv4configs
+}
+func flattenMapComputeBladeRef(p *models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var computeblades []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	computeblade := make(map[string]interface{})
+	computeblade["moid"] = item.Moid
+	computeblade["object_type"] = item.ObjectType
+	computeblade["selector"] = item.Selector
+
+	computeblades = append(computeblades, computeblade)
+	return computeblades
+}
+func flattenMapComputeBoardRef(p *models.ComputeBoardRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var computeboards []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	computeboard := make(map[string]interface{})
+	computeboard["moid"] = item.Moid
+	computeboard["object_type"] = item.ObjectType
+	computeboard["selector"] = item.Selector
+
+	computeboards = append(computeboards, computeboard)
+	return computeboards
+}
+func flattenMapComputePhysicalRef(p *models.ComputePhysicalRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var servers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	server := make(map[string]interface{})
+	server["moid"] = item.Moid
+	server["object_type"] = item.ObjectType
+	server["selector"] = item.Selector
+
+	servers = append(servers, server)
+	return servers
+}
+func flattenMapComputeRackUnitRef(p *models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var assignedservers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	assignedserver := make(map[string]interface{})
+	assignedserver["moid"] = item.Moid
+	assignedserver["object_type"] = item.ObjectType
+	assignedserver["selector"] = item.Selector
+
+	assignedservers = append(assignedservers, assignedserver)
+	return assignedservers
+}
+func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
+
+	var serverconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	serverconfig := make(map[string]interface{})
+	delete(item.ComputeServerConfigAO1P1.ComputeServerConfigAO1P1, "ObjectType")
+	if len(item.ComputeServerConfigAO1P1.ComputeServerConfigAO1P1) != 0 {
+		j, err := json.Marshal(item.ComputeServerConfigAO1P1.ComputeServerConfigAO1P1)
+		if err == nil {
+			serverconfig["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	serverconfig["asset_tag"] = item.AssetTag
+	serverconfig["object_type"] = item.ObjectType
+	serverconfig["user_label"] = item.UserLabel
+
+	serverconfigs = append(serverconfigs, serverconfig)
+	return serverconfigs
+}
+func flattenMapCondHclStatusRef(p *models.CondHclStatusRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var hclstatuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	hclstatus := make(map[string]interface{})
+	hclstatus["moid"] = item.Moid
+	hclstatus["object_type"] = item.ObjectType
+	hclstatus["selector"] = item.Selector
+
+	hclstatuss = append(hclstatuss, hclstatus)
+	return hclstatuss
+}
+func flattenMapCryptDecryptRef(p *models.CryptDecryptRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var nr1decrypts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	nr1decrypt := make(map[string]interface{})
+	nr1decrypt["moid"] = item.Moid
+	nr1decrypt["object_type"] = item.ObjectType
+	nr1decrypt["selector"] = item.Selector
+
+	nr1decrypts = append(nr1decrypts, nr1decrypt)
+	return nr1decrypts
+}
+func flattenMapCryptEncryptRef(p *models.CryptEncryptRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var nr0encrypts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	nr0encrypt := make(map[string]interface{})
+	nr0encrypt["moid"] = item.Moid
+	nr0encrypt["object_type"] = item.ObjectType
+	nr0encrypt["selector"] = item.Selector
+
+	nr0encrypts = append(nr0encrypts, nr0encrypt)
+	return nr0encrypts
+}
+func flattenMapEquipmentChassisRef(p *models.EquipmentChassisRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentchassiss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentchassis := make(map[string]interface{})
+	equipmentchassis["moid"] = item.Moid
+	equipmentchassis["object_type"] = item.ObjectType
+	equipmentchassis["selector"] = item.Selector
+
+	equipmentchassiss = append(equipmentchassiss, equipmentchassis)
+	return equipmentchassiss
+}
+func flattenMapEquipmentFanModuleRef(p *models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentfanmodules []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentfanmodule := make(map[string]interface{})
+	equipmentfanmodule["moid"] = item.Moid
+	equipmentfanmodule["object_type"] = item.ObjectType
+	equipmentfanmodule["selector"] = item.Selector
+
+	equipmentfanmodules = append(equipmentfanmodules, equipmentfanmodule)
+	return equipmentfanmodules
+}
+func flattenMapEquipmentLocatorLedRef(p *models.EquipmentLocatorLedRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var locatorleds []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	locatorled := make(map[string]interface{})
+	locatorled["moid"] = item.Moid
+	locatorled["object_type"] = item.ObjectType
+	locatorled["selector"] = item.Selector
+
+	locatorleds = append(locatorleds, locatorled)
+	return locatorleds
+}
+func flattenMapEquipmentRackEnclosureRef(p *models.EquipmentRackEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentrackenclosures []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentrackenclosure := make(map[string]interface{})
+	equipmentrackenclosure["moid"] = item.Moid
+	equipmentrackenclosure["object_type"] = item.ObjectType
+	equipmentrackenclosure["selector"] = item.Selector
+
+	equipmentrackenclosures = append(equipmentrackenclosures, equipmentrackenclosure)
+	return equipmentrackenclosures
+}
+func flattenMapEquipmentRackEnclosureSlotRef(p *models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var rackenclosureslots []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	rackenclosureslot := make(map[string]interface{})
+	rackenclosureslot["moid"] = item.Moid
+	rackenclosureslot["object_type"] = item.ObjectType
+	rackenclosureslot["selector"] = item.Selector
+
+	rackenclosureslots = append(rackenclosureslots, rackenclosureslot)
+	return rackenclosureslots
+}
+func flattenMapEquipmentSharedIoModuleRef(p *models.EquipmentSharedIoModuleRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentsharediomodules []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentsharediomodule := make(map[string]interface{})
+	equipmentsharediomodule["moid"] = item.Moid
+	equipmentsharediomodule["object_type"] = item.ObjectType
+	equipmentsharediomodule["selector"] = item.Selector
+
+	equipmentsharediomodules = append(equipmentsharediomodules, equipmentsharediomodule)
+	return equipmentsharediomodules
+}
+func flattenMapEquipmentSwitchCardRef(p *models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentswitchcards []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentswitchcard := make(map[string]interface{})
+	equipmentswitchcard["moid"] = item.Moid
+	equipmentswitchcard["object_type"] = item.ObjectType
+	equipmentswitchcard["selector"] = item.Selector
+
+	equipmentswitchcards = append(equipmentswitchcards, equipmentswitchcard)
+	return equipmentswitchcards
+}
+func flattenMapEquipmentSystemIoControllerRef(p *models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var equipmentsystemiocontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	equipmentsystemiocontroller := make(map[string]interface{})
+	equipmentsystemiocontroller["moid"] = item.Moid
+	equipmentsystemiocontroller["object_type"] = item.ObjectType
+	equipmentsystemiocontroller["selector"] = item.Selector
+
+	equipmentsystemiocontrollers = append(equipmentsystemiocontrollers, equipmentsystemiocontroller)
+	return equipmentsystemiocontrollers
 }
 func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4519,6 +4579,21 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 
 	directdownloads = append(directdownloads, directdownload)
 	return directdownloads
+}
+func flattenMapFirmwareDistributableRef(p *models.FirmwareDistributableRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var serverfirmwareversioninfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	serverfirmwareversioninfo := make(map[string]interface{})
+	serverfirmwareversioninfo["moid"] = item.Moid
+	serverfirmwareversioninfo["object_type"] = item.ObjectType
+	serverfirmwareversioninfo["selector"] = item.Selector
+
+	serverfirmwareversioninfos = append(serverfirmwareversioninfos, serverfirmwareversioninfo)
+	return serverfirmwareversioninfos
 }
 func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.ResourceData) []map[string]interface{} {
 
@@ -4596,6 +4671,51 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 	networkshares = append(networkshares, networkshare)
 	return networkshares
 }
+func flattenMapFirmwareRunningFirmwareRef(p *models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ucsmrunningfirmwares []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ucsmrunningfirmware := make(map[string]interface{})
+	ucsmrunningfirmware["moid"] = item.Moid
+	ucsmrunningfirmware["object_type"] = item.ObjectType
+	ucsmrunningfirmware["selector"] = item.Selector
+
+	ucsmrunningfirmwares = append(ucsmrunningfirmwares, ucsmrunningfirmware)
+	return ucsmrunningfirmwares
+}
+func flattenMapFirmwareServerConfigurationUtilityDistributableRef(p *models.FirmwareServerConfigurationUtilityDistributableRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var osduimages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	osduimage := make(map[string]interface{})
+	osduimage["moid"] = item.Moid
+	osduimage["object_type"] = item.ObjectType
+	osduimage["selector"] = item.Selector
+
+	osduimages = append(osduimages, osduimage)
+	return osduimages
+}
+func flattenMapFirmwareUpgradeRef(p *models.FirmwareUpgradeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var upgrades []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	upgrade := make(map[string]interface{})
+	upgrade["moid"] = item.Moid
+	upgrade["object_type"] = item.ObjectType
+	upgrade["selector"] = item.Selector
+
+	upgrades = append(upgrades, upgrade)
+	return upgrades
+}
 func flattenMapFirmwareUpgradeStatusRef(p *models.FirmwareUpgradeStatusRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var upgradestatuss []map[string]interface{}
@@ -4611,475 +4731,255 @@ func flattenMapFirmwareUpgradeStatusRef(p *models.FirmwareUpgradeStatusRef, d *s
 	upgradestatuss = append(upgradestatuss, upgradestatus)
 	return upgradestatuss
 }
-func flattenListStoragePureHostRef(p []*models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
-	var hostgroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		hostgroups := make(map[string]interface{})
-		hostgroups["moid"] = item.Moid
-		hostgroups["object_type"] = item.ObjectType
-		hostgroups["selector"] = item.Selector
-		hostgroupss = append(hostgroupss, hostgroups)
-	}
-	return hostgroupss
-}
-func flattenMapStorageGenericArrayRef(p *models.StorageGenericArrayRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastCatalogRef(p *models.ForecastCatalogRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var storagearrays []map[string]interface{}
+	var catalogs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storagearray := make(map[string]interface{})
-	storagearray["moid"] = item.Moid
-	storagearray["object_type"] = item.ObjectType
-	storagearray["selector"] = item.Selector
+	catalog := make(map[string]interface{})
+	catalog["moid"] = item.Moid
+	catalog["object_type"] = item.ObjectType
+	catalog["selector"] = item.Selector
 
-	storagearrays = append(storagearrays, storagearray)
-	return storagearrays
+	catalogs = append(catalogs, catalog)
+	return catalogs
 }
-func flattenListStoragePureVolumeRef(p []*models.StoragePureVolumeRef, d *schema.ResourceData) []map[string]interface{} {
-	var volumess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		volumes := make(map[string]interface{})
-		volumes["moid"] = item.Moid
-		volumes["object_type"] = item.ObjectType
-		volumes["selector"] = item.Selector
-		volumess = append(volumess, volumes)
-	}
-	return volumess
-}
-func flattenMapAssetDeviceConnectionRef(p *models.AssetDeviceConnectionRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastDefinitionRef(p *models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var deviceregistrations []map[string]interface{}
+	var forecastdefs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	deviceregistration := make(map[string]interface{})
-	deviceregistration["moid"] = item.Moid
-	deviceregistration["object_type"] = item.ObjectType
-	deviceregistration["selector"] = item.Selector
+	forecastdef := make(map[string]interface{})
+	forecastdef["moid"] = item.Moid
+	forecastdef["object_type"] = item.ObjectType
+	forecastdef["selector"] = item.Selector
 
-	deviceregistrations = append(deviceregistrations, deviceregistration)
-	return deviceregistrations
+	forecastdefs = append(forecastdefs, forecastdef)
+	return forecastdefs
 }
-func flattenMapEquipmentChassisRef(p *models.EquipmentChassisRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
 
-	var equipmentchassiss []map[string]interface{}
+	var models []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	equipmentchassis := make(map[string]interface{})
-	equipmentchassis["moid"] = item.Moid
-	equipmentchassis["object_type"] = item.ObjectType
-	equipmentchassis["selector"] = item.Selector
-
-	equipmentchassiss = append(equipmentchassiss, equipmentchassis)
-	return equipmentchassiss
-}
-func flattenMapComputeBladeRef(p *models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var computeblades []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	computeblade := make(map[string]interface{})
-	computeblade["moid"] = item.Moid
-	computeblade["object_type"] = item.ObjectType
-	computeblade["selector"] = item.Selector
-
-	computeblades = append(computeblades, computeblade)
-	return computeblades
-}
-func flattenListFirmwareRunningFirmwareRef(p []*models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
-	var runningfirmwares []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		runningfirmware := make(map[string]interface{})
-		runningfirmware["moid"] = item.Moid
-		runningfirmware["object_type"] = item.ObjectType
-		runningfirmware["selector"] = item.Selector
-		runningfirmwares = append(runningfirmwares, runningfirmware)
-	}
-	return runningfirmwares
-}
-func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
-	var accountpermissionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		accountpermissions := make(map[string]interface{})
-		accountpermissions["account_identifier"] = item.AccountIdentifier
-		accountpermissions["account_name"] = item.AccountName
-		accountpermissions["account_status"] = item.AccountStatus
-		accountpermissions["object_type"] = item.ObjectType
-		accountpermissions["permissions"] = (func(p []*models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
-			var permissionss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				permissions := make(map[string]interface{})
-				permissions["object_type"] = item.ObjectType
-				permissions["permission_identifier"] = item.PermissionIdentifier
-				permissions["permission_name"] = item.PermissionName
-				permissionss = append(permissionss, permissions)
-			}
-			return permissionss
-		})(item.Permissions, d)
-		accountpermissionss = append(accountpermissionss, accountpermissions)
-	}
-	return accountpermissionss
-}
-func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData) []map[string]interface{} {
-
-	var storageutilizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storageutilization := make(map[string]interface{})
-	storageutilization["available"] = item.Available
-	storageutilization["free"] = item.Free
-	storageutilization["object_type"] = item.ObjectType
-	storageutilization["total"] = item.Total
-	storageutilization["used"] = item.Used
-
-	storageutilizations = append(storageutilizations, storageutilization)
-	return storageutilizations
-}
-func flattenMapAdapterUnitRef(p *models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var adapterunits []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	adapterunit := make(map[string]interface{})
-	adapterunit["moid"] = item.Moid
-	adapterunit["object_type"] = item.ObjectType
-	adapterunit["selector"] = item.Selector
-
-	adapterunits = append(adapterunits, adapterunit)
-	return adapterunits
-}
-func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []map[string]interface{} {
-
-	var sudis []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	sudi := make(map[string]interface{})
-	sudi["object_type"] = item.ObjectType
-	sudi["pid"] = item.Pid
-	sudi["serial_number"] = item.SerialNumber
-	sudi["signature"] = item.Signature
-	sudi["status"] = item.Status
-	sudi["sudi_certificate"] = (func(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
-
-		var sudicertificates []map[string]interface{}
-		if p == nil {
-			return nil
+	model := make(map[string]interface{})
+	model["accuracy"] = item.Accuracy
+	delete(item.ForecastModelAO1P1.ForecastModelAO1P1, "ObjectType")
+	if len(item.ForecastModelAO1P1.ForecastModelAO1P1) != 0 {
+		j, err := json.Marshal(item.ForecastModelAO1P1.ForecastModelAO1P1)
+		if err == nil {
+			model["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
-		item := *p
-		sudicertificate := make(map[string]interface{})
-		sudicertificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+	}
+	model["model_data"] = item.ModelData
+	model["model_type"] = item.ModelType
+	model["object_type"] = item.ObjectType
 
-			var issuers []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			issuer := make(map[string]interface{})
-			issuer["common_name"] = item.CommonName
-			issuer["country"] = item.Country
-			issuer["locality"] = item.Locality
-			issuer["object_type"] = item.ObjectType
-			issuer["organization"] = item.Organization
-			issuer["organizational_unit"] = item.OrganizationalUnit
-			issuer["state"] = item.State
-
-			issuers = append(issuers, issuer)
-			return issuers
-		})(item.Issuer, d)
-		sudicertificate["object_type"] = item.ObjectType
-		sudicertificate["pem_certificate"] = item.PemCertificate
-		sudicertificate["sha256_fingerprint"] = item.Sha256Fingerprint
-		sudicertificate["signature_algorithm"] = item.SignatureAlgorithm
-		sudicertificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
-
-			var subjects []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			subject := make(map[string]interface{})
-			subject["common_name"] = item.CommonName
-			subject["country"] = item.Country
-			subject["locality"] = item.Locality
-			subject["object_type"] = item.ObjectType
-			subject["organization"] = item.Organization
-			subject["organizational_unit"] = item.OrganizationalUnit
-			subject["state"] = item.State
-
-			subjects = append(subjects, subject)
-			return subjects
-		})(item.Subject, d)
-
-		sudicertificates = append(sudicertificates, sudicertificate)
-		return sudicertificates
-	})(item.SudiCertificate, d)
-
-	sudis = append(sudis, sudi)
-	return sudis
+	models = append(models, model)
+	return models
 }
-func flattenMapStoragePhysicalDiskRef(p *models.StoragePhysicalDiskRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapGraphicsCardRef(p *models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var physicaldisks []map[string]interface{}
+	var graphicscards []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	physicaldisk := make(map[string]interface{})
-	physicaldisk["moid"] = item.Moid
-	physicaldisk["object_type"] = item.ObjectType
-	physicaldisk["selector"] = item.Selector
+	graphicscard := make(map[string]interface{})
+	graphicscard["moid"] = item.Moid
+	graphicscard["object_type"] = item.ObjectType
+	graphicscard["selector"] = item.Selector
 
-	physicaldisks = append(physicaldisks, physicaldisk)
-	return physicaldisks
+	graphicscards = append(graphicscards, graphicscard)
+	return graphicscards
 }
-func flattenMapStorageControllerRef(p *models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHclOperatingSystemVendorRef(p *models.HclOperatingSystemVendorRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var storagecontrollers []map[string]interface{}
+	var vendors []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storagecontroller := make(map[string]interface{})
-	storagecontroller["moid"] = item.Moid
-	storagecontroller["object_type"] = item.ObjectType
-	storagecontroller["selector"] = item.Selector
+	vendor := make(map[string]interface{})
+	vendor["moid"] = item.Moid
+	vendor["object_type"] = item.ObjectType
+	vendor["selector"] = item.Selector
 
-	storagecontrollers = append(storagecontrollers, storagecontroller)
-	return storagecontrollers
+	vendors = append(vendors, vendor)
+	return vendors
 }
-func flattenMapStorageFlexFlashControllerRef(p *models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexAppCatalogRef(p *models.HyperflexAppCatalogRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var storageflexflashcontrollers []map[string]interface{}
+	var appcatalogs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storageflexflashcontroller := make(map[string]interface{})
-	storageflexflashcontroller["moid"] = item.Moid
-	storageflexflashcontroller["object_type"] = item.ObjectType
-	storageflexflashcontroller["selector"] = item.Selector
+	appcatalog := make(map[string]interface{})
+	appcatalog["moid"] = item.Moid
+	appcatalog["object_type"] = item.ObjectType
+	appcatalog["selector"] = item.Selector
 
-	storageflexflashcontrollers = append(storageflexflashcontrollers, storageflexflashcontroller)
-	return storageflexflashcontrollers
+	appcatalogs = append(appcatalogs, appcatalog)
+	return appcatalogs
 }
-func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexAutoSupportPolicyRef(p *models.HyperflexAutoSupportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var postdetails []map[string]interface{}
+	var autosupports []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	postdetail := make(map[string]interface{})
-	postdetail["description"] = item.Description
-	postdetail["link"] = item.Link
-	postdetail["object_type"] = item.ObjectType
-	postdetail["release_note_link"] = item.ReleaseNoteLink
-	postdetail["release_note_link_title"] = item.ReleaseNoteLinkTitle
-	postdetail["software_download_link"] = item.SoftwareDownloadLink
-	postdetail["software_download_link_title"] = item.SoftwareDownloadLinkTitle
-	postdetail["title"] = item.Title
-	postdetail["version"] = item.Version
+	autosupport := make(map[string]interface{})
+	autosupport["moid"] = item.Moid
+	autosupport["object_type"] = item.ObjectType
+	autosupport["selector"] = item.Selector
 
-	postdetails = append(postdetails, postdetail)
-	return postdetails
+	autosupports = append(autosupports, autosupport)
+	return autosupports
 }
-func flattenMapStorageArrayControllerRef(p *models.StorageArrayControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterNetworkPolicyRef(p *models.HyperflexClusterNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var controllers []map[string]interface{}
+	var clusternetworks []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	controller := make(map[string]interface{})
-	controller["moid"] = item.Moid
-	controller["object_type"] = item.ObjectType
-	controller["selector"] = item.Selector
+	clusternetwork := make(map[string]interface{})
+	clusternetwork["moid"] = item.Moid
+	clusternetwork["object_type"] = item.ObjectType
+	clusternetwork["selector"] = item.Selector
 
-	controllers = append(controllers, controller)
-	return controllers
+	clusternetworks = append(clusternetworks, clusternetwork)
+	return clusternetworks
 }
-func flattenListComputeIPAddress(p []*models.ComputeIPAddress, d *schema.ResourceData) []map[string]interface{} {
-	var kvmipaddressess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		kvmipaddresses := make(map[string]interface{})
-		kvmipaddresses["address"] = item.Address
-		kvmipaddresses["category"] = item.Category
-		kvmipaddresses["default_gateway"] = item.DefaultGateway
-		kvmipaddresses["dn"] = item.Dn
-		kvmipaddresses["http_port"] = item.HTTPPort
-		kvmipaddresses["https_port"] = item.HTTPSPort
-		kvmipaddresses["kvm_port"] = item.KvmPort
-		kvmipaddresses["name"] = item.Name
-		kvmipaddresses["object_type"] = item.ObjectType
-		kvmipaddresses["subnet"] = item.Subnet
-		kvmipaddresses["type"] = item.Type
-		kvmipaddressess = append(kvmipaddressess, kvmipaddresses)
-	}
-	return kvmipaddressess
-}
-func flattenListHyperflexConfigResultEntryRef(p []*models.HyperflexConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var resultentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		resultentries := make(map[string]interface{})
-		resultentries["moid"] = item.Moid
-		resultentries["object_type"] = item.ObjectType
-		resultentries["selector"] = item.Selector
-		resultentriess = append(resultentriess, resultentries)
-	}
-	return resultentriess
-}
-func flattenMapComputeBoardRef(p *models.ComputeBoardRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterProfileRef(p *models.HyperflexClusterProfileRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var computeboards []map[string]interface{}
+	var nr0clusterprofiles []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	computeboard := make(map[string]interface{})
-	computeboard["moid"] = item.Moid
-	computeboard["object_type"] = item.ObjectType
-	computeboard["selector"] = item.Selector
+	nr0clusterprofile := make(map[string]interface{})
+	nr0clusterprofile["moid"] = item.Moid
+	nr0clusterprofile["object_type"] = item.ObjectType
+	nr0clusterprofile["selector"] = item.Selector
 
-	computeboards = append(computeboards, computeboard)
-	return computeboards
+	nr0clusterprofiles = append(nr0clusterprofiles, nr0clusterprofile)
+	return nr0clusterprofiles
 }
-func flattenListGraphicsControllerRef(p []*models.GraphicsControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var graphicscontrollerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		graphicscontrollers := make(map[string]interface{})
-		graphicscontrollers["moid"] = item.Moid
-		graphicscontrollers["object_type"] = item.ObjectType
-		graphicscontrollers["selector"] = item.Selector
-		graphicscontrollerss = append(graphicscontrollerss, graphicscontrollers)
-	}
-	return graphicscontrollerss
-}
-func flattenMapNetworkElementRef(p *models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterRef(p *models.HyperflexClusterRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var networkelements []map[string]interface{}
+	var associatedclusters []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	networkelement := make(map[string]interface{})
-	networkelement["moid"] = item.Moid
-	networkelement["object_type"] = item.ObjectType
-	networkelement["selector"] = item.Selector
+	associatedcluster := make(map[string]interface{})
+	associatedcluster["moid"] = item.Moid
+	associatedcluster["object_type"] = item.ObjectType
+	associatedcluster["selector"] = item.Selector
 
-	networkelements = append(networkelements, networkelement)
-	return networkelements
+	associatedclusters = append(associatedclusters, associatedcluster)
+	return associatedclusters
 }
-func flattenListPolicyinventoryJobInfo(p []*models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
-	var jobinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		jobinfo := make(map[string]interface{})
-		jobinfo["execution_status"] = item.ExecutionStatus
-		jobinfo["last_scheduled_time"] = item.LastScheduledTime
-		jobinfo["object_type"] = item.ObjectType
-		jobinfo["policy_id"] = item.PolicyID
-		jobinfo["policy_name"] = item.PolicyName
-		jobinfos = append(jobinfos, jobinfo)
-	}
-	return jobinfos
-}
-func flattenMapInventoryBaseRef(p *models.InventoryBaseRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterStoragePolicyRef(p *models.HyperflexClusterStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var managedobjects []map[string]interface{}
+	var clusterstorages []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	managedobject := make(map[string]interface{})
-	managedobject["moid"] = item.Moid
-	managedobject["object_type"] = item.ObjectType
-	managedobject["selector"] = item.Selector
+	clusterstorage := make(map[string]interface{})
+	clusterstorage["moid"] = item.Moid
+	clusterstorage["object_type"] = item.ObjectType
+	clusterstorage["selector"] = item.Selector
 
-	managedobjects = append(managedobjects, managedobject)
-	return managedobjects
+	clusterstorages = append(clusterstorages, clusterstorage)
+	return clusterstorages
 }
-func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexConfigResultRef(p *models.HyperflexConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var schedules []map[string]interface{}
+	var configresults []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	schedule := make(map[string]interface{})
-	schedule["day_of_month"] = item.DayOfMonth
-	schedule["day_of_week"] = item.DayOfWeek
-	schedule["month_of_year"] = item.MonthOfYear
-	schedule["object_type"] = item.ObjectType
-	schedule["repeat_interval"] = item.RepeatInterval
-	schedule["time_of_day"] = item.TimeOfDay
-	schedule["time_zone"] = item.TimeZone
-	schedule["week_of_month"] = item.WeekOfMonth
+	configresult := make(map[string]interface{})
+	configresult["moid"] = item.Moid
+	configresult["object_type"] = item.ObjectType
+	configresult["selector"] = item.Selector
 
-	schedules = append(schedules, schedule)
-	return schedules
+	configresults = append(configresults, configresult)
+	return configresults
 }
-func flattenListHyperflexAlarmRef(p []*models.HyperflexAlarmRef, d *schema.ResourceData) []map[string]interface{} {
-	var alarms []map[string]interface{}
+func flattenMapHyperflexExtFcStoragePolicyRef(p *models.HyperflexExtFcStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var extfcstorages []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	for _, item := range p {
-		item := *item
-		alarm := make(map[string]interface{})
-		alarm["moid"] = item.Moid
-		alarm["object_type"] = item.ObjectType
-		alarm["selector"] = item.Selector
-		alarms = append(alarms, alarm)
+	item := *p
+	extfcstorage := make(map[string]interface{})
+	extfcstorage["moid"] = item.Moid
+	extfcstorage["object_type"] = item.ObjectType
+	extfcstorage["selector"] = item.Selector
+
+	extfcstorages = append(extfcstorages, extfcstorage)
+	return extfcstorages
+}
+func flattenMapHyperflexExtIscsiStoragePolicyRef(p *models.HyperflexExtIscsiStoragePolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var extiscsistorages []map[string]interface{}
+	if p == nil {
+		return nil
 	}
-	return alarms
+	item := *p
+	extiscsistorage := make(map[string]interface{})
+	extiscsistorage["moid"] = item.Moid
+	extiscsistorage["object_type"] = item.ObjectType
+	extiscsistorage["selector"] = item.Selector
+
+	extiscsistorages = append(extiscsistorages, extiscsistorage)
+	return extiscsistorages
+}
+func flattenMapHyperflexFeatureLimitExternalRef(p *models.HyperflexFeatureLimitExternalRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var featurelimitexternals []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	featurelimitexternal := make(map[string]interface{})
+	featurelimitexternal["moid"] = item.Moid
+	featurelimitexternal["object_type"] = item.ObjectType
+	featurelimitexternal["selector"] = item.Selector
+
+	featurelimitexternals = append(featurelimitexternals, featurelimitexternal)
+	return featurelimitexternals
+}
+func flattenMapHyperflexFeatureLimitInternalRef(p *models.HyperflexFeatureLimitInternalRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var featurelimitinternals []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	featurelimitinternal := make(map[string]interface{})
+	featurelimitinternal["moid"] = item.Moid
+	featurelimitinternal["object_type"] = item.ObjectType
+	featurelimitinternal["selector"] = item.Selector
+
+	featurelimitinternals = append(featurelimitinternals, featurelimitinternal)
+	return featurelimitinternals
 }
 func flattenMapHyperflexHealthRef(p *models.HyperflexHealthRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -5096,20 +4996,325 @@ func flattenMapHyperflexHealthRef(p *models.HyperflexHealthRef, d *schema.Resour
 	healths = append(healths, health)
 	return healths
 }
-func flattenListHyperflexNodeRef(p []*models.HyperflexNodeRef, d *schema.ResourceData) []map[string]interface{} {
-	var nodess []map[string]interface{}
+func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
+
+	var ips []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	for _, item := range p {
-		item := *item
-		nodes := make(map[string]interface{})
-		nodes["moid"] = item.Moid
-		nodes["object_type"] = item.ObjectType
-		nodes["selector"] = item.Selector
-		nodess = append(nodess, nodes)
+	item := *p
+	ip := make(map[string]interface{})
+	delete(item.HyperflexHxNetworkAddressDtAO1P1.HyperflexHxNetworkAddressDtAO1P1, "ObjectType")
+	if len(item.HyperflexHxNetworkAddressDtAO1P1.HyperflexHxNetworkAddressDtAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexHxNetworkAddressDtAO1P1.HyperflexHxNetworkAddressDtAO1P1)
+		if err == nil {
+			ip["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
 	}
-	return nodess
+	ip["address"] = item.Address
+	ip["fqdn"] = item.Fqdn
+	ip["ip"] = item.IP
+	ip["object_type"] = item.ObjectType
+
+	ips = append(ips, ip)
+	return ips
+}
+func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+
+	var resiliencydetailss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	resiliencydetails := make(map[string]interface{})
+	delete(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1, "ObjectType")
+	if len(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexHxResiliencyInfoDtAO1P1.HyperflexHxResiliencyInfoDtAO1P1)
+		if err == nil {
+			resiliencydetails["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	resiliencydetails["data_replication_factor"] = item.DataReplicationFactor
+	resiliencydetails["hdd_failures_tolerable"] = item.HddFailuresTolerable
+	resiliencydetails["messages"] = item.Messages
+	resiliencydetails["node_failures_tolerable"] = item.NodeFailuresTolerable
+	resiliencydetails["object_type"] = item.ObjectType
+	resiliencydetails["policy_compliance"] = item.PolicyCompliance
+	resiliencydetails["resiliency_state"] = item.ResiliencyState
+	resiliencydetails["ssd_failures_tolerable"] = item.SsdFailuresTolerable
+
+	resiliencydetailss = append(resiliencydetailss, resiliencydetails)
+	return resiliencydetailss
+}
+func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.ResourceData) []map[string]interface{} {
+
+	var identitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	identity := make(map[string]interface{})
+	delete(item.HyperflexHxUuIDDtAO1P1.HyperflexHxUuIDDtAO1P1, "ObjectType")
+	if len(item.HyperflexHxUuIDDtAO1P1.HyperflexHxUuIDDtAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexHxUuIDDtAO1P1.HyperflexHxUuIDDtAO1P1)
+		if err == nil {
+			identity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	identity["links"] = (func(p []*models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
+		var linkss []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			links := make(map[string]interface{})
+			links["comments"] = item.Comments
+			links["href"] = item.Href
+			links["method"] = item.Method
+			links["object_type"] = item.ObjectType
+			links["rel"] = item.Rel
+			linkss = append(linkss, links)
+		}
+		return linkss
+	})(item.Links, d)
+	identity["object_type"] = item.ObjectType
+	identity["uuid"] = item.UUID
+
+	identitys = append(identitys, identity)
+	return identitys
+}
+func flattenMapHyperflexInstallerImageRef(p *models.HyperflexInstallerImageRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var installerimages []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	installerimage := make(map[string]interface{})
+	installerimage["moid"] = item.Moid
+	installerimage["object_type"] = item.ObjectType
+	installerimage["selector"] = item.Selector
+
+	installerimages = append(installerimages, installerimage)
+	return installerimages
+}
+func flattenMapHyperflexIPAddrRange(p *models.HyperflexIPAddrRange, d *schema.ResourceData) []map[string]interface{} {
+
+	var kvmipranges []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	kvmiprange := make(map[string]interface{})
+	delete(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1, "ObjectType")
+	if len(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1)
+		if err == nil {
+			kvmiprange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	kvmiprange["end_addr"] = item.EndAddr
+	kvmiprange["gateway"] = item.Gateway
+	kvmiprange["netmask"] = item.Netmask
+	kvmiprange["object_type"] = item.ObjectType
+	kvmiprange["start_addr"] = item.StartAddr
+
+	kvmipranges = append(kvmipranges, kvmiprange)
+	return kvmipranges
+}
+func flattenMapHyperflexLocalCredentialPolicyRef(p *models.HyperflexLocalCredentialPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var localcredentials []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	localcredential := make(map[string]interface{})
+	localcredential["moid"] = item.Moid
+	localcredential["object_type"] = item.ObjectType
+	localcredential["selector"] = item.Selector
+
+	localcredentials = append(localcredentials, localcredential)
+	return localcredentials
+}
+func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
+
+	var logicalavalabilityzoneconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	logicalavalabilityzoneconfig := make(map[string]interface{})
+	delete(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1, "ObjectType")
+	if len(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexLogicalAvailabilityZoneAO1P1.HyperflexLogicalAvailabilityZoneAO1P1)
+		if err == nil {
+			logicalavalabilityzoneconfig["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	logicalavalabilityzoneconfig["auto_config"] = item.AutoConfig
+	logicalavalabilityzoneconfig["object_type"] = item.ObjectType
+
+	logicalavalabilityzoneconfigs = append(logicalavalabilityzoneconfigs, logicalavalabilityzoneconfig)
+	return logicalavalabilityzoneconfigs
+}
+func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
+
+	var macprefixranges []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	macprefixrange := make(map[string]interface{})
+	delete(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1, "ObjectType")
+	if len(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1)
+		if err == nil {
+			macprefixrange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	macprefixrange["end_addr"] = item.EndAddr
+	macprefixrange["object_type"] = item.ObjectType
+	macprefixrange["start_addr"] = item.StartAddr
+
+	macprefixranges = append(macprefixranges, macprefixrange)
+	return macprefixranges
+}
+func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+
+	var mgmtvlans []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	mgmtvlan := make(map[string]interface{})
+	delete(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1, "ObjectType")
+	if len(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1)
+		if err == nil {
+			mgmtvlan["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	mgmtvlan["name"] = item.Name
+	mgmtvlan["object_type"] = item.ObjectType
+	mgmtvlan["vlan_id"] = item.VlanID
+
+	mgmtvlans = append(mgmtvlans, mgmtvlan)
+	return mgmtvlans
+}
+func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.ResourceData) []map[string]interface{} {
+
+	var extatraffics []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	extatraffic := make(map[string]interface{})
+	delete(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1, "ObjectType")
+	if len(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexNamedVsanAO1P1.HyperflexNamedVsanAO1P1)
+		if err == nil {
+			extatraffic["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	extatraffic["name"] = item.Name
+	extatraffic["object_type"] = item.ObjectType
+	extatraffic["vsan_id"] = item.VsanID
+
+	extatraffics = append(extatraffics, extatraffic)
+	return extatraffics
+}
+func flattenMapHyperflexNodeConfigPolicyRef(p *models.HyperflexNodeConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var nodeconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	nodeconfig := make(map[string]interface{})
+	nodeconfig["moid"] = item.Moid
+	nodeconfig["object_type"] = item.ObjectType
+	nodeconfig["selector"] = item.Selector
+
+	nodeconfigs = append(nodeconfigs, nodeconfig)
+	return nodeconfigs
+}
+func flattenMapHyperflexProxySettingPolicyRef(p *models.HyperflexProxySettingPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var proxysettings []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	proxysetting := make(map[string]interface{})
+	proxysetting["moid"] = item.Moid
+	proxysetting["object_type"] = item.ObjectType
+	proxysetting["selector"] = item.Selector
+
+	proxysettings = append(proxysettings, proxysetting)
+	return proxysettings
+}
+func flattenMapHyperflexServerFirmwareVersionRef(p *models.HyperflexServerFirmwareVersionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var serverfirmwareversions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	serverfirmwareversion := make(map[string]interface{})
+	serverfirmwareversion["moid"] = item.Moid
+	serverfirmwareversion["object_type"] = item.ObjectType
+	serverfirmwareversion["selector"] = item.Selector
+
+	serverfirmwareversions = append(serverfirmwareversions, serverfirmwareversion)
+	return serverfirmwareversions
+}
+func flattenMapHyperflexServerModelRef(p *models.HyperflexServerModelRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var servermodels []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	servermodel := make(map[string]interface{})
+	servermodel["moid"] = item.Moid
+	servermodel["object_type"] = item.ObjectType
+	servermodel["selector"] = item.Selector
+
+	servermodels = append(servermodels, servermodel)
+	return servermodels
+}
+func flattenMapHyperflexSoftwareVersionPolicyRef(p *models.HyperflexSoftwareVersionPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var softwareversions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	softwareversion := make(map[string]interface{})
+	softwareversion["moid"] = item.Moid
+	softwareversion["object_type"] = item.ObjectType
+	softwareversion["selector"] = item.Selector
+
+	softwareversions = append(softwareversions, softwareversion)
+	return softwareversions
 }
 func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceData) []map[string]interface{} {
 
@@ -5120,6 +5325,15 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 	item := *p
 	summary := make(map[string]interface{})
 	summary["active_nodes"] = item.ActiveNodes
+	delete(item.HyperflexSummaryAO1P1.HyperflexSummaryAO1P1, "ObjectType")
+	if len(item.HyperflexSummaryAO1P1.HyperflexSummaryAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexSummaryAO1P1.HyperflexSummaryAO1P1)
+		if err == nil {
+			summary["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
 	summary["address"] = item.Address
 	summary["boottime"] = item.Boottime
 	summary["cluster_access_policy"] = item.ClusterAccessPolicy
@@ -5182,798 +5396,89 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 	summarys = append(summarys, summary)
 	return summarys
 }
-func flattenMapStorageEnclosureRef(p *models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexSysConfigPolicyRef(p *models.HyperflexSysConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var storageenclosures []map[string]interface{}
+	var sysconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storageenclosure := make(map[string]interface{})
-	storageenclosure["moid"] = item.Moid
-	storageenclosure["object_type"] = item.ObjectType
-	storageenclosure["selector"] = item.Selector
+	sysconfig := make(map[string]interface{})
+	sysconfig["moid"] = item.Moid
+	sysconfig["object_type"] = item.ObjectType
+	sysconfig["selector"] = item.Selector
 
-	storageenclosures = append(storageenclosures, storageenclosure)
-	return storageenclosures
+	sysconfigs = append(sysconfigs, sysconfig)
+	return sysconfigs
 }
-func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexUcsmConfigPolicyRef(p *models.HyperflexUcsmConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var contexts []map[string]interface{}
+	var ucsmconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	context := make(map[string]interface{})
-	context["entity_data"] = item.EntityData
-	context["entity_moid"] = item.EntityMoid
-	context["entity_name"] = item.EntityName
-	context["entity_type"] = item.EntityType
-	context["object_type"] = item.ObjectType
+	ucsmconfig := make(map[string]interface{})
+	ucsmconfig["moid"] = item.Moid
+	ucsmconfig["object_type"] = item.ObjectType
+	ucsmconfig["selector"] = item.Selector
 
-	contexts = append(contexts, context)
-	return contexts
+	ucsmconfigs = append(ucsmconfigs, ucsmconfig)
+	return ucsmconfigs
 }
-func flattenListIamEndPointPrivilegeRef(p []*models.IamEndPointPrivilegeRef, d *schema.ResourceData) []map[string]interface{} {
-	var endpointprivilegess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		endpointprivileges := make(map[string]interface{})
-		endpointprivileges["moid"] = item.Moid
-		endpointprivileges["object_type"] = item.ObjectType
-		endpointprivileges["selector"] = item.Selector
-		endpointprivilegess = append(endpointprivilegess, endpointprivileges)
-	}
-	return endpointprivilegess
-}
-func flattenMapIamServiceProviderRef(p *models.IamServiceProviderRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexVcenterConfigPolicyRef(p *models.HyperflexVcenterConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var serviceproviders []map[string]interface{}
+	var vcenterconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	serviceprovider := make(map[string]interface{})
-	serviceprovider["moid"] = item.Moid
-	serviceprovider["object_type"] = item.ObjectType
-	serviceprovider["selector"] = item.Selector
+	vcenterconfig := make(map[string]interface{})
+	vcenterconfig["moid"] = item.Moid
+	vcenterconfig["object_type"] = item.ObjectType
+	vcenterconfig["selector"] = item.Selector
 
-	serviceproviders = append(serviceproviders, serviceprovider)
-	return serviceproviders
+	vcenterconfigs = append(vcenterconfigs, vcenterconfig)
+	return vcenterconfigs
 }
-func flattenMapManagementControllerRef(p *models.ManagementControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *schema.ResourceData) []map[string]interface{} {
 
-	var managementcontrollers []map[string]interface{}
+	var wwxnprefixranges []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	managementcontroller := make(map[string]interface{})
-	managementcontroller["moid"] = item.Moid
-	managementcontroller["object_type"] = item.ObjectType
-	managementcontroller["selector"] = item.Selector
-
-	managementcontrollers = append(managementcontrollers, managementcontroller)
-	return managementcontrollers
-}
-func flattenListNiaapiDetail(p []*models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
-	var contents []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		content := make(map[string]interface{})
-		content["chksum"] = item.Chksum
-		content["filename"] = item.Filename
-		content["name"] = item.Name
-		content["object_type"] = item.ObjectType
-		contents = append(contents, content)
-	}
-	return contents
-}
-func flattenMapIamSessionRef(p *models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var sessionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	sessions := make(map[string]interface{})
-	sessions["moid"] = item.Moid
-	sessions["object_type"] = item.ObjectType
-	sessions["selector"] = item.Selector
-
-	sessionss = append(sessionss, sessions)
-	return sessionss
-}
-func flattenMapMemoryPersistentMemoryRegionRef(p *models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var memorypersistentmemoryregions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	memorypersistentmemoryregion := make(map[string]interface{})
-	memorypersistentmemoryregion["moid"] = item.Moid
-	memorypersistentmemoryregion["object_type"] = item.ObjectType
-	memorypersistentmemoryregion["selector"] = item.Selector
-
-	memorypersistentmemoryregions = append(memorypersistentmemoryregions, memorypersistentmemoryregion)
-	return memorypersistentmemoryregions
-}
-func flattenMapLicenseAccountLicenseDataRef(p *models.LicenseAccountLicenseDataRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var accountlicensedatas []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	accountlicensedata := make(map[string]interface{})
-	accountlicensedata["moid"] = item.Moid
-	accountlicensedata["object_type"] = item.ObjectType
-	accountlicensedata["selector"] = item.Selector
-
-	accountlicensedatas = append(accountlicensedatas, accountlicensedata)
-	return accountlicensedatas
-}
-func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
-	var permissionroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		permissionroles := make(map[string]interface{})
-		permissionroles["object_type"] = item.ObjectType
-		permissionroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-
-			var permissions []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			permission := make(map[string]interface{})
-			permission["moid"] = item.Moid
-			permission["object_type"] = item.ObjectType
-
-			permissions = append(permissions, permission)
-			return permissions
-		})(item.Permission, d)
-		permissionroles["roles"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-			var roless []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				roles := make(map[string]interface{})
-				roles["moid"] = item.Moid
-				roles["object_type"] = item.ObjectType
-				roless = append(roless, roles)
-			}
-			return roless
-		})(item.Roles, d)
-		permissionroless = append(permissionroless, permissionroles)
-	}
-	return permissionroless
-}
-func flattenMapHclOperatingSystemVendorRef(p *models.HclOperatingSystemVendorRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var vendors []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	vendor := make(map[string]interface{})
-	vendor["moid"] = item.Moid
-	vendor["object_type"] = item.ObjectType
-	vendor["selector"] = item.Selector
-
-	vendors = append(vendors, vendor)
-	return vendors
-}
-func flattenListAdapterExtEthInterfaceRef(p []*models.AdapterExtEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var extethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		extethifs := make(map[string]interface{})
-		extethifs["moid"] = item.Moid
-		extethifs["object_type"] = item.ObjectType
-		extethifs["selector"] = item.Selector
-		extethifss = append(extethifss, extethifs)
-	}
-	return extethifss
-}
-func flattenListAdapterHostEthInterfaceRef(p []*models.AdapterHostEthInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var hostethifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		hostethifs := make(map[string]interface{})
-		hostethifs["moid"] = item.Moid
-		hostethifs["object_type"] = item.ObjectType
-		hostethifs["selector"] = item.Selector
-		hostethifss = append(hostethifss, hostethifs)
-	}
-	return hostethifss
-}
-func flattenListAdapterHostFcInterfaceRef(p []*models.AdapterHostFcInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var hostfcifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		hostfcifs := make(map[string]interface{})
-		hostfcifs["moid"] = item.Moid
-		hostfcifs["object_type"] = item.ObjectType
-		hostfcifs["selector"] = item.Selector
-		hostfcifss = append(hostfcifss, hostfcifs)
-	}
-	return hostfcifss
-}
-func flattenListAdapterHostIscsiInterfaceRef(p []*models.AdapterHostIscsiInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var hostiscsiifss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		hostiscsiifs := make(map[string]interface{})
-		hostiscsiifs["moid"] = item.Moid
-		hostiscsiifs["object_type"] = item.ObjectType
-		hostiscsiifs["selector"] = item.Selector
-		hostiscsiifss = append(hostiscsiifss, hostiscsiifs)
-	}
-	return hostiscsiifss
-}
-func flattenListInventoryGenericInventoryRef(p []*models.InventoryGenericInventoryRef, d *schema.ResourceData) []map[string]interface{} {
-	var genericinventorys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		genericinventory := make(map[string]interface{})
-		genericinventory["moid"] = item.Moid
-		genericinventory["object_type"] = item.ObjectType
-		genericinventory["selector"] = item.Selector
-		genericinventorys = append(genericinventorys, genericinventory)
-	}
-	return genericinventorys
-}
-func flattenMapEquipmentLocatorLedRef(p *models.EquipmentLocatorLedRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var locatorleds []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	locatorled := make(map[string]interface{})
-	locatorled["moid"] = item.Moid
-	locatorled["object_type"] = item.ObjectType
-	locatorled["selector"] = item.Selector
-
-	locatorleds = append(locatorleds, locatorled)
-	return locatorleds
-}
-func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
-
-	var serverconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	serverconfig := make(map[string]interface{})
-	serverconfig["asset_tag"] = item.AssetTag
-	serverconfig["object_type"] = item.ObjectType
-	serverconfig["user_label"] = item.UserLabel
-
-	serverconfigs = append(serverconfigs, serverconfig)
-	return serverconfigs
-}
-func flattenListManagementInterfaceRef(p []*models.ManagementInterfaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var managementinterfacess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		managementinterfaces := make(map[string]interface{})
-		managementinterfaces["moid"] = item.Moid
-		managementinterfaces["object_type"] = item.ObjectType
-		managementinterfaces["selector"] = item.Selector
-		managementinterfacess = append(managementinterfacess, managementinterfaces)
-	}
-	return managementinterfacess
-}
-func flattenMapStorageSasExpanderRef(p *models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var storagesasexpanders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storagesasexpander := make(map[string]interface{})
-	storagesasexpander["moid"] = item.Moid
-	storagesasexpander["object_type"] = item.ObjectType
-	storagesasexpander["selector"] = item.Selector
-
-	storagesasexpanders = append(storagesasexpanders, storagesasexpander)
-	return storagesasexpanders
-}
-func flattenMapTopSystemRef(p *models.TopSystemRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var topsystems []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	topsystem := make(map[string]interface{})
-	topsystem["moid"] = item.Moid
-	topsystem["object_type"] = item.ObjectType
-	topsystem["selector"] = item.Selector
-
-	topsystems = append(topsystems, topsystem)
-	return topsystems
-}
-func flattenMapBiosUnitRef(p *models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var biosunits []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	biosunit := make(map[string]interface{})
-	biosunit["moid"] = item.Moid
-	biosunit["object_type"] = item.ObjectType
-	biosunit["selector"] = item.Selector
-
-	biosunits = append(biosunits, biosunit)
-	return biosunits
-}
-func flattenListNetworkElementRef(p []*models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
-	var networkelementss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		networkelements := make(map[string]interface{})
-		networkelements["moid"] = item.Moid
-		networkelements["object_type"] = item.ObjectType
-		networkelements["selector"] = item.Selector
-		networkelementss = append(networkelementss, networkelements)
-	}
-	return networkelementss
-}
-func flattenMapMemoryPersistentMemoryConfigurationRef(p *models.MemoryPersistentMemoryConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var memorypersistentmemoryconfigurations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	memorypersistentmemoryconfiguration := make(map[string]interface{})
-	memorypersistentmemoryconfiguration["moid"] = item.Moid
-	memorypersistentmemoryconfiguration["object_type"] = item.ObjectType
-	memorypersistentmemoryconfiguration["selector"] = item.Selector
-
-	memorypersistentmemoryconfigurations = append(memorypersistentmemoryconfigurations, memorypersistentmemoryconfiguration)
-	return memorypersistentmemoryconfigurations
-}
-func flattenListMemoryPersistentMemoryNamespaceRef(p []*models.MemoryPersistentMemoryNamespaceRef, d *schema.ResourceData) []map[string]interface{} {
-	var persistentmemorynamespacess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		persistentmemorynamespaces := make(map[string]interface{})
-		persistentmemorynamespaces["moid"] = item.Moid
-		persistentmemorynamespaces["object_type"] = item.ObjectType
-		persistentmemorynamespaces["selector"] = item.Selector
-		persistentmemorynamespacess = append(persistentmemorynamespacess, persistentmemorynamespaces)
-	}
-	return persistentmemorynamespacess
-}
-func flattenMapStorageProtectionGroupSnapshotRef(p *models.StorageProtectionGroupSnapshotRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var protectiongroupsnapshots []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	protectiongroupsnapshot := make(map[string]interface{})
-	protectiongroupsnapshot["moid"] = item.Moid
-	protectiongroupsnapshot["object_type"] = item.ObjectType
-	protectiongroupsnapshot["selector"] = item.Selector
-
-	protectiongroupsnapshots = append(protectiongroupsnapshots, protectiongroupsnapshot)
-	return protectiongroupsnapshots
-}
-func flattenMapStorageVolumeRef(p *models.StorageVolumeRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var volumes []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	volume := make(map[string]interface{})
-	volume["moid"] = item.Moid
-	volume["object_type"] = item.ObjectType
-	volume["selector"] = item.Selector
-
-	volumes = append(volumes, volume)
-	return volumes
-}
-func flattenMapAssetClusterMemberRef(p *models.AssetClusterMemberRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var clustermembers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	clustermember := make(map[string]interface{})
-	clustermember["moid"] = item.Moid
-	clustermember["object_type"] = item.ObjectType
-	clustermember["selector"] = item.Selector
-
-	clustermembers = append(clustermembers, clustermember)
-	return clustermembers
-}
-func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
-
-	var ips []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ip := make(map[string]interface{})
-	ip["address"] = item.Address
-	ip["fqdn"] = item.Fqdn
-	ip["ip"] = item.IP
-	ip["object_type"] = item.ObjectType
-
-	ips = append(ips, ip)
-	return ips
-}
-func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.ResourceData) []map[string]interface{} {
-
-	var identitys []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	identity := make(map[string]interface{})
-	identity["links"] = (func(p []*models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
-		var linkss []map[string]interface{}
-		if p == nil {
-			return nil
+	wwxnprefixrange := make(map[string]interface{})
+	delete(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1, "ObjectType")
+	if len(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1) != 0 {
+		j, err := json.Marshal(item.HyperflexWwxnPrefixRangeAO1P1.HyperflexWwxnPrefixRangeAO1P1)
+		if err == nil {
+			wwxnprefixrange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
-		for _, item := range p {
-			item := *item
-			links := make(map[string]interface{})
-			links["comments"] = item.Comments
-			links["href"] = item.Href
-			links["method"] = item.Method
-			links["object_type"] = item.ObjectType
-			links["rel"] = item.Rel
-			linkss = append(linkss, links)
-		}
-		return linkss
-	})(item.Links, d)
-	identity["object_type"] = item.ObjectType
-	identity["uuid"] = item.UUID
-
-	identitys = append(identitys, identity)
-	return identitys
-}
-func flattenListAdapterUnitRef(p []*models.AdapterUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var adapterss []map[string]interface{}
-	if p == nil {
-		return nil
 	}
-	for _, item := range p {
-		item := *item
-		adapters := make(map[string]interface{})
-		adapters["moid"] = item.Moid
-		adapters["object_type"] = item.ObjectType
-		adapters["selector"] = item.Selector
-		adapterss = append(adapterss, adapters)
-	}
-	return adapterss
-}
-func flattenMapBiosBootModeRef(p *models.BiosBootModeRef, d *schema.ResourceData) []map[string]interface{} {
+	wwxnprefixrange["end_addr"] = item.EndAddr
+	wwxnprefixrange["object_type"] = item.ObjectType
+	wwxnprefixrange["start_addr"] = item.StartAddr
 
-	var biosbootmodes []map[string]interface{}
+	wwxnprefixranges = append(wwxnprefixranges, wwxnprefixrange)
+	return wwxnprefixranges
+}
+func flattenMapIaasLicenseInfoRef(p *models.IaasLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var licenseinfos []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	biosbootmode := make(map[string]interface{})
-	biosbootmode["moid"] = item.Moid
-	biosbootmode["object_type"] = item.ObjectType
-	biosbootmode["selector"] = item.Selector
+	licenseinfo := make(map[string]interface{})
+	licenseinfo["moid"] = item.Moid
+	licenseinfo["object_type"] = item.ObjectType
+	licenseinfo["selector"] = item.Selector
 
-	biosbootmodes = append(biosbootmodes, biosbootmode)
-	return biosbootmodes
-}
-func flattenListBiosUnitRef(p []*models.BiosUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var biosunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		biosunits := make(map[string]interface{})
-		biosunits["moid"] = item.Moid
-		biosunits["object_type"] = item.ObjectType
-		biosunits["selector"] = item.Selector
-		biosunitss = append(biosunitss, biosunits)
-	}
-	return biosunitss
-}
-func flattenMapBootDeviceBootModeRef(p *models.BootDeviceBootModeRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var bootdevicebootmodes []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	bootdevicebootmode := make(map[string]interface{})
-	bootdevicebootmode["moid"] = item.Moid
-	bootdevicebootmode["object_type"] = item.ObjectType
-	bootdevicebootmode["selector"] = item.Selector
-
-	bootdevicebootmodes = append(bootdevicebootmodes, bootdevicebootmode)
-	return bootdevicebootmodes
-}
-func flattenListEquipmentFanModuleRef(p []*models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
-	var fanmoduless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		fanmodules := make(map[string]interface{})
-		fanmodules["moid"] = item.Moid
-		fanmodules["object_type"] = item.ObjectType
-		fanmodules["selector"] = item.Selector
-		fanmoduless = append(fanmoduless, fanmodules)
-	}
-	return fanmoduless
-}
-func flattenListInventoryGenericInventoryHolderRef(p []*models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
-	var genericinventoryholderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		genericinventoryholders := make(map[string]interface{})
-		genericinventoryholders["moid"] = item.Moid
-		genericinventoryholders["object_type"] = item.ObjectType
-		genericinventoryholders["selector"] = item.Selector
-		genericinventoryholderss = append(genericinventoryholderss, genericinventoryholders)
-	}
-	return genericinventoryholderss
-}
-func flattenListPciDeviceRef(p []*models.PciDeviceRef, d *schema.ResourceData) []map[string]interface{} {
-	var pcidevicess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		pcidevices := make(map[string]interface{})
-		pcidevices["moid"] = item.Moid
-		pcidevices["object_type"] = item.ObjectType
-		pcidevices["selector"] = item.Selector
-		pcidevicess = append(pcidevicess, pcidevices)
-	}
-	return pcidevicess
-}
-func flattenListEquipmentPsuRef(p []*models.EquipmentPsuRef, d *schema.ResourceData) []map[string]interface{} {
-	var psuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		psus := make(map[string]interface{})
-		psus["moid"] = item.Moid
-		psus["object_type"] = item.ObjectType
-		psus["selector"] = item.Selector
-		psuss = append(psuss, psus)
-	}
-	return psuss
-}
-func flattenMapEquipmentRackEnclosureSlotRef(p *models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var rackenclosureslots []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	rackenclosureslot := make(map[string]interface{})
-	rackenclosureslot["moid"] = item.Moid
-	rackenclosureslot["object_type"] = item.ObjectType
-	rackenclosureslot["selector"] = item.Selector
-
-	rackenclosureslots = append(rackenclosureslots, rackenclosureslot)
-	return rackenclosureslots
-}
-func flattenListStorageSasExpanderRef(p []*models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
-	var sasexpanderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		sasexpanders := make(map[string]interface{})
-		sasexpanders["moid"] = item.Moid
-		sasexpanders["object_type"] = item.ObjectType
-		sasexpanders["selector"] = item.Selector
-		sasexpanderss = append(sasexpanderss, sasexpanders)
-	}
-	return sasexpanderss
-}
-func flattenListStorageEnclosureRef(p []*models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
-	var storageenclosuress []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		storageenclosures := make(map[string]interface{})
-		storageenclosures["moid"] = item.Moid
-		storageenclosures["object_type"] = item.ObjectType
-		storageenclosures["selector"] = item.Selector
-		storageenclosuress = append(storageenclosuress, storageenclosures)
-	}
-	return storageenclosuress
-}
-func flattenListNiaapiRevisionInfo(p []*models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
-	var revisioninfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		revisioninfo := make(map[string]interface{})
-		revisioninfo["date_published"] = item.DatePublished
-		revisioninfo["object_type"] = item.ObjectType
-		revisioninfo["revision_comment"] = item.RevisionComment
-		revisioninfo["revision_no"] = item.RevisionNo
-		revisioninfos = append(revisioninfos, revisioninfo)
-	}
-	return revisioninfos
-}
-func flattenMapPortGroupRef(p *models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var portgroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	portgroup := make(map[string]interface{})
-	portgroup["moid"] = item.Moid
-	portgroup["object_type"] = item.ObjectType
-	portgroup["selector"] = item.Selector
-
-	portgroups = append(portgroups, portgroup)
-	return portgroups
-}
-func flattenMapForecastCatalogRef(p *models.ForecastCatalogRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var catalogs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	catalog := make(map[string]interface{})
-	catalog["moid"] = item.Moid
-	catalog["object_type"] = item.ObjectType
-	catalog["selector"] = item.Selector
-
-	catalogs = append(catalogs, catalog)
-	return catalogs
-}
-func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
-	var grouppermissionroless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		grouppermissionroles := make(map[string]interface{})
-		grouppermissionroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-
-			var groups []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			group := make(map[string]interface{})
-			group["moid"] = item.Moid
-			group["object_type"] = item.ObjectType
-
-			groups = append(groups, group)
-			return groups
-		})(item.Group, d)
-		grouppermissionroles["object_type"] = item.ObjectType
-		grouppermissionroles["orgs"] = (func(p []*models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
-			var orgss []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			for _, item := range p {
-				item := *item
-				orgs := make(map[string]interface{})
-				orgs["moid"] = item.Moid
-				orgs["object_type"] = item.ObjectType
-				orgss = append(orgss, orgs)
-			}
-			return orgss
-		})(item.Orgs, d)
-		grouppermissionroless = append(grouppermissionroless, grouppermissionroles)
-	}
-	return grouppermissionroless
-}
-func flattenMapResourceMembershipHolderRef(p *models.ResourceMembershipHolderRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var holders []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	holder := make(map[string]interface{})
-	holder["moid"] = item.Moid
-	holder["object_type"] = item.ObjectType
-	holder["selector"] = item.Selector
-
-	holders = append(holders, holder)
-	return holders
-}
-func flattenMapApplianceDataExportPolicyRef(p *models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var parentconfigs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	parentconfig := make(map[string]interface{})
-	parentconfig["moid"] = item.Moid
-	parentconfig["object_type"] = item.ObjectType
-	parentconfig["selector"] = item.Selector
-
-	parentconfigs = append(parentconfigs, parentconfig)
-	return parentconfigs
-}
-func flattenListApplianceDataExportPolicyRef(p []*models.ApplianceDataExportPolicyRef, d *schema.ResourceData) []map[string]interface{} {
-	var subconfigss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		subconfigs := make(map[string]interface{})
-		subconfigs["moid"] = item.Moid
-		subconfigs["object_type"] = item.ObjectType
-		subconfigs["selector"] = item.Selector
-		subconfigss = append(subconfigss, subconfigs)
-	}
-	return subconfigss
+	licenseinfos = append(licenseinfos, licenseinfo)
+	return licenseinfos
 }
 func flattenMapIaasUcsdInfoRef(p *models.IaasUcsdInfoRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -5990,6 +5495,36 @@ func flattenMapIaasUcsdInfoRef(p *models.IaasUcsdInfoRef, d *schema.ResourceData
 	guids = append(guids, guid)
 	return guids
 }
+func flattenMapIaasUcsdManagedInfraRef(p *models.IaasUcsdManagedInfraRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ucsdmanagedinfras []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ucsdmanagedinfra := make(map[string]interface{})
+	ucsdmanagedinfra["moid"] = item.Moid
+	ucsdmanagedinfra["object_type"] = item.ObjectType
+	ucsdmanagedinfra["selector"] = item.Selector
+
+	ucsdmanagedinfras = append(ucsdmanagedinfras, ucsdmanagedinfra)
+	return ucsdmanagedinfras
+}
+func flattenMapIamAccountRef(p *models.IamAccountRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var accounts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	account := make(map[string]interface{})
+	account["moid"] = item.Moid
+	account["object_type"] = item.ObjectType
+	account["selector"] = item.Selector
+
+	accounts = append(accounts, account)
+	return accounts
+}
 func flattenMapIamAppRegistrationRef(p *models.IamAppRegistrationRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var appregistrations []map[string]interface{}
@@ -6005,6 +5540,36 @@ func flattenMapIamAppRegistrationRef(p *models.IamAppRegistrationRef, d *schema.
 	appregistrations = append(appregistrations, appregistration)
 	return appregistrations
 }
+func flattenMapIamCertificateRef(p *models.IamCertificateRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var certificates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	certificate := make(map[string]interface{})
+	certificate["moid"] = item.Moid
+	certificate["object_type"] = item.ObjectType
+	certificate["selector"] = item.Selector
+
+	certificates = append(certificates, certificate)
+	return certificates
+}
+func flattenMapIamCertificateRequestRef(p *models.IamCertificateRequestRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var certificaterequests []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	certificaterequest := make(map[string]interface{})
+	certificaterequest["moid"] = item.Moid
+	certificaterequest["object_type"] = item.ObjectType
+	certificaterequest["selector"] = item.Selector
+
+	certificaterequests = append(certificaterequests, certificaterequest)
+	return certificaterequests
+}
 func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []map[string]interface{} {
 
 	var usermetas []map[string]interface{}
@@ -6013,6 +5578,15 @@ func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []
 	}
 	item := *p
 	usermeta := make(map[string]interface{})
+	delete(item.IamClientMetaAO1P1.IamClientMetaAO1P1, "ObjectType")
+	if len(item.IamClientMetaAO1P1.IamClientMetaAO1P1) != 0 {
+		j, err := json.Marshal(item.IamClientMetaAO1P1.IamClientMetaAO1P1)
+		if err == nil {
+			usermeta["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
 	usermeta["device_model"] = item.DeviceModel
 	usermeta["object_type"] = item.ObjectType
 	usermeta["user_agent"] = item.UserAgent
@@ -6020,356 +5594,410 @@ func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []
 	usermetas = append(usermetas, usermeta)
 	return usermetas
 }
-func flattenMapEquipmentRackEnclosureRef(p *models.EquipmentRackEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamDomainGroupRef(p *models.IamDomainGroupRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var equipmentrackenclosures []map[string]interface{}
+	var domaingroups []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	equipmentrackenclosure := make(map[string]interface{})
-	equipmentrackenclosure["moid"] = item.Moid
-	equipmentrackenclosure["object_type"] = item.ObjectType
-	equipmentrackenclosure["selector"] = item.Selector
+	domaingroup := make(map[string]interface{})
+	domaingroup["moid"] = item.Moid
+	domaingroup["object_type"] = item.ObjectType
+	domaingroup["selector"] = item.Selector
 
-	equipmentrackenclosures = append(equipmentrackenclosures, equipmentrackenclosure)
-	return equipmentrackenclosures
+	domaingroups = append(domaingroups, domaingroup)
+	return domaingroups
 }
-func flattenListStoragePhysicalDiskUsageRef(p []*models.StoragePhysicalDiskUsageRef, d *schema.ResourceData) []map[string]interface{} {
-	var physicaldiskusagess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		physicaldiskusages := make(map[string]interface{})
-		physicaldiskusages["moid"] = item.Moid
-		physicaldiskusages["object_type"] = item.ObjectType
-		physicaldiskusages["selector"] = item.Selector
-		physicaldiskusagess = append(physicaldiskusagess, physicaldiskusages)
-	}
-	return physicaldiskusagess
-}
-func flattenListStorageVdMemberEpRef(p []*models.StorageVdMemberEpRef, d *schema.ResourceData) []map[string]interface{} {
-	var vdmemberepss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		vdmembereps := make(map[string]interface{})
-		vdmembereps["moid"] = item.Moid
-		vdmembereps["object_type"] = item.ObjectType
-		vdmembereps["selector"] = item.Selector
-		vdmemberepss = append(vdmemberepss, vdmembereps)
-	}
-	return vdmemberepss
-}
-func flattenMapStorageVirtualDriveExtensionRef(p *models.StorageVirtualDriveExtensionRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
 
-	var virtualdriveextensions []map[string]interface{}
+	var passwordpropertiess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	virtualdriveextension := make(map[string]interface{})
-	virtualdriveextension["moid"] = item.Moid
-	virtualdriveextension["object_type"] = item.ObjectType
-	virtualdriveextension["selector"] = item.Selector
+	passwordproperties := make(map[string]interface{})
+	delete(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1, "ObjectType")
+	if len(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.IamEndPointPasswordPropertiesAO1P1.IamEndPointPasswordPropertiesAO1P1)
+		if err == nil {
+			passwordproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	passwordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
+	passwordproperties["enforce_strong_password"] = item.EnforceStrongPassword
+	passwordproperties["grace_period"] = item.GracePeriod
+	passwordproperties["notification_period"] = item.NotificationPeriod
+	passwordproperties["object_type"] = item.ObjectType
+	passwordproperties["password_expiry_duration"] = item.PasswordExpiryDuration
+	passwordproperties["password_history"] = item.PasswordHistory
 
-	virtualdriveextensions = append(virtualdriveextensions, virtualdriveextension)
-	return virtualdriveextensions
+	passwordpropertiess = append(passwordpropertiess, passwordproperties)
+	return passwordpropertiess
 }
-func flattenMapEquipmentSharedIoModuleRef(p *models.EquipmentSharedIoModuleRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserPolicyRef(p *models.IamEndPointUserPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var sharediomodules []map[string]interface{}
+	var endpointuserpolicys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	sharediomodule := make(map[string]interface{})
-	sharediomodule["moid"] = item.Moid
-	sharediomodule["object_type"] = item.ObjectType
-	sharediomodule["selector"] = item.Selector
+	endpointuserpolicy := make(map[string]interface{})
+	endpointuserpolicy["moid"] = item.Moid
+	endpointuserpolicy["object_type"] = item.ObjectType
+	endpointuserpolicy["selector"] = item.Selector
 
-	sharediomodules = append(sharediomodules, sharediomodule)
-	return sharediomodules
+	endpointuserpolicys = append(endpointuserpolicys, endpointuserpolicy)
+	return endpointuserpolicys
 }
-func flattenMapPciSwitchRef(p *models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserRef(p *models.IamEndPointUserRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var pciswitchs []map[string]interface{}
+	var endpointusers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	pciswitch := make(map[string]interface{})
-	pciswitch["moid"] = item.Moid
-	pciswitch["object_type"] = item.ObjectType
-	pciswitch["selector"] = item.Selector
+	endpointuser := make(map[string]interface{})
+	endpointuser["moid"] = item.Moid
+	endpointuser["object_type"] = item.ObjectType
+	endpointuser["selector"] = item.Selector
 
-	pciswitchs = append(pciswitchs, pciswitch)
-	return pciswitchs
+	endpointusers = append(endpointusers, endpointuser)
+	return endpointusers
 }
-func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
-	var ansiblepackagess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		ansiblepackages := make(map[string]interface{})
-		ansiblepackages["file_path"] = item.FilePath
-		ansiblepackages["file_sha"] = item.FileSha
-		ansiblepackages["file_size"] = item.FileSize
-		ansiblepackages["file_time"] = item.FileTime
-		ansiblepackages["filename"] = item.Filename
-		ansiblepackages["name"] = item.Name
-		ansiblepackages["object_type"] = item.ObjectType
-		ansiblepackages["package_type"] = item.PackageType
-		ansiblepackages["version"] = item.Version
-		ansiblepackagess = append(ansiblepackagess, ansiblepackages)
-	}
-	return ansiblepackagess
-}
-func flattenMapStorageProtectionGroupRef(p *models.StorageProtectionGroupRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamIdpRef(p *models.IamIdpRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var protectiongroups []map[string]interface{}
+	var idps []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	protectiongroup := make(map[string]interface{})
-	protectiongroup["moid"] = item.Moid
-	protectiongroup["object_type"] = item.ObjectType
-	protectiongroup["selector"] = item.Selector
+	idp := make(map[string]interface{})
+	idp["moid"] = item.Moid
+	idp["object_type"] = item.ObjectType
+	idp["selector"] = item.Selector
 
-	protectiongroups = append(protectiongroups, protectiongroup)
-	return protectiongroups
+	idps = append(idps, idp)
+	return idps
 }
-func flattenListEquipmentTpmRef(p []*models.EquipmentTpmRef, d *schema.ResourceData) []map[string]interface{} {
-	var equipmenttpmss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		equipmenttpms := make(map[string]interface{})
-		equipmenttpms["moid"] = item.Moid
-		equipmenttpms["object_type"] = item.ObjectType
-		equipmenttpms["selector"] = item.Selector
-		equipmenttpmss = append(equipmenttpmss, equipmenttpms)
-	}
-	return equipmenttpmss
-}
-func flattenListGraphicsCardRef(p []*models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var graphicscardss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		graphicscards := make(map[string]interface{})
-		graphicscards["moid"] = item.Moid
-		graphicscards["object_type"] = item.ObjectType
-		graphicscards["selector"] = item.Selector
-		graphicscardss = append(graphicscardss, graphicscards)
-	}
-	return graphicscardss
-}
-func flattenListMemoryArrayRef(p []*models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
-	var memoryarrayss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		memoryarrays := make(map[string]interface{})
-		memoryarrays["moid"] = item.Moid
-		memoryarrays["object_type"] = item.ObjectType
-		memoryarrays["selector"] = item.Selector
-		memoryarrayss = append(memoryarrayss, memoryarrays)
-	}
-	return memoryarrayss
-}
-func flattenListPciCoprocessorCardRef(p []*models.PciCoprocessorCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var pcicoprocessorcardss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		pcicoprocessorcards := make(map[string]interface{})
-		pcicoprocessorcards["moid"] = item.Moid
-		pcicoprocessorcards["object_type"] = item.ObjectType
-		pcicoprocessorcards["selector"] = item.Selector
-		pcicoprocessorcardss = append(pcicoprocessorcardss, pcicoprocessorcards)
-	}
-	return pcicoprocessorcardss
-}
-func flattenListPciSwitchRef(p []*models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
-	var pciswitchs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		pciswitch := make(map[string]interface{})
-		pciswitch["moid"] = item.Moid
-		pciswitch["object_type"] = item.ObjectType
-		pciswitch["selector"] = item.Selector
-		pciswitchs = append(pciswitchs, pciswitch)
-	}
-	return pciswitchs
-}
-func flattenListProcessorUnitRef(p []*models.ProcessorUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var processorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		processors := make(map[string]interface{})
-		processors["moid"] = item.Moid
-		processors["object_type"] = item.ObjectType
-		processors["selector"] = item.Selector
-		processorss = append(processorss, processors)
-	}
-	return processorss
-}
-func flattenListSecurityUnitRef(p []*models.SecurityUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var securityunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		securityunits := make(map[string]interface{})
-		securityunits["moid"] = item.Moid
-		securityunits["object_type"] = item.ObjectType
-		securityunits["selector"] = item.Selector
-		securityunitss = append(securityunitss, securityunits)
-	}
-	return securityunitss
-}
-func flattenListStorageControllerRef(p []*models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var storagecontrollerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		storagecontrollers := make(map[string]interface{})
-		storagecontrollers["moid"] = item.Moid
-		storagecontrollers["object_type"] = item.ObjectType
-		storagecontrollers["selector"] = item.Selector
-		storagecontrollerss = append(storagecontrollerss, storagecontrollers)
-	}
-	return storagecontrollerss
-}
-func flattenListStorageFlexFlashControllerRef(p []*models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var storageflexflashcontrollerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		storageflexflashcontrollers := make(map[string]interface{})
-		storageflexflashcontrollers["moid"] = item.Moid
-		storageflexflashcontrollers["object_type"] = item.ObjectType
-		storageflexflashcontrollers["selector"] = item.Selector
-		storageflexflashcontrollerss = append(storageflexflashcontrollerss, storageflexflashcontrollers)
-	}
-	return storageflexflashcontrollerss
-}
-func flattenListStorageFlexUtilControllerRef(p []*models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var storageflexutilcontrollerss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		storageflexutilcontrollers := make(map[string]interface{})
-		storageflexutilcontrollers["moid"] = item.Moid
-		storageflexutilcontrollers["object_type"] = item.ObjectType
-		storageflexutilcontrollers["selector"] = item.Selector
-		storageflexutilcontrollerss = append(storageflexutilcontrollerss, storageflexutilcontrollers)
-	}
-	return storageflexutilcontrollerss
-}
-func flattenListForecastDefinitionRef(p []*models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-	var definitions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		definition := make(map[string]interface{})
-		definition["moid"] = item.Moid
-		definition["object_type"] = item.ObjectType
-		definition["selector"] = item.Selector
-		definitions = append(definitions, definition)
-	}
-	return definitions
-}
-func flattenMapPortSubGroupRef(p *models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamIdpReferenceRef(p *models.IamIdpReferenceRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var portsubgroups []map[string]interface{}
+	var idpreferences []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	portsubgroup := make(map[string]interface{})
-	portsubgroup["moid"] = item.Moid
-	portsubgroup["object_type"] = item.ObjectType
-	portsubgroup["selector"] = item.Selector
+	idpreference := make(map[string]interface{})
+	idpreference["moid"] = item.Moid
+	idpreference["object_type"] = item.ObjectType
+	idpreference["selector"] = item.Selector
 
-	portsubgroups = append(portsubgroups, portsubgroup)
-	return portsubgroups
+	idpreferences = append(idpreferences, idpreference)
+	return idpreferences
 }
-func flattenListStorageFlexUtilPhysicalDriveRef(p []*models.StorageFlexUtilPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var flexutilphysicaldrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		flexutilphysicaldrives := make(map[string]interface{})
-		flexutilphysicaldrives["moid"] = item.Moid
-		flexutilphysicaldrives["object_type"] = item.ObjectType
-		flexutilphysicaldrives["selector"] = item.Selector
-		flexutilphysicaldrivess = append(flexutilphysicaldrivess, flexutilphysicaldrives)
-	}
-	return flexutilphysicaldrivess
-}
-func flattenListStorageFlexUtilVirtualDriveRef(p []*models.StorageFlexUtilVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var flexutilvirtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		flexutilvirtualdrives := make(map[string]interface{})
-		flexutilvirtualdrives["moid"] = item.Moid
-		flexutilvirtualdrives["object_type"] = item.ObjectType
-		flexutilvirtualdrives["selector"] = item.Selector
-		flexutilvirtualdrivess = append(flexutilvirtualdrivess, flexutilvirtualdrives)
-	}
-	return flexutilvirtualdrivess
-}
-func flattenMapResourceGroupRef(p *models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
 
-	var groups []map[string]interface{}
+	var basepropertiess []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	group := make(map[string]interface{})
-	group["moid"] = item.Moid
-	group["object_type"] = item.ObjectType
-	group["selector"] = item.Selector
+	baseproperties := make(map[string]interface{})
+	delete(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1, "ObjectType")
+	if len(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1)
+		if err == nil {
+			baseproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	baseproperties["attribute"] = item.Attribute
+	baseproperties["base_dn"] = item.BaseDn
+	baseproperties["bind_dn"] = item.BindDn
+	baseproperties["bind_method"] = item.BindMethod
+	baseproperties["domain"] = item.Domain
+	baseproperties["enable_encryption"] = item.EnableEncryption
+	baseproperties["enable_group_authorization"] = item.EnableGroupAuthorization
+	baseproperties["filter"] = item.Filter
+	baseproperties["group_attribute"] = item.GroupAttribute
+	baseproperties["is_password_set"] = item.IsPasswordSet
+	baseproperties["nested_group_search_depth"] = item.NestedGroupSearchDepth
+	baseproperties["object_type"] = item.ObjectType
+	password_x := d.Get("base_properties").([]interface{})
+	password_y := password_x[0].(map[string]interface{})
+	baseproperties["password"] = password_y["password"]
+	baseproperties["timeout"] = item.Timeout
 
-	groups = append(groups, group)
-	return groups
+	basepropertiess = append(basepropertiess, baseproperties)
+	return basepropertiess
+}
+func flattenMapIamLdapDNSParameters(p *models.IamLdapDNSParameters, d *schema.ResourceData) []map[string]interface{} {
+
+	var dnsparameterss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	dnsparameters := make(map[string]interface{})
+	delete(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1, "ObjectType")
+	if len(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1) != 0 {
+		j, err := json.Marshal(item.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1)
+		if err == nil {
+			dnsparameters["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	dnsparameters["object_type"] = item.ObjectType
+	dnsparameters["search_domain"] = item.SearchDomain
+	dnsparameters["search_forest"] = item.SearchForest
+	dnsparameters["source"] = item.Source
+
+	dnsparameterss = append(dnsparameterss, dnsparameters)
+	return dnsparameterss
+}
+func flattenMapIamLdapPolicyRef(p *models.IamLdapPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ldappolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ldappolicy := make(map[string]interface{})
+	ldappolicy["moid"] = item.Moid
+	ldappolicy["object_type"] = item.ObjectType
+	ldappolicy["selector"] = item.Selector
+
+	ldappolicys = append(ldappolicys, ldappolicy)
+	return ldappolicys
+}
+func flattenMapIamLocalUserPasswordRef(p *models.IamLocalUserPasswordRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var localuserpasswords []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	localuserpassword := make(map[string]interface{})
+	localuserpassword["moid"] = item.Moid
+	localuserpassword["object_type"] = item.ObjectType
+	localuserpassword["selector"] = item.Selector
+
+	localuserpasswords = append(localuserpasswords, localuserpassword)
+	return localuserpasswords
+}
+func flattenMapIamPermissionRef(p *models.IamPermissionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var permissions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	permission := make(map[string]interface{})
+	permission["moid"] = item.Moid
+	permission["object_type"] = item.ObjectType
+	permission["selector"] = item.Selector
+
+	permissions = append(permissions, permission)
+	return permissions
+}
+func flattenMapIamPrivateKeySpecRef(p *models.IamPrivateKeySpecRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var privatekeyspecs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	privatekeyspec := make(map[string]interface{})
+	privatekeyspec["moid"] = item.Moid
+	privatekeyspec["object_type"] = item.ObjectType
+	privatekeyspec["selector"] = item.Selector
+
+	privatekeyspecs = append(privatekeyspecs, privatekeyspec)
+	return privatekeyspecs
+}
+func flattenMapIamQualifierRef(p *models.IamQualifierRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var qualifiers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	qualifier := make(map[string]interface{})
+	qualifier["moid"] = item.Moid
+	qualifier["object_type"] = item.ObjectType
+	qualifier["selector"] = item.Selector
+
+	qualifiers = append(qualifiers, qualifier)
+	return qualifiers
+}
+func flattenMapIamResourceLimitsRef(p *models.IamResourceLimitsRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var resourcelimitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	resourcelimits := make(map[string]interface{})
+	resourcelimits["moid"] = item.Moid
+	resourcelimits["object_type"] = item.ObjectType
+	resourcelimits["selector"] = item.Selector
+
+	resourcelimitss = append(resourcelimitss, resourcelimits)
+	return resourcelimitss
+}
+func flattenMapIamSecurityHolderRef(p *models.IamSecurityHolderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var securityholders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	securityholder := make(map[string]interface{})
+	securityholder["moid"] = item.Moid
+	securityholder["object_type"] = item.ObjectType
+	securityholder["selector"] = item.Selector
+
+	securityholders = append(securityholders, securityholder)
+	return securityholders
+}
+func flattenMapIamServiceProviderRef(p *models.IamServiceProviderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var serviceproviders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	serviceprovider := make(map[string]interface{})
+	serviceprovider["moid"] = item.Moid
+	serviceprovider["object_type"] = item.ObjectType
+	serviceprovider["selector"] = item.Selector
+
+	serviceproviders = append(serviceproviders, serviceprovider)
+	return serviceproviders
+}
+func flattenMapIamSessionLimitsRef(p *models.IamSessionLimitsRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var sessionlimitss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sessionlimits := make(map[string]interface{})
+	sessionlimits["moid"] = item.Moid
+	sessionlimits["object_type"] = item.ObjectType
+	sessionlimits["selector"] = item.Selector
+
+	sessionlimitss = append(sessionlimitss, sessionlimits)
+	return sessionlimitss
+}
+func flattenMapIamSessionRef(p *models.IamSessionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var sessionss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sessions := make(map[string]interface{})
+	sessions["moid"] = item.Moid
+	sessions["object_type"] = item.ObjectType
+	sessions["selector"] = item.Selector
+
+	sessionss = append(sessionss, sessions)
+	return sessionss
+}
+func flattenMapIamSystemRef(p *models.IamSystemRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var systems []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	system := make(map[string]interface{})
+	system["moid"] = item.Moid
+	system["object_type"] = item.ObjectType
+	system["selector"] = item.Selector
+
+	systems = append(systems, system)
+	return systems
+}
+func flattenMapIamUserGroupRef(p *models.IamUserGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var usergroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	usergroup := make(map[string]interface{})
+	usergroup["moid"] = item.Moid
+	usergroup["object_type"] = item.ObjectType
+	usergroup["selector"] = item.Selector
+
+	usergroups = append(usergroups, usergroup)
+	return usergroups
+}
+func flattenMapIamUserRef(p *models.IamUserRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var users []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	user := make(map[string]interface{})
+	user["moid"] = item.Moid
+	user["object_type"] = item.ObjectType
+	user["selector"] = item.Selector
+
+	users = append(users, user)
+	return users
+}
+func flattenMapInventoryBaseRef(p *models.InventoryBaseRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var components []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	component := make(map[string]interface{})
+	component["moid"] = item.Moid
+	component["object_type"] = item.ObjectType
+	component["selector"] = item.Selector
+
+	components = append(components, component)
+	return components
+}
+func flattenMapInventoryGenericInventoryHolderRef(p *models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var inventorygenericinventoryholders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	inventorygenericinventoryholder := make(map[string]interface{})
+	inventorygenericinventoryholder["moid"] = item.Moid
+	inventorygenericinventoryholder["object_type"] = item.ObjectType
+	inventorygenericinventoryholder["selector"] = item.Selector
+
+	inventorygenericinventoryholders = append(inventorygenericinventoryholders, inventorygenericinventoryholder)
+	return inventorygenericinventoryholders
+}
+func flattenMapLicenseAccountLicenseDataRef(p *models.LicenseAccountLicenseDataRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var accountlicensedatas []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	accountlicensedata := make(map[string]interface{})
+	accountlicensedata["moid"] = item.Moid
+	accountlicensedata["object_type"] = item.ObjectType
+	accountlicensedata["selector"] = item.Selector
+
+	accountlicensedatas = append(accountlicensedatas, accountlicensedata)
+	return accountlicensedatas
 }
 func flattenMapLicenseCustomerOpRef(p *models.LicenseCustomerOpRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -6386,21 +6014,6 @@ func flattenMapLicenseCustomerOpRef(p *models.LicenseCustomerOpRef, d *schema.Re
 	customerops = append(customerops, customerop)
 	return customerops
 }
-func flattenListLicenseLicenseInfoRef(p []*models.LicenseLicenseInfoRef, d *schema.ResourceData) []map[string]interface{} {
-	var licenseinfoss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		licenseinfos := make(map[string]interface{})
-		licenseinfos["moid"] = item.Moid
-		licenseinfos["object_type"] = item.ObjectType
-		licenseinfos["selector"] = item.Selector
-		licenseinfoss = append(licenseinfoss, licenseinfos)
-	}
-	return licenseinfoss
-}
 func flattenMapLicenseSmartlicenseTokenRef(p *models.LicenseSmartlicenseTokenRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var smartlicensetokens []map[string]interface{}
@@ -6416,649 +6029,155 @@ func flattenMapLicenseSmartlicenseTokenRef(p *models.LicenseSmartlicenseTokenRef
 	smartlicensetokens = append(smartlicensetokens, smartlicensetoken)
 	return smartlicensetokens
 }
-func flattenListStorageEnclosureDiskSlotEpRef(p []*models.StorageEnclosureDiskSlotEpRef, d *schema.ResourceData) []map[string]interface{} {
-	var enclosurediskslotss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		enclosurediskslots := make(map[string]interface{})
-		enclosurediskslots["moid"] = item.Moid
-		enclosurediskslots["object_type"] = item.ObjectType
-		enclosurediskslots["selector"] = item.Selector
-		enclosurediskslotss = append(enclosurediskslotss, enclosurediskslots)
-	}
-	return enclosurediskslotss
-}
-func flattenListStorageEnclosureDiskRef(p []*models.StorageEnclosureDiskRef, d *schema.ResourceData) []map[string]interface{} {
-	var enclosurediskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		enclosuredisks := make(map[string]interface{})
-		enclosuredisks["moid"] = item.Moid
-		enclosuredisks["object_type"] = item.ObjectType
-		enclosuredisks["selector"] = item.Selector
-		enclosurediskss = append(enclosurediskss, enclosuredisks)
-	}
-	return enclosurediskss
-}
-func flattenListStoragePhysicalDiskRef(p []*models.StoragePhysicalDiskRef, d *schema.ResourceData) []map[string]interface{} {
-	var physicaldiskss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		physicaldisks := make(map[string]interface{})
-		physicaldisks["moid"] = item.Moid
-		physicaldisks["object_type"] = item.ObjectType
-		physicaldisks["selector"] = item.Selector
-		physicaldiskss = append(physicaldiskss, physicaldisks)
-	}
-	return physicaldiskss
-}
-func flattenMapGraphicsCardRef(p *models.GraphicsCardRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapManagementControllerRef(p *models.ManagementControllerRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var graphicscards []map[string]interface{}
+	var managementcontrollers []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	graphicscard := make(map[string]interface{})
-	graphicscard["moid"] = item.Moid
-	graphicscard["object_type"] = item.ObjectType
-	graphicscard["selector"] = item.Selector
+	managementcontroller := make(map[string]interface{})
+	managementcontroller["moid"] = item.Moid
+	managementcontroller["object_type"] = item.ObjectType
+	managementcontroller["selector"] = item.Selector
 
-	graphicscards = append(graphicscards, graphicscard)
-	return graphicscards
+	managementcontrollers = append(managementcontrollers, managementcontroller)
+	return managementcontrollers
 }
-func flattenListWorkflowTaskRetryInfo(p []*models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
-	var taskinstidlists []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		taskinstidlist := make(map[string]interface{})
-		taskinstidlist["object_type"] = item.ObjectType
-		taskinstidlist["status"] = item.Status
-		taskinstidlist["task_inst_id"] = item.TaskInstID
-		taskinstidlists = append(taskinstidlists, taskinstidlist)
-	}
-	return taskinstidlists
-}
-func flattenListStoragePhysicalDiskExtensionRef(p []*models.StoragePhysicalDiskExtensionRef, d *schema.ResourceData) []map[string]interface{} {
-	var physicaldiskextensionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		physicaldiskextensions := make(map[string]interface{})
-		physicaldiskextensions["moid"] = item.Moid
-		physicaldiskextensions["object_type"] = item.ObjectType
-		physicaldiskextensions["selector"] = item.Selector
-		physicaldiskextensionss = append(physicaldiskextensionss, physicaldiskextensions)
-	}
-	return physicaldiskextensionss
-}
-func flattenListStorageSasPortRef(p []*models.StorageSasPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var sasportss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		sasports := make(map[string]interface{})
-		sasports["moid"] = item.Moid
-		sasports["object_type"] = item.ObjectType
-		sasports["selector"] = item.Selector
-		sasportss = append(sasportss, sasports)
-	}
-	return sasportss
-}
-func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
-	var connectorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		connectors := make(map[string]interface{})
-		connectors["connector_feature"] = item.ConnectorFeature
-		connectors["dependency_names"] = item.DependencyNames
-		connectors["downloaded_version"] = item.DownloadedVersion
-		connectors["name"] = item.Name
-		connectors["object_type"] = item.ObjectType
-		connectors["services"] = item.Services
-		connectors["state"] = item.State
-		connectors["version"] = item.Version
-		connectorss = append(connectorss, connectors)
-	}
-	return connectorss
-}
-func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapManagementEntityRef(p *models.ManagementEntityRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var contracts []map[string]interface{}
+	var managemententitys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	contract := make(map[string]interface{})
-	contract["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+	managemententity := make(map[string]interface{})
+	managemententity["moid"] = item.Moid
+	managemententity["object_type"] = item.ObjectType
+	managemententity["selector"] = item.Selector
 
-		var billtos []map[string]interface{}
-		if p == nil {
-			return nil
+	managemententitys = append(managemententitys, managemententity)
+	return managemententitys
+}
+func flattenMapMemoryArrayRef(p *models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var memoryarrays []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	memoryarray := make(map[string]interface{})
+	memoryarray["moid"] = item.Moid
+	memoryarray["object_type"] = item.ObjectType
+	memoryarray["selector"] = item.Selector
+
+	memoryarrays = append(memoryarrays, memoryarray)
+	return memoryarrays
+}
+func flattenMapMemoryPersistentMemoryConfigResultRef(p *models.MemoryPersistentMemoryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var persistentmemoryconfigresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	persistentmemoryconfigresult := make(map[string]interface{})
+	persistentmemoryconfigresult["moid"] = item.Moid
+	persistentmemoryconfigresult["object_type"] = item.ObjectType
+	persistentmemoryconfigresult["selector"] = item.Selector
+
+	persistentmemoryconfigresults = append(persistentmemoryconfigresults, persistentmemoryconfigresult)
+	return persistentmemoryconfigresults
+}
+func flattenMapMemoryPersistentMemoryConfigurationRef(p *models.MemoryPersistentMemoryConfigurationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var persistentmemoryconfigurations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	persistentmemoryconfiguration := make(map[string]interface{})
+	persistentmemoryconfiguration["moid"] = item.Moid
+	persistentmemoryconfiguration["object_type"] = item.ObjectType
+	persistentmemoryconfiguration["selector"] = item.Selector
+
+	persistentmemoryconfigurations = append(persistentmemoryconfigurations, persistentmemoryconfiguration)
+	return persistentmemoryconfigurations
+}
+func flattenMapMemoryPersistentMemoryRegionRef(p *models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var memorypersistentmemoryregions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	memorypersistentmemoryregion := make(map[string]interface{})
+	memorypersistentmemoryregion["moid"] = item.Moid
+	memorypersistentmemoryregion["object_type"] = item.ObjectType
+	memorypersistentmemoryregion["selector"] = item.Selector
+
+	memorypersistentmemoryregions = append(memorypersistentmemoryregions, memorypersistentmemoryregion)
+	return memorypersistentmemoryregions
+}
+func flattenMapMoBaseMoRef(p *models.MoBaseMoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var resources []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	resource := make(map[string]interface{})
+	resource["moid"] = item.Moid
+	resource["object_type"] = item.ObjectType
+	resource["selector"] = item.Selector
+
+	resources = append(resources, resource)
+	return resources
+}
+func flattenMapNetworkElementRef(p *models.NetworkElementRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var networkelements []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	networkelement := make(map[string]interface{})
+	networkelement["moid"] = item.Moid
+	networkelement["object_type"] = item.ObjectType
+	networkelement["selector"] = item.Selector
+
+	networkelements = append(networkelements, networkelement)
+	return networkelements
+}
+func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
+
+	var postdetails []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	postdetail := make(map[string]interface{})
+	delete(item.NiaapiNewReleaseDetailAO1P1.NiaapiNewReleaseDetailAO1P1, "ObjectType")
+	if len(item.NiaapiNewReleaseDetailAO1P1.NiaapiNewReleaseDetailAO1P1) != 0 {
+		j, err := json.Marshal(item.NiaapiNewReleaseDetailAO1P1.NiaapiNewReleaseDetailAO1P1)
+		if err == nil {
+			postdetail["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
-		item := *p
-		billto := make(map[string]interface{})
-		billto["address1"] = item.Address1
-		billto["address2"] = item.Address2
-		billto["city"] = item.City
-		billto["country"] = item.Country
-		billto["location"] = item.Location
-		billto["name"] = item.Name
-		billto["object_type"] = item.ObjectType
-		billto["postal_code"] = item.PostalCode
-		billto["state"] = item.State
-
-		billtos = append(billtos, billto)
-		return billtos
-	})(item.BillTo, d)
-	contract["bill_to_global_ultimate"] = (func(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
-
-		var billtoglobalultimates []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		billtoglobalultimate := make(map[string]interface{})
-		billtoglobalultimate["id"] = item.ID
-		billtoglobalultimate["name"] = item.Name
-		billtoglobalultimate["object_type"] = item.ObjectType
-
-		billtoglobalultimates = append(billtoglobalultimates, billtoglobalultimate)
-		return billtoglobalultimates
-	})(item.BillToGlobalUltimate, d)
-	contract["contract_number"] = item.ContractNumber
-	contract["line_status"] = item.LineStatus
-	contract["object_type"] = item.ObjectType
-
-	contracts = append(contracts, contract)
-	return contracts
-}
-func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *schema.ResourceData) []map[string]interface{} {
-
-	var endcustomers []map[string]interface{}
-	if p == nil {
-		return nil
 	}
-	item := *p
-	endcustomer := make(map[string]interface{})
-	endcustomer["address"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+	postdetail["description"] = item.Description
+	postdetail["link"] = item.Link
+	postdetail["object_type"] = item.ObjectType
+	postdetail["release_note_link"] = item.ReleaseNoteLink
+	postdetail["release_note_link_title"] = item.ReleaseNoteLinkTitle
+	postdetail["software_download_link"] = item.SoftwareDownloadLink
+	postdetail["software_download_link_title"] = item.SoftwareDownloadLinkTitle
+	postdetail["title"] = item.Title
+	postdetail["version"] = item.Version
 
-		var addresss []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		address := make(map[string]interface{})
-		address["address1"] = item.Address1
-		address["address2"] = item.Address2
-		address["city"] = item.City
-		address["country"] = item.Country
-		address["location"] = item.Location
-		address["name"] = item.Name
-		address["object_type"] = item.ObjectType
-		address["postal_code"] = item.PostalCode
-		address["state"] = item.State
-
-		addresss = append(addresss, address)
-		return addresss
-	})(item.Address, d)
-	endcustomer["id"] = item.ID
-	endcustomer["name"] = item.Name
-	endcustomer["object_type"] = item.ObjectType
-
-	endcustomers = append(endcustomers, endcustomer)
-	return endcustomers
-}
-func flattenMapAssetGlobalUltimate(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
-
-	var enduserglobalultimates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	enduserglobalultimate := make(map[string]interface{})
-	enduserglobalultimate["id"] = item.ID
-	enduserglobalultimate["name"] = item.Name
-	enduserglobalultimate["object_type"] = item.ObjectType
-
-	enduserglobalultimates = append(enduserglobalultimates, enduserglobalultimate)
-	return enduserglobalultimates
-}
-func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *schema.ResourceData) []map[string]interface{} {
-
-	var products []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	product := make(map[string]interface{})
-	product["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
-
-		var billtos []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		billto := make(map[string]interface{})
-		billto["address1"] = item.Address1
-		billto["address2"] = item.Address2
-		billto["city"] = item.City
-		billto["country"] = item.Country
-		billto["location"] = item.Location
-		billto["name"] = item.Name
-		billto["object_type"] = item.ObjectType
-		billto["postal_code"] = item.PostalCode
-		billto["state"] = item.State
-
-		billtos = append(billtos, billto)
-		return billtos
-	})(item.BillTo, d)
-	product["description"] = item.Description
-	product["family"] = item.Family
-	product["group"] = item.Group
-	product["number"] = item.Number
-	product["object_type"] = item.ObjectType
-	product["ship_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
-
-		var shiptos []map[string]interface{}
-		if p == nil {
-			return nil
-		}
-		item := *p
-		shipto := make(map[string]interface{})
-		shipto["address1"] = item.Address1
-		shipto["address2"] = item.Address2
-		shipto["city"] = item.City
-		shipto["country"] = item.Country
-		shipto["location"] = item.Location
-		shipto["name"] = item.Name
-		shipto["object_type"] = item.ObjectType
-		shipto["postal_code"] = item.PostalCode
-		shipto["state"] = item.State
-
-		shiptos = append(shiptos, shipto)
-		return shiptos
-	})(item.ShipTo, d)
-	product["sub_type"] = item.SubType
-
-	products = append(products, product)
-	return products
-}
-func flattenMapCommIPV4Interface(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
-
-	var nodeipv4configs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	nodeipv4config := make(map[string]interface{})
-	nodeipv4config["gateway"] = item.Gateway
-	nodeipv4config["ip_address"] = item.IPAddress
-	nodeipv4config["netmask"] = item.Netmask
-	nodeipv4config["object_type"] = item.ObjectType
-
-	nodeipv4configs = append(nodeipv4configs, nodeipv4config)
-	return nodeipv4configs
-}
-func flattenMapStorageFlexUtilControllerRef(p *models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var storageflexutilcontrollers []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storageflexutilcontroller := make(map[string]interface{})
-	storageflexutilcontroller["moid"] = item.Moid
-	storageflexutilcontroller["object_type"] = item.ObjectType
-	storageflexutilcontroller["selector"] = item.Selector
-
-	storageflexutilcontrollers = append(storageflexutilcontrollers, storageflexutilcontroller)
-	return storageflexutilcontrollers
-}
-func flattenListPortGroupRef(p []*models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var portgroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		portgroups := make(map[string]interface{})
-		portgroups["moid"] = item.Moid
-		portgroups["object_type"] = item.ObjectType
-		portgroups["selector"] = item.Selector
-		portgroupss = append(portgroupss, portgroups)
-	}
-	return portgroupss
-}
-func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
-	var completedphasess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		completedphases := make(map[string]interface{})
-		completedphases["name"] = item.Name
-		completedphases["object_type"] = item.ObjectType
-		completedphasess = append(completedphasess, completedphases)
-	}
-	return completedphasess
-}
-func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
-
-	var currentphases []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	currentphase := make(map[string]interface{})
-	currentphase["name"] = item.Name
-	currentphase["object_type"] = item.ObjectType
-
-	currentphases = append(currentphases, currentphase)
-	return currentphases
-}
-func flattenMapApplianceImageBundleRef(p *models.ApplianceImageBundleRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var imagebundles []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	imagebundle := make(map[string]interface{})
-	imagebundle["moid"] = item.Moid
-	imagebundle["object_type"] = item.ObjectType
-	imagebundle["selector"] = item.Selector
-
-	imagebundles = append(imagebundles, imagebundle)
-	return imagebundles
-}
-func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
-
-	var disks []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	disk := make(map[string]interface{})
-	disk["free"] = item.Free
-	disk["name"] = item.Name
-	disk["object_type"] = item.ObjectType
-	disk["total"] = item.Total
-	disk["used"] = item.Used
-
-	disks = append(disks, disk)
-	return disks
-}
-func flattenMapNiatelemetryNiaLicenseStateRef(p *models.NiatelemetryNiaLicenseStateRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var licensestates []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	licensestate := make(map[string]interface{})
-	licensestate["moid"] = item.Moid
-	licensestate["object_type"] = item.ObjectType
-	licensestate["selector"] = item.Selector
-
-	licensestates = append(licensestates, licensestate)
-	return licensestates
-}
-func flattenListOsConfigurationFileRef(p []*models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
-	var configurationfiless []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		configurationfiles := make(map[string]interface{})
-		configurationfiles["moid"] = item.Moid
-		configurationfiles["object_type"] = item.ObjectType
-		configurationfiles["selector"] = item.Selector
-		configurationfiless = append(configurationfiless, configurationfiles)
-	}
-	return configurationfiless
-}
-func flattenListMetaAccessPrivilege(p []*models.MetaAccessPrivilege, d *schema.ResourceData) []map[string]interface{} {
-	var accessprivilegess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		accessprivileges := make(map[string]interface{})
-		accessprivileges["method"] = item.Method
-		accessprivileges["object_type"] = item.ObjectType
-		accessprivileges["privilege"] = item.Privilege
-		accessprivilegess = append(accessprivilegess, accessprivileges)
-	}
-	return accessprivilegess
-}
-func flattenListMetaPropDefinition(p []*models.MetaPropDefinition, d *schema.ResourceData) []map[string]interface{} {
-	var propertiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		properties := make(map[string]interface{})
-		properties["api_access"] = item.APIAccess
-		properties["name"] = item.Name
-		properties["object_type"] = item.ObjectType
-		properties["op_security"] = item.OpSecurity
-		properties["search_weight"] = item.SearchWeight
-		propertiess = append(propertiess, properties)
-	}
-	return propertiess
-}
-func flattenListMetaRelationshipDefinition(p []*models.MetaRelationshipDefinition, d *schema.ResourceData) []map[string]interface{} {
-	var relationshipss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		relationships := make(map[string]interface{})
-		relationships["api_access"] = item.APIAccess
-		relationships["collection"] = item.Collection
-		relationships["name"] = item.Name
-		relationships["object_type"] = item.ObjectType
-		relationships["type"] = item.Type
-		relationshipss = append(relationshipss, relationships)
-	}
-	return relationshipss
-}
-func flattenMapStorageVirtualDriveRef(p *models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var storagevirtualdrives []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storagevirtualdrive := make(map[string]interface{})
-	storagevirtualdrive["moid"] = item.Moid
-	storagevirtualdrive["object_type"] = item.ObjectType
-	storagevirtualdrive["selector"] = item.Selector
-
-	storagevirtualdrives = append(storagevirtualdrives, storagevirtualdrive)
-	return storagevirtualdrives
-}
-func flattenListStorageReplicationBlackout(p []*models.StorageReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
-	var replicationblackoutintervalss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		replicationblackoutintervals := make(map[string]interface{})
-		replicationblackoutintervals["object_type"] = item.ObjectType
-		replicationblackoutintervalss = append(replicationblackoutintervalss, replicationblackoutintervals)
-	}
-	return replicationblackoutintervalss
-}
-func flattenListEquipmentFanRef(p []*models.EquipmentFanRef, d *schema.ResourceData) []map[string]interface{} {
-	var fanss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		fans := make(map[string]interface{})
-		fans["moid"] = item.Moid
-		fans["object_type"] = item.ObjectType
-		fans["selector"] = item.Selector
-		fanss = append(fanss, fans)
-	}
-	return fanss
-}
-func flattenMapStorageHostRef(p *models.StorageHostRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var hosts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	host := make(map[string]interface{})
-	host["moid"] = item.Moid
-	host["object_type"] = item.ObjectType
-	host["selector"] = item.Selector
-
-	hosts = append(hosts, host)
-	return hosts
-}
-func flattenMapCondHclStatusRef(p *models.CondHclStatusRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var hclstatuss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	hclstatus := make(map[string]interface{})
-	hclstatus["moid"] = item.Moid
-	hclstatus["object_type"] = item.ObjectType
-	hclstatus["selector"] = item.Selector
-
-	hclstatuss = append(hclstatuss, hclstatus)
-	return hclstatuss
-}
-func flattenMapStoragePureHostRef(p *models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var hostgroups []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	hostgroup := make(map[string]interface{})
-	hostgroup["moid"] = item.Moid
-	hostgroup["object_type"] = item.ObjectType
-	hostgroup["selector"] = item.Selector
-
-	hostgroups = append(hostgroups, hostgroup)
-	return hostgroups
-}
-func flattenListStorageInitiator(p []*models.StorageInitiator, d *schema.ResourceData) []map[string]interface{} {
-	var initiatorss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		initiators := make(map[string]interface{})
-		initiators["iqn"] = item.Iqn
-		initiators["name"] = item.Name
-		initiators["object_type"] = item.ObjectType
-		initiators["type"] = item.Type
-		initiators["wwn"] = item.Wwn
-		initiatorss = append(initiatorss, initiators)
-	}
-	return initiatorss
-}
-func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schema.ResourceData) []map[string]interface{} {
-
-	var storageutilizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storageutilization := make(map[string]interface{})
-	storageutilization["available"] = item.Available
-	storageutilization["data_reduction"] = item.DataReduction
-	storageutilization["free"] = item.Free
-	storageutilization["object_type"] = item.ObjectType
-	storageutilization["snapshot"] = item.Snapshot
-	storageutilization["thin_provisioned"] = item.ThinProvisioned
-	storageutilization["total"] = item.Total
-	storageutilization["total_reduction"] = item.TotalReduction
-	storageutilization["used"] = item.Used
-	storageutilization["volume"] = item.Volume
-
-	storageutilizations = append(storageutilizations, storageutilization)
-	return storageutilizations
-}
-func flattenListEtherPhysicalPortRef(p []*models.EtherPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var ethernetportss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		ethernetports := make(map[string]interface{})
-		ethernetports["moid"] = item.Moid
-		ethernetports["object_type"] = item.ObjectType
-		ethernetports["selector"] = item.Selector
-		ethernetportss = append(ethernetportss, ethernetports)
-	}
-	return ethernetportss
-}
-func flattenListEquipmentIoExpanderRef(p []*models.EquipmentIoExpanderRef, d *schema.ResourceData) []map[string]interface{} {
-	var equipmentioexpanderss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		equipmentioexpanders := make(map[string]interface{})
-		equipmentioexpanders["moid"] = item.Moid
-		equipmentioexpanders["object_type"] = item.ObjectType
-		equipmentioexpanders["selector"] = item.Selector
-		equipmentioexpanderss = append(equipmentioexpanderss, equipmentioexpanders)
-	}
-	return equipmentioexpanderss
-}
-func flattenListApplianceKeyValuePair(p []*models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
-	var capabilitiess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		capabilities := make(map[string]interface{})
-		capabilities["key"] = item.Key
-		capabilities["object_type"] = item.ObjectType
-		capabilities["value"] = item.Value
-		capabilitiess = append(capabilitiess, capabilities)
-	}
-	return capabilitiess
+	postdetails = append(postdetails, postdetail)
+	return postdetails
 }
 func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7068,6 +6187,15 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 	}
 	item := *p
 	apic := make(map[string]interface{})
+	delete(item.NiaapiVersionRegexPlatformAO1P1.NiaapiVersionRegexPlatformAO1P1, "ObjectType")
+	if len(item.NiaapiVersionRegexPlatformAO1P1.NiaapiVersionRegexPlatformAO1P1) != 0 {
+		j, err := json.Marshal(item.NiaapiVersionRegexPlatformAO1P1.NiaapiVersionRegexPlatformAO1P1)
+		if err == nil {
+			apic["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
 	apic["anyllregex"] = item.Anyllregex
 	apic["currentlltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7134,340 +6262,31 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 	apics = append(apics, apic)
 	return apics
 }
-func flattenListIaasLicenseKeysInfo(p []*models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
-	var licensekeysinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		licensekeysinfo := make(map[string]interface{})
-		licensekeysinfo["count"] = item.Count
-		licensekeysinfo["expiration_date"] = item.ExpirationDate
-		licensekeysinfo["license_id"] = item.LicenseID
-		licensekeysinfo["object_type"] = item.ObjectType
-		licensekeysinfo["pid"] = item.Pid
-		licensekeysinfos = append(licensekeysinfos, licensekeysinfo)
-	}
-	return licensekeysinfos
-}
-func flattenListIaasLicenseUtilizationInfo(p []*models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
-	var licenseutilizationinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		licenseutilizationinfo := make(map[string]interface{})
-		licenseutilizationinfo["actual_used"] = item.ActualUsed
-		licenseutilizationinfo["label"] = item.Label
-		licenseutilizationinfo["licensed_limit"] = item.LicensedLimit
-		licenseutilizationinfo["object_type"] = item.ObjectType
-		licenseutilizationinfo["sku"] = item.Sku
-		licenseutilizationinfos = append(licenseutilizationinfos, licenseutilizationinfo)
-	}
-	return licenseutilizationinfos
-}
-func flattenListResourceMembershipRef(p []*models.ResourceMembershipRef, d *schema.ResourceData) []map[string]interface{} {
-	var membershipss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		memberships := make(map[string]interface{})
-		memberships["moid"] = item.Moid
-		memberships["object_type"] = item.ObjectType
-		memberships["selector"] = item.Selector
-		membershipss = append(membershipss, memberships)
-	}
-	return membershipss
-}
-func flattenListMemoryPersistentMemoryNamespaceConfigResultRef(p []*models.MemoryPersistentMemoryNamespaceConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-	var persistentmemorynamespaceconfigresultss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		persistentmemorynamespaceconfigresults := make(map[string]interface{})
-		persistentmemorynamespaceconfigresults["moid"] = item.Moid
-		persistentmemorynamespaceconfigresults["object_type"] = item.ObjectType
-		persistentmemorynamespaceconfigresults["selector"] = item.Selector
-		persistentmemorynamespaceconfigresultss = append(persistentmemorynamespaceconfigresultss, persistentmemorynamespaceconfigresults)
-	}
-	return persistentmemorynamespaceconfigresultss
-}
-func flattenListEquipmentRackEnclosureSlotRef(p []*models.EquipmentRackEnclosureSlotRef, d *schema.ResourceData) []map[string]interface{} {
-	var slotss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		slots := make(map[string]interface{})
-		slots["moid"] = item.Moid
-		slots["object_type"] = item.ObjectType
-		slots["selector"] = item.Selector
-		slotss = append(slotss, slots)
-	}
-	return slotss
-}
-func flattenListStorageFlexFlashControllerPropsRef(p []*models.StorageFlexFlashControllerPropsRef, d *schema.ResourceData) []map[string]interface{} {
-	var flexflashcontrollerpropss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		flexflashcontrollerprops := make(map[string]interface{})
-		flexflashcontrollerprops["moid"] = item.Moid
-		flexflashcontrollerprops["object_type"] = item.ObjectType
-		flexflashcontrollerprops["selector"] = item.Selector
-		flexflashcontrollerpropss = append(flexflashcontrollerpropss, flexflashcontrollerprops)
-	}
-	return flexflashcontrollerpropss
-}
-func flattenListStorageFlexFlashPhysicalDriveRef(p []*models.StorageFlexFlashPhysicalDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var flexflashphysicaldrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		flexflashphysicaldrives := make(map[string]interface{})
-		flexflashphysicaldrives["moid"] = item.Moid
-		flexflashphysicaldrives["object_type"] = item.ObjectType
-		flexflashphysicaldrives["selector"] = item.Selector
-		flexflashphysicaldrivess = append(flexflashphysicaldrivess, flexflashphysicaldrives)
-	}
-	return flexflashphysicaldrivess
-}
-func flattenListStorageFlexFlashVirtualDriveRef(p []*models.StorageFlexFlashVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var flexflashvirtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		flexflashvirtualdrives := make(map[string]interface{})
-		flexflashvirtualdrives["moid"] = item.Moid
-		flexflashvirtualdrives["object_type"] = item.ObjectType
-		flexflashvirtualdrives["selector"] = item.Selector
-		flexflashvirtualdrivess = append(flexflashvirtualdrivess, flexflashvirtualdrives)
-	}
-	return flexflashvirtualdrivess
-}
-func flattenListEquipmentSwitchCardRef(p []*models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var cardss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		cards := make(map[string]interface{})
-		cards["moid"] = item.Moid
-		cards["object_type"] = item.ObjectType
-		cards["selector"] = item.Selector
-		cardss = append(cardss, cards)
-	}
-	return cardss
-}
-func flattenMapManagementEntityRef(p *models.ManagementEntityRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
 
-	var managemententitys []map[string]interface{}
+	var disks []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	managemententity := make(map[string]interface{})
-	managemententity["moid"] = item.Moid
-	managemententity["object_type"] = item.ObjectType
-	managemententity["selector"] = item.Selector
+	disk := make(map[string]interface{})
+	delete(item.NiatelemetryDiskinfoAO1P1.NiatelemetryDiskinfoAO1P1, "ObjectType")
+	if len(item.NiatelemetryDiskinfoAO1P1.NiatelemetryDiskinfoAO1P1) != 0 {
+		j, err := json.Marshal(item.NiatelemetryDiskinfoAO1P1.NiatelemetryDiskinfoAO1P1)
+		if err == nil {
+			disk["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	disk["free"] = item.Free
+	disk["name"] = item.Name
+	disk["object_type"] = item.ObjectType
+	disk["total"] = item.Total
+	disk["used"] = item.Used
 
-	managemententitys = append(managemententitys, managemententity)
-	return managemententitys
-}
-func flattenMapFirmwareRunningFirmwareRef(p *models.FirmwareRunningFirmwareRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var ucsmrunningfirmwares []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	ucsmrunningfirmware := make(map[string]interface{})
-	ucsmrunningfirmware["moid"] = item.Moid
-	ucsmrunningfirmware["object_type"] = item.ObjectType
-	ucsmrunningfirmware["selector"] = item.Selector
-
-	ucsmrunningfirmwares = append(ucsmrunningfirmwares, ucsmrunningfirmware)
-	return ucsmrunningfirmwares
-}
-func flattenMapEquipmentSwitchCardRef(p *models.EquipmentSwitchCardRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var equipmentswitchcards []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	equipmentswitchcard := make(map[string]interface{})
-	equipmentswitchcard["moid"] = item.Moid
-	equipmentswitchcard["object_type"] = item.ObjectType
-	equipmentswitchcard["selector"] = item.Selector
-
-	equipmentswitchcards = append(equipmentswitchcards, equipmentswitchcard)
-	return equipmentswitchcards
-}
-func flattenListFcPhysicalPortRef(p []*models.FcPhysicalPortRef, d *schema.ResourceData) []map[string]interface{} {
-	var fcportss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		fcports := make(map[string]interface{})
-		fcports["moid"] = item.Moid
-		fcports["object_type"] = item.ObjectType
-		fcports["selector"] = item.Selector
-		fcportss = append(fcportss, fcports)
-	}
-	return fcportss
-}
-func flattenListPortSubGroupRef(p []*models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
-	var subgroupss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		subgroups := make(map[string]interface{})
-		subgroups["moid"] = item.Moid
-		subgroups["object_type"] = item.ObjectType
-		subgroups["selector"] = item.Selector
-		subgroupss = append(subgroupss, subgroups)
-	}
-	return subgroupss
-}
-func flattenListWorkflowDynamicWorkflowActionTaskList(p []*models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
-	var workflowactiontasklistss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		workflowactiontasklists := make(map[string]interface{})
-		workflowactiontasklists["action"] = item.Action
-		workflowactiontasklists["object_type"] = item.ObjectType
-		workflowactiontasklists["tasks"] = item.Tasks
-		workflowactiontasklistss = append(workflowactiontasklistss, workflowactiontasklists)
-	}
-	return workflowactiontasklistss
-}
-func flattenListPciLinkRef(p []*models.PciLinkRef, d *schema.ResourceData) []map[string]interface{} {
-	var linkss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		links := make(map[string]interface{})
-		links["moid"] = item.Moid
-		links["object_type"] = item.ObjectType
-		links["selector"] = item.Selector
-		linkss = append(linkss, links)
-	}
-	return linkss
-}
-func flattenMapMemoryPersistentMemoryConfigResultRef(p *models.MemoryPersistentMemoryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var persistentmemoryconfigresults []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	persistentmemoryconfigresult := make(map[string]interface{})
-	persistentmemoryconfigresult["moid"] = item.Moid
-	persistentmemoryconfigresult["object_type"] = item.ObjectType
-	persistentmemoryconfigresult["selector"] = item.Selector
-
-	persistentmemoryconfigresults = append(persistentmemoryconfigresults, persistentmemoryconfigresult)
-	return persistentmemoryconfigresults
-}
-func flattenListMemoryPersistentMemoryRegionRef(p []*models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
-	var persistentmemoryregionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		persistentmemoryregions := make(map[string]interface{})
-		persistentmemoryregions["moid"] = item.Moid
-		persistentmemoryregions["object_type"] = item.ObjectType
-		persistentmemoryregions["selector"] = item.Selector
-		persistentmemoryregionss = append(persistentmemoryregionss, persistentmemoryregions)
-	}
-	return persistentmemoryregionss
-}
-func flattenMapForecastDefinitionRef(p *models.ForecastDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var forecastdefs []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	forecastdef := make(map[string]interface{})
-	forecastdef["moid"] = item.Moid
-	forecastdef["object_type"] = item.ObjectType
-	forecastdef["selector"] = item.Selector
-
-	forecastdefs = append(forecastdefs, forecastdef)
-	return forecastdefs
-}
-func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
-
-	var models []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	model := make(map[string]interface{})
-	model["accuracy"] = item.Accuracy
-	model["model_data"] = item.ModelData
-	model["model_type"] = item.ModelType
-	model["object_type"] = item.ObjectType
-
-	models = append(models, model)
-	return models
-}
-func flattenListStorageVirtualDriveExtensionRef(p []*models.StorageVirtualDriveExtensionRef, d *schema.ResourceData) []map[string]interface{} {
-	var virtualdriveextensionss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		virtualdriveextensions := make(map[string]interface{})
-		virtualdriveextensions["moid"] = item.Moid
-		virtualdriveextensions["object_type"] = item.ObjectType
-		virtualdriveextensions["selector"] = item.Selector
-		virtualdriveextensionss = append(virtualdriveextensionss, virtualdriveextensions)
-	}
-	return virtualdriveextensionss
-}
-func flattenListStorageVirtualDriveRef(p []*models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
-	var virtualdrivess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		virtualdrives := make(map[string]interface{})
-		virtualdrives["moid"] = item.Moid
-		virtualdrives["object_type"] = item.ObjectType
-		virtualdrives["selector"] = item.Selector
-		virtualdrivess = append(virtualdrivess, virtualdrives)
-	}
-	return virtualdrivess
+	disks = append(disks, disk)
+	return disks
 }
 func flattenMapNiatelemetryNiaInventoryRef(p *models.NiatelemetryNiaInventoryRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7484,35 +6303,444 @@ func flattenMapNiatelemetryNiaInventoryRef(p *models.NiatelemetryNiaInventoryRef
 	devices = append(devices, device)
 	return devices
 }
-func flattenListIamResourcePermissionRef(p []*models.IamResourcePermissionRef, d *schema.ResourceData) []map[string]interface{} {
-	var resourcepermissionss []map[string]interface{}
+func flattenMapNiatelemetryNiaLicenseStateRef(p *models.NiatelemetryNiaLicenseStateRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var licensestates []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	for _, item := range p {
-		item := *item
-		resourcepermissions := make(map[string]interface{})
-		resourcepermissions["moid"] = item.Moid
-		resourcepermissions["object_type"] = item.ObjectType
-		resourcepermissions["selector"] = item.Selector
-		resourcepermissionss = append(resourcepermissionss, resourcepermissions)
-	}
-	return resourcepermissionss
+	item := *p
+	licensestate := make(map[string]interface{})
+	licensestate["moid"] = item.Moid
+	licensestate["object_type"] = item.ObjectType
+	licensestate["selector"] = item.Selector
+
+	licensestates = append(licensestates, licensestate)
+	return licensestates
 }
-func flattenListServerConfigResultEntryRef(p []*models.ServerConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var resultentriess []map[string]interface{}
+func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
+
+	var schedules []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	for _, item := range p {
-		item := *item
-		resultentries := make(map[string]interface{})
-		resultentries["moid"] = item.Moid
-		resultentries["object_type"] = item.ObjectType
-		resultentries["selector"] = item.Selector
-		resultentriess = append(resultentriess, resultentries)
+	item := *p
+	schedule := make(map[string]interface{})
+	delete(item.OnpremScheduleAO1P1.OnpremScheduleAO1P1, "ObjectType")
+	if len(item.OnpremScheduleAO1P1.OnpremScheduleAO1P1) != 0 {
+		j, err := json.Marshal(item.OnpremScheduleAO1P1.OnpremScheduleAO1P1)
+		if err == nil {
+			schedule["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
 	}
-	return resultentriess
+	schedule["day_of_month"] = item.DayOfMonth
+	schedule["day_of_week"] = item.DayOfWeek
+	schedule["month_of_year"] = item.MonthOfYear
+	schedule["object_type"] = item.ObjectType
+	schedule["repeat_interval"] = item.RepeatInterval
+	schedule["time_of_day"] = item.TimeOfDay
+	schedule["time_zone"] = item.TimeZone
+	schedule["week_of_month"] = item.WeekOfMonth
+
+	schedules = append(schedules, schedule)
+	return schedules
+}
+func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+
+	var currentphases []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	currentphase := make(map[string]interface{})
+	delete(item.OnpremUpgradePhaseAO1P1.OnpremUpgradePhaseAO1P1, "ObjectType")
+	if len(item.OnpremUpgradePhaseAO1P1.OnpremUpgradePhaseAO1P1) != 0 {
+		j, err := json.Marshal(item.OnpremUpgradePhaseAO1P1.OnpremUpgradePhaseAO1P1)
+		if err == nil {
+			currentphase["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	currentphase["name"] = item.Name
+	currentphase["object_type"] = item.ObjectType
+
+	currentphases = append(currentphases, currentphase)
+	return currentphases
+}
+func flattenMapOrganizationOrganizationRef(p *models.OrganizationOrganizationRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var organizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	organization := make(map[string]interface{})
+	organization["moid"] = item.Moid
+	organization["object_type"] = item.ObjectType
+	organization["selector"] = item.Selector
+
+	organizations = append(organizations, organization)
+	return organizations
+}
+func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[string]interface{} {
+
+	var answerss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	answers := make(map[string]interface{})
+	delete(item.OsAnswersAO1P1.OsAnswersAO1P1, "ObjectType")
+	if len(item.OsAnswersAO1P1.OsAnswersAO1P1) != 0 {
+		j, err := json.Marshal(item.OsAnswersAO1P1.OsAnswersAO1P1)
+		if err == nil {
+			answers["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	answers["answer_file"] = item.AnswerFile
+	answers["hostname"] = item.Hostname
+	answers["ip_config_type"] = item.IPConfigType
+	answers["ipv4_config"] = (func(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
+
+		var ipv4configs []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		ipv4config := make(map[string]interface{})
+		ipv4config["gateway"] = item.Gateway
+		ipv4config["ip_address"] = item.IPAddress
+		ipv4config["netmask"] = item.Netmask
+		ipv4config["object_type"] = item.ObjectType
+
+		ipv4configs = append(ipv4configs, ipv4config)
+		return ipv4configs
+	})(item.IPV4Config, d)
+	answers["is_answer_file_set"] = item.IsAnswerFileSet
+	answers["is_root_password_set"] = item.IsRootPasswordSet
+	answers["nameserver"] = item.Nameserver
+	answers["object_type"] = item.ObjectType
+	answers["product_key"] = item.ProductKey
+	answers["root_password"] = item.RootPassword
+	answers["source"] = item.Source
+
+	answerss = append(answerss, answers)
+	return answerss
+}
+func flattenMapOsCatalogRef(p *models.OsCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var catalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	catalog := make(map[string]interface{})
+	catalog["moid"] = item.Moid
+	catalog["object_type"] = item.ObjectType
+	catalog["selector"] = item.Selector
+
+	catalogs = append(catalogs, catalog)
+	return catalogs
+}
+func flattenMapOsConfigurationFileRef(p *models.OsConfigurationFileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var configurationfiles []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configurationfile := make(map[string]interface{})
+	configurationfile["moid"] = item.Moid
+	configurationfile["object_type"] = item.ObjectType
+	configurationfile["selector"] = item.Selector
+
+	configurationfiles = append(configurationfiles, configurationfile)
+	return configurationfiles
+}
+func flattenMapOsOperatingSystemParameters(p *models.OsOperatingSystemParameters, d *schema.ResourceData) []map[string]interface{} {
+
+	var operatingsystemparameterss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	operatingsystemparameters := make(map[string]interface{})
+	delete(item.AO1, "ObjectType")
+	if len(item.AO1) != 0 {
+		j, err := json.Marshal(item.AO1)
+		if err == nil {
+			operatingsystemparameters["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	operatingsystemparameters["object_type"] = item.ObjectType
+
+	operatingsystemparameterss = append(operatingsystemparameterss, operatingsystemparameters)
+	return operatingsystemparameterss
+}
+func flattenMapPciSwitchRef(p *models.PciSwitchRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var pciswitchs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	pciswitch := make(map[string]interface{})
+	pciswitch["moid"] = item.Moid
+	pciswitch["object_type"] = item.ObjectType
+	pciswitch["selector"] = item.Selector
+
+	pciswitchs = append(pciswitchs, pciswitch)
+	return pciswitchs
+}
+func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+	var subjects []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	subject := make(map[string]interface{})
+	delete(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1, "ObjectType")
+	if len(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1)
+		if err == nil {
+			subject["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	subject["common_name"] = item.CommonName
+	subject["country"] = item.Country
+	subject["locality"] = item.Locality
+	subject["object_type"] = item.ObjectType
+	subject["organization"] = item.Organization
+	subject["organizational_unit"] = item.OrganizationalUnit
+	subject["state"] = item.State
+
+	subjects = append(subjects, subject)
+	return subjects
+}
+func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
+
+	var keyspecs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	keyspec := make(map[string]interface{})
+	delete(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1, "ObjectType")
+	if len(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixKeyGenerationSpecAO1P1.PkixKeyGenerationSpecAO1P1)
+		if err == nil {
+			keyspec["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	keyspec["name"] = item.Name
+	keyspec["object_type"] = item.ObjectType
+
+	keyspecs = append(keyspecs, keyspec)
+	return keyspecs
+}
+func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
+
+	var subjectalternatenames []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	subjectalternatename := make(map[string]interface{})
+	delete(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1, "ObjectType")
+	if len(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1) != 0 {
+		j, err := json.Marshal(item.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1)
+		if err == nil {
+			subjectalternatename["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	subjectalternatename["dns_name"] = item.DNSName
+	subjectalternatename["email_address"] = item.EmailAddress
+	subjectalternatename["ip_address"] = item.IPAddress
+	subjectalternatename["object_type"] = item.ObjectType
+	subjectalternatename["uri"] = item.URI
+
+	subjectalternatenames = append(subjectalternatenames, subjectalternatename)
+	return subjectalternatenames
+}
+func flattenMapPolicyAbstractProfileRef(p *models.PolicyAbstractProfileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var srctemplates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	srctemplate := make(map[string]interface{})
+	srctemplate["moid"] = item.Moid
+	srctemplate["object_type"] = item.ObjectType
+	srctemplate["selector"] = item.Selector
+
+	srctemplates = append(srctemplates, srctemplate)
+	return srctemplates
+}
+func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
+
+	var configchangess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configchanges := make(map[string]interface{})
+	delete(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1, "ObjectType")
+	if len(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1) != 0 {
+		j, err := json.Marshal(item.PolicyConfigChangeAO1P1.PolicyConfigChangeAO1P1)
+		if err == nil {
+			configchanges["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	configchanges["changes"] = item.Changes
+	configchanges["disruptions"] = item.Disruptions
+	configchanges["object_type"] = item.ObjectType
+
+	configchangess = append(configchangess, configchanges)
+	return configchangess
+}
+func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
+
+	var configcontexts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configcontext := make(map[string]interface{})
+	delete(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1, "ObjectType")
+	if len(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1) != 0 {
+		j, err := json.Marshal(item.PolicyConfigContextAO1P1.PolicyConfigContextAO1P1)
+		if err == nil {
+			configcontext["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	configcontext["config_state"] = item.ConfigState
+	configcontext["control_action"] = item.ControlAction
+	configcontext["error_state"] = item.ErrorState
+	configcontext["object_type"] = item.ObjectType
+	configcontext["oper_state"] = item.OperState
+
+	configcontexts = append(configcontexts, configcontext)
+	return configcontexts
+}
+func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
+
+	var contexts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	context := make(map[string]interface{})
+	delete(item.PolicyConfigResultContextAO1P1.PolicyConfigResultContextAO1P1, "ObjectType")
+	if len(item.PolicyConfigResultContextAO1P1.PolicyConfigResultContextAO1P1) != 0 {
+		j, err := json.Marshal(item.PolicyConfigResultContextAO1P1.PolicyConfigResultContextAO1P1)
+		if err == nil {
+			context["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	context["entity_data"] = item.EntityData
+	context["entity_moid"] = item.EntityMoid
+	context["entity_name"] = item.EntityName
+	context["entity_type"] = item.EntityType
+	context["object_type"] = item.ObjectType
+
+	contexts = append(contexts, context)
+	return contexts
+}
+func flattenMapPortGroupRef(p *models.PortGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var portgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	portgroup := make(map[string]interface{})
+	portgroup["moid"] = item.Moid
+	portgroup["object_type"] = item.ObjectType
+	portgroup["selector"] = item.Selector
+
+	portgroups = append(portgroups, portgroup)
+	return portgroups
+}
+func flattenMapPortSubGroupRef(p *models.PortSubGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var portsubgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	portsubgroup := make(map[string]interface{})
+	portsubgroup["moid"] = item.Moid
+	portsubgroup["object_type"] = item.ObjectType
+	portsubgroup["selector"] = item.Selector
+
+	portsubgroups = append(portsubgroups, portsubgroup)
+	return portsubgroups
+}
+func flattenMapRecoveryAbstractBackupInfoRef(p *models.RecoveryAbstractBackupInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var backupinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	backupinfo := make(map[string]interface{})
+	backupinfo["moid"] = item.Moid
+	backupinfo["object_type"] = item.ObjectType
+	backupinfo["selector"] = item.Selector
+
+	backupinfos = append(backupinfos, backupinfo)
+	return backupinfos
+}
+func flattenMapRecoveryAbstractRestoreStatusRef(p *models.RecoveryAbstractRestoreStatusRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var restorestatuss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	restorestatus := make(map[string]interface{})
+	restorestatus["moid"] = item.Moid
+	restorestatus["object_type"] = item.ObjectType
+	restorestatus["selector"] = item.Selector
+
+	restorestatuss = append(restorestatuss, restorestatus)
+	return restorestatuss
+}
+func flattenMapRecoveryBackupConfigPolicyRef(p *models.RecoveryBackupConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var backupconfigs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	backupconfig := make(map[string]interface{})
+	backupconfig["moid"] = item.Moid
+	backupconfig["object_type"] = item.ObjectType
+	backupconfig["selector"] = item.Selector
+
+	backupconfigs = append(backupconfigs, backupconfig)
+	return backupconfigs
 }
 func flattenMapRecoveryBackupProfileRef(p *models.RecoveryBackupProfileRef, d *schema.ResourceData) []map[string]interface{} {
 
@@ -7529,6 +6757,68 @@ func flattenMapRecoveryBackupProfileRef(p *models.RecoveryBackupProfileRef, d *s
 	backupprofiles = append(backupprofiles, backupprofile)
 	return backupprofiles
 }
+func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schema.ResourceData) []map[string]interface{} {
+
+	var schedules []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	schedule := make(map[string]interface{})
+	delete(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1, "ObjectType")
+	if len(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1) != 0 {
+		j, err := json.Marshal(item.RecoveryBackupScheduleAO1P1.RecoveryBackupScheduleAO1P1)
+		if err == nil {
+			schedule["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	schedule["execution_time"] = item.ExecutionTime
+	schedule["frequency_unit"] = item.FrequencyUnit
+	schedule["hours"] = item.Hours
+	schedule["object_type"] = item.ObjectType
+
+	schedules = append(schedules, schedule)
+	return schedules
+}
+func flattenMapRecoveryConfigParams(p *models.RecoveryConfigParams, d *schema.ResourceData) []map[string]interface{} {
+
+	var configparamss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configparams := make(map[string]interface{})
+	delete(item.AO1, "ObjectType")
+	if len(item.AO1) != 0 {
+		j, err := json.Marshal(item.AO1)
+		if err == nil {
+			configparams["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	configparams["object_type"] = item.ObjectType
+
+	configparamss = append(configparamss, configparams)
+	return configparamss
+}
+func flattenMapRecoveryConfigResultRef(p *models.RecoveryConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var configresults []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configresult := make(map[string]interface{})
+	configresult["moid"] = item.Moid
+	configresult["object_type"] = item.ObjectType
+	configresult["selector"] = item.Selector
+
+	configresults = append(configresults, configresult)
+	return configresults
+}
 func flattenMapRecoveryOnDemandBackupRef(p *models.RecoveryOnDemandBackupRef, d *schema.ResourceData) []map[string]interface{} {
 
 	var nr0ondemandbackups []map[string]interface{}
@@ -7544,252 +6834,1418 @@ func flattenMapRecoveryOnDemandBackupRef(p *models.RecoveryOnDemandBackupRef, d 
 	nr0ondemandbackups = append(nr0ondemandbackups, nr0ondemandbackup)
 	return nr0ondemandbackups
 }
-func flattenListRecoveryConfigResultEntryRef(p []*models.RecoveryConfigResultEntryRef, d *schema.ResourceData) []map[string]interface{} {
-	var resultentriess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		resultentries := make(map[string]interface{})
-		resultentries["moid"] = item.Moid
-		resultentries["object_type"] = item.ObjectType
-		resultentries["selector"] = item.Selector
-		resultentriess = append(resultentriess, resultentries)
-	}
-	return resultentriess
-}
-func flattenListComputeBladeRef(p []*models.ComputeBladeRef, d *schema.ResourceData) []map[string]interface{} {
-	var bladess []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		blades := make(map[string]interface{})
-		blades["moid"] = item.Moid
-		blades["object_type"] = item.ObjectType
-		blades["selector"] = item.Selector
-		bladess = append(bladess, blades)
-	}
-	return bladess
-}
-func flattenListEquipmentIoCardRef(p []*models.EquipmentIoCardRef, d *schema.ResourceData) []map[string]interface{} {
-	var iomss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		ioms := make(map[string]interface{})
-		ioms["moid"] = item.Moid
-		ioms["object_type"] = item.ObjectType
-		ioms["selector"] = item.Selector
-		iomss = append(iomss, ioms)
-	}
-	return iomss
-}
-func flattenListEquipmentSystemIoControllerRef(p []*models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
-	var siocss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		siocs := make(map[string]interface{})
-		siocs["moid"] = item.Moid
-		siocs["object_type"] = item.ObjectType
-		siocs["selector"] = item.Selector
-		siocss = append(siocss, siocs)
-	}
-	return siocss
-}
-func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryScheduleConfigPolicyRef(p *models.RecoveryScheduleConfigPolicyRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var resiliencydetailss []map[string]interface{}
+	var scheduleconfigs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	resiliencydetails := make(map[string]interface{})
-	resiliencydetails["data_replication_factor"] = item.DataReplicationFactor
-	resiliencydetails["hdd_failures_tolerable"] = item.HddFailuresTolerable
-	resiliencydetails["messages"] = item.Messages
-	resiliencydetails["node_failures_tolerable"] = item.NodeFailuresTolerable
-	resiliencydetails["object_type"] = item.ObjectType
-	resiliencydetails["policy_compliance"] = item.PolicyCompliance
-	resiliencydetails["resiliency_state"] = item.ResiliencyState
-	resiliencydetails["ssd_failures_tolerable"] = item.SsdFailuresTolerable
+	scheduleconfig := make(map[string]interface{})
+	scheduleconfig["moid"] = item.Moid
+	scheduleconfig["object_type"] = item.ObjectType
+	scheduleconfig["selector"] = item.Selector
 
-	resiliencydetailss = append(resiliencydetailss, resiliencydetails)
-	return resiliencydetailss
+	scheduleconfigs = append(scheduleconfigs, scheduleconfig)
+	return scheduleconfigs
 }
-func flattenListHyperflexHxZoneResiliencyInfoDt(p []*models.HyperflexHxZoneResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
-	var zoneresiliencylists []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		zoneresiliencylist := make(map[string]interface{})
-		zoneresiliencylist["name"] = item.Name
-		zoneresiliencylist["object_type"] = item.ObjectType
-		zoneresiliencylist["resiliency_info"] = (func(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapResourceGroupRef(p *models.ResourceGroupRef, d *schema.ResourceData) []map[string]interface{} {
 
-			var resiliencyinfos []map[string]interface{}
-			if p == nil {
-				return nil
-			}
-			item := *p
-			resiliencyinfo := make(map[string]interface{})
-			resiliencyinfo["data_replication_factor"] = item.DataReplicationFactor
-			resiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
-			resiliencyinfo["messages"] = item.Messages
-			resiliencyinfo["node_failures_tolerable"] = item.NodeFailuresTolerable
-			resiliencyinfo["object_type"] = item.ObjectType
-			resiliencyinfo["policy_compliance"] = item.PolicyCompliance
-			resiliencyinfo["resiliency_state"] = item.ResiliencyState
-			resiliencyinfo["ssd_failures_tolerable"] = item.SsdFailuresTolerable
-
-			resiliencyinfos = append(resiliencyinfos, resiliencyinfo)
-			return resiliencyinfos
-		})(item.ResiliencyInfo, d)
-		zoneresiliencylists = append(zoneresiliencylists, zoneresiliencylist)
-	}
-	return zoneresiliencylists
-}
-func flattenListCondHclStatusDetailRef(p []*models.CondHclStatusDetailRef, d *schema.ResourceData) []map[string]interface{} {
-	var detailss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		details := make(map[string]interface{})
-		details["moid"] = item.Moid
-		details["object_type"] = item.ObjectType
-		details["selector"] = item.Selector
-		detailss = append(detailss, details)
-	}
-	return detailss
-}
-func flattenMapMemoryArrayRef(p *models.MemoryArrayRef, d *schema.ResourceData) []map[string]interface{} {
-
-	var memoryarrays []map[string]interface{}
+	var groups []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	memoryarray := make(map[string]interface{})
-	memoryarray["moid"] = item.Moid
-	memoryarray["object_type"] = item.ObjectType
-	memoryarray["selector"] = item.Selector
+	group := make(map[string]interface{})
+	group["moid"] = item.Moid
+	group["object_type"] = item.ObjectType
+	group["selector"] = item.Selector
 
-	memoryarrays = append(memoryarrays, memoryarray)
-	return memoryarrays
+	groups = append(groups, group)
+	return groups
 }
-func flattenListComputeRackUnitRef(p []*models.ComputeRackUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var computerackunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		computerackunits := make(map[string]interface{})
-		computerackunits["moid"] = item.Moid
-		computerackunits["object_type"] = item.ObjectType
-		computerackunits["selector"] = item.Selector
-		computerackunitss = append(computerackunitss, computerackunits)
-	}
-	return computerackunitss
-}
-func flattenMapFirmwareUpgradeRef(p *models.FirmwareUpgradeRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapResourceMembershipHolderRef(p *models.ResourceMembershipHolderRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var upgrades []map[string]interface{}
+	var holders []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	upgrade := make(map[string]interface{})
-	upgrade["moid"] = item.Moid
-	upgrade["object_type"] = item.ObjectType
-	upgrade["selector"] = item.Selector
+	holder := make(map[string]interface{})
+	holder["moid"] = item.Moid
+	holder["object_type"] = item.ObjectType
+	holder["selector"] = item.Selector
 
-	upgrades = append(upgrades, upgrade)
-	return upgrades
+	holders = append(holders, holder)
+	return holders
 }
-func flattenMapInventoryGenericInventoryHolderRef(p *models.InventoryGenericInventoryHolderRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapServerConfigResultRef(p *models.ServerConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var inventorygenericinventoryholders []map[string]interface{}
+	var configresults []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	inventorygenericinventoryholder := make(map[string]interface{})
-	inventorygenericinventoryholder["moid"] = item.Moid
-	inventorygenericinventoryholder["object_type"] = item.ObjectType
-	inventorygenericinventoryholder["selector"] = item.Selector
+	configresult := make(map[string]interface{})
+	configresult["moid"] = item.Moid
+	configresult["object_type"] = item.ObjectType
+	configresult["selector"] = item.Selector
 
-	inventorygenericinventoryholders = append(inventorygenericinventoryholders, inventorygenericinventoryholder)
-	return inventorygenericinventoryholders
+	configresults = append(configresults, configresult)
+	return configresults
 }
-func flattenListMemoryPersistentMemoryUnitRef(p []*models.MemoryPersistentMemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var persistentmemoryunitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		persistentmemoryunits := make(map[string]interface{})
-		persistentmemoryunits["moid"] = item.Moid
-		persistentmemoryunits["object_type"] = item.ObjectType
-		persistentmemoryunits["selector"] = item.Selector
-		persistentmemoryunitss = append(persistentmemoryunitss, persistentmemoryunits)
-	}
-	return persistentmemoryunitss
-}
-func flattenListMemoryUnitRef(p []*models.MemoryUnitRef, d *schema.ResourceData) []map[string]interface{} {
-	var unitss []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		units := make(map[string]interface{})
-		units["moid"] = item.Moid
-		units["object_type"] = item.ObjectType
-		units["selector"] = item.Selector
-		unitss = append(unitss, units)
-	}
-	return unitss
-}
-func flattenMapEquipmentFanModuleRef(p *models.EquipmentFanModuleRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapServerProfileRef(p *models.ServerProfileRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var equipmentfanmodules []map[string]interface{}
+	var nr1profiles []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	equipmentfanmodule := make(map[string]interface{})
-	equipmentfanmodule["moid"] = item.Moid
-	equipmentfanmodule["object_type"] = item.ObjectType
-	equipmentfanmodule["selector"] = item.Selector
+	nr1profile := make(map[string]interface{})
+	nr1profile["moid"] = item.Moid
+	nr1profile["object_type"] = item.ObjectType
+	nr1profile["selector"] = item.Selector
 
-	equipmentfanmodules = append(equipmentfanmodules, equipmentfanmodule)
-	return equipmentfanmodules
+	nr1profiles = append(nr1profiles, nr1profile)
+	return nr1profiles
 }
-func flattenMapEquipmentSystemIoControllerRef(p *models.EquipmentSystemIoControllerRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwareHyperflexDistributableRef(p *models.SoftwareHyperflexDistributableRef, d *schema.ResourceData) []map[string]interface{} {
 
-	var equipmentsystemiocontrollers []map[string]interface{}
+	var hxdpversioninfos []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	equipmentsystemiocontroller := make(map[string]interface{})
-	equipmentsystemiocontroller["moid"] = item.Moid
-	equipmentsystemiocontroller["object_type"] = item.ObjectType
-	equipmentsystemiocontroller["selector"] = item.Selector
+	hxdpversioninfo := make(map[string]interface{})
+	hxdpversioninfo["moid"] = item.Moid
+	hxdpversioninfo["object_type"] = item.ObjectType
+	hxdpversioninfo["selector"] = item.Selector
 
-	equipmentsystemiocontrollers = append(equipmentsystemiocontrollers, equipmentsystemiocontroller)
-	return equipmentsystemiocontrollers
+	hxdpversioninfos = append(hxdpversioninfos, hxdpversioninfo)
+	return hxdpversioninfos
+}
+func flattenMapSoftwarerepositoryCatalogRef(p *models.SoftwarerepositoryCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var catalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	catalog := make(map[string]interface{})
+	catalog["moid"] = item.Moid
+	catalog["object_type"] = item.ObjectType
+	catalog["selector"] = item.Selector
+
+	catalogs = append(catalogs, catalog)
+	return catalogs
+}
+func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServer, d *schema.ResourceData) []map[string]interface{} {
+
+	var sources []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	source := make(map[string]interface{})
+	delete(item.AO1, "ObjectType")
+	if len(item.AO1) != 0 {
+		j, err := json.Marshal(item.AO1)
+		if err == nil {
+			source["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	source["object_type"] = item.ObjectType
+
+	sources = append(sources, source)
+	return sources
+}
+func flattenMapSoftwarerepositoryOperatingSystemFileRef(p *models.SoftwarerepositoryOperatingSystemFileRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var images []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	image := make(map[string]interface{})
+	image["moid"] = item.Moid
+	image["object_type"] = item.ObjectType
+	image["selector"] = item.Selector
+
+	images = append(images, image)
+	return images
+}
+func flattenMapStorageArrayControllerRef(p *models.StorageArrayControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var controllers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	controller := make(map[string]interface{})
+	controller["moid"] = item.Moid
+	controller["object_type"] = item.ObjectType
+	controller["selector"] = item.Selector
+
+	controllers = append(controllers, controller)
+	return controllers
+}
+func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData) []map[string]interface{} {
+
+	var storageutilizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storageutilization := make(map[string]interface{})
+	delete(item.StorageCapacityAO1P1.StorageCapacityAO1P1, "ObjectType")
+	if len(item.StorageCapacityAO1P1.StorageCapacityAO1P1) != 0 {
+		j, err := json.Marshal(item.StorageCapacityAO1P1.StorageCapacityAO1P1)
+		if err == nil {
+			storageutilization["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	storageutilization["available"] = item.Available
+	storageutilization["free"] = item.Free
+	storageutilization["object_type"] = item.ObjectType
+	storageutilization["total"] = item.Total
+	storageutilization["used"] = item.Used
+
+	storageutilizations = append(storageutilizations, storageutilization)
+	return storageutilizations
+}
+func flattenMapStorageControllerRef(p *models.StorageControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storagecontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagecontroller := make(map[string]interface{})
+	storagecontroller["moid"] = item.Moid
+	storagecontroller["object_type"] = item.ObjectType
+	storagecontroller["selector"] = item.Selector
+
+	storagecontrollers = append(storagecontrollers, storagecontroller)
+	return storagecontrollers
+}
+func flattenMapStorageEnclosureRef(p *models.StorageEnclosureRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storageenclosures []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storageenclosure := make(map[string]interface{})
+	storageenclosure["moid"] = item.Moid
+	storageenclosure["object_type"] = item.ObjectType
+	storageenclosure["selector"] = item.Selector
+
+	storageenclosures = append(storageenclosures, storageenclosure)
+	return storageenclosures
+}
+func flattenMapStorageFlexFlashControllerRef(p *models.StorageFlexFlashControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storageflexflashcontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storageflexflashcontroller := make(map[string]interface{})
+	storageflexflashcontroller["moid"] = item.Moid
+	storageflexflashcontroller["object_type"] = item.ObjectType
+	storageflexflashcontroller["selector"] = item.Selector
+
+	storageflexflashcontrollers = append(storageflexflashcontrollers, storageflexflashcontroller)
+	return storageflexflashcontrollers
+}
+func flattenMapStorageFlexUtilControllerRef(p *models.StorageFlexUtilControllerRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storageflexutilcontrollers []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storageflexutilcontroller := make(map[string]interface{})
+	storageflexutilcontroller["moid"] = item.Moid
+	storageflexutilcontroller["object_type"] = item.ObjectType
+	storageflexutilcontroller["selector"] = item.Selector
+
+	storageflexutilcontrollers = append(storageflexutilcontrollers, storageflexutilcontroller)
+	return storageflexutilcontrollers
+}
+func flattenMapStorageGenericArrayRef(p *models.StorageGenericArrayRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storagearrays []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagearray := make(map[string]interface{})
+	storagearray["moid"] = item.Moid
+	storagearray["object_type"] = item.ObjectType
+	storagearray["selector"] = item.Selector
+
+	storagearrays = append(storagearrays, storagearray)
+	return storagearrays
+}
+func flattenMapStorageHostRef(p *models.StorageHostRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var hosts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	host := make(map[string]interface{})
+	host["moid"] = item.Moid
+	host["object_type"] = item.ObjectType
+	host["selector"] = item.Selector
+
+	hosts = append(hosts, host)
+	return hosts
+}
+func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schema.ResourceData) []map[string]interface{} {
+
+	var storageutilizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storageutilization := make(map[string]interface{})
+	delete(item.StorageCapacityAO1P1.StorageCapacityAO1P1, "ObjectType")
+	if len(item.StorageCapacityAO1P1.StorageCapacityAO1P1) != 0 {
+		j, err := json.Marshal(item.StorageCapacityAO1P1.StorageCapacityAO1P1)
+		if err == nil {
+			storageutilization["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	storageutilization["available"] = item.Available
+	storageutilization["data_reduction"] = item.DataReduction
+	storageutilization["free"] = item.Free
+	storageutilization["object_type"] = item.ObjectType
+	storageutilization["snapshot"] = item.Snapshot
+	storageutilization["thin_provisioned"] = item.ThinProvisioned
+	storageutilization["total"] = item.Total
+	storageutilization["total_reduction"] = item.TotalReduction
+	storageutilization["used"] = item.Used
+	storageutilization["volume"] = item.Volume
+
+	storageutilizations = append(storageutilizations, storageutilization)
+	return storageutilizations
+}
+func flattenMapStoragePhysicalDiskRef(p *models.StoragePhysicalDiskRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storagephysicaldisks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagephysicaldisk := make(map[string]interface{})
+	storagephysicaldisk["moid"] = item.Moid
+	storagephysicaldisk["object_type"] = item.ObjectType
+	storagephysicaldisk["selector"] = item.Selector
+
+	storagephysicaldisks = append(storagephysicaldisks, storagephysicaldisk)
+	return storagephysicaldisks
+}
+func flattenMapStorageProtectionGroupRef(p *models.StorageProtectionGroupRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var protectiongroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	protectiongroup := make(map[string]interface{})
+	protectiongroup["moid"] = item.Moid
+	protectiongroup["object_type"] = item.ObjectType
+	protectiongroup["selector"] = item.Selector
+
+	protectiongroups = append(protectiongroups, protectiongroup)
+	return protectiongroups
+}
+func flattenMapStorageProtectionGroupSnapshotRef(p *models.StorageProtectionGroupSnapshotRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var protectiongroupsnapshots []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	protectiongroupsnapshot := make(map[string]interface{})
+	protectiongroupsnapshot["moid"] = item.Moid
+	protectiongroupsnapshot["object_type"] = item.ObjectType
+	protectiongroupsnapshot["selector"] = item.Selector
+
+	protectiongroupsnapshots = append(protectiongroupsnapshots, protectiongroupsnapshot)
+	return protectiongroupsnapshots
+}
+func flattenMapStoragePureHostRef(p *models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var hostgroups []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	hostgroup := make(map[string]interface{})
+	hostgroup["moid"] = item.Moid
+	hostgroup["object_type"] = item.ObjectType
+	hostgroup["selector"] = item.Selector
+
+	hostgroups = append(hostgroups, hostgroup)
+	return hostgroups
+}
+func flattenMapStorageSasExpanderRef(p *models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storagesasexpanders []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagesasexpander := make(map[string]interface{})
+	storagesasexpander["moid"] = item.Moid
+	storagesasexpander["object_type"] = item.ObjectType
+	storagesasexpander["selector"] = item.Selector
+
+	storagesasexpanders = append(storagesasexpanders, storagesasexpander)
+	return storagesasexpanders
+}
+func flattenMapStorageVirtualDriveExtensionRef(p *models.StorageVirtualDriveExtensionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var virtualdriveextensions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualdriveextension := make(map[string]interface{})
+	virtualdriveextension["moid"] = item.Moid
+	virtualdriveextension["object_type"] = item.ObjectType
+	virtualdriveextension["selector"] = item.Selector
+
+	virtualdriveextensions = append(virtualdriveextensions, virtualdriveextension)
+	return virtualdriveextensions
+}
+func flattenMapStorageVirtualDriveRef(p *models.StorageVirtualDriveRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var storagevirtualdrives []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagevirtualdrive := make(map[string]interface{})
+	storagevirtualdrive["moid"] = item.Moid
+	storagevirtualdrive["object_type"] = item.ObjectType
+	storagevirtualdrive["selector"] = item.Selector
+
+	storagevirtualdrives = append(storagevirtualdrives, storagevirtualdrive)
+	return storagevirtualdrives
+}
+func flattenMapStorageVolumeRef(p *models.StorageVolumeRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var volumes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	volume := make(map[string]interface{})
+	volume["moid"] = item.Moid
+	volume["object_type"] = item.ObjectType
+	volume["selector"] = item.Selector
+
+	volumes = append(volumes, volume)
+	return volumes
+}
+func flattenMapTamAdvisoryRef(p *models.TamAdvisoryRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var advisorys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	advisory := make(map[string]interface{})
+	advisory["moid"] = item.Moid
+	advisory["object_type"] = item.ObjectType
+	advisory["selector"] = item.Selector
+
+	advisorys = append(advisorys, advisory)
+	return advisorys
+}
+func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
+
+	var severitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	severity := make(map[string]interface{})
+	delete(item.AO1, "ObjectType")
+	if len(item.AO1) != 0 {
+		j, err := json.Marshal(item.AO1)
+		if err == nil {
+			severity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	severity["object_type"] = item.ObjectType
+
+	severitys = append(severitys, severity)
+	return severitys
+}
+func flattenMapTopSystemRef(p *models.TopSystemRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var topsystems []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	topsystem := make(map[string]interface{})
+	topsystem["moid"] = item.Moid
+	topsystem["object_type"] = item.ObjectType
+	topsystem["selector"] = item.Selector
+
+	topsystems = append(topsystems, topsystem)
+	return topsystems
+}
+func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var arfssettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	arfssettings := make(map[string]interface{})
+	delete(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1, "ObjectType")
+	if len(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1)
+		if err == nil {
+			arfssettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	arfssettings["enabled"] = item.Enabled
+	arfssettings["object_type"] = item.ObjectType
+
+	arfssettingss = append(arfssettingss, arfssettings)
+	return arfssettingss
+}
+func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]interface{} {
+
+	var cdns []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	cdn := make(map[string]interface{})
+	delete(item.VnicCdnAO1P1.VnicCdnAO1P1, "ObjectType")
+	if len(item.VnicCdnAO1P1.VnicCdnAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicCdnAO1P1.VnicCdnAO1P1)
+		if err == nil {
+			cdn["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	cdn["object_type"] = item.ObjectType
+	cdn["source"] = item.Source
+	cdn["value"] = item.Value
+
+	cdns = append(cdns, cdn)
+	return cdns
+}
+func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var completionqueuesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	completionqueuesettings := make(map[string]interface{})
+	delete(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1, "ObjectType")
+	if len(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1)
+		if err == nil {
+			completionqueuesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	completionqueuesettings["count"] = item.Count
+	completionqueuesettings["object_type"] = item.ObjectType
+	completionqueuesettings["ring_size"] = item.RingSize
+
+	completionqueuesettingss = append(completionqueuesettingss, completionqueuesettings)
+	return completionqueuesettingss
+}
+func flattenMapVnicEthAdapterPolicyRef(p *models.VnicEthAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ethadapterpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ethadapterpolicy := make(map[string]interface{})
+	ethadapterpolicy["moid"] = item.Moid
+	ethadapterpolicy["object_type"] = item.ObjectType
+	ethadapterpolicy["selector"] = item.Selector
+
+	ethadapterpolicys = append(ethadapterpolicys, ethadapterpolicy)
+	return ethadapterpolicys
+}
+func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var interruptsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	interruptsettings := make(map[string]interface{})
+	delete(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1, "ObjectType")
+	if len(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1)
+		if err == nil {
+			interruptsettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	interruptsettings["coalescing_time"] = item.CoalescingTime
+	interruptsettings["coalescing_type"] = item.CoalescingType
+	interruptsettings["count"] = item.Count
+	interruptsettings["mode"] = item.Mode
+	interruptsettings["object_type"] = item.ObjectType
+
+	interruptsettingss = append(interruptsettingss, interruptsettings)
+	return interruptsettingss
+}
+func flattenMapVnicEthNetworkPolicyRef(p *models.VnicEthNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ethnetworkpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ethnetworkpolicy := make(map[string]interface{})
+	ethnetworkpolicy["moid"] = item.Moid
+	ethnetworkpolicy["object_type"] = item.ObjectType
+	ethnetworkpolicy["selector"] = item.Selector
+
+	ethnetworkpolicys = append(ethnetworkpolicys, ethnetworkpolicy)
+	return ethnetworkpolicys
+}
+func flattenMapVnicEthQosPolicyRef(p *models.VnicEthQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var ethqospolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ethqospolicy := make(map[string]interface{})
+	ethqospolicy["moid"] = item.Moid
+	ethqospolicy["object_type"] = item.ObjectType
+	ethqospolicy["selector"] = item.Selector
+
+	ethqospolicys = append(ethqospolicys, ethqospolicy)
+	return ethqospolicys
+}
+func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var rxqueuesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	rxqueuesettings := make(map[string]interface{})
+	delete(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1, "ObjectType")
+	if len(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1)
+		if err == nil {
+			rxqueuesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	rxqueuesettings["count"] = item.Count
+	rxqueuesettings["object_type"] = item.ObjectType
+	rxqueuesettings["ring_size"] = item.RingSize
+
+	rxqueuesettingss = append(rxqueuesettingss, rxqueuesettings)
+	return rxqueuesettingss
+}
+func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var txqueuesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	txqueuesettings := make(map[string]interface{})
+	delete(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1, "ObjectType")
+	if len(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1)
+		if err == nil {
+			txqueuesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	txqueuesettings["count"] = item.Count
+	txqueuesettings["object_type"] = item.ObjectType
+	txqueuesettings["ring_size"] = item.RingSize
+
+	txqueuesettingss = append(txqueuesettingss, txqueuesettings)
+	return txqueuesettingss
+}
+func flattenMapVnicFcAdapterPolicyRef(p *models.VnicFcAdapterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var fcadapterpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	fcadapterpolicy := make(map[string]interface{})
+	fcadapterpolicy["moid"] = item.Moid
+	fcadapterpolicy["object_type"] = item.ObjectType
+	fcadapterpolicy["selector"] = item.Selector
+
+	fcadapterpolicys = append(fcadapterpolicys, fcadapterpolicy)
+	return fcadapterpolicys
+}
+func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var errorrecoverysettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	errorrecoverysettings := make(map[string]interface{})
+	delete(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1, "ObjectType")
+	if len(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1)
+		if err == nil {
+			errorrecoverysettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	errorrecoverysettings["enabled"] = item.Enabled
+	errorrecoverysettings["io_retry_count"] = item.IoRetryCount
+	errorrecoverysettings["io_retry_timeout"] = item.IoRetryTimeout
+	errorrecoverysettings["link_down_timeout"] = item.LinkDownTimeout
+	errorrecoverysettings["object_type"] = item.ObjectType
+	errorrecoverysettings["port_down_timeout"] = item.PortDownTimeout
+
+	errorrecoverysettingss = append(errorrecoverysettingss, errorrecoverysettings)
+	return errorrecoverysettingss
+}
+func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var interruptsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	interruptsettings := make(map[string]interface{})
+	delete(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1, "ObjectType")
+	if len(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1)
+		if err == nil {
+			interruptsettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	interruptsettings["mode"] = item.Mode
+	interruptsettings["object_type"] = item.ObjectType
+
+	interruptsettingss = append(interruptsettingss, interruptsettings)
+	return interruptsettingss
+}
+func flattenMapVnicFcNetworkPolicyRef(p *models.VnicFcNetworkPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var fcnetworkpolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	fcnetworkpolicy := make(map[string]interface{})
+	fcnetworkpolicy["moid"] = item.Moid
+	fcnetworkpolicy["object_type"] = item.ObjectType
+	fcnetworkpolicy["selector"] = item.Selector
+
+	fcnetworkpolicys = append(fcnetworkpolicys, fcnetworkpolicy)
+	return fcnetworkpolicys
+}
+func flattenMapVnicFcQosPolicyRef(p *models.VnicFcQosPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var fcqospolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	fcqospolicy := make(map[string]interface{})
+	fcqospolicy["moid"] = item.Moid
+	fcqospolicy["object_type"] = item.ObjectType
+	fcqospolicy["selector"] = item.Selector
+
+	fcqospolicys = append(fcqospolicys, fcqospolicy)
+	return fcqospolicys
+}
+func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var rxqueuesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	rxqueuesettings := make(map[string]interface{})
+	delete(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1, "ObjectType")
+	if len(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1)
+		if err == nil {
+			rxqueuesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	rxqueuesettings["count"] = item.Count
+	rxqueuesettings["object_type"] = item.ObjectType
+	rxqueuesettings["ring_size"] = item.RingSize
+
+	rxqueuesettingss = append(rxqueuesettingss, rxqueuesettings)
+	return rxqueuesettingss
+}
+func flattenMapVnicFlogiSettings(p *models.VnicFlogiSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var flogisettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	flogisettings := make(map[string]interface{})
+	delete(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1, "ObjectType")
+	if len(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicFlogiSettingsAO1P1.VnicFlogiSettingsAO1P1)
+		if err == nil {
+			flogisettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	flogisettings["object_type"] = item.ObjectType
+	flogisettings["retries"] = item.Retries
+	flogisettings["timeout"] = item.Timeout
+
+	flogisettingss = append(flogisettingss, flogisettings)
+	return flogisettingss
+}
+func flattenMapVnicLanConnectivityPolicyRef(p *models.VnicLanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var lanconnectivitypolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	lanconnectivitypolicy := make(map[string]interface{})
+	lanconnectivitypolicy["moid"] = item.Moid
+	lanconnectivitypolicy["object_type"] = item.ObjectType
+	lanconnectivitypolicy["selector"] = item.Selector
+
+	lanconnectivitypolicys = append(lanconnectivitypolicys, lanconnectivitypolicy)
+	return lanconnectivitypolicys
+}
+func flattenMapVnicNvgreSettings(p *models.VnicNvgreSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var nvgresettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	nvgresettings := make(map[string]interface{})
+	delete(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1, "ObjectType")
+	if len(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1)
+		if err == nil {
+			nvgresettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	nvgresettings["enabled"] = item.Enabled
+	nvgresettings["object_type"] = item.ObjectType
+
+	nvgresettingss = append(nvgresettingss, nvgresettings)
+	return nvgresettingss
+}
+func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var placements []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	placement := make(map[string]interface{})
+	delete(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1, "ObjectType")
+	if len(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicPlacementSettingsAO1P1.VnicPlacementSettingsAO1P1)
+		if err == nil {
+			placement["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	placement["id"] = item.ID
+	placement["object_type"] = item.ObjectType
+	placement["pci_link"] = item.PciLink
+	placement["uplink"] = item.Uplink
+
+	placements = append(placements, placement)
+	return placements
+}
+func flattenMapVnicPlogiSettings(p *models.VnicPlogiSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var plogisettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	plogisettings := make(map[string]interface{})
+	delete(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1, "ObjectType")
+	if len(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicPlogiSettingsAO1P1.VnicPlogiSettingsAO1P1)
+		if err == nil {
+			plogisettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	plogisettings["object_type"] = item.ObjectType
+	plogisettings["retries"] = item.Retries
+	plogisettings["timeout"] = item.Timeout
+
+	plogisettingss = append(plogisettingss, plogisettings)
+	return plogisettingss
+}
+func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var rocesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	rocesettings := make(map[string]interface{})
+	delete(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1, "ObjectType")
+	if len(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1)
+		if err == nil {
+			rocesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	rocesettings["enabled"] = item.Enabled
+	rocesettings["memory_regions"] = item.MemoryRegions
+	rocesettings["object_type"] = item.ObjectType
+	rocesettings["queue_pairs"] = item.QueuePairs
+	rocesettings["resource_groups"] = item.ResourceGroups
+
+	rocesettingss = append(rocesettingss, rocesettings)
+	return rocesettingss
+}
+func flattenMapVnicSanConnectivityPolicyRef(p *models.VnicSanConnectivityPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var sanconnectivitypolicys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sanconnectivitypolicy := make(map[string]interface{})
+	sanconnectivitypolicy["moid"] = item.Moid
+	sanconnectivitypolicy["object_type"] = item.ObjectType
+	sanconnectivitypolicy["selector"] = item.Selector
+
+	sanconnectivitypolicys = append(sanconnectivitypolicys, sanconnectivitypolicy)
+	return sanconnectivitypolicys
+}
+func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var scsiqueuesettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	scsiqueuesettings := make(map[string]interface{})
+	delete(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1, "ObjectType")
+	if len(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1)
+		if err == nil {
+			scsiqueuesettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	scsiqueuesettings["count"] = item.Count
+	scsiqueuesettings["object_type"] = item.ObjectType
+	scsiqueuesettings["ring_size"] = item.RingSize
+
+	scsiqueuesettingss = append(scsiqueuesettingss, scsiqueuesettings)
+	return scsiqueuesettingss
+}
+func flattenMapVnicTCPOffloadSettings(p *models.VnicTCPOffloadSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var tcpoffloadsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	tcpoffloadsettings := make(map[string]interface{})
+	delete(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1, "ObjectType")
+	if len(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1)
+		if err == nil {
+			tcpoffloadsettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	tcpoffloadsettings["large_receive"] = item.LargeReceive
+	tcpoffloadsettings["large_send"] = item.LargeSend
+	tcpoffloadsettings["object_type"] = item.ObjectType
+	tcpoffloadsettings["rx_checksum"] = item.RxChecksum
+	tcpoffloadsettings["tx_checksum"] = item.TxChecksum
+
+	tcpoffloadsettingss = append(tcpoffloadsettingss, tcpoffloadsettings)
+	return tcpoffloadsettingss
+}
+func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var usnicsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	usnicsettings := make(map[string]interface{})
+	delete(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1, "ObjectType")
+	if len(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1)
+		if err == nil {
+			usnicsettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	usnicsettings["cos"] = item.Cos
+	usnicsettings["count"] = item.Count
+	usnicsettings["object_type"] = item.ObjectType
+	usnicsettings["usnic_adapter_policy"] = item.UsnicAdapterPolicy
+
+	usnicsettingss = append(usnicsettingss, usnicsettings)
+	return usnicsettingss
+}
+func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var vlansettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	vlansettings := make(map[string]interface{})
+	delete(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1, "ObjectType")
+	if len(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVlanSettingsAO1P1.VnicVlanSettingsAO1P1)
+		if err == nil {
+			vlansettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	vlansettings["default_vlan"] = item.DefaultVlan
+	vlansettings["mode"] = item.Mode
+	vlansettings["object_type"] = item.ObjectType
+
+	vlansettingss = append(vlansettingss, vlansettings)
+	return vlansettingss
+}
+func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var vmqsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	vmqsettings := make(map[string]interface{})
+	delete(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1, "ObjectType")
+	if len(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1)
+		if err == nil {
+			vmqsettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	vmqsettings["enabled"] = item.Enabled
+	vmqsettings["object_type"] = item.ObjectType
+
+	vmqsettingss = append(vmqsettingss, vmqsettings)
+	return vmqsettingss
+}
+func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var vsansettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	vsansettings := make(map[string]interface{})
+	delete(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1, "ObjectType")
+	if len(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVsanSettingsAO1P1.VnicVsanSettingsAO1P1)
+		if err == nil {
+			vsansettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	vsansettings["id"] = item.ID
+	vsansettings["object_type"] = item.ObjectType
+
+	vsansettingss = append(vsansettingss, vsansettings)
+	return vsansettingss
+}
+func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.ResourceData) []map[string]interface{} {
+
+	var vxlansettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	vxlansettings := make(map[string]interface{})
+	delete(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1, "ObjectType")
+	if len(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1) != 0 {
+		j, err := json.Marshal(item.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1)
+		if err == nil {
+			vxlansettings["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	vxlansettings["enabled"] = item.Enabled
+	vxlansettings["object_type"] = item.ObjectType
+
+	vxlansettingss = append(vxlansettingss, vxlansettings)
+	return vxlansettingss
+}
+func flattenMapWorkflowCatalogRef(p *models.WorkflowCatalogRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var catalogs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	catalog := make(map[string]interface{})
+	catalog["moid"] = item.Moid
+	catalog["object_type"] = item.ObjectType
+	catalog["selector"] = item.Selector
+
+	catalogs = append(catalogs, catalog)
+	return catalogs
+}
+func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var internalpropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	internalproperties := make(map[string]interface{})
+	delete(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowInternalPropertiesAO1P1.WorkflowInternalPropertiesAO1P1)
+		if err == nil {
+			internalproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	internalproperties["base_task_type"] = item.BaseTaskType
+	internalproperties["constraints"] = item.Constraints
+	internalproperties["internal"] = item.Internal
+	internalproperties["object_type"] = item.ObjectType
+	internalproperties["owner"] = item.Owner
+
+	internalpropertiess = append(internalpropertiess, internalproperties)
+	return internalpropertiess
+}
+func flattenMapWorkflowPendingDynamicWorkflowInfoRef(p *models.WorkflowPendingDynamicWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var pendingdynamicworkflowinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	pendingdynamicworkflowinfo := make(map[string]interface{})
+	pendingdynamicworkflowinfo["moid"] = item.Moid
+	pendingdynamicworkflowinfo["object_type"] = item.ObjectType
+	pendingdynamicworkflowinfo["selector"] = item.Selector
+
+	pendingdynamicworkflowinfos = append(pendingdynamicworkflowinfos, pendingdynamicworkflowinfo)
+	return pendingdynamicworkflowinfos
+}
+func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
+
+	var propertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	properties := make(map[string]interface{})
+	delete(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowPropertiesAO1P1.WorkflowPropertiesAO1P1)
+		if err == nil {
+			properties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	properties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+		var inputdefinitions []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			inputdefinition := make(map[string]interface{})
+			inputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+				var NonReserveddefaults []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				NonReserveddefault := make(map[string]interface{})
+				NonReserveddefault["object_type"] = item.ObjectType
+				NonReserveddefault["override"] = item.Override
+				NonReserveddefault["value"] = item.Value
+
+				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
+				return NonReserveddefaults
+			})(item.Default, d)
+			inputdefinition["description"] = item.Description
+			inputdefinition["label"] = item.Label
+			inputdefinition["name"] = item.Name
+			inputdefinition["object_type"] = item.ObjectType
+			inputdefinition["required"] = item.Required
+			inputdefinitions = append(inputdefinitions, inputdefinition)
+		}
+		return inputdefinitions
+	})(item.InputDefinition, d)
+	properties["object_type"] = item.ObjectType
+	properties["output_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+		var outputdefinitions []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			outputdefinition := make(map[string]interface{})
+			outputdefinition["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+
+				var NonReserveddefaults []map[string]interface{}
+				if p == nil {
+					return nil
+				}
+				item := *p
+				NonReserveddefault := make(map[string]interface{})
+				NonReserveddefault["object_type"] = item.ObjectType
+				NonReserveddefault["override"] = item.Override
+				NonReserveddefault["value"] = item.Value
+
+				NonReserveddefaults = append(NonReserveddefaults, NonReserveddefault)
+				return NonReserveddefaults
+			})(item.Default, d)
+			outputdefinition["description"] = item.Description
+			outputdefinition["label"] = item.Label
+			outputdefinition["name"] = item.Name
+			outputdefinition["object_type"] = item.ObjectType
+			outputdefinition["required"] = item.Required
+			outputdefinitions = append(outputdefinitions, outputdefinition)
+		}
+		return outputdefinitions
+	})(item.OutputDefinition, d)
+	properties["retry_count"] = item.RetryCount
+	properties["retry_delay"] = item.RetryDelay
+	properties["retry_policy"] = item.RetryPolicy
+	properties["timeout"] = item.Timeout
+	properties["timeout_policy"] = item.TimeoutPolicy
+
+	propertiess = append(propertiess, properties)
+	return propertiess
+}
+func flattenMapWorkflowTaskDefinitionRef(p *models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var interfacetasks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	interfacetask := make(map[string]interface{})
+	interfacetask["moid"] = item.Moid
+	interfacetask["object_type"] = item.ObjectType
+	interfacetask["selector"] = item.Selector
+
+	interfacetasks = append(interfacetasks, interfacetask)
+	return interfacetasks
+}
+func flattenMapWorkflowTaskInfoRef(p *models.WorkflowTaskInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var parenttaskinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	parenttaskinfo := make(map[string]interface{})
+	parenttaskinfo["moid"] = item.Moid
+	parenttaskinfo["object_type"] = item.ObjectType
+	parenttaskinfo["selector"] = item.Selector
+
+	parenttaskinfos = append(parenttaskinfos, parenttaskinfo)
+	return parenttaskinfos
+}
+func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	var validationinformations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	validationinformation := make(map[string]interface{})
+	delete(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1, "ObjectType")
+	if len(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowValidationInformationAO1P1.WorkflowValidationInformationAO1P1)
+		if err == nil {
+			validationinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	validationinformation["object_type"] = item.ObjectType
+	validationinformation["state"] = item.State
+	validationinformation["validation_error"] = (func(p []*models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
+		var validationerrors []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			validationerror := make(map[string]interface{})
+			validationerror["error_log"] = item.ErrorLog
+			validationerror["field"] = item.Field
+			validationerror["object_type"] = item.ObjectType
+			validationerror["task_name"] = item.TaskName
+			validationerror["transition_name"] = item.TransitionName
+			validationerrors = append(validationerrors, validationerror)
+		}
+		return validationerrors
+	})(item.ValidationError, d)
+
+	validationinformations = append(validationinformations, validationinformation)
+	return validationinformations
+}
+func flattenMapWorkflowWorkflowDefinitionRef(p *models.WorkflowWorkflowDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var workflowdefinitions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	workflowdefinition := make(map[string]interface{})
+	workflowdefinition["moid"] = item.Moid
+	workflowdefinition["object_type"] = item.ObjectType
+	workflowdefinition["selector"] = item.Selector
+
+	workflowdefinitions = append(workflowdefinitions, workflowdefinition)
+	return workflowdefinitions
+}
+func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
+
+	var workflowinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	workflowinfo := make(map[string]interface{})
+	workflowinfo["moid"] = item.Moid
+	workflowinfo["object_type"] = item.ObjectType
+	workflowinfo["selector"] = item.Selector
+
+	workflowinfos = append(workflowinfos, workflowinfo)
+	return workflowinfos
+}
+func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+
+	var certificates []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	certificate := make(map[string]interface{})
+	delete(item.X509CertificateAO1P1.X509CertificateAO1P1, "ObjectType")
+	if len(item.X509CertificateAO1P1.X509CertificateAO1P1) != 0 {
+		j, err := json.Marshal(item.X509CertificateAO1P1.X509CertificateAO1P1)
+		if err == nil {
+			certificate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+		var issuers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		issuer := make(map[string]interface{})
+		issuer["common_name"] = item.CommonName
+		issuer["country"] = item.Country
+		issuer["locality"] = item.Locality
+		issuer["object_type"] = item.ObjectType
+		issuer["organization"] = item.Organization
+		issuer["organizational_unit"] = item.OrganizationalUnit
+		issuer["state"] = item.State
+
+		issuers = append(issuers, issuer)
+		return issuers
+	})(item.Issuer, d)
+	certificate["object_type"] = item.ObjectType
+	certificate["pem_certificate"] = item.PemCertificate
+	certificate["sha256_fingerprint"] = item.Sha256Fingerprint
+	certificate["signature_algorithm"] = item.SignatureAlgorithm
+	certificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+
+		var subjects []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		subject := make(map[string]interface{})
+		subject["common_name"] = item.CommonName
+		subject["country"] = item.Country
+		subject["locality"] = item.Locality
+		subject["object_type"] = item.ObjectType
+		subject["organization"] = item.Organization
+		subject["organizational_unit"] = item.OrganizationalUnit
+		subject["state"] = item.State
+
+		subjects = append(subjects, subject)
+		return subjects
+	})(item.Subject, d)
+
+	certificates = append(certificates, certificate)
+	return certificates
 }
