@@ -24,6 +24,7 @@ build: vet
 
 install: vet build
 	@echo "installing terraform-provider-intersight"
+	go mod vendor
 	$(GO_INSTALL)
 
 clean:
