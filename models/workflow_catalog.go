@@ -27,7 +27,7 @@ type WorkflowCatalog struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -43,7 +43,7 @@ func (m *WorkflowCatalog) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -69,7 +69,7 @@ func (m WorkflowCatalog) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 	}
 
 	dataAO1.Name = m.Name

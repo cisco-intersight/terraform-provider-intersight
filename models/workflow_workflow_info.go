@@ -24,6 +24,10 @@ import (
 type WorkflowWorkflowInfo struct {
 	MoBaseMo
 
+	// The Account to which the workflow is associated.
+	//
+	Account *IamAccountRef `json:"Account,omitempty"`
+
 	// The action of the workflow such as start, cancel, retry, pause.
 	//
 	// Enum: [Start Pause Resume Retry Cancel]
@@ -58,6 +62,11 @@ type WorkflowWorkflowInfo struct {
 	//
 	Internal *bool `json:"Internal,omitempty"`
 
+	// Collection of Workflow execution messages with severity.
+	//
+	// Read Only: true
+	Message []*WorkflowMessage `json:"Message"`
+
 	// Version of the workflow metadata for which this workflow execution was started.
 	//
 	MetaVersion int64 `json:"MetaVersion,omitempty"`
@@ -66,9 +75,9 @@ type WorkflowWorkflowInfo struct {
 	//
 	Name string `json:"Name,omitempty"`
 
-	// Relationship to the Organization that owns the Managed Object.
+	// The Organization to which the workflow is associated.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// All the generated outputs for the workflow.
 	//
@@ -84,6 +93,10 @@ type WorkflowWorkflowInfo struct {
 	//
 	// Read Only: true
 	PendingDynamicWorkflowInfo *WorkflowPendingDynamicWorkflowInfoRef `json:"PendingDynamicWorkflowInfo,omitempty"`
+
+	// Reference to the permission object for which user has access to start this workflow.
+	//
+	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 	// This field indicates percentage of workflow task execution.
 	//
@@ -115,6 +128,11 @@ type WorkflowWorkflowInfo struct {
 	// Read Only: true
 	TaskInfos []*WorkflowTaskInfoRef `json:"TaskInfos"`
 
+	// The trace id to keep track of workflow execution.
+	//
+	// Read Only: true
+	TraceID string `json:"TraceId,omitempty"`
+
 	// A type of the workflow (serverconfig, ansible_monitoring).
 	//
 	// Read Only: true
@@ -127,7 +145,7 @@ type WorkflowWorkflowInfo struct {
 
 	// Denotes the reason workflow is in waiting status.
 	//
-	// Enum: [None GatherTasks WaitTask]
+	// Enum: [None GatherTasks Duplicate RateLimit WaitTask]
 	WaitReason *string `json:"WaitReason,omitempty"`
 
 	// The workflow context which contains initiator and target information.
@@ -147,6 +165,20 @@ type WorkflowWorkflowInfo struct {
 	//
 	// Read Only: true
 	WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
+
+	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
+	//
+	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
+	//
+	// Read Only: true
+	Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
+
+	// A collection of references to the [server.Profile](mo://server.Profile) Managed Object.
+	//
+	// When this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.
+	//
+	// Read Only: true
+	Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -160,6 +192,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		Account *IamAccountRef `json:"Account,omitempty"`
+
 		Action *string `json:"Action,omitempty"`
 
 		CleanupTime strfmt.DateTime `json:"CleanupTime,omitempty"`
@@ -174,17 +208,21 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 		Internal *bool `json:"Internal,omitempty"`
 
+		Message []*WorkflowMessage `json:"Message"`
+
 		MetaVersion int64 `json:"MetaVersion,omitempty"`
 
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Output interface{} `json:"Output,omitempty"`
 
 		ParentTaskInfo *WorkflowTaskInfoRef `json:"ParentTaskInfo,omitempty"`
 
 		PendingDynamicWorkflowInfo *WorkflowPendingDynamicWorkflowInfoRef `json:"PendingDynamicWorkflowInfo,omitempty"`
+
+		Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 		Progress float32 `json:"Progress,omitempty"`
 
@@ -197,6 +235,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 		SuccessWorkflowCleanupDuration int64 `json:"SuccessWorkflowCleanupDuration,omitempty"`
 
 		TaskInfos []*WorkflowTaskInfoRef `json:"TaskInfos"`
+
+		TraceID string `json:"TraceId,omitempty"`
 
 		Type string `json:"Type,omitempty"`
 
@@ -211,10 +251,16 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 		WorkflowMetaType *string `json:"WorkflowMetaType,omitempty"`
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
+
+		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
+
+		Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Account = dataAO1.Account
 
 	m.Action = dataAO1.Action
 
@@ -230,6 +276,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	m.Internal = dataAO1.Internal
 
+	m.Message = dataAO1.Message
+
 	m.MetaVersion = dataAO1.MetaVersion
 
 	m.Name = dataAO1.Name
@@ -242,6 +290,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	m.PendingDynamicWorkflowInfo = dataAO1.PendingDynamicWorkflowInfo
 
+	m.Permission = dataAO1.Permission
+
 	m.Progress = dataAO1.Progress
 
 	m.Src = dataAO1.Src
@@ -253,6 +303,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 	m.SuccessWorkflowCleanupDuration = dataAO1.SuccessWorkflowCleanupDuration
 
 	m.TaskInfos = dataAO1.TaskInfos
+
+	m.TraceID = dataAO1.TraceID
 
 	m.Type = dataAO1.Type
 
@@ -268,6 +320,10 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	m.WorkflowTaskCount = dataAO1.WorkflowTaskCount
 
+	m.Nr0ClusterProfile = dataAO1.Nr0ClusterProfile
+
+	m.Nr1Profile = dataAO1.Nr1Profile
+
 	return nil
 }
 
@@ -282,6 +338,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		Account *IamAccountRef `json:"Account,omitempty"`
+
 		Action *string `json:"Action,omitempty"`
 
 		CleanupTime strfmt.DateTime `json:"CleanupTime,omitempty"`
@@ -296,17 +354,21 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 		Internal *bool `json:"Internal,omitempty"`
 
+		Message []*WorkflowMessage `json:"Message"`
+
 		MetaVersion int64 `json:"MetaVersion,omitempty"`
 
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Output interface{} `json:"Output,omitempty"`
 
 		ParentTaskInfo *WorkflowTaskInfoRef `json:"ParentTaskInfo,omitempty"`
 
 		PendingDynamicWorkflowInfo *WorkflowPendingDynamicWorkflowInfoRef `json:"PendingDynamicWorkflowInfo,omitempty"`
+
+		Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 		Progress float32 `json:"Progress,omitempty"`
 
@@ -319,6 +381,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 		SuccessWorkflowCleanupDuration int64 `json:"SuccessWorkflowCleanupDuration,omitempty"`
 
 		TaskInfos []*WorkflowTaskInfoRef `json:"TaskInfos"`
+
+		TraceID string `json:"TraceId,omitempty"`
 
 		Type string `json:"Type,omitempty"`
 
@@ -333,7 +397,13 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 		WorkflowMetaType *string `json:"WorkflowMetaType,omitempty"`
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
+
+		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
+
+		Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
 	}
+
+	dataAO1.Account = m.Account
 
 	dataAO1.Action = m.Action
 
@@ -349,6 +419,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Internal = m.Internal
 
+	dataAO1.Message = m.Message
+
 	dataAO1.MetaVersion = m.MetaVersion
 
 	dataAO1.Name = m.Name
@@ -361,6 +433,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 	dataAO1.PendingDynamicWorkflowInfo = m.PendingDynamicWorkflowInfo
 
+	dataAO1.Permission = m.Permission
+
 	dataAO1.Progress = m.Progress
 
 	dataAO1.Src = m.Src
@@ -372,6 +446,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.SuccessWorkflowCleanupDuration = m.SuccessWorkflowCleanupDuration
 
 	dataAO1.TaskInfos = m.TaskInfos
+
+	dataAO1.TraceID = m.TraceID
 
 	dataAO1.Type = m.Type
 
@@ -386,6 +462,10 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.WorkflowMetaType = m.WorkflowMetaType
 
 	dataAO1.WorkflowTaskCount = m.WorkflowTaskCount
+
+	dataAO1.Nr0ClusterProfile = m.Nr0ClusterProfile
+
+	dataAO1.Nr1Profile = m.Nr1Profile
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -405,6 +485,10 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateAccount(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateAction(formats); err != nil {
 		res = append(res, err)
 	}
@@ -417,6 +501,10 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateMessage(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrganization(formats); err != nil {
 		res = append(res, err)
 	}
@@ -426,6 +514,10 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePendingDynamicWorkflowInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePermission(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -449,9 +541,35 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateNr0ClusterProfile(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNr1Profile(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *WorkflowWorkflowInfo) validateAccount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Account) { // not required
+		return nil
+	}
+
+	if m.Account != nil {
+		if err := m.Account.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Account")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -515,6 +633,31 @@ func (m *WorkflowWorkflowInfo) validateEndTime(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *WorkflowWorkflowInfo) validateMessage(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Message) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Message); i++ {
+		if swag.IsZero(m.Message[i]) { // not required
+			continue
+		}
+
+		if m.Message[i] != nil {
+			if err := m.Message[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Message" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *WorkflowWorkflowInfo) validateOrganization(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Organization) { // not required
@@ -569,6 +712,24 @@ func (m *WorkflowWorkflowInfo) validatePendingDynamicWorkflowInfo(formats strfmt
 	return nil
 }
 
+func (m *WorkflowWorkflowInfo) validatePermission(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Permission) { // not required
+		return nil
+	}
+
+	if m.Permission != nil {
+		if err := m.Permission.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Permission")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *WorkflowWorkflowInfo) validateStartTime(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.StartTime) { // not required
@@ -611,7 +772,7 @@ var workflowWorkflowInfoTypeWaitReasonPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["None","GatherTasks","WaitTask"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["None","GatherTasks","Duplicate","RateLimit","WaitTask"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -688,6 +849,42 @@ func (m *WorkflowWorkflowInfo) validateWorkflowMetaType(formats strfmt.Registry)
 	// value enum
 	if err := m.validateWorkflowMetaTypeEnum("WorkflowMetaType", "body", *m.WorkflowMetaType); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *WorkflowWorkflowInfo) validateNr0ClusterProfile(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Nr0ClusterProfile) { // not required
+		return nil
+	}
+
+	if m.Nr0ClusterProfile != nil {
+		if err := m.Nr0ClusterProfile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("_0_ClusterProfile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *WorkflowWorkflowInfo) validateNr1Profile(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Nr1Profile) { // not required
+		return nil
+	}
+
+	if m.Nr1Profile != nil {
+		if err := m.Nr1Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("_1_Profile")
+			}
+			return err
+		}
 	}
 
 	return nil

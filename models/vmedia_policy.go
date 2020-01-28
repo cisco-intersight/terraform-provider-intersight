@@ -40,7 +40,7 @@ type VmediaPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -66,7 +66,7 @@ func (m *VmediaPolicy) UnmarshalJSON(raw []byte) error {
 
 		Mappings []*VmediaMapping `json:"Mappings"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
@@ -108,7 +108,7 @@ func (m VmediaPolicy) MarshalJSON() ([]byte, error) {
 
 		Mappings []*VmediaMapping `json:"Mappings"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}

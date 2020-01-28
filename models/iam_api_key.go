@@ -6,10 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // IamAPIKey Iam:Api Key
@@ -19,6 +22,16 @@ import (
 // swagger:model iamApiKey
 type IamAPIKey struct {
 	MoBaseMo
+
+	// The cryptographic hash algorithm to calculate the message digest.
+	//
+	//
+	// Enum: [SHA256 SHA384 SHA512 SHA512_224 SHA512_256]
+	HashAlgorithm *string `json:"HashAlgorithm,omitempty"`
+
+	// The key generation specification provides the algorithm and the parameters required for this algorithm to generate a private key, public key pair. Supported key generation schemes include RSA, ECDSA and Edwards-Curve Digital Signature Algorithm (EdDSA).
+	//
+	KeySpec *PkixKeyGenerationSpec `json:"KeySpec,omitempty"`
 
 	// Permissions associated with the API key. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
 	//
@@ -32,6 +45,17 @@ type IamAPIKey struct {
 	// The purpose of the API Key.
 	//
 	Purpose string `json:"Purpose,omitempty"`
+
+	// The signing algorithm used by the client to authenticate API requests to Intersight.
+	// The following key generation schemes are supported:
+	// 1. RSASSA-PSS, as defined in RFC 8017 [RFC8017], Section 8.1,
+	// 2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,
+	// 3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.
+	// The signing algorithm must be compatible with the key generation specification.
+	//
+	//
+	// Enum: [RSASSA-PKCS1-v1_5 RSASSA-PSS Ed25519 Ecdsa]
+	SigningAlgorithm *string `json:"SigningAlgorithm,omitempty"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
 	//
@@ -52,11 +76,17 @@ func (m *IamAPIKey) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		HashAlgorithm *string `json:"HashAlgorithm,omitempty"`
+
+		KeySpec *PkixKeyGenerationSpec `json:"KeySpec,omitempty"`
+
 		Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 		PrivateKey string `json:"PrivateKey,omitempty"`
 
 		Purpose string `json:"Purpose,omitempty"`
+
+		SigningAlgorithm *string `json:"SigningAlgorithm,omitempty"`
 
 		User *IamUserRef `json:"User,omitempty"`
 	}
@@ -64,11 +94,17 @@ func (m *IamAPIKey) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
+	m.HashAlgorithm = dataAO1.HashAlgorithm
+
+	m.KeySpec = dataAO1.KeySpec
+
 	m.Permission = dataAO1.Permission
 
 	m.PrivateKey = dataAO1.PrivateKey
 
 	m.Purpose = dataAO1.Purpose
+
+	m.SigningAlgorithm = dataAO1.SigningAlgorithm
 
 	m.User = dataAO1.User
 
@@ -86,20 +122,32 @@ func (m IamAPIKey) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		HashAlgorithm *string `json:"HashAlgorithm,omitempty"`
+
+		KeySpec *PkixKeyGenerationSpec `json:"KeySpec,omitempty"`
+
 		Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 		PrivateKey string `json:"PrivateKey,omitempty"`
 
 		Purpose string `json:"Purpose,omitempty"`
 
+		SigningAlgorithm *string `json:"SigningAlgorithm,omitempty"`
+
 		User *IamUserRef `json:"User,omitempty"`
 	}
+
+	dataAO1.HashAlgorithm = m.HashAlgorithm
+
+	dataAO1.KeySpec = m.KeySpec
 
 	dataAO1.Permission = m.Permission
 
 	dataAO1.PrivateKey = m.PrivateKey
 
 	dataAO1.Purpose = m.Purpose
+
+	dataAO1.SigningAlgorithm = m.SigningAlgorithm
 
 	dataAO1.User = m.User
 
@@ -121,7 +169,19 @@ func (m *IamAPIKey) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateHashAlgorithm(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateKeySpec(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validatePermission(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSigningAlgorithm(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -132,6 +192,58 @@ func (m *IamAPIKey) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var iamApiKeyTypeHashAlgorithmPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["SHA256","SHA384","SHA512","SHA512_224","SHA512_256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		iamApiKeyTypeHashAlgorithmPropEnum = append(iamApiKeyTypeHashAlgorithmPropEnum, v)
+	}
+}
+
+// property enum
+func (m *IamAPIKey) validateHashAlgorithmEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, iamApiKeyTypeHashAlgorithmPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *IamAPIKey) validateHashAlgorithm(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.HashAlgorithm) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateHashAlgorithmEnum("HashAlgorithm", "body", *m.HashAlgorithm); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *IamAPIKey) validateKeySpec(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.KeySpec) { // not required
+		return nil
+	}
+
+	if m.KeySpec != nil {
+		if err := m.KeySpec.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("KeySpec")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -148,6 +260,40 @@ func (m *IamAPIKey) validatePermission(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var iamApiKeyTypeSigningAlgorithmPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["RSASSA-PKCS1-v1_5","RSASSA-PSS","Ed25519","Ecdsa"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		iamApiKeyTypeSigningAlgorithmPropEnum = append(iamApiKeyTypeSigningAlgorithmPropEnum, v)
+	}
+}
+
+// property enum
+func (m *IamAPIKey) validateSigningAlgorithmEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, iamApiKeyTypeSigningAlgorithmPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *IamAPIKey) validateSigningAlgorithm(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SigningAlgorithm) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateSigningAlgorithmEnum("SigningAlgorithm", "body", *m.SigningAlgorithm); err != nil {
+		return err
 	}
 
 	return nil

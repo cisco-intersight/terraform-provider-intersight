@@ -12,13 +12,13 @@ Sas Port details of the SAS endpoint.
 
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `address`:(string)This field indicates the SAS Address assigned to storage port.
+* `address`:(string)The SAS Address assigned to storage port.
 * `device_mo_id`:(string)
-* `disk_id`:(int)This field holds the disk identifier.
-* `dn`:(string)
-* `end_point_id`:(int)This field identifies the end-point Id assigned to storage port.
-* `link_description`:(string)This field holds the link description.
-* `link_speed`:(string)This field holds the link speed negotiated for communication.
+* `disk_id`:(int)The disk identifier.
+* `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
+* `end_point_id`:(int)The end-point Id assigned to storage port.
+* `link_description`:(string)The link description.
+* `link_speed`:(string)The link speed negotiated for communication.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-* `rn`:(string)
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `rn`:(string)The Relative Name uniquely identifies an object within a given context.

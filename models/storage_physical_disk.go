@@ -22,7 +22,8 @@ import (
 type StoragePhysicalDisk struct {
 	EquipmentBase
 
-	// block size
+	// The block size of the physical disk.
+	//
 	// Read Only: true
 	BlockSize string `json:"BlockSize,omitempty"`
 
@@ -73,7 +74,8 @@ type StoragePhysicalDisk struct {
 	// Read Only: true
 	LocatorLed *EquipmentLocatorLedRef `json:"LocatorLed,omitempty"`
 
-	// num blocks
+	// The number of blocks present on the physical disk.
+	//
 	// Read Only: true
 	NumBlocks string `json:"NumBlocks,omitempty"`
 
@@ -93,7 +95,7 @@ type StoragePhysicalDisk struct {
 	// Read Only: true
 	PhysicalBlockSize string `json:"PhysicalBlockSize,omitempty"`
 
-	// This object is created to indicate a SCSI controller has physical connectivity to specified physical disk.
+	// The physical connectivity between a SCSI controller and physical disks.
 	//
 	PhysicalDiskExtensions []*StoragePhysicalDiskExtensionRef `json:"PhysicalDiskExtensions"`
 

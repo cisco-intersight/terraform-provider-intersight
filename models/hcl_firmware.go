@@ -21,30 +21,45 @@ import (
 //
 // swagger:model hclFirmware
 type HclFirmware struct {
-	HclFirmwareAO0P0
+	MoBaseComplexType
+
+	HclFirmwareAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *HclFirmware) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 HclFirmwareAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.HclFirmwareAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 HclFirmwareAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.HclFirmwareAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m HclFirmware) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.HclFirmwareAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.HclFirmwareAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m HclFirmware) MarshalJSON() ([]byte, error) {
 func (m *HclFirmware) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with HclFirmwareAO0P0
-	if err := m.HclFirmwareAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with HclFirmwareAO1P1
+	if err := m.HclFirmwareAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *HclFirmware) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// HclFirmwareAO0P0 hcl firmware a o0 p0
-// swagger:model HclFirmwareAO0P0
-type HclFirmwareAO0P0 struct {
+// HclFirmwareAO1P1 hcl firmware a o1 p1
+// swagger:model HclFirmwareAO1P1
+type HclFirmwareAO1P1 struct {
 
 	// Protocol for which the driver is provided. E.g.  enic, fnic, lsi_mr3.
 	//
@@ -113,22 +132,17 @@ type HclFirmwareAO0P0 struct {
 	// Read Only: true
 	LatestDriver *bool `json:"LatestDriver,omitempty"`
 
-	// The concrete type of this complex type.
+	// True if the firmware is latest recommended firmware.
 	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+	// Read Only: true
+	LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 
-	// hcl firmware a o0 p0
-	HclFirmwareAO0P0 map[string]interface{} `json:"-"`
+	// hcl firmware a o1 p1
+	HclFirmwareAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *HclFirmwareAO0P0) UnmarshalJSON(data []byte) error {
+func (m *HclFirmwareAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -159,20 +173,15 @@ func (m *HclFirmwareAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		LatestDriver *bool `json:"LatestDriver,omitempty"`
 
-		// The concrete type of this complex type.
+		// True if the firmware is latest recommended firmware.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		// Read Only: true
+		LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv HclFirmwareAO0P0
+	var rcv HclFirmwareAO1P1
 
 	rcv.DriverName = stage1.DriverName
 
@@ -186,7 +195,7 @@ func (m *HclFirmwareAO0P0) UnmarshalJSON(data []byte) error {
 
 	rcv.LatestDriver = stage1.LatestDriver
 
-	rcv.ObjectType = stage1.ObjectType
+	rcv.LatestFirmware = stage1.LatestFirmware
 
 	*m = rcv
 
@@ -208,7 +217,7 @@ func (m *HclFirmwareAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "LatestDriver")
 
-	delete(stage2, "ObjectType")
+	delete(stage2, "LatestFirmware")
 
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
@@ -220,14 +229,14 @@ func (m *HclFirmwareAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.HclFirmwareAO0P0 = result
+		m.HclFirmwareAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m HclFirmwareAO0P0) MarshalJSON() ([]byte, error) {
+func (m HclFirmwareAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Protocol for which the driver is provided. E.g.  enic, fnic, lsi_mr3.
@@ -257,15 +266,10 @@ func (m HclFirmwareAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		LatestDriver *bool `json:"LatestDriver,omitempty"`
 
-		// The concrete type of this complex type.
+		// True if the firmware is latest recommended firmware.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		// Read Only: true
+		LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 	}
 
 	stage1.DriverName = m.DriverName
@@ -280,7 +284,7 @@ func (m HclFirmwareAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.LatestDriver = m.LatestDriver
 
-	stage1.ObjectType = m.ObjectType
+	stage1.LatestFirmware = m.LatestFirmware
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -288,12 +292,12 @@ func (m HclFirmwareAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.HclFirmwareAO0P0) == 0 {
+	if len(m.HclFirmwareAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.HclFirmwareAO0P0)
+	additional, err := json.Marshal(m.HclFirmwareAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -307,8 +311,8 @@ func (m HclFirmwareAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this hcl firmware a o0 p0
-func (m *HclFirmwareAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this hcl firmware a o1 p1
+func (m *HclFirmwareAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateErrorCode(formats); err != nil {
@@ -321,7 +325,7 @@ func (m *HclFirmwareAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var hclFirmwareAO0P0TypeErrorCodePropEnum []interface{}
+var hclFirmwareAO1P1TypeErrorCodePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -329,82 +333,82 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		hclFirmwareAO0P0TypeErrorCodePropEnum = append(hclFirmwareAO0P0TypeErrorCodePropEnum, v)
+		hclFirmwareAO1P1TypeErrorCodePropEnum = append(hclFirmwareAO1P1TypeErrorCodePropEnum, v)
 	}
 }
 
 const (
 
-	// HclFirmwareAO0P0ErrorCodeSuccess captures enum value "Success"
-	HclFirmwareAO0P0ErrorCodeSuccess string = "Success"
+	// HclFirmwareAO1P1ErrorCodeSuccess captures enum value "Success"
+	HclFirmwareAO1P1ErrorCodeSuccess string = "Success"
 
-	// HclFirmwareAO0P0ErrorCodeUnknown captures enum value "Unknown"
-	HclFirmwareAO0P0ErrorCodeUnknown string = "Unknown"
+	// HclFirmwareAO1P1ErrorCodeUnknown captures enum value "Unknown"
+	HclFirmwareAO1P1ErrorCodeUnknown string = "Unknown"
 
-	// HclFirmwareAO0P0ErrorCodeUnknownServer captures enum value "UnknownServer"
-	HclFirmwareAO0P0ErrorCodeUnknownServer string = "UnknownServer"
+	// HclFirmwareAO1P1ErrorCodeUnknownServer captures enum value "UnknownServer"
+	HclFirmwareAO1P1ErrorCodeUnknownServer string = "UnknownServer"
 
-	// HclFirmwareAO0P0ErrorCodeInvalidUcsVersion captures enum value "InvalidUcsVersion"
-	HclFirmwareAO0P0ErrorCodeInvalidUcsVersion string = "InvalidUcsVersion"
+	// HclFirmwareAO1P1ErrorCodeInvalidUcsVersion captures enum value "InvalidUcsVersion"
+	HclFirmwareAO1P1ErrorCodeInvalidUcsVersion string = "InvalidUcsVersion"
 
-	// HclFirmwareAO0P0ErrorCodeProcessorNotSupported captures enum value "ProcessorNotSupported"
-	HclFirmwareAO0P0ErrorCodeProcessorNotSupported string = "ProcessorNotSupported"
+	// HclFirmwareAO1P1ErrorCodeProcessorNotSupported captures enum value "ProcessorNotSupported"
+	HclFirmwareAO1P1ErrorCodeProcessorNotSupported string = "ProcessorNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeOSNotSupported captures enum value "OSNotSupported"
-	HclFirmwareAO0P0ErrorCodeOSNotSupported string = "OSNotSupported"
+	// HclFirmwareAO1P1ErrorCodeOSNotSupported captures enum value "OSNotSupported"
+	HclFirmwareAO1P1ErrorCodeOSNotSupported string = "OSNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeOSUnknown captures enum value "OSUnknown"
-	HclFirmwareAO0P0ErrorCodeOSUnknown string = "OSUnknown"
+	// HclFirmwareAO1P1ErrorCodeOSUnknown captures enum value "OSUnknown"
+	HclFirmwareAO1P1ErrorCodeOSUnknown string = "OSUnknown"
 
-	// HclFirmwareAO0P0ErrorCodeUCSVersionNotSupported captures enum value "UCSVersionNotSupported"
-	HclFirmwareAO0P0ErrorCodeUCSVersionNotSupported string = "UCSVersionNotSupported"
+	// HclFirmwareAO1P1ErrorCodeUCSVersionNotSupported captures enum value "UCSVersionNotSupported"
+	HclFirmwareAO1P1ErrorCodeUCSVersionNotSupported string = "UCSVersionNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeUcsVersionServerOSCombinationNotSupported captures enum value "UcsVersionServerOSCombinationNotSupported"
-	HclFirmwareAO0P0ErrorCodeUcsVersionServerOSCombinationNotSupported string = "UcsVersionServerOSCombinationNotSupported"
+	// HclFirmwareAO1P1ErrorCodeUcsVersionServerOSCombinationNotSupported captures enum value "UcsVersionServerOSCombinationNotSupported"
+	HclFirmwareAO1P1ErrorCodeUcsVersionServerOSCombinationNotSupported string = "UcsVersionServerOSCombinationNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeProductUnknown captures enum value "ProductUnknown"
-	HclFirmwareAO0P0ErrorCodeProductUnknown string = "ProductUnknown"
+	// HclFirmwareAO1P1ErrorCodeProductUnknown captures enum value "ProductUnknown"
+	HclFirmwareAO1P1ErrorCodeProductUnknown string = "ProductUnknown"
 
-	// HclFirmwareAO0P0ErrorCodeProductNotSupported captures enum value "ProductNotSupported"
-	HclFirmwareAO0P0ErrorCodeProductNotSupported string = "ProductNotSupported"
+	// HclFirmwareAO1P1ErrorCodeProductNotSupported captures enum value "ProductNotSupported"
+	HclFirmwareAO1P1ErrorCodeProductNotSupported string = "ProductNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeDriverNameNotSupported captures enum value "DriverNameNotSupported"
-	HclFirmwareAO0P0ErrorCodeDriverNameNotSupported string = "DriverNameNotSupported"
+	// HclFirmwareAO1P1ErrorCodeDriverNameNotSupported captures enum value "DriverNameNotSupported"
+	HclFirmwareAO1P1ErrorCodeDriverNameNotSupported string = "DriverNameNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeFirmwareVersionNotSupported captures enum value "FirmwareVersionNotSupported"
-	HclFirmwareAO0P0ErrorCodeFirmwareVersionNotSupported string = "FirmwareVersionNotSupported"
+	// HclFirmwareAO1P1ErrorCodeFirmwareVersionNotSupported captures enum value "FirmwareVersionNotSupported"
+	HclFirmwareAO1P1ErrorCodeFirmwareVersionNotSupported string = "FirmwareVersionNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeDriverVersionNotSupported captures enum value "DriverVersionNotSupported"
-	HclFirmwareAO0P0ErrorCodeDriverVersionNotSupported string = "DriverVersionNotSupported"
+	// HclFirmwareAO1P1ErrorCodeDriverVersionNotSupported captures enum value "DriverVersionNotSupported"
+	HclFirmwareAO1P1ErrorCodeDriverVersionNotSupported string = "DriverVersionNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported captures enum value "FirmwareVersionDriverVersionCombinationNotSupported"
-	HclFirmwareAO0P0ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported string = "FirmwareVersionDriverVersionCombinationNotSupported"
+	// HclFirmwareAO1P1ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported captures enum value "FirmwareVersionDriverVersionCombinationNotSupported"
+	HclFirmwareAO1P1ErrorCodeFirmwareVersionDriverVersionCombinationNotSupported string = "FirmwareVersionDriverVersionCombinationNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeFirmwareVersionAndDriverVersionNotSupported captures enum value "FirmwareVersionAndDriverVersionNotSupported"
-	HclFirmwareAO0P0ErrorCodeFirmwareVersionAndDriverVersionNotSupported string = "FirmwareVersionAndDriverVersionNotSupported"
+	// HclFirmwareAO1P1ErrorCodeFirmwareVersionAndDriverVersionNotSupported captures enum value "FirmwareVersionAndDriverVersionNotSupported"
+	HclFirmwareAO1P1ErrorCodeFirmwareVersionAndDriverVersionNotSupported string = "FirmwareVersionAndDriverVersionNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeFirmwareVersionAndDriverNameNotSupported captures enum value "FirmwareVersionAndDriverNameNotSupported"
-	HclFirmwareAO0P0ErrorCodeFirmwareVersionAndDriverNameNotSupported string = "FirmwareVersionAndDriverNameNotSupported"
+	// HclFirmwareAO1P1ErrorCodeFirmwareVersionAndDriverNameNotSupported captures enum value "FirmwareVersionAndDriverNameNotSupported"
+	HclFirmwareAO1P1ErrorCodeFirmwareVersionAndDriverNameNotSupported string = "FirmwareVersionAndDriverNameNotSupported"
 
-	// HclFirmwareAO0P0ErrorCodeInternalError captures enum value "InternalError"
-	HclFirmwareAO0P0ErrorCodeInternalError string = "InternalError"
+	// HclFirmwareAO1P1ErrorCodeInternalError captures enum value "InternalError"
+	HclFirmwareAO1P1ErrorCodeInternalError string = "InternalError"
 
-	// HclFirmwareAO0P0ErrorCodeMarshallingError captures enum value "MarshallingError"
-	HclFirmwareAO0P0ErrorCodeMarshallingError string = "MarshallingError"
+	// HclFirmwareAO1P1ErrorCodeMarshallingError captures enum value "MarshallingError"
+	HclFirmwareAO1P1ErrorCodeMarshallingError string = "MarshallingError"
 
-	// HclFirmwareAO0P0ErrorCodeExempted captures enum value "Exempted"
-	HclFirmwareAO0P0ErrorCodeExempted string = "Exempted"
+	// HclFirmwareAO1P1ErrorCodeExempted captures enum value "Exempted"
+	HclFirmwareAO1P1ErrorCodeExempted string = "Exempted"
 )
 
 // prop value enum
-func (m *HclFirmwareAO0P0) validateErrorCodeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, hclFirmwareAO0P0TypeErrorCodePropEnum); err != nil {
+func (m *HclFirmwareAO1P1) validateErrorCodeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, hclFirmwareAO1P1TypeErrorCodePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *HclFirmwareAO0P0) validateErrorCode(formats strfmt.Registry) error {
+func (m *HclFirmwareAO1P1) validateErrorCode(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ErrorCode) { // not required
 		return nil
@@ -419,7 +423,7 @@ func (m *HclFirmwareAO0P0) validateErrorCode(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *HclFirmwareAO0P0) MarshalBinary() ([]byte, error) {
+func (m *HclFirmwareAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -427,8 +431,8 @@ func (m *HclFirmwareAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *HclFirmwareAO0P0) UnmarshalBinary(b []byte) error {
-	var res HclFirmwareAO0P0
+func (m *HclFirmwareAO1P1) UnmarshalBinary(b []byte) error {
+	var res HclFirmwareAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

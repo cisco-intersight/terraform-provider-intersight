@@ -21,30 +21,45 @@ import (
 //
 // swagger:model metaRelationshipDefinition
 type MetaRelationshipDefinition struct {
-	MetaRelationshipDefinitionAO0P0
+	MoBaseComplexType
+
+	MetaRelationshipDefinitionAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *MetaRelationshipDefinition) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 MetaRelationshipDefinitionAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.MetaRelationshipDefinitionAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 MetaRelationshipDefinitionAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.MetaRelationshipDefinitionAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m MetaRelationshipDefinition) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.MetaRelationshipDefinitionAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.MetaRelationshipDefinitionAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m MetaRelationshipDefinition) MarshalJSON() ([]byte, error) {
 func (m *MetaRelationshipDefinition) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with MetaRelationshipDefinitionAO0P0
-	if err := m.MetaRelationshipDefinitionAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with MetaRelationshipDefinitionAO1P1
+	if err := m.MetaRelationshipDefinitionAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *MetaRelationshipDefinition) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// MetaRelationshipDefinitionAO0P0 meta relationship definition a o0 p0
-// swagger:model MetaRelationshipDefinitionAO0P0
-type MetaRelationshipDefinitionAO0P0 struct {
+// MetaRelationshipDefinitionAO1P1 meta relationship definition a o1 p1
+// swagger:model MetaRelationshipDefinitionAO1P1
+type MetaRelationshipDefinitionAO1P1 struct {
 
 	// API access definition for this relationship.
 	//
@@ -102,27 +121,17 @@ type MetaRelationshipDefinitionAO0P0 struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Fully qualified type of the foreign managed object.
 	//
 	// Read Only: true
 	Type string `json:"Type,omitempty"`
 
-	// meta relationship definition a o0 p0
-	MetaRelationshipDefinitionAO0P0 map[string]interface{} `json:"-"`
+	// meta relationship definition a o1 p1
+	MetaRelationshipDefinitionAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *MetaRelationshipDefinitionAO0P0) UnmarshalJSON(data []byte) error {
+func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -142,16 +151,6 @@ func (m *MetaRelationshipDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Fully qualified type of the foreign managed object.
 		//
 		// Read Only: true
@@ -160,15 +159,13 @@ func (m *MetaRelationshipDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv MetaRelationshipDefinitionAO0P0
+	var rcv MetaRelationshipDefinitionAO1P1
 
 	rcv.APIAccess = stage1.APIAccess
 
 	rcv.Collection = stage1.Collection
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Type = stage1.Type
 
@@ -186,8 +183,6 @@ func (m *MetaRelationshipDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Type")
 
 	// stage 3, add additional properties values
@@ -200,14 +195,14 @@ func (m *MetaRelationshipDefinitionAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.MetaRelationshipDefinitionAO0P0 = result
+		m.MetaRelationshipDefinitionAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m MetaRelationshipDefinitionAO0P0) MarshalJSON() ([]byte, error) {
+func (m MetaRelationshipDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// API access definition for this relationship.
@@ -226,16 +221,6 @@ func (m MetaRelationshipDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// Fully qualified type of the foreign managed object.
 		//
 		// Read Only: true
@@ -248,8 +233,6 @@ func (m MetaRelationshipDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties
@@ -258,12 +241,12 @@ func (m MetaRelationshipDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.MetaRelationshipDefinitionAO0P0) == 0 {
+	if len(m.MetaRelationshipDefinitionAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.MetaRelationshipDefinitionAO0P0)
+	additional, err := json.Marshal(m.MetaRelationshipDefinitionAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -277,8 +260,8 @@ func (m MetaRelationshipDefinitionAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this meta relationship definition a o0 p0
-func (m *MetaRelationshipDefinitionAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this meta relationship definition a o1 p1
+func (m *MetaRelationshipDefinitionAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAPIAccess(formats); err != nil {
@@ -291,7 +274,7 @@ func (m *MetaRelationshipDefinitionAO0P0) Validate(formats strfmt.Registry) erro
 	return nil
 }
 
-var metaRelationshipDefinitionAO0P0TypeAPIAccessPropEnum []interface{}
+var metaRelationshipDefinitionAO1P1TypeAPIAccessPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -299,40 +282,40 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		metaRelationshipDefinitionAO0P0TypeAPIAccessPropEnum = append(metaRelationshipDefinitionAO0P0TypeAPIAccessPropEnum, v)
+		metaRelationshipDefinitionAO1P1TypeAPIAccessPropEnum = append(metaRelationshipDefinitionAO1P1TypeAPIAccessPropEnum, v)
 	}
 }
 
 const (
 
-	// MetaRelationshipDefinitionAO0P0APIAccessNoAccess captures enum value "NoAccess"
-	MetaRelationshipDefinitionAO0P0APIAccessNoAccess string = "NoAccess"
+	// MetaRelationshipDefinitionAO1P1APIAccessNoAccess captures enum value "NoAccess"
+	MetaRelationshipDefinitionAO1P1APIAccessNoAccess string = "NoAccess"
 
-	// MetaRelationshipDefinitionAO0P0APIAccessReadOnly captures enum value "ReadOnly"
-	MetaRelationshipDefinitionAO0P0APIAccessReadOnly string = "ReadOnly"
+	// MetaRelationshipDefinitionAO1P1APIAccessReadOnly captures enum value "ReadOnly"
+	MetaRelationshipDefinitionAO1P1APIAccessReadOnly string = "ReadOnly"
 
-	// MetaRelationshipDefinitionAO0P0APIAccessCreateOnly captures enum value "CreateOnly"
-	MetaRelationshipDefinitionAO0P0APIAccessCreateOnly string = "CreateOnly"
+	// MetaRelationshipDefinitionAO1P1APIAccessCreateOnly captures enum value "CreateOnly"
+	MetaRelationshipDefinitionAO1P1APIAccessCreateOnly string = "CreateOnly"
 
-	// MetaRelationshipDefinitionAO0P0APIAccessReadWrite captures enum value "ReadWrite"
-	MetaRelationshipDefinitionAO0P0APIAccessReadWrite string = "ReadWrite"
+	// MetaRelationshipDefinitionAO1P1APIAccessReadWrite captures enum value "ReadWrite"
+	MetaRelationshipDefinitionAO1P1APIAccessReadWrite string = "ReadWrite"
 
-	// MetaRelationshipDefinitionAO0P0APIAccessWriteOnly captures enum value "WriteOnly"
-	MetaRelationshipDefinitionAO0P0APIAccessWriteOnly string = "WriteOnly"
+	// MetaRelationshipDefinitionAO1P1APIAccessWriteOnly captures enum value "WriteOnly"
+	MetaRelationshipDefinitionAO1P1APIAccessWriteOnly string = "WriteOnly"
 
-	// MetaRelationshipDefinitionAO0P0APIAccessReadOnCreate captures enum value "ReadOnCreate"
-	MetaRelationshipDefinitionAO0P0APIAccessReadOnCreate string = "ReadOnCreate"
+	// MetaRelationshipDefinitionAO1P1APIAccessReadOnCreate captures enum value "ReadOnCreate"
+	MetaRelationshipDefinitionAO1P1APIAccessReadOnCreate string = "ReadOnCreate"
 )
 
 // prop value enum
-func (m *MetaRelationshipDefinitionAO0P0) validateAPIAccessEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, metaRelationshipDefinitionAO0P0TypeAPIAccessPropEnum); err != nil {
+func (m *MetaRelationshipDefinitionAO1P1) validateAPIAccessEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, metaRelationshipDefinitionAO1P1TypeAPIAccessPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *MetaRelationshipDefinitionAO0P0) validateAPIAccess(formats strfmt.Registry) error {
+func (m *MetaRelationshipDefinitionAO1P1) validateAPIAccess(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.APIAccess) { // not required
 		return nil
@@ -347,7 +330,7 @@ func (m *MetaRelationshipDefinitionAO0P0) validateAPIAccess(formats strfmt.Regis
 }
 
 // MarshalBinary interface implementation
-func (m *MetaRelationshipDefinitionAO0P0) MarshalBinary() ([]byte, error) {
+func (m *MetaRelationshipDefinitionAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -355,8 +338,8 @@ func (m *MetaRelationshipDefinitionAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *MetaRelationshipDefinitionAO0P0) UnmarshalBinary(b []byte) error {
-	var res MetaRelationshipDefinitionAO0P0
+func (m *MetaRelationshipDefinitionAO1P1) UnmarshalBinary(b []byte) error {
+	var res MetaRelationshipDefinitionAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

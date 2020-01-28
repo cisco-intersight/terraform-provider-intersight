@@ -21,30 +21,45 @@ import (
 //
 // swagger:model storageVirtualDriveConfig
 type StorageVirtualDriveConfig struct {
-	StorageVirtualDriveConfigAO0P0
+	MoBaseComplexType
+
+	StorageVirtualDriveConfigAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StorageVirtualDriveConfig) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageVirtualDriveConfigAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageVirtualDriveConfigAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 StorageVirtualDriveConfigAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.StorageVirtualDriveConfigAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m StorageVirtualDriveConfig) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageVirtualDriveConfigAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.StorageVirtualDriveConfigAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m StorageVirtualDriveConfig) MarshalJSON() ([]byte, error) {
 func (m *StorageVirtualDriveConfig) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageVirtualDriveConfigAO0P0
-	if err := m.StorageVirtualDriveConfigAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with StorageVirtualDriveConfigAO1P1
+	if err := m.StorageVirtualDriveConfigAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *StorageVirtualDriveConfig) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// StorageVirtualDriveConfigAO0P0 storage virtual drive config a o0 p0
-// swagger:model StorageVirtualDriveConfigAO0P0
-type StorageVirtualDriveConfigAO0P0 struct {
+// StorageVirtualDriveConfigAO1P1 storage virtual drive config a o1 p1
+// swagger:model StorageVirtualDriveConfigAO1P1
+type StorageVirtualDriveConfigAO1P1 struct {
 
 	// This property holds the access policy that host has on this virtual drive.
 	//
@@ -122,16 +141,6 @@ type StorageVirtualDriveConfigAO0P0 struct {
 	//
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// This property holds the read ahead mode to be used.
 	//
 	// Enum: [Default ReadAhead NoReadAhead]
@@ -146,12 +155,12 @@ type StorageVirtualDriveConfigAO0P0 struct {
 	// Enum: [Default WriteThrough WriteBackGoodBbu AlwaysWriteBack]
 	WritePolicy *string `json:"WritePolicy,omitempty"`
 
-	// storage virtual drive config a o0 p0
-	StorageVirtualDriveConfigAO0P0 map[string]interface{} `json:"-"`
+	// storage virtual drive config a o1 p1
+	StorageVirtualDriveConfigAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
+func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -191,16 +200,6 @@ func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// This property holds the read ahead mode to be used.
 		//
 		// Enum: [Default ReadAhead NoReadAhead]
@@ -218,7 +217,7 @@ func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv StorageVirtualDriveConfigAO0P0
+	var rcv StorageVirtualDriveConfigAO1P1
 
 	rcv.AccessPolicy = stage1.AccessPolicy
 
@@ -235,8 +234,6 @@ func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.IoPolicy = stage1.IoPolicy
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.ReadPolicy = stage1.ReadPolicy
 
@@ -268,8 +265,6 @@ func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "ReadPolicy")
 
 	delete(stage2, "Size")
@@ -286,14 +281,14 @@ func (m *StorageVirtualDriveConfigAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.StorageVirtualDriveConfigAO0P0 = result
+		m.StorageVirtualDriveConfigAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m StorageVirtualDriveConfigAO0P0) MarshalJSON() ([]byte, error) {
+func (m StorageVirtualDriveConfigAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// This property holds the access policy that host has on this virtual drive.
@@ -332,16 +327,6 @@ func (m StorageVirtualDriveConfigAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// This property holds the read ahead mode to be used.
 		//
 		// Enum: [Default ReadAhead NoReadAhead]
@@ -373,8 +358,6 @@ func (m StorageVirtualDriveConfigAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.ReadPolicy = m.ReadPolicy
 
 	stage1.Size = m.Size
@@ -387,12 +370,12 @@ func (m StorageVirtualDriveConfigAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.StorageVirtualDriveConfigAO0P0) == 0 {
+	if len(m.StorageVirtualDriveConfigAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.StorageVirtualDriveConfigAO0P0)
+	additional, err := json.Marshal(m.StorageVirtualDriveConfigAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -406,8 +389,8 @@ func (m StorageVirtualDriveConfigAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this storage virtual drive config a o0 p0
-func (m *StorageVirtualDriveConfigAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this storage virtual drive config a o1 p1
+func (m *StorageVirtualDriveConfigAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAccessPolicy(formats); err != nil {
@@ -436,7 +419,7 @@ func (m *StorageVirtualDriveConfigAO0P0) Validate(formats strfmt.Registry) error
 	return nil
 }
 
-var storageVirtualDriveConfigAO0P0TypeAccessPolicyPropEnum []interface{}
+var storageVirtualDriveConfigAO1P1TypeAccessPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -444,34 +427,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageVirtualDriveConfigAO0P0TypeAccessPolicyPropEnum = append(storageVirtualDriveConfigAO0P0TypeAccessPolicyPropEnum, v)
+		storageVirtualDriveConfigAO1P1TypeAccessPolicyPropEnum = append(storageVirtualDriveConfigAO1P1TypeAccessPolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// StorageVirtualDriveConfigAO0P0AccessPolicyDefault captures enum value "Default"
-	StorageVirtualDriveConfigAO0P0AccessPolicyDefault string = "Default"
+	// StorageVirtualDriveConfigAO1P1AccessPolicyDefault captures enum value "Default"
+	StorageVirtualDriveConfigAO1P1AccessPolicyDefault string = "Default"
 
-	// StorageVirtualDriveConfigAO0P0AccessPolicyReadWrite captures enum value "ReadWrite"
-	StorageVirtualDriveConfigAO0P0AccessPolicyReadWrite string = "ReadWrite"
+	// StorageVirtualDriveConfigAO1P1AccessPolicyReadWrite captures enum value "ReadWrite"
+	StorageVirtualDriveConfigAO1P1AccessPolicyReadWrite string = "ReadWrite"
 
-	// StorageVirtualDriveConfigAO0P0AccessPolicyReadOnly captures enum value "ReadOnly"
-	StorageVirtualDriveConfigAO0P0AccessPolicyReadOnly string = "ReadOnly"
+	// StorageVirtualDriveConfigAO1P1AccessPolicyReadOnly captures enum value "ReadOnly"
+	StorageVirtualDriveConfigAO1P1AccessPolicyReadOnly string = "ReadOnly"
 
-	// StorageVirtualDriveConfigAO0P0AccessPolicyBlocked captures enum value "Blocked"
-	StorageVirtualDriveConfigAO0P0AccessPolicyBlocked string = "Blocked"
+	// StorageVirtualDriveConfigAO1P1AccessPolicyBlocked captures enum value "Blocked"
+	StorageVirtualDriveConfigAO1P1AccessPolicyBlocked string = "Blocked"
 )
 
 // prop value enum
-func (m *StorageVirtualDriveConfigAO0P0) validateAccessPolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO0P0TypeAccessPolicyPropEnum); err != nil {
+func (m *StorageVirtualDriveConfigAO1P1) validateAccessPolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO1P1TypeAccessPolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageVirtualDriveConfigAO0P0) validateAccessPolicy(formats strfmt.Registry) error {
+func (m *StorageVirtualDriveConfigAO1P1) validateAccessPolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AccessPolicy) { // not required
 		return nil
@@ -485,7 +468,7 @@ func (m *StorageVirtualDriveConfigAO0P0) validateAccessPolicy(formats strfmt.Reg
 	return nil
 }
 
-var storageVirtualDriveConfigAO0P0TypeDriveCachePropEnum []interface{}
+var storageVirtualDriveConfigAO1P1TypeDriveCachePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -493,34 +476,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageVirtualDriveConfigAO0P0TypeDriveCachePropEnum = append(storageVirtualDriveConfigAO0P0TypeDriveCachePropEnum, v)
+		storageVirtualDriveConfigAO1P1TypeDriveCachePropEnum = append(storageVirtualDriveConfigAO1P1TypeDriveCachePropEnum, v)
 	}
 }
 
 const (
 
-	// StorageVirtualDriveConfigAO0P0DriveCacheDefault captures enum value "Default"
-	StorageVirtualDriveConfigAO0P0DriveCacheDefault string = "Default"
+	// StorageVirtualDriveConfigAO1P1DriveCacheDefault captures enum value "Default"
+	StorageVirtualDriveConfigAO1P1DriveCacheDefault string = "Default"
 
-	// StorageVirtualDriveConfigAO0P0DriveCacheNoChange captures enum value "NoChange"
-	StorageVirtualDriveConfigAO0P0DriveCacheNoChange string = "NoChange"
+	// StorageVirtualDriveConfigAO1P1DriveCacheNoChange captures enum value "NoChange"
+	StorageVirtualDriveConfigAO1P1DriveCacheNoChange string = "NoChange"
 
-	// StorageVirtualDriveConfigAO0P0DriveCacheEnable captures enum value "Enable"
-	StorageVirtualDriveConfigAO0P0DriveCacheEnable string = "Enable"
+	// StorageVirtualDriveConfigAO1P1DriveCacheEnable captures enum value "Enable"
+	StorageVirtualDriveConfigAO1P1DriveCacheEnable string = "Enable"
 
-	// StorageVirtualDriveConfigAO0P0DriveCacheDisable captures enum value "Disable"
-	StorageVirtualDriveConfigAO0P0DriveCacheDisable string = "Disable"
+	// StorageVirtualDriveConfigAO1P1DriveCacheDisable captures enum value "Disable"
+	StorageVirtualDriveConfigAO1P1DriveCacheDisable string = "Disable"
 )
 
 // prop value enum
-func (m *StorageVirtualDriveConfigAO0P0) validateDriveCacheEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO0P0TypeDriveCachePropEnum); err != nil {
+func (m *StorageVirtualDriveConfigAO1P1) validateDriveCacheEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO1P1TypeDriveCachePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageVirtualDriveConfigAO0P0) validateDriveCache(formats strfmt.Registry) error {
+func (m *StorageVirtualDriveConfigAO1P1) validateDriveCache(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.DriveCache) { // not required
 		return nil
@@ -534,7 +517,7 @@ func (m *StorageVirtualDriveConfigAO0P0) validateDriveCache(formats strfmt.Regis
 	return nil
 }
 
-var storageVirtualDriveConfigAO0P0TypeIoPolicyPropEnum []interface{}
+var storageVirtualDriveConfigAO1P1TypeIoPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -542,31 +525,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageVirtualDriveConfigAO0P0TypeIoPolicyPropEnum = append(storageVirtualDriveConfigAO0P0TypeIoPolicyPropEnum, v)
+		storageVirtualDriveConfigAO1P1TypeIoPolicyPropEnum = append(storageVirtualDriveConfigAO1P1TypeIoPolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// StorageVirtualDriveConfigAO0P0IoPolicyDefault captures enum value "Default"
-	StorageVirtualDriveConfigAO0P0IoPolicyDefault string = "Default"
+	// StorageVirtualDriveConfigAO1P1IoPolicyDefault captures enum value "Default"
+	StorageVirtualDriveConfigAO1P1IoPolicyDefault string = "Default"
 
-	// StorageVirtualDriveConfigAO0P0IoPolicyDirect captures enum value "Direct"
-	StorageVirtualDriveConfigAO0P0IoPolicyDirect string = "Direct"
+	// StorageVirtualDriveConfigAO1P1IoPolicyDirect captures enum value "Direct"
+	StorageVirtualDriveConfigAO1P1IoPolicyDirect string = "Direct"
 
-	// StorageVirtualDriveConfigAO0P0IoPolicyCached captures enum value "Cached"
-	StorageVirtualDriveConfigAO0P0IoPolicyCached string = "Cached"
+	// StorageVirtualDriveConfigAO1P1IoPolicyCached captures enum value "Cached"
+	StorageVirtualDriveConfigAO1P1IoPolicyCached string = "Cached"
 )
 
 // prop value enum
-func (m *StorageVirtualDriveConfigAO0P0) validateIoPolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO0P0TypeIoPolicyPropEnum); err != nil {
+func (m *StorageVirtualDriveConfigAO1P1) validateIoPolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO1P1TypeIoPolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageVirtualDriveConfigAO0P0) validateIoPolicy(formats strfmt.Registry) error {
+func (m *StorageVirtualDriveConfigAO1P1) validateIoPolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.IoPolicy) { // not required
 		return nil
@@ -580,7 +563,7 @@ func (m *StorageVirtualDriveConfigAO0P0) validateIoPolicy(formats strfmt.Registr
 	return nil
 }
 
-var storageVirtualDriveConfigAO0P0TypeReadPolicyPropEnum []interface{}
+var storageVirtualDriveConfigAO1P1TypeReadPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -588,31 +571,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageVirtualDriveConfigAO0P0TypeReadPolicyPropEnum = append(storageVirtualDriveConfigAO0P0TypeReadPolicyPropEnum, v)
+		storageVirtualDriveConfigAO1P1TypeReadPolicyPropEnum = append(storageVirtualDriveConfigAO1P1TypeReadPolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// StorageVirtualDriveConfigAO0P0ReadPolicyDefault captures enum value "Default"
-	StorageVirtualDriveConfigAO0P0ReadPolicyDefault string = "Default"
+	// StorageVirtualDriveConfigAO1P1ReadPolicyDefault captures enum value "Default"
+	StorageVirtualDriveConfigAO1P1ReadPolicyDefault string = "Default"
 
-	// StorageVirtualDriveConfigAO0P0ReadPolicyReadAhead captures enum value "ReadAhead"
-	StorageVirtualDriveConfigAO0P0ReadPolicyReadAhead string = "ReadAhead"
+	// StorageVirtualDriveConfigAO1P1ReadPolicyReadAhead captures enum value "ReadAhead"
+	StorageVirtualDriveConfigAO1P1ReadPolicyReadAhead string = "ReadAhead"
 
-	// StorageVirtualDriveConfigAO0P0ReadPolicyNoReadAhead captures enum value "NoReadAhead"
-	StorageVirtualDriveConfigAO0P0ReadPolicyNoReadAhead string = "NoReadAhead"
+	// StorageVirtualDriveConfigAO1P1ReadPolicyNoReadAhead captures enum value "NoReadAhead"
+	StorageVirtualDriveConfigAO1P1ReadPolicyNoReadAhead string = "NoReadAhead"
 )
 
 // prop value enum
-func (m *StorageVirtualDriveConfigAO0P0) validateReadPolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO0P0TypeReadPolicyPropEnum); err != nil {
+func (m *StorageVirtualDriveConfigAO1P1) validateReadPolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO1P1TypeReadPolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageVirtualDriveConfigAO0P0) validateReadPolicy(formats strfmt.Registry) error {
+func (m *StorageVirtualDriveConfigAO1P1) validateReadPolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ReadPolicy) { // not required
 		return nil
@@ -626,7 +609,7 @@ func (m *StorageVirtualDriveConfigAO0P0) validateReadPolicy(formats strfmt.Regis
 	return nil
 }
 
-var storageVirtualDriveConfigAO0P0TypeWritePolicyPropEnum []interface{}
+var storageVirtualDriveConfigAO1P1TypeWritePolicyPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -634,34 +617,34 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageVirtualDriveConfigAO0P0TypeWritePolicyPropEnum = append(storageVirtualDriveConfigAO0P0TypeWritePolicyPropEnum, v)
+		storageVirtualDriveConfigAO1P1TypeWritePolicyPropEnum = append(storageVirtualDriveConfigAO1P1TypeWritePolicyPropEnum, v)
 	}
 }
 
 const (
 
-	// StorageVirtualDriveConfigAO0P0WritePolicyDefault captures enum value "Default"
-	StorageVirtualDriveConfigAO0P0WritePolicyDefault string = "Default"
+	// StorageVirtualDriveConfigAO1P1WritePolicyDefault captures enum value "Default"
+	StorageVirtualDriveConfigAO1P1WritePolicyDefault string = "Default"
 
-	// StorageVirtualDriveConfigAO0P0WritePolicyWriteThrough captures enum value "WriteThrough"
-	StorageVirtualDriveConfigAO0P0WritePolicyWriteThrough string = "WriteThrough"
+	// StorageVirtualDriveConfigAO1P1WritePolicyWriteThrough captures enum value "WriteThrough"
+	StorageVirtualDriveConfigAO1P1WritePolicyWriteThrough string = "WriteThrough"
 
-	// StorageVirtualDriveConfigAO0P0WritePolicyWriteBackGoodBbu captures enum value "WriteBackGoodBbu"
-	StorageVirtualDriveConfigAO0P0WritePolicyWriteBackGoodBbu string = "WriteBackGoodBbu"
+	// StorageVirtualDriveConfigAO1P1WritePolicyWriteBackGoodBbu captures enum value "WriteBackGoodBbu"
+	StorageVirtualDriveConfigAO1P1WritePolicyWriteBackGoodBbu string = "WriteBackGoodBbu"
 
-	// StorageVirtualDriveConfigAO0P0WritePolicyAlwaysWriteBack captures enum value "AlwaysWriteBack"
-	StorageVirtualDriveConfigAO0P0WritePolicyAlwaysWriteBack string = "AlwaysWriteBack"
+	// StorageVirtualDriveConfigAO1P1WritePolicyAlwaysWriteBack captures enum value "AlwaysWriteBack"
+	StorageVirtualDriveConfigAO1P1WritePolicyAlwaysWriteBack string = "AlwaysWriteBack"
 )
 
 // prop value enum
-func (m *StorageVirtualDriveConfigAO0P0) validateWritePolicyEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO0P0TypeWritePolicyPropEnum); err != nil {
+func (m *StorageVirtualDriveConfigAO1P1) validateWritePolicyEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageVirtualDriveConfigAO1P1TypeWritePolicyPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageVirtualDriveConfigAO0P0) validateWritePolicy(formats strfmt.Registry) error {
+func (m *StorageVirtualDriveConfigAO1P1) validateWritePolicy(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.WritePolicy) { // not required
 		return nil
@@ -676,7 +659,7 @@ func (m *StorageVirtualDriveConfigAO0P0) validateWritePolicy(formats strfmt.Regi
 }
 
 // MarshalBinary interface implementation
-func (m *StorageVirtualDriveConfigAO0P0) MarshalBinary() ([]byte, error) {
+func (m *StorageVirtualDriveConfigAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -684,8 +667,8 @@ func (m *StorageVirtualDriveConfigAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *StorageVirtualDriveConfigAO0P0) UnmarshalBinary(b []byte) error {
-	var res StorageVirtualDriveConfigAO0P0
+func (m *StorageVirtualDriveConfigAO1P1) UnmarshalBinary(b []byte) error {
+	var res StorageVirtualDriveConfigAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

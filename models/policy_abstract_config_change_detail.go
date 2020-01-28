@@ -31,6 +31,11 @@ type PolicyAbstractConfigChangeDetail struct {
 	//
 	ConfigChangeContext *PolicyConfigResultContext `json:"ConfigChangeContext,omitempty"`
 
+	// Config change flag to differentiate Pending-changes and Config-drift.
+	//
+	// Enum: [Pending-changes Drift-changes]
+	ConfigChangeFlag *string `json:"ConfigChangeFlag,omitempty"`
+
 	// Possible disruptions the configuration change might cause.
 	//
 	Disruptions []string `json:"Disruptions"`
@@ -60,6 +65,8 @@ func (m *PolicyAbstractConfigChangeDetail) UnmarshalJSON(raw []byte) error {
 
 		ConfigChangeContext *PolicyConfigResultContext `json:"ConfigChangeContext,omitempty"`
 
+		ConfigChangeFlag *string `json:"ConfigChangeFlag,omitempty"`
+
 		Disruptions []string `json:"Disruptions"`
 
 		Message string `json:"Message,omitempty"`
@@ -73,6 +80,8 @@ func (m *PolicyAbstractConfigChangeDetail) UnmarshalJSON(raw []byte) error {
 	m.Changes = dataAO1.Changes
 
 	m.ConfigChangeContext = dataAO1.ConfigChangeContext
+
+	m.ConfigChangeFlag = dataAO1.ConfigChangeFlag
 
 	m.Disruptions = dataAO1.Disruptions
 
@@ -98,6 +107,8 @@ func (m PolicyAbstractConfigChangeDetail) MarshalJSON() ([]byte, error) {
 
 		ConfigChangeContext *PolicyConfigResultContext `json:"ConfigChangeContext,omitempty"`
 
+		ConfigChangeFlag *string `json:"ConfigChangeFlag,omitempty"`
+
 		Disruptions []string `json:"Disruptions"`
 
 		Message string `json:"Message,omitempty"`
@@ -108,6 +119,8 @@ func (m PolicyAbstractConfigChangeDetail) MarshalJSON() ([]byte, error) {
 	dataAO1.Changes = m.Changes
 
 	dataAO1.ConfigChangeContext = m.ConfigChangeContext
+
+	dataAO1.ConfigChangeFlag = m.ConfigChangeFlag
 
 	dataAO1.Disruptions = m.Disruptions
 
@@ -137,6 +150,10 @@ func (m *PolicyAbstractConfigChangeDetail) Validate(formats strfmt.Registry) err
 		res = append(res, err)
 	}
 
+	if err := m.validateConfigChangeFlag(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateModStatus(formats); err != nil {
 		res = append(res, err)
 	}
@@ -160,6 +177,40 @@ func (m *PolicyAbstractConfigChangeDetail) validateConfigChangeContext(formats s
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var policyAbstractConfigChangeDetailTypeConfigChangeFlagPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Pending-changes","Drift-changes"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		policyAbstractConfigChangeDetailTypeConfigChangeFlagPropEnum = append(policyAbstractConfigChangeDetailTypeConfigChangeFlagPropEnum, v)
+	}
+}
+
+// property enum
+func (m *PolicyAbstractConfigChangeDetail) validateConfigChangeFlagEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, policyAbstractConfigChangeDetailTypeConfigChangeFlagPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *PolicyAbstractConfigChangeDetail) validateConfigChangeFlag(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ConfigChangeFlag) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateConfigChangeFlagEnum("ConfigChangeFlag", "body", *m.ConfigChangeFlag); err != nil {
+		return err
 	}
 
 	return nil

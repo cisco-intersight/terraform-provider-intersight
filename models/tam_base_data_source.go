@@ -21,30 +21,45 @@ import (
 //
 // swagger:model tamBaseDataSource
 type TamBaseDataSource struct {
-	TamBaseDataSourceAO0P0
+	MoBaseComplexType
+
+	TamBaseDataSourceAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *TamBaseDataSource) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 TamBaseDataSourceAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.TamBaseDataSourceAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 TamBaseDataSourceAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.TamBaseDataSourceAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m TamBaseDataSource) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.TamBaseDataSourceAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.TamBaseDataSourceAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m TamBaseDataSource) MarshalJSON() ([]byte, error) {
 func (m *TamBaseDataSource) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with TamBaseDataSourceAO0P0
-	if err := m.TamBaseDataSourceAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with TamBaseDataSourceAO1P1
+	if err := m.TamBaseDataSourceAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,51 +101,31 @@ func (m *TamBaseDataSource) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// TamBaseDataSourceAO0P0 tam base data source a o0 p0
-// swagger:model TamBaseDataSourceAO0P0
-type TamBaseDataSourceAO0P0 struct {
+// TamBaseDataSourceAO1P1 tam base data source a o1 p1
+// swagger:model TamBaseDataSourceAO1P1
+type TamBaseDataSourceAO1P1 struct {
 
 	// Name is used to unique identify and refer a given data source in an alert definition.
 	//
 	Name string `json:"Name,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
 	//
 	// Enum: [nxos intersightApi]
 	Type *string `json:"Type,omitempty"`
 
-	// tam base data source a o0 p0
-	TamBaseDataSourceAO0P0 map[string]interface{} `json:"-"`
+	// tam base data source a o1 p1
+	TamBaseDataSourceAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *TamBaseDataSourceAO0P0) UnmarshalJSON(data []byte) error {
+func (m *TamBaseDataSourceAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// Name is used to unique identify and refer a given data source in an alert definition.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
 		//
@@ -136,11 +135,9 @@ func (m *TamBaseDataSourceAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv TamBaseDataSourceAO0P0
+	var rcv TamBaseDataSourceAO1P1
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Type = stage1.Type
 
@@ -154,8 +151,6 @@ func (m *TamBaseDataSourceAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Type")
 
 	// stage 3, add additional properties values
@@ -168,29 +163,19 @@ func (m *TamBaseDataSourceAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.TamBaseDataSourceAO0P0 = result
+		m.TamBaseDataSourceAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m TamBaseDataSourceAO0P0) MarshalJSON() ([]byte, error) {
+func (m TamBaseDataSourceAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name is used to unique identify and refer a given data source in an alert definition.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
 		//
@@ -200,8 +185,6 @@ func (m TamBaseDataSourceAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties
@@ -210,12 +193,12 @@ func (m TamBaseDataSourceAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.TamBaseDataSourceAO0P0) == 0 {
+	if len(m.TamBaseDataSourceAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.TamBaseDataSourceAO0P0)
+	additional, err := json.Marshal(m.TamBaseDataSourceAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -229,8 +212,8 @@ func (m TamBaseDataSourceAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this tam base data source a o0 p0
-func (m *TamBaseDataSourceAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this tam base data source a o1 p1
+func (m *TamBaseDataSourceAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateType(formats); err != nil {
@@ -243,7 +226,7 @@ func (m *TamBaseDataSourceAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var tamBaseDataSourceAO0P0TypeTypePropEnum []interface{}
+var tamBaseDataSourceAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -251,28 +234,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		tamBaseDataSourceAO0P0TypeTypePropEnum = append(tamBaseDataSourceAO0P0TypeTypePropEnum, v)
+		tamBaseDataSourceAO1P1TypeTypePropEnum = append(tamBaseDataSourceAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// TamBaseDataSourceAO0P0TypeNxos captures enum value "nxos"
-	TamBaseDataSourceAO0P0TypeNxos string = "nxos"
+	// TamBaseDataSourceAO1P1TypeNxos captures enum value "nxos"
+	TamBaseDataSourceAO1P1TypeNxos string = "nxos"
 
-	// TamBaseDataSourceAO0P0TypeIntersightAPI captures enum value "intersightApi"
-	TamBaseDataSourceAO0P0TypeIntersightAPI string = "intersightApi"
+	// TamBaseDataSourceAO1P1TypeIntersightAPI captures enum value "intersightApi"
+	TamBaseDataSourceAO1P1TypeIntersightAPI string = "intersightApi"
 )
 
 // prop value enum
-func (m *TamBaseDataSourceAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, tamBaseDataSourceAO0P0TypeTypePropEnum); err != nil {
+func (m *TamBaseDataSourceAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, tamBaseDataSourceAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *TamBaseDataSourceAO0P0) validateType(formats strfmt.Registry) error {
+func (m *TamBaseDataSourceAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -287,7 +270,7 @@ func (m *TamBaseDataSourceAO0P0) validateType(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *TamBaseDataSourceAO0P0) MarshalBinary() ([]byte, error) {
+func (m *TamBaseDataSourceAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -295,8 +278,8 @@ func (m *TamBaseDataSourceAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *TamBaseDataSourceAO0P0) UnmarshalBinary(b []byte) error {
-	var res TamBaseDataSourceAO0P0
+func (m *TamBaseDataSourceAO1P1) UnmarshalBinary(b []byte) error {
+	var res TamBaseDataSourceAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

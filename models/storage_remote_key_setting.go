@@ -16,34 +16,49 @@ import (
 
 // StorageRemoteKeySetting Remote Key Management
 //
-// This type models the remote key configurarion required for disks encryptions. KMIP is the only remote key protocol supported in the policy.
+// Models the remote key configurarion required for disks encryptions. KMIP is the only remote key protocol supported in the policy.
 //
 // swagger:model storageRemoteKeySetting
 type StorageRemoteKeySetting struct {
-	StorageRemoteKeySettingAO0P0
+	MoBaseComplexType
+
+	StorageRemoteKeySettingAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StorageRemoteKeySetting) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageRemoteKeySettingAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageRemoteKeySettingAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 StorageRemoteKeySettingAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.StorageRemoteKeySettingAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m StorageRemoteKeySetting) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageRemoteKeySettingAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.StorageRemoteKeySettingAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m StorageRemoteKeySetting) MarshalJSON() ([]byte, error) {
 func (m *StorageRemoteKeySetting) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageRemoteKeySettingAO0P0
-	if err := m.StorageRemoteKeySettingAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with StorageRemoteKeySettingAO1P1
+	if err := m.StorageRemoteKeySettingAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,101 +100,79 @@ func (m *StorageRemoteKeySetting) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// StorageRemoteKeySettingAO0P0 storage remote key setting a o0 p0
-// swagger:model StorageRemoteKeySettingAO0P0
-type StorageRemoteKeySettingAO0P0 struct {
+// StorageRemoteKeySettingAO1P1 storage remote key setting a o1 p1
+// swagger:model StorageRemoteKeySettingAO1P1
+type StorageRemoteKeySettingAO1P1 struct {
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// This property is used to specify password for the KMIP server login.
+	// The password for the KMIP server login.
 	//
 	Password string `json:"Password,omitempty"`
 
-	// This property is used to port to which the KMIP client should connect.
+	// The port to which the KMIP client should connect.
 	//
 	Port int64 `json:"Port,omitempty"`
 
-	// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+	// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 	//
 	PrimaryServer string `json:"PrimaryServer,omitempty"`
 
-	// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+	// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 	//
 	SecondaryServer string `json:"SecondaryServer,omitempty"`
 
-	// This property is used to store the certificate/ public key of the KMIP server This is required for initiating secure communication with the server.
+	// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
 	//
 	ServerCertificate string `json:"ServerCertificate,omitempty"`
 
-	// This property is used to specify user name for the KMIP server login.
+	// The user name for the KMIP server login.
 	//
 	Username string `json:"Username,omitempty"`
 
-	// storage remote key setting a o0 p0
-	StorageRemoteKeySettingAO0P0 map[string]interface{} `json:"-"`
+	// storage remote key setting a o1 p1
+	StorageRemoteKeySettingAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *StorageRemoteKeySettingAO0P0) UnmarshalJSON(data []byte) error {
+func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// This property is used to specify password for the KMIP server login.
+		// The password for the KMIP server login.
 		//
 		Password string `json:"Password,omitempty"`
 
-		// This property is used to port to which the KMIP client should connect.
+		// The port to which the KMIP client should connect.
 		//
 		Port int64 `json:"Port,omitempty"`
 
-		// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+		// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 		//
 		PrimaryServer string `json:"PrimaryServer,omitempty"`
 
-		// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+		// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 		//
 		SecondaryServer string `json:"SecondaryServer,omitempty"`
 
-		// This property is used to store the certificate/ public key of the KMIP server This is required for initiating secure communication with the server.
+		// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
 		//
 		ServerCertificate string `json:"ServerCertificate,omitempty"`
 
-		// This property is used to specify user name for the KMIP server login.
+		// The user name for the KMIP server login.
 		//
 		Username string `json:"Username,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv StorageRemoteKeySettingAO0P0
+	var rcv StorageRemoteKeySettingAO1P1
 
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Password = stage1.Password
 
@@ -199,8 +196,6 @@ func (m *StorageRemoteKeySettingAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "IsPasswordSet")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Password")
 
 	delete(stage2, "Port")
@@ -223,57 +218,45 @@ func (m *StorageRemoteKeySettingAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.StorageRemoteKeySettingAO0P0 = result
+		m.StorageRemoteKeySettingAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m StorageRemoteKeySettingAO0P0) MarshalJSON() ([]byte, error) {
+func (m StorageRemoteKeySettingAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// This property is used to specify password for the KMIP server login.
+		// The password for the KMIP server login.
 		//
 		Password string `json:"Password,omitempty"`
 
-		// This property is used to port to which the KMIP client should connect.
+		// The port to which the KMIP client should connect.
 		//
 		Port int64 `json:"Port,omitempty"`
 
-		// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+		// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 		//
 		PrimaryServer string `json:"PrimaryServer,omitempty"`
 
-		// This property is used to store the address of the KMIP server. It could be an IPv4 address or an IPv6 address or hostname. Hostnames are valid only when Inband is configured for the CIMC address.
+		// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
 		//
 		SecondaryServer string `json:"SecondaryServer,omitempty"`
 
-		// This property is used to store the certificate/ public key of the KMIP server This is required for initiating secure communication with the server.
+		// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
 		//
 		ServerCertificate string `json:"ServerCertificate,omitempty"`
 
-		// This property is used to specify user name for the KMIP server login.
+		// The user name for the KMIP server login.
 		//
 		Username string `json:"Username,omitempty"`
 	}
 
 	stage1.IsPasswordSet = m.IsPasswordSet
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.Password = m.Password
 
@@ -293,12 +276,12 @@ func (m StorageRemoteKeySettingAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.StorageRemoteKeySettingAO0P0) == 0 {
+	if len(m.StorageRemoteKeySettingAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.StorageRemoteKeySettingAO0P0)
+	additional, err := json.Marshal(m.StorageRemoteKeySettingAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -312,13 +295,13 @@ func (m StorageRemoteKeySettingAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this storage remote key setting a o0 p0
-func (m *StorageRemoteKeySettingAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this storage remote key setting a o1 p1
+func (m *StorageRemoteKeySettingAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *StorageRemoteKeySettingAO0P0) MarshalBinary() ([]byte, error) {
+func (m *StorageRemoteKeySettingAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -326,8 +309,8 @@ func (m *StorageRemoteKeySettingAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *StorageRemoteKeySettingAO0P0) UnmarshalBinary(b []byte) error {
-	var res StorageRemoteKeySettingAO0P0
+func (m *StorageRemoteKeySettingAO1P1) UnmarshalBinary(b []byte) error {
+	var res StorageRemoteKeySettingAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

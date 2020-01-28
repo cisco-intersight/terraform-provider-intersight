@@ -34,7 +34,7 @@ type SoftwarerepositoryFile struct {
 
 	// The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source.
 	//
-	// Enum: [None GeneratePreSignedUploadUrl CompleteImportProcess PreCache Cancel Evict]
+	// Enum: [None GeneratePreSignedUploadUrl GeneratePreSignedDownloadUrl CompleteImportProcess PreCache Cancel Evict]
 	ImportAction *string `json:"ImportAction,omitempty"`
 
 	// The state  of this file in the repository or Appliance. The importState is updated during the import operation and as part of the repository monitoring process.
@@ -283,7 +283,7 @@ var softwarerepositoryFileTypeImportActionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["None","GeneratePreSignedUploadUrl","CompleteImportProcess","PreCache","Cancel","Evict"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["None","GeneratePreSignedUploadUrl","GeneratePreSignedDownloadUrl","CompleteImportProcess","PreCache","Cancel","Evict"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

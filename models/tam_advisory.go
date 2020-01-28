@@ -25,19 +25,15 @@ type TamAdvisory struct {
 
 	// Brief description of the advisory details.
 	//
-	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// A user defined name for the Intersight Advisory.
 	//
-	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Severity level of the Intersight Advisory.
 	//
-	// Read Only: true
-	// Enum: [critical high medium info]
-	Severity string `json:"Severity,omitempty"`
+	Severity *TamSeverity `json:"Severity,omitempty"`
 
 	// Current state of the advisory. Indicates if the user is interested in getting updates for the advisory.
 	//
@@ -60,7 +56,7 @@ func (m *TamAdvisory) UnmarshalJSON(raw []byte) error {
 
 		Name string `json:"Name,omitempty"`
 
-		Severity string `json:"Severity,omitempty"`
+		Severity *TamSeverity `json:"Severity,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
@@ -94,7 +90,7 @@ func (m TamAdvisory) MarshalJSON() ([]byte, error) {
 
 		Name string `json:"Name,omitempty"`
 
-		Severity string `json:"Severity,omitempty"`
+		Severity *TamSeverity `json:"Severity,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
@@ -139,35 +135,19 @@ func (m *TamAdvisory) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var tamAdvisoryTypeSeverityPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["critical","high","medium","info"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		tamAdvisoryTypeSeverityPropEnum = append(tamAdvisoryTypeSeverityPropEnum, v)
-	}
-}
-
-// property enum
-func (m *TamAdvisory) validateSeverityEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, tamAdvisoryTypeSeverityPropEnum); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *TamAdvisory) validateSeverity(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Severity) { // not required
 		return nil
 	}
 
-	// value enum
-	if err := m.validateSeverityEnum("Severity", "body", m.Severity); err != nil {
-		return err
+	if m.Severity != nil {
+		if err := m.Severity.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Severity")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -14,6 +14,7 @@ of the cluster.
 
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `capacity_runway`:(int)The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.Default value is math.MaxInt32 to indicate that the capacity runway is \"Unknown\" for a cluster that is not connected or with not sufficient data.
 * `cluster_name`:(string)The name of this HyperFlex cluster.
 * `cluster_type`:(int)The storage type of this cluster (All Flash or Hybrid).
 * `cluster_uuid`:(string)The unique identifier for this HyperFlex cluster.
@@ -27,5 +28,7 @@ The following arguments can be used to get data of already created objects in In
 * `hypervisor_type`:(string)The type of hypervisor running on this cluster.
 * `hypervisor_version`:(string)The version of hypervisor running on this cluster.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `utilization_percentage`:(float)The storage utilization percentage is computed based on total capacity and current capacity utilization.
+* `utilization_trend_percentage`:(float)The storage utilization trend percentage represents the trend in percentage computed using the first and last point from historical data.
 * `vm_count`:(int)The number of virtual machines present on this cluster.

@@ -32,7 +32,7 @@ type HyperflexAutoSupportPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The email address recipient for support tickets.
 	//
@@ -54,7 +54,7 @@ func (m *HyperflexAutoSupportPolicy) UnmarshalJSON(raw []byte) error {
 
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServiceTicketReceipient string `json:"ServiceTicketReceipient,omitempty"`
 	}
@@ -88,7 +88,7 @@ func (m HyperflexAutoSupportPolicy) MarshalJSON() ([]byte, error) {
 
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServiceTicketReceipient string `json:"ServiceTicketReceipient,omitempty"`
 	}

@@ -28,7 +28,8 @@ type NetworkElementSummary struct {
 	// Read Only: true
 	DeviceMoID string `json:"DeviceMoId,omitempty"`
 
-	// dn
+	// The Distinguished Name unambiguously identifies an object in the system.
+	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
@@ -41,11 +42,13 @@ type NetworkElementSummary struct {
 	// Read Only: true
 	Firmware string `json:"Firmware,omitempty"`
 
-	// inband Ip address
+	// The Inband IP address of the network Element.
+	//
 	// Read Only: true
 	InbandIPAddress string `json:"InbandIpAddress,omitempty"`
 
-	// inband Ip gateway
+	// The Inband IP Gateway of the network Element.
+	//
 	// Read Only: true
 	InbandIPGateway string `json:"InbandIpGateway,omitempty"`
 
@@ -132,7 +135,8 @@ type NetworkElementSummary struct {
 	// Read Only: true
 	Revision string `json:"Revision,omitempty"`
 
-	// rn
+	// The Relative Name uniquely identifies an object within a given context.
+	//
 	// Read Only: true
 	Rn string `json:"Rn,omitempty"`
 
@@ -141,12 +145,13 @@ type NetworkElementSummary struct {
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
-	// Specifies the source object type for View MO.
+	// The source object type of this view MO.
 	//
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`
 
-	// switch Id
+	// The Switch Id of the network Element.
+	//
 	// Read Only: true
 	SwitchID string `json:"SwitchId,omitempty"`
 

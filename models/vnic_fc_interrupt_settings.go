@@ -21,30 +21,45 @@ import (
 //
 // swagger:model vnicFcInterruptSettings
 type VnicFcInterruptSettings struct {
-	VnicFcInterruptSettingsAO0P0
+	MoBaseComplexType
+
+	VnicFcInterruptSettingsAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VnicFcInterruptSettings) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VnicFcInterruptSettingsAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VnicFcInterruptSettingsAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 VnicFcInterruptSettingsAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.VnicFcInterruptSettingsAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m VnicFcInterruptSettings) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VnicFcInterruptSettingsAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.VnicFcInterruptSettingsAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m VnicFcInterruptSettings) MarshalJSON() ([]byte, error) {
 func (m *VnicFcInterruptSettings) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VnicFcInterruptSettingsAO0P0
-	if err := m.VnicFcInterruptSettingsAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with VnicFcInterruptSettingsAO1P1
+	if err := m.VnicFcInterruptSettingsAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,57 +101,35 @@ func (m *VnicFcInterruptSettings) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// VnicFcInterruptSettingsAO0P0 vnic fc interrupt settings a o0 p0
-// swagger:model VnicFcInterruptSettingsAO0P0
-type VnicFcInterruptSettingsAO0P0 struct {
+// VnicFcInterruptSettingsAO1P1 vnic fc interrupt settings a o1 p1
+// swagger:model VnicFcInterruptSettingsAO1P1
+type VnicFcInterruptSettingsAO1P1 struct {
 
-	// The preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+	// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 	//
 	// Enum: [MSIx MSI INTx]
 	Mode *string `json:"Mode,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// vnic fc interrupt settings a o0 p0
-	VnicFcInterruptSettingsAO0P0 map[string]interface{} `json:"-"`
+	// vnic fc interrupt settings a o1 p1
+	VnicFcInterruptSettingsAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *VnicFcInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
+func (m *VnicFcInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// The preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+		// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv VnicFcInterruptSettingsAO0P0
+	var rcv VnicFcInterruptSettingsAO1P1
 
 	rcv.Mode = stage1.Mode
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -144,8 +141,6 @@ func (m *VnicFcInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Mode")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -156,35 +151,23 @@ func (m *VnicFcInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.VnicFcInterruptSettingsAO0P0 = result
+		m.VnicFcInterruptSettingsAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m VnicFcInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
+func (m VnicFcInterruptSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// The preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+		// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Mode = m.Mode
-
-	stage1.ObjectType = m.ObjectType
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -192,12 +175,12 @@ func (m VnicFcInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.VnicFcInterruptSettingsAO0P0) == 0 {
+	if len(m.VnicFcInterruptSettingsAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.VnicFcInterruptSettingsAO0P0)
+	additional, err := json.Marshal(m.VnicFcInterruptSettingsAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -211,8 +194,8 @@ func (m VnicFcInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this vnic fc interrupt settings a o0 p0
-func (m *VnicFcInterruptSettingsAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this vnic fc interrupt settings a o1 p1
+func (m *VnicFcInterruptSettingsAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMode(formats); err != nil {
@@ -225,7 +208,7 @@ func (m *VnicFcInterruptSettingsAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var vnicFcInterruptSettingsAO0P0TypeModePropEnum []interface{}
+var vnicFcInterruptSettingsAO1P1TypeModePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -233,31 +216,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vnicFcInterruptSettingsAO0P0TypeModePropEnum = append(vnicFcInterruptSettingsAO0P0TypeModePropEnum, v)
+		vnicFcInterruptSettingsAO1P1TypeModePropEnum = append(vnicFcInterruptSettingsAO1P1TypeModePropEnum, v)
 	}
 }
 
 const (
 
-	// VnicFcInterruptSettingsAO0P0ModeMSIx captures enum value "MSIx"
-	VnicFcInterruptSettingsAO0P0ModeMSIx string = "MSIx"
+	// VnicFcInterruptSettingsAO1P1ModeMSIx captures enum value "MSIx"
+	VnicFcInterruptSettingsAO1P1ModeMSIx string = "MSIx"
 
-	// VnicFcInterruptSettingsAO0P0ModeMSI captures enum value "MSI"
-	VnicFcInterruptSettingsAO0P0ModeMSI string = "MSI"
+	// VnicFcInterruptSettingsAO1P1ModeMSI captures enum value "MSI"
+	VnicFcInterruptSettingsAO1P1ModeMSI string = "MSI"
 
-	// VnicFcInterruptSettingsAO0P0ModeINTx captures enum value "INTx"
-	VnicFcInterruptSettingsAO0P0ModeINTx string = "INTx"
+	// VnicFcInterruptSettingsAO1P1ModeINTx captures enum value "INTx"
+	VnicFcInterruptSettingsAO1P1ModeINTx string = "INTx"
 )
 
 // prop value enum
-func (m *VnicFcInterruptSettingsAO0P0) validateModeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vnicFcInterruptSettingsAO0P0TypeModePropEnum); err != nil {
+func (m *VnicFcInterruptSettingsAO1P1) validateModeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vnicFcInterruptSettingsAO1P1TypeModePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VnicFcInterruptSettingsAO0P0) validateMode(formats strfmt.Registry) error {
+func (m *VnicFcInterruptSettingsAO1P1) validateMode(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Mode) { // not required
 		return nil
@@ -272,7 +255,7 @@ func (m *VnicFcInterruptSettingsAO0P0) validateMode(formats strfmt.Registry) err
 }
 
 // MarshalBinary interface implementation
-func (m *VnicFcInterruptSettingsAO0P0) MarshalBinary() ([]byte, error) {
+func (m *VnicFcInterruptSettingsAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -280,8 +263,8 @@ func (m *VnicFcInterruptSettingsAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *VnicFcInterruptSettingsAO0P0) UnmarshalBinary(b []byte) error {
-	var res VnicFcInterruptSettingsAO0P0
+func (m *VnicFcInterruptSettingsAO1P1) UnmarshalBinary(b []byte) error {
+	var res VnicFcInterruptSettingsAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -12,13 +12,18 @@ Intersight representation of a Cisco PSIRT (https://tools.cisco.com/security/cen
 
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `cve_id`:(string)CVE (https://cve.mitre.org/about/faqs.html) identifier for the security Advisory.
+* `advisory_id`:(string)Cisco generated identifier for the published security advisory.
+* `base_score`:(float)CVSS version 3 base score for the security Advisory.
+* `date_published`:(string)Date when the security advisory was first published by Cisco.
+* `date_updated`:(string)Date when the security advisory was last updated by Cisco.
 * `description`:(string)Brief description of the advisory details.
+* `environmental_score`:(float)CVSS version 3 environmental score for the security Advisory.
 * `external_url`:(string)A link to an external URL describing security Advisory in more details.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)A user defined name for the Intersight Advisory.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `recommendation`:(string)Recommended action to resolve the security advisory.
-* `score`:(float)CVSS score for the security Advisory.
-* `severity`:(string)Severity level of the Intersight Advisory.
 * `state`:(string)Current state of the advisory. Indicates if the user is interested in getting updates for the advisory.
+* `status`:(string)Cisco assigned status of the published advisory based on whether the investigation is complete or on-going.
+* `temporal_score`:(float)CVSS version 3 temporal score for the security Advisory.
+* `version`:(string)Cisco assigned advisory version after latest revision.

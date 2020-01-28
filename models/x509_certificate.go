@@ -21,30 +21,45 @@ import (
 //
 // swagger:model x509Certificate
 type X509Certificate struct {
-	X509CertificateAO0P0
+	MoBaseComplexType
+
+	X509CertificateAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *X509Certificate) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 X509CertificateAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.X509CertificateAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 X509CertificateAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.X509CertificateAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m X509Certificate) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.X509CertificateAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.X509CertificateAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m X509Certificate) MarshalJSON() ([]byte, error) {
 func (m *X509Certificate) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with X509CertificateAO0P0
-	if err := m.X509CertificateAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with X509CertificateAO1P1
+	if err := m.X509CertificateAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *X509Certificate) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// X509CertificateAO0P0 x509 certificate a o0 p0
-// swagger:model X509CertificateAO0P0
-type X509CertificateAO0P0 struct {
+// X509CertificateAO1P1 x509 certificate a o1 p1
+// swagger:model X509CertificateAO1P1
+type X509CertificateAO1P1 struct {
 
 	// The X.509 distinguished name of the issuer of this certificate.
 	//
@@ -102,16 +121,6 @@ type X509CertificateAO0P0 struct {
 	// Read Only: true
 	// Format: date-time
 	NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// The base64 encoded certificate in PEM format.
 	//
@@ -132,12 +141,12 @@ type X509CertificateAO0P0 struct {
 	// Read Only: true
 	Subject *PkixDistinguishedName `json:"Subject,omitempty"`
 
-	// x509 certificate a o0 p0
-	X509CertificateAO0P0 map[string]interface{} `json:"-"`
+	// x509 certificate a o1 p1
+	X509CertificateAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *X509CertificateAO0P0) UnmarshalJSON(data []byte) error {
+func (m *X509CertificateAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -157,16 +166,6 @@ func (m *X509CertificateAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		// Format: date-time
 		NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The base64 encoded certificate in PEM format.
 		//
@@ -190,15 +189,13 @@ func (m *X509CertificateAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv X509CertificateAO0P0
+	var rcv X509CertificateAO1P1
 
 	rcv.Issuer = stage1.Issuer
 
 	rcv.NotAfter = stage1.NotAfter
 
 	rcv.NotBefore = stage1.NotBefore
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.PemCertificate = stage1.PemCertificate
 
@@ -222,8 +219,6 @@ func (m *X509CertificateAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "NotBefore")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "PemCertificate")
 
 	delete(stage2, "Sha256Fingerprint")
@@ -242,14 +237,14 @@ func (m *X509CertificateAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.X509CertificateAO0P0 = result
+		m.X509CertificateAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m X509CertificateAO0P0) MarshalJSON() ([]byte, error) {
+func (m X509CertificateAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The X.509 distinguished name of the issuer of this certificate.
@@ -268,16 +263,6 @@ func (m X509CertificateAO0P0) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		// Format: date-time
 		NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The base64 encoded certificate in PEM format.
 		//
@@ -305,8 +290,6 @@ func (m X509CertificateAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.NotBefore = m.NotBefore
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.PemCertificate = m.PemCertificate
 
 	stage1.Sha256Fingerprint = m.Sha256Fingerprint
@@ -321,12 +304,12 @@ func (m X509CertificateAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.X509CertificateAO0P0) == 0 {
+	if len(m.X509CertificateAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.X509CertificateAO0P0)
+	additional, err := json.Marshal(m.X509CertificateAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -340,8 +323,8 @@ func (m X509CertificateAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this x509 certificate a o0 p0
-func (m *X509CertificateAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this x509 certificate a o1 p1
+func (m *X509CertificateAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateIssuer(formats); err != nil {
@@ -366,7 +349,7 @@ func (m *X509CertificateAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *X509CertificateAO0P0) validateIssuer(formats strfmt.Registry) error {
+func (m *X509CertificateAO1P1) validateIssuer(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Issuer) { // not required
 		return nil
@@ -384,7 +367,7 @@ func (m *X509CertificateAO0P0) validateIssuer(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *X509CertificateAO0P0) validateNotAfter(formats strfmt.Registry) error {
+func (m *X509CertificateAO1P1) validateNotAfter(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.NotAfter) { // not required
 		return nil
@@ -397,7 +380,7 @@ func (m *X509CertificateAO0P0) validateNotAfter(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *X509CertificateAO0P0) validateNotBefore(formats strfmt.Registry) error {
+func (m *X509CertificateAO1P1) validateNotBefore(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.NotBefore) { // not required
 		return nil
@@ -410,7 +393,7 @@ func (m *X509CertificateAO0P0) validateNotBefore(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *X509CertificateAO0P0) validateSubject(formats strfmt.Registry) error {
+func (m *X509CertificateAO1P1) validateSubject(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Subject) { // not required
 		return nil
@@ -429,7 +412,7 @@ func (m *X509CertificateAO0P0) validateSubject(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *X509CertificateAO0P0) MarshalBinary() ([]byte, error) {
+func (m *X509CertificateAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -437,8 +420,8 @@ func (m *X509CertificateAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *X509CertificateAO0P0) UnmarshalBinary(b []byte) error {
-	var res X509CertificateAO0P0
+func (m *X509CertificateAO1P1) UnmarshalBinary(b []byte) error {
+	var res X509CertificateAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -30,9 +30,9 @@ type VnicEthQosPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
-	// The value in Mbps (0-40000) to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
+	// The value in Mbps (0-100000) to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
 	//
 	RateLimit int64 `json:"RateLimit,omitempty"`
 
@@ -56,7 +56,7 @@ func (m *VnicEthQosPolicy) UnmarshalJSON(raw []byte) error {
 
 		Mtu int64 `json:"Mtu,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RateLimit int64 `json:"RateLimit,omitempty"`
 
@@ -94,7 +94,7 @@ func (m VnicEthQosPolicy) MarshalJSON() ([]byte, error) {
 
 		Mtu int64 `json:"Mtu,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RateLimit int64 `json:"RateLimit,omitempty"`
 

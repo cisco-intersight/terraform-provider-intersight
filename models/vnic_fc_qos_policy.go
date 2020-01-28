@@ -30,7 +30,7 @@ type VnicFcQosPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The value in Mbps to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
 	//
@@ -52,7 +52,7 @@ func (m *VnicFcQosPolicy) UnmarshalJSON(raw []byte) error {
 
 		MaxDataFieldSize int64 `json:"MaxDataFieldSize,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RateLimit int64 `json:"RateLimit,omitempty"`
 	}
@@ -86,7 +86,7 @@ func (m VnicFcQosPolicy) MarshalJSON() ([]byte, error) {
 
 		MaxDataFieldSize int64 `json:"MaxDataFieldSize,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RateLimit int64 `json:"RateLimit,omitempty"`
 	}

@@ -23,7 +23,7 @@ The following arguments can be used to get data of already created objects in In
 * `model`:(string)The endpoint model for which this firmware image is applicable.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name of the file. It is populated as part of the image import operation.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `platform_type`:(string)The platform type of the image.
 * `recommended_build`:(string)The build which is recommended by Cisco.
 * `release_notes_url`:(string)The url for the release notes of this image.

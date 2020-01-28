@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // WorkflowWorkflowDefinition Workflow:Workflow Definition
@@ -41,6 +43,12 @@ type WorkflowWorkflowDefinition struct {
 	// A user friendly short name to identify the workflow.
 	//
 	Label string `json:"Label,omitempty"`
+
+	// License entitlement required to run this workflow. It is calculated based on the highest license requirement of all its tasks.
+	//
+	// Read Only: true
+	// Enum: [Base Essential Standard Advantage]
+	LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
 
 	// The name for this workflow. You can have multiple version of the workflow with the same name.
 	//
@@ -93,6 +101,8 @@ func (m *WorkflowWorkflowDefinition) UnmarshalJSON(raw []byte) error {
 
 		Label string `json:"Label,omitempty"`
 
+		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
@@ -120,6 +130,8 @@ func (m *WorkflowWorkflowDefinition) UnmarshalJSON(raw []byte) error {
 	m.InputDefinition = dataAO1.InputDefinition
 
 	m.Label = dataAO1.Label
+
+	m.LicenseEntitlement = dataAO1.LicenseEntitlement
 
 	m.Name = dataAO1.Name
 
@@ -159,6 +171,8 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 
 		Label string `json:"Label,omitempty"`
 
+		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
@@ -183,6 +197,8 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 	dataAO1.InputDefinition = m.InputDefinition
 
 	dataAO1.Label = m.Label
+
+	dataAO1.LicenseEntitlement = m.LicenseEntitlement
 
 	dataAO1.Name = m.Name
 
@@ -221,6 +237,10 @@ func (m *WorkflowWorkflowDefinition) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateInputDefinition(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLicenseEntitlement(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -280,6 +300,40 @@ func (m *WorkflowWorkflowDefinition) validateInputDefinition(formats strfmt.Regi
 			}
 		}
 
+	}
+
+	return nil
+}
+
+var workflowWorkflowDefinitionTypeLicenseEntitlementPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		workflowWorkflowDefinitionTypeLicenseEntitlementPropEnum = append(workflowWorkflowDefinitionTypeLicenseEntitlementPropEnum, v)
+	}
+}
+
+// property enum
+func (m *WorkflowWorkflowDefinition) validateLicenseEntitlementEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowWorkflowDefinitionTypeLicenseEntitlementPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *WorkflowWorkflowDefinition) validateLicenseEntitlement(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LicenseEntitlement) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateLicenseEntitlementEnum("LicenseEntitlement", "body", m.LicenseEntitlement); err != nil {
+		return err
 	}
 
 	return nil

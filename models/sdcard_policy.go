@@ -24,7 +24,7 @@ type SdcardPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// This is a collection of partition.
 	//
@@ -46,7 +46,7 @@ func (m *SdcardPolicy) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Partitions []*SdcardPartition `json:"Partitions"`
 
@@ -76,7 +76,7 @@ func (m SdcardPolicy) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Partitions []*SdcardPartition `json:"Partitions"`
 

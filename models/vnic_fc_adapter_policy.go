@@ -50,7 +50,7 @@ type VnicFcAdapterPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Fibre Channel Plogi Settings.
 	//
@@ -98,7 +98,7 @@ func (m *VnicFcAdapterPolicy) UnmarshalJSON(raw []byte) error {
 
 		LunQueueDepth int64 `json:"LunQueueDepth,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PlogiSettings *VnicPlogiSettings `json:"PlogiSettings,omitempty"`
 
@@ -168,7 +168,7 @@ func (m VnicFcAdapterPolicy) MarshalJSON() ([]byte, error) {
 
 		LunQueueDepth int64 `json:"LunQueueDepth,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PlogiSettings *VnicPlogiSettings `json:"PlogiSettings,omitempty"`
 

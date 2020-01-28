@@ -21,30 +21,45 @@ import (
 //
 // swagger:model assetSudiInfo
 type AssetSudiInfo struct {
-	AssetSudiInfoAO0P0
+	MoBaseComplexType
+
+	AssetSudiInfoAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *AssetSudiInfo) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 AssetSudiInfoAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.AssetSudiInfoAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 AssetSudiInfoAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.AssetSudiInfoAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m AssetSudiInfo) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.AssetSudiInfoAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.AssetSudiInfoAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m AssetSudiInfo) MarshalJSON() ([]byte, error) {
 func (m *AssetSudiInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with AssetSudiInfoAO0P0
-	if err := m.AssetSudiInfoAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with AssetSudiInfoAO1P1
+	if err := m.AssetSudiInfoAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,19 +101,9 @@ func (m *AssetSudiInfo) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// AssetSudiInfoAO0P0 asset sudi info a o0 p0
-// swagger:model AssetSudiInfoAO0P0
-type AssetSudiInfoAO0P0 struct {
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+// AssetSudiInfoAO1P1 asset sudi info a o1 p1
+// swagger:model AssetSudiInfoAO1P1
+type AssetSudiInfoAO1P1 struct {
 
 	// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
 	//
@@ -117,24 +126,14 @@ type AssetSudiInfoAO0P0 struct {
 	//
 	SudiCertificate *X509Certificate `json:"SudiCertificate,omitempty"`
 
-	// asset sudi info a o0 p0
-	AssetSudiInfoAO0P0 map[string]interface{} `json:"-"`
+	// asset sudi info a o1 p1
+	AssetSudiInfoAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *AssetSudiInfoAO0P0) UnmarshalJSON(data []byte) error {
+func (m *AssetSudiInfoAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
 		//
@@ -160,9 +159,7 @@ func (m *AssetSudiInfoAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv AssetSudiInfoAO0P0
-
-	rcv.ObjectType = stage1.ObjectType
+	var rcv AssetSudiInfoAO1P1
 
 	rcv.Pid = stage1.Pid
 
@@ -181,8 +178,6 @@ func (m *AssetSudiInfoAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage2); err != nil {
 		return err
 	}
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "Pid")
 
@@ -204,25 +199,15 @@ func (m *AssetSudiInfoAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.AssetSudiInfoAO0P0 = result
+		m.AssetSudiInfoAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m AssetSudiInfoAO0P0) MarshalJSON() ([]byte, error) {
+func (m AssetSudiInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
 		//
@@ -246,8 +231,6 @@ func (m AssetSudiInfoAO0P0) MarshalJSON() ([]byte, error) {
 		SudiCertificate *X509Certificate `json:"SudiCertificate,omitempty"`
 	}
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Pid = m.Pid
 
 	stage1.SerialNumber = m.SerialNumber
@@ -264,12 +247,12 @@ func (m AssetSudiInfoAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.AssetSudiInfoAO0P0) == 0 {
+	if len(m.AssetSudiInfoAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.AssetSudiInfoAO0P0)
+	additional, err := json.Marshal(m.AssetSudiInfoAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -283,8 +266,8 @@ func (m AssetSudiInfoAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this asset sudi info a o0 p0
-func (m *AssetSudiInfoAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this asset sudi info a o1 p1
+func (m *AssetSudiInfoAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateStatus(formats); err != nil {
@@ -301,7 +284,7 @@ func (m *AssetSudiInfoAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var assetSudiInfoAO0P0TypeStatusPropEnum []interface{}
+var assetSudiInfoAO1P1TypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -309,40 +292,40 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		assetSudiInfoAO0P0TypeStatusPropEnum = append(assetSudiInfoAO0P0TypeStatusPropEnum, v)
+		assetSudiInfoAO1P1TypeStatusPropEnum = append(assetSudiInfoAO1P1TypeStatusPropEnum, v)
 	}
 }
 
 const (
 
-	// AssetSudiInfoAO0P0StatusDeviceStatusUnknown captures enum value "DeviceStatusUnknown"
-	AssetSudiInfoAO0P0StatusDeviceStatusUnknown string = "DeviceStatusUnknown"
+	// AssetSudiInfoAO1P1StatusDeviceStatusUnknown captures enum value "DeviceStatusUnknown"
+	AssetSudiInfoAO1P1StatusDeviceStatusUnknown string = "DeviceStatusUnknown"
 
-	// AssetSudiInfoAO0P0StatusVerified captures enum value "Verified"
-	AssetSudiInfoAO0P0StatusVerified string = "Verified"
+	// AssetSudiInfoAO1P1StatusVerified captures enum value "Verified"
+	AssetSudiInfoAO1P1StatusVerified string = "Verified"
 
-	// AssetSudiInfoAO0P0StatusCertificateValidationFailed captures enum value "CertificateValidationFailed"
-	AssetSudiInfoAO0P0StatusCertificateValidationFailed string = "CertificateValidationFailed"
+	// AssetSudiInfoAO1P1StatusCertificateValidationFailed captures enum value "CertificateValidationFailed"
+	AssetSudiInfoAO1P1StatusCertificateValidationFailed string = "CertificateValidationFailed"
 
-	// AssetSudiInfoAO0P0StatusUnsupportedFirmware captures enum value "UnsupportedFirmware"
-	AssetSudiInfoAO0P0StatusUnsupportedFirmware string = "UnsupportedFirmware"
+	// AssetSudiInfoAO1P1StatusUnsupportedFirmware captures enum value "UnsupportedFirmware"
+	AssetSudiInfoAO1P1StatusUnsupportedFirmware string = "UnsupportedFirmware"
 
-	// AssetSudiInfoAO0P0StatusUnsupportedHardware captures enum value "UnsupportedHardware"
-	AssetSudiInfoAO0P0StatusUnsupportedHardware string = "UnsupportedHardware"
+	// AssetSudiInfoAO1P1StatusUnsupportedHardware captures enum value "UnsupportedHardware"
+	AssetSudiInfoAO1P1StatusUnsupportedHardware string = "UnsupportedHardware"
 
-	// AssetSudiInfoAO0P0StatusDeviceNotResponding captures enum value "DeviceNotResponding"
-	AssetSudiInfoAO0P0StatusDeviceNotResponding string = "DeviceNotResponding"
+	// AssetSudiInfoAO1P1StatusDeviceNotResponding captures enum value "DeviceNotResponding"
+	AssetSudiInfoAO1P1StatusDeviceNotResponding string = "DeviceNotResponding"
 )
 
 // prop value enum
-func (m *AssetSudiInfoAO0P0) validateStatusEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, assetSudiInfoAO0P0TypeStatusPropEnum); err != nil {
+func (m *AssetSudiInfoAO1P1) validateStatusEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, assetSudiInfoAO1P1TypeStatusPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *AssetSudiInfoAO0P0) validateStatus(formats strfmt.Registry) error {
+func (m *AssetSudiInfoAO1P1) validateStatus(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Status) { // not required
 		return nil
@@ -356,7 +339,7 @@ func (m *AssetSudiInfoAO0P0) validateStatus(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *AssetSudiInfoAO0P0) validateSudiCertificate(formats strfmt.Registry) error {
+func (m *AssetSudiInfoAO1P1) validateSudiCertificate(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.SudiCertificate) { // not required
 		return nil
@@ -375,7 +358,7 @@ func (m *AssetSudiInfoAO0P0) validateSudiCertificate(formats strfmt.Registry) er
 }
 
 // MarshalBinary interface implementation
-func (m *AssetSudiInfoAO0P0) MarshalBinary() ([]byte, error) {
+func (m *AssetSudiInfoAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -383,8 +366,8 @@ func (m *AssetSudiInfoAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *AssetSudiInfoAO0P0) UnmarshalBinary(b []byte) error {
-	var res AssetSudiInfoAO0P0
+func (m *AssetSudiInfoAO1P1) UnmarshalBinary(b []byte) error {
+	var res AssetSudiInfoAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

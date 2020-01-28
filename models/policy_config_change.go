@@ -20,30 +20,45 @@ import (
 //
 // swagger:model policyConfigChange
 type PolicyConfigChange struct {
-	PolicyConfigChangeAO0P0
+	MoBaseComplexType
+
+	PolicyConfigChangeAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *PolicyConfigChange) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 PolicyConfigChangeAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.PolicyConfigChangeAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 PolicyConfigChangeAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.PolicyConfigChangeAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m PolicyConfigChange) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.PolicyConfigChangeAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.PolicyConfigChangeAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m PolicyConfigChange) MarshalJSON() ([]byte, error) {
 func (m *PolicyConfigChange) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with PolicyConfigChangeAO0P0
-	if err := m.PolicyConfigChangeAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with PolicyConfigChangeAO1P1
+	if err := m.PolicyConfigChangeAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *PolicyConfigChange) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// PolicyConfigChangeAO0P0 policy config change a o0 p0
-// swagger:model PolicyConfigChangeAO0P0
-type PolicyConfigChangeAO0P0 struct {
+// PolicyConfigChangeAO1P1 policy config change a o1 p1
+// swagger:model PolicyConfigChangeAO1P1
+type PolicyConfigChangeAO1P1 struct {
 
 	// Configuration changes at summary level.
 	//
@@ -93,22 +112,12 @@ type PolicyConfigChangeAO0P0 struct {
 	//
 	Disruptions []string `json:"Disruptions"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// policy config change a o0 p0
-	PolicyConfigChangeAO0P0 map[string]interface{} `json:"-"`
+	// policy config change a o1 p1
+	PolicyConfigChangeAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *PolicyConfigChangeAO0P0) UnmarshalJSON(data []byte) error {
+func (m *PolicyConfigChangeAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -119,27 +128,15 @@ func (m *PolicyConfigChangeAO0P0) UnmarshalJSON(data []byte) error {
 		// Configuration disruptions.
 		//
 		Disruptions []string `json:"Disruptions"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv PolicyConfigChangeAO0P0
+	var rcv PolicyConfigChangeAO1P1
 
 	rcv.Changes = stage1.Changes
 
 	rcv.Disruptions = stage1.Disruptions
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -153,8 +150,6 @@ func (m *PolicyConfigChangeAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Disruptions")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -165,14 +160,14 @@ func (m *PolicyConfigChangeAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.PolicyConfigChangeAO0P0 = result
+		m.PolicyConfigChangeAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m PolicyConfigChangeAO0P0) MarshalJSON() ([]byte, error) {
+func (m PolicyConfigChangeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Configuration changes at summary level.
@@ -182,23 +177,11 @@ func (m PolicyConfigChangeAO0P0) MarshalJSON() ([]byte, error) {
 		// Configuration disruptions.
 		//
 		Disruptions []string `json:"Disruptions"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Changes = m.Changes
 
 	stage1.Disruptions = m.Disruptions
-
-	stage1.ObjectType = m.ObjectType
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -206,12 +189,12 @@ func (m PolicyConfigChangeAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.PolicyConfigChangeAO0P0) == 0 {
+	if len(m.PolicyConfigChangeAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.PolicyConfigChangeAO0P0)
+	additional, err := json.Marshal(m.PolicyConfigChangeAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -225,13 +208,13 @@ func (m PolicyConfigChangeAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this policy config change a o0 p0
-func (m *PolicyConfigChangeAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this policy config change a o1 p1
+func (m *PolicyConfigChangeAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *PolicyConfigChangeAO0P0) MarshalBinary() ([]byte, error) {
+func (m *PolicyConfigChangeAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -239,8 +222,8 @@ func (m *PolicyConfigChangeAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PolicyConfigChangeAO0P0) UnmarshalBinary(b []byte) error {
-	var res PolicyConfigChangeAO0P0
+func (m *PolicyConfigChangeAO1P1) UnmarshalBinary(b []byte) error {
+	var res PolicyConfigChangeAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -60,6 +61,11 @@ type LicenseAccountLicenseData struct {
 	// AccountLicenseData record to CustomerOp record relationship.
 	//
 	CustomerOp *LicenseCustomerOpRef `json:"CustomerOp,omitempty"`
+
+	// Default license tier set by user.
+	//
+	// Enum: [Base Essential Standard Advantage]
+	DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
 
 	// Account license data group name.
 	//
@@ -164,6 +170,8 @@ func (m *LicenseAccountLicenseData) UnmarshalJSON(raw []byte) error {
 
 		CustomerOp *LicenseCustomerOpRef `json:"CustomerOp,omitempty"`
 
+		DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
+
 		Group string `json:"Group,omitempty"`
 
 		LastSync strfmt.DateTime `json:"LastSync,omitempty"`
@@ -213,6 +221,8 @@ func (m *LicenseAccountLicenseData) UnmarshalJSON(raw []byte) error {
 	m.Category = dataAO1.Category
 
 	m.CustomerOp = dataAO1.CustomerOp
+
+	m.DefaultLicenseType = dataAO1.DefaultLicenseType
 
 	m.Group = dataAO1.Group
 
@@ -274,6 +284,8 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 
 		CustomerOp *LicenseCustomerOpRef `json:"CustomerOp,omitempty"`
 
+		DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
+
 		Group string `json:"Group,omitempty"`
 
 		LastSync strfmt.DateTime `json:"LastSync,omitempty"`
@@ -320,6 +332,8 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 	dataAO1.Category = m.Category
 
 	dataAO1.CustomerOp = m.CustomerOp
+
+	dataAO1.DefaultLicenseType = m.DefaultLicenseType
 
 	dataAO1.Group = m.Group
 
@@ -377,6 +391,10 @@ func (m *LicenseAccountLicenseData) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDefaultLicenseType(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLastSync(formats); err != nil {
 		res = append(res, err)
 	}
@@ -430,6 +448,40 @@ func (m *LicenseAccountLicenseData) validateCustomerOp(formats strfmt.Registry) 
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var licenseAccountLicenseDataTypeDefaultLicenseTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		licenseAccountLicenseDataTypeDefaultLicenseTypePropEnum = append(licenseAccountLicenseDataTypeDefaultLicenseTypePropEnum, v)
+	}
+}
+
+// property enum
+func (m *LicenseAccountLicenseData) validateDefaultLicenseTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, licenseAccountLicenseDataTypeDefaultLicenseTypePropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *LicenseAccountLicenseData) validateDefaultLicenseType(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DefaultLicenseType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateDefaultLicenseTypeEnum("DefaultLicenseType", "body", *m.DefaultLicenseType); err != nil {
+		return err
 	}
 
 	return nil

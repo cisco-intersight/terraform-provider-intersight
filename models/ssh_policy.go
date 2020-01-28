@@ -28,7 +28,7 @@ type SSHPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Port used for secure shell access.
 	//
@@ -56,7 +56,7 @@ func (m *SSHPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Port int64 `json:"Port,omitempty"`
 
@@ -94,7 +94,7 @@ func (m SSHPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Port int64 `json:"Port,omitempty"`
 

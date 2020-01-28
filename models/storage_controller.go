@@ -53,7 +53,8 @@ type StorageController struct {
 	// Read Only: true
 	OobInterfaceSupported string `json:"OobInterfaceSupported,omitempty"`
 
-	// oper state
+	// It shows the current operational state of controller.
+	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
@@ -71,7 +72,7 @@ type StorageController struct {
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
-	// This object is created to indicate a SCSI controller has physical connectivity to specified physical disk.
+	// Indicates a SCSI controller has physical connectivity to specified physical disk.
 	//
 	// Read Only: true
 	PhysicalDiskExtensions []*StoragePhysicalDiskExtensionRef `json:"PhysicalDiskExtensions"`

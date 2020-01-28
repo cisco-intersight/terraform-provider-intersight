@@ -17,30 +17,45 @@ import (
 // HyperflexSummary Hyperflex:Summary
 // swagger:model hyperflexSummary
 type HyperflexSummary struct {
-	HyperflexSummaryAO0P0
+	MoBaseComplexType
+
+	HyperflexSummaryAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *HyperflexSummary) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 HyperflexSummaryAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.HyperflexSummaryAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 HyperflexSummaryAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.HyperflexSummaryAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m HyperflexSummary) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.HyperflexSummaryAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.HyperflexSummaryAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -49,8 +64,12 @@ func (m HyperflexSummary) MarshalJSON() ([]byte, error) {
 func (m *HyperflexSummary) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with HyperflexSummaryAO0P0
-	if err := m.HyperflexSummaryAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with HyperflexSummaryAO1P1
+	if err := m.HyperflexSummaryAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -78,9 +97,9 @@ func (m *HyperflexSummary) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// HyperflexSummaryAO0P0 hyperflex summary a o0 p0
-// swagger:model HyperflexSummaryAO0P0
-type HyperflexSummaryAO0P0 struct {
+// HyperflexSummaryAO1P1 hyperflex summary a o1 p1
+// swagger:model HyperflexSummaryAO1P1
+type HyperflexSummaryAO1P1 struct {
 
 	// active nodes
 	// Read Only: true
@@ -130,16 +149,6 @@ type HyperflexSummaryAO0P0 struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// resiliency details
 	// Read Only: true
 	ResiliencyDetails interface{} `json:"ResiliencyDetails,omitempty"`
@@ -176,12 +185,12 @@ type HyperflexSummaryAO0P0 struct {
 	// Read Only: true
 	UsedCapacity int64 `json:"UsedCapacity,omitempty"`
 
-	// hyperflex summary a o0 p0
-	HyperflexSummaryAO0P0 map[string]interface{} `json:"-"`
+	// hyperflex summary a o1 p1
+	HyperflexSummaryAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
+func (m *HyperflexSummaryAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -233,16 +242,6 @@ func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
 		// resiliency details
 		// Read Only: true
 		ResiliencyDetails interface{} `json:"ResiliencyDetails,omitempty"`
@@ -282,7 +281,7 @@ func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv HyperflexSummaryAO0P0
+	var rcv HyperflexSummaryAO1P1
 
 	rcv.ActiveNodes = stage1.ActiveNodes
 
@@ -307,8 +306,6 @@ func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.HealingInfo = stage1.HealingInfo
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.ResiliencyDetails = stage1.ResiliencyDetails
 
@@ -360,8 +357,6 @@ func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "ResiliencyDetails")
 
 	delete(stage2, "ResiliencyDetailsSize")
@@ -390,14 +385,14 @@ func (m *HyperflexSummaryAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.HyperflexSummaryAO0P0 = result
+		m.HyperflexSummaryAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m HyperflexSummaryAO0P0) MarshalJSON() ([]byte, error) {
+func (m HyperflexSummaryAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// active nodes
@@ -447,16 +442,6 @@ func (m HyperflexSummaryAO0P0) MarshalJSON() ([]byte, error) {
 		// name
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// resiliency details
 		// Read Only: true
@@ -519,8 +504,6 @@ func (m HyperflexSummaryAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.ResiliencyDetails = m.ResiliencyDetails
 
 	stage1.ResiliencyDetailsSize = m.ResiliencyDetailsSize
@@ -545,12 +528,12 @@ func (m HyperflexSummaryAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.HyperflexSummaryAO0P0) == 0 {
+	if len(m.HyperflexSummaryAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.HyperflexSummaryAO0P0)
+	additional, err := json.Marshal(m.HyperflexSummaryAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -564,8 +547,8 @@ func (m HyperflexSummaryAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this hyperflex summary a o0 p0
-func (m *HyperflexSummaryAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this hyperflex summary a o1 p1
+func (m *HyperflexSummaryAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateHealingInfo(formats); err != nil {
@@ -582,7 +565,7 @@ func (m *HyperflexSummaryAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *HyperflexSummaryAO0P0) validateHealingInfo(formats strfmt.Registry) error {
+func (m *HyperflexSummaryAO1P1) validateHealingInfo(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.HealingInfo) { // not required
 		return nil
@@ -600,7 +583,7 @@ func (m *HyperflexSummaryAO0P0) validateHealingInfo(formats strfmt.Registry) err
 	return nil
 }
 
-func (m *HyperflexSummaryAO0P0) validateResiliencyInfo(formats strfmt.Registry) error {
+func (m *HyperflexSummaryAO1P1) validateResiliencyInfo(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ResiliencyInfo) { // not required
 		return nil
@@ -619,7 +602,7 @@ func (m *HyperflexSummaryAO0P0) validateResiliencyInfo(formats strfmt.Registry) 
 }
 
 // MarshalBinary interface implementation
-func (m *HyperflexSummaryAO0P0) MarshalBinary() ([]byte, error) {
+func (m *HyperflexSummaryAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -627,8 +610,8 @@ func (m *HyperflexSummaryAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *HyperflexSummaryAO0P0) UnmarshalBinary(b []byte) error {
-	var res HyperflexSummaryAO0P0
+func (m *HyperflexSummaryAO1P1) UnmarshalBinary(b []byte) error {
+	var res HyperflexSummaryAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

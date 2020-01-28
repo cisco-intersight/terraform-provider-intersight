@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // IaasUcsdInfo Iaas:Ucsd Info
@@ -22,7 +23,8 @@ import (
 type IaasUcsdInfo struct {
 	MoBaseMo
 
-	// connector pack
+	// Relationship to a collection of connector packs installed on the UCSD.
+	//
 	// Read Only: true
 	ConnectorPack []*IaasConnectorPackRef `json:"ConnectorPack"`
 
@@ -31,7 +33,8 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
-	// device status
+	// Relationship to a collection of infra accounts managed by the UCSD.
+	//
 	// Read Only: true
 	DeviceStatus []*IaasDeviceStatusRef `json:"DeviceStatus"`
 
@@ -50,7 +53,14 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	IP string `json:"Ip,omitempty"`
 
-	// license info
+	// Last successful backup created for this UCS Director appliance if backup is configured.
+	//
+	// Read Only: true
+	// Format: date-time
+	LastBackup strfmt.DateTime `json:"LastBackup,omitempty"`
+
+	// Relationship to license information of the UCSD.
+	//
 	// Read Only: true
 	LicenseInfo *IaasLicenseInfoRef `json:"LicenseInfo,omitempty"`
 
@@ -83,12 +93,13 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// The UCSD status. Possible values are Active, In-Active, Unknown.
+	// The UCSD status. Possible values are Active, Inactive, Unknown.
 	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 
-	// ucsd managed infra
+	// Relationship to infrastructure being managed by the UCSD.
+	//
 	// Read Only: true
 	UcsdManagedInfra *IaasUcsdManagedInfraRef `json:"UcsdManagedInfra,omitempty"`
 }
@@ -115,6 +126,8 @@ func (m *IaasUcsdInfo) UnmarshalJSON(raw []byte) error {
 		HostName string `json:"HostName,omitempty"`
 
 		IP string `json:"Ip,omitempty"`
+
+		LastBackup strfmt.DateTime `json:"LastBackup,omitempty"`
 
 		LicenseInfo *IaasLicenseInfoRef `json:"LicenseInfo,omitempty"`
 
@@ -149,6 +162,8 @@ func (m *IaasUcsdInfo) UnmarshalJSON(raw []byte) error {
 	m.HostName = dataAO1.HostName
 
 	m.IP = dataAO1.IP
+
+	m.LastBackup = dataAO1.LastBackup
 
 	m.LicenseInfo = dataAO1.LicenseInfo
 
@@ -194,6 +209,8 @@ func (m IaasUcsdInfo) MarshalJSON() ([]byte, error) {
 
 		IP string `json:"Ip,omitempty"`
 
+		LastBackup strfmt.DateTime `json:"LastBackup,omitempty"`
+
 		LicenseInfo *IaasLicenseInfoRef `json:"LicenseInfo,omitempty"`
 
 		MostRunTasks []*IaasMostRunTasksRef `json:"MostRunTasks"`
@@ -224,6 +241,8 @@ func (m IaasUcsdInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.HostName = m.HostName
 
 	dataAO1.IP = m.IP
+
+	dataAO1.LastBackup = m.LastBackup
 
 	dataAO1.LicenseInfo = m.LicenseInfo
 
@@ -266,6 +285,10 @@ func (m *IaasUcsdInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDeviceStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLastBackup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -336,6 +359,19 @@ func (m *IaasUcsdInfo) validateDeviceStatus(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *IaasUcsdInfo) validateLastBackup(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LastBackup) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("LastBackup", "body", "date-time", m.LastBackup.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

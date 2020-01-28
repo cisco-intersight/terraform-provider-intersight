@@ -20,7 +20,8 @@ import (
 type StorageVirtualDriveExtension struct {
 	InventoryBase
 
-	// bootable
+	// It shows virtual drive is bootable.
+	//
 	// Read Only: true
 	Bootable string `json:"Bootable,omitempty"`
 
@@ -68,7 +69,8 @@ type StorageVirtualDriveExtension struct {
 	// Read Only: true
 	VirtualDriveDn string `json:"VirtualDriveDn,omitempty"`
 
-	// virtual drive Id
+	// It shows virtual drive Id.
+	//
 	// Read Only: true
 	VirtualDriveID string `json:"VirtualDriveId,omitempty"`
 }

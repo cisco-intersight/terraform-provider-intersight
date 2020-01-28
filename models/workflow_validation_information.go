@@ -22,30 +22,45 @@ import (
 //
 // swagger:model workflowValidationInformation
 type WorkflowValidationInformation struct {
-	WorkflowValidationInformationAO0P0
+	MoBaseComplexType
+
+	WorkflowValidationInformationAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *WorkflowValidationInformation) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 WorkflowValidationInformationAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.WorkflowValidationInformationAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 WorkflowValidationInformationAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.WorkflowValidationInformationAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m WorkflowValidationInformation) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.WorkflowValidationInformationAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.WorkflowValidationInformationAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m WorkflowValidationInformation) MarshalJSON() ([]byte, error) {
 func (m *WorkflowValidationInformation) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with WorkflowValidationInformationAO0P0
-	if err := m.WorkflowValidationInformationAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with WorkflowValidationInformationAO1P1
+	if err := m.WorkflowValidationInformationAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,19 +102,9 @@ func (m *WorkflowValidationInformation) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// WorkflowValidationInformationAO0P0 workflow validation information a o0 p0
-// swagger:model WorkflowValidationInformationAO0P0
-type WorkflowValidationInformationAO0P0 struct {
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+// WorkflowValidationInformationAO1P1 workflow validation information a o1 p1
+// swagger:model WorkflowValidationInformationAO1P1
+type WorkflowValidationInformationAO1P1 struct {
 
 	// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
 	//
@@ -108,24 +117,14 @@ type WorkflowValidationInformationAO0P0 struct {
 	// Read Only: true
 	ValidationError []*WorkflowValidationError `json:"ValidationError"`
 
-	// workflow validation information a o0 p0
-	WorkflowValidationInformationAO0P0 map[string]interface{} `json:"-"`
+	// workflow validation information a o1 p1
+	WorkflowValidationInformationAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *WorkflowValidationInformationAO0P0) UnmarshalJSON(data []byte) error {
+func (m *WorkflowValidationInformationAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
 		//
@@ -141,9 +140,7 @@ func (m *WorkflowValidationInformationAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv WorkflowValidationInformationAO0P0
-
-	rcv.ObjectType = stage1.ObjectType
+	var rcv WorkflowValidationInformationAO1P1
 
 	rcv.State = stage1.State
 
@@ -156,8 +153,6 @@ func (m *WorkflowValidationInformationAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage2); err != nil {
 		return err
 	}
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "State")
 
@@ -173,25 +168,15 @@ func (m *WorkflowValidationInformationAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.WorkflowValidationInformationAO0P0 = result
+		m.WorkflowValidationInformationAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m WorkflowValidationInformationAO0P0) MarshalJSON() ([]byte, error) {
+func (m WorkflowValidationInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
 		//
@@ -205,8 +190,6 @@ func (m WorkflowValidationInformationAO0P0) MarshalJSON() ([]byte, error) {
 		ValidationError []*WorkflowValidationError `json:"ValidationError"`
 	}
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.State = m.State
 
 	stage1.ValidationError = m.ValidationError
@@ -217,12 +200,12 @@ func (m WorkflowValidationInformationAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.WorkflowValidationInformationAO0P0) == 0 {
+	if len(m.WorkflowValidationInformationAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.WorkflowValidationInformationAO0P0)
+	additional, err := json.Marshal(m.WorkflowValidationInformationAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -236,8 +219,8 @@ func (m WorkflowValidationInformationAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this workflow validation information a o0 p0
-func (m *WorkflowValidationInformationAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this workflow validation information a o1 p1
+func (m *WorkflowValidationInformationAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateState(formats); err != nil {
@@ -254,7 +237,7 @@ func (m *WorkflowValidationInformationAO0P0) Validate(formats strfmt.Registry) e
 	return nil
 }
 
-var workflowValidationInformationAO0P0TypeStatePropEnum []interface{}
+var workflowValidationInformationAO1P1TypeStatePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -262,31 +245,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		workflowValidationInformationAO0P0TypeStatePropEnum = append(workflowValidationInformationAO0P0TypeStatePropEnum, v)
+		workflowValidationInformationAO1P1TypeStatePropEnum = append(workflowValidationInformationAO1P1TypeStatePropEnum, v)
 	}
 }
 
 const (
 
-	// WorkflowValidationInformationAO0P0StateNotValidated captures enum value "NotValidated"
-	WorkflowValidationInformationAO0P0StateNotValidated string = "NotValidated"
+	// WorkflowValidationInformationAO1P1StateNotValidated captures enum value "NotValidated"
+	WorkflowValidationInformationAO1P1StateNotValidated string = "NotValidated"
 
-	// WorkflowValidationInformationAO0P0StateValid captures enum value "Valid"
-	WorkflowValidationInformationAO0P0StateValid string = "Valid"
+	// WorkflowValidationInformationAO1P1StateValid captures enum value "Valid"
+	WorkflowValidationInformationAO1P1StateValid string = "Valid"
 
-	// WorkflowValidationInformationAO0P0StateInvalid captures enum value "Invalid"
-	WorkflowValidationInformationAO0P0StateInvalid string = "Invalid"
+	// WorkflowValidationInformationAO1P1StateInvalid captures enum value "Invalid"
+	WorkflowValidationInformationAO1P1StateInvalid string = "Invalid"
 )
 
 // prop value enum
-func (m *WorkflowValidationInformationAO0P0) validateStateEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, workflowValidationInformationAO0P0TypeStatePropEnum); err != nil {
+func (m *WorkflowValidationInformationAO1P1) validateStateEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowValidationInformationAO1P1TypeStatePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *WorkflowValidationInformationAO0P0) validateState(formats strfmt.Registry) error {
+func (m *WorkflowValidationInformationAO1P1) validateState(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.State) { // not required
 		return nil
@@ -300,7 +283,7 @@ func (m *WorkflowValidationInformationAO0P0) validateState(formats strfmt.Regist
 	return nil
 }
 
-func (m *WorkflowValidationInformationAO0P0) validateValidationError(formats strfmt.Registry) error {
+func (m *WorkflowValidationInformationAO1P1) validateValidationError(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ValidationError) { // not required
 		return nil
@@ -326,7 +309,7 @@ func (m *WorkflowValidationInformationAO0P0) validateValidationError(formats str
 }
 
 // MarshalBinary interface implementation
-func (m *WorkflowValidationInformationAO0P0) MarshalBinary() ([]byte, error) {
+func (m *WorkflowValidationInformationAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -334,8 +317,8 @@ func (m *WorkflowValidationInformationAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *WorkflowValidationInformationAO0P0) UnmarshalBinary(b []byte) error {
-	var res WorkflowValidationInformationAO0P0
+func (m *WorkflowValidationInformationAO1P1) UnmarshalBinary(b []byte) error {
+	var res WorkflowValidationInformationAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

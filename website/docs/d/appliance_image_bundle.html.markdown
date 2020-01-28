@@ -37,11 +37,13 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the software upgrade bundle.
 * `notes`:(string)Detailed description of the software upgrade bundle.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `priority`:(string)Software upgrade manifest's upgrade priority. The upgrade service supports two priorities, Normal and Critical. Normal priority is used for regular software upgrades, and the upgrade service uses the Upgrade Policy to compute upgrade start time. Critical priority is used for the critical software security patches, and the upgrade service ignores the Upgrade Policy when it computes the upgrade start time.
 * `release_time`:(string)Software upgrade manifest's release date and time.
 * `status_message`:(string)Status message set during the manifest processing.
 * `upgrade_end_time`:(string)End date of the software upgrade process.
 * `upgrade_grace_period`:(int)Grace period in seconds before the automatic upgrade is initiated. The upgrade service uses the grace period to compute the upgrade start time when it receives an upgrade notfication from the Intersight. If there is an Upgrade Policy configured for the Intersight Appliance, then the upgrade service uses the policy to compute the upgrade start time. However, the upgrade start time cannot not exceed the limit enforced by the grace period.
+* `upgrade_impact_duration`:(int)Duration (in minutes) for which services will be disrupted.
+* `upgrade_impact_enum`:(string)UpgradeImpactEnum is used to indicate the kind of impact the upgrade has on currently running services on the appliance.
 * `upgrade_start_time`:(string)Start date of the software upgrade process.
 * `version`:(string)Software upgrade manifest's version.

@@ -26,7 +26,7 @@ type ServerConfigImport struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Policy prefix for the policies of the imported server profile.
 	//
@@ -63,7 +63,7 @@ func (m *ServerConfigImport) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PolicyPrefix string `json:"PolicyPrefix,omitempty"`
 
@@ -109,7 +109,7 @@ func (m ServerConfigImport) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PolicyPrefix string `json:"PolicyPrefix,omitempty"`
 

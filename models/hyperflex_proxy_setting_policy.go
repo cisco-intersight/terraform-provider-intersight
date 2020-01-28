@@ -35,7 +35,7 @@ type HyperflexProxySettingPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The password for the HTTP Proxy.
 	//
@@ -70,7 +70,7 @@ func (m *HyperflexProxySettingPolicy) UnmarshalJSON(raw []byte) error {
 
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Password string `json:"Password,omitempty"`
 
@@ -116,7 +116,7 @@ func (m HyperflexProxySettingPolicy) MarshalJSON() ([]byte, error) {
 
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Password string `json:"Password,omitempty"`
 

@@ -21,30 +21,45 @@ import (
 //
 // swagger:model vnicCdn
 type VnicCdn struct {
-	VnicCdnAO0P0
+	MoBaseComplexType
+
+	VnicCdnAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VnicCdn) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VnicCdnAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VnicCdnAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 VnicCdnAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.VnicCdnAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m VnicCdn) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VnicCdnAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.VnicCdnAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m VnicCdn) MarshalJSON() ([]byte, error) {
 func (m *VnicCdn) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VnicCdnAO0P0
-	if err := m.VnicCdnAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with VnicCdnAO1P1
+	if err := m.VnicCdnAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,19 +101,9 @@ func (m *VnicCdn) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// VnicCdnAO0P0 vnic cdn a o0 p0
-// swagger:model VnicCdnAO0P0
-type VnicCdnAO0P0 struct {
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+// VnicCdnAO1P1 vnic cdn a o1 p1
+// swagger:model VnicCdnAO1P1
+type VnicCdnAO1P1 struct {
 
 	// Source of the CDN. It can either be user specified or be the same as the vNIC name.
 	//
@@ -105,24 +114,14 @@ type VnicCdnAO0P0 struct {
 	//
 	Value string `json:"Value,omitempty"`
 
-	// vnic cdn a o0 p0
-	VnicCdnAO0P0 map[string]interface{} `json:"-"`
+	// vnic cdn a o1 p1
+	VnicCdnAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *VnicCdnAO0P0) UnmarshalJSON(data []byte) error {
+func (m *VnicCdnAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Source of the CDN. It can either be user specified or be the same as the vNIC name.
 		//
@@ -136,9 +135,7 @@ func (m *VnicCdnAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv VnicCdnAO0P0
-
-	rcv.ObjectType = stage1.ObjectType
+	var rcv VnicCdnAO1P1
 
 	rcv.Source = stage1.Source
 
@@ -151,8 +148,6 @@ func (m *VnicCdnAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage2); err != nil {
 		return err
 	}
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "Source")
 
@@ -168,25 +163,15 @@ func (m *VnicCdnAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.VnicCdnAO0P0 = result
+		m.VnicCdnAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m VnicCdnAO0P0) MarshalJSON() ([]byte, error) {
+func (m VnicCdnAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Source of the CDN. It can either be user specified or be the same as the vNIC name.
 		//
@@ -198,8 +183,6 @@ func (m VnicCdnAO0P0) MarshalJSON() ([]byte, error) {
 		Value string `json:"Value,omitempty"`
 	}
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Source = m.Source
 
 	stage1.Value = m.Value
@@ -210,12 +193,12 @@ func (m VnicCdnAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.VnicCdnAO0P0) == 0 {
+	if len(m.VnicCdnAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.VnicCdnAO0P0)
+	additional, err := json.Marshal(m.VnicCdnAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -229,8 +212,8 @@ func (m VnicCdnAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this vnic cdn a o0 p0
-func (m *VnicCdnAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this vnic cdn a o1 p1
+func (m *VnicCdnAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateSource(formats); err != nil {
@@ -243,7 +226,7 @@ func (m *VnicCdnAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var vnicCdnAO0P0TypeSourcePropEnum []interface{}
+var vnicCdnAO1P1TypeSourcePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -251,28 +234,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vnicCdnAO0P0TypeSourcePropEnum = append(vnicCdnAO0P0TypeSourcePropEnum, v)
+		vnicCdnAO1P1TypeSourcePropEnum = append(vnicCdnAO1P1TypeSourcePropEnum, v)
 	}
 }
 
 const (
 
-	// VnicCdnAO0P0SourceVnic captures enum value "vnic"
-	VnicCdnAO0P0SourceVnic string = "vnic"
+	// VnicCdnAO1P1SourceVnic captures enum value "vnic"
+	VnicCdnAO1P1SourceVnic string = "vnic"
 
-	// VnicCdnAO0P0SourceUser captures enum value "user"
-	VnicCdnAO0P0SourceUser string = "user"
+	// VnicCdnAO1P1SourceUser captures enum value "user"
+	VnicCdnAO1P1SourceUser string = "user"
 )
 
 // prop value enum
-func (m *VnicCdnAO0P0) validateSourceEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vnicCdnAO0P0TypeSourcePropEnum); err != nil {
+func (m *VnicCdnAO1P1) validateSourceEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vnicCdnAO1P1TypeSourcePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VnicCdnAO0P0) validateSource(formats strfmt.Registry) error {
+func (m *VnicCdnAO1P1) validateSource(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Source) { // not required
 		return nil
@@ -287,7 +270,7 @@ func (m *VnicCdnAO0P0) validateSource(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *VnicCdnAO0P0) MarshalBinary() ([]byte, error) {
+func (m *VnicCdnAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -295,8 +278,8 @@ func (m *VnicCdnAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *VnicCdnAO0P0) UnmarshalBinary(b []byte) error {
-	var res VnicCdnAO0P0
+func (m *VnicCdnAO1P1) UnmarshalBinary(b []byte) error {
+	var res VnicCdnAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

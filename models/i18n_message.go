@@ -24,30 +24,45 @@ import (
 //
 // swagger:model i18nMessage
 type I18nMessage struct {
-	I18nMessageAO0P0
+	MoBaseComplexType
+
+	I18nMessageAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *I18nMessage) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 I18nMessageAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.I18nMessageAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 I18nMessageAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.I18nMessageAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m I18nMessage) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.I18nMessageAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.I18nMessageAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -56,8 +71,12 @@ func (m I18nMessage) MarshalJSON() ([]byte, error) {
 func (m *I18nMessage) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with I18nMessageAO0P0
-	if err := m.I18nMessageAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with I18nMessageAO1P1
+	if err := m.I18nMessageAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,9 +104,9 @@ func (m *I18nMessage) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// I18nMessageAO0P0 i18n message a o0 p0
-// swagger:model I18nMessageAO0P0
-type I18nMessageAO0P0 struct {
+// I18nMessageAO1P1 i18n message a o1 p1
+// swagger:model I18nMessageAO1P1
+type I18nMessageAO1P1 struct {
 
 	// The default (en-US) localized message. Default localized message will be stored and directly retrieved when
 	// the user's locale setting is en-US.
@@ -105,22 +124,12 @@ type I18nMessageAO0P0 struct {
 	//
 	MessageParams []*I18nMessageParam `json:"MessageParams"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// i18n message a o0 p0
-	I18nMessageAO0P0 map[string]interface{} `json:"-"`
+	// i18n message a o1 p1
+	I18nMessageAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *I18nMessageAO0P0) UnmarshalJSON(data []byte) error {
+func (m *I18nMessageAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -139,29 +148,17 @@ func (m *I18nMessageAO0P0) UnmarshalJSON(data []byte) error {
 		// The list of message parameters.
 		//
 		MessageParams []*I18nMessageParam `json:"MessageParams"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv I18nMessageAO0P0
+	var rcv I18nMessageAO1P1
 
 	rcv.Message = stage1.Message
 
 	rcv.MessageID = stage1.MessageID
 
 	rcv.MessageParams = stage1.MessageParams
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -177,8 +174,6 @@ func (m *I18nMessageAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MessageParams")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -189,14 +184,14 @@ func (m *I18nMessageAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.I18nMessageAO0P0 = result
+		m.I18nMessageAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m I18nMessageAO0P0) MarshalJSON() ([]byte, error) {
+func (m I18nMessageAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The default (en-US) localized message. Default localized message will be stored and directly retrieved when
@@ -214,16 +209,6 @@ func (m I18nMessageAO0P0) MarshalJSON() ([]byte, error) {
 		// The list of message parameters.
 		//
 		MessageParams []*I18nMessageParam `json:"MessageParams"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Message = m.Message
@@ -232,20 +217,18 @@ func (m I18nMessageAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.MessageParams = m.MessageParams
 
-	stage1.ObjectType = m.ObjectType
-
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(m.I18nMessageAO0P0) == 0 {
+	if len(m.I18nMessageAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.I18nMessageAO0P0)
+	additional, err := json.Marshal(m.I18nMessageAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -259,8 +242,8 @@ func (m I18nMessageAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this i18n message a o0 p0
-func (m *I18nMessageAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this i18n message a o1 p1
+func (m *I18nMessageAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMessageParams(formats); err != nil {
@@ -273,7 +256,7 @@ func (m *I18nMessageAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *I18nMessageAO0P0) validateMessageParams(formats strfmt.Registry) error {
+func (m *I18nMessageAO1P1) validateMessageParams(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MessageParams) { // not required
 		return nil
@@ -299,7 +282,7 @@ func (m *I18nMessageAO0P0) validateMessageParams(formats strfmt.Registry) error 
 }
 
 // MarshalBinary interface implementation
-func (m *I18nMessageAO0P0) MarshalBinary() ([]byte, error) {
+func (m *I18nMessageAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -307,8 +290,8 @@ func (m *I18nMessageAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *I18nMessageAO0P0) UnmarshalBinary(b []byte) error {
-	var res I18nMessageAO0P0
+func (m *I18nMessageAO1P1) UnmarshalBinary(b []byte) error {
+	var res I18nMessageAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

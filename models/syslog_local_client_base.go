@@ -21,30 +21,45 @@ import (
 //
 // swagger:model syslogLocalClientBase
 type SyslogLocalClientBase struct {
-	SyslogLocalClientBaseAO0P0
+	MoBaseComplexType
+
+	SyslogLocalClientBaseAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *SyslogLocalClientBase) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 SyslogLocalClientBaseAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.SyslogLocalClientBaseAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 SyslogLocalClientBaseAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.SyslogLocalClientBaseAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m SyslogLocalClientBase) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.SyslogLocalClientBaseAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.SyslogLocalClientBaseAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m SyslogLocalClientBase) MarshalJSON() ([]byte, error) {
 func (m *SyslogLocalClientBase) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with SyslogLocalClientBaseAO0P0
-	if err := m.SyslogLocalClientBaseAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with SyslogLocalClientBaseAO1P1
+	if err := m.SyslogLocalClientBaseAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,31 +101,21 @@ func (m *SyslogLocalClientBase) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// SyslogLocalClientBaseAO0P0 syslog local client base a o0 p0
-// swagger:model SyslogLocalClientBaseAO0P0
-type SyslogLocalClientBaseAO0P0 struct {
+// SyslogLocalClientBaseAO1P1 syslog local client base a o1 p1
+// swagger:model SyslogLocalClientBaseAO1P1
+type SyslogLocalClientBaseAO1P1 struct {
 
 	// Lowest level of messages to be included in the local log.
 	//
 	// Enum: [warning emergency alert critical error notice informational debug]
 	MinSeverity *string `json:"MinSeverity,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// syslog local client base a o0 p0
-	SyslogLocalClientBaseAO0P0 map[string]interface{} `json:"-"`
+	// syslog local client base a o1 p1
+	SyslogLocalClientBaseAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *SyslogLocalClientBaseAO0P0) UnmarshalJSON(data []byte) error {
+func (m *SyslogLocalClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -114,25 +123,13 @@ func (m *SyslogLocalClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv SyslogLocalClientBaseAO0P0
+	var rcv SyslogLocalClientBaseAO1P1
 
 	rcv.MinSeverity = stage1.MinSeverity
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -144,8 +141,6 @@ func (m *SyslogLocalClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "MinSeverity")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -156,35 +151,23 @@ func (m *SyslogLocalClientBaseAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.SyslogLocalClientBaseAO0P0 = result
+		m.SyslogLocalClientBaseAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m SyslogLocalClientBaseAO0P0) MarshalJSON() ([]byte, error) {
+func (m SyslogLocalClientBaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Lowest level of messages to be included in the local log.
 		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.MinSeverity = m.MinSeverity
-
-	stage1.ObjectType = m.ObjectType
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -192,12 +175,12 @@ func (m SyslogLocalClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.SyslogLocalClientBaseAO0P0) == 0 {
+	if len(m.SyslogLocalClientBaseAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.SyslogLocalClientBaseAO0P0)
+	additional, err := json.Marshal(m.SyslogLocalClientBaseAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -211,8 +194,8 @@ func (m SyslogLocalClientBaseAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this syslog local client base a o0 p0
-func (m *SyslogLocalClientBaseAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this syslog local client base a o1 p1
+func (m *SyslogLocalClientBaseAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMinSeverity(formats); err != nil {
@@ -225,7 +208,7 @@ func (m *SyslogLocalClientBaseAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var syslogLocalClientBaseAO0P0TypeMinSeverityPropEnum []interface{}
+var syslogLocalClientBaseAO1P1TypeMinSeverityPropEnum []interface{}
 
 func init() {
 	var res []string
@@ -233,46 +216,46 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		syslogLocalClientBaseAO0P0TypeMinSeverityPropEnum = append(syslogLocalClientBaseAO0P0TypeMinSeverityPropEnum, v)
+		syslogLocalClientBaseAO1P1TypeMinSeverityPropEnum = append(syslogLocalClientBaseAO1P1TypeMinSeverityPropEnum, v)
 	}
 }
 
 const (
 
-	// SyslogLocalClientBaseAO0P0MinSeverityWarning captures enum value "warning"
-	SyslogLocalClientBaseAO0P0MinSeverityWarning string = "warning"
+	// SyslogLocalClientBaseAO1P1MinSeverityWarning captures enum value "warning"
+	SyslogLocalClientBaseAO1P1MinSeverityWarning string = "warning"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityEmergency captures enum value "emergency"
-	SyslogLocalClientBaseAO0P0MinSeverityEmergency string = "emergency"
+	// SyslogLocalClientBaseAO1P1MinSeverityEmergency captures enum value "emergency"
+	SyslogLocalClientBaseAO1P1MinSeverityEmergency string = "emergency"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityAlert captures enum value "alert"
-	SyslogLocalClientBaseAO0P0MinSeverityAlert string = "alert"
+	// SyslogLocalClientBaseAO1P1MinSeverityAlert captures enum value "alert"
+	SyslogLocalClientBaseAO1P1MinSeverityAlert string = "alert"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityCritical captures enum value "critical"
-	SyslogLocalClientBaseAO0P0MinSeverityCritical string = "critical"
+	// SyslogLocalClientBaseAO1P1MinSeverityCritical captures enum value "critical"
+	SyslogLocalClientBaseAO1P1MinSeverityCritical string = "critical"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityError captures enum value "error"
-	SyslogLocalClientBaseAO0P0MinSeverityError string = "error"
+	// SyslogLocalClientBaseAO1P1MinSeverityError captures enum value "error"
+	SyslogLocalClientBaseAO1P1MinSeverityError string = "error"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityNotice captures enum value "notice"
-	SyslogLocalClientBaseAO0P0MinSeverityNotice string = "notice"
+	// SyslogLocalClientBaseAO1P1MinSeverityNotice captures enum value "notice"
+	SyslogLocalClientBaseAO1P1MinSeverityNotice string = "notice"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityInformational captures enum value "informational"
-	SyslogLocalClientBaseAO0P0MinSeverityInformational string = "informational"
+	// SyslogLocalClientBaseAO1P1MinSeverityInformational captures enum value "informational"
+	SyslogLocalClientBaseAO1P1MinSeverityInformational string = "informational"
 
-	// SyslogLocalClientBaseAO0P0MinSeverityDebug captures enum value "debug"
-	SyslogLocalClientBaseAO0P0MinSeverityDebug string = "debug"
+	// SyslogLocalClientBaseAO1P1MinSeverityDebug captures enum value "debug"
+	SyslogLocalClientBaseAO1P1MinSeverityDebug string = "debug"
 )
 
 // prop value enum
-func (m *SyslogLocalClientBaseAO0P0) validateMinSeverityEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, syslogLocalClientBaseAO0P0TypeMinSeverityPropEnum); err != nil {
+func (m *SyslogLocalClientBaseAO1P1) validateMinSeverityEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, syslogLocalClientBaseAO1P1TypeMinSeverityPropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SyslogLocalClientBaseAO0P0) validateMinSeverity(formats strfmt.Registry) error {
+func (m *SyslogLocalClientBaseAO1P1) validateMinSeverity(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MinSeverity) { // not required
 		return nil
@@ -287,7 +270,7 @@ func (m *SyslogLocalClientBaseAO0P0) validateMinSeverity(formats strfmt.Registry
 }
 
 // MarshalBinary interface implementation
-func (m *SyslogLocalClientBaseAO0P0) MarshalBinary() ([]byte, error) {
+func (m *SyslogLocalClientBaseAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -295,8 +278,8 @@ func (m *SyslogLocalClientBaseAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SyslogLocalClientBaseAO0P0) UnmarshalBinary(b []byte) error {
-	var res SyslogLocalClientBaseAO0P0
+func (m *SyslogLocalClientBaseAO1P1) UnmarshalBinary(b []byte) error {
+	var res SyslogLocalClientBaseAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

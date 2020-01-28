@@ -17,30 +17,45 @@ import (
 // HyperflexHxZoneResiliencyInfoDt Hyperflex:Hx Zone Resiliency Info Dt
 // swagger:model hyperflexHxZoneResiliencyInfoDt
 type HyperflexHxZoneResiliencyInfoDt struct {
-	HyperflexHxZoneResiliencyInfoDtAO0P0
+	MoBaseComplexType
+
+	HyperflexHxZoneResiliencyInfoDtAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *HyperflexHxZoneResiliencyInfoDt) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 HyperflexHxZoneResiliencyInfoDtAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.HyperflexHxZoneResiliencyInfoDtAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 HyperflexHxZoneResiliencyInfoDtAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.HyperflexHxZoneResiliencyInfoDtAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m HyperflexHxZoneResiliencyInfoDt) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.HyperflexHxZoneResiliencyInfoDtAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.HyperflexHxZoneResiliencyInfoDtAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -49,8 +64,12 @@ func (m HyperflexHxZoneResiliencyInfoDt) MarshalJSON() ([]byte, error) {
 func (m *HyperflexHxZoneResiliencyInfoDt) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with HyperflexHxZoneResiliencyInfoDtAO0P0
-	if err := m.HyperflexHxZoneResiliencyInfoDtAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with HyperflexHxZoneResiliencyInfoDtAO1P1
+	if err := m.HyperflexHxZoneResiliencyInfoDtAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -78,50 +97,30 @@ func (m *HyperflexHxZoneResiliencyInfoDt) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// HyperflexHxZoneResiliencyInfoDtAO0P0 hyperflex hx zone resiliency info dt a o0 p0
-// swagger:model HyperflexHxZoneResiliencyInfoDtAO0P0
-type HyperflexHxZoneResiliencyInfoDtAO0P0 struct {
+// HyperflexHxZoneResiliencyInfoDtAO1P1 hyperflex hx zone resiliency info dt a o1 p1
+// swagger:model HyperflexHxZoneResiliencyInfoDtAO1P1
+type HyperflexHxZoneResiliencyInfoDtAO1P1 struct {
 
 	// name
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// resiliency info
 	// Read Only: true
 	ResiliencyInfo *HyperflexHxResiliencyInfoDt `json:"ResiliencyInfo,omitempty"`
 
-	// hyperflex hx zone resiliency info dt a o0 p0
-	HyperflexHxZoneResiliencyInfoDtAO0P0 map[string]interface{} `json:"-"`
+	// hyperflex hx zone resiliency info dt a o1 p1
+	HyperflexHxZoneResiliencyInfoDtAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) UnmarshalJSON(data []byte) error {
+func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// name
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// resiliency info
 		// Read Only: true
@@ -130,11 +129,9 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) UnmarshalJSON(data []byte) error 
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv HyperflexHxZoneResiliencyInfoDtAO0P0
+	var rcv HyperflexHxZoneResiliencyInfoDtAO1P1
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.ResiliencyInfo = stage1.ResiliencyInfo
 
@@ -148,8 +145,6 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) UnmarshalJSON(data []byte) error 
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "ResiliencyInfo")
 
 	// stage 3, add additional properties values
@@ -162,29 +157,19 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) UnmarshalJSON(data []byte) error 
 			}
 			result[k] = toadd
 		}
-		m.HyperflexHxZoneResiliencyInfoDtAO0P0 = result
+		m.HyperflexHxZoneResiliencyInfoDtAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalJSON() ([]byte, error) {
+func (m HyperflexHxZoneResiliencyInfoDtAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// name
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// resiliency info
 		// Read Only: true
@@ -192,8 +177,6 @@ func (m HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Name = m.Name
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.ResiliencyInfo = m.ResiliencyInfo
 
@@ -203,12 +186,12 @@ func (m HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.HyperflexHxZoneResiliencyInfoDtAO0P0) == 0 {
+	if len(m.HyperflexHxZoneResiliencyInfoDtAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.HyperflexHxZoneResiliencyInfoDtAO0P0)
+	additional, err := json.Marshal(m.HyperflexHxZoneResiliencyInfoDtAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -222,8 +205,8 @@ func (m HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this hyperflex hx zone resiliency info dt a o0 p0
-func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this hyperflex hx zone resiliency info dt a o1 p1
+func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateResiliencyInfo(formats); err != nil {
@@ -236,7 +219,7 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) Validate(formats strfmt.Registry)
 	return nil
 }
 
-func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) validateResiliencyInfo(formats strfmt.Registry) error {
+func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) validateResiliencyInfo(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ResiliencyInfo) { // not required
 		return nil
@@ -255,7 +238,7 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) validateResiliencyInfo(formats st
 }
 
 // MarshalBinary interface implementation
-func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalBinary() ([]byte, error) {
+func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -263,8 +246,8 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *HyperflexHxZoneResiliencyInfoDtAO0P0) UnmarshalBinary(b []byte) error {
-	var res HyperflexHxZoneResiliencyInfoDtAO0P0
+func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) UnmarshalBinary(b []byte) error {
+	var res HyperflexHxZoneResiliencyInfoDtAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

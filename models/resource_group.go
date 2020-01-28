@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // ResourceGroup Resource:Group
@@ -22,23 +24,36 @@ import (
 type ResourceGroup struct {
 	MoBaseMo
 
+	// The account to which this resource group belongs to.
+	//
+	// Read Only: true
+	Account *IamAccountRef `json:"Account,omitempty"`
+
 	// The name of this resource group.
 	//
 	Name string `json:"Name,omitempty"`
 
-	// Relationship to the Organization that owns the Managed Object.
+	// A collection of references to the [organization.Organization](mo://organization.Organization) Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	// When this managed object is deleted, the referenced [organization.Organization](mo://organization.Organization) MOs unset their reference to this deleted MO.
+	//
+	Organizations []*OrganizationOrganizationRef `json:"Organizations"`
 
-	// The list of all resources contained in this resource group.
+	// A single filter expression created by OR'ing the $filter criteria of the 'selectors' of a given object type. Used to efficiently maintain the membership of the group. This filter is maintained per object type in this type.
+	//
 	//
 	// Read Only: true
-	Resources []*MoBaseMoRef `json:"Resources"`
+	PerTypeCombinedSelector []*ResourcePerTypeCombinedSelector `json:"PerTypeCombinedSelector"`
 
-	// A list of ODATA filters to select resources. The group selectors may be include URLs of individual resources, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host) and start with "/api/v1/".
+	// Qualifier shall be used to specify if we want to organize resources using multiple resource group or single For an account, resource groups can be of only one of the above types. (Both the types are mutually exclusive for an account.).
+	//
+	// Enum: [Allow-Selectors Allow-All]
+	Qualifier *string `json:"Qualifier,omitempty"`
+
+	// A list of ODATA filters to select resources. The group selectors may be include URLs of individual resources, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host).
 	//
 	//
-	Selectors []string `json:"Selectors"`
+	Selectors []*ResourceSelector `json:"Selectors"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -52,23 +67,31 @@ func (m *ResourceGroup) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		Account *IamAccountRef `json:"Account,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organizations []*OrganizationOrganizationRef `json:"Organizations"`
 
-		Resources []*MoBaseMoRef `json:"Resources"`
+		PerTypeCombinedSelector []*ResourcePerTypeCombinedSelector `json:"PerTypeCombinedSelector"`
 
-		Selectors []string `json:"Selectors"`
+		Qualifier *string `json:"Qualifier,omitempty"`
+
+		Selectors []*ResourceSelector `json:"Selectors"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
 
+	m.Account = dataAO1.Account
+
 	m.Name = dataAO1.Name
 
-	m.Organization = dataAO1.Organization
+	m.Organizations = dataAO1.Organizations
 
-	m.Resources = dataAO1.Resources
+	m.PerTypeCombinedSelector = dataAO1.PerTypeCombinedSelector
+
+	m.Qualifier = dataAO1.Qualifier
 
 	m.Selectors = dataAO1.Selectors
 
@@ -86,20 +109,28 @@ func (m ResourceGroup) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		Account *IamAccountRef `json:"Account,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organizations []*OrganizationOrganizationRef `json:"Organizations"`
 
-		Resources []*MoBaseMoRef `json:"Resources"`
+		PerTypeCombinedSelector []*ResourcePerTypeCombinedSelector `json:"PerTypeCombinedSelector"`
 
-		Selectors []string `json:"Selectors"`
+		Qualifier *string `json:"Qualifier,omitempty"`
+
+		Selectors []*ResourceSelector `json:"Selectors"`
 	}
+
+	dataAO1.Account = m.Account
 
 	dataAO1.Name = m.Name
 
-	dataAO1.Organization = m.Organization
+	dataAO1.Organizations = m.Organizations
 
-	dataAO1.Resources = m.Resources
+	dataAO1.PerTypeCombinedSelector = m.PerTypeCombinedSelector
+
+	dataAO1.Qualifier = m.Qualifier
 
 	dataAO1.Selectors = m.Selectors
 
@@ -121,11 +152,23 @@ func (m *ResourceGroup) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateOrganization(formats); err != nil {
+	if err := m.validateAccount(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateResources(formats); err != nil {
+	if err := m.validateOrganizations(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePerTypeCombinedSelector(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateQualifier(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSelectors(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -135,16 +178,16 @@ func (m *ResourceGroup) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ResourceGroup) validateOrganization(formats strfmt.Registry) error {
+func (m *ResourceGroup) validateAccount(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Organization) { // not required
+	if swag.IsZero(m.Account) { // not required
 		return nil
 	}
 
-	if m.Organization != nil {
-		if err := m.Organization.Validate(formats); err != nil {
+	if m.Account != nil {
+		if err := m.Account.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("Organization")
+				return ve.ValidateName("Account")
 			}
 			return err
 		}
@@ -153,21 +196,105 @@ func (m *ResourceGroup) validateOrganization(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ResourceGroup) validateResources(formats strfmt.Registry) error {
+func (m *ResourceGroup) validateOrganizations(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Resources) { // not required
+	if swag.IsZero(m.Organizations) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.Resources); i++ {
-		if swag.IsZero(m.Resources[i]) { // not required
+	for i := 0; i < len(m.Organizations); i++ {
+		if swag.IsZero(m.Organizations[i]) { // not required
 			continue
 		}
 
-		if m.Resources[i] != nil {
-			if err := m.Resources[i].Validate(formats); err != nil {
+		if m.Organizations[i] != nil {
+			if err := m.Organizations[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("Resources" + "." + strconv.Itoa(i))
+					return ve.ValidateName("Organizations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ResourceGroup) validatePerTypeCombinedSelector(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PerTypeCombinedSelector) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.PerTypeCombinedSelector); i++ {
+		if swag.IsZero(m.PerTypeCombinedSelector[i]) { // not required
+			continue
+		}
+
+		if m.PerTypeCombinedSelector[i] != nil {
+			if err := m.PerTypeCombinedSelector[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("PerTypeCombinedSelector" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var resourceGroupTypeQualifierPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Allow-Selectors","Allow-All"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		resourceGroupTypeQualifierPropEnum = append(resourceGroupTypeQualifierPropEnum, v)
+	}
+}
+
+// property enum
+func (m *ResourceGroup) validateQualifierEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, resourceGroupTypeQualifierPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ResourceGroup) validateQualifier(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Qualifier) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateQualifierEnum("Qualifier", "body", *m.Qualifier); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ResourceGroup) validateSelectors(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Selectors) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Selectors); i++ {
+		if swag.IsZero(m.Selectors[i]) { // not required
+			continue
+		}
+
+		if m.Selectors[i] != nil {
+			if err := m.Selectors[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Selectors" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

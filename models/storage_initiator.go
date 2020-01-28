@@ -21,30 +21,45 @@ import (
 //
 // swagger:model storageInitiator
 type StorageInitiator struct {
-	StorageInitiatorAO0P0
+	MoBaseComplexType
+
+	StorageInitiatorAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StorageInitiator) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageInitiatorAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageInitiatorAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 StorageInitiatorAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.StorageInitiatorAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m StorageInitiator) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageInitiatorAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.StorageInitiatorAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m StorageInitiator) MarshalJSON() ([]byte, error) {
 func (m *StorageInitiator) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageInitiatorAO0P0
-	if err := m.StorageInitiatorAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with StorageInitiatorAO1P1
+	if err := m.StorageInitiatorAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,9 +101,9 @@ func (m *StorageInitiator) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// StorageInitiatorAO0P0 storage initiator a o0 p0
-// swagger:model StorageInitiatorAO0P0
-type StorageInitiatorAO0P0 struct {
+// StorageInitiatorAO1P1 storage initiator a o1 p1
+// swagger:model StorageInitiatorAO1P1
+type StorageInitiatorAO1P1 struct {
 
 	// IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.
 	//
@@ -95,16 +114,6 @@ type StorageInitiatorAO0P0 struct {
 	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Initiator type, it can be FC or iSCSI.
 	//
@@ -117,12 +126,12 @@ type StorageInitiatorAO0P0 struct {
 	// Read Only: true
 	Wwn string `json:"Wwn,omitempty"`
 
-	// storage initiator a o0 p0
-	StorageInitiatorAO0P0 map[string]interface{} `json:"-"`
+	// storage initiator a o1 p1
+	StorageInitiatorAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *StorageInitiatorAO0P0) UnmarshalJSON(data []byte) error {
+func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -135,16 +144,6 @@ func (m *StorageInitiatorAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Initiator type, it can be FC or iSCSI.
 		//
@@ -160,13 +159,11 @@ func (m *StorageInitiatorAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv StorageInitiatorAO0P0
+	var rcv StorageInitiatorAO1P1
 
 	rcv.Iqn = stage1.Iqn
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Type = stage1.Type
 
@@ -184,8 +181,6 @@ func (m *StorageInitiatorAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Type")
 
 	delete(stage2, "Wwn")
@@ -200,14 +195,14 @@ func (m *StorageInitiatorAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.StorageInitiatorAO0P0 = result
+		m.StorageInitiatorAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m StorageInitiatorAO0P0) MarshalJSON() ([]byte, error) {
+func (m StorageInitiatorAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.
@@ -219,16 +214,6 @@ func (m StorageInitiatorAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Initiator type, it can be FC or iSCSI.
 		//
@@ -246,8 +231,6 @@ func (m StorageInitiatorAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.Type = m.Type
 
 	stage1.Wwn = m.Wwn
@@ -258,12 +241,12 @@ func (m StorageInitiatorAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.StorageInitiatorAO0P0) == 0 {
+	if len(m.StorageInitiatorAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.StorageInitiatorAO0P0)
+	additional, err := json.Marshal(m.StorageInitiatorAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -277,8 +260,8 @@ func (m StorageInitiatorAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this storage initiator a o0 p0
-func (m *StorageInitiatorAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this storage initiator a o1 p1
+func (m *StorageInitiatorAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateType(formats); err != nil {
@@ -291,7 +274,7 @@ func (m *StorageInitiatorAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var storageInitiatorAO0P0TypeTypePropEnum []interface{}
+var storageInitiatorAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -299,28 +282,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		storageInitiatorAO0P0TypeTypePropEnum = append(storageInitiatorAO0P0TypeTypePropEnum, v)
+		storageInitiatorAO1P1TypeTypePropEnum = append(storageInitiatorAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// StorageInitiatorAO0P0TypeFC captures enum value "FC"
-	StorageInitiatorAO0P0TypeFC string = "FC"
+	// StorageInitiatorAO1P1TypeFC captures enum value "FC"
+	StorageInitiatorAO1P1TypeFC string = "FC"
 
-	// StorageInitiatorAO0P0TypeISCSI captures enum value "iSCSI"
-	StorageInitiatorAO0P0TypeISCSI string = "iSCSI"
+	// StorageInitiatorAO1P1TypeISCSI captures enum value "iSCSI"
+	StorageInitiatorAO1P1TypeISCSI string = "iSCSI"
 )
 
 // prop value enum
-func (m *StorageInitiatorAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, storageInitiatorAO0P0TypeTypePropEnum); err != nil {
+func (m *StorageInitiatorAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, storageInitiatorAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *StorageInitiatorAO0P0) validateType(formats strfmt.Registry) error {
+func (m *StorageInitiatorAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -335,7 +318,7 @@ func (m *StorageInitiatorAO0P0) validateType(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *StorageInitiatorAO0P0) MarshalBinary() ([]byte, error) {
+func (m *StorageInitiatorAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -343,8 +326,8 @@ func (m *StorageInitiatorAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *StorageInitiatorAO0P0) UnmarshalBinary(b []byte) error {
-	var res StorageInitiatorAO0P0
+func (m *StorageInitiatorAO1P1) UnmarshalBinary(b []byte) error {
+	var res StorageInitiatorAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -40,7 +40,7 @@ type HclHyperflexSoftwareCompatibilityInfo struct {
 
 	// Type fo Hypervisor the HyperFlex components versions are compatible with. For example ESX, Hyperv or KVM.
 	//
-	// Enum: [ESXi]
+	// Enum: [Unknown Hyper-V ESXi]
 	HypervisorType *string `json:"HypervisorType,omitempty"`
 
 	// Hypervisor component software version.
@@ -213,7 +213,7 @@ var hclHyperflexSoftwareCompatibilityInfoTypeHypervisorTypePropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

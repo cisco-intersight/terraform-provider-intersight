@@ -8,6 +8,10 @@ resource "intersight_storage_disk_group_policy" "storage_disk_group1" {
     }
   }
   description = "Disk Group Test policy"
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 resource "intersight_storage_disk_group_policy" "storage_disk_group3" {
@@ -25,6 +29,10 @@ resource "intersight_storage_disk_group_policy" "storage_disk_group3" {
   }
   dedicated_hot_spares {
     slot_number = 5
+  }
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
   }
 }
 

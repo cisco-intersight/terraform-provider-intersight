@@ -59,6 +59,11 @@ type WorkflowTaskInfo struct {
 	// Read Only: true
 	Label string `json:"Label,omitempty"`
 
+	// Collection of Task execution messages with severity.
+	//
+	// Read Only: true
+	Message []*WorkflowMessage `json:"Message"`
+
 	// Task definition name which specifies the task type.
 	//
 	// Read Only: true
@@ -95,6 +100,10 @@ type WorkflowTaskInfo struct {
 	//
 	// Read Only: true
 	SubWorkflowInfo *WorkflowWorkflowInfoRef `json:"SubWorkflowInfo,omitempty"`
+
+	// The task definition that was used to launch this task execution instance.
+	//
+	TaskDefinition *WorkflowTaskDefinitionRef `json:"TaskDefinition,omitempty"`
 
 	// The list keeps a list of retried task instances.
 	//
@@ -134,6 +143,8 @@ func (m *WorkflowTaskInfo) UnmarshalJSON(raw []byte) error {
 
 		Label string `json:"Label,omitempty"`
 
+		Message []*WorkflowMessage `json:"Message"`
+
 		Name string `json:"Name,omitempty"`
 
 		Output interface{} `json:"Output,omitempty"`
@@ -147,6 +158,8 @@ func (m *WorkflowTaskInfo) UnmarshalJSON(raw []byte) error {
 		Status string `json:"Status,omitempty"`
 
 		SubWorkflowInfo *WorkflowWorkflowInfoRef `json:"SubWorkflowInfo,omitempty"`
+
+		TaskDefinition *WorkflowTaskDefinitionRef `json:"TaskDefinition,omitempty"`
 
 		TaskInstIDList []*WorkflowTaskRetryInfo `json:"TaskInstIdList"`
 
@@ -170,6 +183,8 @@ func (m *WorkflowTaskInfo) UnmarshalJSON(raw []byte) error {
 
 	m.Label = dataAO1.Label
 
+	m.Message = dataAO1.Message
+
 	m.Name = dataAO1.Name
 
 	m.Output = dataAO1.Output
@@ -183,6 +198,8 @@ func (m *WorkflowTaskInfo) UnmarshalJSON(raw []byte) error {
 	m.Status = dataAO1.Status
 
 	m.SubWorkflowInfo = dataAO1.SubWorkflowInfo
+
+	m.TaskDefinition = dataAO1.TaskDefinition
 
 	m.TaskInstIDList = dataAO1.TaskInstIDList
 
@@ -216,6 +233,8 @@ func (m WorkflowTaskInfo) MarshalJSON() ([]byte, error) {
 
 		Label string `json:"Label,omitempty"`
 
+		Message []*WorkflowMessage `json:"Message"`
+
 		Name string `json:"Name,omitempty"`
 
 		Output interface{} `json:"Output,omitempty"`
@@ -229,6 +248,8 @@ func (m WorkflowTaskInfo) MarshalJSON() ([]byte, error) {
 		Status string `json:"Status,omitempty"`
 
 		SubWorkflowInfo *WorkflowWorkflowInfoRef `json:"SubWorkflowInfo,omitempty"`
+
+		TaskDefinition *WorkflowTaskDefinitionRef `json:"TaskDefinition,omitempty"`
 
 		TaskInstIDList []*WorkflowTaskRetryInfo `json:"TaskInstIdList"`
 
@@ -249,6 +270,8 @@ func (m WorkflowTaskInfo) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Label = m.Label
 
+	dataAO1.Message = m.Message
+
 	dataAO1.Name = m.Name
 
 	dataAO1.Output = m.Output
@@ -262,6 +285,8 @@ func (m WorkflowTaskInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.Status = m.Status
 
 	dataAO1.SubWorkflowInfo = m.SubWorkflowInfo
+
+	dataAO1.TaskDefinition = m.TaskDefinition
 
 	dataAO1.TaskInstIDList = m.TaskInstIDList
 
@@ -289,11 +314,19 @@ func (m *WorkflowTaskInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateMessage(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateStartTime(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateSubWorkflowInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTaskDefinition(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -324,6 +357,31 @@ func (m *WorkflowTaskInfo) validateEndTime(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *WorkflowTaskInfo) validateMessage(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Message) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Message); i++ {
+		if swag.IsZero(m.Message[i]) { // not required
+			continue
+		}
+
+		if m.Message[i] != nil {
+			if err := m.Message[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Message" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *WorkflowTaskInfo) validateStartTime(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.StartTime) { // not required
@@ -347,6 +405,24 @@ func (m *WorkflowTaskInfo) validateSubWorkflowInfo(formats strfmt.Registry) erro
 		if err := m.SubWorkflowInfo.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("SubWorkflowInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *WorkflowTaskInfo) validateTaskDefinition(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.TaskDefinition) { // not required
+		return nil
+	}
+
+	if m.TaskDefinition != nil {
+		if err := m.TaskDefinition.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("TaskDefinition")
 			}
 			return err
 		}

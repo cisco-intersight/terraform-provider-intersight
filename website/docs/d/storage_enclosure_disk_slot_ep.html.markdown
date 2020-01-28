@@ -13,11 +13,11 @@ Physical Disk slots on the enclosure.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)
-* `dn`:(string)
+* `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
 * `drive_path`:(string)This field identifies the zoning configuration applied to  this enclosure slot.
 * `health`:(string)This field identifies the health of the disk inserted in the slot.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `presence`:(string)This field identifies the disk is present in the enclosure slot.
-* `rn`:(string)
+* `rn`:(string)The Relative Name uniquely identifies an object within a given context.
 * `slot`:(string)This field represents the slot Id in the storage enclosure.

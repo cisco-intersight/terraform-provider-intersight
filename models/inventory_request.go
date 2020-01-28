@@ -22,7 +22,8 @@ import (
 type InventoryRequest struct {
 	MoBaseMo
 
-	// device
+	// The device bind with this Request.
+	//
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// The collection of specific inventory MOs that need to be fetched. The property is optional and if not present then all the MOs of the given device will be fetched.

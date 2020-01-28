@@ -70,7 +70,7 @@ type HyperflexClusterProfile struct {
 
 	// The hypervisor type for the HyperFlex cluster.
 	//
-	// Enum: [ESXi]
+	// Enum: [Unknown Hyper-V ESXi]
 	HypervisorType *string `json:"HypervisorType,omitempty"`
 
 	// A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.
@@ -104,7 +104,7 @@ type HyperflexClusterProfile struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// A collection of references to the [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) Managed Object.
 	//
@@ -195,7 +195,7 @@ func (m *HyperflexClusterProfile) UnmarshalJSON(raw []byte) error {
 
 		NodeProfileConfig []*HyperflexNodeProfileRef `json:"NodeProfileConfig"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ProxySetting *HyperflexProxySettingPolicyRef `json:"ProxySetting,omitempty"`
 
@@ -313,7 +313,7 @@ func (m HyperflexClusterProfile) MarshalJSON() ([]byte, error) {
 
 		NodeProfileConfig []*HyperflexNodeProfileRef `json:"NodeProfileConfig"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ProxySetting *HyperflexProxySettingPolicyRef `json:"ProxySetting,omitempty"`
 
@@ -618,7 +618,7 @@ var hyperflexClusterProfileTypeHypervisorTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

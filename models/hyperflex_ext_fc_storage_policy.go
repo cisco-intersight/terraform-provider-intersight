@@ -40,7 +40,7 @@ type HyperflexExtFcStoragePolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The range of WWxN addresses to use for the FC storage configuration.
 	//
@@ -66,7 +66,7 @@ func (m *HyperflexExtFcStoragePolicy) UnmarshalJSON(raw []byte) error {
 
 		ExtbTraffic *HyperflexNamedVsan `json:"ExtbTraffic,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		WwxnPrefixRange *HyperflexWwxnPrefixRange `json:"WwxnPrefixRange,omitempty"`
 	}
@@ -108,7 +108,7 @@ func (m HyperflexExtFcStoragePolicy) MarshalJSON() ([]byte, error) {
 
 		ExtbTraffic *HyperflexNamedVsan `json:"ExtbTraffic,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		WwxnPrefixRange *HyperflexWwxnPrefixRange `json:"WwxnPrefixRange,omitempty"`
 	}

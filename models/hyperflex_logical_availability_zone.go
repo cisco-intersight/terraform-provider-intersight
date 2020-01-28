@@ -27,30 +27,45 @@ import (
 //
 // swagger:model hyperflexLogicalAvailabilityZone
 type HyperflexLogicalAvailabilityZone struct {
-	HyperflexLogicalAvailabilityZoneAO0P0
+	MoBaseComplexType
+
+	HyperflexLogicalAvailabilityZoneAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *HyperflexLogicalAvailabilityZone) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 HyperflexLogicalAvailabilityZoneAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.HyperflexLogicalAvailabilityZoneAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 HyperflexLogicalAvailabilityZoneAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.HyperflexLogicalAvailabilityZoneAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m HyperflexLogicalAvailabilityZone) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.HyperflexLogicalAvailabilityZoneAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.HyperflexLogicalAvailabilityZoneAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -59,8 +74,12 @@ func (m HyperflexLogicalAvailabilityZone) MarshalJSON() ([]byte, error) {
 func (m *HyperflexLogicalAvailabilityZone) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with HyperflexLogicalAvailabilityZoneAO0P0
-	if err := m.HyperflexLogicalAvailabilityZoneAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with HyperflexLogicalAvailabilityZoneAO1P1
+	if err := m.HyperflexLogicalAvailabilityZoneAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -88,31 +107,21 @@ func (m *HyperflexLogicalAvailabilityZone) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// HyperflexLogicalAvailabilityZoneAO0P0 hyperflex logical availability zone a o0 p0
-// swagger:model HyperflexLogicalAvailabilityZoneAO0P0
-type HyperflexLogicalAvailabilityZoneAO0P0 struct {
+// HyperflexLogicalAvailabilityZoneAO1P1 hyperflex logical availability zone a o1 p1
+// swagger:model HyperflexLogicalAvailabilityZoneAO1P1
+type HyperflexLogicalAvailabilityZoneAO1P1 struct {
 
 	// Enable or disable Logical Availability Zones (LAZ).
 	// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
 	//
 	AutoConfig *bool `json:"AutoConfig,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// hyperflex logical availability zone a o0 p0
-	HyperflexLogicalAvailabilityZoneAO0P0 map[string]interface{} `json:"-"`
+	// hyperflex logical availability zone a o1 p1
+	HyperflexLogicalAvailabilityZoneAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *HyperflexLogicalAvailabilityZoneAO0P0) UnmarshalJSON(data []byte) error {
+func (m *HyperflexLogicalAvailabilityZoneAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -120,25 +129,13 @@ func (m *HyperflexLogicalAvailabilityZoneAO0P0) UnmarshalJSON(data []byte) error
 		// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
 		//
 		AutoConfig *bool `json:"AutoConfig,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv HyperflexLogicalAvailabilityZoneAO0P0
+	var rcv HyperflexLogicalAvailabilityZoneAO1P1
 
 	rcv.AutoConfig = stage1.AutoConfig
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -150,8 +147,6 @@ func (m *HyperflexLogicalAvailabilityZoneAO0P0) UnmarshalJSON(data []byte) error
 
 	delete(stage2, "AutoConfig")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -162,35 +157,23 @@ func (m *HyperflexLogicalAvailabilityZoneAO0P0) UnmarshalJSON(data []byte) error
 			}
 			result[k] = toadd
 		}
-		m.HyperflexLogicalAvailabilityZoneAO0P0 = result
+		m.HyperflexLogicalAvailabilityZoneAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m HyperflexLogicalAvailabilityZoneAO0P0) MarshalJSON() ([]byte, error) {
+func (m HyperflexLogicalAvailabilityZoneAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enable or disable Logical Availability Zones (LAZ).
 		// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
 		//
 		AutoConfig *bool `json:"AutoConfig,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.AutoConfig = m.AutoConfig
-
-	stage1.ObjectType = m.ObjectType
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -198,12 +181,12 @@ func (m HyperflexLogicalAvailabilityZoneAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.HyperflexLogicalAvailabilityZoneAO0P0) == 0 {
+	if len(m.HyperflexLogicalAvailabilityZoneAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.HyperflexLogicalAvailabilityZoneAO0P0)
+	additional, err := json.Marshal(m.HyperflexLogicalAvailabilityZoneAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -217,13 +200,13 @@ func (m HyperflexLogicalAvailabilityZoneAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this hyperflex logical availability zone a o0 p0
-func (m *HyperflexLogicalAvailabilityZoneAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this hyperflex logical availability zone a o1 p1
+func (m *HyperflexLogicalAvailabilityZoneAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *HyperflexLogicalAvailabilityZoneAO0P0) MarshalBinary() ([]byte, error) {
+func (m *HyperflexLogicalAvailabilityZoneAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -231,8 +214,8 @@ func (m *HyperflexLogicalAvailabilityZoneAO0P0) MarshalBinary() ([]byte, error) 
 }
 
 // UnmarshalBinary interface implementation
-func (m *HyperflexLogicalAvailabilityZoneAO0P0) UnmarshalBinary(b []byte) error {
-	var res HyperflexLogicalAvailabilityZoneAO0P0
+func (m *HyperflexLogicalAvailabilityZoneAO1P1) UnmarshalBinary(b []byte) error {
+	var res HyperflexLogicalAvailabilityZoneAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

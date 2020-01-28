@@ -16,7 +16,7 @@ import (
 
 // ManagementController Management:Controller
 //
-// Provides management controls access to an endpoint.
+// A specialized service processor that monitors the physical state of a server, using sensors and communicating with the system administrator through an independent connection.
 //
 // swagger:model managementController
 type ManagementController struct {

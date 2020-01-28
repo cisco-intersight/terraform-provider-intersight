@@ -28,7 +28,7 @@ type SyslogPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -52,7 +52,7 @@ func (m *SyslogPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		LocalClients []*SyslogLocalClientBase `json:"LocalClients"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -86,7 +86,7 @@ func (m SyslogPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		LocalClients []*SyslogLocalClientBase `json:"LocalClients"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

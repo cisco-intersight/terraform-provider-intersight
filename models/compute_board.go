@@ -71,6 +71,11 @@ type ComputeBoard struct {
 	// Read Only: true
 	PciSwitch []*PciSwitchRef `json:"PciSwitch"`
 
+	// This represents the configuration applied on the persistent memory modules on a server.
+	//
+	// Read Only: true
+	PersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"PersistentMemoryConfiguration,omitempty"`
+
 	// presence
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
@@ -132,6 +137,8 @@ func (m *ComputeBoard) UnmarshalJSON(raw []byte) error {
 
 		PciSwitch []*PciSwitchRef `json:"PciSwitch"`
 
+		PersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"PersistentMemoryConfiguration,omitempty"`
+
 		Presence string `json:"Presence,omitempty"`
 
 		Processors []*ProcessorUnitRef `json:"Processors"`
@@ -169,6 +176,8 @@ func (m *ComputeBoard) UnmarshalJSON(raw []byte) error {
 	m.PciCoprocessorCards = dataAO1.PciCoprocessorCards
 
 	m.PciSwitch = dataAO1.PciSwitch
+
+	m.PersistentMemoryConfiguration = dataAO1.PersistentMemoryConfiguration
 
 	m.Presence = dataAO1.Presence
 
@@ -218,6 +227,8 @@ func (m ComputeBoard) MarshalJSON() ([]byte, error) {
 
 		PciSwitch []*PciSwitchRef `json:"PciSwitch"`
 
+		PersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"PersistentMemoryConfiguration,omitempty"`
+
 		Presence string `json:"Presence,omitempty"`
 
 		Processors []*ProcessorUnitRef `json:"Processors"`
@@ -252,6 +263,8 @@ func (m ComputeBoard) MarshalJSON() ([]byte, error) {
 	dataAO1.PciCoprocessorCards = m.PciCoprocessorCards
 
 	dataAO1.PciSwitch = m.PciSwitch
+
+	dataAO1.PersistentMemoryConfiguration = m.PersistentMemoryConfiguration
 
 	dataAO1.Presence = m.Presence
 
@@ -310,6 +323,10 @@ func (m *ComputeBoard) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePciSwitch(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePersistentMemoryConfiguration(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -499,6 +516,24 @@ func (m *ComputeBoard) validatePciSwitch(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ComputeBoard) validatePersistentMemoryConfiguration(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PersistentMemoryConfiguration) { // not required
+		return nil
+	}
+
+	if m.PersistentMemoryConfiguration != nil {
+		if err := m.PersistentMemoryConfiguration.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("PersistentMemoryConfiguration")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -36,7 +36,7 @@ type HyperflexClusterStoragePolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Enable or disable VDI optimization (hybrid HyperFlex systems only).
 	//
@@ -60,7 +60,7 @@ func (m *HyperflexClusterStoragePolicy) UnmarshalJSON(raw []byte) error {
 
 		LogicalAvalabilityZoneConfig *HyperflexLogicalAvailabilityZone `json:"LogicalAvalabilityZoneConfig,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		VdiOptimization *bool `json:"VdiOptimization,omitempty"`
 	}
@@ -98,7 +98,7 @@ func (m HyperflexClusterStoragePolicy) MarshalJSON() ([]byte, error) {
 
 		LogicalAvalabilityZoneConfig *HyperflexLogicalAvailabilityZone `json:"LogicalAvalabilityZoneConfig,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		VdiOptimization *bool `json:"VdiOptimization,omitempty"`
 	}

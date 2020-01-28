@@ -21,30 +21,45 @@ import (
 //
 // swagger:model vnicEthInterruptSettings
 type VnicEthInterruptSettings struct {
-	VnicEthInterruptSettingsAO0P0
+	MoBaseComplexType
+
+	VnicEthInterruptSettingsAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VnicEthInterruptSettings) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VnicEthInterruptSettingsAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VnicEthInterruptSettingsAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 VnicEthInterruptSettingsAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.VnicEthInterruptSettingsAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m VnicEthInterruptSettings) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VnicEthInterruptSettingsAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.VnicEthInterruptSettingsAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -53,8 +68,12 @@ func (m VnicEthInterruptSettings) MarshalJSON() ([]byte, error) {
 func (m *VnicEthInterruptSettings) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VnicEthInterruptSettingsAO0P0
-	if err := m.VnicEthInterruptSettingsAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with VnicEthInterruptSettingsAO1P1
+	if err := m.VnicEthInterruptSettingsAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,15 +101,15 @@ func (m *VnicEthInterruptSettings) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// VnicEthInterruptSettingsAO0P0 vnic eth interrupt settings a o0 p0
-// swagger:model VnicEthInterruptSettingsAO0P0
-type VnicEthInterruptSettingsAO0P0 struct {
+// VnicEthInterruptSettingsAO1P1 vnic eth interrupt settings a o1 p1
+// swagger:model VnicEthInterruptSettingsAO1P1
+type VnicEthInterruptSettingsAO1P1 struct {
 
 	// The time to wait between interrupts or the idle period that must be encountered before an interrupt is sent. To turn off interrupt coalescing, enter 0 (zero) in this field.
 	//
 	CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
-	// Interrupt Coalescing Type. This can be one of the following:- MIN  — The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE — The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
+	// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
 	//
 	// Enum: [MIN IDLE]
 	CoalescingType *string `json:"CoalescingType,omitempty"`
@@ -99,27 +118,17 @@ type VnicEthInterruptSettingsAO0P0 struct {
 	//
 	Count int64 `json:"Count,omitempty"`
 
-	// Preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+	// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 	//
 	// Enum: [MSIx MSI INTx]
 	Mode *string `json:"Mode,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// vnic eth interrupt settings a o0 p0
-	VnicEthInterruptSettingsAO0P0 map[string]interface{} `json:"-"`
+	// vnic eth interrupt settings a o1 p1
+	VnicEthInterruptSettingsAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
+func (m *VnicEthInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -127,7 +136,7 @@ func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
-		// Interrupt Coalescing Type. This can be one of the following:- MIN  — The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE — The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
+		// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
 		//
 		// Enum: [MIN IDLE]
 		CoalescingType *string `json:"CoalescingType,omitempty"`
@@ -136,25 +145,15 @@ func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		Count int64 `json:"Count,omitempty"`
 
-		// Preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+		// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv VnicEthInterruptSettingsAO0P0
+	var rcv VnicEthInterruptSettingsAO1P1
 
 	rcv.CoalescingTime = stage1.CoalescingTime
 
@@ -163,8 +162,6 @@ func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.Count = stage1.Count
 
 	rcv.Mode = stage1.Mode
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -182,8 +179,6 @@ func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Mode")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -194,21 +189,21 @@ func (m *VnicEthInterruptSettingsAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.VnicEthInterruptSettingsAO0P0 = result
+		m.VnicEthInterruptSettingsAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m VnicEthInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
+func (m VnicEthInterruptSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The time to wait between interrupts or the idle period that must be encountered before an interrupt is sent. To turn off interrupt coalescing, enter 0 (zero) in this field.
 		//
 		CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
-		// Interrupt Coalescing Type. This can be one of the following:- MIN  — The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE — The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
+		// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
 		//
 		// Enum: [MIN IDLE]
 		CoalescingType *string `json:"CoalescingType,omitempty"`
@@ -217,20 +212,10 @@ func (m VnicEthInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		Count int64 `json:"Count,omitempty"`
 
-		// Preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.
+		// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
 		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.CoalescingTime = m.CoalescingTime
@@ -241,20 +226,18 @@ func (m VnicEthInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Mode = m.Mode
 
-	stage1.ObjectType = m.ObjectType
-
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(m.VnicEthInterruptSettingsAO0P0) == 0 {
+	if len(m.VnicEthInterruptSettingsAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.VnicEthInterruptSettingsAO0P0)
+	additional, err := json.Marshal(m.VnicEthInterruptSettingsAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -268,8 +251,8 @@ func (m VnicEthInterruptSettingsAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this vnic eth interrupt settings a o0 p0
-func (m *VnicEthInterruptSettingsAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this vnic eth interrupt settings a o1 p1
+func (m *VnicEthInterruptSettingsAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCoalescingType(formats); err != nil {
@@ -286,7 +269,7 @@ func (m *VnicEthInterruptSettingsAO0P0) Validate(formats strfmt.Registry) error 
 	return nil
 }
 
-var vnicEthInterruptSettingsAO0P0TypeCoalescingTypePropEnum []interface{}
+var vnicEthInterruptSettingsAO1P1TypeCoalescingTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -294,28 +277,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vnicEthInterruptSettingsAO0P0TypeCoalescingTypePropEnum = append(vnicEthInterruptSettingsAO0P0TypeCoalescingTypePropEnum, v)
+		vnicEthInterruptSettingsAO1P1TypeCoalescingTypePropEnum = append(vnicEthInterruptSettingsAO1P1TypeCoalescingTypePropEnum, v)
 	}
 }
 
 const (
 
-	// VnicEthInterruptSettingsAO0P0CoalescingTypeMIN captures enum value "MIN"
-	VnicEthInterruptSettingsAO0P0CoalescingTypeMIN string = "MIN"
+	// VnicEthInterruptSettingsAO1P1CoalescingTypeMIN captures enum value "MIN"
+	VnicEthInterruptSettingsAO1P1CoalescingTypeMIN string = "MIN"
 
-	// VnicEthInterruptSettingsAO0P0CoalescingTypeIDLE captures enum value "IDLE"
-	VnicEthInterruptSettingsAO0P0CoalescingTypeIDLE string = "IDLE"
+	// VnicEthInterruptSettingsAO1P1CoalescingTypeIDLE captures enum value "IDLE"
+	VnicEthInterruptSettingsAO1P1CoalescingTypeIDLE string = "IDLE"
 )
 
 // prop value enum
-func (m *VnicEthInterruptSettingsAO0P0) validateCoalescingTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vnicEthInterruptSettingsAO0P0TypeCoalescingTypePropEnum); err != nil {
+func (m *VnicEthInterruptSettingsAO1P1) validateCoalescingTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vnicEthInterruptSettingsAO1P1TypeCoalescingTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VnicEthInterruptSettingsAO0P0) validateCoalescingType(formats strfmt.Registry) error {
+func (m *VnicEthInterruptSettingsAO1P1) validateCoalescingType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.CoalescingType) { // not required
 		return nil
@@ -329,7 +312,7 @@ func (m *VnicEthInterruptSettingsAO0P0) validateCoalescingType(formats strfmt.Re
 	return nil
 }
 
-var vnicEthInterruptSettingsAO0P0TypeModePropEnum []interface{}
+var vnicEthInterruptSettingsAO1P1TypeModePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -337,31 +320,31 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		vnicEthInterruptSettingsAO0P0TypeModePropEnum = append(vnicEthInterruptSettingsAO0P0TypeModePropEnum, v)
+		vnicEthInterruptSettingsAO1P1TypeModePropEnum = append(vnicEthInterruptSettingsAO1P1TypeModePropEnum, v)
 	}
 }
 
 const (
 
-	// VnicEthInterruptSettingsAO0P0ModeMSIx captures enum value "MSIx"
-	VnicEthInterruptSettingsAO0P0ModeMSIx string = "MSIx"
+	// VnicEthInterruptSettingsAO1P1ModeMSIx captures enum value "MSIx"
+	VnicEthInterruptSettingsAO1P1ModeMSIx string = "MSIx"
 
-	// VnicEthInterruptSettingsAO0P0ModeMSI captures enum value "MSI"
-	VnicEthInterruptSettingsAO0P0ModeMSI string = "MSI"
+	// VnicEthInterruptSettingsAO1P1ModeMSI captures enum value "MSI"
+	VnicEthInterruptSettingsAO1P1ModeMSI string = "MSI"
 
-	// VnicEthInterruptSettingsAO0P0ModeINTx captures enum value "INTx"
-	VnicEthInterruptSettingsAO0P0ModeINTx string = "INTx"
+	// VnicEthInterruptSettingsAO1P1ModeINTx captures enum value "INTx"
+	VnicEthInterruptSettingsAO1P1ModeINTx string = "INTx"
 )
 
 // prop value enum
-func (m *VnicEthInterruptSettingsAO0P0) validateModeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, vnicEthInterruptSettingsAO0P0TypeModePropEnum); err != nil {
+func (m *VnicEthInterruptSettingsAO1P1) validateModeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, vnicEthInterruptSettingsAO1P1TypeModePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *VnicEthInterruptSettingsAO0P0) validateMode(formats strfmt.Registry) error {
+func (m *VnicEthInterruptSettingsAO1P1) validateMode(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Mode) { // not required
 		return nil
@@ -376,7 +359,7 @@ func (m *VnicEthInterruptSettingsAO0P0) validateMode(formats strfmt.Registry) er
 }
 
 // MarshalBinary interface implementation
-func (m *VnicEthInterruptSettingsAO0P0) MarshalBinary() ([]byte, error) {
+func (m *VnicEthInterruptSettingsAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -384,8 +367,8 @@ func (m *VnicEthInterruptSettingsAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *VnicEthInterruptSettingsAO0P0) UnmarshalBinary(b []byte) error {
-	var res VnicEthInterruptSettingsAO0P0
+func (m *VnicEthInterruptSettingsAO1P1) UnmarshalBinary(b []byte) error {
+	var res VnicEthInterruptSettingsAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

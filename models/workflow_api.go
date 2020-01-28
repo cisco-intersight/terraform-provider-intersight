@@ -25,30 +25,45 @@ import (
 //
 // swagger:model workflowApi
 type WorkflowAPI struct {
-	WorkflowAPIAO0P0
+	MoBaseComplexType
+
+	WorkflowAPIAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *WorkflowAPI) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 WorkflowAPIAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.WorkflowAPIAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 WorkflowAPIAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.WorkflowAPIAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m WorkflowAPI) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.WorkflowAPIAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.WorkflowAPIAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -57,8 +72,12 @@ func (m WorkflowAPI) MarshalJSON() ([]byte, error) {
 func (m *WorkflowAPI) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with WorkflowAPIAO0P0
-	if err := m.WorkflowAPIAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with WorkflowAPIAO1P1
+	if err := m.WorkflowAPIAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -86,9 +105,9 @@ func (m *WorkflowAPI) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// WorkflowAPIAO0P0 workflow API a o0 p0
-// swagger:model WorkflowAPIAO0P0
-type WorkflowAPIAO0P0 struct {
+// WorkflowAPIAO1P1 workflow API a o1 p1
+// swagger:model WorkflowAPIAO1P1
+type WorkflowAPIAO1P1 struct {
 
 	// The optional request body that is sent as part of this API request.
 	//
@@ -106,20 +125,8 @@ type WorkflowAPIAO0P0 struct {
 	// API.
 	//
 	//
-	// Enum: [json xml]
+	// Enum: [json xml text]
 	ContentType *string `json:"ContentType,omitempty"`
-
-	// The expected state expression, if provided, allows the Intersight Orchestrator
-	// to mark a task status as success/fail by checking the extracted API
-	// values against a set of expected values.
-	//
-	// The expected state is given as a golang template that has to evaluate to a
-	// final content true/false.
-	//
-	// This property is deprecated in favour of Outcomes property.
-	//
-	//
-	ExpectedState string `json:"ExpectedState,omitempty"`
 
 	// A reference name for this API request within the batch API request.
 	//
@@ -128,16 +135,6 @@ type WorkflowAPIAO0P0 struct {
 	//
 	//
 	Name string `json:"Name,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// All the possible outcomes of this API are captured here. Outcomes property
 	// is a collection property of type workflow.Outcome objects.
@@ -161,6 +158,16 @@ type WorkflowAPIAO0P0 struct {
 	//
 	ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
+	// The skip expression, if provided, allows the batch API executor to skip the
+	// api execution when the given expression evaluates to true.
+	//
+	// The expression is given as such a golang template that has to be
+	// evaluated to a final content true/false. The expression is an optional and in
+	// case not provided, the API will always be executed.
+	//
+	//
+	SkipOnCondition string `json:"SkipOnCondition,omitempty"`
+
 	// The duration in seconds by which the API response is expected from the API target.
 	//
 	// If the end point does not respond for the API request within this timeout
@@ -169,12 +176,12 @@ type WorkflowAPIAO0P0 struct {
 	//
 	Timeout int64 `json:"Timeout,omitempty"`
 
-	// workflow API a o0 p0
-	WorkflowAPIAO0P0 map[string]interface{} `json:"-"`
+	// workflow API a o1 p1
+	WorkflowAPIAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
+func (m *WorkflowAPIAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -194,20 +201,8 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 		// API.
 		//
 		//
-		// Enum: [json xml]
+		// Enum: [json xml text]
 		ContentType *string `json:"ContentType,omitempty"`
-
-		// The expected state expression, if provided, allows the Intersight Orchestrator
-		// to mark a task status as success/fail by checking the extracted API
-		// values against a set of expected values.
-		//
-		// The expected state is given as a golang template that has to evaluate to a
-		// final content true/false.
-		//
-		// This property is deprecated in favour of Outcomes property.
-		//
-		//
-		ExpectedState string `json:"ExpectedState,omitempty"`
 
 		// A reference name for this API request within the batch API request.
 		//
@@ -216,16 +211,6 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// All the possible outcomes of this API are captured here. Outcomes property
 		// is a collection property of type workflow.Outcome objects.
@@ -249,6 +234,16 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
+		// The skip expression, if provided, allows the batch API executor to skip the
+		// api execution when the given expression evaluates to true.
+		//
+		// The expression is given as such a golang template that has to be
+		// evaluated to a final content true/false. The expression is an optional and in
+		// case not provided, the API will always be executed.
+		//
+		//
+		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
+
 		// The duration in seconds by which the API response is expected from the API target.
 		//
 		// If the end point does not respond for the API request within this timeout
@@ -260,21 +255,19 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv WorkflowAPIAO0P0
+	var rcv WorkflowAPIAO1P1
 
 	rcv.Body = stage1.Body
 
 	rcv.ContentType = stage1.ContentType
 
-	rcv.ExpectedState = stage1.ExpectedState
-
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Outcomes = stage1.Outcomes
 
 	rcv.ResponseSpec = stage1.ResponseSpec
+
+	rcv.SkipOnCondition = stage1.SkipOnCondition
 
 	rcv.Timeout = stage1.Timeout
 
@@ -290,15 +283,13 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "ContentType")
 
-	delete(stage2, "ExpectedState")
-
 	delete(stage2, "Name")
-
-	delete(stage2, "ObjectType")
 
 	delete(stage2, "Outcomes")
 
 	delete(stage2, "ResponseSpec")
+
+	delete(stage2, "SkipOnCondition")
 
 	delete(stage2, "Timeout")
 
@@ -312,14 +303,14 @@ func (m *WorkflowAPIAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.WorkflowAPIAO0P0 = result
+		m.WorkflowAPIAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
+func (m WorkflowAPIAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The optional request body that is sent as part of this API request.
@@ -338,20 +329,8 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 		// API.
 		//
 		//
-		// Enum: [json xml]
+		// Enum: [json xml text]
 		ContentType *string `json:"ContentType,omitempty"`
-
-		// The expected state expression, if provided, allows the Intersight Orchestrator
-		// to mark a task status as success/fail by checking the extracted API
-		// values against a set of expected values.
-		//
-		// The expected state is given as a golang template that has to evaluate to a
-		// final content true/false.
-		//
-		// This property is deprecated in favour of Outcomes property.
-		//
-		//
-		ExpectedState string `json:"ExpectedState,omitempty"`
 
 		// A reference name for this API request within the batch API request.
 		//
@@ -360,16 +339,6 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// All the possible outcomes of this API are captured here. Outcomes property
 		// is a collection property of type workflow.Outcome objects.
@@ -393,6 +362,16 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
+		// The skip expression, if provided, allows the batch API executor to skip the
+		// api execution when the given expression evaluates to true.
+		//
+		// The expression is given as such a golang template that has to be
+		// evaluated to a final content true/false. The expression is an optional and in
+		// case not provided, the API will always be executed.
+		//
+		//
+		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
+
 		// The duration in seconds by which the API response is expected from the API target.
 		//
 		// If the end point does not respond for the API request within this timeout
@@ -406,15 +385,13 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.ContentType = m.ContentType
 
-	stage1.ExpectedState = m.ExpectedState
-
 	stage1.Name = m.Name
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.Outcomes = m.Outcomes
 
 	stage1.ResponseSpec = m.ResponseSpec
+
+	stage1.SkipOnCondition = m.SkipOnCondition
 
 	stage1.Timeout = m.Timeout
 
@@ -424,12 +401,12 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.WorkflowAPIAO0P0) == 0 {
+	if len(m.WorkflowAPIAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.WorkflowAPIAO0P0)
+	additional, err := json.Marshal(m.WorkflowAPIAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -443,8 +420,8 @@ func (m WorkflowAPIAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this workflow API a o0 p0
-func (m *WorkflowAPIAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this workflow API a o1 p1
+func (m *WorkflowAPIAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateContentType(formats); err != nil {
@@ -461,36 +438,39 @@ func (m *WorkflowAPIAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var workflowApiAO0P0TypeContentTypePropEnum []interface{}
+var workflowApiAO1P1TypeContentTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["json","xml"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["json","xml","text"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		workflowApiAO0P0TypeContentTypePropEnum = append(workflowApiAO0P0TypeContentTypePropEnum, v)
+		workflowApiAO1P1TypeContentTypePropEnum = append(workflowApiAO1P1TypeContentTypePropEnum, v)
 	}
 }
 
 const (
 
-	// WorkflowAPIAO0P0ContentTypeJSON captures enum value "json"
-	WorkflowAPIAO0P0ContentTypeJSON string = "json"
+	// WorkflowAPIAO1P1ContentTypeJSON captures enum value "json"
+	WorkflowAPIAO1P1ContentTypeJSON string = "json"
 
-	// WorkflowAPIAO0P0ContentTypeXML captures enum value "xml"
-	WorkflowAPIAO0P0ContentTypeXML string = "xml"
+	// WorkflowAPIAO1P1ContentTypeXML captures enum value "xml"
+	WorkflowAPIAO1P1ContentTypeXML string = "xml"
+
+	// WorkflowAPIAO1P1ContentTypeText captures enum value "text"
+	WorkflowAPIAO1P1ContentTypeText string = "text"
 )
 
 // prop value enum
-func (m *WorkflowAPIAO0P0) validateContentTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, workflowApiAO0P0TypeContentTypePropEnum); err != nil {
+func (m *WorkflowAPIAO1P1) validateContentTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowApiAO1P1TypeContentTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *WorkflowAPIAO0P0) validateContentType(formats strfmt.Registry) error {
+func (m *WorkflowAPIAO1P1) validateContentType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ContentType) { // not required
 		return nil
@@ -504,7 +484,7 @@ func (m *WorkflowAPIAO0P0) validateContentType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *WorkflowAPIAO0P0) validateResponseSpec(formats strfmt.Registry) error {
+func (m *WorkflowAPIAO1P1) validateResponseSpec(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ResponseSpec) { // not required
 		return nil
@@ -523,7 +503,7 @@ func (m *WorkflowAPIAO0P0) validateResponseSpec(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *WorkflowAPIAO0P0) MarshalBinary() ([]byte, error) {
+func (m *WorkflowAPIAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -531,8 +511,8 @@ func (m *WorkflowAPIAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *WorkflowAPIAO0P0) UnmarshalBinary(b []byte) error {
-	var res WorkflowAPIAO0P0
+func (m *WorkflowAPIAO1P1) UnmarshalBinary(b []byte) error {
+	var res WorkflowAPIAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

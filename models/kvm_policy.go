@@ -40,7 +40,7 @@ type KvmPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -70,7 +70,7 @@ func (m *KvmPolicy) UnmarshalJSON(raw []byte) error {
 
 		MaximumSessions *int64 `json:"MaximumSessions,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -116,7 +116,7 @@ func (m KvmPolicy) MarshalJSON() ([]byte, error) {
 
 		MaximumSessions *int64 `json:"MaximumSessions,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

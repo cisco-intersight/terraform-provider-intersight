@@ -19,5 +19,5 @@ The following arguments can be used to get data of already created objects in In
 * `last_name`:(string)Last name of the user. This field is populated from the IdP attributes received after authentication.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)UserID as configured in the IdP.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `user_type`:(string)Type of the User. If a user is added manually by specifying the email address, or has logged in using groups, based on the IdP attributes received during authentication. If added manually, the user type will be static, otherwise dynamic.

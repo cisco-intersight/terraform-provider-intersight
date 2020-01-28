@@ -16,6 +16,6 @@ The following arguments can be used to get data of already created objects in In
 * `host_group_name`:(string)Name of the host group associated with LUN.
 * `host_name`:(string)Name of the host associated with LUN.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `shared`:(bool)Kind of volume connection to host. True if it is connected through host group. False in case of direct host connection.
 * `volume_name`:(string)Name of the storage volume associated with LUN.

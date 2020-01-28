@@ -22,30 +22,45 @@ import (
 //
 // swagger:model tamAction
 type TamAction struct {
-	TamActionAO0P0
+	MoBaseComplexType
+
+	TamActionAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *TamAction) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 TamActionAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.TamActionAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 TamActionAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.TamActionAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m TamAction) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.TamActionAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.TamActionAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -54,8 +69,12 @@ func (m TamAction) MarshalJSON() ([]byte, error) {
 func (m *TamAction) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with TamActionAO0P0
-	if err := m.TamActionAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with TamActionAO1P1
+	if err := m.TamActionAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,9 +102,9 @@ func (m *TamAction) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// TamActionAO0P0 tam action a o0 p0
-// swagger:model TamActionAO0P0
-type TamActionAO0P0 struct {
+// TamActionAO1P1 tam action a o1 p1
+// swagger:model TamActionAO1P1
+type TamActionAO1P1 struct {
 
 	// Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
 	//
@@ -100,15 +119,9 @@ type TamActionAO0P0 struct {
 	//
 	Identifiers []*TamIdentifiers `json:"Identifiers"`
 
-	// The concrete type of this complex type.
+	// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
 	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
+	Name string `json:"Name,omitempty"`
 
 	// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
 	//
@@ -124,12 +137,12 @@ type TamActionAO0P0 struct {
 	// Enum: [restApi]
 	Type *string `json:"Type,omitempty"`
 
-	// tam action a o0 p0
-	TamActionAO0P0 map[string]interface{} `json:"-"`
+	// tam action a o1 p1
+	TamActionAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
+func (m *TamActionAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -146,15 +159,9 @@ func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		Identifiers []*TamIdentifiers `json:"Identifiers"`
 
-		// The concrete type of this complex type.
+		// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		Name string `json:"Name,omitempty"`
 
 		// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
 		//
@@ -173,7 +180,7 @@ func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv TamActionAO0P0
+	var rcv TamActionAO1P1
 
 	rcv.AffectedObjectType = stage1.AffectedObjectType
 
@@ -181,7 +188,7 @@ func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
 
 	rcv.Identifiers = stage1.Identifiers
 
-	rcv.ObjectType = stage1.ObjectType
+	rcv.Name = stage1.Name
 
 	rcv.OperationType = stage1.OperationType
 
@@ -203,7 +210,7 @@ func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Identifiers")
 
-	delete(stage2, "ObjectType")
+	delete(stage2, "Name")
 
 	delete(stage2, "OperationType")
 
@@ -221,14 +228,14 @@ func (m *TamActionAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.TamActionAO0P0 = result
+		m.TamActionAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m TamActionAO0P0) MarshalJSON() ([]byte, error) {
+func (m TamActionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
@@ -244,15 +251,9 @@ func (m TamActionAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		Identifiers []*TamIdentifiers `json:"Identifiers"`
 
-		// The concrete type of this complex type.
+		// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
 		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
+		Name string `json:"Name,omitempty"`
 
 		// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
 		//
@@ -275,7 +276,7 @@ func (m TamActionAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Identifiers = m.Identifiers
 
-	stage1.ObjectType = m.ObjectType
+	stage1.Name = m.Name
 
 	stage1.OperationType = m.OperationType
 
@@ -289,12 +290,12 @@ func (m TamActionAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.TamActionAO0P0) == 0 {
+	if len(m.TamActionAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.TamActionAO0P0)
+	additional, err := json.Marshal(m.TamActionAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -308,8 +309,8 @@ func (m TamActionAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this tam action a o0 p0
-func (m *TamActionAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this tam action a o1 p1
+func (m *TamActionAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAlertType(formats); err != nil {
@@ -338,7 +339,7 @@ func (m *TamActionAO0P0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var tamActionAO0P0TypeAlertTypePropEnum []interface{}
+var tamActionAO1P1TypeAlertTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -346,28 +347,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		tamActionAO0P0TypeAlertTypePropEnum = append(tamActionAO0P0TypeAlertTypePropEnum, v)
+		tamActionAO1P1TypeAlertTypePropEnum = append(tamActionAO1P1TypeAlertTypePropEnum, v)
 	}
 }
 
 const (
 
-	// TamActionAO0P0AlertTypePsirt captures enum value "psirt"
-	TamActionAO0P0AlertTypePsirt string = "psirt"
+	// TamActionAO1P1AlertTypePsirt captures enum value "psirt"
+	TamActionAO1P1AlertTypePsirt string = "psirt"
 
-	// TamActionAO0P0AlertTypeFieldNotice captures enum value "fieldNotice"
-	TamActionAO0P0AlertTypeFieldNotice string = "fieldNotice"
+	// TamActionAO1P1AlertTypeFieldNotice captures enum value "fieldNotice"
+	TamActionAO1P1AlertTypeFieldNotice string = "fieldNotice"
 )
 
 // prop value enum
-func (m *TamActionAO0P0) validateAlertTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, tamActionAO0P0TypeAlertTypePropEnum); err != nil {
+func (m *TamActionAO1P1) validateAlertTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, tamActionAO1P1TypeAlertTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *TamActionAO0P0) validateAlertType(formats strfmt.Registry) error {
+func (m *TamActionAO1P1) validateAlertType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AlertType) { // not required
 		return nil
@@ -381,7 +382,7 @@ func (m *TamActionAO0P0) validateAlertType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *TamActionAO0P0) validateIdentifiers(formats strfmt.Registry) error {
+func (m *TamActionAO1P1) validateIdentifiers(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Identifiers) { // not required
 		return nil
@@ -406,7 +407,7 @@ func (m *TamActionAO0P0) validateIdentifiers(formats strfmt.Registry) error {
 	return nil
 }
 
-var tamActionAO0P0TypeOperationTypePropEnum []interface{}
+var tamActionAO1P1TypeOperationTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -414,28 +415,28 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		tamActionAO0P0TypeOperationTypePropEnum = append(tamActionAO0P0TypeOperationTypePropEnum, v)
+		tamActionAO1P1TypeOperationTypePropEnum = append(tamActionAO1P1TypeOperationTypePropEnum, v)
 	}
 }
 
 const (
 
-	// TamActionAO0P0OperationTypeCreate captures enum value "create"
-	TamActionAO0P0OperationTypeCreate string = "create"
+	// TamActionAO1P1OperationTypeCreate captures enum value "create"
+	TamActionAO1P1OperationTypeCreate string = "create"
 
-	// TamActionAO0P0OperationTypeRemove captures enum value "remove"
-	TamActionAO0P0OperationTypeRemove string = "remove"
+	// TamActionAO1P1OperationTypeRemove captures enum value "remove"
+	TamActionAO1P1OperationTypeRemove string = "remove"
 )
 
 // prop value enum
-func (m *TamActionAO0P0) validateOperationTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, tamActionAO0P0TypeOperationTypePropEnum); err != nil {
+func (m *TamActionAO1P1) validateOperationTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, tamActionAO1P1TypeOperationTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *TamActionAO0P0) validateOperationType(formats strfmt.Registry) error {
+func (m *TamActionAO1P1) validateOperationType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.OperationType) { // not required
 		return nil
@@ -449,7 +450,7 @@ func (m *TamActionAO0P0) validateOperationType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *TamActionAO0P0) validateQueries(formats strfmt.Registry) error {
+func (m *TamActionAO1P1) validateQueries(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Queries) { // not required
 		return nil
@@ -474,7 +475,7 @@ func (m *TamActionAO0P0) validateQueries(formats strfmt.Registry) error {
 	return nil
 }
 
-var tamActionAO0P0TypeTypePropEnum []interface{}
+var tamActionAO1P1TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -482,25 +483,25 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		tamActionAO0P0TypeTypePropEnum = append(tamActionAO0P0TypeTypePropEnum, v)
+		tamActionAO1P1TypeTypePropEnum = append(tamActionAO1P1TypeTypePropEnum, v)
 	}
 }
 
 const (
 
-	// TamActionAO0P0TypeRestAPI captures enum value "restApi"
-	TamActionAO0P0TypeRestAPI string = "restApi"
+	// TamActionAO1P1TypeRestAPI captures enum value "restApi"
+	TamActionAO1P1TypeRestAPI string = "restApi"
 )
 
 // prop value enum
-func (m *TamActionAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, tamActionAO0P0TypeTypePropEnum); err != nil {
+func (m *TamActionAO1P1) validateTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, tamActionAO1P1TypeTypePropEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *TamActionAO0P0) validateType(formats strfmt.Registry) error {
+func (m *TamActionAO1P1) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
@@ -515,7 +516,7 @@ func (m *TamActionAO0P0) validateType(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *TamActionAO0P0) MarshalBinary() ([]byte, error) {
+func (m *TamActionAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -523,8 +524,8 @@ func (m *TamActionAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *TamActionAO0P0) UnmarshalBinary(b []byte) error {
-	var res TamActionAO0P0
+func (m *TamActionAO1P1) UnmarshalBinary(b []byte) error {
+	var res TamActionAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

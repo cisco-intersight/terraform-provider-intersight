@@ -6,49 +6,57 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // ContentParameter Parameter
 //
-// A parameter is a definition of specific value to be extracted from a given API or
-// device response.
-//
-// The Parameter object provides the name, type and content specific path, such as XPath or
-// JSONPath, that points to the location of the parameter value in the content.
+// Concrete implementation of BaseParameter for XML and JSON content types.
 //
 // swagger:model contentParameter
 type ContentParameter struct {
-	ContentParameterAO0P0
+	ContentBaseParameter
+
+	ContentParameterAllOf1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *ContentParameter) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 ContentParameterAO0P0
+	var aO0 ContentBaseParameter
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.ContentParameterAO0P0 = aO0
+	m.ContentBaseParameter = aO0
+
+	// AO1
+	var aO1 ContentParameterAllOf1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.ContentParameterAllOf1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m ContentParameter) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.ContentParameterAO0P0)
+	aO0, err := swag.WriteJSON(m.ContentBaseParameter)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.ContentParameterAllOf1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -57,10 +65,11 @@ func (m ContentParameter) MarshalJSON() ([]byte, error) {
 func (m *ContentParameter) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with ContentParameterAO0P0
-	if err := m.ContentParameterAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with ContentBaseParameter
+	if err := m.ContentBaseParameter.Validate(formats); err != nil {
 		res = append(res, err)
 	}
+	// validation for a type composition with ContentParameterAllOf1
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
@@ -86,391 +95,6 @@ func (m *ContentParameter) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// ContentParameterAO0P0 content parameter a o0 p0
-// swagger:model ContentParameterAO0P0
-type ContentParameterAO0P0 struct {
-
-	// The flag that allows single values in content to be extracted as a
-	// single element collection in case the parameter is of Collection type.
-	//
-	// This flag is applicable for parameters of type Collection only.
-	//
-	//
-	AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
-
-	// The name of the complex type definition in case this is a complex
-	// parameter. The content.Grammar object must have a complex type, content.ComplexType,
-	// defined with the specified name in types collection property.
-	//
-	//
-	ComplexType string `json:"ComplexType,omitempty"`
-
-	// The type of the collection item in case this is a collection parameter.
-	//
-	//
-	// Enum: [simple complex collection]
-	ItemType *string `json:"ItemType,omitempty"`
-
-	// The name of the parameter.
-	//
-	Name string `json:"Name,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// The content specific path information that identifies the parameter
-	// value within the content. The value is usually a XPath or JSONPath or a
-	// regular expression in case of text content.
-	//
-	//
-	Path string `json:"Path,omitempty"`
-
-	// The type of the parameter. Accepted values are simple, complex,
-	// collection.
-	//
-	//
-	// Enum: [simple complex collection]
-	Type *string `json:"Type,omitempty"`
-
-	// content parameter a o0 p0
-	ContentParameterAO0P0 map[string]interface{} `json:"-"`
-}
-
-// UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *ContentParameterAO0P0) UnmarshalJSON(data []byte) error {
-	// stage 1, bind the properties
-	var stage1 struct {
-
-		// The flag that allows single values in content to be extracted as a
-		// single element collection in case the parameter is of Collection type.
-		//
-		// This flag is applicable for parameters of type Collection only.
-		//
-		//
-		AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
-
-		// The name of the complex type definition in case this is a complex
-		// parameter. The content.Grammar object must have a complex type, content.ComplexType,
-		// defined with the specified name in types collection property.
-		//
-		//
-		ComplexType string `json:"ComplexType,omitempty"`
-
-		// The type of the collection item in case this is a collection parameter.
-		//
-		//
-		// Enum: [simple complex collection]
-		ItemType *string `json:"ItemType,omitempty"`
-
-		// The name of the parameter.
-		//
-		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// The content specific path information that identifies the parameter
-		// value within the content. The value is usually a XPath or JSONPath or a
-		// regular expression in case of text content.
-		//
-		//
-		Path string `json:"Path,omitempty"`
-
-		// The type of the parameter. Accepted values are simple, complex,
-		// collection.
-		//
-		//
-		// Enum: [simple complex collection]
-		Type *string `json:"Type,omitempty"`
-	}
-	if err := json.Unmarshal(data, &stage1); err != nil {
-		return err
-	}
-	var rcv ContentParameterAO0P0
-
-	rcv.AcceptSingleValue = stage1.AcceptSingleValue
-
-	rcv.ComplexType = stage1.ComplexType
-
-	rcv.ItemType = stage1.ItemType
-
-	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
-
-	rcv.Path = stage1.Path
-
-	rcv.Type = stage1.Type
-
-	*m = rcv
-
-	// stage 2, remove properties and add to map
-	stage2 := make(map[string]json.RawMessage)
-	if err := json.Unmarshal(data, &stage2); err != nil {
-		return err
-	}
-
-	delete(stage2, "AcceptSingleValue")
-
-	delete(stage2, "ComplexType")
-
-	delete(stage2, "ItemType")
-
-	delete(stage2, "Name")
-
-	delete(stage2, "ObjectType")
-
-	delete(stage2, "Path")
-
-	delete(stage2, "Type")
-
-	// stage 3, add additional properties values
-	if len(stage2) > 0 {
-		result := make(map[string]interface{})
-		for k, v := range stage2 {
-			var toadd interface{}
-			if err := json.Unmarshal(v, &toadd); err != nil {
-				return err
-			}
-			result[k] = toadd
-		}
-		m.ContentParameterAO0P0 = result
-	}
-
-	return nil
-}
-
-// MarshalJSON marshals this object with additional properties into a JSON object
-func (m ContentParameterAO0P0) MarshalJSON() ([]byte, error) {
-	var stage1 struct {
-
-		// The flag that allows single values in content to be extracted as a
-		// single element collection in case the parameter is of Collection type.
-		//
-		// This flag is applicable for parameters of type Collection only.
-		//
-		//
-		AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
-
-		// The name of the complex type definition in case this is a complex
-		// parameter. The content.Grammar object must have a complex type, content.ComplexType,
-		// defined with the specified name in types collection property.
-		//
-		//
-		ComplexType string `json:"ComplexType,omitempty"`
-
-		// The type of the collection item in case this is a collection parameter.
-		//
-		//
-		// Enum: [simple complex collection]
-		ItemType *string `json:"ItemType,omitempty"`
-
-		// The name of the parameter.
-		//
-		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
-
-		// The content specific path information that identifies the parameter
-		// value within the content. The value is usually a XPath or JSONPath or a
-		// regular expression in case of text content.
-		//
-		//
-		Path string `json:"Path,omitempty"`
-
-		// The type of the parameter. Accepted values are simple, complex,
-		// collection.
-		//
-		//
-		// Enum: [simple complex collection]
-		Type *string `json:"Type,omitempty"`
-	}
-
-	stage1.AcceptSingleValue = m.AcceptSingleValue
-
-	stage1.ComplexType = m.ComplexType
-
-	stage1.ItemType = m.ItemType
-
-	stage1.Name = m.Name
-
-	stage1.ObjectType = m.ObjectType
-
-	stage1.Path = m.Path
-
-	stage1.Type = m.Type
-
-	// make JSON object for known properties
-	props, err := json.Marshal(stage1)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(m.ContentParameterAO0P0) == 0 {
-		return props, nil
-	}
-
-	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.ContentParameterAO0P0)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(props) < 3 {
-		return additional, nil
-	}
-
-	// concatenate the 2 objects
-	props[len(props)-1] = ','
-	return append(props, additional[1:]...), nil
-}
-
-// Validate validates this content parameter a o0 p0
-func (m *ContentParameterAO0P0) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateItemType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-var contentParameterAO0P0TypeItemTypePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["simple","complex","collection"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		contentParameterAO0P0TypeItemTypePropEnum = append(contentParameterAO0P0TypeItemTypePropEnum, v)
-	}
-}
-
-const (
-
-	// ContentParameterAO0P0ItemTypeSimple captures enum value "simple"
-	ContentParameterAO0P0ItemTypeSimple string = "simple"
-
-	// ContentParameterAO0P0ItemTypeComplex captures enum value "complex"
-	ContentParameterAO0P0ItemTypeComplex string = "complex"
-
-	// ContentParameterAO0P0ItemTypeCollection captures enum value "collection"
-	ContentParameterAO0P0ItemTypeCollection string = "collection"
-)
-
-// prop value enum
-func (m *ContentParameterAO0P0) validateItemTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, contentParameterAO0P0TypeItemTypePropEnum); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *ContentParameterAO0P0) validateItemType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ItemType) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateItemTypeEnum("ItemType", "body", *m.ItemType); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var contentParameterAO0P0TypeTypePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["simple","complex","collection"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		contentParameterAO0P0TypeTypePropEnum = append(contentParameterAO0P0TypeTypePropEnum, v)
-	}
-}
-
-const (
-
-	// ContentParameterAO0P0TypeSimple captures enum value "simple"
-	ContentParameterAO0P0TypeSimple string = "simple"
-
-	// ContentParameterAO0P0TypeComplex captures enum value "complex"
-	ContentParameterAO0P0TypeComplex string = "complex"
-
-	// ContentParameterAO0P0TypeCollection captures enum value "collection"
-	ContentParameterAO0P0TypeCollection string = "collection"
-)
-
-// prop value enum
-func (m *ContentParameterAO0P0) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, contentParameterAO0P0TypeTypePropEnum); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *ContentParameterAO0P0) validateType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Type) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateTypeEnum("Type", "body", *m.Type); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *ContentParameterAO0P0) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *ContentParameterAO0P0) UnmarshalBinary(b []byte) error {
-	var res ContentParameterAO0P0
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
+// ContentParameterAllOf1 content parameter all of1
+// swagger:model ContentParameterAllOf1
+type ContentParameterAllOf1 interface{}

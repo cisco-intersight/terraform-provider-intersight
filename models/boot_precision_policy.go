@@ -39,7 +39,7 @@ type BootPrecisionPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Reference to the profile objects that this policy is a part of.
 	//
@@ -63,7 +63,7 @@ func (m *BootPrecisionPolicy) UnmarshalJSON(raw []byte) error {
 
 		EnforceUefiSecureBoot *bool `json:"EnforceUefiSecureBoot,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
@@ -101,7 +101,7 @@ func (m BootPrecisionPolicy) MarshalJSON() ([]byte, error) {
 
 		EnforceUefiSecureBoot *bool `json:"EnforceUefiSecureBoot,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}

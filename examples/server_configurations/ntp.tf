@@ -6,6 +6,10 @@ resource "intersight_ntp_policy" "ntp1" {
     "time-a-g.nist.gov",
     "time-b-g.nist.gov"
   ]
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 resource "intersight_ntp_policy" "ntp2" {
@@ -17,6 +21,10 @@ resource "intersight_ntp_policy" "ntp2" {
     "10.10.10.12",
     "10.10.10.13"
   ]
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"

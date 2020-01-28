@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // WorkflowTaskDefinition Workflow:Task Definition
@@ -53,6 +55,12 @@ type WorkflowTaskDefinition struct {
 	//
 	Label string `json:"Label,omitempty"`
 
+	// License entitlement required to run this task. It is determined by license requirement of features.
+	//
+	// Read Only: true
+	// Enum: [Base Essential Standard Advantage]
+	LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
+
 	// The name of the task definition. The name should follow this convention <Verb or Action><Category><Vendor><Product><Noun or object> Verb or Action is a required portion of the name and this must be part of the pre-approved verb list. Category is an optional field and this will refer to the broad category of the task referring to the type of resource or endpoint. If there is no specific category then use "Generic" if required. Vendor is an optional field and this will refer to the specific vendor this task applies to. If the task is generic and not tied to a vendor, then do not specify anything. Product is an optional field, this will contain the vendor product and model when desired. Noun or object is a required field and  this will contain the noun or object on which the action is being performed. Examples SendEmail  - This is a task in Generic category for sending email. NewStorageVolume - This is a vendor agnostic task under Storage device category for creating a new volume.
 	//
 	Name string `json:"Name,omitempty"`
@@ -91,6 +99,8 @@ func (m *WorkflowTaskDefinition) UnmarshalJSON(raw []byte) error {
 
 		Label string `json:"Label,omitempty"`
 
+		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		Properties *WorkflowProperties `json:"Properties,omitempty"`
@@ -114,6 +124,8 @@ func (m *WorkflowTaskDefinition) UnmarshalJSON(raw []byte) error {
 	m.InternalProperties = dataAO1.InternalProperties
 
 	m.Label = dataAO1.Label
+
+	m.LicenseEntitlement = dataAO1.LicenseEntitlement
 
 	m.Name = dataAO1.Name
 
@@ -149,6 +161,8 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 
 		Label string `json:"Label,omitempty"`
 
+		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		Properties *WorkflowProperties `json:"Properties,omitempty"`
@@ -169,6 +183,8 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 	dataAO1.InternalProperties = m.InternalProperties
 
 	dataAO1.Label = m.Label
+
+	dataAO1.LicenseEntitlement = m.LicenseEntitlement
 
 	dataAO1.Name = m.Name
 
@@ -207,6 +223,10 @@ func (m *WorkflowTaskDefinition) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateInternalProperties(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLicenseEntitlement(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -294,6 +314,40 @@ func (m *WorkflowTaskDefinition) validateInternalProperties(formats strfmt.Regis
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var workflowTaskDefinitionTypeLicenseEntitlementPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		workflowTaskDefinitionTypeLicenseEntitlementPropEnum = append(workflowTaskDefinitionTypeLicenseEntitlementPropEnum, v)
+	}
+}
+
+// property enum
+func (m *WorkflowTaskDefinition) validateLicenseEntitlementEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowTaskDefinitionTypeLicenseEntitlementPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *WorkflowTaskDefinition) validateLicenseEntitlement(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LicenseEntitlement) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateLicenseEntitlementEnum("LicenseEntitlement", "body", m.LicenseEntitlement); err != nil {
+		return err
 	}
 
 	return nil

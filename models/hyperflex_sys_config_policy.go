@@ -42,7 +42,7 @@ type HyperflexSysConfigPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The timezone of the HyperFlex cluster's system clock.
 	//
@@ -69,7 +69,7 @@ func (m *HyperflexSysConfigPolicy) UnmarshalJSON(raw []byte) error {
 
 		NtpServers []string `json:"NtpServers"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Timezone *string `json:"Timezone,omitempty"`
 	}
@@ -111,7 +111,7 @@ func (m HyperflexSysConfigPolicy) MarshalJSON() ([]byte, error) {
 
 		NtpServers []string `json:"NtpServers"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Timezone *string `json:"Timezone,omitempty"`
 	}

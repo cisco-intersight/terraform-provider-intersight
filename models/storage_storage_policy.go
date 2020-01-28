@@ -34,7 +34,7 @@ type StorageStoragePolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile objects.
 	//
@@ -69,7 +69,7 @@ func (m *StorageStoragePolicy) UnmarshalJSON(raw []byte) error {
 
 		GlobalHotSpares []*StorageLocalDisk `json:"GlobalHotSpares"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -115,7 +115,7 @@ func (m StorageStoragePolicy) MarshalJSON() ([]byte, error) {
 
 		GlobalHotSpares []*StorageLocalDisk `json:"GlobalHotSpares"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 

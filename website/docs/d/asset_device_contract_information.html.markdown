@@ -21,7 +21,7 @@ The following arguments can be used to get data of already created objects in In
 * `maintenance_purchase_order_number`:(string)Maintenance purchase order number for the Cisco device.
 * `maintenance_sales_order_number`:(string)Maintenance sales order number for the Cisco device.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `platform_type`:(string)The platform type of the Cisco device.
 * `purchase_order_number`:(string)Purchase order number for the Cisco device. It is a unique number assigned for every purchase.
 * `sales_order_number`:(string)Sales order number for the Cisco device. It is a unique number assigned for every sale.
@@ -30,5 +30,6 @@ The following arguments can be used to get data of already created objects in In
 * `service_level`:(string)The type of service contract that covers the Cisco device.
 * `service_sku`:(string)The SKU of the service contract that covers the Cisco device.
 * `service_start_date`:(string)Start date for the Cisco service contract that covers this Cisco device.
+* `state_contract`:(string)Internal property used for triggering and tracking actions for contract information.
 * `warranty_end_date`:(string)End date for the warranty that covers the Cisco device.
 * `warranty_type`:(string)Type of warranty that covers the Cisco device.

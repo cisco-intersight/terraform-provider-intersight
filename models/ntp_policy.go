@@ -22,6 +22,10 @@ import (
 type NtpPolicy struct {
 	PolicyAbstractPolicy
 
+	// The appliance account to which the appliance NTP policy belongs.
+	//
+	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 	// State of NTP service on the endpoint.
 	//
 	Enabled *bool `json:"Enabled,omitempty"`
@@ -30,9 +34,9 @@ type NtpPolicy struct {
 	//
 	NtpServers []string `json:"NtpServers"`
 
-	// Relationship to the Organization that owns the Managed Object.
+	// The organization to which the NTP policy belongs.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile objects.
 	//
@@ -50,17 +54,21 @@ func (m *NtpPolicy) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		NtpServers []string `json:"NtpServers"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.ApplianceAccount = dataAO1.ApplianceAccount
 
 	m.Enabled = dataAO1.Enabled
 
@@ -84,14 +92,18 @@ func (m NtpPolicy) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		NtpServers []string `json:"NtpServers"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
+
+	dataAO1.ApplianceAccount = m.ApplianceAccount
 
 	dataAO1.Enabled = m.Enabled
 
@@ -119,6 +131,10 @@ func (m *NtpPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateApplianceAccount(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrganization(formats); err != nil {
 		res = append(res, err)
 	}
@@ -130,6 +146,24 @@ func (m *NtpPolicy) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *NtpPolicy) validateApplianceAccount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ApplianceAccount) { // not required
+		return nil
+	}
+
+	if m.ApplianceAccount != nil {
+		if err := m.ApplianceAccount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ApplianceAccount")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

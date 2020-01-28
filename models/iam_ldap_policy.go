@@ -24,6 +24,10 @@ import (
 type IamLdapPolicy struct {
 	PolicyAbstractPolicy
 
+	// The appliance account to which the appliance LDAP policy belongs.
+	//
+	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 	// Base settings of LDAP required while configuring LDAP policy.
 	//
 	BaseProperties *IamLdapBaseProperties `json:"BaseProperties,omitempty"`
@@ -44,9 +48,9 @@ type IamLdapPolicy struct {
 	//
 	Groups []*IamLdapGroupRef `json:"Groups"`
 
-	// Relationship to the Organization that owns the Managed Object.
+	// The organization to which the LDAP policy belongs.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -73,6 +77,8 @@ func (m *IamLdapPolicy) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		BaseProperties *IamLdapBaseProperties `json:"BaseProperties,omitempty"`
 
 		DNSParameters *IamLdapDNSParameters `json:"DnsParameters,omitempty"`
@@ -83,7 +89,7 @@ func (m *IamLdapPolicy) UnmarshalJSON(raw []byte) error {
 
 		Groups []*IamLdapGroupRef `json:"Groups"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -94,6 +100,8 @@ func (m *IamLdapPolicy) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.ApplianceAccount = dataAO1.ApplianceAccount
 
 	m.BaseProperties = dataAO1.BaseProperties
 
@@ -127,6 +135,8 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 	_parts = append(_parts, aO0)
 
 	var dataAO1 struct {
+		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
+
 		BaseProperties *IamLdapBaseProperties `json:"BaseProperties,omitempty"`
 
 		DNSParameters *IamLdapDNSParameters `json:"DnsParameters,omitempty"`
@@ -137,7 +147,7 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 
 		Groups []*IamLdapGroupRef `json:"Groups"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
@@ -145,6 +155,8 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 
 		UserSearchPrecedence *string `json:"UserSearchPrecedence,omitempty"`
 	}
+
+	dataAO1.ApplianceAccount = m.ApplianceAccount
 
 	dataAO1.BaseProperties = m.BaseProperties
 
@@ -182,6 +194,10 @@ func (m *IamLdapPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateApplianceAccount(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateBaseProperties(formats); err != nil {
 		res = append(res, err)
 	}
@@ -213,6 +229,24 @@ func (m *IamLdapPolicy) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *IamLdapPolicy) validateApplianceAccount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ApplianceAccount) { // not required
+		return nil
+	}
+
+	if m.ApplianceAccount != nil {
+		if err := m.ApplianceAccount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ApplianceAccount")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -15,6 +15,6 @@ The following arguments can be used to get data of already created objects in In
 * `description`:(string)Description of the policy.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the concrete policy.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `retain_policy_virtual_drives`:(bool)Retains the virtual drives defined in policy if they exist already. If this flag is false, the existing virtual drives are removed and created again based on virtual drives in the policy.
 * `unused_disks_state`:(string)This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.

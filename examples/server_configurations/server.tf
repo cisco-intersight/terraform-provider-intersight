@@ -4,8 +4,8 @@ resource "intersight_server_profile" "server1" {
     key   = "server"
     value = "demo"
   }
-  assigned_server {
-    moid        = "5d7b2f8e6176752d30511ee6"
-    object_type = "compute.RackUnit"
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
   }
 }

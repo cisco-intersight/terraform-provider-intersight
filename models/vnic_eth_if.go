@@ -50,7 +50,7 @@ type VnicEthIf struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Placement Settings for the virtual interface.
 	//
@@ -90,7 +90,7 @@ func (m *VnicEthIf) UnmarshalJSON(raw []byte) error {
 
 		Order int64 `json:"Order,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Placement *VnicPlacementSettings `json:"Placement,omitempty"`
 
@@ -152,7 +152,7 @@ func (m VnicEthIf) MarshalJSON() ([]byte, error) {
 
 		Order int64 `json:"Order,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Placement *VnicPlacementSettings `json:"Placement,omitempty"`
 

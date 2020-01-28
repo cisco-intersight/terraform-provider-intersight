@@ -12,7 +12,9 @@ API keys are used to programatically perform API calls. API keys can be created 
 
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `hash_algorithm`:(string)The cryptographic hash algorithm to calculate the message digest.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `private_key`:(string)Holds the private key for the API key.
 * `purpose`:(string)The purpose of the API Key.
+* `signing_algorithm`:(string)The signing algorithm used by the client to authenticate API requests to Intersight.The following key generation schemes are supported:1. RSASSA-PSS, as defined in RFC 8017 [RFC8017], Section 8.1,2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.The signing algorithm must be compatible with the key generation specification.

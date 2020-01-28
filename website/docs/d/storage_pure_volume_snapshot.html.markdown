@@ -15,7 +15,7 @@ The following arguments can be used to get data of already created objects in In
 * `created_time`:(string)Exact date and time on which snapshot is created.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the snapshot which represents point in time copy of volume.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `protection_group_name`:(string)Name of the protection group to which the snapshot belongs. Value is emptry, if the snapshot is created directly on volume.
 * `serial`:(string)Unique serial number of the snapshot allocated by the storage array.
 * `size`:(int)Snapshot size represented in bytes.

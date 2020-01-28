@@ -20,30 +20,45 @@ import (
 //
 // swagger:model iamEndPointPasswordProperties
 type IamEndPointPasswordProperties struct {
-	IamEndPointPasswordPropertiesAO0P0
+	MoBaseComplexType
+
+	IamEndPointPasswordPropertiesAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *IamEndPointPasswordProperties) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 IamEndPointPasswordPropertiesAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.IamEndPointPasswordPropertiesAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 IamEndPointPasswordPropertiesAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.IamEndPointPasswordPropertiesAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m IamEndPointPasswordProperties) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.IamEndPointPasswordPropertiesAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.IamEndPointPasswordPropertiesAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m IamEndPointPasswordProperties) MarshalJSON() ([]byte, error) {
 func (m *IamEndPointPasswordProperties) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with IamEndPointPasswordPropertiesAO0P0
-	if err := m.IamEndPointPasswordPropertiesAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with IamEndPointPasswordPropertiesAO1P1
+	if err := m.IamEndPointPasswordPropertiesAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *IamEndPointPasswordProperties) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// IamEndPointPasswordPropertiesAO0P0 iam end point password properties a o0 p0
-// swagger:model IamEndPointPasswordPropertiesAO0P0
-type IamEndPointPasswordPropertiesAO0P0 struct {
+// IamEndPointPasswordPropertiesAO1P1 iam end point password properties a o1 p1
+// swagger:model IamEndPointPasswordPropertiesAO1P1
+type IamEndPointPasswordPropertiesAO1P1 struct {
 
 	// Enables password expiry on the endpoint.
 	//
@@ -98,19 +117,9 @@ type IamEndPointPasswordPropertiesAO0P0 struct {
 	//
 	GracePeriod int64 `json:"GracePeriod,omitempty"`
 
-	// Specifies the duration by when the password will expire.
+	// The duration by when the password will expire.
 	//
 	NotificationPeriod int64 `json:"NotificationPeriod,omitempty"`
-
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
 
 	// Set time period for password expiration. Value should be greater than notification period and grace period.
 	//
@@ -120,12 +129,12 @@ type IamEndPointPasswordPropertiesAO0P0 struct {
 	//
 	PasswordHistory int64 `json:"PasswordHistory,omitempty"`
 
-	// iam end point password properties a o0 p0
-	IamEndPointPasswordPropertiesAO0P0 map[string]interface{} `json:"-"`
+	// iam end point password properties a o1 p1
+	IamEndPointPasswordPropertiesAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
+func (m *IamEndPointPasswordPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -142,19 +151,9 @@ func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		GracePeriod int64 `json:"GracePeriod,omitempty"`
 
-		// Specifies the duration by when the password will expire.
+		// The duration by when the password will expire.
 		//
 		NotificationPeriod int64 `json:"NotificationPeriod,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Set time period for password expiration. Value should be greater than notification period and grace period.
 		//
@@ -167,7 +166,7 @@ func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv IamEndPointPasswordPropertiesAO0P0
+	var rcv IamEndPointPasswordPropertiesAO1P1
 
 	rcv.EnablePasswordExpiry = stage1.EnablePasswordExpiry
 
@@ -176,8 +175,6 @@ func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 	rcv.GracePeriod = stage1.GracePeriod
 
 	rcv.NotificationPeriod = stage1.NotificationPeriod
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.PasswordExpiryDuration = stage1.PasswordExpiryDuration
 
@@ -199,8 +196,6 @@ func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "NotificationPeriod")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "PasswordExpiryDuration")
 
 	delete(stage2, "PasswordHistory")
@@ -215,14 +210,14 @@ func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.IamEndPointPasswordPropertiesAO0P0 = result
+		m.IamEndPointPasswordPropertiesAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m IamEndPointPasswordPropertiesAO0P0) MarshalJSON() ([]byte, error) {
+func (m IamEndPointPasswordPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enables password expiry on the endpoint.
@@ -238,19 +233,9 @@ func (m IamEndPointPasswordPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		GracePeriod int64 `json:"GracePeriod,omitempty"`
 
-		// Specifies the duration by when the password will expire.
+		// The duration by when the password will expire.
 		//
 		NotificationPeriod int64 `json:"NotificationPeriod,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Set time period for password expiration. Value should be greater than notification period and grace period.
 		//
@@ -269,8 +254,6 @@ func (m IamEndPointPasswordPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.NotificationPeriod = m.NotificationPeriod
 
-	stage1.ObjectType = m.ObjectType
-
 	stage1.PasswordExpiryDuration = m.PasswordExpiryDuration
 
 	stage1.PasswordHistory = m.PasswordHistory
@@ -281,12 +264,12 @@ func (m IamEndPointPasswordPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.IamEndPointPasswordPropertiesAO0P0) == 0 {
+	if len(m.IamEndPointPasswordPropertiesAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.IamEndPointPasswordPropertiesAO0P0)
+	additional, err := json.Marshal(m.IamEndPointPasswordPropertiesAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -300,13 +283,13 @@ func (m IamEndPointPasswordPropertiesAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this iam end point password properties a o0 p0
-func (m *IamEndPointPasswordPropertiesAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this iam end point password properties a o1 p1
+func (m *IamEndPointPasswordPropertiesAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *IamEndPointPasswordPropertiesAO0P0) MarshalBinary() ([]byte, error) {
+func (m *IamEndPointPasswordPropertiesAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -314,8 +297,8 @@ func (m *IamEndPointPasswordPropertiesAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *IamEndPointPasswordPropertiesAO0P0) UnmarshalBinary(b []byte) error {
-	var res IamEndPointPasswordPropertiesAO0P0
+func (m *IamEndPointPasswordPropertiesAO1P1) UnmarshalBinary(b []byte) error {
+	var res IamEndPointPasswordPropertiesAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

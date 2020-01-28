@@ -25,6 +25,10 @@ resource "intersight_syslog_policy" "syslog1" {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"
   }
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
 }
 
 /*

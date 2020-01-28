@@ -20,30 +20,45 @@ import (
 //
 // swagger:model assetCustomerInformation
 type AssetCustomerInformation struct {
-	AssetCustomerInformationAO0P0
+	MoBaseComplexType
+
+	AssetCustomerInformationAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *AssetCustomerInformation) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 AssetCustomerInformationAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.AssetCustomerInformationAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 AssetCustomerInformationAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.AssetCustomerInformationAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m AssetCustomerInformation) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.AssetCustomerInformationAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.AssetCustomerInformationAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m AssetCustomerInformation) MarshalJSON() ([]byte, error) {
 func (m *AssetCustomerInformation) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with AssetCustomerInformationAO0P0
-	if err := m.AssetCustomerInformationAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with AssetCustomerInformationAO1P1
+	if err := m.AssetCustomerInformationAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,9 +100,9 @@ func (m *AssetCustomerInformation) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// AssetCustomerInformationAO0P0 asset customer information a o0 p0
-// swagger:model AssetCustomerInformationAO0P0
-type AssetCustomerInformationAO0P0 struct {
+// AssetCustomerInformationAO1P1 asset customer information a o1 p1
+// swagger:model AssetCustomerInformationAO1P1
+type AssetCustomerInformationAO1P1 struct {
 
 	// Address as per the information provided by the user.
 	//
@@ -100,22 +119,12 @@ type AssetCustomerInformationAO0P0 struct {
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
-	// asset customer information a o0 p0
-	AssetCustomerInformationAO0P0 map[string]interface{} `json:"-"`
+	// asset customer information a o1 p1
+	AssetCustomerInformationAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *AssetCustomerInformationAO0P0) UnmarshalJSON(data []byte) error {
+func (m *AssetCustomerInformationAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
@@ -133,29 +142,17 @@ func (m *AssetCustomerInformationAO0P0) UnmarshalJSON(data []byte) error {
 		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv AssetCustomerInformationAO0P0
+	var rcv AssetCustomerInformationAO1P1
 
 	rcv.Address = stage1.Address
 
 	rcv.ID = stage1.ID
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	*m = rcv
 
@@ -171,8 +168,6 @@ func (m *AssetCustomerInformationAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,14 +178,14 @@ func (m *AssetCustomerInformationAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.AssetCustomerInformationAO0P0 = result
+		m.AssetCustomerInformationAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m AssetCustomerInformationAO0P0) MarshalJSON() ([]byte, error) {
+func (m AssetCustomerInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Address as per the information provided by the user.
@@ -207,16 +202,6 @@ func (m AssetCustomerInformationAO0P0) MarshalJSON() ([]byte, error) {
 		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 	}
 
 	stage1.Address = m.Address
@@ -225,20 +210,18 @@ func (m AssetCustomerInformationAO0P0) MarshalJSON() ([]byte, error) {
 
 	stage1.Name = m.Name
 
-	stage1.ObjectType = m.ObjectType
-
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(m.AssetCustomerInformationAO0P0) == 0 {
+	if len(m.AssetCustomerInformationAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.AssetCustomerInformationAO0P0)
+	additional, err := json.Marshal(m.AssetCustomerInformationAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -252,8 +235,8 @@ func (m AssetCustomerInformationAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this asset customer information a o0 p0
-func (m *AssetCustomerInformationAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this asset customer information a o1 p1
+func (m *AssetCustomerInformationAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAddress(formats); err != nil {
@@ -266,7 +249,7 @@ func (m *AssetCustomerInformationAO0P0) Validate(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *AssetCustomerInformationAO0P0) validateAddress(formats strfmt.Registry) error {
+func (m *AssetCustomerInformationAO1P1) validateAddress(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Address) { // not required
 		return nil
@@ -285,7 +268,7 @@ func (m *AssetCustomerInformationAO0P0) validateAddress(formats strfmt.Registry)
 }
 
 // MarshalBinary interface implementation
-func (m *AssetCustomerInformationAO0P0) MarshalBinary() ([]byte, error) {
+func (m *AssetCustomerInformationAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -293,8 +276,8 @@ func (m *AssetCustomerInformationAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *AssetCustomerInformationAO0P0) UnmarshalBinary(b []byte) error {
-	var res AssetCustomerInformationAO0P0
+func (m *AssetCustomerInformationAO1P1) UnmarshalBinary(b []byte) error {
+	var res AssetCustomerInformationAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

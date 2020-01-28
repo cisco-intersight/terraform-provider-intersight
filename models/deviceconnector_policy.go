@@ -28,7 +28,7 @@ type DeviceconnectorPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
 	//
@@ -48,7 +48,7 @@ func (m *DeviceconnectorPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		LockoutEnabled *bool `json:"LockoutEnabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}
@@ -78,7 +78,7 @@ func (m DeviceconnectorPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		LockoutEnabled *bool `json:"LockoutEnabled,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 	}

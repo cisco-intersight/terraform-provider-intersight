@@ -11,6 +11,10 @@ resource "intersight_smtp_policy" "smtp1" {
     "bx@cisco.com",
     "cy@cisco.com",
   "dz@cisco.com"]
+  organization {
+    object_type = "organization.Organization"
+    moid = "5e2540956972652d301b0a65"
+  }
   profiles {
     moid        = intersight_server_profile.server1.id
     object_type = "server.Profile"

@@ -13,13 +13,15 @@ Interface that provides access to the management controller.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)
-* `dn`:(string)
+* `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
 * `gateway`:(string)Default gateway for the interface.
 * `host_name`:(string)Hostname configured for the interface.
 * `ip_address`:(string)IP address of the interface.
 * `mac_address`:(string)MAC address configured for the interface.
 * `mask`:(string)Netmask for the interface.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-* `rn`:(string)
+* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `rn`:(string)The Relative Name uniquely identifies an object within a given context.
+* `switch_id`:(string)Switch Id of the interface.
+* `uem_conn_status`:(string)Status of UEM connection.
 * `virtual_host_name`:(string)Virtual hostname configured for the interface in case of clustered environment.

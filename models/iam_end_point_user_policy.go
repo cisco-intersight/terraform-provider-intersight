@@ -28,7 +28,7 @@ type IamEndPointUserPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Set password properties for endpoint users.
 	//
@@ -52,7 +52,7 @@ func (m *IamEndPointUserPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		EndPointUserRoles []*IamEndPointUserRoleRef `json:"EndPointUserRoles"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PasswordProperties *IamEndPointPasswordProperties `json:"PasswordProperties,omitempty"`
 
@@ -86,7 +86,7 @@ func (m IamEndPointUserPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		EndPointUserRoles []*IamEndPointUserRoleRef `json:"EndPointUserRoles"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		PasswordProperties *IamEndPointPasswordProperties `json:"PasswordProperties,omitempty"`
 

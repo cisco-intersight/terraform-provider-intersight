@@ -30,7 +30,7 @@ type StorageDiskGroupPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The supported RAID level for the disk group.
 	//
@@ -65,7 +65,7 @@ func (m *StorageDiskGroupPolicy) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		DedicatedHotSpares []*StorageLocalDisk `json:"DedicatedHotSpares"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RaidLevel *string `json:"RaidLevel,omitempty"`
 
@@ -107,7 +107,7 @@ func (m StorageDiskGroupPolicy) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		DedicatedHotSpares []*StorageLocalDisk `json:"DedicatedHotSpares"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RaidLevel *string `json:"RaidLevel,omitempty"`
 

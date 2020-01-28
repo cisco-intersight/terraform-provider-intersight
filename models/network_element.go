@@ -37,11 +37,13 @@ type NetworkElement struct {
 	// fault summary
 	FaultSummary int64 `json:"FaultSummary,omitempty"`
 
-	// inband Ip address
+	// The Inband IP address of the network Element.
+	//
 	// Read Only: true
 	InbandIPAddress string `json:"InbandIpAddress,omitempty"`
 
-	// inband Ip gateway
+	// The Inband IP Gateway of the network Element.
+	//
 	// Read Only: true
 	InbandIPGateway string `json:"InbandIpGateway,omitempty"`
 
@@ -86,7 +88,8 @@ type NetworkElement struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// switch Id
+	// The Switch Id of the network Element.
+	//
 	// Read Only: true
 	SwitchID string `json:"SwitchId,omitempty"`
 

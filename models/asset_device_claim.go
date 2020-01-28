@@ -39,11 +39,11 @@ type AssetDeviceClaim struct {
 	// Read Only: true
 	DeviceUpdates []*AssetConnectionControlMessage `json:"DeviceUpdates"`
 
-	// Obtained from the device connector management UI or API (REST endpoint /connector/SecurityTokens).
+	// Obtained from the device connector management UI or API (REST endpoint '/connector/SecurityTokens').
 	//
 	SecurityToken string `json:"SecurityToken,omitempty"`
 
-	// Obtained from the device connector management UI or API (REST endpoint /connector/DeviceIdentifiers).
+	// Obtained from the device connector management UI or API (REST endpoint '/connector/DeviceIdentifiers').
 	//
 	SerialNumber string `json:"SerialNumber,omitempty"`
 }

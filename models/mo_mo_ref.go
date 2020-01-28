@@ -24,14 +24,9 @@ type MoMoRef struct {
 	// Read Only: true
 	Moid string `json:"Moid,omitempty"`
 
-	// The concrete type of this complex type.
+	// The Object Type of the referenced REST resource.
 	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
+	// Read Only: true
 	ObjectType string `json:"ObjectType,omitempty"`
 
 	// An OData $filter expression which describes the REST resource to be referenced. This field may

@@ -20,30 +20,45 @@ import (
 //
 // swagger:model tamIdentifiers
 type TamIdentifiers struct {
-	TamIdentifiersAO0P0
+	MoBaseComplexType
+
+	TamIdentifiersAO1P1
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *TamIdentifiers) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 TamIdentifiersAO0P0
+	var aO0 MoBaseComplexType
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.TamIdentifiersAO0P0 = aO0
+	m.MoBaseComplexType = aO0
+
+	// AO1
+	var aO1 TamIdentifiersAO1P1
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.TamIdentifiersAO1P1 = aO1
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
 func (m TamIdentifiers) MarshalJSON() ([]byte, error) {
-	_parts := make([][]byte, 0, 1)
+	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.TamIdentifiersAO0P0)
+	aO0, err := swag.WriteJSON(m.MoBaseComplexType)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
+
+	aO1, err := swag.WriteJSON(m.TamIdentifiersAO1P1)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
@@ -52,8 +67,12 @@ func (m TamIdentifiers) MarshalJSON() ([]byte, error) {
 func (m *TamIdentifiers) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with TamIdentifiersAO0P0
-	if err := m.TamIdentifiersAO0P0.Validate(formats); err != nil {
+	// validation for a type composition with MoBaseComplexType
+	if err := m.MoBaseComplexType.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+	// validation for a type composition with TamIdentifiersAO1P1
+	if err := m.TamIdentifiersAO1P1.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -81,50 +100,30 @@ func (m *TamIdentifiers) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// TamIdentifiersAO0P0 tam identifiers a o0 p0
-// swagger:model TamIdentifiersAO0P0
-type TamIdentifiersAO0P0 struct {
+// TamIdentifiersAO1P1 tam identifiers a o1 p1
+// swagger:model TamIdentifiersAO1P1
+type TamIdentifiersAO1P1 struct {
 
 	// Name of the filter paramter.
 	//
 	Name string `json:"Name,omitempty"`
 
-	// The concrete type of this complex type.
-	//
-	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-	// ObjectType is optional.
-	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
-	ObjectType string `json:"ObjectType,omitempty"`
-
 	// Value of the filter paramter.
 	//
 	Value string `json:"Value,omitempty"`
 
-	// tam identifiers a o0 p0
-	TamIdentifiersAO0P0 map[string]interface{} `json:"-"`
+	// tam identifiers a o1 p1
+	TamIdentifiersAO1P1 map[string]interface{} `json:"-"`
 }
 
 // UnmarshalJSON unmarshals this object with additional properties from JSON
-func (m *TamIdentifiersAO0P0) UnmarshalJSON(data []byte) error {
+func (m *TamIdentifiersAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
 		// Name of the filter paramter.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Value of the filter paramter.
 		//
@@ -133,11 +132,9 @@ func (m *TamIdentifiersAO0P0) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
-	var rcv TamIdentifiersAO0P0
+	var rcv TamIdentifiersAO1P1
 
 	rcv.Name = stage1.Name
-
-	rcv.ObjectType = stage1.ObjectType
 
 	rcv.Value = stage1.Value
 
@@ -151,8 +148,6 @@ func (m *TamIdentifiersAO0P0) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "Name")
 
-	delete(stage2, "ObjectType")
-
 	delete(stage2, "Value")
 
 	// stage 3, add additional properties values
@@ -165,29 +160,19 @@ func (m *TamIdentifiersAO0P0) UnmarshalJSON(data []byte) error {
 			}
 			result[k] = toadd
 		}
-		m.TamIdentifiersAO0P0 = result
+		m.TamIdentifiersAO1P1 = result
 	}
 
 	return nil
 }
 
 // MarshalJSON marshals this object with additional properties into a JSON object
-func (m TamIdentifiersAO0P0) MarshalJSON() ([]byte, error) {
+func (m TamIdentifiersAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name of the filter paramter.
 		//
 		Name string `json:"Name,omitempty"`
-
-		// The concrete type of this complex type.
-		//
-		// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
-		// ObjectType is optional.
-		// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
-		// are heterogeneous, i.e. the array can contain nested documents of different types.
-		//
-		//
-		ObjectType string `json:"ObjectType,omitempty"`
 
 		// Value of the filter paramter.
 		//
@@ -195,8 +180,6 @@ func (m TamIdentifiersAO0P0) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Name = m.Name
-
-	stage1.ObjectType = m.ObjectType
 
 	stage1.Value = m.Value
 
@@ -206,12 +189,12 @@ func (m TamIdentifiersAO0P0) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	if len(m.TamIdentifiersAO0P0) == 0 {
+	if len(m.TamIdentifiersAO1P1) == 0 {
 		return props, nil
 	}
 
 	// make JSON object for the additional properties
-	additional, err := json.Marshal(m.TamIdentifiersAO0P0)
+	additional, err := json.Marshal(m.TamIdentifiersAO1P1)
 	if err != nil {
 		return nil, err
 	}
@@ -225,13 +208,13 @@ func (m TamIdentifiersAO0P0) MarshalJSON() ([]byte, error) {
 	return append(props, additional[1:]...), nil
 }
 
-// Validate validates this tam identifiers a o0 p0
-func (m *TamIdentifiersAO0P0) Validate(formats strfmt.Registry) error {
+// Validate validates this tam identifiers a o1 p1
+func (m *TamIdentifiersAO1P1) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *TamIdentifiersAO0P0) MarshalBinary() ([]byte, error) {
+func (m *TamIdentifiersAO1P1) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -239,8 +222,8 @@ func (m *TamIdentifiersAO0P0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *TamIdentifiersAO0P0) UnmarshalBinary(b []byte) error {
-	var res TamIdentifiersAO0P0
+func (m *TamIdentifiersAO1P1) UnmarshalBinary(b []byte) error {
+	var res TamIdentifiersAO1P1
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

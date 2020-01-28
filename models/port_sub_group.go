@@ -16,7 +16,7 @@ import (
 
 // PortSubGroup Port:Sub Group
 //
-// Holder for multiple ports within a portGroup. Represents a break-out port group on the Fabric Interconnect.
+// Holder for multiple ports within a portGroup. SubGroup represents a break-out port group on the Fabric Interconnect.
 //
 // swagger:model portSubGroup
 type PortSubGroup struct {

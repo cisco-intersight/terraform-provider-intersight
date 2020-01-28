@@ -42,7 +42,7 @@ type VnicEthAdapterPolicy struct {
 
 	// Relationship to the Organization that owns the Managed Object.
 	//
-	Organization *IamAccountRef `json:"Organization,omitempty"`
+	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Settings for RDMA over Converged Ethernet.
 	//
@@ -90,7 +90,7 @@ func (m *VnicEthAdapterPolicy) UnmarshalJSON(raw []byte) error {
 
 		NvgreSettings *VnicNvgreSettings `json:"NvgreSettings,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RoceSettings *VnicRoceSettings `json:"RoceSettings,omitempty"`
 
@@ -156,7 +156,7 @@ func (m VnicEthAdapterPolicy) MarshalJSON() ([]byte, error) {
 
 		NvgreSettings *VnicNvgreSettings `json:"NvgreSettings,omitempty"`
 
-		Organization *IamAccountRef `json:"Organization,omitempty"`
+		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		RoceSettings *VnicRoceSettings `json:"RoceSettings,omitempty"`
 

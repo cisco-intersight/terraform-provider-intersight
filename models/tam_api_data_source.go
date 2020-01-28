@@ -16,7 +16,7 @@ import (
 
 // TamAPIDataSource Tam:Api Data Source
 //
-// This type represents a data source that is based on TextFsmTemplate based data collection from the managed devices.
+// Data source using Intersight API to collect data regarding managed devices.
 //
 // swagger:model tamApiDataSource
 type TamAPIDataSource struct {

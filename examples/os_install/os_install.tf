@@ -2,7 +2,7 @@ resource "intersight_os_install" "os1" {
   name = "InstallTemplatee165"
   server {
     object_type = "compute.RackUnit"
-    moid = "5d7b2f8e6176752d30511ee6"
+    moid = "5db6c1366176752d30b9bfd7"
   }
   image {
     object_type = "softwarerepository.OperatingSystemFile"
@@ -15,11 +15,6 @@ resource "intersight_os_install" "os1" {
   answers {
     answer_file = "vmaccepteula\nrootpw Nbv@12345\n\ninstall --overwritevmfs --disk=<DISK> \n#network --bootproto=static --vlanid=1024\nnetwork --bootproto=static  --ip=10.106.233.228 --netmask=255.255.255.128 --gateway=10.106.233.129 --nameserver=64.104.128.236\n\n%pre --interpreter=busybox\nhwclock -d %LIVE_VAR_DATE_1% -t %LIVE_VAR_TIME_UTC_1%\ndate -s %LIVE_VAR_DATE_TIME_UTC_1%\ncd /tmp\n\n%firstboot --interpreter=busybox\ncd /tmp\nesxcfg-vswitch -A 'VM Network' vSwitch0\n\n###############################\n\n# enable & start remote ESXi Shell  (SSH)\n\n###############################\nvim-cmd hostsvc/enable_ssh\nvim-cmd hostsvc/start_ssh\n\n###############################\n# enable & start ESXi Shell (TSM)\n###############################\nvim-cmd hostsvc/enable_esx_shell\nvim-cmd hostsvc/start_esx_shell\nesxcli system hostname set --host=VM_NAME\n#%post --interpreter=busybox --ignorefailure=true\n%post --interpreter=busybox --ignorefailure=true\nESXI_INSTALL_LOG=/var/log/esxi_install.log\necho \\\"OS INSTALL COMPLETED\\\" >>   /var/log/Xinstall.log\n/opt/ucs_tool_esxi/ucs_ipmitool write_file  /var/log/Xinstall.log osProgress.log\n#cd /tmp\\r\\nlocalcli network firewall set --default-action true\nlocalcli network firewall set --enabled false\n\nlocalcli network firewall set --default-action false\nlocalcli network firewall set --enabled true\n\nreboot\n"
     source = "File"
-    ipv4_config {
-      netmask = "255.255.255.0"
-      gateway = "10.105.218.1"
-      ip_address = "10.105.218.159"
-    }
   }
   description = "Install Template 5"
   install_method = "vMedia"

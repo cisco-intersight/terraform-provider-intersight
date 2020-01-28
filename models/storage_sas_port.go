@@ -20,27 +20,27 @@ import (
 type StorageSasPort struct {
 	InventoryBase
 
-	// This field indicates the SAS Address assigned to storage port.
+	// The SAS Address assigned to storage port.
 	//
 	// Read Only: true
 	Address string `json:"Address,omitempty"`
 
-	// This field holds the disk identifier.
+	// The disk identifier.
 	//
 	// Read Only: true
 	DiskID int64 `json:"DiskId,omitempty"`
 
-	// This field identifies the end-point Id assigned to storage port.
+	// The end-point Id assigned to storage port.
 	//
 	// Read Only: true
 	EndPointID int64 `json:"EndPointId,omitempty"`
 
-	// This field holds the link description.
+	// The link description.
 	//
 	// Read Only: true
 	LinkDescription string `json:"LinkDescription,omitempty"`
 
-	// This field holds the link speed negotiated for communication.
+	// The link speed negotiated for communication.
 	//
 	// Read Only: true
 	LinkSpeed string `json:"LinkSpeed,omitempty"`
