@@ -54,7 +54,7 @@ func resourceSoftwareHclMeta() *schema.Resource {
 				ForceNew:   true,
 			},
 			"content_type": {
-				Description: "Indicates what type of content the Json file is holding(Incremental or full dump).",
+				Description: "The type of content that the Json file holds (Incremental or full dump).",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "Full",

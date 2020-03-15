@@ -5,13 +5,11 @@ sidebar_current: "docs-intersight-data-source-iamCertificateRequest"
 description: |-
 The information required to generate a certificate signing request (CSR),
 which is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.
-
 ---
 
 # Data Source: intersight_iam_certificate_request
 The information required to generate a certificate signing request (CSR),
 which is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `email_address`:(string)User input email address, an optional part of the subject of the certificate request.

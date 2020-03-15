@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m VnicFcInterruptSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,11 +100,11 @@ func (m *VnicFcInterruptSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicFcInterruptSettingsAO1P1 vnic fc interrupt settings a o1 p1
+//
 // swagger:model VnicFcInterruptSettingsAO1P1
 type VnicFcInterruptSettingsAO1P1 struct {
 
 	// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-	//
 	// Enum: [MSIx MSI INTx]
 	Mode *string `json:"Mode,omitempty"`
 
@@ -120,7 +118,6 @@ func (m *VnicFcInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
 	}
@@ -130,7 +127,6 @@ func (m *VnicFcInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicFcInterruptSettingsAO1P1
 
 	rcv.Mode = stage1.Mode
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -140,7 +136,6 @@ func (m *VnicFcInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Mode")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -162,7 +157,6 @@ func (m VnicFcInterruptSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
 	}

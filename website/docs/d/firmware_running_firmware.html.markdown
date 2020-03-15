@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_running_firmware"
 sidebar_current: "docs-intersight-data-source-firmwareRunningFirmware"
 description: |-
 Running Firmware on an endpoint.
-
 ---
 
 # Data Source: intersight_firmware_running_firmware
 Running Firmware on an endpoint.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `component`:(string)Kind of the firmware - boot-booloader/system/kernel.

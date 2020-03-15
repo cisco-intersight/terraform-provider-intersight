@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_flash_physical_drive"
 sidebar_current: "docs-intersight-data-source-storageFlexFlashPhysicalDrive"
 description: |-
 Physical Drive repersenting a SD Card.
-
 ---
 
 # Data Source: intersight_storage_flex_flash_physical_drive
 Physical Drive repersenting a SD Card.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `card_status`:(string)

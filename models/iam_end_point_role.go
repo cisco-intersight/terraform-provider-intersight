@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,38 +24,30 @@ type IamEndPointRole struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Privileges assigned to this end point role. These privileges are assigned to users using end point roles to perform operations such as GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointPrivileges []*IamEndPointPrivilegeRef `json:"EndPointPrivileges"`
 
 	// The name of the end point role.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// User specified tags to roles like as ep-admin or ep-readonly.
-	//
 	// Read Only: true
 	RoleType string `json:"RoleType,omitempty"`
 
 	// A collection of references to the [iam.System](mo://iam.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.System](mo://iam.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 
 	// The type of the end point like Cisco UCS Fabric Interconnect or Cisco IMC.
-	//
 	// Read Only: true
-	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	Type string `json:"Type,omitempty"`
 }
 
@@ -111,7 +102,6 @@ func (m IamEndPointRole) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -143,7 +133,6 @@ func (m IamEndPointRole) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -243,7 +232,7 @@ var iamEndPointRoleTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

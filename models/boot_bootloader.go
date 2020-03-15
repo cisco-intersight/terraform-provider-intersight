@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m BootBootloader) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *BootBootloader) UnmarshalBinary(b []byte) error {
 }
 
 // BootBootloaderAO1P1 boot bootloader a o1 p1
+//
 // swagger:model BootBootloaderAO1P1
 type BootBootloaderAO1P1 struct {
 
 	// Carries more information about the bootloader.
-	//
 	Description string `json:"Description,omitempty"`
 
-	// Name of the bootloader.
-	//
+	// Name of the bootloader image.
 	Name string `json:"Name,omitempty"`
 
 	// Path to the bootloader image.
-	//
 	Path string `json:"Path,omitempty"`
 
 	// boot bootloader a o1 p1
@@ -126,15 +122,12 @@ func (m *BootBootloaderAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Carries more information about the bootloader.
-		//
 		Description string `json:"Description,omitempty"`
 
-		// Name of the bootloader.
-		//
+		// Name of the bootloader image.
 		Name string `json:"Name,omitempty"`
 
 		// Path to the bootloader image.
-		//
 		Path string `json:"Path,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *BootBootloaderAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv BootBootloaderAO1P1
 
 	rcv.Description = stage1.Description
-
 	rcv.Name = stage1.Name
-
 	rcv.Path = stage1.Path
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *BootBootloaderAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Description")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Path")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m BootBootloaderAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Carries more information about the bootloader.
-		//
 		Description string `json:"Description,omitempty"`
 
-		// Name of the bootloader.
-		//
+		// Name of the bootloader image.
 		Name string `json:"Name,omitempty"`
 
 		// Path to the bootloader image.
-		//
 		Path string `json:"Path,omitempty"`
 	}
 
 	stage1.Description = m.Description
-
 	stage1.Name = m.Name
-
 	stage1.Path = m.Path
 
 	// make JSON object for known properties

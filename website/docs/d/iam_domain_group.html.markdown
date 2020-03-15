@@ -4,18 +4,14 @@ page_title: "Intersight: intersight_iam_domain_group"
 sidebar_current: "docs-intersight-data-source-iamDomainGroup"
 description: |-
 Intersight services are mapped to three different categories of services for scaling purpose.
-
 Three categories are defined: Partition1/Partition2/Partition3. Topics for each category are created with
 a specific number of partitions. For each cloud environment these numbers will be different.
-
 ---
 
 # Data Source: intersight_iam_domain_group
 Intersight services are mapped to three different categories of services for scaling purpose.
-
 Three categories are defined: Partition1/Partition2/Partition3. Topics for each category are created with
 a specific number of partitions. For each cloud environment these numbers will be different.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

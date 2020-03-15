@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,36 +24,28 @@ type SMTPPolicy struct {
 	PolicyAbstractPolicy
 
 	// If enabled, controls the state of the SMTP client service on the managed device.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Minimum fault severity level to receive email notifications. Email notifications are sent for all faults whose severity is equal to or greater than the chosen level.
-	//
 	// Enum: [critical condition warning minor major]
 	MinSeverity *string `json:"MinSeverity,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// The email address entered here will be displayed as the from address (mail received from address) of all the SMTP mail alerts that are received. If not configured, the hostname of the server is used in the from address field.
-	//
 	SenderEmail string `json:"SenderEmail,omitempty"`
 
 	// Port number used by the SMTP server for outgoing SMTP communication.
-	//
 	SMTPPort int64 `json:"SmtpPort,omitempty"`
 
 	// List of email addresses that will receive notifications for faults.
-	//
 	SMTPRecipients []string `json:"SmtpRecipients"`
 
 	// IP address or hostname of the SMTP server. The SMTP server is used by the managed device to send email notifications.
-	//
 	SMTPServer string `json:"SmtpServer,omitempty"`
 }
 
@@ -117,7 +108,6 @@ func (m SMTPPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Enabled *bool `json:"Enabled,omitempty"`
 
@@ -157,7 +147,6 @@ func (m SMTPPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

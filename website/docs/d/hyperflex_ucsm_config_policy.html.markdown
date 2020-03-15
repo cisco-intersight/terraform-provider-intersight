@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_ucsm_config_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexUcsmConfigPolicy"
 description: |-
 A policy specifying UCS Manager settings such as service profile org, KVM IP addresses, and MAC prefix for server configuration in Fabric Interconnect environment.
-
 ---
 
 # Data Source: intersight_hyperflex_ucsm_config_policy
 A policy specifying UCS Manager settings such as service profile org, KVM IP addresses, and MAC prefix for server configuration in Fabric Interconnect environment.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

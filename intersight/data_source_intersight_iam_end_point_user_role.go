@@ -26,7 +26,7 @@ func dataSourceIamEndPointUserRole() *schema.Resource {
 				Optional:    true,
 			},
 			"end_point_role": {
-				Description: "Roles.",
+				Description: "Roles associated with the user on the endpoint.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
@@ -54,7 +54,7 @@ func dataSourceIamEndPointUserRole() *schema.Resource {
 				Computed: true,
 			},
 			"end_point_user": {
-				Description: "User",
+				Description: "The of set End Point Users which are mapped to this role.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,

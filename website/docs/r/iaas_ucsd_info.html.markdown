@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_ucsd_info"
 sidebar_current: "docs-intersight-resource-iaasUcsdInfo"
 description: |-
   UCS Director accounts managed by Intersight.
-
 ---
 
 # Resource: intersight_iaas_ucsd_info
 UCS Director accounts managed by Intersight.
-
 ## Argument Reference
 The following arguments are supported:
 * `connector_pack`:(Array)(Computed)Relationship to a collection of connector packs installed on the UCSD.

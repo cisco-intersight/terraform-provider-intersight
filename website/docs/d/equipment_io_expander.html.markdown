@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_io_expander"
 sidebar_current: "docs-intersight-data-source-equipmentIoExpander"
 description: |-
 I/O expander card which is used as an extension for servers in a Colusa Chassis.
-
 ---
 
 # Data Source: intersight_equipment_io_expander
 I/O expander card which is used as an extension for servers in a Colusa Chassis.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

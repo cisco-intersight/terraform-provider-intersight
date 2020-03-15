@@ -227,13 +227,13 @@ func resourceOsConfigurationFile() *schema.Resource {
 										ForceNew:    true,
 									},
 									"label": {
-										Description: "Descriptive name for the data type.",
+										Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
 									},
 									"name": {
-										Description: "Pick a descriptive name for the data type.",
+										Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
@@ -339,6 +339,50 @@ func resourceOsConfigurationFile() *schema.Resource {
 													Computed:   true,
 													ForceNew:   true,
 												},
+												"inventory_selector": {
+													Description: "List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.",
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"additional_properties": {
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: SuppressDiffAdditionProps,
+																ForceNew:         true,
+															},
+															"display_attributes": {
+																Description: "List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.",
+																Type:        schema.TypeList,
+																Optional:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString}, ForceNew: true,
+															},
+															"object_type": {
+																Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+																ForceNew:    true,
+															},
+															"selector": {
+																Description: "Field to hold an Intersight API along with an optional filter to narrow down the search options.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																ForceNew:    true,
+															},
+															"value_attribute": {
+																Description: "A property from the Intersight object, value of which can be used as value for referenced input definition.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																ForceNew:    true,
+															},
+														},
+													},
+													ConfigMode: schema.SchemaConfigModeAttr,
+													Computed:   true,
+													ForceNew:   true,
+												},
 												"object_type": {
 													Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
@@ -347,7 +391,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 													ForceNew:    true,
 												},
 												"secure": {
-													Description: "Intersight allows the secure properties to be used as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.",
+													Description: "Intersight supports secure properties as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.",
 													Type:        schema.TypeBool,
 													Optional:    true,
 													ForceNew:    true,
@@ -778,6 +822,59 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 												}
 												x := p
 												o.Constraints = &x
+											}
+										}
+										if v, ok := l["inventory_selector"]; ok {
+											{
+												x := make([]*models.WorkflowMoReferenceProperty, 0)
+												switch reflect.TypeOf(v).Kind() {
+												case reflect.Slice:
+													s := reflect.ValueOf(v)
+													for i := 0; i < s.Len(); i++ {
+														o := models.WorkflowMoReferenceProperty{}
+														l := s.Index(i).Interface().(map[string]interface{})
+														if v, ok := l["additional_properties"]; ok {
+															{
+																x := []byte(v.(string))
+																var x1 interface{}
+																err := json.Unmarshal(x, &x1)
+																if err == nil && x1 != nil {
+																	o.WorkflowMoReferencePropertyAO1P1.WorkflowMoReferencePropertyAO1P1 = x1.(map[string]interface{})
+																}
+															}
+														}
+														if v, ok := l["display_attributes"]; ok {
+															{
+																x := make([]string, 0)
+																y := reflect.ValueOf(v)
+																for i := 0; i < y.Len(); i++ {
+																	x = append(x, y.Index(i).Interface().(string))
+																}
+																o.DisplayAttributes = x
+															}
+														}
+														if v, ok := l["object_type"]; ok {
+															{
+																x := (v.(string))
+																o.ObjectType = x
+															}
+														}
+														if v, ok := l["selector"]; ok {
+															{
+																x := (v.(string))
+																o.Selector = x
+															}
+														}
+														if v, ok := l["value_attribute"]; ok {
+															{
+																x := (v.(string))
+																o.ValueAttribute = x
+															}
+														}
+														x = append(x, &o)
+													}
+												}
+												o.InventorySelector = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {

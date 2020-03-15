@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_privilege"
 sidebar_current: "docs-intersight-data-source-iamPrivilege"
 description: |-
 Privilege represents an action which can be performed in Intersight such as creating server profile, deleting a user etc.
-
 ---
 
 # Data Source: intersight_iam_privilege
 Privilege represents an action which can be performed in Intersight such as creating server profile, deleting a user etc.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `hostname_prefix`:(string)The hostname prefix of the resource corresponding to this privilege. For example 'sentry' in https://sentry.intersight.com .

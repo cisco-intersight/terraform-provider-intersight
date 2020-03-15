@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m PkixDistinguishedName) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,36 +99,31 @@ func (m *PkixDistinguishedName) UnmarshalBinary(b []byte) error {
 }
 
 // PkixDistinguishedNameAO1P1 pkix distinguished name a o1 p1
+//
 // swagger:model PkixDistinguishedNameAO1P1
 type PkixDistinguishedNameAO1P1 struct {
 
 	// A required component that identifies a person or an object.
-	//
 	// Read Only: true
 	CommonName string `json:"CommonName,omitempty"`
 
 	// Identifier for the country in which the entity resides.
-	//
 	// Read Only: true
 	Country []string `json:"Country"`
 
 	// Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.
-	//
 	// Read Only: true
 	Locality []string `json:"Locality"`
 
 	// Identifier for the organization in which the entity resides.
-	//
 	// Read Only: true
 	Organization []string `json:"Organization"`
 
 	// Identifier for a unit within the organization.
-	//
 	// Read Only: true
 	OrganizationalUnit []string `json:"OrganizationalUnit"`
 
 	// Identifier for the state or province of the entity.
-	//
 	// Read Only: true
 	State []string `json:"State"`
 
@@ -144,32 +137,26 @@ func (m *PkixDistinguishedNameAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// A required component that identifies a person or an object.
-		//
 		// Read Only: true
 		CommonName string `json:"CommonName,omitempty"`
 
 		// Identifier for the country in which the entity resides.
-		//
 		// Read Only: true
 		Country []string `json:"Country"`
 
 		// Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.
-		//
 		// Read Only: true
 		Locality []string `json:"Locality"`
 
 		// Identifier for the organization in which the entity resides.
-		//
 		// Read Only: true
 		Organization []string `json:"Organization"`
 
 		// Identifier for a unit within the organization.
-		//
 		// Read Only: true
 		OrganizationalUnit []string `json:"OrganizationalUnit"`
 
 		// Identifier for the state or province of the entity.
-		//
 		// Read Only: true
 		State []string `json:"State"`
 	}
@@ -179,17 +166,11 @@ func (m *PkixDistinguishedNameAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PkixDistinguishedNameAO1P1
 
 	rcv.CommonName = stage1.CommonName
-
 	rcv.Country = stage1.Country
-
 	rcv.Locality = stage1.Locality
-
 	rcv.Organization = stage1.Organization
-
 	rcv.OrganizationalUnit = stage1.OrganizationalUnit
-
 	rcv.State = stage1.State
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -199,17 +180,11 @@ func (m *PkixDistinguishedNameAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "CommonName")
-
 	delete(stage2, "Country")
-
 	delete(stage2, "Locality")
-
 	delete(stage2, "Organization")
-
 	delete(stage2, "OrganizationalUnit")
-
 	delete(stage2, "State")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -231,46 +206,35 @@ func (m PkixDistinguishedNameAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// A required component that identifies a person or an object.
-		//
 		// Read Only: true
 		CommonName string `json:"CommonName,omitempty"`
 
 		// Identifier for the country in which the entity resides.
-		//
 		// Read Only: true
 		Country []string `json:"Country"`
 
 		// Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.
-		//
 		// Read Only: true
 		Locality []string `json:"Locality"`
 
 		// Identifier for the organization in which the entity resides.
-		//
 		// Read Only: true
 		Organization []string `json:"Organization"`
 
 		// Identifier for a unit within the organization.
-		//
 		// Read Only: true
 		OrganizationalUnit []string `json:"OrganizationalUnit"`
 
 		// Identifier for the state or province of the entity.
-		//
 		// Read Only: true
 		State []string `json:"State"`
 	}
 
 	stage1.CommonName = m.CommonName
-
 	stage1.Country = m.Country
-
 	stage1.Locality = m.Locality
-
 	stage1.Organization = m.Organization
-
 	stage1.OrganizationalUnit = m.OrganizationalUnit
-
 	stage1.State = m.State
 
 	// make JSON object for known properties

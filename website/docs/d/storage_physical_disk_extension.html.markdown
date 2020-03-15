@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_physical_disk_extension"
 sidebar_current: "docs-intersight-data-source-storagePhysicalDiskExtension"
 description: |-
 Information of disks as reported by controller. In certain cases like S-series servers, disk information will be reported by controller separately and this represents such information.
-
 ---
 
 # Data Source: intersight_storage_physical_disk_extension
 Information of disks as reported by controller. In certain cases like S-series servers, disk information will be reported by controller separately and this represents such information.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bootable`:(string)It shows whether disk is bootable or not.

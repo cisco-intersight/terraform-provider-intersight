@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_management_entity"
 sidebar_current: "docs-intersight-data-source-managementEntity"
 description: |-
 Logical representation that captures the role of each Fabric Interconnect in UCS Manager.
-
 ---
 
 # Data Source: intersight_management_entity
 Logical representation that captures the role of each Fabric Interconnect in UCS Manager.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

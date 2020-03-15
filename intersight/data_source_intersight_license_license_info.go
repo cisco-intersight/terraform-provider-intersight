@@ -48,6 +48,7 @@ func dataSourceLicenseLicenseInfo() *schema.Resource {
 				Description: "The license administrative state.Set this property to 'true' to activate the license entitlements.",
 				Type:        schema.TypeBool,
 				Optional:    true,
+				Computed:    true,
 			},
 			"days_left": {
 				Description: "The number of days left for licenseState to stay in TrialPeriod or OutOfCompliance state.",
@@ -182,6 +183,7 @@ func dataSourceLicenseLicenseInfo() *schema.Resource {
 				Description: "The administrative state of the trial license.When the LicenseState is set to 'NotLicensed', 'trialAdmin' can be set to true to start the trial period,i.e. licenseState is set to be TrialPeriod.",
 				Type:        schema.TypeBool,
 				Optional:    true,
+				Computed:    true,
 			},
 		},
 	}

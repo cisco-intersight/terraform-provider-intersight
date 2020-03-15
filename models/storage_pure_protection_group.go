@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,36 +22,29 @@ type StoragePureProtectionGroup struct {
 	StorageProtectionGroup
 
 	// List of host group object associated to the protection group.
-	//
 	// Read Only: true
-	HostGroups []*StoragePureHostRef `json:"HostGroups"`
+	HostGroups []*StoragePureHostGroupRef `json:"HostGroups"`
 
 	// List of host object associated to the protection group.
-	//
 	// Read Only: true
 	Hosts []*StoragePureHostRef `json:"Hosts"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Overall size of all snapshots in the protection group, represented in bytes.
-	//
 	Size int64 `json:"Size,omitempty"`
 
 	// Name of PureStorage array name on which the protection group is created.
-	//
 	// Read Only: true
 	Source string `json:"Source,omitempty"`
 
 	// Target PureStorage array names where the replication snapshots are created.
-	//
 	// Read Only: true
 	Targets []string `json:"Targets"`
 
 	// List of volume object associated to the protection group.
-	//
 	// Read Only: true
 	Volumes []*StoragePureVolumeRef `json:"Volumes"`
 }
@@ -68,7 +60,7 @@ func (m *StoragePureProtectionGroup) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		HostGroups []*StoragePureHostRef `json:"HostGroups"`
+		HostGroups []*StoragePureHostGroupRef `json:"HostGroups"`
 
 		Hosts []*StoragePureHostRef `json:"Hosts"`
 
@@ -112,9 +104,8 @@ func (m StoragePureProtectionGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
-		HostGroups []*StoragePureHostRef `json:"HostGroups"`
+		HostGroups []*StoragePureHostGroupRef `json:"HostGroups"`
 
 		Hosts []*StoragePureHostRef `json:"Hosts"`
 
@@ -148,7 +139,6 @@ func (m StoragePureProtectionGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

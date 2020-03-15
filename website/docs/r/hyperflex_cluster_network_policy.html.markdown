@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_cluster_network_policy"
 sidebar_current: "docs-intersight-resource-hyperflexClusterNetworkPolicy"
 description: |-
   A policy specifying VLANs for management, VM migration, and VM traffic.
-
 ---
 
 # Resource: intersight_hyperflex_cluster_network_policy
 A policy specifying VLANs for management, VM migration, and VM traffic.
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.
@@ -62,7 +60,7 @@ This complex property has following sub-properties:
   + `key`:(string)The string representation of a tag key.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `value`:(string)The string representation of a tag value.
-* `uplink_speed`:(string)Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G'. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.
+* `uplink_speed`:(string)Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G+'. Use '10G+' for link speeds of 10G or above. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.
 * `vm_migration_vlan`:(Array with Maximum of one item) -The VM migration VLAN.This VLAN is used for transfering VMs from one host to another during operations such a cluster upgrade.
 This complex property has following sub-properties:
   + `additional_properties`:

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_nia_metadata"
 sidebar_current: "docs-intersight-data-source-niaapiNiaMetadata"
 description: |-
 Contains the latest Metadata available for download from server.
-
 ---
 
 # Data Source: intersight_niaapi_nia_metadata
 Contains the latest Metadata available for download from server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `date`:(string)The date when this package is generated.

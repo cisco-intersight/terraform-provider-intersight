@@ -16,7 +16,7 @@ func dataSourceStoragePureVolumeSnapshot() *schema.Resource {
 		Read: dataSourceStoragePureVolumeSnapshotRead,
 		Schema: map[string]*schema.Schema{
 			"created_time": {
-				Description: "Exact date and time on which snapshot is created.",
+				Description: "Exact date and time at which snapshot was created.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -28,7 +28,7 @@ func dataSourceStoragePureVolumeSnapshot() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "Name of the snapshot which represents point in time copy of volume.",
+				Description: "Name of the snapshot which represents point-in-time copy of volume.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -68,7 +68,7 @@ func dataSourceStoragePureVolumeSnapshot() *schema.Resource {
 				},
 			},
 			"protection_group_name": {
-				Description: "Name of the protection group to which the snapshot belongs. Value is emptry, if the snapshot is created directly on volume.",
+				Description: "Name of the protection group to which the snapshot belongs. Value is empty, if the snapshot is created directly on volume.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -144,7 +144,7 @@ func dataSourceStoragePureVolumeSnapshot() *schema.Resource {
 				Computed:    true,
 			},
 			"source": {
-				Description: "Source object on which the snapshot is created. It is a name of the originating volume.",
+				Description: "Source object on which the snapshot is created. It is the name of the originating volume.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

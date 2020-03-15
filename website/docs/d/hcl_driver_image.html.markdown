@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hcl_driver_image"
 sidebar_current: "docs-intersight-data-source-hclDriverImage"
 description: |-
 Collection used to store the driver ISO urls for each server based on how it is managed.
-
 ---
 
 # Data Source: intersight_hcl_driver_image
 Collection used to store the driver ISO urls for each server based on how it is managed.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `driver_iso_url`:(string)URL of the driver ISO images.

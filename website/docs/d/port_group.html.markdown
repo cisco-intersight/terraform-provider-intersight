@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_port_group"
 sidebar_current: "docs-intersight-data-source-portGroup"
 description: |-
 Holder for multiple ports. A switch card will have one or more port groups.
-
 ---
 
 # Data Source: intersight_port_group
 Holder for multiple ports. A switch card will have one or more port groups.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

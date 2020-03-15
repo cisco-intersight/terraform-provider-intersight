@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_user"
 sidebar_current: "docs-intersight-resource-iamUser"
 description: |-
   The Intersight account user.
-
 ---
 
 # Resource: intersight_iam_user
 The Intersight account user.
-
 ## Argument Reference
 The following arguments are supported:
 * `api_keys`:(Array)(Computed)Current user's API keys. API keys are used to programatically perform API calls.
@@ -43,7 +41,7 @@ This complex property has following sub-properties:
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `moid`:(string)The unique identifier of this Managed Object instance.
-* `name`:(string)(Computed)UserID as configured in the IdP.
+* `name`:(string)(Computed)Name as configured in the IdP.
 * `oauth_tokens`:(Array)(Computed)Collection of the available OAuthTokens.Each OAuthToken lives 30 days unless it is deleted manually by User.OAuthToken is created when Login performed via OAuth Client (AppRegistration).OAuthToken itself is not sensitive data since it doesn't contain salt, salt is stored in Vault.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
@@ -72,4 +70,5 @@ This complex property has following sub-properties:
   + `key`:(string)The string representation of a tag key.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `value`:(string)The string representation of a tag value.
+* `user_id_or_email`:(string)UserID or email as configured in the IdP.
 * `user_type`:(string)(Computed)Type of the User. If a user is added manually by specifying the email address, or has logged in using groups, based on the IdP attributes received during authentication. If added manually, the user type will be static, otherwise dynamic.

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowBaseDataType) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,28 +99,23 @@ func (m *WorkflowBaseDataType) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowBaseDataTypeAO1P1 workflow base data type a o1 p1
+//
 // swagger:model WorkflowBaseDataTypeAO1P1
 type WorkflowBaseDataTypeAO1P1 struct {
 
 	// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-	//
 	Default *WorkflowDefaultValue `json:"Default,omitempty"`
 
 	// Provide a detailed description of the data type.
-	//
 	Description string `json:"Description,omitempty"`
 
-	// Descriptive name for the data type.
-	//
+	// Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
 	Label string `json:"Label,omitempty"`
 
-	// Pick a descriptive name for the data type.
-	//
+	// Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
 	Name string `json:"Name,omitempty"`
 
 	// Specifies whether this parameter is required. The field is applicable for task and workflow.
-	//
-	//
 	Required *bool `json:"Required,omitempty"`
 
 	// workflow base data type a o1 p1
@@ -135,24 +128,18 @@ func (m *WorkflowBaseDataTypeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-		//
 		Default *WorkflowDefaultValue `json:"Default,omitempty"`
 
 		// Provide a detailed description of the data type.
-		//
 		Description string `json:"Description,omitempty"`
 
-		// Descriptive name for the data type.
-		//
+		// Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
 		Label string `json:"Label,omitempty"`
 
-		// Pick a descriptive name for the data type.
-		//
+		// Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
 		Name string `json:"Name,omitempty"`
 
 		// Specifies whether this parameter is required. The field is applicable for task and workflow.
-		//
-		//
 		Required *bool `json:"Required,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -161,15 +148,10 @@ func (m *WorkflowBaseDataTypeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowBaseDataTypeAO1P1
 
 	rcv.Default = stage1.Default
-
 	rcv.Description = stage1.Description
-
 	rcv.Label = stage1.Label
-
 	rcv.Name = stage1.Name
-
 	rcv.Required = stage1.Required
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -179,15 +161,10 @@ func (m *WorkflowBaseDataTypeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Default")
-
 	delete(stage2, "Description")
-
 	delete(stage2, "Label")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Required")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -209,35 +186,25 @@ func (m WorkflowBaseDataTypeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-		//
 		Default *WorkflowDefaultValue `json:"Default,omitempty"`
 
 		// Provide a detailed description of the data type.
-		//
 		Description string `json:"Description,omitempty"`
 
-		// Descriptive name for the data type.
-		//
+		// Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
 		Label string `json:"Label,omitempty"`
 
-		// Pick a descriptive name for the data type.
-		//
+		// Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
 		Name string `json:"Name,omitempty"`
 
 		// Specifies whether this parameter is required. The field is applicable for task and workflow.
-		//
-		//
 		Required *bool `json:"Required,omitempty"`
 	}
 
 	stage1.Default = m.Default
-
 	stage1.Description = m.Description
-
 	stage1.Label = m.Label
-
 	stage1.Name = m.Name
-
 	stage1.Required = m.Required
 
 	// make JSON object for known properties

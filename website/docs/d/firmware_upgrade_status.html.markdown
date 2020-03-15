@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_upgrade_status"
 sidebar_current: "docs-intersight-data-source-firmwareUpgradeStatus"
 description: |-
 Status of the upgrade operation includes the status of download and upgrade stages.
-
 ---
 
 # Data Source: intersight_firmware_upgrade_status
 Status of the upgrade operation includes the status of download and upgrade stages.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `download_error`:(string)The error message from the endpoint during the download.

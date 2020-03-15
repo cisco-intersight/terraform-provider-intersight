@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_compute_physical_summary"
 sidebar_current: "docs-intersight-data-source-computePhysicalSummary"
 description: |-
 Consolidated view of Blades and RackUnits.
-
 ---
 
 # Data Source: intersight_compute_physical_summary
 Consolidated view of Blades and RackUnits.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_power_state`:(string)
@@ -23,16 +21,16 @@ The following arguments can be used to get data of already created objects in In
 * `firmware`:(string)The firmware version of the Cisco Integrated Management Controller (CIMC) for this server.
 * `ipv4_address`:(string)The IPv4 address configured on the management interface of the Integrated Management Controller.
 * `memory_speed`:(string)
-* `mgmt_ip_address`:(string)The IP address of the management interface on the UCS Fabric Interconnect or Cisco Integrated Management Controller.
+* `mgmt_ip_address`:(string)Management address of the server.
 * `model`:(string)This field identifies the model of the given component.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)The name of the UCS Fabric Interconnect cluster or Cisco Integrated Management Controller (CIMC).When this server is attached to a UCS Fabric Interconnect, the value of this property is the name of the UCS Fabric Interconnect.When this server configured in standalone mode, the value of this property is the name of the Cisco Integrated Management Controller.
 * `num_adaptors`:(int)Total number of Adaptors available.
-* `num_cpu_cores`:(int)
+* `num_cpu_cores`:(int)Total number of CPU cores available.
 * `num_cpu_cores_enabled`:(int)Number of CPU cores enabled.
 * `num_cpus`:(int)Total number of CPU's available.
 * `num_eth_host_interfaces`:(int)Number of Ethernet Host Interfaces.
-* `num_fc_host_interfaces`:(int)
+* `num_fc_host_interfaces`:(int)Number of Fibre channel Host Interfaces.
 * `num_threads`:(int)Number of threads enabled.
 * `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `oper_power_state`:(string)
@@ -44,8 +42,8 @@ The following arguments can be used to get data of already created objects in In
 * `rn`:(string)The Relative Name uniquely identifies an object within a given context.
 * `scaled_mode`:(string)
 * `serial`:(string)This field identifies the serial of the given component.
-* `server_id`:(int)
-* `service_profile`:(string)
+* `server_id`:(int)The server id of the Rack server.
+* `service_profile`:(string)The service profile assigned.
 * `slot_id`:(int)
 * `source_object_type`:(string)The source object type of this view MO.
 * `total_memory`:(int)

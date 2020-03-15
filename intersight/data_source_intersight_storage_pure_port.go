@@ -50,7 +50,7 @@ func dataSourceStoragePurePort() *schema.Resource {
 				Computed:    true,
 			},
 			"iqn": {
-				Description: "ISCSI qualified name applicable for ethernet port. eg 'iqn.2008-05.com.storage:fnm00151300643-514f0c50141faf05'.",
+				Description: "ISCSI qualified name applicable for ethernet port. Example - 'iqn.2008-05.com.storage:fnm00151300643-514f0c50141faf05'.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -209,25 +209,25 @@ func dataSourceStoragePurePort() *schema.Resource {
 				Computed: true,
 			},
 			"type": {
-				Description: "Port type, it can be a any of the following category FC, FCoE and iSCSI.",
+				Description: "Port type - possible values are FC, FCoE and iSCSI.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"wwn": {
-				Description: "World wide name of FC port. It is a combination of WWNN and WWPN represented in 128 bit hexa decimal formatted with colon. e.g '51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01'.",
+				Description: "World wide name of FC port. It is a combination of WWNN and WWPN represented in 128 bit hexadecimal formatted with colon.Example: '51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01'.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"wwnn": {
-				Description: "World wide node name of FC port. Represented in 64 bit digit hexa formatted with colon eg '51:4f:0c:50:14:1f:af:01'.",
+				Description: "World wide node name of FC port. Represented in 64 bit hex digits, formatted with colon. Example - '51:4f:0c:50:14:1f:af:01'.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"wwpn": {
-				Description: "World wide port name of FC port. Represented in 64 bit digit hexa formatted with colon eg '51:4f:0c:51:14:1f:af:01'.",
+				Description: "World wide port name of FC port. Represented in 64 bit hex digits, formatted with colon. Example - '51:4f:0c:51:14:1f:af:01'.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

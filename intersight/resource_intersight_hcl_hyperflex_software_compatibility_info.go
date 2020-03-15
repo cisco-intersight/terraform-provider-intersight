@@ -87,7 +87,7 @@ func resourceHclHyperflexSoftwareCompatibilityInfo() *schema.Resource {
 				Description: "Type fo Hypervisor the HyperFlex components versions are compatible with. For example ESX, Hyperv or KVM.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Default:     "Unknown",
+				Default:     "ESXi",
 			},
 			"hypervisor_version": {
 				Description: "Hypervisor component software version.",

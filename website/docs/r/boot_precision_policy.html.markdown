@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_boot_precision_policy"
 sidebar_current: "docs-intersight-resource-bootPrecisionPolicy"
 description: |-
   Boot order policy models a reusable boot order configuration that can be applied to multiple servers via profile association. It supports advanced boot order configuration on Cisco CIMC servers.
-
 ---
 
 # Resource: intersight_boot_precision_policy
 Boot order policy models a reusable boot order configuration that can be applied to multiple servers via profile association. It supports advanced boot order configuration on Cisco CIMC servers.
-
 ## Argument Reference
 The following arguments are supported:
 * `boot_devices`:(Array)Set of boot devices to be configured.

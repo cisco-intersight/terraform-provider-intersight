@@ -15,8 +15,8 @@ func dataSourceStoragePureHostLun() *schema.Resource {
 		Read: dataSourceStoragePureHostLunRead,
 		Schema: map[string]*schema.Schema{
 			"hlu": {
-				Description: "Logical unit number (LUN) by which hosts address specified volume.",
-				Type:        schema.TypeString,
+				Description: "Logical unit number (LUN) by which hosts address specified volume. Hlu is a decimal representation of the LUN from the endpoint.",
+				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -271,7 +271,7 @@ func dataSourceStoragePureHostLunRead(d *schema.ResourceData, meta interface{}) 
 	url := "storage/PureHostLuns"
 	var o models.StoragePureHostLun
 	if v, ok := d.GetOk("hlu"); ok {
-		x := (v.(string))
+		x := int64(v.(int))
 		o.Hlu = x
 	}
 	if v, ok := d.GetOk("host_group_name"); ok {
@@ -329,7 +329,7 @@ func dataSourceStoragePureHostLunRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("host_group", flattenMapStorageHostRef(s.HostGroup, d)); err != nil {
+			if err := d.Set("host_group", flattenMapStoragePureHostGroupRef(s.HostGroup, d)); err != nil {
 				return err
 			}
 			if err := d.Set("host_group_name", (s.HostGroupName)); err != nil {

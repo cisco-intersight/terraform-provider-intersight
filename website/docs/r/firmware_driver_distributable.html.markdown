@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_driver_distributable"
 sidebar_current: "docs-intersight-resource-firmwareDriverDistributable"
 description: |-
   A device driver image distributed by Cisco.
-
 ---
 
 # Resource: intersight_firmware_driver_distributable
 A device driver image distributed by Cisco.
-
 ## Argument Reference
 The following arguments are supported:
 * `bundle_type`:(string)(Computed)The bundle type of the image, as published on cisco.com.

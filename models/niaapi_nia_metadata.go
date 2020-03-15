@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,24 +23,19 @@ type NiaapiNiaMetadata struct {
 	MoBaseMo
 
 	// The detail of child file in this package.
-	//
 	Content []*NiaapiDetail `json:"Content"`
 
 	// The date when this package is generated.
-	//
 	// Format: date-time
 	Date strfmt.DateTime `json:"Date,omitempty"`
 
 	// Chksum used to check the integrity of the Metadata file downloaded.
-	//
 	MetadataChksum string `json:"MetadataChksum,omitempty"`
 
 	// The Filename of this Metadata package.
-	//
 	MetadataFilename string `json:"MetadataFilename,omitempty"`
 
 	// The version number of the Metadata package.
-	//
 	Version int64 `json:"Version,omitempty"`
 }
 
@@ -92,7 +86,6 @@ func (m NiaapiNiaMetadata) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Content []*NiaapiDetail `json:"Content"`
 
@@ -120,7 +113,6 @@ func (m NiaapiNiaMetadata) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

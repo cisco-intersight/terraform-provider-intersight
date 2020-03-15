@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_qualifier"
 sidebar_current: "docs-intersight-resource-iamQualifier"
 description: |-
   The qualifier defines how a user qualifies to be part of a user group.
-
 ---
 
 # Resource: intersight_iam_qualifier
 The qualifier defines how a user qualifies to be part of a user group.
-
 ## Argument Reference
 The following arguments are supported:
 * `moid`:(string)The unique identifier of this Managed Object instance.

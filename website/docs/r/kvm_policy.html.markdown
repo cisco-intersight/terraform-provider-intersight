@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_kvm_policy"
 sidebar_current: "docs-intersight-resource-kvmPolicy"
 description: |-
   Policy to configure KVM Launch settings.
-
 ---
 
 # Resource: intersight_kvm_policy
 Policy to configure KVM Launch settings.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

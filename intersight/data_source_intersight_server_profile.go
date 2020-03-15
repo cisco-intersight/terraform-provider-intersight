@@ -217,6 +217,11 @@ func dataSourceServerProfile() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"is_pmc_deployed_secure_passphrase_set": {
+				Description: "",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
 				Type:        schema.TypeString,
@@ -290,6 +295,11 @@ func dataSourceServerProfile() *schema.Resource {
 						},
 					},
 				},
+			},
+			"pmc_deployed_secure_passphrase": {
+				Description: "Secure passphrase that is already deployed on all the Persistent Memory Modules on the server. This deployed passphrase is required during deploy of server profile if secure passphrase is changed or security is disabled in the attached persistent memory policy.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"running_workflows": {
 				Description: "The WorkflowInfos in the workflow engine that are running for this server Profile.",
@@ -402,6 +412,10 @@ func dataSourceServerProfileRead(d *schema.ResourceData, meta interface{}) error
 		x := (v.(string))
 		o.Description = x
 	}
+	if v, ok := d.GetOk("is_pmc_deployed_secure_passphrase_set"); ok {
+		x := (v.(bool))
+		o.IsPmcDeployedSecurePassphraseSet = &x
+	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
 		o.Moid = x
@@ -413,6 +427,10 @@ func dataSourceServerProfileRead(d *schema.ResourceData, meta interface{}) error
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.ObjectType = x
+	}
+	if v, ok := d.GetOk("pmc_deployed_secure_passphrase"); ok {
+		x := (v.(string))
+		o.PmcDeployedSecurePassphrase = x
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
@@ -471,6 +489,9 @@ func dataSourceServerProfileRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("description", (s.Description)); err != nil {
 				return err
 			}
+			if err := d.Set("is_pmc_deployed_secure_passphrase_set", (s.IsPmcDeployedSecurePassphraseSet)); err != nil {
+				return err
+			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
 				return err
 			}
@@ -486,6 +507,9 @@ func dataSourceServerProfileRead(d *schema.ResourceData, meta interface{}) error
 			}
 
 			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+				return err
+			}
+			if err := d.Set("pmc_deployed_secure_passphrase", (s.PmcDeployedSecurePassphrase)); err != nil {
 				return err
 			}
 

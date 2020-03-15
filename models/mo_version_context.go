@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m MoVersionContext) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,38 +101,32 @@ func (m *MoVersionContext) UnmarshalBinary(b []byte) error {
 }
 
 // MoVersionContextAO1P1 mo version context a o1 p1
+//
 // swagger:model MoVersionContextAO1P1
 type MoVersionContextAO1P1 struct {
 
 	// A collection of objects that have reference to this versioned object.
 	// The lifecycle of the versioned object is based on the interestedMos list;
 	// the versioned object will be purged when interestedMos is empty.
-	//
-	//
 	// Read Only: true
 	InterestedMos []*MoMoRef `json:"InterestedMos"`
 
 	// A reference to the original Managed Object.
-	//
 	// Read Only: true
 	RefMo *MoMoRef `json:"RefMo,omitempty"`
 
 	// The time this versioned Managed Object was created.
-	//
 	// Read Only: true
 	// Format: date-time
 	Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 	// The version of the Managed Object, e.g. an incrementing number or a hash id.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 
 	// Specifies type of version. Currently the only supported value is "Configured"
 	// that is used to keep track of snapshots of policies and profiles that are intended
 	// to be configured to target endpoints.
-	//
-	//
 	// Read Only: true
 	// Enum: [Modified Configured Deployed]
 	VersionType string `json:"VersionType,omitempty"`
@@ -151,32 +143,25 @@ func (m *MoVersionContextAO1P1) UnmarshalJSON(data []byte) error {
 		// A collection of objects that have reference to this versioned object.
 		// The lifecycle of the versioned object is based on the interestedMos list;
 		// the versioned object will be purged when interestedMos is empty.
-		//
-		//
 		// Read Only: true
 		InterestedMos []*MoMoRef `json:"InterestedMos"`
 
 		// A reference to the original Managed Object.
-		//
 		// Read Only: true
 		RefMo *MoMoRef `json:"RefMo,omitempty"`
 
 		// The time this versioned Managed Object was created.
-		//
 		// Read Only: true
 		// Format: date-time
 		Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 		// The version of the Managed Object, e.g. an incrementing number or a hash id.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 
 		// Specifies type of version. Currently the only supported value is "Configured"
 		// that is used to keep track of snapshots of policies and profiles that are intended
 		// to be configured to target endpoints.
-		//
-		//
 		// Read Only: true
 		// Enum: [Modified Configured Deployed]
 		VersionType string `json:"VersionType,omitempty"`
@@ -187,15 +172,10 @@ func (m *MoVersionContextAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv MoVersionContextAO1P1
 
 	rcv.InterestedMos = stage1.InterestedMos
-
 	rcv.RefMo = stage1.RefMo
-
 	rcv.Timestamp = stage1.Timestamp
-
 	rcv.Version = stage1.Version
-
 	rcv.VersionType = stage1.VersionType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -205,15 +185,10 @@ func (m *MoVersionContextAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "InterestedMos")
-
 	delete(stage2, "RefMo")
-
 	delete(stage2, "Timestamp")
-
 	delete(stage2, "Version")
-
 	delete(stage2, "VersionType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -237,45 +212,34 @@ func (m MoVersionContextAO1P1) MarshalJSON() ([]byte, error) {
 		// A collection of objects that have reference to this versioned object.
 		// The lifecycle of the versioned object is based on the interestedMos list;
 		// the versioned object will be purged when interestedMos is empty.
-		//
-		//
 		// Read Only: true
 		InterestedMos []*MoMoRef `json:"InterestedMos"`
 
 		// A reference to the original Managed Object.
-		//
 		// Read Only: true
 		RefMo *MoMoRef `json:"RefMo,omitempty"`
 
 		// The time this versioned Managed Object was created.
-		//
 		// Read Only: true
 		// Format: date-time
 		Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 		// The version of the Managed Object, e.g. an incrementing number or a hash id.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 
 		// Specifies type of version. Currently the only supported value is "Configured"
 		// that is used to keep track of snapshots of policies and profiles that are intended
 		// to be configured to target endpoints.
-		//
-		//
 		// Read Only: true
 		// Enum: [Modified Configured Deployed]
 		VersionType string `json:"VersionType,omitempty"`
 	}
 
 	stage1.InterestedMos = m.InterestedMos
-
 	stage1.RefMo = m.RefMo
-
 	stage1.Timestamp = m.Timestamp
-
 	stage1.Version = m.Version
-
 	stage1.VersionType = m.VersionType
 
 	// make JSON object for known properties

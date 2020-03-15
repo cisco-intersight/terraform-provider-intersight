@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -25,12 +24,10 @@ type InventoryBase struct {
 	DeviceMoID string `json:"DeviceMoId,omitempty"`
 
 	// The Distinguished Name unambiguously identifies an object in the system.
-	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
 	// The Relative Name uniquely identifies an object within a given context.
-	//
 	// Read Only: true
 	Rn string `json:"Rn,omitempty"`
 }
@@ -74,7 +71,6 @@ func (m InventoryBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DeviceMoID string `json:"DeviceMoId,omitempty"`
 
@@ -94,7 +90,6 @@ func (m InventoryBase) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

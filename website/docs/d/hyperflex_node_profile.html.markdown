@@ -5,13 +5,11 @@ sidebar_current: "docs-intersight-data-source-hyperflexNodeProfile"
 description: |-
 A configuration profile per node in the HyperFlex cluster.
 It defines node settings such as IP address configuration for hypervisor management network, storage data network, HyperFlex management network, and the assigned physical server.
-
 ---
 
 # Data Source: intersight_hyperflex_node_profile
 A configuration profile per node in the HyperFlex cluster.
 It defines node settings such as IP address configuration for hypervisor management network, storage data network, HyperFlex management network, and the assigned physical server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the profile.

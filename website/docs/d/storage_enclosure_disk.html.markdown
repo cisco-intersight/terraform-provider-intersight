@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_enclosure_disk"
 sidebar_current: "docs-intersight-data-source-storageEnclosureDisk"
 description: |-
 Physical Disk on the enclosure.
-
 ---
 
 # Data Source: intersight_storage_enclosure_disk
 Physical Disk on the enclosure.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `block_size`:(string)The block size of the physical disk in bytes.

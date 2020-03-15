@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_softwarerepository_operating_system_file"
 sidebar_current: "docs-intersight-resource-softwarerepositoryOperatingSystemFile"
 description: |-
   An operating system image that resides either in an external repository or has been imported to the local repository. If the file is available in the local repository, it is marked as cached. If not, it represents a pointer to a file in an external repository.
-
 ---
 
 # Resource: intersight_softwarerepository_operating_system_file
 An operating system image that resides either in an external repository or has been imported to the local repository. If the file is available in the local repository, it is marked as cached. If not, it represents a pointer to a file in an external repository.
-
 ## Argument Reference
 The following arguments are supported:
 * `catalog`:(Array with Maximum of one item) -The catalog where this image is present.

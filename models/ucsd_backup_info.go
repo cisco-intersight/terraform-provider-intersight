@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,82 +23,66 @@ type UcsdBackupInfo struct {
 	RecoveryAbstractBackupInfo
 
 	// Auto generated backup File Name with combination of file prefix given an user input and the timestamp.
-	//
 	// Read Only: true
 	BackupFileName string `json:"BackupFileName,omitempty"`
 
 	// Backup location that contains the backup images for end device which can be used for restore operation.
-	//
 	// Read Only: true
 	BackupLocation string `json:"BackupLocation,omitempty"`
 
 	// Backup server where backup images are maintained.
-	//
 	// Read Only: true
 	BackupServerIP string `json:"BackupServerIp,omitempty"`
 
 	// Size of the backup image in bytes.
-	//
 	// Read Only: true
 	BackupSize int64 `json:"BackupSize,omitempty"`
 
 	// Connector pack versions that are active on the UCS Director when this backup image was taken.
-	//
 	// Read Only: true
 	Connectors []*UcsdConnectorPack `json:"Connectors"`
 
 	// Time taken for the backup to be completed.
-	//
 	// Read Only: true
 	Duration int64 `json:"Duration,omitempty"`
 
 	// The key used for encrypting the backup file.
-	//
 	EncryptionKey string `json:"EncryptionKey,omitempty"`
 
 	// Reason for backup failure.
-	//
 	// Read Only: true
 	FailureReason string `json:"FailureReason,omitempty"`
 
 	// Backup image got purged or not. The backup images get purged based on the retention count set by the user in the backup config policy.
-	//
 	// Read Only: true
 	IsPurged *bool `json:"IsPurged,omitempty"`
 
 	// Last modified time when this backup record got updated.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastModified strfmt.DateTime `json:"LastModified,omitempty"`
 
 	// Backup current precentage completion status information.
-	//
 	// Read Only: true
 	PercentageCompletion int64 `json:"PercentageCompletion,omitempty"`
 
 	// The end device product version when the backup image was taken.
-	//
 	ProductVersion string `json:"ProductVersion,omitempty"`
 
 	// Protocol used for the remote backup. possible values are FTP, SCP and SFTP. Not applicable for the localhost (127.0.0.1).
-	//
 	// Read Only: true
 	Protocol string `json:"Protocol,omitempty"`
 
 	// Backup current status stage information.
-	//
 	// Read Only: true
 	StageCompletion string `json:"StageCompletion,omitempty"`
 
 	// Start time of backup when it got initiated.
-	//
 	// Read Only: true
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// Current status of Backup current.
-	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 }
@@ -195,7 +178,6 @@ func (m UcsdBackupInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupFileName string `json:"BackupFileName,omitempty"`
 
@@ -267,7 +249,6 @@ func (m UcsdBackupInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

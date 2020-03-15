@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,24 +20,19 @@ type ManagementEntity struct {
 	InventoryBase
 
 	// Identity of the Fabric Interconnect - A/B.
-	//
 	// Read Only: true
 	EntityID string `json:"EntityId,omitempty"`
 
 	// Role (Primary / Subordinate) of the Fabric Interconnect.
-	//
 	// Read Only: true
 	Leadership string `json:"Leadership,omitempty"`
 
 	// A collection of references to the [network.Element](mo://network.Element) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [network.Element](mo://network.Element) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	NetworkElement *NetworkElementRef `json:"NetworkElement,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -86,7 +80,6 @@ func (m ManagementEntity) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EntityID string `json:"EntityId,omitempty"`
 
@@ -110,7 +103,6 @@ func (m ManagementEntity) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

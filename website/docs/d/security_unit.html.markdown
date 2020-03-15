@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_security_unit"
 sidebar_current: "docs-intersight-data-source-securityUnit"
 description: |-
 The crypto card present on a server.
-
 ---
 
 # Data Source: intersight_security_unit
 The crypto card present on a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

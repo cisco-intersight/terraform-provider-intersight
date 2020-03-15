@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_storage_policy"
 sidebar_current: "docs-intersight-resource-storageStoragePolicy"
 description: |-
   The storage policy models the reusable storage related configuration that can be applied on many servers. This policy allows creation of RAID groups using existing disk group policies and virtual drives on the drive groups. The user has options to move all unused disks to JBOD or Unconfigured good state. The encryption of drives can be enabled through this policy using remote keys from a KMIP server.
-
 ---
 
 # Resource: intersight_storage_storage_policy
 The storage policy models the reusable storage related configuration that can be applied on many servers. This policy allows creation of RAID groups using existing disk group policies and virtual drives on the drive groups. The user has options to move all unused disks to JBOD or Unconfigured good state. The encryption of drives can be enabled through this policy using remote keys from a KMIP server.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.
@@ -53,7 +51,7 @@ This complex property has following sub-properties:
 * `unused_disks_state`:(string)This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.
 * `virtual_drives`:(Array)The list of virtual drives and the disk groups that need to be created through this policy.
 This complex property has following sub-properties:
-  + `access_policy`:(string)This property holds the access policy that host has on this virtual drive.
+  + `access_policy`:(string)Access policy that host has on this virtual drive.
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `boot_drive`:(bool)This flag enables the use of this virtual drive as a boot drive.
@@ -64,6 +62,6 @@ This complex property has following sub-properties:
   + `io_policy`:(string)This property expects the desired IO mode - direct IO or cached IO.
   + `name`:(string)The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-  + `read_policy`:(string)This property holds the read ahead mode to be used.
+  + `read_policy`:(string)Read ahead mode to be used to read data from this virtual drive.
   + `size`:(int)Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.
-  + `write_policy`:(string)This property holds the write mode used to write the data in this virtual drive.
+  + `write_policy`:(string)Write mode to be used to write data to this virtual drive.

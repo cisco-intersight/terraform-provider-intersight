@@ -15,7 +15,7 @@ func dataSourceMemoryPersistentMemoryNamespace() *schema.Resource {
 		Read: dataSourceMemoryPersistentMemoryNamespaceRead,
 		Schema: map[string]*schema.Schema{
 			"capacity": {
-				Description: "This represents the capacity in GB of a Persistent Memory Namespace.",
+				Description: "Capacity in GB of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -33,13 +33,13 @@ func dataSourceMemoryPersistentMemoryNamespace() *schema.Resource {
 				Computed:    true,
 			},
 			"health_state": {
-				Description: "This represents the health state of a Persistent Memory Namespace.",
+				Description: "Health state of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"label_version": {
-				Description: "This represents the label version of a Persistent Memory Namespace.",
+				Description: "Label version of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -74,7 +74,7 @@ func dataSourceMemoryPersistentMemoryNamespace() *schema.Resource {
 				},
 			},
 			"mode": {
-				Description: "This represents the mode of a Persistent Memory Namespace.",
+				Description: "Mode of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -86,7 +86,7 @@ func dataSourceMemoryPersistentMemoryNamespace() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "This represents the name of a Persistent Memory Namespace.",
+				Description: "Name of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -192,7 +192,7 @@ func dataSourceMemoryPersistentMemoryNamespace() *schema.Resource {
 				Computed: true,
 			},
 			"uuid": {
-				Description: "This represents the uuid of a Persistent Memory Namespace.",
+				Description: "UUID of the Persistent Memory Namespace.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

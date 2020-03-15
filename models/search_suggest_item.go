@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -24,28 +23,21 @@ type SearchSuggestItem struct {
 	MoBaseMo
 
 	// Flag for returning complete objects that matched the global search criteria.
-	//
 	CompleteMo *bool `json:"CompleteMo,omitempty"`
 
 	// Additional filter parameters for global search. You can also specify OData select fields here. Maximum Query Length is limited to 10000.
-	//
 	Rawquery string `json:"Rawquery,omitempty"`
 
 	// Starting offset for the results to be returned from external search engine.
-	//
 	Skip int64 `json:"Skip,omitempty"`
 
 	// Main search term used for global search across all Managed Objects that has search enabled. Search Term can be up to 200 characters long.
-	//
 	SuggestTerm string `json:"SuggestTerm,omitempty"`
 
 	// Maximum number of results to be returned from external search engine.
-	//
 	Top int64 `json:"Top,omitempty"`
 
 	// Object type filter of a Managed Object. Search will be restricted only on the specified object types.  Do not provide IndexMoTypes filter in the rawquery, if you specify values in this field.
-	//
-	//
 	Type string `json:"Type,omitempty"`
 }
 
@@ -100,7 +92,6 @@ func (m SearchSuggestItem) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CompleteMo *bool `json:"CompleteMo,omitempty"`
 
@@ -132,7 +123,6 @@ func (m SearchSuggestItem) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_bios_policy"
 sidebar_current: "docs-intersight-resource-biosPolicy"
 description: |-
   Policy for setting BIOS tokens on the endpoint.
-
 ---
 
 # Resource: intersight_bios_policy
 Policy for setting BIOS tokens on the endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `acs_control_gpu1state`:(string)BIOS Token for setting ACS Control GPU-1 configuration.

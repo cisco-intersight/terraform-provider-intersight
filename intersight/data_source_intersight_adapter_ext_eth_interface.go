@@ -44,7 +44,7 @@ func dataSourceAdapterExtEthInterface() *schema.Resource {
 				},
 			},
 			"admin_state": {
-				Description: "",
+				Description: "The administrative state of the physical port.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -104,7 +104,7 @@ func dataSourceAdapterExtEthInterface() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_state": {
-				Description: "",
+				Description: "The operational state of the physical port.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

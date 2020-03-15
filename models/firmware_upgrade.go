@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,33 +23,26 @@ type FirmwareUpgrade struct {
 	MoBaseMo
 
 	// The device onto which the upgrade is peformed.
-	//
 	// Read Only: true
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// Direct download options in case the upgradeType is direct download based upgrade.
-	//
 	DirectDownload *FirmwareDirectDownload `json:"DirectDownload,omitempty"`
 
 	// The image that is used to upgrade the server for direct download upgrade type operation.
-	//
 	Distributable *FirmwareDistributableRef `json:"Distributable,omitempty"`
 
 	// Network share options in case of the upgradeType is network share based upgrade.
-	//
 	NetworkShare *FirmwareNetworkShare `json:"NetworkShare,omitempty"`
 
 	// The server on which this upgrade operation is performed.
-	//
 	Server *ComputeRackUnitRef `json:"Server,omitempty"`
 
 	// Captures status of this upgrade information.
-	//
 	// Read Only: true
 	UpgradeStatus *FirmwareUpgradeStatusRef `json:"UpgradeStatus,omitempty"`
 
 	// Desired upgrade mode to choose either direct download based upgrade or network share upgrade.
-	//
 	// Enum: [direct_upgrade network_upgrade]
 	UpgradeType *string `json:"UpgradeType,omitempty"`
 }
@@ -110,7 +102,6 @@ func (m FirmwareUpgrade) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
@@ -146,7 +137,6 @@ func (m FirmwareUpgrade) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

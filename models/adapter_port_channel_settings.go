@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AdapterPortChannelSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *AdapterPortChannelSettings) UnmarshalBinary(b []byte) error {
 }
 
 // AdapterPortChannelSettingsAO1P1 adapter port channel settings a o1 p1
+//
 // swagger:model AdapterPortChannelSettingsAO1P1
 type AdapterPortChannelSettingsAO1P1 struct {
 
-	// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.
-	//
+	// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// adapter port channel settings a o1 p1
@@ -117,8 +115,7 @@ func (m *AdapterPortChannelSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.
-		//
+		// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.
 		Enabled *bool `json:"Enabled,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *AdapterPortChannelSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AdapterPortChannelSettingsAO1P1
 
 	rcv.Enabled = stage1.Enabled
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *AdapterPortChannelSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enabled")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -158,8 +153,7 @@ func (m *AdapterPortChannelSettingsAO1P1) UnmarshalJSON(data []byte) error {
 func (m AdapterPortChannelSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.
-		//
+		// When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.
 		Enabled *bool `json:"Enabled,omitempty"`
 	}
 

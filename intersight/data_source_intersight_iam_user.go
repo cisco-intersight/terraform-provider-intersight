@@ -194,7 +194,7 @@ func dataSourceIamUser() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "UserID as configured in the IdP.",
+				Description: "Name as configured in the IdP.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -348,6 +348,11 @@ func dataSourceIamUser() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"user_id_or_email": {
+				Description: "UserID or email as configured in the IdP.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"user_type": {
 				Description: "Type of the User. If a user is added manually by specifying the email address, or has logged in using groups, based on the IdP attributes received during authentication. If added manually, the user type will be static, otherwise dynamic.",
 				Type:        schema.TypeString,
@@ -395,6 +400,10 @@ func dataSourceIamUserRead(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.ObjectType = x
+	}
+	if v, ok := d.GetOk("user_id_or_email"); ok {
+		x := (v.(string))
+		o.UserIDOrEmail = x
 	}
 	if v, ok := d.GetOk("user_type"); ok {
 		x := (v.(string))
@@ -486,6 +495,9 @@ func dataSourceIamUserRead(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+				return err
+			}
+			if err := d.Set("user_id_or_email", (s.UserIDOrEmail)); err != nil {
 				return err
 			}
 			if err := d.Set("user_type", (s.UserType)); err != nil {

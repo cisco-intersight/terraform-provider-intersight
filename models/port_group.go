@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,16 +22,12 @@ type PortGroup struct {
 	InventoryBase
 
 	// A collection of references to the [equipment.SharedIoModule](mo://equipment.SharedIoModule) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.SharedIoModule](mo://equipment.SharedIoModule) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentSharedIoModule *EquipmentSharedIoModuleRef `json:"EquipmentSharedIoModule,omitempty"`
 
 	// A collection of references to the [equipment.SwitchCard](mo://equipment.SwitchCard) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.SwitchCard](mo://equipment.SwitchCard) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentSwitchCard *EquipmentSwitchCardRef `json:"EquipmentSwitchCard,omitempty"`
 
@@ -45,7 +40,6 @@ type PortGroup struct {
 	FcPorts []*FcPhysicalPortRef `json:"FcPorts"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -113,7 +107,6 @@ func (m PortGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EquipmentSharedIoModule *EquipmentSharedIoModuleRef `json:"EquipmentSharedIoModule,omitempty"`
 
@@ -149,7 +142,6 @@ func (m PortGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

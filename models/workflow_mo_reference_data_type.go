@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,7 +22,6 @@ type WorkflowMoReferenceDataType struct {
 	WorkflowBaseDataType
 
 	// List of managed object references.
-	//
 	Properties []*WorkflowMoReferenceProperty `json:"Properties"`
 }
 
@@ -58,7 +56,6 @@ func (m WorkflowMoReferenceDataType) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Properties []*WorkflowMoReferenceProperty `json:"Properties"`
 	}
@@ -70,7 +67,6 @@ func (m WorkflowMoReferenceDataType) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

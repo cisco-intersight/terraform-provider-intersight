@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_resource_group"
 sidebar_current: "docs-intersight-resource-resourceGroup"
 description: |-
   A group of REST resources, such as a group of compute.Blade MOs. A ResourceGroup can contain static members which are specified as a set of object references, or it can contain dynamic members, which are specified through OData query filters. A Resource can be part of multiple resource groups.
-
 ---
 
 # Resource: intersight_resource_group
 A group of REST resources, such as a group of compute.Blade MOs. A ResourceGroup can contain static members which are specified as a set of object references, or it can contain dynamic members, which are specified through OData query filters. A Resource can be part of multiple resource groups.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)The account to which this resource group belongs to.

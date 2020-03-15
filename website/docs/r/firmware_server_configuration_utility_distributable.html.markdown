@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_server_configuration_utility_distri
 sidebar_current: "docs-intersight-resource-firmwareServerConfigurationUtilityDistributable"
 description: |-
   A server configuration utility image distributed by Cisco.
-
 ---
 
 # Resource: intersight_firmware_server_configuration_utility_distributable
 A server configuration utility image distributed by Cisco.
-
 ## Argument Reference
 The following arguments are supported:
 * `bundle_type`:(string)(Computed)The bundle type of the image, as published on cisco.com.

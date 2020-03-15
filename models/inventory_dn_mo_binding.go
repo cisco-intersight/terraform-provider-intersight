@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,22 +20,18 @@ type InventoryDnMoBinding struct {
 	MoBaseMo
 
 	// Distinguished Name of the UCSM object.
-	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
 	// Relationship to the device registration object.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The property targetMoId represents the Binding target's MoId.
-	//
 	// Read Only: true
 	TargetMoID string `json:"TargetMoId,omitempty"`
 
 	// The property targetMoType represents the Binding target's Mo type.
-	//
 	// Read Only: true
 	TargetMoType string `json:"TargetMoType,omitempty"`
 }
@@ -84,7 +79,6 @@ func (m InventoryDnMoBinding) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Dn string `json:"Dn,omitempty"`
 
@@ -108,7 +102,6 @@ func (m InventoryDnMoBinding) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

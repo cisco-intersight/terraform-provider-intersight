@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_util_physical_drive"
 sidebar_current: "docs-intersight-data-source-storageFlexUtilPhysicalDrive"
 description: |-
 Storage Flex Util Physical Drive.
-
 ---
 
 # Data Source: intersight_storage_flex_util_physical_drive
 Storage Flex Util Physical Drive.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `block_size`:(string)

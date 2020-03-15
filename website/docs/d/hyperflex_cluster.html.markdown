@@ -5,13 +5,11 @@ sidebar_current: "docs-intersight-data-source-hyperflexCluster"
 description: |-
 A HyperFlex cluster. Contains inventory information concerning the health, software versions, storage, and nodes
 of the cluster.
-
 ---
 
 # Data Source: intersight_hyperflex_cluster
 A HyperFlex cluster. Contains inventory information concerning the health, software versions, storage, and nodes
 of the cluster.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `capacity_runway`:(int)The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.Default value is math.MaxInt32 to indicate that the capacity runway is \"Unknown\" for a cluster that is not connected or with not sufficient data.

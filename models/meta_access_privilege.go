@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m MetaAccessPrivilege) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,17 +100,16 @@ func (m *MetaAccessPrivilege) UnmarshalBinary(b []byte) error {
 }
 
 // MetaAccessPrivilegeAO1P1 meta access privilege a o1 p1
+//
 // swagger:model MetaAccessPrivilegeAO1P1
 type MetaAccessPrivilegeAO1P1 struct {
 
 	// The type of CRUD operation (create, read, update, delete) for which an access privilege is required.
-	//
 	// Read Only: true
 	// Enum: [Update Create Read Delete]
 	Method string `json:"Method,omitempty"`
 
 	// The name of the privilege which is required to invoke the specified CRUD method.
-	//
 	// Read Only: true
 	Privilege string `json:"Privilege,omitempty"`
 
@@ -126,13 +123,11 @@ func (m *MetaAccessPrivilegeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The type of CRUD operation (create, read, update, delete) for which an access privilege is required.
-		//
 		// Read Only: true
 		// Enum: [Update Create Read Delete]
 		Method string `json:"Method,omitempty"`
 
 		// The name of the privilege which is required to invoke the specified CRUD method.
-		//
 		// Read Only: true
 		Privilege string `json:"Privilege,omitempty"`
 	}
@@ -142,9 +137,7 @@ func (m *MetaAccessPrivilegeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv MetaAccessPrivilegeAO1P1
 
 	rcv.Method = stage1.Method
-
 	rcv.Privilege = stage1.Privilege
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -154,9 +147,7 @@ func (m *MetaAccessPrivilegeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Method")
-
 	delete(stage2, "Privilege")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -178,19 +169,16 @@ func (m MetaAccessPrivilegeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The type of CRUD operation (create, read, update, delete) for which an access privilege is required.
-		//
 		// Read Only: true
 		// Enum: [Update Create Read Delete]
 		Method string `json:"Method,omitempty"`
 
 		// The name of the privilege which is required to invoke the specified CRUD method.
-		//
 		// Read Only: true
 		Privilege string `json:"Privilege,omitempty"`
 	}
 
 	stage1.Method = m.Method
-
 	stage1.Privilege = m.Privilege
 
 	// make JSON object for known properties

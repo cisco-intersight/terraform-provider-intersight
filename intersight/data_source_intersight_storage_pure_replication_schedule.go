@@ -21,7 +21,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				Computed:    true,
 			},
 			"frequency": {
-				Description: "Replication frequency. It is an interval on which replication is set to trigger.Examples:    PT2H, Snapshot is performed for every 2 hours.    P30D, Snapshot is scheduled for every 30 days.    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Replication frequency. It is an interval at which replication is set to trigger.Examples:    PT2H, Snapshot is generated every 2 hours.    P30D, Snapshot is scheduled for every 30 days.    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -152,7 +152,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"retention_time": {
-				Description: "Duration to keep the replicated snapshots on the targets.Replicated snapshots are deleted from target array once mentioned rentention period is elapsed.Examples:P30D, Snapshots are available for 30 days.PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Duration to keep the replicated snapshots on the targets.Replicated snapshots are deleted from target array once the retention period has elapsed.Examples:P30D, Snapshots are available for 30 days.PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -312,7 +312,7 @@ func dataSourceStoragePureReplicationScheduleRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("replication_blackout_intervals", flattenListStorageReplicationBlackout(s.ReplicationBlackoutIntervals, d)); err != nil {
+			if err := d.Set("replication_blackout_intervals", flattenListStoragePureReplicationBlackout(s.ReplicationBlackoutIntervals, d)); err != nil {
 				return err
 			}
 			if err := d.Set("retention_time", (s.RetentionTime)); err != nil {

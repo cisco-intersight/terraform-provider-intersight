@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_adapter_host_iscsi_interface"
 sidebar_current: "docs-intersight-data-source-adapterHostIscsiInterface"
 description: |-
 Iscsi interface on a server adaptor.
-
 ---
 
 # Data Source: intersight_adapter_host_iscsi_interface
 Iscsi interface on a server adaptor.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(string)

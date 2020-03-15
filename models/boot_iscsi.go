@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,11 +20,9 @@ type BootIscsi struct {
 	BootDeviceBase
 
 	// Port ID of the ISCSI boot device.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// The slot id of the device. Supported values are (1 - 255, "MLOM", "L", "L1", "L2", "OCP").
-	//
 	Slot string `json:"Slot,omitempty"`
 }
 
@@ -64,7 +61,6 @@ func (m BootIscsi) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Port int64 `json:"Port,omitempty"`
 
@@ -80,7 +76,6 @@ func (m BootIscsi) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

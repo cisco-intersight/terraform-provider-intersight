@@ -54,6 +54,35 @@ func dataSourceIamIdp() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"ldap_policy": {
+				Description: "When a relationship to an LDAP Policy exists, IdP represents the domain of that LDAP Policy.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"metadata": {
 				Description: "SAML metadata of the IdP.",
 				Type:        schema.TypeString,
@@ -350,6 +379,10 @@ func dataSourceIamIdpRead(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 			if err := d.Set("idp_entity_id", (s.IdpEntityID)); err != nil {
+				return err
+			}
+
+			if err := d.Set("ldap_policy", flattenMapIamLdapPolicyRef(s.LdapPolicy, d)); err != nil {
 				return err
 			}
 			if err := d.Set("metadata", (s.Metadata)); err != nil {

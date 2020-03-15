@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_ldap_group"
 sidebar_current: "docs-intersight-resource-iamLdapGroup"
 description: |-
   Mapping of LDAP Group to EndPointRoles.
-
 ---
 
 # Resource: intersight_iam_ldap_group
 Mapping of LDAP Group to EndPointRoles.
-
 ## Argument Reference
 The following arguments are supported:
 * `domain`:(string)LDAP server domain the Group resides in.

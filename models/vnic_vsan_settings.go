@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicVsanSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *VnicVsanSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicVsanSettingsAO1P1 vnic vsan settings a o1 p1
+//
 // swagger:model VnicVsanSettingsAO1P1
 type VnicVsanSettingsAO1P1 struct {
 
 	// Default VSAN ID of the virtual interface. Setting the ID to 0 will not associate any default VSAN to the traffic on the virtual interface.
-	//
 	ID int64 `json:"Id,omitempty"`
 
 	// vnic vsan settings a o1 p1
@@ -118,7 +116,6 @@ func (m *VnicVsanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Default VSAN ID of the virtual interface. Setting the ID to 0 will not associate any default VSAN to the traffic on the virtual interface.
-		//
 		ID int64 `json:"Id,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *VnicVsanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicVsanSettingsAO1P1
 
 	rcv.ID = stage1.ID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *VnicVsanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Id")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m VnicVsanSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Default VSAN ID of the virtual interface. Setting the ID to 0 will not associate any default VSAN to the traffic on the virtual interface.
-		//
 		ID int64 `json:"Id,omitempty"`
 	}
 

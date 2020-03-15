@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,52 +22,41 @@ type IamIdpReference struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The email domain name for this IdP of the user. When a user enters an email during login in the Intersight home page, the IdP is picked by matching this domain name with the email domain name for authentication.
-	//
 	// Read Only: true
 	DomainName string `json:"DomainName,omitempty"`
 
 	// Reference to System default Cisco IdP.
-	//
 	// Read Only: true
 	Idp *IamIdpRef `json:"Idp,omitempty"`
 
 	// Entity ID of the IdP. In SAML, the entity ID uniquely identifies the IdP/Service Provider.
-	//
 	// Read Only: true
 	IdpEntityID string `json:"IdpEntityId,omitempty"`
 
 	// The flag represents if the second factor of authentication is required for Cisco IdP users.
-	//
 	MultiFactorAuthentication *bool `json:"MultiFactorAuthentication,omitempty"`
 
 	// Cisco IdP reference in an account.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The last login session details for each logged in user of this IdP.
-	//
 	// Read Only: true
 	UserLoginTime []*IamUserLoginTimeRef `json:"UserLoginTime"`
 
 	// The UI preference object for each user logged in through this IdP.
-	//
 	// Read Only: true
 	UserPreferences []*IamUserPreferenceRef `json:"UserPreferences"`
 
 	// User groups added in an IdP. User group provides a way to configure permission assignment for a group of users based on IdP attributes received after authentication.
-	//
 	Usergroups []*IamUserGroupRef `json:"Usergroups"`
 
 	// Added or logged in users of an IdP who can access an Intersight account.
-	//
 	Users []*IamUserRef `json:"Users"`
 }
 
@@ -139,7 +127,6 @@ func (m IamIdpReference) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -187,7 +174,6 @@ func (m IamIdpReference) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

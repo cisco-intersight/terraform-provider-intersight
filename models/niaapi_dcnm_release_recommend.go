@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -57,7 +56,6 @@ func (m NiaapiDcnmReleaseRecommend) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -96,5 +94,6 @@ func (m *NiaapiDcnmReleaseRecommend) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiDcnmReleaseRecommendAllOf1 niaapi dcnm release recommend all of1
+//
 // swagger:model NiaapiDcnmReleaseRecommendAllOf1
 type NiaapiDcnmReleaseRecommendAllOf1 interface{}

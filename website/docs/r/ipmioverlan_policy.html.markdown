@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ipmioverlan_policy"
 sidebar_current: "docs-intersight-resource-ipmioverlanPolicy"
 description: |-
   Intelligent Platform Management Interface Over LAN Policy.
-
 ---
 
 # Resource: intersight_ipmioverlan_policy
 Intelligent Platform Management Interface Over LAN Policy.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

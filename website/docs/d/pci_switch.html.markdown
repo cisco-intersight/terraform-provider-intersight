@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_pci_switch"
 sidebar_current: "docs-intersight-data-source-pciSwitch"
 description: |-
 PCI Switch present in a server connected to two GPUs and one PCIe adapter.
-
 ---
 
 # Data Source: intersight_pci_switch
 PCI Switch present in a server connected to two GPUs and one PCIe adapter.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_id`:(string)It shows the device id of the switch.

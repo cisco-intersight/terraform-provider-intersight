@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_memory_unit"
 sidebar_current: "docs-intersight-data-source-memoryUnit"
 description: |-
 This represents a memory DIMM on a server.
-
 ---
 
 # Data Source: intersight_memory_unit
 This represents a memory DIMM on a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(string)This represents the administrative state of the memory unit on a server.

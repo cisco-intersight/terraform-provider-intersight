@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m OsPlaceHolder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *OsPlaceHolder) UnmarshalBinary(b []byte) error {
 }
 
 // OsPlaceHolderAO1P1 os place holder a o1 p1
+//
 // swagger:model OsPlaceHolderAO1P1
 type OsPlaceHolderAO1P1 struct {
 
 	// Flag to indicate if value is set. Value will be used to check if any edit.
-	//
 	IsValueSet *bool `json:"IsValueSet,omitempty"`
 
 	// Definition of place holder.
-	//
 	Type *WorkflowPrimitiveDataType `json:"Type,omitempty"`
 
 	// Value for placeholder provided by user.
-	//
 	Value interface{} `json:"Value,omitempty"`
 
 	// os place holder a o1 p1
@@ -126,15 +122,12 @@ func (m *OsPlaceHolderAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Flag to indicate if value is set. Value will be used to check if any edit.
-		//
 		IsValueSet *bool `json:"IsValueSet,omitempty"`
 
 		// Definition of place holder.
-		//
 		Type *WorkflowPrimitiveDataType `json:"Type,omitempty"`
 
 		// Value for placeholder provided by user.
-		//
 		Value interface{} `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *OsPlaceHolderAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv OsPlaceHolderAO1P1
 
 	rcv.IsValueSet = stage1.IsValueSet
-
 	rcv.Type = stage1.Type
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *OsPlaceHolderAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "IsValueSet")
-
 	delete(stage2, "Type")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m OsPlaceHolderAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Flag to indicate if value is set. Value will be used to check if any edit.
-		//
 		IsValueSet *bool `json:"IsValueSet,omitempty"`
 
 		// Definition of place holder.
-		//
 		Type *WorkflowPrimitiveDataType `json:"Type,omitempty"`
 
 		// Value for placeholder provided by user.
-		//
 		Value interface{} `json:"Value,omitempty"`
 	}
 
 	stage1.IsValueSet = m.IsValueSet
-
 	stage1.Type = m.Type
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_recovery_backup_profile"
 sidebar_current: "docs-intersight-resource-recoveryBackupProfile"
 description: |-
   Backup profile to initiate on-demand or scheduled backups at end points.
-
 ---
 
 # Resource: intersight_recovery_backup_profile
 Backup profile to initiate on-demand or scheduled backups at end points.
-
 ## Argument Reference
 The following arguments are supported:
 * `action`:(string)User initiated action. Each profile type has its own supported actions. For HyperFlex cluster profile, the supported actions are -- Validate, Deploy, Continue, Retry, Abort, Unassign For server profile, the support actions are -- Deploy, Unassign.

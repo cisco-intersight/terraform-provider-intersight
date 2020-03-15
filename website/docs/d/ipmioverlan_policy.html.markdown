@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ipmioverlan_policy"
 sidebar_current: "docs-intersight-data-source-ipmioverlanPolicy"
 description: |-
 Intelligent Platform Management Interface Over LAN Policy.
-
 ---
 
 # Data Source: intersight_ipmioverlan_policy
 Intelligent Platform Management Interface Over LAN Policy.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

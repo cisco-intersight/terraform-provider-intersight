@@ -4,16 +4,14 @@ page_title: "Intersight: intersight_recovery_on_demand_backup"
 sidebar_current: "docs-intersight-data-source-recoveryOnDemandBackup"
 description: |-
 Handles requests for on demand backup for a given endpoint.
-
 ---
 
 # Data Source: intersight_recovery_on_demand_backup
 Handles requests for on demand backup for a given endpoint.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.
-* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418
+* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.
 * `is_password_set`:(bool)
 * `location_type`:(string)Specifies whether the backup will be stored locally or remotely.
 * `moid`:(string)The unique identifier of this Managed Object instance.

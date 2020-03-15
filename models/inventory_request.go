@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,11 +22,9 @@ type InventoryRequest struct {
 	MoBaseMo
 
 	// The device bind with this Request.
-	//
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// The collection of specific inventory MOs that need to be fetched. The property is optional and if not present then all the MOs of the given device will be fetched.
-	//
 	Mos []*InventoryInventoryMo `json:"Mos"`
 }
 
@@ -66,7 +63,6 @@ func (m InventoryRequest) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
@@ -82,7 +78,6 @@ func (m InventoryRequest) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

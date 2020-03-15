@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_apic_field_notice"
 sidebar_current: "docs-intersight-data-source-niaapiApicFieldNotice"
 description: |-
 The field notice reporting bug and related software or hardware for APIC.
-
 ---
 
 # Data Source: intersight_niaapi_apic_field_notice
 The field notice reporting bug and related software or hardware for APIC.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bugid`:(string)Bug Id associated with this notice.

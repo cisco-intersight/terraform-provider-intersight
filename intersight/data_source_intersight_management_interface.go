@@ -43,6 +43,39 @@ func dataSourceManagementInterface() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"ipv4_address": {
+				Description: "IPv4 address of the interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"ipv4_gateway": {
+				Description: "IPv4 default gateway for the interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"ipv4_mask": {
+				Description: "IPv4 Netmask for the interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"ipv6_address": {
+				Description: "IPv6 address of the interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"ipv6_gateway": {
+				Description: "IPv6 default gateway for the interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"ipv6_prefix": {
+				Description: "IPv6 prefix for the interface.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
 			"mac_address": {
 				Description: "MAC address configured for the interface.",
 				Type:        schema.TypeString,
@@ -235,6 +268,30 @@ func dataSourceManagementInterfaceRead(d *schema.ResourceData, meta interface{})
 		x := (v.(string))
 		o.IPAddress = x
 	}
+	if v, ok := d.GetOk("ipv4_address"); ok {
+		x := (v.(string))
+		o.IPV4Address = x
+	}
+	if v, ok := d.GetOk("ipv4_gateway"); ok {
+		x := (v.(string))
+		o.IPV4Gateway = x
+	}
+	if v, ok := d.GetOk("ipv4_mask"); ok {
+		x := (v.(string))
+		o.IPV4Mask = x
+	}
+	if v, ok := d.GetOk("ipv6_address"); ok {
+		x := (v.(string))
+		o.IPV6Address = x
+	}
+	if v, ok := d.GetOk("ipv6_gateway"); ok {
+		x := (v.(string))
+		o.IPV6Gateway = x
+	}
+	if v, ok := d.GetOk("ipv6_prefix"); ok {
+		x := int64(v.(int))
+		o.IPV6Prefix = x
+	}
 	if v, ok := d.GetOk("mac_address"); ok {
 		x := (v.(string))
 		o.MacAddress = x
@@ -303,6 +360,24 @@ func dataSourceManagementInterfaceRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 			if err := d.Set("ip_address", (s.IPAddress)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv4_address", (s.IPV4Address)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv4_gateway", (s.IPV4Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv4_mask", (s.IPV4Mask)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv6_address", (s.IPV6Address)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv6_gateway", (s.IPV6Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv6_prefix", (s.IPV6Prefix)); err != nil {
 				return err
 			}
 			if err := d.Set("mac_address", (s.MacAddress)); err != nil {

@@ -6,59 +6,49 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryNamespace Memory:Persistent Memory Namespace
 //
-// This represents a Persistent Memory Namespace configured within the persistent memory region on a server.
+// Persistent Memory Namespace configured within a Persistent Memory Region on a server.
 //
 // swagger:model memoryPersistentMemoryNamespace
 type MemoryPersistentMemoryNamespace struct {
 	InventoryBase
 
-	// This represents the capacity in GB of a Persistent Memory Namespace.
-	//
+	// Capacity in GB of the Persistent Memory Namespace.
 	// Read Only: true
 	Capacity string `json:"Capacity,omitempty"`
 
-	// This represents the health state of a Persistent Memory Namespace.
-	//
+	// Health state of the Persistent Memory Namespace.
 	// Read Only: true
 	HealthState string `json:"HealthState,omitempty"`
 
-	// This represents the label version of a Persistent Memory Namespace.
-	//
+	// Label version of the Persistent Memory Namespace.
 	// Read Only: true
 	LabelVersion string `json:"LabelVersion,omitempty"`
 
 	// A collection of references to the [memory.PersistentMemoryRegion](mo://memory.PersistentMemoryRegion) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.PersistentMemoryRegion](mo://memory.PersistentMemoryRegion) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryPersistentMemoryRegion *MemoryPersistentMemoryRegionRef `json:"MemoryPersistentMemoryRegion,omitempty"`
 
-	// This represents the mode of a Persistent Memory Namespace.
-	//
+	// Mode of the Persistent Memory Namespace.
 	// Read Only: true
 	Mode string `json:"Mode,omitempty"`
 
-	// This represents the name of a Persistent Memory Namespace.
-	//
+	// Name of the Persistent Memory Namespace.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents the uuid of a Persistent Memory Namespace.
-	//
+	// UUID of the Persistent Memory Namespace.
 	// Read Only: true
 	UUID string `json:"Uuid,omitempty"`
 }
@@ -122,7 +112,6 @@ func (m MemoryPersistentMemoryNamespace) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Capacity string `json:"Capacity,omitempty"`
 
@@ -162,7 +151,6 @@ func (m MemoryPersistentMemoryNamespace) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

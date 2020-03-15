@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hcl_hyperflex_software_compatibility_info"
 sidebar_current: "docs-intersight-resource-hclHyperflexSoftwareCompatibilityInfo"
 description: |-
   Lists software compatibility information between different HperFlex component versions like HyperFlex Data Platform, Hypervisor, Drive Firmware, etc.
-
 ---
 
 # Resource: intersight_hcl_hyperflex_software_compatibility_info
 Lists software compatibility information between different HperFlex component versions like HyperFlex Data Platform, Hypervisor, Drive Firmware, etc.
-
 ## Argument Reference
 The following arguments are supported:
 * `app_catalog`:(Array with Maximum of one item) -A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.

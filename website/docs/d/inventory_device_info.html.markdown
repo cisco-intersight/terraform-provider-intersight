@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_inventory_device_info"
 sidebar_current: "docs-intersight-data-source-inventoryDeviceInfo"
 description: |-
 Information pertaining to a Registered Device in starship which is pertinent to Inventory Microservice.
-
 ---
 
 # Data Source: intersight_inventory_device_info
 Information pertaining to a Registered Device in starship which is pertinent to Inventory Microservice.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `config_state`:(string)Configuration state of server profile config context.

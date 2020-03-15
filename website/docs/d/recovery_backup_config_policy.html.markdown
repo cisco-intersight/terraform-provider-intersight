@@ -4,16 +4,14 @@ page_title: "Intersight: intersight_recovery_backup_config_policy"
 sidebar_current: "docs-intersight-data-source-recoveryBackupConfigPolicy"
 description: |-
 Backup config policy which contains all the required inputs to do backup on a local or remote server.
-
 ---
 
 # Data Source: intersight_recovery_backup_config_policy
 Backup config policy which contains all the required inputs to do backup on a local or remote server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.
-* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418
+* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.
 * `is_password_set`:(bool)
 * `location_type`:(string)Specifies whether the backup will be stored locally or remotely.
 * `moid`:(string)The unique identifier of this Managed Object instance.

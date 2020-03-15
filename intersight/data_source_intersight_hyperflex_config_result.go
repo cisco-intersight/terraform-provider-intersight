@@ -54,7 +54,7 @@ func dataSourceHyperflexConfigResult() *schema.Resource {
 				Optional:    true,
 			},
 			"config_state": {
-				Description: "Indicates overall configuration state for applying the configuration to the end point. Values  -- ok, ok-with-warning, errored.",
+				Description: "Indicates overall configuration state for applying the configuration to the end point. Values  -- Ok, Ok-with-warning, Errored.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -168,7 +168,7 @@ func dataSourceHyperflexConfigResult() *schema.Resource {
 				Computed: true,
 			},
 			"validation_state": {
-				Description: "Indicates overall state for logical model validation. Values  -- ok, ok-with-warning, errored.",
+				Description: "Indicates overall state for logical model validation. Values  -- Ok, Ok-with-warning, Errored.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,29 +20,23 @@ type IaasMostRunTasks struct {
 	MoBaseMo
 
 	// A collection of references to the [iaas.UcsdInfo](mo://iaas.UcsdInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iaas.UcsdInfo](mo://iaas.UcsdInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
 	// A functional area to which a task belongs to.
-	//
 	// Read Only: true
 	TaskCategory string `json:"TaskCategory,omitempty"`
 
 	// Number of times this task has executed.
-	//
 	// Read Only: true
 	TaskExecutionCount int64 `json:"TaskExecutionCount,omitempty"`
 
 	// Name of the task executed in UCSD.
-	//
 	// Read Only: true
 	TaskName string `json:"TaskName,omitempty"`
 
 	// Type of the task whether it is system task or custom task.
-	//
 	// Read Only: true
 	TaskType string `json:"TaskType,omitempty"`
 }
@@ -95,7 +88,6 @@ func (m IaasMostRunTasks) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
@@ -123,7 +115,6 @@ func (m IaasMostRunTasks) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

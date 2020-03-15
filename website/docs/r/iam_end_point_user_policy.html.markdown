@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_end_point_user_policy"
 sidebar_current: "docs-intersight-resource-iamEndPointUserPolicy"
 description: |-
   Enables creation of local users on endpoints.
-
 ---
 
 # Resource: intersight_iam_end_point_user_policy
 Enables creation of local users on endpoints.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.
@@ -31,7 +29,7 @@ This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `enable_password_expiry`:(bool)Enables password expiry on the endpoint.
-  + `enforce_strong_password`:(bool)Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (!, @, #, $, %, ^, &, *, -, _, +, =).
+  + `enforce_strong_password`:(bool)Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).
   + `grace_period`:(int)Time period until when you can use the existing password, after it expires.
   + `notification_period`:(int)The duration by when the password will expire.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_version_regex"
 sidebar_current: "docs-intersight-data-source-niaapiVersionRegex"
 description: |-
 The regular expression pattern to recongnize the version string.
-
 ---
 
 # Data Source: intersight_niaapi_version_regex
 The regular expression pattern to recongnize the version string.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

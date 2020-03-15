@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_resource_license_resource_count"
 sidebar_current: "docs-intersight-data-source-resourceLicenseResourceCount"
 description: |-
 LicenseResourceCount tracks the server count info for 3 different licensing tiers.
-
 ---
 
 # Data Source: intersight_resource_license_resource_count
 LicenseResourceCount tracks the server count info for 3 different licensing tiers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `license_type`:(string)Type of licensing defined for this resource group. Used for licensing group.

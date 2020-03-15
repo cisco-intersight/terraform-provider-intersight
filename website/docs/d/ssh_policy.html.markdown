@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ssh_policy"
 sidebar_current: "docs-intersight-data-source-sshPolicy"
 description: |-
 Secure shell policy on the endpoint.
-
 ---
 
 # Data Source: intersight_ssh_policy
 Secure shell policy on the endpoint.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ntp_policy"
 sidebar_current: "docs-intersight-data-source-ntpPolicy"
 description: |-
 Policy to configure the NTP Servers.
-
 ---
 
 # Data Source: intersight_ntp_policy
 Policy to configure the NTP Servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

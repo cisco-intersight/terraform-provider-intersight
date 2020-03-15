@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m CommIPV4Interface) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *CommIPV4Interface) UnmarshalBinary(b []byte) error {
 }
 
 // CommIPV4InterfaceAO1P1 comm IP v4 interface a o1 p1
+//
 // swagger:model CommIPV4InterfaceAO1P1
 type CommIPV4InterfaceAO1P1 struct {
 
 	// The IPv4 address of the default gateway.
-	//
 	Gateway string `json:"Gateway,omitempty"`
 
 	// The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3.
-	//
 	IPAddress string `json:"IpAddress,omitempty"`
 
 	// The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.
-	//
 	Netmask string `json:"Netmask,omitempty"`
 
 	// comm IP v4 interface a o1 p1
@@ -126,15 +122,12 @@ func (m *CommIPV4InterfaceAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The IPv4 address of the default gateway.
-		//
 		Gateway string `json:"Gateway,omitempty"`
 
 		// The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3.
-		//
 		IPAddress string `json:"IpAddress,omitempty"`
 
 		// The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.
-		//
 		Netmask string `json:"Netmask,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *CommIPV4InterfaceAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv CommIPV4InterfaceAO1P1
 
 	rcv.Gateway = stage1.Gateway
-
 	rcv.IPAddress = stage1.IPAddress
-
 	rcv.Netmask = stage1.Netmask
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *CommIPV4InterfaceAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Gateway")
-
 	delete(stage2, "IpAddress")
-
 	delete(stage2, "Netmask")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m CommIPV4InterfaceAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The IPv4 address of the default gateway.
-		//
 		Gateway string `json:"Gateway,omitempty"`
 
 		// The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3.
-		//
 		IPAddress string `json:"IpAddress,omitempty"`
 
 		// The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.
-		//
 		Netmask string `json:"Netmask,omitempty"`
 	}
 
 	stage1.Gateway = m.Gateway
-
 	stage1.IPAddress = m.IPAddress
-
 	stage1.Netmask = m.Netmask
 
 	// make JSON object for known properties

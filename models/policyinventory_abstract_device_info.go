@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,37 +22,30 @@ type PolicyinventoryAbstractDeviceInfo struct {
 	MoBaseMo
 
 	// Configuration state of server profile config context.
-	//
 	// Read Only: true
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// Control action of server profile config context.
-	//
 	// Read Only: true
 	ControlAction string `json:"ControlAction,omitempty"`
 
 	// Error state of server profile config context.
-	//
 	// Read Only: true
 	ErrorState string `json:"ErrorState,omitempty"`
 
 	// Inventory job information of the device.
-	//
 	// Read Only: true
 	JobInfo []*PolicyinventoryJobInfo `json:"JobInfo"`
 
 	// Operational state of server profile config context.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// Server profile MO ID of the server.
-	//
 	// Read Only: true
 	ProfileMoID string `json:"ProfileMoId,omitempty"`
 
 	// Registered device associated with profile for which inventory is done.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -113,7 +105,6 @@ func (m PolicyinventoryAbstractDeviceInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigState string `json:"ConfigState,omitempty"`
 
@@ -149,7 +140,6 @@ func (m PolicyinventoryAbstractDeviceInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

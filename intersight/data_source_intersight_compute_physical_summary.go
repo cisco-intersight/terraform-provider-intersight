@@ -99,7 +99,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"default_gateway": {
-							Description: "",
+							Description: "Gateway address of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -123,7 +123,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"kvm_port": {
-							Description: "",
+							Description: "Port number on which the KVM is running.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
@@ -141,7 +141,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"subnet": {
-							Description: "",
+							Description: "Subnet of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -162,7 +162,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"mgmt_ip_address": {
-				Description: "The IP address of the management interface on the UCS Fabric Interconnect or Cisco Integrated Management Controller.",
+				Description: "Management address of the server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -192,7 +192,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"num_cpu_cores": {
-				Description: "",
+				Description: "Total number of CPU cores available.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -216,7 +216,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"num_fc_host_interfaces": {
-				Description: "",
+				Description: "Number of Fibre channel Host Interfaces.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -345,13 +345,13 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"server_id": {
-				Description: "",
+				Description: "The server id of the Rack server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"service_profile": {
-				Description: "",
+				Description: "The service profile assigned.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

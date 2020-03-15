@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_vcenter_config_policy"
 sidebar_current: "docs-intersight-resource-hyperflexVcenterConfigPolicy"
 description: |-
   A policy specifying vCenter configuration.
-
 ---
 
 # Resource: intersight_hyperflex_vcenter_config_policy
 A policy specifying vCenter configuration.
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.

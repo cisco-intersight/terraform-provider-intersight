@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicEthTxQueueSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *VnicEthTxQueueSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicEthTxQueueSettingsAO1P1 vnic eth tx queue settings a o1 p1
+//
 // swagger:model VnicEthTxQueueSettingsAO1P1
 type VnicEthTxQueueSettingsAO1P1 struct {
 
 	// The number of queue resources to allocate.
-	//
 	Count int64 `json:"Count,omitempty"`
 
 	// The number of descriptors in each queue.
-	//
 	RingSize int64 `json:"RingSize,omitempty"`
 
 	// vnic eth tx queue settings a o1 p1
@@ -122,11 +119,9 @@ func (m *VnicEthTxQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The number of queue resources to allocate.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// The number of descriptors in each queue.
-		//
 		RingSize int64 `json:"RingSize,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *VnicEthTxQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicEthTxQueueSettingsAO1P1
 
 	rcv.Count = stage1.Count
-
 	rcv.RingSize = stage1.RingSize
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *VnicEthTxQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Count")
-
 	delete(stage2, "RingSize")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m VnicEthTxQueueSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The number of queue resources to allocate.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// The number of descriptors in each queue.
-		//
 		RingSize int64 `json:"RingSize,omitempty"`
 	}
 
 	stage1.Count = m.Count
-
 	stage1.RingSize = m.RingSize
 
 	// make JSON object for known properties

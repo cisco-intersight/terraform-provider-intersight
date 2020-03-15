@@ -9,14 +9,14 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // HyperflexHealth Hyperflex:Health
+//
 // swagger:model hyperflexHealth
 type HyperflexHealth struct {
 	MoBaseMo
@@ -27,9 +27,7 @@ type HyperflexHealth struct {
 	ArbitrationServiceState string `json:"ArbitrationServiceState,omitempty"`
 
 	// A collection of references to the [hyperflex.Cluster](mo://hyperflex.Cluster) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.Cluster](mo://hyperflex.Cluster) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Cluster *HyperflexClusterRef `json:"Cluster,omitempty"`
 
@@ -120,7 +118,6 @@ func (m HyperflexHealth) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ArbitrationServiceState string `json:"ArbitrationServiceState,omitempty"`
 
@@ -160,7 +157,6 @@ func (m HyperflexHealth) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

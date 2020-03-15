@@ -8,7 +8,6 @@ OS installation. The OS installation can be started in the target server by doin
 a POST on this MO.
 The requests to this MO starts a OS installation workflow that can be tracked
 using workflow engine MO workflow.WorkflowInfo.
-
 ---
 
 # Data Source: intersight_os_install
@@ -17,7 +16,6 @@ OS installation. The OS installation can be started in the target server by doin
 a POST on this MO.
 The requests to this MO starts a OS installation workflow that can be tracked
 using workflow engine MO workflow.WorkflowInfo.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)User provided description about the OS install configuration.

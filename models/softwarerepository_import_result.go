@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m SoftwarerepositoryImportResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,15 @@ func (m *SoftwarerepositoryImportResult) UnmarshalBinary(b []byte) error {
 }
 
 // SoftwarerepositoryImportResultAO1P1 softwarerepository import result a o1 p1
+//
 // swagger:model SoftwarerepositoryImportResultAO1P1
 type SoftwarerepositoryImportResultAO1P1 struct {
 
 	// The reason for the failure of an import operation, if applicable.
-	//
 	// Read Only: true
 	ErrorMessage string `json:"ErrorMessage,omitempty"`
 
 	// The progress percentage of the import operation.
-	//
 	// Read Only: true
 	Progress int64 `json:"Progress,omitempty"`
 
@@ -124,12 +121,10 @@ func (m *SoftwarerepositoryImportResultAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The reason for the failure of an import operation, if applicable.
-		//
 		// Read Only: true
 		ErrorMessage string `json:"ErrorMessage,omitempty"`
 
 		// The progress percentage of the import operation.
-		//
 		// Read Only: true
 		Progress int64 `json:"Progress,omitempty"`
 	}
@@ -139,9 +134,7 @@ func (m *SoftwarerepositoryImportResultAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SoftwarerepositoryImportResultAO1P1
 
 	rcv.ErrorMessage = stage1.ErrorMessage
-
 	rcv.Progress = stage1.Progress
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *SoftwarerepositoryImportResultAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ErrorMessage")
-
 	delete(stage2, "Progress")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,18 +166,15 @@ func (m SoftwarerepositoryImportResultAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The reason for the failure of an import operation, if applicable.
-		//
 		// Read Only: true
 		ErrorMessage string `json:"ErrorMessage,omitempty"`
 
 		// The progress percentage of the import operation.
-		//
 		// Read Only: true
 		Progress int64 `json:"Progress,omitempty"`
 	}
 
 	stage1.ErrorMessage = m.ErrorMessage
-
 	stage1.Progress = m.Progress
 
 	// make JSON object for known properties

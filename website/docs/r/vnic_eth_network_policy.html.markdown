@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_eth_network_policy"
 sidebar_current: "docs-intersight-resource-vnicEthNetworkPolicy"
 description: |-
   An Ethernet Network policy determines if the port can carry single VLAN (Access) or multiple VLANs (Trunk) traffic. You can specify the VLAN to be associated with an Ethernet packet if no tag is found.
-
 ---
 
 # Resource: intersight_vnic_eth_network_policy
 An Ethernet Network policy determines if the port can carry single VLAN (Access) or multiple VLANs (Trunk) traffic. You can specify the VLAN to be associated with an Ethernet packet if no tag is found.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

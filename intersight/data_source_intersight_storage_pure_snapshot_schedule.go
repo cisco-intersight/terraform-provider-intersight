@@ -21,7 +21,7 @@ func dataSourceStoragePureSnapshotSchedule() *schema.Resource {
 				Computed:    true,
 			},
 			"frequency": {
-				Description: "Snapshot frequency. It is an interval on which snapshot is set to trigger on source array.Examples:    PT2H, Snapshot is performed for every 2 hours.    P4D, Snapshot is scheduled for every 4 days.    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Snapshot frequency. It is an interval at which snapshot is set to trigger on source array.Examples:    PT2H Snapshot is generated every 2 hours.    P4D, Snapshot is scheduled for every 4 days.    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -130,7 +130,7 @@ func dataSourceStoragePureSnapshotSchedule() *schema.Resource {
 				},
 			},
 			"retention_time": {
-				Description: "Duration to keep the snapshots on the source array.Once the period expires, system deletes the snapshot automatically from source array.Examples:P200D,  200 days.PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Duration to keep the snapshots on the source array.Once this period expires, system deletes the snapshot automatically from source array.Examples:P200D,  200 days.PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

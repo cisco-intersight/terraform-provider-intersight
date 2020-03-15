@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_vd_member_ep"
 sidebar_current: "docs-intersight-data-source-storageVdMemberEp"
 description: |-
 Reference to LocalDisk to build up a VirtualDrive.
-
 ---
 
 # Data Source: intersight_storage_vd_member_ep
 Reference to LocalDisk to build up a VirtualDrive.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_terminal_audit_log"
 sidebar_current: "docs-intersight-data-source-terminalAuditLog"
 description: |-
 Audit log of remote terminal user sessions.
-
 ---
 
 # Data Source: intersight_terminal_audit_log
 Audit log of remote terminal user sessions.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `end_time`:(string)The time the terminal was closed. If terminal has not closed, value is zero time.

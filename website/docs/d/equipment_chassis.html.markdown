@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_chassis"
 sidebar_current: "docs-intersight-data-source-equipmentChassis"
 description: |-
 A physical holder housing blade servers.
-
 ---
 
 # Data Source: intersight_equipment_chassis
 A physical holder housing blade servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `chassis_id`:(int)The assigned identifier for a chassis.

@@ -9,16 +9,14 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // I18nMessage I18n:Message
 //
 // An i18n message that can be translated in multiple languages to support internationalization.
-//
 // An i18n message includes a unique message identifier, a text format string, a list of message parameters that can be used
 // to substitute parameters, and a translated string based on a user's locale.
 //
@@ -63,7 +61,6 @@ func (m I18nMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -105,23 +102,20 @@ func (m *I18nMessage) UnmarshalBinary(b []byte) error {
 }
 
 // I18nMessageAO1P1 i18n message a o1 p1
+//
 // swagger:model I18nMessageAO1P1
 type I18nMessageAO1P1 struct {
 
 	// The default (en-US) localized message. Default localized message will be stored and directly retrieved when
 	// the user's locale setting is en-US.
-	//
-	//
 	// Read Only: true
 	Message string `json:"Message,omitempty"`
 
 	// The unique message identitifer used to lookup text templates in a multi-language message catalog.
-	//
 	// Read Only: true
 	MessageID string `json:"MessageId,omitempty"`
 
 	// The list of message parameters.
-	//
 	MessageParams []*I18nMessageParam `json:"MessageParams"`
 
 	// i18n message a o1 p1
@@ -135,18 +129,14 @@ func (m *I18nMessageAO1P1) UnmarshalJSON(data []byte) error {
 
 		// The default (en-US) localized message. Default localized message will be stored and directly retrieved when
 		// the user's locale setting is en-US.
-		//
-		//
 		// Read Only: true
 		Message string `json:"Message,omitempty"`
 
 		// The unique message identitifer used to lookup text templates in a multi-language message catalog.
-		//
 		// Read Only: true
 		MessageID string `json:"MessageId,omitempty"`
 
 		// The list of message parameters.
-		//
 		MessageParams []*I18nMessageParam `json:"MessageParams"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -155,11 +145,8 @@ func (m *I18nMessageAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv I18nMessageAO1P1
 
 	rcv.Message = stage1.Message
-
 	rcv.MessageID = stage1.MessageID
-
 	rcv.MessageParams = stage1.MessageParams
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -169,11 +156,8 @@ func (m *I18nMessageAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Message")
-
 	delete(stage2, "MessageId")
-
 	delete(stage2, "MessageParams")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -196,25 +180,19 @@ func (m I18nMessageAO1P1) MarshalJSON() ([]byte, error) {
 
 		// The default (en-US) localized message. Default localized message will be stored and directly retrieved when
 		// the user's locale setting is en-US.
-		//
-		//
 		// Read Only: true
 		Message string `json:"Message,omitempty"`
 
 		// The unique message identitifer used to lookup text templates in a multi-language message catalog.
-		//
 		// Read Only: true
 		MessageID string `json:"MessageId,omitempty"`
 
 		// The list of message parameters.
-		//
 		MessageParams []*I18nMessageParam `json:"MessageParams"`
 	}
 
 	stage1.Message = m.Message
-
 	stage1.MessageID = m.MessageID
-
 	stage1.MessageParams = m.MessageParams
 
 	// make JSON object for known properties

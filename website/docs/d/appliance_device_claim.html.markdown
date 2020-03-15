@@ -6,22 +6,18 @@ description: |-
 DeviceClaim managed object represents a user initiated claim request for claiming
 an endpoint device. There can be many DeviceClaim managed object for a given endpoint
 device when users claim and unclaim devices repeatedly.
-
 Claiming an endpoint device is a multi-step operation. The Intersight Appliance
 starts a workflow with multiple tasks to process the device claim request. The status
 of the device claim operation can be obtained from the claim workflow.
-
 ---
 
 # Data Source: intersight_appliance_device_claim
 DeviceClaim managed object represents a user initiated claim request for claiming
 an endpoint device. There can be many DeviceClaim managed object for a given endpoint
 device when users claim and unclaim devices repeatedly.
-
 Claiming an endpoint device is a multi-step operation. The Intersight Appliance
 starts a workflow with multiple tasks to process the device claim request. The status
 of the device claim operation can be obtained from the claim workflow.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_id`:(string)Device identifier of the endpoint device.

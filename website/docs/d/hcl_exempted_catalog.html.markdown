@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hcl_exempted_catalog"
 sidebar_current: "docs-intersight-data-source-hclExemptedCatalog"
 description: |-
 Collection used to store exempted products (ie. adapters, storage controllers, etc). These products should be ignored for HCL validation purposes.
-
 ---
 
 # Data Source: intersight_hcl_exempted_catalog
 Collection used to store exempted products (ie. adapters, storage controllers, etc). These products should be ignored for HCL validation purposes.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `comments`:(string)Reason for the exemption.

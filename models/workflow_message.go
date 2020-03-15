@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m WorkflowMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,15 +100,14 @@ func (m *WorkflowMessage) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowMessageAO1P1 workflow message a o1 p1
+//
 // swagger:model WorkflowMessageAO1P1
 type WorkflowMessageAO1P1 struct {
 
 	// An i18n message that can be translated in multiple languages to support internationalization.
-	//
 	Message string `json:"Message,omitempty"`
 
 	// The severity of the Task or Workflow message warning/error/info etc.
-	//
 	// Enum: [Info Warning Debug Error]
 	Severity *string `json:"Severity,omitempty"`
 
@@ -124,11 +121,9 @@ func (m *WorkflowMessageAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// An i18n message that can be translated in multiple languages to support internationalization.
-		//
 		Message string `json:"Message,omitempty"`
 
 		// The severity of the Task or Workflow message warning/error/info etc.
-		//
 		// Enum: [Info Warning Debug Error]
 		Severity *string `json:"Severity,omitempty"`
 	}
@@ -138,9 +133,7 @@ func (m *WorkflowMessageAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowMessageAO1P1
 
 	rcv.Message = stage1.Message
-
 	rcv.Severity = stage1.Severity
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -150,9 +143,7 @@ func (m *WorkflowMessageAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Message")
-
 	delete(stage2, "Severity")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -174,17 +165,14 @@ func (m WorkflowMessageAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// An i18n message that can be translated in multiple languages to support internationalization.
-		//
 		Message string `json:"Message,omitempty"`
 
 		// The severity of the Task or Workflow message warning/error/info etc.
-		//
 		// Enum: [Info Warning Debug Error]
 		Severity *string `json:"Severity,omitempty"`
 	}
 
 	stage1.Message = m.Message
-
 	stage1.Severity = m.Severity
 
 	// make JSON object for known properties

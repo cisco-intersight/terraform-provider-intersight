@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_eth_adapter_policy"
 sidebar_current: "docs-intersight-resource-vnicEthAdapterPolicy"
 description: |-
   An Ethernet adapter policy governs the host-side behavior of the adapter, including how the adapter handles traffic. For each VIC Virtual Ethernet Interface you can configure various features like VXLAN, NVGRE, ARFS, Interrupt settings, and TCP Offload settings.
-
 ---
 
 # Resource: intersight_vnic_eth_adapter_policy
 An Ethernet adapter policy governs the host-side behavior of the adapter, including how the adapter handles traffic. For each VIC Virtual Ethernet Interface you can configure various features like VXLAN, NVGRE, ARFS, Interrupt settings, and TCP Offload settings.
-
 ## Argument Reference
 The following arguments are supported:
 * `advanced_filter`:(bool)Enables advanced filtering on the interface.

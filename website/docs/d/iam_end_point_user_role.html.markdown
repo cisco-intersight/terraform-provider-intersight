@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_end_point_user_role"
 sidebar_current: "docs-intersight-data-source-iamEndPointUserRole"
 description: |-
 Mapping of endpoint user to endpoint roles.
-
 ---
 
 # Data Source: intersight_iam_end_point_user_role
 Mapping of endpoint user to endpoint roles.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `change_password`:(bool)Denotes whether password has changed.

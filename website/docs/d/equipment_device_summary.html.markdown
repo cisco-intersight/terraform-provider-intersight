@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_device_summary"
 sidebar_current: "docs-intersight-data-source-equipmentDeviceSummary"
 description: |-
 Aggregation of properties pertaining to different inventory MOs.
-
 ---
 
 # Data Source: intersight_equipment_device_summary
 Aggregation of properties pertaining to different inventory MOs.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `dn`:(string)The distinguished name for the Network Element.

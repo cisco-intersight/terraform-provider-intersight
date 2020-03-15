@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_flash_virtual_drive"
 sidebar_current: "docs-intersight-data-source-storageFlexFlashVirtualDrive"
 description: |-
 Virtual Drive repersenting a SD Card.
-
 ---
 
 # Data Source: intersight_storage_flex_flash_virtual_drive
 Virtual Drive repersenting a SD Card.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

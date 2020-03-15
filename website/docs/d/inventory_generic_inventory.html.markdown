@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_inventory_generic_inventory"
 sidebar_current: "docs-intersight-data-source-inventoryGenericInventory"
 description: |-
 Any inventory which is represented as a key / value pair. Example - moInvKv in UCSM representing OS tools running on ESX.
-
 ---
 
 # Data Source: intersight_inventory_generic_inventory
 Any inventory which is represented as a key / value pair. Example - moInvKv in UCSM representing OS tools running on ESX.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

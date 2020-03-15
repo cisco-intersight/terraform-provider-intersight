@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_workflow_task_definition"
 sidebar_current: "docs-intersight-resource-workflowTaskDefinition"
 description: |-
   Used to define a task which can be included within a workflow. Task definition conveys the intent that we want to achieve with the task. We can have a standalone task definition that is bound to a single implementation for that task, or we can define an TaskDefinition that will serve as the interface task definition which is linked to multiple implementation tasks. Each implemented TaskDefinition will be bound to its own implementation so we can achieve a case where single TaskDefinition has multiple implementations.
-
 ---
 
 # Resource: intersight_workflow_task_definition
 Used to define a task which can be included within a workflow. Task definition conveys the intent that we want to achieve with the task. We can have a standalone task definition that is bound to a single implementation for that task, or we can define an TaskDefinition that will serve as the interface task definition which is linked to multiple implementation tasks. Each implemented TaskDefinition will be bound to its own implementation so we can achieve a case where single TaskDefinition has multiple implementations.
-
 ## Argument Reference
 The following arguments are supported:
 * `catalog`:(Array with Maximum of one item) -The catalog under which the definition has been added.
@@ -34,8 +32,13 @@ This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `base_task_type`:(string)(Computed)This field will hold the base task type like HttpBaseTask or RemoteAnsibleBaseTask.
-  + `constraints`:(string)(Computed)This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.
-  + `internal`:(bool)(Computed)Denotes this is an internal task.  Internal tasks will be hidden from the UI within a workflow.
+  + `constraints`:(Array with Maximum of one item) -(Computed)This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.
+This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+    + `target_data_type`:List of property constraints that helps to narrow down task implementations based on target device input.
+  + `internal`:(bool)(Computed)Denotes this is an internal task. Internal tasks will be hidden from the UI when executing a workflow.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `owner`:(string)(Computed)The service that owns and is responsible for execution of the task.
 * `label`:(string)A user friendly short name to identify the task definition.
@@ -52,6 +55,7 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `external_meta`:(bool)When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.
   + `input_definition`:(Array)The schema expected for input parameters for this task.
 This complex property has following sub-properties:
     + `additional_properties`:
@@ -64,8 +68,8 @@ This complex property has following sub-properties:
     + `override`:(bool)Override the default value provided for the data type. When true, allow the user to enter value for the data type.
     + `value`:Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
   + `description`:(string)Provide a detailed description of the data type.
-  + `label`:(string)Descriptive name for the data type.
-  + `name`:(string)Pick a descriptive name for the data type.
+  + `label`:(string)Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
+  + `name`:(string)Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `required`:(bool)Specifies whether this parameter is required. The field is applicable for task and workflow.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
@@ -81,15 +85,17 @@ This complex property has following sub-properties:
     + `override`:(bool)Override the default value provided for the data type. When true, allow the user to enter value for the data type.
     + `value`:Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
   + `description`:(string)Provide a detailed description of the data type.
-  + `label`:(string)Descriptive name for the data type.
-  + `name`:(string)Pick a descriptive name for the data type.
+  + `label`:(string)Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
+  + `name`:(string)Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `required`:(bool)Specifies whether this parameter is required. The field is applicable for task and workflow.
   + `retry_count`:(int)The number of times a task should be tried before marking as failed.
   + `retry_delay`:(int)The delay in seconds after which the the task is re-tried.
   + `retry_policy`:(string)The retry policy for the task.
+  + `support_status`:(string)Supported status of the definition.
   + `timeout`:(int)The timeout value in seconds after which task will be marked as timed out. Max allowed value is 7 days.
   + `timeout_policy`:(string)The timeout policy for the task.
+* `secure_prop_access`:(bool)If set to true, the task requires access to secure properties and uses an encyption token associated with a workflow moid to encrypt or decrypt the secure properties.
 * `tags`:(Array)The array of tags, which allow to add key, value meta-data to managed objects.
 This complex property has following sub-properties:
   + `additional_properties`:

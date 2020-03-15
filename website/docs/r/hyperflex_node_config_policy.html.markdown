@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_node_config_policy"
 sidebar_current: "docs-intersight-resource-hyperflexNodeConfigPolicy"
 description: |-
   A policy specifying node details such as management and storage data IP ranges. For HyperFlex Edge, storage data IP range is pre-defined.
-
 ---
 
 # Resource: intersight_hyperflex_node_config_policy
 A policy specifying node details such as management and storage data IP ranges. For HyperFlex Edge, storage data IP range is pre-defined.
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.

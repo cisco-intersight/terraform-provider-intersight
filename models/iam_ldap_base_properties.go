@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m IamLdapBaseProperties) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,44 +100,36 @@ func (m *IamLdapBaseProperties) UnmarshalBinary(b []byte) error {
 }
 
 // IamLdapBasePropertiesAO1P1 iam ldap base properties a o1 p1
+//
 // swagger:model IamLdapBasePropertiesAO1P1
 type IamLdapBasePropertiesAO1P1 struct {
 
 	// Role and locale information of the user.
-	//
 	Attribute string `json:"Attribute,omitempty"`
 
 	// Base Distinguished Name (DN). Starting point from where server will search for users and groups.
-	//
 	BaseDn string `json:"BaseDn,omitempty"`
 
 	// Distinguished Name (DN) of the user, that is used to authenticate against LDAP servers.
-	//
 	BindDn string `json:"BindDn,omitempty"`
 
 	// Authentication method to access LDAP servers.
-	//
 	// Enum: [LoginCredentials Anonymous ConfiguredCredentials]
 	BindMethod *string `json:"BindMethod,omitempty"`
 
 	// The IPv4 domain that all users must be in.
-	//
 	Domain string `json:"Domain,omitempty"`
 
 	// If enabled, the endpoint encrypts all information it sends to the LDAP server.
-	//
 	EnableEncryption *bool `json:"EnableEncryption,omitempty"`
 
 	// If enabled, user authorization is also done at the group level for LDAP users not in the local user database.
-	//
 	EnableGroupAuthorization *bool `json:"EnableGroupAuthorization,omitempty"`
 
 	// Criteria to identify entries in search requests.
-	//
 	Filter string `json:"Filter,omitempty"`
 
 	// Groups to which an LDAP entry belongs.
-	//
 	GroupAttribute string `json:"GroupAttribute,omitempty"`
 
 	// is password set
@@ -147,15 +137,12 @@ type IamLdapBasePropertiesAO1P1 struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Search depth to look for a nested LDAP group in an LDAP group map.
-	//
 	NestedGroupSearchDepth int64 `json:"NestedGroupSearchDepth,omitempty"`
 
 	// Password of the user, that is used to authenticate.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// LDAP authentication timeout duration, in seconds.
-	//
 	Timeout int64 `json:"Timeout,omitempty"`
 
 	// iam ldap base properties a o1 p1
@@ -168,40 +155,31 @@ func (m *IamLdapBasePropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Role and locale information of the user.
-		//
 		Attribute string `json:"Attribute,omitempty"`
 
 		// Base Distinguished Name (DN). Starting point from where server will search for users and groups.
-		//
 		BaseDn string `json:"BaseDn,omitempty"`
 
 		// Distinguished Name (DN) of the user, that is used to authenticate against LDAP servers.
-		//
 		BindDn string `json:"BindDn,omitempty"`
 
 		// Authentication method to access LDAP servers.
-		//
 		// Enum: [LoginCredentials Anonymous ConfiguredCredentials]
 		BindMethod *string `json:"BindMethod,omitempty"`
 
 		// The IPv4 domain that all users must be in.
-		//
 		Domain string `json:"Domain,omitempty"`
 
 		// If enabled, the endpoint encrypts all information it sends to the LDAP server.
-		//
 		EnableEncryption *bool `json:"EnableEncryption,omitempty"`
 
 		// If enabled, user authorization is also done at the group level for LDAP users not in the local user database.
-		//
 		EnableGroupAuthorization *bool `json:"EnableGroupAuthorization,omitempty"`
 
 		// Criteria to identify entries in search requests.
-		//
 		Filter string `json:"Filter,omitempty"`
 
 		// Groups to which an LDAP entry belongs.
-		//
 		GroupAttribute string `json:"GroupAttribute,omitempty"`
 
 		// is password set
@@ -209,15 +187,12 @@ func (m *IamLdapBasePropertiesAO1P1) UnmarshalJSON(data []byte) error {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Search depth to look for a nested LDAP group in an LDAP group map.
-		//
 		NestedGroupSearchDepth int64 `json:"NestedGroupSearchDepth,omitempty"`
 
 		// Password of the user, that is used to authenticate.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// LDAP authentication timeout duration, in seconds.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -226,31 +201,18 @@ func (m *IamLdapBasePropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamLdapBasePropertiesAO1P1
 
 	rcv.Attribute = stage1.Attribute
-
 	rcv.BaseDn = stage1.BaseDn
-
 	rcv.BindDn = stage1.BindDn
-
 	rcv.BindMethod = stage1.BindMethod
-
 	rcv.Domain = stage1.Domain
-
 	rcv.EnableEncryption = stage1.EnableEncryption
-
 	rcv.EnableGroupAuthorization = stage1.EnableGroupAuthorization
-
 	rcv.Filter = stage1.Filter
-
 	rcv.GroupAttribute = stage1.GroupAttribute
-
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.NestedGroupSearchDepth = stage1.NestedGroupSearchDepth
-
 	rcv.Password = stage1.Password
-
 	rcv.Timeout = stage1.Timeout
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -260,31 +222,18 @@ func (m *IamLdapBasePropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Attribute")
-
 	delete(stage2, "BaseDn")
-
 	delete(stage2, "BindDn")
-
 	delete(stage2, "BindMethod")
-
 	delete(stage2, "Domain")
-
 	delete(stage2, "EnableEncryption")
-
 	delete(stage2, "EnableGroupAuthorization")
-
 	delete(stage2, "Filter")
-
 	delete(stage2, "GroupAttribute")
-
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "NestedGroupSearchDepth")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "Timeout")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -306,40 +255,31 @@ func (m IamLdapBasePropertiesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Role and locale information of the user.
-		//
 		Attribute string `json:"Attribute,omitempty"`
 
 		// Base Distinguished Name (DN). Starting point from where server will search for users and groups.
-		//
 		BaseDn string `json:"BaseDn,omitempty"`
 
 		// Distinguished Name (DN) of the user, that is used to authenticate against LDAP servers.
-		//
 		BindDn string `json:"BindDn,omitempty"`
 
 		// Authentication method to access LDAP servers.
-		//
 		// Enum: [LoginCredentials Anonymous ConfiguredCredentials]
 		BindMethod *string `json:"BindMethod,omitempty"`
 
 		// The IPv4 domain that all users must be in.
-		//
 		Domain string `json:"Domain,omitempty"`
 
 		// If enabled, the endpoint encrypts all information it sends to the LDAP server.
-		//
 		EnableEncryption *bool `json:"EnableEncryption,omitempty"`
 
 		// If enabled, user authorization is also done at the group level for LDAP users not in the local user database.
-		//
 		EnableGroupAuthorization *bool `json:"EnableGroupAuthorization,omitempty"`
 
 		// Criteria to identify entries in search requests.
-		//
 		Filter string `json:"Filter,omitempty"`
 
 		// Groups to which an LDAP entry belongs.
-		//
 		GroupAttribute string `json:"GroupAttribute,omitempty"`
 
 		// is password set
@@ -347,42 +287,27 @@ func (m IamLdapBasePropertiesAO1P1) MarshalJSON() ([]byte, error) {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Search depth to look for a nested LDAP group in an LDAP group map.
-		//
 		NestedGroupSearchDepth int64 `json:"NestedGroupSearchDepth,omitempty"`
 
 		// Password of the user, that is used to authenticate.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// LDAP authentication timeout duration, in seconds.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 
 	stage1.Attribute = m.Attribute
-
 	stage1.BaseDn = m.BaseDn
-
 	stage1.BindDn = m.BindDn
-
 	stage1.BindMethod = m.BindMethod
-
 	stage1.Domain = m.Domain
-
 	stage1.EnableEncryption = m.EnableEncryption
-
 	stage1.EnableGroupAuthorization = m.EnableGroupAuthorization
-
 	stage1.Filter = m.Filter
-
 	stage1.GroupAttribute = m.GroupAttribute
-
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.NestedGroupSearchDepth = m.NestedGroupSearchDepth
-
 	stage1.Password = m.Password
-
 	stage1.Timeout = m.Timeout
 
 	// make JSON object for known properties

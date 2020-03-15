@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_meta_definition"
 sidebar_current: "docs-intersight-data-source-metaDefinition"
 description: |-
 The meta-data of managed objects and complex types.
-
 ---
 
 # Data Source: intersight_meta_definition
 The meta-data of managed objects and complex types.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `is_concrete`:(bool)Boolean flag to specify whether the meta class is a concrete class or not.

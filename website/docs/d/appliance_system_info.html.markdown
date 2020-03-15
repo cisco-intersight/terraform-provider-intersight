@@ -6,14 +6,12 @@ description: |-
 The Intersight Appliance's system information. SystemInfo is a singleton managed object
 created during the Intersight Appliance setup. The Intersight Appliance updates the
 SystemInfo managed object with up to date cluster status information periodically.
-
 ---
 
 # Data Source: intersight_appliance_system_info
 The Intersight Appliance's system information. SystemInfo is a singleton managed object
 created during the Intersight Appliance setup. The Intersight Appliance updates the
 SystemInfo managed object with up to date cluster status information periodically.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `cloud_conn_status`:(string)Connection state of the Intersight Appliance to the Intersight.

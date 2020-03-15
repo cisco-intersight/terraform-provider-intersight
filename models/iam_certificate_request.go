@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -22,45 +21,34 @@ type IamCertificateRequest struct {
 	MoBaseMo
 
 	// The account associated with the CertificateRequest.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// A collection of references to the [iam.Certificate](mo://iam.Certificate) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Certificate](mo://iam.Certificate) MO on the other side of the relationship is deleted.
-	//
 	Certificate *IamCertificateRef `json:"Certificate,omitempty"`
 
 	// User input email address, an optional part of the subject of the certificate request.
-	//
 	EmailAddress string `json:"EmailAddress,omitempty"`
 
 	// Name of the certificate request.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// A collection of references to the [iam.PrivateKeySpec](mo://iam.PrivateKeySpec) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.PrivateKeySpec](mo://iam.PrivateKeySpec) MO on the other side of the relationship is deleted.
-	//
 	PrivateKeySpec *IamPrivateKeySpecRef `json:"PrivateKeySpec,omitempty"`
 
 	// Generated certificate signing request (CSR) in PEM format.
-	//
 	// Read Only: true
 	Request string `json:"Request,omitempty"`
 
 	// Whether the user wants the generated CSR to be self-signed by the appliance.
-	//
 	SelfSigned *bool `json:"SelfSigned,omitempty"`
 
 	// The x.509 distinguished name of the subject of the certificate request.
-	//
 	Subject *PkixDistinguishedName `json:"Subject,omitempty"`
 
 	// The x.509 subject alternate name values of the certificate request.
-	//
 	SubjectAlternateName *PkixSubjectAlternateName `json:"SubjectAlternateName,omitempty"`
 }
 
@@ -127,7 +115,6 @@ func (m IamCertificateRequest) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -171,7 +158,6 @@ func (m IamCertificateRequest) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

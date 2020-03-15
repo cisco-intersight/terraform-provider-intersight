@@ -3,19 +3,17 @@ layout: "intersight"
 page_title: "Intersight: intersight_memory_persistent_memory_config_result"
 sidebar_current: "docs-intersight-data-source-memoryPersistentMemoryConfigResult"
 description: |-
-This represents the result of a previously applied Persistent Memory Configuration on a server.
-
+Result of a previously applied Persistent Memory configuration on a server.
 ---
 
 # Data Source: intersight_memory_persistent_memory_config_result
-This represents the result of a previously applied Persistent Memory Configuration on a server.
-
+Result of a previously applied Persistent Memory configuration on a server.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `config_error_desc`:(string)This describes the error in the result of a previously applied Persistent Memory Configuration on a server.
-* `config_result`:(string)This represents the result of a previously applied Persistent Memory Configuration on a server.
-* `config_sequence_no`:(int)This represents the sequence number of a previously applied Persistent Memory Configuration on a server.
-* `config_state`:(string)This represents the state of a previously applied Persistent Memory Configuration on a server.
+* `config_error_desc`:(string)Error in the result of a previously applied Persistent Memory configuration on a server.
+* `config_result`:(string)Result of a previously applied Persistent Memory configuration on a server.
+* `config_sequence_no`:(int)Sequence number of a previously applied Persistent Memory configuration on a server.
+* `config_state`:(string)State of a previously applied Persistent Memory configuration on a server.
 * `device_mo_id`:(string)
 * `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
 * `moid`:(string)The unique identifier of this Managed Object instance.

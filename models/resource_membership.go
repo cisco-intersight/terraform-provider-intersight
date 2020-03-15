@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,24 +22,19 @@ type ResourceMembership struct {
 	MoBaseMo
 
 	// Groups, organizations and their permissions to roles mapping.
-	//
 	// Read Only: true
 	GroupPermissionRoles []*IamGroupPermissionToRoles `json:"GroupPermissionRoles"`
 
 	// A collection of references to the [resource.MembershipHolder](mo://resource.MembershipHolder) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [resource.MembershipHolder](mo://resource.MembershipHolder) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Holder *ResourceMembershipHolderRef `json:"Holder,omitempty"`
 
 	// Reference to the resources like device registrations which needs access control.
-	//
 	// Read Only: true
 	Resource *MoBaseMoRef `json:"Resource,omitempty"`
 
 	// Name of the Service owning the resource.
-	//
 	// Read Only: true
 	TargetApp string `json:"TargetApp,omitempty"`
 }
@@ -88,7 +82,6 @@ func (m ResourceMembership) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		GroupPermissionRoles []*IamGroupPermissionToRoles `json:"GroupPermissionRoles"`
 
@@ -112,7 +105,6 @@ func (m ResourceMembership) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

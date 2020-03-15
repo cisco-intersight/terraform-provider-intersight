@@ -99,6 +99,11 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 					},
 				},
 			},
+			"retryable": {
+				Description: "When true, this workflow can be retried for 2 weeks since the last modification of the workflow.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
 			"schema_version": {
 				Description: "The Conductor schema version that decides what attribute can be supported.",
 				Type:        schema.TypeInt,
@@ -181,6 +186,10 @@ func dataSourceWorkflowWorkflowMetaRead(d *schema.ResourceData, meta interface{}
 		x := (v.(string))
 		o.ObjectType = x
 	}
+	if v, ok := d.GetOk("retryable"); ok {
+		x := (v.(bool))
+		o.Retryable = &x
+	}
 	if v, ok := d.GetOk("schema_version"); ok {
 		x := int64(v.(int))
 		o.SchemaVersion = x
@@ -245,6 +254,9 @@ func dataSourceWorkflowWorkflowMetaRead(d *schema.ResourceData, meta interface{}
 			}
 
 			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+				return err
+			}
+			if err := d.Set("retryable", (s.Retryable)); err != nil {
 				return err
 			}
 			if err := d.Set("schema_version", (s.SchemaVersion)); err != nil {

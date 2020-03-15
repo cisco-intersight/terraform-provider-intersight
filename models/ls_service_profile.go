@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,37 +20,30 @@ type LsServiceProfile struct {
 	InventoryBase
 
 	// Assignment state of the service profile.
-	//
 	// Read Only: true
 	AssignState string `json:"AssignState,omitempty"`
 
 	// Association state of the service profile.
-	//
 	// Read Only: true
 	AssocState string `json:"AssocState,omitempty"`
 
 	// Server to which the UCS Manager service profile is associated to.
-	//
 	// Read Only: true
 	AssociatedServer string `json:"AssociatedServer,omitempty"`
 
 	// Configuration state of the service profile.
-	//
 	// Read Only: true
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// Name of the UCS Manager service profile.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Operational state of the service profile.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -111,7 +103,6 @@ func (m LsServiceProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AssignState string `json:"AssignState,omitempty"`
 
@@ -147,7 +138,6 @@ func (m LsServiceProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

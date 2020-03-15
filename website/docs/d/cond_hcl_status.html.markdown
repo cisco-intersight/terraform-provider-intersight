@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_cond_hcl_status"
 sidebar_current: "docs-intersight-data-source-condHclStatus"
 description: |-
 The HCL status of a managed object after we have validated the managed object components' firmware and drivers against the HCL.
-
 ---
 
 # Data Source: intersight_cond_hcl_status
 The HCL status of a managed object after we have validated the managed object components' firmware and drivers against the HCL.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `component_status`:(string)The overall status for the components found in the HCL. This will provide the HCL validation status for all the components. It can be one of the following. \"Validated\" - all the components hardware/software profiles are listed in the HCL. \"Not-Listed\" - one or more components hardware/software profiles are not listed in the HCL \"Incomplete\" - the components are not evaluated as the server's software/hardware profiles are not listed in the HCL. \"Not-Evaluated\" - The components are not evaluated against the HCL because it is exempted.

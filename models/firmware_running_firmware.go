@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,21 +22,16 @@ type FirmwareRunningFirmware struct {
 	InventoryBase
 
 	// A collection of references to the [bios.Unit](mo://bios.Unit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [bios.Unit](mo://bios.Unit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	BiosUnit *BiosUnitRef `json:"BiosUnit,omitempty"`
 
 	// Kind of the firmware - boot-booloader/system/kernel.
-	//
 	// Read Only: true
 	Component string `json:"Component,omitempty"`
 
 	// A collection of references to the [management.Controller](mo://management.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [management.Controller](mo://management.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ManagementController *ManagementControllerRef `json:"ManagementController,omitempty"`
 
@@ -45,36 +39,28 @@ type FirmwareRunningFirmware struct {
 	NetworkElements []*NetworkElementRef `json:"NetworkElements"`
 
 	// Package version which the firmware belongs to.
-	//
 	// Read Only: true
 	PackageVersion string `json:"PackageVersion,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageController *StorageControllerRef `json:"StorageController,omitempty"`
 
 	// A collection of references to the [storage.PhysicalDisk](mo://storage.PhysicalDisk) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.PhysicalDisk](mo://storage.PhysicalDisk) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StoragePhysicalDisk *StoragePhysicalDiskRef `json:"StoragePhysicalDisk,omitempty"`
 
 	// Type of the firmware.
-	//
 	// Read Only: true
 	Type string `json:"Type,omitempty"`
 
 	// Version of the firmware.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -146,7 +132,6 @@ func (m FirmwareRunningFirmware) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BiosUnit *BiosUnitRef `json:"BiosUnit,omitempty"`
 
@@ -194,7 +179,6 @@ func (m FirmwareRunningFirmware) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_flash_controller"
 sidebar_current: "docs-intersight-data-source-storageFlexFlashController"
 description: |-
 Storage Flex Flash Controller.
-
 ---
 
 # Data Source: intersight_storage_flex_flash_controller
 Storage Flex Flash Controller.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `controller_state`:(string)

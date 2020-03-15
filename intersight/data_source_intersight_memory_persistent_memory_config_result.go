@@ -15,25 +15,25 @@ func dataSourceMemoryPersistentMemoryConfigResult() *schema.Resource {
 		Read: dataSourceMemoryPersistentMemoryConfigResultRead,
 		Schema: map[string]*schema.Schema{
 			"config_error_desc": {
-				Description: "This describes the error in the result of a previously applied Persistent Memory Configuration on a server.",
+				Description: "Error in the result of a previously applied Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"config_result": {
-				Description: "This represents the result of a previously applied Persistent Memory Configuration on a server.",
+				Description: "Result of a previously applied Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"config_sequence_no": {
-				Description: "This represents the sequence number of a previously applied Persistent Memory Configuration on a server.",
+				Description: "Sequence number of a previously applied Persistent Memory configuration on a server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"config_state": {
-				Description: "This represents the state of a previously applied Persistent Memory Configuration on a server.",
+				Description: "State of a previously applied Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -120,7 +120,7 @@ func dataSourceMemoryPersistentMemoryConfigResult() *schema.Resource {
 				},
 			},
 			"persistent_memory_namespace_config_results": {
-				Description: "This represents the collection of all the results of the previously applied Persistent Memory Namespaces on a server.",
+				Description: "Collection of all the results of the previously applied Persistent Memory Namespaces on a server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_adapter_host_fc_interface"
 sidebar_current: "docs-intersight-data-source-adapterHostFcInterface"
 description: |-
 Host facing fibre channel interface on a server adaptor.
-
 ---
 
 # Data Source: intersight_adapter_host_fc_interface
 Host facing fibre channel interface on a server adaptor.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(string)

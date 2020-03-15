@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_software_hyperflex_distributable"
 sidebar_current: "docs-intersight-resource-softwareHyperflexDistributable"
 description: |-
   A HyperFlex image distributed by Cisco.
-
 ---
 
 # Resource: intersight_software_hyperflex_distributable
 A HyperFlex image distributed by Cisco.
-
 ## Argument Reference
 The following arguments are supported:
 * `bundle_type`:(string)(Computed)The bundle type of the image, as published on cisco.com.

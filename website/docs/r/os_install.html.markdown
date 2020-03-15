@@ -8,7 +8,6 @@ OS installation. The OS installation can be started in the target server by doin
 a POST on this MO.
 The requests to this MO starts a OS installation workflow that can be tracked
 using workflow engine MO workflow.WorkflowInfo.
-
 ---
 
 # Resource: intersight_os_install
@@ -17,7 +16,6 @@ OS installation. The OS installation can be started in the target server by doin
 a POST on this MO.
 The requests to this MO starts a OS installation workflow that can be tracked
 using workflow engine MO workflow.WorkflowInfo.
-
 ## Argument Reference
 The following arguments are supported:
 * `additional_parameters`:(Array)If the os.ConfigurationFile MO selected is a template that uses additionalplaceholders other than the ones provided in standard os.Answers MO, the valuesfor those additional placeholders are provided here.
@@ -38,8 +36,8 @@ This complex property has following sub-properties:
     + `override`:(bool)Override the default value provided for the data type. When true, allow the user to enter value for the data type.
     + `value`:Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
   + `description`:(string)Provide a detailed description of the data type.
-  + `label`:(string)Descriptive name for the data type.
-  + `name`:(string)Pick a descriptive name for the data type.
+  + `label`:(string)Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
+  + `name`:(string)Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `properties`:(Array with Maximum of one item) -Primitive data type properties.
 This complex property has following sub-properties:
@@ -60,8 +58,17 @@ This complex property has following sub-properties:
   + `min`:(float)Allowed minimum value of the parameter if parameter is integer/float or minimum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `regex`:(string)When the parameter is a string this regular expression is used to ensure the value is valid.
+  + `inventory_selector`:(Array)List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.
+This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `display_attributes`:
+                (Array of schema.TypeString) -List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
+    + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+    + `selector`:(string)Field to hold an Intersight API along with an optional filter to narrow down the search options.
+    + `value_attribute`:(string)A property from the Intersight object, value of which can be used as value for referenced input definition.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-  + `secure`:(bool)Intersight allows the secure properties to be used as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.
+  + `secure`:(bool)Intersight supports secure properties as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.
   + `type`:(string)Specify the enum type for primitive data type.
   + `required`:(bool)Specifies whether this parameter is required. The field is applicable for task and workflow.
   + `value`:Value for placeholder provided by user.
@@ -81,11 +88,12 @@ This complex property has following sub-properties:
     + `netmask`:(string)The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.
     + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `is_answer_file_set`:(bool)(Computed)Indicates whether the value of the 'answerFile' property has been set.
+  + `is_root_password_crypted`:(bool)Enable to indicate Root Password provided is encrypted.
   + `is_root_password_set`:(bool)
   + `nameserver`:(string)IP address of the name server to be configured in the OS.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `product_key`:(string)The product key to be used for a specific version of Windows installation.
-  + `root_password`:(string)Password to be configured for the root / administrator user in the OS.
+  + `root_password`:(string)Password configured for the root / administrator user in the OS. You can enter a plain text or an encrypted password.Intersight encrypts the plaintext password. Enable the Encrypted Password option to provide an encrypted password.For more details on encrypting passwords, see Help Center.
   + `source`:(string)Answer values can be provided from three sources - Embedded in OS image, static file,or as placeholder values for an answer file template.Source of the answers is given as value, Embedded/File/Template.'Embedded' option indicates that the answer file is embedded within the OS Image. 'File'option indicates that the answers are provided as a file. 'Template' indicates that theplaceholders in the selected os.ConfigurationFile MO are replaced with values providedas os.Answers MO.
 * `configuration_file`:(Array with Maximum of one item) -If the answers source is selected as 'Template' in 'Answers' property, this relation provides the os.ConfigurationFile instance to be used for this OS install.
 This complex property has following sub-properties:

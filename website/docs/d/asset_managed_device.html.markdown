@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_asset_managed_device"
 sidebar_current: "docs-intersight-data-source-assetManagedDevice"
 description: |-
 Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
-
 ---
 
 # Data Source: intersight_asset_managed_device
 Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_type`:(string)Type of the Device such as VMware, Pure Storage supported by Intersight Assist.

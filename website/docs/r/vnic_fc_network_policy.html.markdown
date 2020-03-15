@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_fc_network_policy"
 sidebar_current: "docs-intersight-resource-vnicFcNetworkPolicy"
 description: |-
   A Fibre Channel Network policy governs the VSAN configuration for the virtual interfaces.
-
 ---
 
 # Resource: intersight_vnic_fc_network_policy
 A Fibre Channel Network policy governs the VSAN configuration for the virtual interfaces.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

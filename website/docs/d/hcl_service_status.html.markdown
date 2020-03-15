@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hcl_service_status"
 sidebar_current: "docs-intersight-data-source-hclServiceStatus"
 description: |-
 Status of the service indicatating if the service is up or under maintenance due to data update. Service will not be able serve any requests when the data is being updated. Collection will have only one document.
-
 ---
 
 # Data Source: intersight_hcl_service_status
 Status of the service indicatating if the service is up or under maintenance due to data update. Service will not be able serve any requests when the data is being updated. Collection will have only one document.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `exemption_file_version`:(string)Version of the last modified exemption file.

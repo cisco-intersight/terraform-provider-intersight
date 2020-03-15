@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,23 +22,18 @@ type HyperflexClusterStoragePolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// If enabled, formats existing disk partitions (destroys all user data).
-	//
 	DiskPartitionCleanup *bool `json:"DiskPartitionCleanup,omitempty"`
 
 	// Enable or disable Logical Availability Zones (LAZ). If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
-	//
 	LogicalAvalabilityZoneConfig *HyperflexLogicalAvailabilityZone `json:"LogicalAvalabilityZoneConfig,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Enable or disable VDI optimization (hybrid HyperFlex systems only).
-	//
 	VdiOptimization *bool `json:"VdiOptimization,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m HyperflexClusterStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -118,7 +111,6 @@ func (m HyperflexClusterStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

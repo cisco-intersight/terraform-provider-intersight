@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_local_credential_policy"
 sidebar_current: "docs-intersight-resource-hyperflexLocalCredentialPolicy"
 description: |-
   A policy specifying credentials for HyperFlex cluster such as controller VM password, hypervisor username, and password.
-
 ---
 
 # Resource: intersight_hyperflex_local_credential_policy
 A policy specifying credentials for HyperFlex cluster such as controller VM password, hypervisor username, and password.
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m FirmwareDirectDownload) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,15 +100,14 @@ func (m *FirmwareDirectDownload) UnmarshalBinary(b []byte) error {
 }
 
 // FirmwareDirectDownloadAO1P1 firmware direct download a o1 p1
+//
 // swagger:model FirmwareDirectDownloadAO1P1
 type FirmwareDirectDownloadAO1P1 struct {
 
 	// HTTP Server option when the image source is a local https server.
-	//
 	HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 	// Source type referring the image to be downloaded from CCO or from a local https server.
-	//
 	// Enum: [cisco localHttp]
 	ImageSource *string `json:"ImageSource,omitempty"`
 
@@ -118,16 +115,13 @@ type FirmwareDirectDownloadAO1P1 struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Password as configured on the local https server.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Option to control the upgrade, e.g., sd_upgrade_mount_only - download the image into sd and upgrade wait for the server on-next boot.
-	//
 	// Enum: [sd_upgrade_mount_only sd_download_only sd_upgrade_only sd_upgrade_full]
 	Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 	// Username as configured on the local https server.
-	//
 	Username string `json:"Username,omitempty"`
 
 	// firmware direct download a o1 p1
@@ -140,11 +134,9 @@ func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// HTTP Server option when the image source is a local https server.
-		//
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 		// Source type referring the image to be downloaded from CCO or from a local https server.
-		//
 		// Enum: [cisco localHttp]
 		ImageSource *string `json:"ImageSource,omitempty"`
 
@@ -152,16 +144,13 @@ func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password as configured on the local https server.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Option to control the upgrade, e.g., sd_upgrade_mount_only - download the image into sd and upgrade wait for the server on-next boot.
-		//
 		// Enum: [sd_upgrade_mount_only sd_download_only sd_upgrade_only sd_upgrade_full]
 		Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 		// Username as configured on the local https server.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -170,17 +159,11 @@ func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FirmwareDirectDownloadAO1P1
 
 	rcv.HTTPServer = stage1.HTTPServer
-
 	rcv.ImageSource = stage1.ImageSource
-
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.Password = stage1.Password
-
 	rcv.Upgradeoption = stage1.Upgradeoption
-
 	rcv.Username = stage1.Username
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -190,17 +173,11 @@ func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "HttpServer")
-
 	delete(stage2, "ImageSource")
-
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "Upgradeoption")
-
 	delete(stage2, "Username")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -222,11 +199,9 @@ func (m FirmwareDirectDownloadAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// HTTP Server option when the image source is a local https server.
-		//
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 		// Source type referring the image to be downloaded from CCO or from a local https server.
-		//
 		// Enum: [cisco localHttp]
 		ImageSource *string `json:"ImageSource,omitempty"`
 
@@ -234,29 +209,21 @@ func (m FirmwareDirectDownloadAO1P1) MarshalJSON() ([]byte, error) {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password as configured on the local https server.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Option to control the upgrade, e.g., sd_upgrade_mount_only - download the image into sd and upgrade wait for the server on-next boot.
-		//
 		// Enum: [sd_upgrade_mount_only sd_download_only sd_upgrade_only sd_upgrade_full]
 		Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 		// Username as configured on the local https server.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 
 	stage1.HTTPServer = m.HTTPServer
-
 	stage1.ImageSource = m.ImageSource
-
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.Password = m.Password
-
 	stage1.Upgradeoption = m.Upgradeoption
-
 	stage1.Username = m.Username
 
 	// make JSON object for known properties

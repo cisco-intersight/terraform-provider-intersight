@@ -45,7 +45,7 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				},
 			},
 			"email": {
-				Description: "The email of the associated user that made the change.  This is needed in case that user is later deleted, we still have some reference to the information.",
+				Description: "The email of the associated user that made the change.  In case the user is later deleted, we still have some reference to the information.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -214,6 +214,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 					},
 				},
 			},
+			"user_id_or_email": {
+				Description: "The userId or the email of the associated user that made the change. In case that user is later deleted, we still have some reference to the information.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 		},
 	}
 }
@@ -263,6 +268,10 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 	if v, ok := d.GetOk("trace_id"); ok {
 		x := (v.(string))
 		o.TraceID = x
+	}
+	if v, ok := d.GetOk("user_id_or_email"); ok {
+		x := (v.(string))
+		o.UserIDOrEmail = x
 	}
 
 	data, err := o.MarshalJSON()
@@ -336,6 +345,9 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 			}
 
 			if err := d.Set("user", flattenMapIamUserRef(s.User, d)); err != nil {
+				return err
+			}
+			if err := d.Set("user_id_or_email", (s.UserIDOrEmail)); err != nil {
 				return err
 			}
 			d.SetId(s.Moid)

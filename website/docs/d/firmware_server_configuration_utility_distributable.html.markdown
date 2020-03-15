@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_server_configuration_utility_distri
 sidebar_current: "docs-intersight-data-source-firmwareServerConfigurationUtilityDistributable"
 description: |-
 A server configuration utility image distributed by Cisco.
-
 ---
 
 # Data Source: intersight_firmware_server_configuration_utility_distributable
 A server configuration utility image distributed by Cisco.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bundle_type`:(string)The bundle type of the image, as published on cisco.com.

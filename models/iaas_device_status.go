@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,60 +23,48 @@ type IaasDeviceStatus struct {
 	MoBaseMo
 
 	// The UCSD infra account name. Account Name is created when UCSD admin adds any new infra account (Physical/Virtual/Compute/Network) to be managed by UCSD.
-	//
 	// Read Only: true
 	AccountName string `json:"AccountName,omitempty"`
 
 	// The UCSD Infra Account type.
-	//
 	// Read Only: true
 	AccountType string `json:"AccountType,omitempty"`
 
 	// Describes if the device is claimed in Intersight or not.
-	//
 	// Read Only: true
 	// Enum: [Unknown Yes No Not Applicable]
 	ClaimStatus string `json:"ClaimStatus,omitempty"`
 
 	// Describes about the connection status between the UCSD and the actual end device.
-	//
 	// Read Only: true
 	ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
 	// Describes about the device model.
-	//
 	// Read Only: true
 	DeviceModel string `json:"DeviceModel,omitempty"`
 
 	// Describes about the device vendor/manufacturer of the device.
-	//
 	// Read Only: true
 	DeviceVendor string `json:"DeviceVendor,omitempty"`
 
 	// Describes about the current firmware version running on the device.
-	//
 	// Read Only: true
 	DeviceVersion string `json:"DeviceVersion,omitempty"`
 
 	// A collection of references to the [iaas.UcsdInfo](mo://iaas.UcsdInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iaas.UcsdInfo](mo://iaas.UcsdInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
 	// The IPAddress of the device.
-	//
 	// Read Only: true
 	IPAddress string `json:"IpAddress,omitempty"`
 
 	// Describes about the pod to which this device belongs to in UCSD.
-	//
 	// Read Only: true
 	Pod string `json:"Pod,omitempty"`
 
 	// Describes about the podType of Pod to which this device belongs to in UCSD.
-	//
 	// Read Only: true
 	PodType string `json:"PodType,omitempty"`
 }
@@ -153,7 +140,6 @@ func (m IaasDeviceStatus) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccountName string `json:"AccountName,omitempty"`
 
@@ -205,7 +191,6 @@ func (m IaasDeviceStatus) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

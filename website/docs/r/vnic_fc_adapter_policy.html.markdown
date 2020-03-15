@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_fc_adapter_policy"
 sidebar_current: "docs-intersight-resource-vnicFcAdapterPolicy"
 description: |-
   A Fibre Channel Adapter policy governs the host-side behavior of the adapter, including how the adapter handles traffic. You can enable FCP Error Recovery, change the default settings of Queues and Interrupt handling for performance enhancement.
-
 ---
 
 # Resource: intersight_vnic_fc_adapter_policy
 A Fibre Channel Adapter policy governs the host-side behavior of the adapter, including how the adapter handles traffic. You can enable FCP Error Recovery, change the default settings of Queues and Interrupt handling for performance enhancement.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

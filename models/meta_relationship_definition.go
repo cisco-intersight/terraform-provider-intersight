@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m MetaRelationshipDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,27 +100,24 @@ func (m *MetaRelationshipDefinition) UnmarshalBinary(b []byte) error {
 }
 
 // MetaRelationshipDefinitionAO1P1 meta relationship definition a o1 p1
+//
 // swagger:model MetaRelationshipDefinitionAO1P1
 type MetaRelationshipDefinitionAO1P1 struct {
 
 	// API access definition for this relationship.
-	//
 	// Read Only: true
 	// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 	APIAccess string `json:"ApiAccess,omitempty"`
 
 	// Specifies whether the relationship is a collection.
-	//
 	// Read Only: true
 	Collection *bool `json:"Collection,omitempty"`
 
 	// The name of the relationship.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Fully qualified type of the foreign managed object.
-	//
 	// Read Only: true
 	Type string `json:"Type,omitempty"`
 
@@ -136,23 +131,19 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// API access definition for this relationship.
-		//
 		// Read Only: true
 		// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 		APIAccess string `json:"ApiAccess,omitempty"`
 
 		// Specifies whether the relationship is a collection.
-		//
 		// Read Only: true
 		Collection *bool `json:"Collection,omitempty"`
 
 		// The name of the relationship.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Fully qualified type of the foreign managed object.
-		//
 		// Read Only: true
 		Type string `json:"Type,omitempty"`
 	}
@@ -162,13 +153,9 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv MetaRelationshipDefinitionAO1P1
 
 	rcv.APIAccess = stage1.APIAccess
-
 	rcv.Collection = stage1.Collection
-
 	rcv.Name = stage1.Name
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -178,13 +165,9 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ApiAccess")
-
 	delete(stage2, "Collection")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -206,33 +189,26 @@ func (m MetaRelationshipDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// API access definition for this relationship.
-		//
 		// Read Only: true
 		// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 		APIAccess string `json:"ApiAccess,omitempty"`
 
 		// Specifies whether the relationship is a collection.
-		//
 		// Read Only: true
 		Collection *bool `json:"Collection,omitempty"`
 
 		// The name of the relationship.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Fully qualified type of the foreign managed object.
-		//
 		// Read Only: true
 		Type string `json:"Type,omitempty"`
 	}
 
 	stage1.APIAccess = m.APIAccess
-
 	stage1.Collection = m.Collection
-
 	stage1.Name = m.Name
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

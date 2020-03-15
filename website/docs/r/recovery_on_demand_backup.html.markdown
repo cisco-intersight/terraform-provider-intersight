@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_recovery_on_demand_backup"
 sidebar_current: "docs-intersight-resource-recoveryOnDemandBackup"
 description: |-
   Handles requests for on demand backup for a given endpoint.
-
 ---
 
 # Resource: intersight_recovery_on_demand_backup
 Handles requests for on demand backup for a given endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `config_result`:(Array with Maximum of one item) -(Computed)The status of ondemand backup.
@@ -23,7 +21,7 @@ This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
-* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418
+* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.
 * `is_password_set`:(bool)
 * `location_type`:(string)Specifies whether the backup will be stored locally or remotely.
 * `moid`:(string)The unique identifier of this Managed Object instance.

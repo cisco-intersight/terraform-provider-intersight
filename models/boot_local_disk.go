@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,11 +20,9 @@ type BootLocalDisk struct {
 	BootDeviceBase
 
 	// Details of the bootloader to be used during boot from local disk.
-	//
 	Bootloader *BootBootloader `json:"Bootloader,omitempty"`
 
 	// The slot id of the local disk device. Supported values are (1-255, "M", "HBA", "SAS", "RAID", "MRAID", "MSTOR-RAID").
-	//
 	Slot string `json:"Slot,omitempty"`
 }
 
@@ -64,7 +61,6 @@ func (m BootLocalDisk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Bootloader *BootBootloader `json:"Bootloader,omitempty"`
 
@@ -80,7 +76,6 @@ func (m BootLocalDisk) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

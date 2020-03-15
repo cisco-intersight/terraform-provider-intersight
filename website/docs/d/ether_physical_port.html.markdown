@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ether_physical_port"
 sidebar_current: "docs-intersight-data-source-etherPhysicalPort"
 description: |-
 Physical ethernet port present on a FI.
-
 ---
 
 # Data Source: intersight_ether_physical_port
 Physical ethernet port present on a FI.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

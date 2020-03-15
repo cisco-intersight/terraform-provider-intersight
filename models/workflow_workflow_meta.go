@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,48 +23,40 @@ type WorkflowWorkflowMeta struct {
 	MoBaseMo
 
 	// The description for the workflow.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The workflow input parameters.
-	//
 	InputParameters []string `json:"InputParameters"`
 
 	// The name given to the workflow.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The workflow output parameters.
-	//
 	OutputParameters interface{} `json:"OutputParameters,omitempty"`
 
+	// When true, this workflow can be retried for 2 weeks since the last modification of the workflow.
+	Retryable *bool `json:"Retryable,omitempty"`
+
 	// The Conductor schema version that decides what attribute can be supported.
-	//
 	SchemaVersion int64 `json:"SchemaVersion,omitempty"`
 
 	// The src is workflow owner service.
-	//
 	Src string `json:"Src,omitempty"`
 
 	// The tasks contained inside of the workflow.
-	//
 	Tasks interface{} `json:"Tasks,omitempty"`
 
 	// The type of workflow definition.
-	//
 	// Enum: [SystemDefined UserDefined Dynamic]
 	Type *string `json:"Type,omitempty"`
 
 	// The version for the workflow so we can support multiple versions for the same workflow name.
-	//
 	Version int64 `json:"Version,omitempty"`
 
 	// Parameter decides if workflows will wait for a duplicate to finish before starting a new one.
-	//
 	WaitOnDuplicate *bool `json:"WaitOnDuplicate,omitempty"`
 }
 
@@ -89,6 +80,8 @@ func (m *WorkflowWorkflowMeta) UnmarshalJSON(raw []byte) error {
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
+
+		Retryable *bool `json:"Retryable,omitempty"`
 
 		SchemaVersion int64 `json:"SchemaVersion,omitempty"`
 
@@ -116,6 +109,8 @@ func (m *WorkflowWorkflowMeta) UnmarshalJSON(raw []byte) error {
 
 	m.OutputParameters = dataAO1.OutputParameters
 
+	m.Retryable = dataAO1.Retryable
+
 	m.SchemaVersion = dataAO1.SchemaVersion
 
 	m.Src = dataAO1.Src
@@ -140,7 +135,6 @@ func (m WorkflowWorkflowMeta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -151,6 +145,8 @@ func (m WorkflowWorkflowMeta) MarshalJSON() ([]byte, error) {
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
+
+		Retryable *bool `json:"Retryable,omitempty"`
 
 		SchemaVersion int64 `json:"SchemaVersion,omitempty"`
 
@@ -175,6 +171,8 @@ func (m WorkflowWorkflowMeta) MarshalJSON() ([]byte, error) {
 
 	dataAO1.OutputParameters = m.OutputParameters
 
+	dataAO1.Retryable = m.Retryable
+
 	dataAO1.SchemaVersion = m.SchemaVersion
 
 	dataAO1.Src = m.Src
@@ -192,7 +190,6 @@ func (m WorkflowWorkflowMeta) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

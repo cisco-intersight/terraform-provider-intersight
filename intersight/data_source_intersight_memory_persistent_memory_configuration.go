@@ -56,7 +56,7 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				Computed:    true,
 			},
 			"memory_capacity": {
-				Description: "This represents the memory capacity in GB of a persistent memory configuration on a server.",
+				Description: "Memory capacity in GB of a Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -67,14 +67,14 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"num_of_dimms": {
-				Description: "This represents the number of persistent memory modules of a Persistent Memory Configuration on a server.",
+			"num_of_modules": {
+				Description: "Number of Persistent Memory Modules on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_of_regions": {
-				Description: "This represents the number of regions of a Persistent Memory Configuration on a server.",
+				Description: "Number of Persistent Memory Regions on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -114,13 +114,13 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				},
 			},
 			"persistent_memory_capacity": {
-				Description: "This represents the persistent memory capacity in GB of a persistent memory configuration on a server.",
+				Description: "Persistent memory capacity in GB of a Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"persistent_memory_config_result": {
-				Description: "This represents the result of a previously applied Persistent Memory Configuration on a server.",
+				Description: "Result of a previously applied Persistent Memory configuration on a server.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -149,7 +149,7 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				},
 			},
 			"persistent_memory_regions": {
-				Description: "This represents the collection of all the persistent memory regions configured on a server.",
+				Description: "Collection of all the Persistent Memory Regions configured on a server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -206,7 +206,7 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				},
 			},
 			"reserved_capacity": {
-				Description: "This represents the reserved capacity in GB of a persistent memory configuration on a server.",
+				Description: "Reserved capacity in GB of a Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -218,7 +218,7 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				Computed:    true,
 			},
 			"security_state": {
-				Description: "This represents the collective security state of all persistent memory modules on a server.",
+				Description: "Collective security state of all Persistent Memory modules on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -255,7 +255,7 @@ func dataSourceMemoryPersistentMemoryConfiguration() *schema.Resource {
 				Computed: true,
 			},
 			"total_capacity": {
-				Description: "This represents the total capacity in GB of a persistent memory configuration on a server.",
+				Description: "Total capacity in GB of a Persistent Memory configuration on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -286,9 +286,9 @@ func dataSourceMemoryPersistentMemoryConfigurationRead(d *schema.ResourceData, m
 		x := (v.(string))
 		o.Moid = x
 	}
-	if v, ok := d.GetOk("num_of_dimms"); ok {
+	if v, ok := d.GetOk("num_of_modules"); ok {
 		x := (v.(string))
-		o.NumOfDimms = x
+		o.NumOfModules = x
 	}
 	if v, ok := d.GetOk("num_of_regions"); ok {
 		x := (v.(string))
@@ -357,7 +357,7 @@ func dataSourceMemoryPersistentMemoryConfigurationRead(d *schema.ResourceData, m
 			if err := d.Set("moid", (s.Moid)); err != nil {
 				return err
 			}
-			if err := d.Set("num_of_dimms", (s.NumOfDimms)); err != nil {
+			if err := d.Set("num_of_modules", (s.NumOfModules)); err != nil {
 				return err
 			}
 			if err := d.Set("num_of_regions", (s.NumOfRegions)); err != nil {

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,15 +22,12 @@ type SdcardPolicy struct {
 	PolicyAbstractPolicy
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// This is a collection of partition.
-	//
 	Partitions []*SdcardPartition `json:"Partitions"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -74,7 +70,6 @@ func (m SdcardPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
@@ -94,7 +89,6 @@ func (m SdcardPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_graphics_card"
 sidebar_current: "docs-intersight-data-source-graphicsCard"
 description: |-
 Graphics Card present in a server.
-
 ---
 
 # Data Source: intersight_graphics_card
 Graphics Card present in a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `card_id`:(int)It shows the id of graphics card.

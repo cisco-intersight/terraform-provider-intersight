@@ -16,7 +16,7 @@ func dataSourceStoragePureProtectionGroupSnapshot() *schema.Resource {
 		Read: dataSourceStoragePureProtectionGroupSnapshotRead,
 		Schema: map[string]*schema.Schema{
 			"created_time": {
-				Description: "Protection group snapshot created time.",
+				Description: "Protection group snapshot creation time.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -28,7 +28,7 @@ func dataSourceStoragePureProtectionGroupSnapshot() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "Protection group snapshot name which represents point in time copy of all members in protection group.",
+				Description: "Protection group snapshot name which represents point-in-time copy of all members in protection group.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -126,7 +126,7 @@ func dataSourceStoragePureProtectionGroupSnapshot() *schema.Resource {
 				},
 			},
 			"size": {
-				Description: "Snapshot size represented in bytes. It is a cummulative size of all snapshots in a set.",
+				Description: "Snapshot size represented in bytes. It is a cumulative size of all snapshots in a set.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,

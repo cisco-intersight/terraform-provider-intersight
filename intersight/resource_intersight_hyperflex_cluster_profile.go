@@ -291,7 +291,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Description: "The hypervisor type for the HyperFlex cluster.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Default:     "Unknown",
+				Default:     "ESXi",
 			},
 			"local_credential": {
 				Description: "A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) MO unsets its reference to this deleted MO.",

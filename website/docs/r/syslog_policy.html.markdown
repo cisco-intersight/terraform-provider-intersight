@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_syslog_policy"
 sidebar_current: "docs-intersight-resource-syslogPolicy"
 description: |-
   The syslog policy configure the syslog server to receive CIMC log entries.
-
 ---
 
 # Resource: intersight_syslog_policy
 The syslog policy configure the syslog server to receive CIMC log entries.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

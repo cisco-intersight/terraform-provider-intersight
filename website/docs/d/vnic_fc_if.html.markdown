@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_fc_if"
 sidebar_current: "docs-intersight-data-source-vnicFcIf"
 description: |-
 Virtual Fibre Channel Interface.
-
 ---
 
 # Data Source: intersight_vnic_fc_if
 Virtual Fibre Channel Interface.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

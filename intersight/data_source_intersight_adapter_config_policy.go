@@ -132,6 +132,37 @@ func dataSourceAdapterConfigPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"dce_interface_settings": {
+							Description: "Collection of DCE interface settings for this adapter.",
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"fec_mode": {
+										Description: "Forward Error Correction (FEC) mode setting for the DCE interfaces of the adapter. FEC mode setting is supported only for Cisco VIC 14xx adapters. FEC mode 'cl74' is unsupported for Cisco VIC 1495/1497. This setting will be ignored for unsupported adapters and for unavailable DCE interfaces.",
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"interface_id": {
+										Description: "DCE interface id on which settings needs to be configured. Supported values are (0-3).",
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+									"object_type": {
+										Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+								},
+							},
+							Computed: true,
+						},
 						"eth_settings": {
 							Description: "Global Ethernet settings for this adapter.",
 							Type:        schema.TypeList,
@@ -205,7 +236,7 @@ func dataSourceAdapterConfigPolicy() *schema.Resource {
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
 									"enabled": {
-										Description: "When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.",
+										Description: "When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.",
 										Type:        schema.TypeBool,
 										Optional:    true,
 									},

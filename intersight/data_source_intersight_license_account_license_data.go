@@ -114,8 +114,20 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"error_desc": {
+				Description: "The detailed error message when there is any error related to license sync of this account.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"group": {
 				Description: "Account license data group name.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"highest_compliant_license_tier": {
+				Description: "The highest license tier which is in compliant of this account.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -358,9 +370,17 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 		x := (v.(string))
 		o.DefaultLicenseType = &x
 	}
+	if v, ok := d.GetOk("error_desc"); ok {
+		x := (v.(string))
+		o.ErrorDesc = x
+	}
 	if v, ok := d.GetOk("group"); ok {
 		x := (v.(string))
 		o.Group = x
+	}
+	if v, ok := d.GetOk("highest_compliant_license_tier"); ok {
+		x := (v.(string))
+		o.HighestCompliantLicenseTier = x
 	}
 	if v, ok := d.GetOk("last_sync"); ok {
 		x, _ := strfmt.ParseDateTime(v.(string))
@@ -470,7 +490,13 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 			if err := d.Set("default_license_type", (s.DefaultLicenseType)); err != nil {
 				return err
 			}
+			if err := d.Set("error_desc", (s.ErrorDesc)); err != nil {
+				return err
+			}
 			if err := d.Set("group", (s.Group)); err != nil {
+				return err
+			}
+			if err := d.Set("highest_compliant_license_tier", (s.HighestCompliantLicenseTier)); err != nil {
 				return err
 			}
 

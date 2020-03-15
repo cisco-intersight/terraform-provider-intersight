@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_inventory_dn_mo_binding"
 sidebar_current: "docs-intersight-data-source-inventoryDnMoBinding"
 description: |-
 DnMoBinding provides a binding between a Intersight MO and a UCSM MO which has a DN.
-
 ---
 
 # Data Source: intersight_inventory_dn_mo_binding
 DnMoBinding provides a binding between a Intersight MO and a UCSM MO which has a DN.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `dn`:(string)Distinguished Name of the UCSM object.

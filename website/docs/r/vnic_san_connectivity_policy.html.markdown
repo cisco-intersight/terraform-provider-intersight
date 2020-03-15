@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_san_connectivity_policy"
 sidebar_current: "docs-intersight-resource-vnicSanConnectivityPolicy"
 description: |-
   SAN connectivity policy determines the network storage resources and the connections between the server and the SAN on the network. This policy enables you to configure vHBAs that the servers use to communicate with the storage network.
-
 ---
 
 # Resource: intersight_vnic_san_connectivity_policy
 SAN connectivity policy determines the network storage resources and the connections between the server and the SAN on the network. This policy enables you to configure vHBAs that the servers use to communicate with the storage network.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

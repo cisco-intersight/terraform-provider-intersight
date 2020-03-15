@@ -116,6 +116,74 @@ func dataSourceComputeServerSetting() *schema.Resource {
 					},
 				},
 			},
+			"persistent_memory_operation": {
+				Description: "The Persistent Memory Modules operation properties.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"admin_action": {
+							Description: "Administrative actions that can be performed on the Persistent Memory Modules.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"is_secure_passphrase_set": {
+							Description: "",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"modules": {
+							Description: "Selected Persistent Memory Modules on the server.",
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"object_type": {
+										Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+									"socket_id": {
+										Description: "Socket ID of the Persistent Memory Module on the server.",
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"socket_memory_id": {
+										Description: "Socket Memory ID of the Persistent Memory Module on the server.",
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+								},
+							},
+							Computed: true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"secure_passphrase": {
+							Description: "Secure passphrase of the Persistent Memory Modules of the server.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"registered_device": {
 				Description: "Relates to the device end point from which this server was discovered.",
 				Type:        schema.TypeList,
@@ -342,6 +410,10 @@ func dataSourceComputeServerSettingRead(d *schema.ResourceData, meta interface{}
 			}
 
 			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+				return err
+			}
+
+			if err := d.Set("persistent_memory_operation", flattenMapComputePersistentMemoryOperation(s.PersistentMemoryOperation, d)); err != nil {
 				return err
 			}
 

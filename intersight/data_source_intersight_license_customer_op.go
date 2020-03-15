@@ -43,9 +43,29 @@ func dataSourceLicenseCustomerOp() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"active_admin": {
+				Description: "The license administrative state.Set this property to 'true' to activate the license entitlements.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
 			"deregister_device": {
 				Description: "Trigger de-registration/disable.",
 				Type:        schema.TypeBool,
+				Optional:    true,
+			},
+			"enable_trial": {
+				Description: "Enable trial for Intersight licensing.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
+			"evaluation_period": {
+				Description: "The default Trial or Grace period customer is entitled to.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
+			"extra_evaluation": {
+				Description: "The number of days the trial Trial or Grace period is extended. The trial or grace period can be extended once.",
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"moid": {
@@ -144,9 +164,25 @@ func dataSourceLicenseCustomerOpRead(d *schema.ResourceData, meta interface{}) e
 
 	url := "license/CustomerOps"
 	var o models.LicenseCustomerOp
+	if v, ok := d.GetOk("active_admin"); ok {
+		x := (v.(bool))
+		o.ActiveAdmin = &x
+	}
 	if v, ok := d.GetOk("deregister_device"); ok {
 		x := (v.(bool))
 		o.DeregisterDevice = &x
+	}
+	if v, ok := d.GetOk("enable_trial"); ok {
+		x := (v.(bool))
+		o.EnableTrial = &x
+	}
+	if v, ok := d.GetOk("evaluation_period"); ok {
+		x := int64(v.(int))
+		o.EvaluationPeriod = x
+	}
+	if v, ok := d.GetOk("extra_evaluation"); ok {
+		x := int64(v.(int))
+		o.ExtraEvaluation = x
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -195,7 +231,19 @@ func dataSourceLicenseCustomerOpRead(d *schema.ResourceData, meta interface{}) e
 			if err := d.Set("account_license_data", flattenMapLicenseAccountLicenseDataRef(s.AccountLicenseData, d)); err != nil {
 				return err
 			}
+			if err := d.Set("active_admin", (s.ActiveAdmin)); err != nil {
+				return err
+			}
 			if err := d.Set("deregister_device", (s.DeregisterDevice)); err != nil {
+				return err
+			}
+			if err := d.Set("enable_trial", (s.EnableTrial)); err != nil {
+				return err
+			}
+			if err := d.Set("evaluation_period", (s.EvaluationPeriod)); err != nil {
+				return err
+			}
+			if err := d.Set("extra_evaluation", (s.ExtraEvaluation)); err != nil {
 				return err
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {

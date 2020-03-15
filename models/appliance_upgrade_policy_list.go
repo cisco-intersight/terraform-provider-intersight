@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // ApplianceUpgradePolicyList appliance upgrade policy list
+//
 // swagger:model applianceUpgradePolicyList
 type ApplianceUpgradePolicyList struct {
 

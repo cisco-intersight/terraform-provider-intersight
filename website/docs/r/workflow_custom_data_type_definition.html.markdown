@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_workflow_custom_data_type_definition"
 sidebar_current: "docs-intersight-resource-workflowCustomDataTypeDefinition"
 description: |-
   Captures a customized data type definition that can be used for task or workflow input/output.  This can be reused across multiple tasks and workflow definitions.
-
 ---
 
 # Resource: intersight_workflow_custom_data_type_definition
 Captures a customized data type definition that can be used for task or workflow input/output.  This can be reused across multiple tasks and workflow definitions.
-
 ## Argument Reference
 The following arguments are supported:
 * `catalog`:(Array with Maximum of one item) -The catalog under which the definition is present.
@@ -47,7 +45,7 @@ This complex property has following sub-properties:
     + `override`:(bool)Override the default value provided for the data type. When true, allow the user to enter value for the data type.
     + `value`:Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
   + `description`:(string)Provide a detailed description of the data type.
-  + `label`:(string)Descriptive name for the data type.
-  + `name`:(string)Pick a descriptive name for the data type.
+  + `label`:(string)Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
+  + `name`:(string)Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `required`:(bool)Specifies whether this parameter is required. The field is applicable for task and workflow.

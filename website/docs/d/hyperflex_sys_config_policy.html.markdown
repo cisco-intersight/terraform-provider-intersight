@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_sys_config_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexSysConfigPolicy"
 description: |-
 A policy specifying system configuration such as timezone, DNS servers, and NTP Servers.
-
 ---
 
 # Data Source: intersight_hyperflex_sys_config_policy
 A policy specifying system configuration such as timezone, DNS servers, and NTP Servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `dns_domain_name`:(string)The DNS Search Domain Name. This setting applies to HyperFlex Data Platform 3.0 or later only.

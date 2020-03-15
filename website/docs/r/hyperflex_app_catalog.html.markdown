@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_app_catalog"
 sidebar_current: "docs-intersight-resource-hyperflexAppCatalog"
 description: |-
   A catalog for managing application settings for HyperFlex cluster configuration service.
-
 ---
 
 # Resource: intersight_hyperflex_app_catalog
 A catalog for managing application settings for HyperFlex cluster configuration service.
-
 ## Argument Reference
 The following arguments are supported:
 * `feature_limit_external`:(Array with Maximum of one item) -The HyperFlex feature limits that are available to end users.

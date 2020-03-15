@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,19 +22,15 @@ type SyslogPolicy struct {
 	PolicyAbstractPolicy
 
 	// Set of local logging clients on the endpoint.
-	//
 	LocalClients []*SyslogLocalClientBase `json:"LocalClients"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// Set of remote logging clients on the endpoint.
-	//
 	RemoteClients []*SyslogRemoteClientBase `json:"RemoteClients"`
 }
 
@@ -82,7 +77,6 @@ func (m SyslogPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		LocalClients []*SyslogLocalClientBase `json:"LocalClients"`
 
@@ -106,7 +100,6 @@ func (m SyslogPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

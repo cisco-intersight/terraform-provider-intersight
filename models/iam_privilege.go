@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,41 +20,32 @@ type IamPrivilege struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The hostname prefix of the resource corresponding to this privilege. For example \'sentry\' in https://sentry.intersight.com .
-	//
 	// Read Only: true
 	HostnamePrefix string `json:"HostnamePrefix,omitempty"`
 
 	// The API method on the rest resource corresponding to privilege. For example READ, CREATE, UPDATE etc.
-	//
 	// Read Only: true
 	Method string `json:"Method,omitempty"`
 
 	// The name of the privilege reported by microservice.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The REST API path of the resource corresponding to this privilege. For example /v1/iam/Accounts, /v1/iam/Sessions.
-	//
 	// Read Only: true
 	RestPath string `json:"RestPath,omitempty"`
 
 	// A collection of references to the [iam.System](mo://iam.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.System](mo://iam.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 
 	// The URL path prefix of the resource corresponding to this privilege. For example /devops/kibana, /devops/grafana etc.
-	//
 	// Read Only: true
 	URLPrefix string `json:"UrlPrefix,omitempty"`
 }
@@ -115,7 +105,6 @@ func (m IamPrivilege) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -151,7 +140,6 @@ func (m IamPrivilege) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

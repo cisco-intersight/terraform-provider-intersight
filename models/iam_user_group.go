@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,31 +22,23 @@ type IamUserGroup struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Idp](mo://iam.Idp) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Idp](mo://iam.Idp) MO unsets its reference to this deleted MO.
-	//
 	Idp *IamIdpRef `json:"Idp,omitempty"`
 
 	// A collection of references to the [iam.IdpReference](mo://iam.IdpReference) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.IdpReference](mo://iam.IdpReference) MO unsets its reference to this deleted MO.
-	//
 	Idpreference *IamIdpReferenceRef `json:"Idpreference,omitempty"`
 
 	// The name of the user group which the dynamic user belongs to.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Permissions assigned to the user group. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	Permissions []*IamPermissionRef `json:"Permissions"`
 
 	// Qualifier defines which Idp attribute qualifies users to be part of a user group.
-	//
 	Qualifier *IamQualifierRef `json:"Qualifier,omitempty"`
 
 	// Users logged in using this user group.
-	//
 	// Read Only: true
 	Users []*IamUserRef `json:"Users"`
 }
@@ -103,7 +94,6 @@ func (m IamUserGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Idp *IamIdpRef `json:"Idp,omitempty"`
 
@@ -135,7 +125,6 @@ func (m IamUserGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

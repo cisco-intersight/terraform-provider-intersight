@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_sdcard_policy"
 sidebar_current: "docs-intersight-resource-sdcardPolicy"
 description: |-
   Policy for configuring SD Card settings on endpoint.
-
 ---
 
 # Resource: intersight_sdcard_policy
 Policy for configuring SD Card settings on endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_user_group"
 sidebar_current: "docs-intersight-resource-iamUserGroup"
 description: |-
   User Group provides a way to assign permissions to a group of users based on the IdP attributes received after authentication.
-
 ---
 
 # Resource: intersight_iam_user_group
 User Group provides a way to assign permissions to a group of users based on the IdP attributes received after authentication.
-
 ## Argument Reference
 The following arguments are supported:
 * `idp`:(Array with Maximum of one item) -A collection of references to the [iam.Idp](mo://iam.Idp) Managed Object.When this managed object is deleted, the referenced [iam.Idp](mo://iam.Idp) MO unsets its reference to this deleted MO.

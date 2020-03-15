@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // WorkflowBatchAPIExecutorList workflow batch Api executor list
+//
 // swagger:model workflowBatchApiExecutorList
 type WorkflowBatchAPIExecutorList struct {
 

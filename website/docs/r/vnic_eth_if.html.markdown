@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_eth_if"
 sidebar_current: "docs-intersight-resource-vnicEthIf"
 description: |-
   Virtual Ethernet Interface.
-
 ---
 
 # Resource: intersight_vnic_eth_if
 Virtual Ethernet Interface.
-
 ## Argument Reference
 The following arguments are supported:
 * `cdn`:(Array with Maximum of one item) -Consistent Device Naming configuration for the virtual NIC.

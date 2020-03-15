@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,13 +19,10 @@ import (
 type MoBaseComplexType struct {
 
 	// The concrete type of this complex type.
-	//
 	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
 	// ObjectType is optional.
 	// The type is ambiguous when a managed object contains an array of nested documents, and the documents in the array
 	// are heterogeneous, i.e. the array can contain nested documents of different types.
-	//
-	//
 	ObjectType string `json:"ObjectType,omitempty"`
 }
 
@@ -60,7 +56,6 @@ func (m MoBaseComplexType) MarshalJSON() ([]byte, error) {
 		return nil, errAO0
 	}
 	_parts = append(_parts, jsonDataAO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ntp_policy"
 sidebar_current: "docs-intersight-resource-ntpPolicy"
 description: |-
   Policy to configure the NTP Servers.
-
 ---
 
 # Resource: intersight_ntp_policy
 Policy to configure the NTP Servers.
-
 ## Argument Reference
 The following arguments are supported:
 * `appliance_account`:(Array with Maximum of one item) -The appliance account to which the appliance NTP policy belongs.

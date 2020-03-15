@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,39 +20,31 @@ type StorageSasPort struct {
 	InventoryBase
 
 	// The SAS Address assigned to storage port.
-	//
 	// Read Only: true
 	Address string `json:"Address,omitempty"`
 
 	// The disk identifier.
-	//
 	// Read Only: true
 	DiskID int64 `json:"DiskId,omitempty"`
 
 	// The end-point Id assigned to storage port.
-	//
 	// Read Only: true
 	EndPointID int64 `json:"EndPointId,omitempty"`
 
 	// The link description.
-	//
 	// Read Only: true
 	LinkDescription string `json:"LinkDescription,omitempty"`
 
 	// The link speed negotiated for communication.
-	//
 	// Read Only: true
 	LinkSpeed string `json:"LinkSpeed,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// A collection of references to the [storage.PhysicalDisk](mo://storage.PhysicalDisk) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.PhysicalDisk](mo://storage.PhysicalDisk) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StoragePhysicalDisk *StoragePhysicalDiskRef `json:"StoragePhysicalDisk,omitempty"`
 }
@@ -113,7 +104,6 @@ func (m StorageSasPort) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Address string `json:"Address,omitempty"`
 
@@ -149,7 +139,6 @@ func (m StorageSasPort) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

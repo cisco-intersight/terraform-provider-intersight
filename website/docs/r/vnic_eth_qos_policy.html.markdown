@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_eth_qos_policy"
 sidebar_current: "docs-intersight-resource-vnicEthQosPolicy"
 description: |-
   An Ethernet Quality of Service (QoS) policy assigns a system class to the outgoing traffic for a vNIC. This system class determines the quality of service for the outgoing traffic. For certain adapters you can also specify additional controls like burst and rate on the outgoing traffic.
-
 ---
 
 # Resource: intersight_vnic_eth_qos_policy
 An Ethernet Quality of Service (QoS) policy assigns a system class to the outgoing traffic for a vNIC. This system class determines the quality of service for the outgoing traffic. For certain adapters you can also specify additional controls like burst and rate on the outgoing traffic.
-
 ## Argument Reference
 The following arguments are supported:
 * `cos`:(int)Class of Service to be associated to the traffic on the virtual interface.

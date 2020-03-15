@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_session"
 sidebar_current: "docs-intersight-data-source-iamSession"
 description: |-
 The web session of a user. After a user logs into Intersight, a session object is created. Session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
-
 ---
 
 # Data Source: intersight_iam_session
 The web session of a user. After a user logs into Intersight, a session object is created. Session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `client_ip_address`:(string)The user agent IP address from which the session is launched.

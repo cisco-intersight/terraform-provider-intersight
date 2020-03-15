@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -57,7 +56,6 @@ func (m BootLocalCdd) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -96,5 +94,6 @@ func (m *BootLocalCdd) UnmarshalBinary(b []byte) error {
 }
 
 // BootLocalCddAllOf1 boot local cdd all of1
+//
 // swagger:model BootLocalCddAllOf1
 type BootLocalCddAllOf1 interface{}

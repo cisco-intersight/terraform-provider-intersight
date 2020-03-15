@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexAutoSupportPolicyList hyperflex auto support policy list
+//
 // swagger:model hyperflexAutoSupportPolicyList
 type HyperflexAutoSupportPolicyList struct {
 

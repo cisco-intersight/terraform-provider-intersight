@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_certificate"
 sidebar_current: "docs-intersight-resource-iamCertificate"
 description: |-
   Holds a certificate, signed by a CAcert.
-
 ---
 
 # Resource: intersight_iam_certificate
 Holds a certificate, signed by a CAcert.
-
 ## Argument Reference
 The following arguments are supported:
 * `certificate`:(Array with Maximum of one item) -User-input pem-encoded certificate, signed by a CAcert.

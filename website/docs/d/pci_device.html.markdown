@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_pci_device"
 sidebar_current: "docs-intersight-data-source-pciDevice"
 description: |-
 PCI device present in a server.
-
 ---
 
 # Data Source: intersight_pci_device
 PCI device present in a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

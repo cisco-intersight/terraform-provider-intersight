@@ -81,6 +81,40 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 					},
 				},
 			},
+			"hypervisor_version": {
+				Description: "Desired  hypervisor version to apply for all the nodes on the HyperFlex cluster.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"hypervisor_version_info": {
+				Description: "Bundle metadata information for the desired Hypervisor version.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
 				Type:        schema.TypeString,
@@ -220,6 +254,12 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"upgrade_types": {
+				Description: "List of components to be upgraded on the HyperFlex Cluster.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString}},
 		},
 	}
 }
@@ -237,6 +277,10 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 	if v, ok := d.GetOk("hxdp_version"); ok {
 		x := (v.(string))
 		o.HxdpVersion = x
+	}
+	if v, ok := d.GetOk("hypervisor_version"); ok {
+		x := (v.(string))
+		o.HypervisorVersion = x
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -291,6 +335,13 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 			if err := d.Set("hxdp_version_info", flattenMapSoftwareHyperflexDistributableRef(s.HxdpVersionInfo, d)); err != nil {
 				return err
 			}
+			if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+				return err
+			}
+
+			if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRef(s.HypervisorVersionInfo, d)); err != nil {
+				return err
+			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
 				return err
 			}
@@ -317,6 +368,9 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+				return err
+			}
+			if err := d.Set("upgrade_types", (s.UpgradeTypes)); err != nil {
 				return err
 			}
 			d.SetId(s.Moid)

@@ -131,12 +131,28 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 						},
 						"constraints": {
 							Description: "This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.",
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
+							MaxItems:    1,
 							Optional:    true,
 							Computed:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"object_type": {
+										Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+								},
+							},
 						},
 						"internal": {
-							Description: "Denotes this is an internal task.  Internal tasks will be hidden from the UI within a workflow.",
+							Description: "Denotes this is an internal task. Internal tasks will be hidden from the UI when executing a workflow.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 							Computed:    true,
@@ -224,6 +240,11 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"external_meta": {
+							Description: "When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
 						"input_definition": {
 							Description: "The schema expected for input parameters for this task.",
 							Type:        schema.TypeList,
@@ -268,12 +289,12 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 										Optional:    true,
 									},
 									"label": {
-										Description: "Descriptive name for the data type.",
+										Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
 									"name": {
-										Description: "Pick a descriptive name for the data type.",
+										Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
@@ -342,12 +363,12 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 										Optional:    true,
 									},
 									"label": {
-										Description: "Descriptive name for the data type.",
+										Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
 									"name": {
-										Description: "Pick a descriptive name for the data type.",
+										Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
@@ -381,6 +402,11 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"support_status": {
+							Description: "Supported status of the definition.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"timeout": {
 							Description: "The timeout value in seconds after which task will be marked as timed out. Max allowed value is 7 days.",
 							Type:        schema.TypeInt,
@@ -394,6 +420,11 @@ func dataSourceWorkflowTaskDefinition() *schema.Resource {
 					},
 				},
 				Computed: true,
+			},
+			"secure_prop_access": {
+				Description: "If set to true, the task requires access to secure properties and uses an encyption token associated with a workflow moid to encrypt or decrypt the secure properties.",
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"tags": {
 				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
@@ -469,6 +500,10 @@ func dataSourceWorkflowTaskDefinitionRead(d *schema.ResourceData, meta interface
 		x := (v.(string))
 		o.ObjectType = x
 	}
+	if v, ok := d.GetOk("secure_prop_access"); ok {
+		x := (v.(bool))
+		o.SecurePropAccess = &x
+	}
 	if v, ok := d.GetOk("version"); ok {
 		x := int64(v.(int))
 		o.Version = x
@@ -539,6 +574,9 @@ func dataSourceWorkflowTaskDefinitionRead(d *schema.ResourceData, meta interface
 			}
 
 			if err := d.Set("properties", flattenMapWorkflowProperties(s.Properties, d)); err != nil {
+				return err
+			}
+			if err := d.Set("secure_prop_access", (s.SecurePropAccess)); err != nil {
 				return err
 			}
 

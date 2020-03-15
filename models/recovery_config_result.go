@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,20 +22,15 @@ type RecoveryConfigResult struct {
 	PolicyAbstractConfigResult
 
 	// A collection of references to the [recovery.BackupProfile](mo://recovery.BackupProfile) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [recovery.BackupProfile](mo://recovery.BackupProfile) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	BackupProfile *RecoveryBackupProfileRef `json:"BackupProfile,omitempty"`
 
 	// Detailed result entries for both validation & configration. Each result entry can be error/warning/info messages and the context.
-	//
 	ResultEntries []*RecoveryConfigResultEntryRef `json:"ResultEntries"`
 
 	// A collection of references to the [recovery.OnDemandBackup](mo://recovery.OnDemandBackup) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [recovery.OnDemandBackup](mo://recovery.OnDemandBackup) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Nr0OnDemandBackup *RecoveryOnDemandBackupRef `json:"_0_OnDemandBackup,omitempty"`
 }
@@ -80,7 +74,6 @@ func (m RecoveryConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupProfile *RecoveryBackupProfileRef `json:"BackupProfile,omitempty"`
 
@@ -100,7 +93,6 @@ func (m RecoveryConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

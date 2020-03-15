@@ -20,12 +20,6 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"dimm_locater_ids": {
-				Description: "This represents a set of DIMM locator IDs that are included in the Persistent Memory Region.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
 				Type:        schema.TypeString,
@@ -33,19 +27,25 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed:    true,
 			},
 			"free_capacity": {
-				Description: "This represents the free capacity in GB of a Persistent Memory Region.",
+				Description: "Free capacity in GB of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"health_state": {
-				Description: "This represents the health state of a Persistent Memory Region.",
+				Description: "Health state of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"interleaved_set_id": {
-				Description: "This represents the ID of a Interleaved Set formed for a Persistent Memory Region.",
+				Description: "ID of the Interleaved Set formed for this Persistent Memory Region.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"locater_ids": {
+				Description: "Set of locator IDs that are included in the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -120,7 +120,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				},
 			},
 			"persistent_memory_namespaces": {
-				Description: "This represents the collection of all the persistent memory namespaces configured within a persistent memory region.",
+				Description: "Collection of all the Persistent Memory Namespaces configured within this Persistent Memory Region.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -148,13 +148,13 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				},
 			},
 			"persistent_memory_type": {
-				Description: "This represents the persistent memory type of a Persistent Memory Region.",
+				Description: "Persistent Memory type of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"region_id": {
-				Description: "This represents the ID of a Persistent Memory Region.",
+				Description: "ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -195,13 +195,13 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed:    true,
 			},
 			"socket_id": {
-				Description: "This represents the Socket ID of a Persistent Memory Region.",
+				Description: "Socket ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"socket_memory_id": {
-				Description: "This represents the Socket Memory ID of a Persistent Memory Region.",
+				Description: "Socket Memory ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -238,7 +238,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed: true,
 			},
 			"total_capacity": {
-				Description: "This represents the total capacity in GB of a Persistent Memory Region.",
+				Description: "Total capacity in GB of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -257,10 +257,6 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 		x := (v.(string))
 		o.DeviceMoID = x
 	}
-	if v, ok := d.GetOk("dimm_locater_ids"); ok {
-		x := (v.(string))
-		o.DimmLocaterIds = x
-	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
 		o.Dn = x
@@ -276,6 +272,10 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 	if v, ok := d.GetOk("interleaved_set_id"); ok {
 		x := (v.(string))
 		o.InterleavedSetID = x
+	}
+	if v, ok := d.GetOk("locater_ids"); ok {
+		x := (v.(string))
+		o.LocaterIds = x
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -335,9 +335,6 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
 				return err
 			}
-			if err := d.Set("dimm_locater_ids", (s.DimmLocaterIds)); err != nil {
-				return err
-			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
 				return err
 			}
@@ -348,6 +345,9 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 				return err
 			}
 			if err := d.Set("interleaved_set_id", (s.InterleavedSetID)); err != nil {
+				return err
+			}
+			if err := d.Set("locater_ids", (s.LocaterIds)); err != nil {
 				return err
 			}
 

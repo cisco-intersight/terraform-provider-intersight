@@ -7,7 +7,6 @@ BackupPolicy stores the Intersight Appliance's backup policy. There will be only
 one BackupPolicy managed object in the Intersight Appliance. Default backup policy
 managed object is created during the Intersight Appliance setup, and it is configured
 in the manual backup mode.
-
 ---
 
 # Data Source: intersight_appliance_backup_policy
@@ -15,7 +14,6 @@ BackupPolicy stores the Intersight Appliance's backup policy. There will be only
 one BackupPolicy managed object in the Intersight Appliance. Default backup policy
 managed object is created during the Intersight Appliance setup, and it is configured
 in the manual backup mode.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `backup_time`:(string)The next backup time set by the backup scheduler. Backup scheduler calculates the next backup time with the user-defined schedule set in the Schedule field.

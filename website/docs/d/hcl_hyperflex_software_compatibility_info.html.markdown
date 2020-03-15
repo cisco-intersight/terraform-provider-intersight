@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hcl_hyperflex_software_compatibility_info"
 sidebar_current: "docs-intersight-data-source-hclHyperflexSoftwareCompatibilityInfo"
 description: |-
 Lists software compatibility information between different HperFlex component versions like HyperFlex Data Platform, Hypervisor, Drive Firmware, etc.
-
 ---
 
 # Data Source: intersight_hcl_hyperflex_software_compatibility_info
 Lists software compatibility information between different HperFlex component versions like HyperFlex Data Platform, Hypervisor, Drive Firmware, etc.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `hxdp_version`:(string)HXDP component software version.

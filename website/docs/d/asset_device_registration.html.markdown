@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_asset_device_registration"
 sidebar_current: "docs-intersight-data-source-assetDeviceRegistration"
 description: |-
 DeviceRegistration represents a device connector enabled endpoint which has registered with Intersight.
-
 ---
 
 # Data Source: intersight_asset_device_registration
 DeviceRegistration represents a device connector enabled endpoint which has registered with Intersight.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `api_version`:(int)The version of the connector API, describes the capability of the connector's framework.If the version is lower than the current minimum supported version defined in the service managing the connection, the device connector will be connected with limited capabilities until the device connector is upgraded to a fully supported version. For example if a device connector that was released without delta inventory capabilities registers and connects to Intersight, inventory collection may be disabled until it has been upgraded.

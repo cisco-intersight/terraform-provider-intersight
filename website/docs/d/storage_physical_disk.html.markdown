@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_physical_disk"
 sidebar_current: "docs-intersight-data-source-storagePhysicalDisk"
 description: |-
 Physical Disk on a server.
-
 ---
 
 # Data Source: intersight_storage_physical_disk
 Physical Disk on a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `block_size`:(string)The block size of the physical disk.

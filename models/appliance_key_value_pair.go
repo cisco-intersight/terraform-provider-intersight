@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m ApplianceKeyValuePair) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,15 @@ func (m *ApplianceKeyValuePair) UnmarshalBinary(b []byte) error {
 }
 
 // ApplianceKeyValuePairAO1P1 appliance key value pair a o1 p1
+//
 // swagger:model ApplianceKeyValuePairAO1P1
 type ApplianceKeyValuePairAO1P1 struct {
 
 	// The string representation of a tag key.
-	//
 	// Read Only: true
 	Key string `json:"Key,omitempty"`
 
 	// The string representation of a tag value.
-	//
 	// Read Only: true
 	Value string `json:"Value,omitempty"`
 
@@ -124,12 +121,10 @@ func (m *ApplianceKeyValuePairAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The string representation of a tag key.
-		//
 		// Read Only: true
 		Key string `json:"Key,omitempty"`
 
 		// The string representation of a tag value.
-		//
 		// Read Only: true
 		Value string `json:"Value,omitempty"`
 	}
@@ -139,9 +134,7 @@ func (m *ApplianceKeyValuePairAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ApplianceKeyValuePairAO1P1
 
 	rcv.Key = stage1.Key
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *ApplianceKeyValuePairAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Key")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,18 +166,15 @@ func (m ApplianceKeyValuePairAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The string representation of a tag key.
-		//
 		// Read Only: true
 		Key string `json:"Key,omitempty"`
 
 		// The string representation of a tag value.
-		//
 		// Read Only: true
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Key = m.Key
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

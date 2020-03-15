@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,120 +24,105 @@ type LicenseAccountLicenseData struct {
 	MoBaseMo
 
 	// AccountLicenseData record to Account record relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Root user's ID of the account.
-	//
 	// Read Only: true
 	AccountID string `json:"AccountId,omitempty"`
 
 	// Agent trusted store data.
-	//
 	// Read Only: true
 	AgentData string `json:"AgentData,omitempty"`
 
 	// Authorization expiration time.
-	//
 	// Read Only: true
 	AuthExpireTime string `json:"AuthExpireTime,omitempty"`
 
 	// Intial authorization time.
-	//
 	// Read Only: true
 	AuthInitialTime string `json:"AuthInitialTime,omitempty"`
 
 	// Next time for the authorization.
-	//
 	// Read Only: true
 	AuthNextTime string `json:"AuthNextTime,omitempty"`
 
 	// Account license data category name.
-	//
 	// Read Only: true
 	Category string `json:"Category,omitempty"`
 
 	// AccountLicenseData record to CustomerOp record relationship.
-	//
 	CustomerOp *LicenseCustomerOpRef `json:"CustomerOp,omitempty"`
 
 	// Default license tier set by user.
-	//
-	// Enum: [Base Essential Standard Advantage]
+	// Enum: [Base Essential Standard Advantage Premier]
 	DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
 
+	// The detailed error message when there is any error related to license sync of this account.
+	// Read Only: true
+	ErrorDesc string `json:"ErrorDesc,omitempty"`
+
 	// Account license data group name.
-	//
 	// Read Only: true
 	Group string `json:"Group,omitempty"`
 
+	// The highest license tier which is in compliant of this account.
+	// Read Only: true
+	// Enum: [Base Essential Standard Advantage Premier]
+	HighestCompliantLicenseTier string `json:"HighestCompliantLicenseTier,omitempty"`
+
 	// Specifies last sync time with SA.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastSync strfmt.DateTime `json:"LastSync,omitempty"`
 
 	// Record's last update datetime.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastUpdatedTime strfmt.DateTime `json:"LastUpdatedTime,omitempty"`
 
 	// Aggregrated mode for the agent.
-	//
 	// Read Only: true
 	LicenseState string `json:"LicenseState,omitempty"`
 
 	// Tech-support info of a smart-agent.
-	//
 	// Read Only: true
 	LicenseTechSupportInfo string `json:"LicenseTechSupportInfo,omitempty"`
 
 	// All LicenceInfo records refercing this AccountLicenseData record.
-	//
 	Licenseinfos []*LicenseLicenseInfoRef `json:"Licenseinfos"`
 
 	// Registration exipiration time.
-	//
 	// Read Only: true
 	RegisterExpireTime string `json:"RegisterExpireTime,omitempty"`
 
 	// Initial time of registration.
-	//
 	// Read Only: true
 	RegisterInitialTime string `json:"RegisterInitialTime,omitempty"`
 
 	// Next time for the license registration.
-	//
 	// Read Only: true
 	RegisterNextTime string `json:"RegisterNextTime,omitempty"`
 
 	// Registration status of a smart-agent.
-	//
 	// Read Only: true
 	RegistrationStatus string `json:"RegistrationStatus,omitempty"`
 
 	// License renewal failure message.
-	//
 	// Read Only: true
 	RenewFailureString string `json:"RenewFailureString,omitempty"`
 
 	// Name of the smart account.
-	//
 	// Read Only: true
 	SmartAccount string `json:"SmartAccount,omitempty"`
 
 	// AccountLicenseData record to SmartlicenseToken record relationship.
-	//
 	SmartlicenseToken *LicenseSmartlicenseTokenRef `json:"SmartlicenseToken,omitempty"`
 
 	// Current sync status for the account.
-	//
 	// Read Only: true
 	SyncStatus string `json:"SyncStatus,omitempty"`
 
 	// Name of the virtual account.
-	//
 	// Read Only: true
 	VirtualAccount string `json:"VirtualAccount,omitempty"`
 }
@@ -172,7 +156,11 @@ func (m *LicenseAccountLicenseData) UnmarshalJSON(raw []byte) error {
 
 		DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
 
+		ErrorDesc string `json:"ErrorDesc,omitempty"`
+
 		Group string `json:"Group,omitempty"`
+
+		HighestCompliantLicenseTier string `json:"HighestCompliantLicenseTier,omitempty"`
 
 		LastSync strfmt.DateTime `json:"LastSync,omitempty"`
 
@@ -224,7 +212,11 @@ func (m *LicenseAccountLicenseData) UnmarshalJSON(raw []byte) error {
 
 	m.DefaultLicenseType = dataAO1.DefaultLicenseType
 
+	m.ErrorDesc = dataAO1.ErrorDesc
+
 	m.Group = dataAO1.Group
+
+	m.HighestCompliantLicenseTier = dataAO1.HighestCompliantLicenseTier
 
 	m.LastSync = dataAO1.LastSync
 
@@ -266,7 +258,6 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -286,7 +277,11 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 
 		DefaultLicenseType *string `json:"DefaultLicenseType,omitempty"`
 
+		ErrorDesc string `json:"ErrorDesc,omitempty"`
+
 		Group string `json:"Group,omitempty"`
+
+		HighestCompliantLicenseTier string `json:"HighestCompliantLicenseTier,omitempty"`
 
 		LastSync strfmt.DateTime `json:"LastSync,omitempty"`
 
@@ -335,7 +330,11 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 
 	dataAO1.DefaultLicenseType = m.DefaultLicenseType
 
+	dataAO1.ErrorDesc = m.ErrorDesc
+
 	dataAO1.Group = m.Group
+
+	dataAO1.HighestCompliantLicenseTier = m.HighestCompliantLicenseTier
 
 	dataAO1.LastSync = m.LastSync
 
@@ -370,7 +369,6 @@ func (m LicenseAccountLicenseData) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -392,6 +390,10 @@ func (m *LicenseAccountLicenseData) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDefaultLicenseType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateHighestCompliantLicenseTier(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -457,7 +459,7 @@ var licenseAccountLicenseDataTypeDefaultLicenseTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -481,6 +483,40 @@ func (m *LicenseAccountLicenseData) validateDefaultLicenseType(formats strfmt.Re
 
 	// value enum
 	if err := m.validateDefaultLicenseTypeEnum("DefaultLicenseType", "body", *m.DefaultLicenseType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var licenseAccountLicenseDataTypeHighestCompliantLicenseTierPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		licenseAccountLicenseDataTypeHighestCompliantLicenseTierPropEnum = append(licenseAccountLicenseDataTypeHighestCompliantLicenseTierPropEnum, v)
+	}
+}
+
+// property enum
+func (m *LicenseAccountLicenseData) validateHighestCompliantLicenseTierEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, licenseAccountLicenseDataTypeHighestCompliantLicenseTierPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *LicenseAccountLicenseData) validateHighestCompliantLicenseTier(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.HighestCompliantLicenseTier) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateHighestCompliantLicenseTierEnum("HighestCompliantLicenseTier", "body", m.HighestCompliantLicenseTier); err != nil {
 		return err
 	}
 

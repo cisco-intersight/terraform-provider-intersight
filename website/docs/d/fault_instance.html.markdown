@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_fault_instance"
 sidebar_current: "docs-intersight-data-source-faultInstance"
 description: |-
 An endpoint anomaly is represented by this object.
-
 ---
 
 # Data Source: intersight_fault_instance
 An endpoint anomaly is represented by this object.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `acknowledged`:(string)

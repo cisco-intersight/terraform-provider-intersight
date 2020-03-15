@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AssetCustomerInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,21 +99,19 @@ func (m *AssetCustomerInformation) UnmarshalBinary(b []byte) error {
 }
 
 // AssetCustomerInformationAO1P1 asset customer information a o1 p1
+//
 // swagger:model AssetCustomerInformationAO1P1
 type AssetCustomerInformationAO1P1 struct {
 
 	// Address as per the information provided by the user.
-	//
 	// Read Only: true
 	Address *AssetAddressInformation `json:"Address,omitempty"`
 
 	// Unique identifier for an end customer. This identifier is allocated by Cisco.
-	//
 	// Read Only: true
 	ID string `json:"Id,omitempty"`
 
 	// Name as per the information provided by the user.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
@@ -129,17 +125,14 @@ func (m *AssetCustomerInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Address as per the information provided by the user.
-		//
 		// Read Only: true
 		Address *AssetAddressInformation `json:"Address,omitempty"`
 
 		// Unique identifier for an end customer. This identifier is allocated by Cisco.
-		//
 		// Read Only: true
 		ID string `json:"Id,omitempty"`
 
 		// Name as per the information provided by the user.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 	}
@@ -149,11 +142,8 @@ func (m *AssetCustomerInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetCustomerInformationAO1P1
 
 	rcv.Address = stage1.Address
-
 	rcv.ID = stage1.ID
-
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -163,11 +153,8 @@ func (m *AssetCustomerInformationAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Address")
-
 	delete(stage2, "Id")
-
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -189,25 +176,20 @@ func (m AssetCustomerInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Address as per the information provided by the user.
-		//
 		// Read Only: true
 		Address *AssetAddressInformation `json:"Address,omitempty"`
 
 		// Unique identifier for an end customer. This identifier is allocated by Cisco.
-		//
 		// Read Only: true
 		ID string `json:"Id,omitempty"`
 
 		// Name as per the information provided by the user.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 	}
 
 	stage1.Address = m.Address
-
 	stage1.ID = m.ID
-
 	stage1.Name = m.Name
 
 	// make JSON object for known properties

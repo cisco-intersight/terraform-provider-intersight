@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,39 +20,30 @@ type VnicFcIf struct {
 	MoBaseMo
 
 	// Relationship to the the Fibre Channel Adapter Policy.
-	//
 	FcAdapterPolicy *VnicFcAdapterPolicyRef `json:"FcAdapterPolicy,omitempty"`
 
 	// Relationship to the Fibre Channel Network Policy.
-	//
 	FcNetworkPolicy *VnicFcNetworkPolicyRef `json:"FcNetworkPolicy,omitempty"`
 
 	// Relationship to the Fibre Channel QoS Policy.
-	//
 	FcQosPolicy *VnicFcQosPolicyRef `json:"FcQosPolicy,omitempty"`
 
 	// Name of the virtual fibre channel interface.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The order in which the virtual interface is brought up. The order assigned to an interface should be unique for all the Ethernet and Fibre-Channel interfaces on each PCI link on a VIC adapter. The maximum value of PCI order is limited by the number of virtual interfaces (Ethernet and Fibre-Channel) on each PCI link on a VIC adapter. All VIC adapters have a single PCI link except VIC 1385 which has two.
-	//
 	Order int64 `json:"Order,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Enables retention of LUN ID associations in memory until they are manually cleared.
-	//
 	PersistentBindings *bool `json:"PersistentBindings,omitempty"`
 
 	// Placement Settings for the virtual interface.
-	//
 	Placement *VnicPlacementSettings `json:"Placement,omitempty"`
 
 	// Relationship to the SAN Connectivity Policy.
-	//
 	SanConnectivityPolicy *VnicSanConnectivityPolicyRef `json:"SanConnectivityPolicy,omitempty"`
 }
 
@@ -120,7 +110,6 @@ func (m VnicFcIf) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		FcAdapterPolicy *VnicFcAdapterPolicyRef `json:"FcAdapterPolicy,omitempty"`
 
@@ -164,7 +153,6 @@ func (m VnicFcIf) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

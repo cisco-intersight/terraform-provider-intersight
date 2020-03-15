@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_server_config_change_detail"
 sidebar_current: "docs-intersight-data-source-serverConfigChangeDetail"
 description: |-
 The configuration change details are captured here.
-
 ---
 
 # Data Source: intersight_server_config_change_detail
 The configuration change details are captured here.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `config_change_flag`:(string)Config change flag to differentiate Pending-changes and Config-drift.

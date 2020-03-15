@@ -3,13 +3,11 @@ layout: "intersight"
 page_title: "Intersight: intersight_deviceconnector_policy"
 sidebar_current: "docs-intersight-resource-deviceconnectorPolicy"
 description: |-
-  Device Connector Policy.
-
+  Policy to control configuration changes allowed from Cisco IMC.
 ---
 
 # Resource: intersight_deviceconnector_policy
-Device Connector Policy.
-
+Policy to control configuration changes allowed from Cisco IMC.
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

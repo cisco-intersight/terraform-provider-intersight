@@ -6,14 +6,12 @@ description: |-
 Restore tracks requests to restore the Intersight Appliance. There will be only
 one Restore managed object with a 'Started' state at any time. All other Restore
 managed objects will be in terminal states.
-
 ---
 
 # Data Source: intersight_appliance_restore
 Restore tracks requests to restore the Intersight Appliance. There will be only
 one Restore managed object with a 'Started' state at any time. All other Restore
 managed objects will be in terminal states.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `elapsed_time`:(int)Elapsed time in seconds since the restore process has started.

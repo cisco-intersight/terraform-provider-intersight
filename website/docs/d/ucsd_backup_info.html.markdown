@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ucsd_backup_info"
 sidebar_current: "docs-intersight-data-source-ucsdBackupInfo"
 description: |-
 List of backup images available for target end device for restore operation.
-
 ---
 
 # Data Source: intersight_ucsd_backup_info
 List of backup images available for target end device for restore operation.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `backup_file_name`:(string)Auto generated backup File Name with combination of file prefix given an user input and the timestamp.

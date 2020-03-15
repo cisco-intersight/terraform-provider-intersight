@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_virtual_drive"
 sidebar_current: "docs-intersight-data-source-storageVirtualDrive"
 description: |-
 A Virtual Disk or LUN.
-
 ---
 
 # Data Source: intersight_storage_virtual_drive
 A Virtual Disk or LUN.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `access_policy`:(string)

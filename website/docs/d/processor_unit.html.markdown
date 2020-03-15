@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_processor_unit"
 sidebar_current: "docs-intersight-data-source-processorUnit"
 description: |-
 The CPU present on a server.
-
 ---
 
 # Data Source: intersight_processor_unit
 The CPU present on a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `architecture`:(string)

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_end_point_privilege"
 sidebar_current: "docs-intersight-data-source-iamEndPointPrivilege"
 description: |-
 The privilege defined at the end point which can be assigned to a user.
-
 ---
 
 # Data Source: intersight_iam_end_point_privilege
 The privilege defined at the end point which can be assigned to a user.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)The functionality of this privilege.

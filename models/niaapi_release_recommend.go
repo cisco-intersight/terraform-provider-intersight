@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,19 +20,15 @@ type NiaapiReleaseRecommend struct {
 	MoBaseMo
 
 	// Current long-lived release.
-	//
 	Cll string `json:"Cll,omitempty"`
 
 	// Customer recommended releases.
-	//
 	Crr string `json:"Crr,omitempty"`
 
 	// Hardware model identificator.
-	//
 	Pid string `json:"Pid,omitempty"`
 
 	// Upcoming long-lived release.
-	//
 	Ull string `json:"Ull,omitempty"`
 }
 
@@ -80,7 +75,6 @@ func (m NiaapiReleaseRecommend) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Cll string `json:"Cll,omitempty"`
 
@@ -104,7 +98,6 @@ func (m NiaapiReleaseRecommend) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

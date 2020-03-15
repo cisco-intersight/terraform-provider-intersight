@@ -5,13 +5,11 @@ sidebar_current: "docs-intersight-resource-hyperflexNodeProfile"
 description: |-
   A configuration profile per node in the HyperFlex cluster.
 It defines node settings such as IP address configuration for hypervisor management network, storage data network, HyperFlex management network, and the assigned physical server.
-
 ---
 
 # Resource: intersight_hyperflex_node_profile
 A configuration profile per node in the HyperFlex cluster.
 It defines node settings such as IP address configuration for hypervisor management network, storage data network, HyperFlex management network, and the assigned physical server.
-
 ## Argument Reference
 The following arguments are supported:
 * `assigned_server`:(Array with Maximum of one item) -The physical server assigned to this node profile.

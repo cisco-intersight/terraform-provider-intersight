@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_top_system"
 sidebar_current: "docs-intersight-data-source-topSystem"
 description: |-
 Root container for all UCSM / CIMC MOs.
-
 ---
 
 # Data Source: intersight_top_system
 Root container for all UCSM / CIMC MOs.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

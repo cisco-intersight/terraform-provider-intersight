@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_adapter_unit"
 sidebar_current: "docs-intersight-data-source-adapterUnit"
 description: |-
 The physical adapter present on a server.
-
 ---
 
 # Data Source: intersight_adapter_unit
 The physical adapter present on a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `adapter_id`:(string)Unique Identifier of an adapter Unit within a Rack Interface.

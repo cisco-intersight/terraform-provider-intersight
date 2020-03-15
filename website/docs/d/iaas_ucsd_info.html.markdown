@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_ucsd_info"
 sidebar_current: "docs-intersight-data-source-iaasUcsdInfo"
 description: |-
 UCS Director accounts managed by Intersight.
-
 ---
 
 # Data Source: intersight_iaas_ucsd_info
 UCS Director accounts managed by Intersight.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_id`:(string)Moid of the UCSD device connector's asset.DeviceRegistration.

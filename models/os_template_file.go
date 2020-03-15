@@ -6,16 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // OsTemplateFile Os:Template File
 //
 // A TemplateFile is an OS specific answer file that helps with the unattended installation.
-//
 // The file can also be a template file with placeholders instead of actual answers.
 // Intersight supports the golang template syntax specified in https://golang.org/pkg/text/template/.
 // The values for these placeholders shall be given during OS installation in the form of 'additionalProperties'
@@ -26,24 +24,18 @@ type OsTemplateFile struct {
 	MoBaseMo
 
 	// The name of the OS Template File that user uploads for unattended installation.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// This readonly property holds the list of placeholder names used in the
 	// template file content.
-	//
-	//
 	// Read Only: true
 	Placeholders []string `json:"Placeholders"`
 
 	// The content of the entire template file is stored as value. The content
 	// can either be a static file content or a template content.
-	//
 	// The template is expected to conform to the golang template syntax.
 	// The placeholders, if any, would be populated and the values provided would be
 	// used to populate this template.
-	//
-	//
 	TemplateContent string `json:"TemplateContent,omitempty"`
 }
 
@@ -86,7 +78,6 @@ func (m OsTemplateFile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
@@ -106,7 +97,6 @@ func (m OsTemplateFile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

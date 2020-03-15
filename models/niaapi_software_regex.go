@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m NiaapiSoftwareRegex) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *NiaapiSoftwareRegex) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiSoftwareRegexAO1P1 niaapi software regex a o1 p1
+//
 // swagger:model NiaapiSoftwareRegexAO1P1
 type NiaapiSoftwareRegexAO1P1 struct {
 
 	// Regular Expression pattern used to reconginze the version string.
-	//
 	Regex string `json:"Regex,omitempty"`
 
 	// Software release. A set of Software releases seperated by comma which can be recongized by according Regex pattern.
-	//
 	SoftwareVersion string `json:"SoftwareVersion,omitempty"`
 
 	// niaapi software regex a o1 p1
@@ -122,11 +119,9 @@ func (m *NiaapiSoftwareRegexAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Regular Expression pattern used to reconginze the version string.
-		//
 		Regex string `json:"Regex,omitempty"`
 
 		// Software release. A set of Software releases seperated by comma which can be recongized by according Regex pattern.
-		//
 		SoftwareVersion string `json:"SoftwareVersion,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *NiaapiSoftwareRegexAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiaapiSoftwareRegexAO1P1
 
 	rcv.Regex = stage1.Regex
-
 	rcv.SoftwareVersion = stage1.SoftwareVersion
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *NiaapiSoftwareRegexAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Regex")
-
 	delete(stage2, "SoftwareVersion")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m NiaapiSoftwareRegexAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Regular Expression pattern used to reconginze the version string.
-		//
 		Regex string `json:"Regex,omitempty"`
 
 		// Software release. A set of Software releases seperated by comma which can be recongized by according Regex pattern.
-		//
 		SoftwareVersion string `json:"SoftwareVersion,omitempty"`
 	}
 
 	stage1.Regex = m.Regex
-
 	stage1.SoftwareVersion = m.SoftwareVersion
 
 	// make JSON object for known properties

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_enclosure_disk_slot_ep"
 sidebar_current: "docs-intersight-data-source-storageEnclosureDiskSlotEp"
 description: |-
 Physical Disk slots on the enclosure.
-
 ---
 
 # Data Source: intersight_storage_enclosure_disk_slot_ep
 Physical Disk slots on the enclosure.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

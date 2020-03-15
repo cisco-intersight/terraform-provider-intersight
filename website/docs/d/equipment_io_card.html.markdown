@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_io_card"
 sidebar_current: "docs-intersight-data-source-equipmentIoCard"
 description: |-
 I/O module on a chassis which multiplexes traffic from blade servers.
-
 ---
 
 # Data Source: intersight_equipment_io_card
 I/O module on a chassis which multiplexes traffic from blade servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

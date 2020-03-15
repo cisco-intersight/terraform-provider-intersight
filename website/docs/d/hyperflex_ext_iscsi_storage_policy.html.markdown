@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_ext_iscsi_storage_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexExtIscsiStoragePolicy"
 description: |-
 A policy specifying external storage connectivity information via Fabric attached FCoE storage.
-
 ---
 
 # Data Source: intersight_hyperflex_ext_iscsi_storage_policy
 A policy specifying external storage connectivity information via Fabric attached FCoE storage.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(bool)Enable or disable external FCoE storage configuration.

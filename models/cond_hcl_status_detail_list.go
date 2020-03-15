@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // CondHclStatusDetailList cond hcl status detail list
+//
 // swagger:model condHclStatusDetailList
 type CondHclStatusDetailList struct {
 

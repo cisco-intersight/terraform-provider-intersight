@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,28 +22,22 @@ type AssetDeviceClaim struct {
 	MoBaseMo
 
 	// The account of the user that has claimed the device.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// A collection of references to the [asset.DeviceRegistration](mo://asset.DeviceRegistration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [asset.DeviceRegistration](mo://asset.DeviceRegistration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// The list of devices that underwent change during the claim process.
-	//
 	// Read Only: true
 	DeviceUpdates []*AssetConnectionControlMessage `json:"DeviceUpdates"`
 
 	// Obtained from the device connector management UI or API (REST endpoint '/connector/SecurityTokens').
-	//
 	SecurityToken string `json:"SecurityToken,omitempty"`
 
 	// Obtained from the device connector management UI or API (REST endpoint '/connector/DeviceIdentifiers').
-	//
 	SerialNumber string `json:"SerialNumber,omitempty"`
 }
 
@@ -95,7 +88,6 @@ func (m AssetDeviceClaim) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -123,7 +115,6 @@ func (m AssetDeviceClaim) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

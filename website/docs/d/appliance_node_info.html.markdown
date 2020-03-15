@@ -7,7 +7,6 @@ NodeInfo managed object stores the Intersight Appliance's cluster node informati
 NodeInfo managed objects are created during the Intersight Appliance setup. The
 Intersight Appliance updates the NodeInfo managed objects with status information
 periodically.
-
 ---
 
 # Data Source: intersight_appliance_node_info
@@ -15,7 +14,6 @@ NodeInfo managed object stores the Intersight Appliance's cluster node informati
 NodeInfo managed objects are created during the Intersight Appliance setup. The
 Intersight Appliance updates the NodeInfo managed objects with status information
 periodically.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `hostname`:(string)Cluster node's FQDN or IP address.

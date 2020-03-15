@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_flash_controller_props"
 sidebar_current: "docs-intersight-data-source-storageFlexFlashControllerProps"
 description: |-
 Flex flash controller properties.
-
 ---
 
 # Data Source: intersight_storage_flex_flash_controller_props
 Flex flash controller properties.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `cards_manageable`:(string)

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_pure_disk"
 sidebar_current: "docs-intersight-data-source-storagePureDisk"
 description: |-
 Disk entity associated with Pure FlashArray.
-
 ---
 
 # Data Source: intersight_storage_pure_disk
 Disk entity associated with Pure FlashArray.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)
@@ -25,6 +23,6 @@ The following arguments can be used to get data of already created objects in In
 * `serial`:(string)This field identifies the serial of the given component.
 * `speed`:(int)Disk speed for read or write operation measured in rpm.
 * `status`:(string)Storage disk health status.
-* `type`:(string)Storage disk type, it can be SSD, HDD, NVRAM.
+* `type`:(string)Storage disk type - it can be SSD, HDD, NVRAM.
 * `vendor`:(string)This field identifies the vendor of the given component.
 * `version`:(string)Storage disk version number.

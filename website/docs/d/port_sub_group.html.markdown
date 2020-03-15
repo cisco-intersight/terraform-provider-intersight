@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_port_sub_group"
 sidebar_current: "docs-intersight-data-source-portSubGroup"
 description: |-
 Holder for multiple ports within a portGroup. SubGroup represents a break-out port group on the Fabric Interconnect.
-
 ---
 
 # Data Source: intersight_port_sub_group
 Holder for multiple ports within a portGroup. SubGroup represents a break-out port group on the Fabric Interconnect.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

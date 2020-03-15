@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_dcnm_latest_maintained_release"
 sidebar_current: "docs-intersight-data-source-niaapiDcnmLatestMaintainedRelease"
 description: |-
 This contains the latest maintained release information for each release on DCNM.
-
 ---
 
 # Data Source: intersight_niaapi_dcnm_latest_maintained_release
 This contains the latest maintained release information for each release on DCNM.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `maintained_release`:(string)Lastest maintained release.

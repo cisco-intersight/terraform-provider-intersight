@@ -5,13 +5,11 @@ sidebar_current: "docs-intersight-resource-iamCertificateRequest"
 description: |-
   The information required to generate a certificate signing request (CSR),
 which is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.
-
 ---
 
 # Resource: intersight_iam_certificate_request
 The information required to generate a certificate signing request (CSR),
 which is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)The account associated with the CertificateRequest.

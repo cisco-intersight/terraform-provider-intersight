@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_rack_enclosure"
 sidebar_current: "docs-intersight-data-source-equipmentRackEnclosure"
 description: |-
 A physical holder housing rack servers.
-
 ---
 
 # Data Source: intersight_equipment_rack_enclosure
 A physical holder housing rack servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

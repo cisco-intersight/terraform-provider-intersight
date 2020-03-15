@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,38 +22,30 @@ type EquipmentSharedIoModule struct {
 	EquipmentBase
 
 	// This field identifies the configuration state for this SIOM Unit.
-	//
 	// Read Only: true
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// This field identifies the discovery state of SIOM.
-	//
 	// Read Only: true
 	Discovery string `json:"Discovery,omitempty"`
 
 	// A collection of references to the [equipment.SystemIoController](mo://equipment.SystemIoController) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.SystemIoController](mo://equipment.SystemIoController) MO unsets its reference to this deleted MO.
-	//
 	EquipmentSystemIoController *EquipmentSystemIoControllerRef `json:"EquipmentSystemIoController,omitempty"`
 
 	// This field identifies the MAC of IOM-A side.
-	//
 	// Read Only: true
 	MacOfSharedIomAside string `json:"MacOfSharedIomAside,omitempty"`
 
 	// This field identifies the MAC of IOM-B side.
-	//
 	// Read Only: true
 	MacOfSharedIomBside string `json:"MacOfSharedIomBside,omitempty"`
 
 	// This field identifies the SIOM operational state.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// This field identifies the Part Number for this SIOM Unit.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
@@ -63,22 +54,18 @@ type EquipmentSharedIoModule struct {
 	PortGroups []*PortGroupRef `json:"PortGroups"`
 
 	// This field identifies the reachability to FI-A and B side.
-	//
 	// Read Only: true
 	Reachability string `json:"Reachability,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// User label configured for the SIOM.
-	//
 	// Read Only: true
 	UsrLbl string `json:"UsrLbl,omitempty"`
 
 	// This field identifies the vendor id for this SIOM Unit.
-	//
 	// Read Only: true
 	Vid string `json:"Vid,omitempty"`
 }
@@ -158,7 +145,6 @@ func (m EquipmentSharedIoModule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigState string `json:"ConfigState,omitempty"`
 
@@ -214,7 +200,6 @@ func (m EquipmentSharedIoModule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

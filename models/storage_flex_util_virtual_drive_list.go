@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageFlexUtilVirtualDriveList storage flex util virtual drive list
+//
 // swagger:model storageFlexUtilVirtualDriveList
 type StorageFlexUtilVirtualDriveList struct {
 

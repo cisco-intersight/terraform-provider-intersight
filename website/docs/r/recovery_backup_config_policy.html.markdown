@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_recovery_backup_config_policy"
 sidebar_current: "docs-intersight-resource-recoveryBackupConfigPolicy"
 description: |-
   Backup config policy which contains all the required inputs to do backup on a local or remote server.
-
 ---
 
 # Resource: intersight_recovery_backup_config_policy
 Backup config policy which contains all the required inputs to do backup on a local or remote server.
-
 ## Argument Reference
 The following arguments are supported:
 * `backup_profiles`:(Array)List of Backup profiles using this policy.
@@ -18,7 +16,7 @@ This complex property has following sub-properties:
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `description`:(string)Description of the policy.
-* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418
+* `file_name_prefix`:(string)The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.
 * `is_password_set`:(bool)
 * `location_type`:(string)Specifies whether the backup will be stored locally or remotely.
 * `moid`:(string)The unique identifier of this Managed Object instance.

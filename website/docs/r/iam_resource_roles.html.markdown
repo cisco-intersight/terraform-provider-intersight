@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_resource_roles"
 sidebar_current: "docs-intersight-resource-iamResourceRoles"
 description: |-
   ResourceRoles provides a way to specify the roles associated with a resource like organization in a permission which can be assigned to a user or user group.
-
 ---
 
 # Resource: intersight_iam_resource_roles
 ResourceRoles provides a way to specify the roles associated with a resource like organization in a permission which can be assigned to a user or user group.
-
 ## Argument Reference
 The following arguments are supported:
 * `end_point_roles`:(Array)(Computed)The end point roles assigned to this permission. The user can perform end point operations like GUI/CLI cross launch.

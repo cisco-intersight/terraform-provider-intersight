@@ -120,7 +120,7 @@ func resourceHyperflexServerModel() *schema.Resource {
 										Description: "The hypervisor type for the HyperFlex cluster.",
 										Type:        schema.TypeString,
 										Optional:    true,
-										Default:     "Unknown",
+										Default:     "ESXi",
 									},
 									"mgmt_platform": {
 										Description: "The supported management platform for the HyperFlex Cluster.",

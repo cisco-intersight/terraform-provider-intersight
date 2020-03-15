@@ -6,16 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamDomainGroup Iam:Domain Group
 //
 // Intersight services are mapped to three different categories of services for scaling purpose.
-//
 // Three categories are defined: Partition1/Partition2/Partition3. Topics for each category are created with
 // a specific number of partitions. For each cloud environment these numbers will be different.
 //
@@ -24,46 +22,32 @@ type IamDomainGroup struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The name of the domain-group.
-	//
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The partition number domain group related messages are produced for 'Partition1' category service topics.
-	//
-	//
 	// Read Only: true
 	Partition1 int64 `json:"Partition1,omitempty"`
 
 	// In a cloud environment this parameter will indicate to which partition number domain group related messages are produced for 'Partition2' category service topics.
-	//
-	//
 	// Read Only: true
 	Partition2 int64 `json:"Partition2,omitempty"`
 
 	// In a cloud environment this parameter will indicate to which partition number domain group related messages are produced for 'Partition3' category service topics.
-	//
-	//
 	// Read Only: true
 	Partition3 int64 `json:"Partition3,omitempty"`
 
 	// Partition key used for producing messages to Kafka partitions. By default Domain-group id will be used as parition key. For Domain-groups belonging to Early adopters domain-group id will be prefixed with 'H' and used as partition key, such partition key will be treated differently and messages will always be produced to partition 0.
-	//
-	//
 	// Read Only: true
 	PartitionKey string `json:"PartitionKey,omitempty"`
 
 	// The number of devices in the domain-group.
 	// Device registration notifications are processed to update the usage of the domain-group. The on-boarding account will have multiple domain-groups, and during the device registration least used domain-group will be selected for the device.
-	//
-	//
 	// Read Only: true
 	Usage int64 `json:"Usage,omitempty"`
 }
@@ -123,7 +107,6 @@ func (m IamDomainGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -159,7 +142,6 @@ func (m IamDomainGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

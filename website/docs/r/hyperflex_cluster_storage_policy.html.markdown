@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_cluster_storage_policy"
 sidebar_current: "docs-intersight-resource-hyperflexClusterStoragePolicy"
 description: |-
   A policy specifying HyperFlex cluster storage settings (optional).
-
 ---
 
 # Resource: intersight_hyperflex_cluster_storage_policy
 A policy specifying HyperFlex cluster storage settings (optional).
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_management_controller"
 sidebar_current: "docs-intersight-data-source-managementController"
 description: |-
 A specialized service processor that monitors the physical state of a server, using sensors and communicating with the system administrator through an independent connection.
-
 ---
 
 # Data Source: intersight_management_controller
 A specialized service processor that monitors the physical state of a server, using sensors and communicating with the system administrator through an independent connection.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

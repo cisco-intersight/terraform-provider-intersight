@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_boot_precision_policy"
 sidebar_current: "docs-intersight-data-source-bootPrecisionPolicy"
 description: |-
 Boot order policy models a reusable boot order configuration that can be applied to multiple servers via profile association. It supports advanced boot order configuration on Cisco CIMC servers.
-
 ---
 
 # Data Source: intersight_boot_precision_policy
 Boot order policy models a reusable boot order configuration that can be applied to multiple servers via profile association. It supports advanced boot order configuration on Cisco CIMC servers.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `configured_boot_mode`:(string)Sets the BIOS boot mode. UEFI uses the GUID Partition Table (GPT) whereas Legacy mode uses the Master Boot Record (MBR) partitioning scheme.

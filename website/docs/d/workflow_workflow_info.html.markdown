@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_workflow_workflow_info"
 sidebar_current: "docs-intersight-data-source-workflowWorkflowInfo"
 description: |-
 Contains information for a workflow execution which is a runtime instance of workflow.
-
 ---
 
 # Data Source: intersight_workflow_workflow_info
 Contains information for a workflow execution which is a runtime instance of workflow.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action`:(string)The action of the workflow such as start, cancel, retry, pause.
@@ -18,11 +16,13 @@ The following arguments can be used to get data of already created objects in In
 * `failed_workflow_cleanup_duration`:(int)The duration in hours after which the workflow info for failed, terminated or timed out workflow will be removed from database.
 * `inst_id`:(string)A workflow instance Id which is the unique identified for the workflow execution.
 * `internal`:(bool)Denotes if this workflow is internal and should be hidden from user view of running workflows.
+* `last_action`:(string)The last action that was issued on the workflow is saved in this field.
 * `meta_version`:(int)Version of the workflow metadata for which this workflow execution was started.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)A name of the workflow execution instance.
 * `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `progress`:(float)This field indicates percentage of workflow task execution.
+* `retry_from_task_name`:(string)This field is applicable when Retry action is issued for a workflow which is in a final state. When this field is not specified then the workflow will retry from the start of the workflow. When this field is specified then the workflow will be retried from the specified task. The field should carry the task name which is the unique name of the task within the workflow. The task name must be one of the tasks that completed or failed in the previous run, you cannot retry a workflow from a task which wasn't run in the previous iteration.
 * `src`:(string)The source microservice name which is the owner for this workflow.
 * `start_time`:(string)The time when the workflow was started for execution.
 * `status`:(string)A status of the workflow (RUNNING, WAITING, COMPLETED, TIME_OUT, FAILED).

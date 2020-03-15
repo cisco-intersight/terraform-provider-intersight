@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_tam_advisory_count"
 sidebar_current: "docs-intersight-resource-tamAdvisoryCount"
 description: |-
   Total number of advisories currently affecting a given Account.
-
 ---
 
 # Resource: intersight_tam_advisory_count
 Total number of advisories currently affecting a given Account.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)The account associated with Advisory count.

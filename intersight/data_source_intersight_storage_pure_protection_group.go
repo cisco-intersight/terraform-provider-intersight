@@ -150,7 +150,7 @@ func dataSourceStoragePureProtectionGroup() *schema.Resource {
 				},
 			},
 			"replication_enabled": {
-				Description: "Flag to determine if the replication is enabled. Snapshots are created on target array if the flag is set.",
+				Description: "Flag to determine if replication is enabled. Snapshots are replicated to the target array if this flag is set.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -160,7 +160,7 @@ func dataSourceStoragePureProtectionGroup() *schema.Resource {
 				Optional:    true,
 			},
 			"snapshot_enabled": {
-				Description: "Flag to determine if the snapshot is enabled. Snapshots are created on local array if the flag is set.",
+				Description: "Flag to determine if snapshot creation is enabled. Snapshots are created on local array if this flag is set.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -331,7 +331,7 @@ func dataSourceStoragePureProtectionGroupRead(d *schema.ResourceData, meta inter
 				return err
 			}
 
-			if err := d.Set("host_groups", flattenListStoragePureHostRef(s.HostGroups, d)); err != nil {
+			if err := d.Set("host_groups", flattenListStoragePureHostGroupRef(s.HostGroups, d)); err != nil {
 				return err
 			}
 

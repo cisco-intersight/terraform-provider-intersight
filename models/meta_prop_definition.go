@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m MetaPropDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,31 +100,26 @@ func (m *MetaPropDefinition) UnmarshalBinary(b []byte) error {
 }
 
 // MetaPropDefinitionAO1P1 meta prop definition a o1 p1
+//
 // swagger:model MetaPropDefinitionAO1P1
 type MetaPropDefinitionAO1P1 struct {
 
 	// API access control for the property. Examples are NoAccess, ReadOnly, CreateOnly etc.
-	//
 	// Read Only: true
 	// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 	APIAccess string `json:"ApiAccess,omitempty"`
 
 	// The name of the property.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The data-at-rest security protection applied to this property when a Managed Object is persisted.
-	//
 	// For example, Encrypted or Cleartext.
-	//
-	//
 	// Read Only: true
-	// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
+	// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
 	OpSecurity string `json:"OpSecurity,omitempty"`
 
 	// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
-	//
 	// Read Only: true
 	SearchWeight float32 `json:"SearchWeight,omitempty"`
 
@@ -140,27 +133,21 @@ func (m *MetaPropDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// API access control for the property. Examples are NoAccess, ReadOnly, CreateOnly etc.
-		//
 		// Read Only: true
 		// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 		APIAccess string `json:"ApiAccess,omitempty"`
 
 		// The name of the property.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
-		//
 		// For example, Encrypted or Cleartext.
-		//
-		//
 		// Read Only: true
-		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
-		//
 		// Read Only: true
 		SearchWeight float32 `json:"SearchWeight,omitempty"`
 	}
@@ -170,13 +157,9 @@ func (m *MetaPropDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv MetaPropDefinitionAO1P1
 
 	rcv.APIAccess = stage1.APIAccess
-
 	rcv.Name = stage1.Name
-
 	rcv.OpSecurity = stage1.OpSecurity
-
 	rcv.SearchWeight = stage1.SearchWeight
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -186,13 +169,9 @@ func (m *MetaPropDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ApiAccess")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "OpSecurity")
-
 	delete(stage2, "SearchWeight")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -214,37 +193,28 @@ func (m MetaPropDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// API access control for the property. Examples are NoAccess, ReadOnly, CreateOnly etc.
-		//
 		// Read Only: true
 		// Enum: [NoAccess ReadOnly CreateOnly ReadWrite WriteOnly ReadOnCreate]
 		APIAccess string `json:"ApiAccess,omitempty"`
 
 		// The name of the property.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
-		//
 		// For example, Encrypted or Cleartext.
-		//
-		//
 		// Read Only: true
-		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
-		//
 		// Read Only: true
 		SearchWeight float32 `json:"SearchWeight,omitempty"`
 	}
 
 	stage1.APIAccess = m.APIAccess
-
 	stage1.Name = m.Name
-
 	stage1.OpSecurity = m.OpSecurity
-
 	stage1.SearchWeight = m.SearchWeight
 
 	// make JSON object for known properties
@@ -349,7 +319,7 @@ var metaPropDefinitionAO1P1TypeOpSecurityPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ClearText","Encrypted","Pbkdf2","Bcrypt"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ClearText","Encrypted","Pbkdf2","Bcrypt","Sha512crypt"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -370,6 +340,9 @@ const (
 
 	// MetaPropDefinitionAO1P1OpSecurityBcrypt captures enum value "Bcrypt"
 	MetaPropDefinitionAO1P1OpSecurityBcrypt string = "Bcrypt"
+
+	// MetaPropDefinitionAO1P1OpSecuritySha512crypt captures enum value "Sha512crypt"
+	MetaPropDefinitionAO1P1OpSecuritySha512crypt string = "Sha512crypt"
 )
 
 // prop value enum

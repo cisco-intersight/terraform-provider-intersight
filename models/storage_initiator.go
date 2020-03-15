@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m StorageInitiator) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,27 +100,24 @@ func (m *StorageInitiator) UnmarshalBinary(b []byte) error {
 }
 
 // StorageInitiatorAO1P1 storage initiator a o1 p1
+//
 // swagger:model StorageInitiatorAO1P1
 type StorageInitiatorAO1P1 struct {
 
-	// IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.
-	//
+	// IQN (iSCSI qualified name). Can be up to 255 characters long and has the format iqn.yyyy-mm.naming-authority:unique name.
 	// Read Only: true
 	Iqn string `json:"Iqn,omitempty"`
 
 	// Name of the initiator represented in storage array.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Initiator type, it can be FC or iSCSI.
-	//
 	// Read Only: true
 	// Enum: [FC iSCSI]
 	Type string `json:"Type,omitempty"`
 
 	// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
-	//
 	// Read Only: true
 	Wwn string `json:"Wwn,omitempty"`
 
@@ -135,24 +130,20 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.
-		//
+		// IQN (iSCSI qualified name). Can be up to 255 characters long and has the format iqn.yyyy-mm.naming-authority:unique name.
 		// Read Only: true
 		Iqn string `json:"Iqn,omitempty"`
 
 		// Name of the initiator represented in storage array.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Initiator type, it can be FC or iSCSI.
-		//
 		// Read Only: true
 		// Enum: [FC iSCSI]
 		Type string `json:"Type,omitempty"`
 
 		// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
-		//
 		// Read Only: true
 		Wwn string `json:"Wwn,omitempty"`
 	}
@@ -162,13 +153,9 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageInitiatorAO1P1
 
 	rcv.Iqn = stage1.Iqn
-
 	rcv.Name = stage1.Name
-
 	rcv.Type = stage1.Type
-
 	rcv.Wwn = stage1.Wwn
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -178,13 +165,9 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Iqn")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Type")
-
 	delete(stage2, "Wwn")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -205,34 +188,27 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 func (m StorageInitiatorAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.
-		//
+		// IQN (iSCSI qualified name). Can be up to 255 characters long and has the format iqn.yyyy-mm.naming-authority:unique name.
 		// Read Only: true
 		Iqn string `json:"Iqn,omitempty"`
 
 		// Name of the initiator represented in storage array.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Initiator type, it can be FC or iSCSI.
-		//
 		// Read Only: true
 		// Enum: [FC iSCSI]
 		Type string `json:"Type,omitempty"`
 
 		// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
-		//
 		// Read Only: true
 		Wwn string `json:"Wwn,omitempty"`
 	}
 
 	stage1.Iqn = m.Iqn
-
 	stage1.Name = m.Name
-
 	stage1.Type = m.Type
-
 	stage1.Wwn = m.Wwn
 
 	// make JSON object for known properties

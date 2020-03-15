@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_sas_port"
 sidebar_current: "docs-intersight-data-source-storageSasPort"
 description: |-
 Sas Port details of the SAS endpoint.
-
 ---
 
 # Data Source: intersight_storage_sas_port
 Sas Port details of the SAS endpoint.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `address`:(string)The SAS Address assigned to storage port.

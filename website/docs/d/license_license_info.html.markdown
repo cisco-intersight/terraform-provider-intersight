@@ -6,14 +6,12 @@ description: |-
 License state information for a specific license entitlement. Essentials license entitlement is supported currently.
 licenseState attribute is used for license enforcement. When license state is one of TrialPeriod, Compliance, or OutOfCompliance,
 the feature set defined for the license entitlement is granted to the customer.
-
 ---
 
 # Data Source: intersight_license_license_info
 License state information for a specific license entitlement. Essentials license entitlement is supported currently.
 licenseState attribute is used for license enforcement. When license state is one of TrialPeriod, Compliance, or OutOfCompliance,
 the feature set defined for the license entitlement is granted to the customer.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `active_admin`:(bool)The license administrative state.Set this property to 'true' to activate the license entitlements.

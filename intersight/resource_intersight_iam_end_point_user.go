@@ -53,7 +53,7 @@ func resourceIamEndPointUser() *schema.Resource {
 				ForceNew:    true,
 			},
 			"name": {
-				Description: "Username.",
+				Description: "Name of the user created on the endpoint.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

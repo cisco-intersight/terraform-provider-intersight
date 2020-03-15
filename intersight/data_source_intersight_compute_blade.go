@@ -278,7 +278,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"default_gateway": {
-							Description: "",
+							Description: "Gateway address of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -302,7 +302,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"kvm_port": {
-							Description: "",
+							Description: "Port number on which the KVM is running.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
@@ -320,7 +320,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"subnet": {
-							Description: "",
+							Description: "Subnet of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -394,7 +394,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"num_cpu_cores": {
-				Description: "",
+				Description: "Total number of CPU cores available.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -418,7 +418,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"num_fc_host_interfaces": {
-				Description: "",
+				Description: "Number of Fibre channel Host Interfaces.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -574,7 +574,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"service_profile": {
-				Description: "",
+				Description: "The service profile assigned.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_cluster_profile"
 sidebar_current: "docs-intersight-data-source-hyperflexClusterProfile"
 description: |-
 A profile specifying configuration settings for a HyperFlex cluster.
-
 ---
 
 # Data Source: intersight_hyperflex_cluster_profile
 A profile specifying configuration settings for a HyperFlex cluster.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action`:(string)User initiated action. Each profile type has its own supported actions. For HyperFlex cluster profile, the supported actions are -- Validate, Deploy, Continue, Retry, Abort, Unassign For server profile, the support actions are -- Deploy, Unassign.

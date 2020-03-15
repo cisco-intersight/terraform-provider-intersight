@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_auto_support_policy"
 sidebar_current: "docs-intersight-resource-hyperflexAutoSupportPolicy"
 description: |-
   A policy specifying the configuration to automatically generate support tickets with Cisco TAC.
-
 ---
 
 # Resource: intersight_hyperflex_auto_support_policy
 A policy specifying the configuration to automatically generate support tickets with Cisco TAC.
-
 ## Argument Reference
 The following arguments are supported:
 * `admin_state`:(bool)Enable or disable Auto Support.

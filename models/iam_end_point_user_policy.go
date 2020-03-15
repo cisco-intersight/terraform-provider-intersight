@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,19 +22,15 @@ type IamEndPointUserPolicy struct {
 	PolicyAbstractPolicy
 
 	// Relationship to the collection of Endpoint user roles.
-	//
 	EndPointUserRoles []*IamEndPointUserRoleRef `json:"EndPointUserRoles"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Set password properties for endpoint users.
-	//
 	PasswordProperties *IamEndPointPasswordProperties `json:"PasswordProperties,omitempty"`
 
 	// Relationship to the server profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -82,7 +77,6 @@ func (m IamEndPointUserPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EndPointUserRoles []*IamEndPointUserRoleRef `json:"EndPointUserRoles"`
 
@@ -106,7 +100,6 @@ func (m IamEndPointUserPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

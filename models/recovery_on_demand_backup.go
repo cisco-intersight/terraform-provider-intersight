@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,16 +20,13 @@ type RecoveryOnDemandBackup struct {
 	RecoveryAbstractBackupConfig
 
 	// The status of ondemand backup.
-	//
 	// Read Only: true
 	ConfigResult *RecoveryConfigResultRef `json:"ConfigResult,omitempty"`
 
 	// Relationship to the end point on which back up is configured.
-	//
 	DeviceID *AssetDeviceRegistrationRef `json:"DeviceId,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
@@ -73,7 +69,6 @@ func (m RecoveryOnDemandBackup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigResult *RecoveryConfigResultRef `json:"ConfigResult,omitempty"`
 
@@ -93,7 +88,6 @@ func (m RecoveryOnDemandBackup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

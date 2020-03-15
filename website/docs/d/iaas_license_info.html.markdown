@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_license_info"
 sidebar_current: "docs-intersight-data-source-iaasLicenseInfo"
 description: |-
 Describes about license info currently available in UCSD.
-
 ---
 
 # Data Source: intersight_iaas_license_info
 Describes about license info currently available in UCSD.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `license_expiration_date`:(string)Licese expiration date.

@@ -3,13 +3,11 @@ layout: "intersight"
 page_title: "Intersight: intersight_deviceconnector_policy"
 sidebar_current: "docs-intersight-data-source-deviceconnectorPolicy"
 description: |-
-Device Connector Policy.
-
+Policy to control configuration changes allowed from Cisco IMC.
 ---
 
 # Data Source: intersight_deviceconnector_policy
-Device Connector Policy.
-
+Policy to control configuration changes allowed from Cisco IMC.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

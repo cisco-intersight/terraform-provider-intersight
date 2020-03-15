@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_tam_advisory_info"
 sidebar_current: "docs-intersight-resource-tamAdvisoryInfo"
 description: |-
   State of an advisory in the context of a given account. Used to capture a given account's preferences regarding  associated advisory.
-
 ---
 
 # Resource: intersight_tam_advisory_info
 State of an advisory in the context of a given account. Used to capture a given account's preferences regarding  associated advisory.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)The account associated with Advisory count.

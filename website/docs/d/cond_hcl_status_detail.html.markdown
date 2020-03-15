@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_cond_hcl_status_detail"
 sidebar_current: "docs-intersight-data-source-condHclStatusDetail"
 description: |-
 The HCL status detail for each component firmware and driver.
-
 ---
 
 # Data Source: intersight_cond_hcl_status_detail
 The HCL status detail for each component firmware and driver.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `hardware_status`:(string)The model is considered as part of the hardware profile for the component. This will provide the HCL validation status for the hardware profile. The reasons can be one of the following \"Incompatible-Server-With-Component\" - the server model and component combination is not listed in HCL \"Incompatible-Firmware\" - The server's firmware is not listed for this component's hardware profile \"Incompatible-Component\" - the component's model is not listed in the HCL \"Service-Unavailable\" - HCL data service is unavailable at the moment (try again later). This could be due to HCL data updating \"Not-Evaluated\" - the hardware profile was not evaulated for the component because the server's hw/sw status is not listed or server is exempted. \"Compatible\" - this component's hardware profile is listed in the HCL.

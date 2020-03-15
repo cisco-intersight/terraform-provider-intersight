@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_apic_release_recommend"
 sidebar_current: "docs-intersight-data-source-niaapiApicReleaseRecommend"
 description: |-
 The recommend version information for each release on APIC.
-
 ---
 
 # Data Source: intersight_niaapi_apic_release_recommend
 The recommend version information for each release on APIC.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `cll`:(string)Current long-lived release.

@@ -108,12 +108,12 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 							Optional:    true,
 						},
 						"label": {
-							Description: "Descriptive name for the data type.",
+							Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"name": {
-							Description: "Pick a descriptive name for the data type.",
+							Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -134,13 +134,19 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 				Computed:   true,
 			},
 			"label": {
-				Description: "A user friendly short name to identify the workflow.",
+				Description: "A user friendly short name to identify the workflow. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:), space ( ) or an underscore (_).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"license_entitlement": {
 				Description: "License entitlement required to run this workflow. It is calculated based on the highest license requirement of all its tasks.",
 				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"max_task_count": {
+				Description: "The maximum number of tasks that can be executed on this workflow.",
+				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -152,7 +158,7 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 				ForceNew:    true,
 			},
 			"name": {
-				Description: "The name for this workflow. You can have multiple version of the workflow with the same name.",
+				Description: "The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -214,12 +220,12 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 							Optional:    true,
 						},
 						"label": {
-							Description: "Descriptive name for the data type.",
+							Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"name": {
-							Description: "Pick a descriptive name for the data type.",
+							Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -274,6 +280,46 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
+			},
+			"properties": {
+				Description: "Type to capture the properties of a workflow definition. Some of these properties are passed to workflow execution instance.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"external_meta": {
+							Description: "When set to false the workflow is owned by the system and used for internal services. Such workflows cannot be directly used by external entities.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							ForceNew:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"retryable": {
+							Description: "When true, this workflow can be retried if has not been modified for more than a period of 2 weeks.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"support_status": {
+							Description: "Supported status of the definition.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Default:     "Supported",
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 			},
 			"tags": {
 				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
@@ -589,6 +635,12 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 
 	}
 
+	if v, ok := d.GetOk("max_task_count"); ok {
+		x := int64(v.(int))
+		o.MaxTaskCount = x
+
+	}
+
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
 		o.Moid = x
@@ -739,6 +791,53 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 			}
 		}
 		o.PermissionResources = x
+
+	}
+
+	if v, ok := d.GetOk("properties"); ok {
+		p := models.WorkflowWorkflowProperties{}
+		if len(v.([]interface{})) > 0 {
+			o := models.WorkflowWorkflowProperties{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.WorkflowWorkflowPropertiesAO1P1.WorkflowWorkflowPropertiesAO1P1 = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["external_meta"]; ok {
+				{
+					x := (v.(bool))
+					o.ExternalMeta = &x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["retryable"]; ok {
+				{
+					x := (v.(bool))
+					o.Retryable = &x
+				}
+			}
+			if v, ok := l["support_status"]; ok {
+				{
+					x := (v.(string))
+					o.SupportStatus = &x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.Properties = &x
 
 	}
 
@@ -1000,6 +1099,10 @@ func resourceWorkflowWorkflowDefinitionRead(d *schema.ResourceData, meta interfa
 		return err
 	}
 
+	if err := d.Set("max_task_count", (s.MaxTaskCount)); err != nil {
+		return err
+	}
+
 	if err := d.Set("moid", (s.Moid)); err != nil {
 		return err
 	}
@@ -1021,6 +1124,10 @@ func resourceWorkflowWorkflowDefinitionRead(d *schema.ResourceData, meta interfa
 	}
 
 	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("properties", flattenMapWorkflowWorkflowProperties(s.Properties, d)); err != nil {
 		return err
 	}
 
@@ -1204,6 +1311,12 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 		o.LicenseEntitlement = x
 	}
 
+	if d.HasChange("max_task_count") {
+		v := d.Get("max_task_count")
+		x := int64(v.(int))
+		o.MaxTaskCount = x
+	}
+
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
@@ -1355,6 +1468,53 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 			}
 		}
 		o.PermissionResources = x
+	}
+
+	if d.HasChange("properties") {
+		v := d.Get("properties")
+		p := models.WorkflowWorkflowProperties{}
+		if len(v.([]interface{})) > 0 {
+			o := models.WorkflowWorkflowProperties{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.WorkflowWorkflowPropertiesAO1P1.WorkflowWorkflowPropertiesAO1P1 = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["external_meta"]; ok {
+				{
+					x := (v.(bool))
+					o.ExternalMeta = &x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["retryable"]; ok {
+				{
+					x := (v.(bool))
+					o.Retryable = &x
+				}
+			}
+			if v, ok := l["support_status"]; ok {
+				{
+					x := (v.(string))
+					o.SupportStatus = &x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.Properties = &x
 	}
 
 	if d.HasChange("tags") {

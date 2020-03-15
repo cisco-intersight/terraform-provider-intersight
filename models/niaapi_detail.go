@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m NiaapiDetail) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *NiaapiDetail) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiDetailAO1P1 niaapi detail a o1 p1
+//
 // swagger:model NiaapiDetailAO1P1
 type NiaapiDetailAO1P1 struct {
 
 	// Checksum of this part of Content.
-	//
 	Chksum string `json:"Chksum,omitempty"`
 
 	// The file name within this Metadata file.
-	//
 	Filename string `json:"Filename,omitempty"`
 
 	// The name of this Content.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// niaapi detail a o1 p1
@@ -126,15 +122,12 @@ func (m *NiaapiDetailAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Checksum of this part of Content.
-		//
 		Chksum string `json:"Chksum,omitempty"`
 
 		// The file name within this Metadata file.
-		//
 		Filename string `json:"Filename,omitempty"`
 
 		// The name of this Content.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *NiaapiDetailAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiaapiDetailAO1P1
 
 	rcv.Chksum = stage1.Chksum
-
 	rcv.Filename = stage1.Filename
-
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *NiaapiDetailAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Chksum")
-
 	delete(stage2, "Filename")
-
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m NiaapiDetailAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Checksum of this part of Content.
-		//
 		Chksum string `json:"Chksum,omitempty"`
 
 		// The file name within this Metadata file.
-		//
 		Filename string `json:"Filename,omitempty"`
 
 		// The name of this Content.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 
 	stage1.Chksum = m.Chksum
-
 	stage1.Filename = m.Filename
-
 	stage1.Name = m.Name
 
 	// make JSON object for known properties

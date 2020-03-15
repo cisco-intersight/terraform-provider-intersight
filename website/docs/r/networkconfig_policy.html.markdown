@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_networkconfig_policy"
 sidebar_current: "docs-intersight-resource-networkconfigPolicy"
 description: |-
   Enable or disable Dynamic DNS, add or update DNS settings for IPv4 and IPv6 on Cisco IMC.
-
 ---
 
 # Resource: intersight_networkconfig_policy
 Enable or disable Dynamic DNS, add or update DNS settings for IPv4 and IPv6 on Cisco IMC.
-
 ## Argument Reference
 The following arguments are supported:
 * `alternate_ipv4dns_server`:(string)IP address of the secondary DNS server.

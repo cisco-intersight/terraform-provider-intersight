@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m AssetManagedDeviceStatus) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,40 +100,33 @@ func (m *AssetManagedDeviceStatus) UnmarshalBinary(b []byte) error {
 }
 
 // AssetManagedDeviceStatusAO1P1 asset managed device status a o1 p1
+//
 // swagger:model AssetManagedDeviceStatusAO1P1
 type AssetManagedDeviceStatusAO1P1 struct {
 
 	// Port used for the connection to the Cloud by the Device Connector for the Managed Device.
-	//
 	CloudPort int64 `json:"CloudPort,omitempty"`
 
 	// Maintains the reason for the failure of connection to the Device in case of connection failure.
-	//
 	ConnectionFailureReason string `json:"ConnectionFailureReason,omitempty"`
 
 	// Maintains the status of the connection to the Device.
-	//
 	// Enum: [Unknown Success Failure]
 	ConnectionStatus *string `json:"ConnectionStatus,omitempty"`
 
 	// Maintains code related to error from Device Connector, if any.
-	//
 	ErrorCode int64 `json:"ErrorCode,omitempty"`
 
 	// Maintains the reason for the error from Device Connector, if any.
-	//
 	ErrorReason string `json:"ErrorReason,omitempty"`
 
 	// Maintains the process pid of the Device Connector for the Managed Device.
-	//
 	ProcessID int64 `json:"ProcessId,omitempty"`
 
 	// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
-	//
 	ServerPort int64 `json:"ServerPort,omitempty"`
 
 	// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
-	//
 	// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 	State *string `json:"State,omitempty"`
 
@@ -149,36 +140,28 @@ func (m *AssetManagedDeviceStatusAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Port used for the connection to the Cloud by the Device Connector for the Managed Device.
-		//
 		CloudPort int64 `json:"CloudPort,omitempty"`
 
 		// Maintains the reason for the failure of connection to the Device in case of connection failure.
-		//
 		ConnectionFailureReason string `json:"ConnectionFailureReason,omitempty"`
 
 		// Maintains the status of the connection to the Device.
-		//
 		// Enum: [Unknown Success Failure]
 		ConnectionStatus *string `json:"ConnectionStatus,omitempty"`
 
 		// Maintains code related to error from Device Connector, if any.
-		//
 		ErrorCode int64 `json:"ErrorCode,omitempty"`
 
 		// Maintains the reason for the error from Device Connector, if any.
-		//
 		ErrorReason string `json:"ErrorReason,omitempty"`
 
 		// Maintains the process pid of the Device Connector for the Managed Device.
-		//
 		ProcessID int64 `json:"ProcessId,omitempty"`
 
 		// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
-		//
 		ServerPort int64 `json:"ServerPort,omitempty"`
 
 		// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
-		//
 		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 		State *string `json:"State,omitempty"`
 	}
@@ -188,21 +171,13 @@ func (m *AssetManagedDeviceStatusAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetManagedDeviceStatusAO1P1
 
 	rcv.CloudPort = stage1.CloudPort
-
 	rcv.ConnectionFailureReason = stage1.ConnectionFailureReason
-
 	rcv.ConnectionStatus = stage1.ConnectionStatus
-
 	rcv.ErrorCode = stage1.ErrorCode
-
 	rcv.ErrorReason = stage1.ErrorReason
-
 	rcv.ProcessID = stage1.ProcessID
-
 	rcv.ServerPort = stage1.ServerPort
-
 	rcv.State = stage1.State
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -212,21 +187,13 @@ func (m *AssetManagedDeviceStatusAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "CloudPort")
-
 	delete(stage2, "ConnectionFailureReason")
-
 	delete(stage2, "ConnectionStatus")
-
 	delete(stage2, "ErrorCode")
-
 	delete(stage2, "ErrorReason")
-
 	delete(stage2, "ProcessId")
-
 	delete(stage2, "ServerPort")
-
 	delete(stage2, "State")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -248,54 +215,39 @@ func (m AssetManagedDeviceStatusAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Port used for the connection to the Cloud by the Device Connector for the Managed Device.
-		//
 		CloudPort int64 `json:"CloudPort,omitempty"`
 
 		// Maintains the reason for the failure of connection to the Device in case of connection failure.
-		//
 		ConnectionFailureReason string `json:"ConnectionFailureReason,omitempty"`
 
 		// Maintains the status of the connection to the Device.
-		//
 		// Enum: [Unknown Success Failure]
 		ConnectionStatus *string `json:"ConnectionStatus,omitempty"`
 
 		// Maintains code related to error from Device Connector, if any.
-		//
 		ErrorCode int64 `json:"ErrorCode,omitempty"`
 
 		// Maintains the reason for the error from Device Connector, if any.
-		//
 		ErrorReason string `json:"ErrorReason,omitempty"`
 
 		// Maintains the process pid of the Device Connector for the Managed Device.
-		//
 		ProcessID int64 `json:"ProcessId,omitempty"`
 
 		// Port used for receiving requests from Intersight Assist by the Device Connector for the Managed Device.
-		//
 		ServerPort int64 `json:"ServerPort,omitempty"`
 
 		// Maintains the state of the Managed Device, such as Start Success, Start Failure, etc. See ManagedDeviceState for device connection states.
-		//
 		// Enum: [New StartSent StartSentFailure StartSuccess StartFailure UpdateSentFailure UpdateSent DeleteSentFailure DeleteInProgress DeleteFailure DeleteSuccess]
 		State *string `json:"State,omitempty"`
 	}
 
 	stage1.CloudPort = m.CloudPort
-
 	stage1.ConnectionFailureReason = m.ConnectionFailureReason
-
 	stage1.ConnectionStatus = m.ConnectionStatus
-
 	stage1.ErrorCode = m.ErrorCode
-
 	stage1.ErrorReason = m.ErrorReason
-
 	stage1.ProcessID = m.ProcessID
-
 	stage1.ServerPort = m.ServerPort
-
 	stage1.State = m.State
 
 	// make JSON object for known properties

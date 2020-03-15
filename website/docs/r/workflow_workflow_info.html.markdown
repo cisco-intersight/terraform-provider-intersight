@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_workflow_workflow_info"
 sidebar_current: "docs-intersight-resource-workflowWorkflowInfo"
 description: |-
   Contains information for a workflow execution which is a runtime instance of workflow.
-
 ---
 
 # Resource: intersight_workflow_workflow_info
 Contains information for a workflow execution which is a runtime instance of workflow.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -The Account to which the workflow is associated.
@@ -24,7 +22,8 @@ This complex property has following sub-properties:
 * `input`:All the given inputs for the workflow.
 * `inst_id`:(string)(Computed)A workflow instance Id which is the unique identified for the workflow execution.
 * `internal`:(bool)Denotes if this workflow is internal and should be hidden from user view of running workflows.
-* `message`:(Array)(Computed)Collection of Workflow execution messages with severity.
+* `last_action`:(string)(Computed)The last action that was issued on the workflow is saved in this field.
+* `message`:(Array)Collection of Workflow execution messages with severity.
 This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
@@ -72,6 +71,13 @@ This complex property has following sub-properties:
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `progress`:(float)(Computed)This field indicates percentage of workflow task execution.
+* `properties`:(Array with Maximum of one item) -(Computed)Type to capture all the properties for the workflow info passed on from workflow definition.
+This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+  + `retryable`:(bool)When true, this workflow can be retried if has not been modified for more than a period of 2 weeks.
+* `retry_from_task_name`:(string)This field is applicable when Retry action is issued for a workflow which is in a final state. When this field is not specified then the workflow will retry from the start of the workflow. When this field is specified then the workflow will be retried from the specified task. The field should carry the task name which is the unique name of the task within the workflow. The task name must be one of the tasks that completed or failed in the previous run, you cannot retry a workflow from a task which wasn't run in the previous iteration.
 * `src`:(string)(Computed)The source microservice name which is the owner for this workflow.
 * `start_time`:(string)(Computed)The time when the workflow was started for execution.
 * `status`:(string)(Computed)A status of the workflow (RUNNING, WAITING, COMPLETED, TIME_OUT, FAILED).

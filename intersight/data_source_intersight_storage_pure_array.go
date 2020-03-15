@@ -139,13 +139,13 @@ func dataSourceStoragePureArray() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"available": {
-							Description: "Total consumable storage capacity represented in bytes. System may reserve some space for internal purpose which is excluded from total capacity.",
+							Description: "Total consumable storage capacity represented in bytes. System may reserve some space for internal purposes which is excluded from total capacity.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
 						},
 						"free": {
-							Description: "Unused space available for user to consume, represented in bytes.",
+							Description: "Unused space available for applications to consume, represented in bytes.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
@@ -157,7 +157,7 @@ func dataSourceStoragePureArray() *schema.Resource {
 							Computed:    true,
 						},
 						"total": {
-							Description: "Total storage capacity, represented in bytes. It is set by the component manufacture.",
+							Description: "Total storage capacity, represented in bytes. It is set by the component manufacturer.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,

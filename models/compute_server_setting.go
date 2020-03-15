@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,42 +23,37 @@ type ComputeServerSetting struct {
 	InventoryBase
 
 	// User configured state of the locator LED for the server.
-	//
 	// Enum: [None On Off]
 	AdminLocatorLedState *string `json:"AdminLocatorLedState,omitempty"`
 
 	// User configured power state of the server.
-	//
 	// Enum: [Policy PowerOn PowerOff PowerCycle HardReset Shutdown Reboot]
 	AdminPowerState *string `json:"AdminPowerState,omitempty"`
 
 	// The configured state of these settings in the target server. The value is any one of Applied, Applying, Failed. Applied - This state denotes that the settings are applied successfully in the target server. Applying - This state denotes that the settings are being applied in the target server. Failed - This state denotes that the settings could not be applied in the target server.
-	//
 	// Read Only: true
 	// Enum: [Applied Applying Failed]
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// Relates to locator LED MO of this server.
-	//
 	// Read Only: true
 	LocatorLed *EquipmentLocatorLedRef `json:"LocatorLed,omitempty"`
 
 	// The name of the device chosen by user for configuring One-Time Boot device.
-	//
 	OneTimeBootDevice string `json:"OneTimeBootDevice,omitempty"`
 
+	// The Persistent Memory Modules operation properties.
+	PersistentMemoryOperation *ComputePersistentMemoryOperation `json:"PersistentMemoryOperation,omitempty"`
+
 	// Relates to the device end point from which this server was discovered.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Compute RackUnit for which the settings are related to.
-	//
 	// Read Only: true
 	Server *ComputeRackUnitRef `json:"Server,omitempty"`
 
 	// The common server configurable properties between a server and a server profile.
-	//
 	ServerConfig *ComputeServerConfig `json:"ServerConfig,omitempty"`
 }
 
@@ -84,6 +78,8 @@ func (m *ComputeServerSetting) UnmarshalJSON(raw []byte) error {
 
 		OneTimeBootDevice string `json:"OneTimeBootDevice,omitempty"`
 
+		PersistentMemoryOperation *ComputePersistentMemoryOperation `json:"PersistentMemoryOperation,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Server *ComputeRackUnitRef `json:"Server,omitempty"`
@@ -104,6 +100,8 @@ func (m *ComputeServerSetting) UnmarshalJSON(raw []byte) error {
 
 	m.OneTimeBootDevice = dataAO1.OneTimeBootDevice
 
+	m.PersistentMemoryOperation = dataAO1.PersistentMemoryOperation
+
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
 	m.Server = dataAO1.Server
@@ -122,7 +120,6 @@ func (m ComputeServerSetting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminLocatorLedState *string `json:"AdminLocatorLedState,omitempty"`
 
@@ -133,6 +130,8 @@ func (m ComputeServerSetting) MarshalJSON() ([]byte, error) {
 		LocatorLed *EquipmentLocatorLedRef `json:"LocatorLed,omitempty"`
 
 		OneTimeBootDevice string `json:"OneTimeBootDevice,omitempty"`
+
+		PersistentMemoryOperation *ComputePersistentMemoryOperation `json:"PersistentMemoryOperation,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -151,6 +150,8 @@ func (m ComputeServerSetting) MarshalJSON() ([]byte, error) {
 
 	dataAO1.OneTimeBootDevice = m.OneTimeBootDevice
 
+	dataAO1.PersistentMemoryOperation = m.PersistentMemoryOperation
+
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
 	dataAO1.Server = m.Server
@@ -162,7 +163,6 @@ func (m ComputeServerSetting) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -188,6 +188,10 @@ func (m *ComputeServerSetting) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLocatorLed(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePersistentMemoryOperation(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -321,6 +325,24 @@ func (m *ComputeServerSetting) validateLocatorLed(formats strfmt.Registry) error
 		if err := m.LocatorLed.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("LocatorLed")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ComputeServerSetting) validatePersistentMemoryOperation(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PersistentMemoryOperation) { // not required
+		return nil
+	}
+
+	if m.PersistentMemoryOperation != nil {
+		if err := m.PersistentMemoryOperation.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("PersistentMemoryOperation")
 			}
 			return err
 		}

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m ResourcePerTypeCombinedSelector) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,24 +99,19 @@ func (m *ResourcePerTypeCombinedSelector) UnmarshalBinary(b []byte) error {
 }
 
 // ResourcePerTypeCombinedSelectorAO1P1 resource per type combined selector a o1 p1
+//
 // swagger:model ResourcePerTypeCombinedSelectorAO1P1
 type ResourcePerTypeCombinedSelectorAO1P1 struct {
 
 	// A single filter expression created by OR'ing the $filter criteria of the 'selectors'. Used to efficiently maintain the membership of the Group.
-	//
-	//
 	// Read Only: true
 	CombinedSelector string `json:"CombinedSelector,omitempty"`
 
 	// If true, then resources are added using just object type without filter.
-	//
-	//
 	// Read Only: true
 	EmptyFilter *bool `json:"EmptyFilter,omitempty"`
 
 	// The ObjectType on which the selectors are defined. Used to efficiently query resource groups for a given ObjectType.
-	//
-	//
 	// Read Only: true
 	SelectorObjectType string `json:"SelectorObjectType,omitempty"`
 
@@ -132,20 +125,14 @@ func (m *ResourcePerTypeCombinedSelectorAO1P1) UnmarshalJSON(data []byte) error 
 	var stage1 struct {
 
 		// A single filter expression created by OR'ing the $filter criteria of the 'selectors'. Used to efficiently maintain the membership of the Group.
-		//
-		//
 		// Read Only: true
 		CombinedSelector string `json:"CombinedSelector,omitempty"`
 
 		// If true, then resources are added using just object type without filter.
-		//
-		//
 		// Read Only: true
 		EmptyFilter *bool `json:"EmptyFilter,omitempty"`
 
 		// The ObjectType on which the selectors are defined. Used to efficiently query resource groups for a given ObjectType.
-		//
-		//
 		// Read Only: true
 		SelectorObjectType string `json:"SelectorObjectType,omitempty"`
 	}
@@ -155,11 +142,8 @@ func (m *ResourcePerTypeCombinedSelectorAO1P1) UnmarshalJSON(data []byte) error 
 	var rcv ResourcePerTypeCombinedSelectorAO1P1
 
 	rcv.CombinedSelector = stage1.CombinedSelector
-
 	rcv.EmptyFilter = stage1.EmptyFilter
-
 	rcv.SelectorObjectType = stage1.SelectorObjectType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -169,11 +153,8 @@ func (m *ResourcePerTypeCombinedSelectorAO1P1) UnmarshalJSON(data []byte) error 
 	}
 
 	delete(stage2, "CombinedSelector")
-
 	delete(stage2, "EmptyFilter")
-
 	delete(stage2, "SelectorObjectType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -195,28 +176,20 @@ func (m ResourcePerTypeCombinedSelectorAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// A single filter expression created by OR'ing the $filter criteria of the 'selectors'. Used to efficiently maintain the membership of the Group.
-		//
-		//
 		// Read Only: true
 		CombinedSelector string `json:"CombinedSelector,omitempty"`
 
 		// If true, then resources are added using just object type without filter.
-		//
-		//
 		// Read Only: true
 		EmptyFilter *bool `json:"EmptyFilter,omitempty"`
 
 		// The ObjectType on which the selectors are defined. Used to efficiently query resource groups for a given ObjectType.
-		//
-		//
 		// Read Only: true
 		SelectorObjectType string `json:"SelectorObjectType,omitempty"`
 	}
 
 	stage1.CombinedSelector = m.CombinedSelector
-
 	stage1.EmptyFilter = m.EmptyFilter
-
 	stage1.SelectorObjectType = m.SelectorObjectType
 
 	// make JSON object for known properties

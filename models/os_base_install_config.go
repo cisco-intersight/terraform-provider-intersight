@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -27,30 +26,20 @@ type OsBaseInstallConfig struct {
 	// If the os.ConfigurationFile MO selected is a template that uses additional
 	// placeholders other than the ones provided in standard os.Answers MO, the values
 	// for those additional placeholders are provided here.
-	//
-	//
 	AdditionalParameters []*OsPlaceHolder `json:"AdditionalParameters"`
 
 	// Answers provided by user for the unattended OS installation.
-	//
-	//
 	Answers *OsAnswers `json:"Answers,omitempty"`
 
 	// User provided description about the OS install configuration.
-	//
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The install method to be used for OS installation - vMedia, iPXE.
 	// Only vMedia is supported as of now.
-	//
-	//
 	// Enum: [vMedia]
 	InstallMethod *string `json:"InstallMethod,omitempty"`
 
 	// Parameters specific to selected OS.
-	//
-	//
 	OperatingSystemParameters *OsOperatingSystemParameters `json:"OperatingSystemParameters,omitempty"`
 }
 
@@ -101,7 +90,6 @@ func (m OsBaseInstallConfig) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdditionalParameters []*OsPlaceHolder `json:"AdditionalParameters"`
 
@@ -129,7 +117,6 @@ func (m OsBaseInstallConfig) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

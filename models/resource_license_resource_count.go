@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,23 +24,19 @@ type ResourceLicenseResourceCount struct {
 	MoBaseMo
 
 	// The account to which this resource group belongs to.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The list of all license groups bind with this server count object.
-	//
 	// Read Only: true
 	LicenseGroups []*ResourceGroupRef `json:"LicenseGroups"`
 
 	// Type of licensing defined for this resource group. Used for licensing group.
-	//
 	// Read Only: true
-	// Enum: [Base Essential Standard Advantage]
+	// Enum: [Base Essential Standard Advantage Premier]
 	LicenseType string `json:"LicenseType,omitempty"`
 
 	// The number of resource belongs to this licensing tier.
-	//
 	// Read Only: true
 	ResourceCount int64 `json:"ResourceCount,omitempty"`
 }
@@ -89,7 +84,6 @@ func (m ResourceLicenseResourceCount) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -113,7 +107,6 @@ func (m ResourceLicenseResourceCount) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -191,7 +184,7 @@ var resourceLicenseResourceCountTypeLicenseTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_feature_limit_external"
 sidebar_current: "docs-intersight-resource-hyperflexFeatureLimitExternal"
 description: |-
   The HyperFlex feature limits that are available to end users.
-
 ---
 
 # Resource: intersight_hyperflex_feature_limit_external
 The HyperFlex feature limits that are available to end users.
-
 ## Argument Reference
 The following arguments are supported:
 * `app_catalog`:(Array with Maximum of one item) -A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.

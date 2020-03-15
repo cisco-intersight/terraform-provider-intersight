@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_smtp_policy"
 sidebar_current: "docs-intersight-resource-smtpPolicy"
 description: |-
   Name that identifies the SMTP Policy.
-
 ---
 
 # Resource: intersight_smtp_policy
 Name that identifies the SMTP Policy.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

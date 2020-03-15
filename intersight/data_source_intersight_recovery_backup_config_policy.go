@@ -48,7 +48,7 @@ func dataSourceRecoveryBackupConfigPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"file_name_prefix": {
-				Description: "The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418",
+				Description: "The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

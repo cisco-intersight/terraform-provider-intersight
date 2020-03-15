@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m VnicVlanSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,15 +100,14 @@ func (m *VnicVlanSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicVlanSettingsAO1P1 vnic vlan settings a o1 p1
+//
 // swagger:model VnicVlanSettingsAO1P1
 type VnicVlanSettingsAO1P1 struct {
 
 	// Default VLAN ID of the virtual interface. Setting the ID to 0 will not associate any default VLAN to the traffic on the virtual interface.
-	//
 	DefaultVlan int64 `json:"DefaultVlan,omitempty"`
 
 	// Option to determine if the port can carry single VLAN (Access) or multiple VLANs (Trunk) traffic.
-	//
 	// Enum: [ACCESS TRUNK]
 	Mode *string `json:"Mode,omitempty"`
 
@@ -124,11 +121,9 @@ func (m *VnicVlanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Default VLAN ID of the virtual interface. Setting the ID to 0 will not associate any default VLAN to the traffic on the virtual interface.
-		//
 		DefaultVlan int64 `json:"DefaultVlan,omitempty"`
 
 		// Option to determine if the port can carry single VLAN (Access) or multiple VLANs (Trunk) traffic.
-		//
 		// Enum: [ACCESS TRUNK]
 		Mode *string `json:"Mode,omitempty"`
 	}
@@ -138,9 +133,7 @@ func (m *VnicVlanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicVlanSettingsAO1P1
 
 	rcv.DefaultVlan = stage1.DefaultVlan
-
 	rcv.Mode = stage1.Mode
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -150,9 +143,7 @@ func (m *VnicVlanSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DefaultVlan")
-
 	delete(stage2, "Mode")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -174,17 +165,14 @@ func (m VnicVlanSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Default VLAN ID of the virtual interface. Setting the ID to 0 will not associate any default VLAN to the traffic on the virtual interface.
-		//
 		DefaultVlan int64 `json:"DefaultVlan,omitempty"`
 
 		// Option to determine if the port can carry single VLAN (Access) or multiple VLANs (Trunk) traffic.
-		//
 		// Enum: [ACCESS TRUNK]
 		Mode *string `json:"Mode,omitempty"`
 	}
 
 	stage1.DefaultVlan = m.DefaultVlan
-
 	stage1.Mode = m.Mode
 
 	// make JSON object for known properties

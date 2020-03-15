@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_session_limits"
 sidebar_current: "docs-intersight-data-source-iamSessionLimits"
 description: |-
 The session related configuration limits.
-
 ---
 
 # Data Source: intersight_iam_session_limits
 The session related configuration limits.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `idle_time_out`:(int)The idle timeout interval for the web session in seconds. The default value is 1800 seconds. When a session is not refreshed for this duration, backend will mark the session as idle and remove the session.

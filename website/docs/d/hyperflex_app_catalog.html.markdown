@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_app_catalog"
 sidebar_current: "docs-intersight-data-source-hyperflexAppCatalog"
 description: |-
 A catalog for managing application settings for HyperFlex cluster configuration service.
-
 ---
 
 # Data Source: intersight_hyperflex_app_catalog
 A catalog for managing application settings for HyperFlex cluster configuration service.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // WorkflowBuildTaskMetaList workflow build task meta list
+//
 // swagger:model workflowBuildTaskMetaList
 type WorkflowBuildTaskMetaList struct {
 

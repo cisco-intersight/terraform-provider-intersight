@@ -4,22 +4,20 @@ page_title: "Intersight: intersight_iam_end_point_user_role"
 sidebar_current: "docs-intersight-resource-iamEndPointUserRole"
 description: |-
   Mapping of endpoint user to endpoint roles.
-
 ---
 
 # Resource: intersight_iam_end_point_user_role
 Mapping of endpoint user to endpoint roles.
-
 ## Argument Reference
 The following arguments are supported:
 * `change_password`:(bool)(Computed)Denotes whether password has changed.
 * `enabled`:(bool)Enables the user account on the endpoint.
-* `end_point_role`:(Array)Roles.
+* `end_point_role`:(Array)Roles associated with the user on the endpoint.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
-* `end_point_user`:(Array with Maximum of one item) -User
+* `end_point_user`:(Array with Maximum of one item) -The of set End Point Users which are mapped to this role.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.

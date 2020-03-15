@@ -6,104 +6,85 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryUnit Memory:Persistent Memory Unit
 //
-// This represents a Persistent Memory Module on a server.
+// Persistent Memory Module on a server.
 //
 // swagger:model memoryPersistentMemoryUnit
 type MemoryPersistentMemoryUnit struct {
 	MemoryAbstractUnit
 
-	// This represents the appdirect capacity in GB of a persistent memory module on a server.
-	//
+	// AppDirect capacity in GB of the Persistent Memory Module on a server.
 	// Read Only: true
 	AppDirectCapacity string `json:"AppDirectCapacity,omitempty"`
 
-	// This represents the count status of a persistent memory module on a server.
-	//
+	// Count status of the Persistent Memory Module on a server.
 	// Read Only: true
 	CountStatus string `json:"CountStatus,omitempty"`
 
-	// This represents the firmware version of the firware running on a persistent memory module on a server.
-	//
+	// Firmware version of the firware running on the Persistent Memory Module on a server.
 	// Read Only: true
 	FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
-	// This represents the frozen status of a persistent memory module on a server.
-	//
+	// Frozen status of the Persistent Memory Module on a server.
 	// Read Only: true
 	FrozenStatus string `json:"FrozenStatus,omitempty"`
 
-	// This represents the health state of a persistent memory module on a server.
-	//
+	// Health state of the Persistent Memory Module on a server.
 	// Read Only: true
 	HealthState string `json:"HealthState,omitempty"`
 
-	// This represents the lock status of a persistent memory module on a server.
-	//
+	// Lock status of the Persistent Memory Module on a server.
 	// Read Only: true
 	LockStatus string `json:"LockStatus,omitempty"`
 
 	// A collection of references to the [memory.Array](mo://memory.Array) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.Array](mo://memory.Array) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryArray *MemoryArrayRef `json:"MemoryArray,omitempty"`
 
-	// This represents the memory capacity in GB of a persistent memory module on a server.
-	//
+	// Memory capacity in GB of the Persistent Memory Module on a server.
 	// Read Only: true
 	MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
-	// This represents the ID of a persistent memory module on a server.
-	//
+	// ID of the Persistent Memory Module on a server.
 	// Read Only: true
 	MemoryID int64 `json:"MemoryId,omitempty"`
 
-	// This represents the persistent memory capacity in GB of a persistent memory module on a server.
-	//
+	// Persistent Memory capacity in GB of the Persistent Memory Module on a server.
 	// Read Only: true
 	PersistentMemoryCapacity string `json:"PersistentMemoryCapacity,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents the reserved capacity in GB of a persistent memory module on a server.
-	//
+	// Reserved capacity in GB of the Persistent Memory Module on a server.
 	// Read Only: true
 	ReservedCapacity string `json:"ReservedCapacity,omitempty"`
 
-	// This represents the security status of a persistent memory module on a server.
-	//
+	// Security status of the Persistent Memory Module on a server.
 	// Read Only: true
 	SecurityStatus string `json:"SecurityStatus,omitempty"`
 
-	// This represents the Socket ID of a persistent memory module on a server.
-	//
+	// Socket ID of the Persistent Memory Module on a server.
 	// Read Only: true
 	SocketID string `json:"SocketId,omitempty"`
 
-	// This represents the Socket Memory ID of a persistent memory module on a server.
-	//
+	// Socket Memory ID of the Persistent Memory Module on a server.
 	// Read Only: true
 	SocketMemoryID string `json:"SocketMemoryId,omitempty"`
 
-	// This represents the total capacity in GB of a persistent memory module on a server.
-	//
+	// Total capacity in GB of the Persistent Memory Module on a server.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 
-	// This represents the uid of a persistent memory module on a server.
-	//
+	// UID of the Persistent Memory Module on a server.
 	// Read Only: true
 	UID string `json:"Uid,omitempty"`
 }
@@ -203,7 +184,6 @@ func (m MemoryPersistentMemoryUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AppDirectCapacity string `json:"AppDirectCapacity,omitempty"`
 
@@ -279,7 +259,6 @@ func (m MemoryPersistentMemoryUnit) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

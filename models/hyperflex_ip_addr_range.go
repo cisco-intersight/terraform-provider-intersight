@@ -8,16 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexIPAddrRange Hyperflex:Ip Addr Range
 //
 // A range of IPv4 addresses.
-//
 // The range is inclusive and comprised of a start IP address, an end IP address, netmask, and default gateway.
 //
 // swagger:model hyperflexIpAddrRange
@@ -61,7 +59,6 @@ func (m HyperflexIPAddrRange) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,26 +100,21 @@ func (m *HyperflexIPAddrRange) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexIPAddrRangeAO1P1 hyperflex IP addr range a o1 p1
+//
 // swagger:model HyperflexIPAddrRangeAO1P1
 type HyperflexIPAddrRangeAO1P1 struct {
 
 	// The end IPv4 address of the range.
-	//
 	EndAddr string `json:"EndAddr,omitempty"`
 
 	// The default gateway for the start and end IPv4 addresses.
-	//
 	Gateway string `json:"Gateway,omitempty"`
 
 	// The netmask specified in dot decimal notation.
-	//
 	// The start address, end address, and gateway must all be within the network specified by this netmask.
-	//
-	//
 	Netmask string `json:"Netmask,omitempty"`
 
 	// The start IPv4 address of the range.
-	//
 	StartAddr string `json:"StartAddr,omitempty"`
 
 	// hyperflex IP addr range a o1 p1
@@ -135,22 +127,16 @@ func (m *HyperflexIPAddrRangeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The end IPv4 address of the range.
-		//
 		EndAddr string `json:"EndAddr,omitempty"`
 
 		// The default gateway for the start and end IPv4 addresses.
-		//
 		Gateway string `json:"Gateway,omitempty"`
 
 		// The netmask specified in dot decimal notation.
-		//
 		// The start address, end address, and gateway must all be within the network specified by this netmask.
-		//
-		//
 		Netmask string `json:"Netmask,omitempty"`
 
 		// The start IPv4 address of the range.
-		//
 		StartAddr string `json:"StartAddr,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -159,13 +145,9 @@ func (m *HyperflexIPAddrRangeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexIPAddrRangeAO1P1
 
 	rcv.EndAddr = stage1.EndAddr
-
 	rcv.Gateway = stage1.Gateway
-
 	rcv.Netmask = stage1.Netmask
-
 	rcv.StartAddr = stage1.StartAddr
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +157,9 @@ func (m *HyperflexIPAddrRangeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "EndAddr")
-
 	delete(stage2, "Gateway")
-
 	delete(stage2, "Netmask")
-
 	delete(stage2, "StartAddr")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,31 +181,22 @@ func (m HyperflexIPAddrRangeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The end IPv4 address of the range.
-		//
 		EndAddr string `json:"EndAddr,omitempty"`
 
 		// The default gateway for the start and end IPv4 addresses.
-		//
 		Gateway string `json:"Gateway,omitempty"`
 
 		// The netmask specified in dot decimal notation.
-		//
 		// The start address, end address, and gateway must all be within the network specified by this netmask.
-		//
-		//
 		Netmask string `json:"Netmask,omitempty"`
 
 		// The start IPv4 address of the range.
-		//
 		StartAddr string `json:"StartAddr,omitempty"`
 	}
 
 	stage1.EndAddr = m.EndAddr
-
 	stage1.Gateway = m.Gateway
-
 	stage1.Netmask = m.Netmask
-
 	stage1.StartAddr = m.StartAddr
 
 	// make JSON object for known properties

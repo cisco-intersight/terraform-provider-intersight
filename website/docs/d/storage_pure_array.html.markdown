@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_pure_array"
 sidebar_current: "docs-intersight-data-source-storagePureArray"
 description: |-
 The details of the Pure storage array.
-
 ---
 
 # Data Source: intersight_storage_pure_array
 The details of the Pure storage array.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

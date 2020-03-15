@@ -6,14 +6,12 @@ description: |-
   To affirm the identity of trusted source.
 Allows import of third-party CA certificates in X.509 (CER) format.
 It can be a root CA or an trust chain that leads to a root CA.
-
 ---
 
 # Resource: intersight_iam_trust_point
 To affirm the identity of trusted source.
 Allows import of third-party CA certificates in X.509 (CER) format.
 It can be a root CA or an trust chain that leads to a root CA.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)The account associated with the Trustpoint.

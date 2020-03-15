@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_idp_reference"
 sidebar_current: "docs-intersight-data-source-iamIdpReference"
 description: |-
 Default Cisco IdP for authentication.
-
 ---
 
 # Data Source: intersight_iam_idp_reference
 Default Cisco IdP for authentication.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `domain_name`:(string)The email domain name for this IdP of the user. When a user enters an email during login in the Intersight home page, the IdP is picked by matching this domain name with the email domain name for authentication.

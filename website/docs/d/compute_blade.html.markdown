@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_compute_blade"
 sidebar_current: "docs-intersight-data-source-computeBlade"
 description: |-
 Server which is housed in a chassis and shares some of the hardware with other servers in the chassis.
-
 ---
 
 # Data Source: intersight_compute_blade
 Server which is housed in a chassis and shares some of the hardware with other servers in the chassis.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_power_state`:(string)
@@ -24,11 +22,11 @@ The following arguments can be used to get data of already created objects in In
 * `model`:(string)This field identifies the model of the given component.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `num_adaptors`:(int)Total number of Adaptors available.
-* `num_cpu_cores`:(int)
+* `num_cpu_cores`:(int)Total number of CPU cores available.
 * `num_cpu_cores_enabled`:(int)Number of CPU cores enabled.
 * `num_cpus`:(int)Total number of CPU's available.
 * `num_eth_host_interfaces`:(int)Number of Ethernet Host Interfaces.
-* `num_fc_host_interfaces`:(int)
+* `num_fc_host_interfaces`:(int)Number of Fibre channel Host Interfaces.
 * `num_threads`:(int)Number of threads enabled.
 * `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
 * `oper_power_state`:(string)
@@ -40,7 +38,7 @@ The following arguments can be used to get data of already created objects in In
 * `rn`:(string)The Relative Name uniquely identifies an object within a given context.
 * `scaled_mode`:(string)
 * `serial`:(string)This field identifies the serial of the given component.
-* `service_profile`:(string)
+* `service_profile`:(string)The service profile assigned.
 * `slot_id`:(int)
 * `total_memory`:(int)
 * `uuid`:(string)

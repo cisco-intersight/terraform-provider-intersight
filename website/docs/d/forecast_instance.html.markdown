@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_forecast_instance"
 sidebar_current: "docs-intersight-data-source-forecastInstance"
 description: |-
 Entity representing forecast result for instance of managed object, ie, data source.
-
 ---
 
 # Data Source: intersight_forecast_instance
 Entity representing forecast result for instance of managed object, ie, data source.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_id`:(string)The Moid of the Intersight managed device instance for which regression model is derived.

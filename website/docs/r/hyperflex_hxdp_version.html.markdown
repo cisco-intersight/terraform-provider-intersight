@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_hxdp_version"
 sidebar_current: "docs-intersight-resource-hyperflexHxdpVersion"
 description: |-
   A HyperFlex Data Platform version.
-
 ---
 
 # Resource: intersight_hyperflex_hxdp_version
 A HyperFlex Data Platform version.
-
 ## Argument Reference
 The following arguments are supported:
 * `app_catalog`:(Array with Maximum of one item) -A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.

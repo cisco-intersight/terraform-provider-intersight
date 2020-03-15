@@ -234,7 +234,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"access_policy": {
-							Description: "This property holds the access policy that host has on this virtual drive.",
+							Description: "Access policy that host has on this virtual drive.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "Default",
@@ -290,7 +290,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"read_policy": {
-							Description: "This property holds the read ahead mode to be used.",
+							Description: "Read ahead mode to be used to read data from this virtual drive.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "Default",
@@ -301,7 +301,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"write_policy": {
-							Description: "This property holds the write mode used to write the data in this virtual drive.",
+							Description: "Write mode to be used to write data to this virtual drive.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "Default",

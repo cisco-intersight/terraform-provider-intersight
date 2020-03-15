@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_fex"
 sidebar_current: "docs-intersight-data-source-equipmentFex"
 description: |-
 Fabric Extender which can mutiplex traffic from the host facing ports.
-
 ---
 
 # Data Source: intersight_equipment_fex
 Fabric Extender which can mutiplex traffic from the host facing ports.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

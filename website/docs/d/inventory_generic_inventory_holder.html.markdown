@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_inventory_generic_inventory_holder"
 sidebar_current: "docs-intersight-data-source-inventoryGenericInventoryHolder"
 description: |-
 A container class for generic inventory.
-
 ---
 
 # Data Source: intersight_inventory_generic_inventory_holder
 A container class for generic inventory.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamEndPointUserPolicyList iam end point user policy list
+//
 // swagger:model iamEndPointUserPolicyList
 type IamEndPointUserPolicyList struct {
 

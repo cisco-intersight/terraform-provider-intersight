@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_software_hcl_meta"
 sidebar_current: "docs-intersight-resource-softwareHclMeta"
 description: |-
   A Json file consisting Hcl meta uploaded to be consumed by HCL service.
-
 ---
 
 # Resource: intersight_software_hcl_meta
 A Json file consisting Hcl meta uploaded to be consumed by HCL service.
-
 ## Argument Reference
 The following arguments are supported:
 * `bundle_type`:(string)(Computed)The bundle type of the image, as published on cisco.com.
@@ -18,7 +16,7 @@ This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
-* `content_type`:(string)Indicates what type of content the Json file is holding(Incremental or full dump).
+* `content_type`:(string)The type of content that the Json file holds (Incremental or full dump).
 * `description`:(string)User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.
 * `download_count`:(int)(Computed)The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.
 * `guid`:(string)(Computed)The unique identifier for an image in a Cisco repository.

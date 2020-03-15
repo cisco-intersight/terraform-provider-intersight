@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_account"
 sidebar_current: "docs-intersight-resource-iamAccount"
 description: |-
   The Intersight Account used to access Intersight.
-
 ---
 
 # Resource: intersight_iam_account
 The Intersight Account used to access Intersight.
-
 ## Argument Reference
 The following arguments are supported:
 * `app_registrations`:(Array)(Computed)List of registered OAuth2 applications created from the account.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_dcnm_hweol"
 sidebar_current: "docs-intersight-data-source-niaapiDcnmHweol"
 description: |-
 The hardware end of life notice for DCNM.
-
 ---
 
 # Data Source: intersight_niaapi_dcnm_hweol
 The hardware end of life notice for DCNM.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `affected_pids`:(string)String contains the PID of hardwares affected by this notice, seperated by comma.

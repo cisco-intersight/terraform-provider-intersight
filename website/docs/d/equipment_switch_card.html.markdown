@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_switch_card"
 sidebar_current: "docs-intersight-data-source-equipmentSwitchCard"
 description: |-
 Fixed / Removable module on a Fabric Interconnect / Switch.
-
 ---
 
 # Data Source: intersight_equipment_switch_card
 Fixed / Removable module on a Fabric Interconnect / Switch.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)

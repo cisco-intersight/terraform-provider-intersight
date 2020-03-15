@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,11 +24,9 @@ type ApplianceBackupPolicy struct {
 	ApplianceBackupBase
 
 	// BackupPolicy managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The next backup time set by the backup scheduler. Backup scheduler calculates the next backup time with the user-defined schedule set in the Schedule field.
-	//
 	// Read Only: true
 	// Format: date-time
 	BackupTime strfmt.DateTime `json:"BackupTime,omitempty"`
@@ -38,15 +35,12 @@ type ApplianceBackupPolicy struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Backup mode of the appliance. Automatic backups of the appliance are not initiated if this property is set to 'true' and the backup schedule field is ignored.
-	//
 	ManualBackup *bool `json:"ManualBackup,omitempty"`
 
 	// Password to authenticate the file server.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Schedule to create a backup of the Intersight Appliance. Manualbackup field must be set to 'false' for this schedule to be active.
-	//
 	Schedule *OnpremSchedule `json:"Schedule,omitempty"`
 }
 
@@ -101,7 +95,6 @@ func (m ApplianceBackupPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -133,7 +126,6 @@ func (m ApplianceBackupPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

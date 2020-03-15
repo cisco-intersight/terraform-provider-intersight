@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,52 +24,35 @@ type HyperflexClusterNetworkPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// Enable or disable jumbo frames.
-	//
 	JumboFrame *bool `json:"JumboFrame,omitempty"`
 
 	// The Out-of-band KVM IP range.
-	//
 	// Configures the service profiles to use IP addresses within this range for setting the KVM IP of a server.
-	//
-	//
 	KvmIPRange *HyperflexIPAddrRange `json:"KvmIpRange,omitempty"`
 
 	// The MAC address prefix range for configuring vNICs.
-	//
 	// Configures the service profiles to use MAC address prefixes within this range for setting the MAC address of server vNICs.
-	//
-	//
 	MacPrefixRange *HyperflexMacAddrPrefixRange `json:"MacPrefixRange,omitempty"`
 
 	// The VLAN for the management network.
-	//
 	MgmtVlan *HyperflexNamedVlan `json:"MgmtVlan,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
-	// Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G'. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.
-	//
+	// Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G+'. Use '10G+' for link speeds of 10G or above. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.
 	// Enum: [default 1G 10G]
 	UplinkSpeed *string `json:"UplinkSpeed,omitempty"`
 
 	// The VM migration VLAN.
-	//
 	// This VLAN is used for transfering VMs from one host to another during operations such a cluster upgrade.
-	//
-	//
 	VMMigrationVlan *HyperflexNamedVlan `json:"VmMigrationVlan,omitempty"`
 
 	// The VLANs for VM traffic.
-	//
 	// Guest VMs hosted on the HyperFlex cluster use these VLANs for network communication.
-	//
-	//
 	VMNetworkVlans []*HyperflexNamedVlan `json:"VmNetworkVlans"`
 }
 
@@ -137,7 +119,6 @@ func (m HyperflexClusterNetworkPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -181,7 +162,6 @@ func (m HyperflexClusterNetworkPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

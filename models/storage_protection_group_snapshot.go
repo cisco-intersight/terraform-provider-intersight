@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -21,34 +20,28 @@ import (
 type StorageProtectionGroupSnapshot struct {
 	MoBaseMo
 
-	// Protection group snapshot created time.
-	//
+	// Protection group snapshot creation time.
 	// Read Only: true
 	// Format: date-time
 	CreatedTime strfmt.DateTime `json:"CreatedTime,omitempty"`
 
-	// Protection group snapshot name which represents point in time copy of all members in protection group.
-	//
+	// Protection group snapshot name which represents point-in-time copy of all members in protection group.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Protection group relationship object.
-	//
 	// Read Only: true
 	ProtectionGroup *StorageProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
-	// Snapshot size represented in bytes. It is a cummulative size of all snapshots in a set.
-	//
+	// Snapshot size represented in bytes. It is a cumulative size of all snapshots in a set.
 	// Read Only: true
 	Size int64 `json:"Size,omitempty"`
 
 	// Source protection group name on which the snapshot is created.
-	//
 	// Read Only: true
 	Source string `json:"Source,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 }
@@ -104,7 +97,6 @@ func (m StorageProtectionGroupSnapshot) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CreatedTime strfmt.DateTime `json:"CreatedTime,omitempty"`
 
@@ -136,7 +128,6 @@ func (m StorageProtectionGroupSnapshot) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

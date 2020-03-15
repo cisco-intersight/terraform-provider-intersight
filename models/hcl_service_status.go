@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,24 +23,19 @@ type HclServiceStatus struct {
 	MoBaseMo
 
 	// Version of the last modified exemption file.
-	//
 	ExemptionFileVersion string `json:"ExemptionFileVersion,omitempty"`
 
 	// A field to uniquely identify the document with the status.
-	//
 	Identity string `json:"Identity,omitempty"`
 
 	// The timestamp of the last modified record in the HCL tool database. Used to query and get updated records.
-	//
 	// Format: date-time
 	LastHclDataModifiedTime strfmt.DateTime `json:"LastHclDataModifiedTime,omitempty"`
 
 	// Checksum of the data dump used as the base for delta updates.
-	//
 	LastImportedDataChecksum string `json:"LastImportedDataChecksum,omitempty"`
 
 	// Status of the service indicatating if the service is up or under maintenance due to data update.
-	//
 	// Enum: [Unknown Initializing DataRefreshing Active]
 	Status *string `json:"Status,omitempty"`
 }
@@ -93,7 +87,6 @@ func (m HclServiceStatus) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ExemptionFileVersion string `json:"ExemptionFileVersion,omitempty"`
 
@@ -121,7 +114,6 @@ func (m HclServiceStatus) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

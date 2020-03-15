@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_rack_enclosure_slot"
 sidebar_current: "docs-intersight-data-source-equipmentRackEnclosureSlot"
 description: |-
 Rack Server Slot in a RackEnclosure.
-
 ---
 
 # Data Source: intersight_equipment_rack_enclosure_slot
 Rack Server Slot in a RackEnclosure.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

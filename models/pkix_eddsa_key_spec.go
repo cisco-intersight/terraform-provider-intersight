@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -26,7 +25,6 @@ type PkixEddsaKeySpec struct {
 	PkixKeyGenerationSpec
 
 	// The EdDSA algorithm, as defined in RFC 8032.
-	//
 	// Enum: [Ed25519 Ed25519ph Ed25519ctx]
 	Algorithm *string `json:"Algorithm,omitempty"`
 }
@@ -62,7 +60,6 @@ func (m PkixEddsaKeySpec) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Algorithm *string `json:"Algorithm,omitempty"`
 	}
@@ -74,7 +71,6 @@ func (m PkixEddsaKeySpec) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_kvm_policy"
 sidebar_current: "docs-intersight-data-source-kvmPolicy"
 description: |-
 Policy to configure KVM Launch settings.
-
 ---
 
 # Data Source: intersight_kvm_policy
 Policy to configure KVM Launch settings.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

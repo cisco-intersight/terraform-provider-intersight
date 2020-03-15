@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowDecisionCase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *WorkflowDecisionCase) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowDecisionCaseAO1P1 workflow decision case a o1 p1
+//
 // swagger:model WorkflowDecisionCaseAO1P1
 type WorkflowDecisionCaseAO1P1 struct {
 
 	// Description of this decision case.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The name of the next task (Task names unique within workflow) to run.  In a graph model, denotes an edge to another Task Node.
-	//
 	NextTask string `json:"NextTask,omitempty"`
 
 	// Value for the decision case.
-	//
 	Value string `json:"Value,omitempty"`
 
 	// workflow decision case a o1 p1
@@ -126,15 +122,12 @@ func (m *WorkflowDecisionCaseAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Description of this decision case.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// The name of the next task (Task names unique within workflow) to run.  In a graph model, denotes an edge to another Task Node.
-		//
 		NextTask string `json:"NextTask,omitempty"`
 
 		// Value for the decision case.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *WorkflowDecisionCaseAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowDecisionCaseAO1P1
 
 	rcv.Description = stage1.Description
-
 	rcv.NextTask = stage1.NextTask
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *WorkflowDecisionCaseAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Description")
-
 	delete(stage2, "NextTask")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m WorkflowDecisionCaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Description of this decision case.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// The name of the next task (Task names unique within workflow) to run.  In a graph model, denotes an edge to another Task Node.
-		//
 		NextTask string `json:"NextTask,omitempty"`
 
 		// Value for the decision case.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Description = m.Description
-
 	stage1.NextTask = m.NextTask
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

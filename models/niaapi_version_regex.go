@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,15 +20,12 @@ type NiaapiVersionRegex struct {
 	MoBaseMo
 
 	// Version Regex mapping for APIC platform.
-	//
 	Apic *NiaapiVersionRegexPlatform `json:"Apic,omitempty"`
 
 	// Version Regex mapping for DCNM platform.
-	//
 	Dcnm *NiaapiVersionRegexPlatform `json:"Dcnm,omitempty"`
 
 	// Version number for the Version Regex data, also used as identity.
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -72,7 +68,6 @@ func (m NiaapiVersionRegex) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Apic *NiaapiVersionRegexPlatform `json:"Apic,omitempty"`
 
@@ -92,7 +87,6 @@ func (m NiaapiVersionRegex) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

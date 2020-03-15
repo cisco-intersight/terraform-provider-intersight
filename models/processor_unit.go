@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -25,9 +24,7 @@ type ProcessorUnit struct {
 	Architecture string `json:"Architecture,omitempty"`
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -64,7 +61,6 @@ type ProcessorUnit struct {
 	ProcessorID int64 `json:"ProcessorId,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -172,7 +168,6 @@ func (m ProcessorUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Architecture string `json:"Architecture,omitempty"`
 
@@ -240,7 +235,6 @@ func (m ProcessorUnit) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

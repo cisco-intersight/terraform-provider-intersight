@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_boot_device_boot_mode"
 sidebar_current: "docs-intersight-data-source-bootDeviceBootMode"
 description: |-
 Boot mode of the devices that BIOS uses to boot them.
-
 ---
 
 # Data Source: intersight_boot_device_boot_mode
 Boot mode of the devices that BIOS uses to boot them.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `configured_boot_mode`:(string)

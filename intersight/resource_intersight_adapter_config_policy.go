@@ -139,6 +139,39 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"dce_interface_settings": {
+							Description: "Collection of DCE interface settings for this adapter.",
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"fec_mode": {
+										Description: "Forward Error Correction (FEC) mode setting for the DCE interfaces of the adapter. FEC mode setting is supported only for Cisco VIC 14xx adapters. FEC mode 'cl74' is unsupported for Cisco VIC 1495/1497. This setting will be ignored for unsupported adapters and for unavailable DCE interfaces.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Default:     "Auto",
+									},
+									"interface_id": {
+										Description: "DCE interface id on which settings needs to be configured. Supported values are (0-3).",
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+									"object_type": {
+										Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+								},
+							},
+							ConfigMode: schema.SchemaConfigModeAttr,
+							Computed:   true,
+						},
 						"eth_settings": {
 							Description: "Global Ethernet settings for this adapter.",
 							Type:        schema.TypeList,
@@ -214,7 +247,7 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
 									"enabled": {
-										Description: "When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.",
+										Description: "When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.",
 										Type:        schema.TypeBool,
 										Optional:    true,
 									},
@@ -416,6 +449,49 @@ func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{})
 						if err == nil && x1 != nil {
 							o.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["dce_interface_settings"]; ok {
+					{
+						x := make([]*models.AdapterDceInterfaceSettings, 0)
+						switch reflect.TypeOf(v).Kind() {
+						case reflect.Slice:
+							s := reflect.ValueOf(v)
+							for i := 0; i < s.Len(); i++ {
+								o := models.AdapterDceInterfaceSettings{}
+								l := s.Index(i).Interface().(map[string]interface{})
+								if v, ok := l["additional_properties"]; ok {
+									{
+										x := []byte(v.(string))
+										var x1 interface{}
+										err := json.Unmarshal(x, &x1)
+										if err == nil && x1 != nil {
+											o.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1 = x1.(map[string]interface{})
+										}
+									}
+								}
+								if v, ok := l["fec_mode"]; ok {
+									{
+										x := (v.(string))
+										o.FecMode = &x
+									}
+								}
+								if v, ok := l["interface_id"]; ok {
+									{
+										x := int64(v.(int))
+										o.InterfaceID = x
+									}
+								}
+								if v, ok := l["object_type"]; ok {
+									{
+										x := (v.(string))
+										o.ObjectType = x
+									}
+								}
+								x = append(x, &o)
+							}
+						}
+						o.DceInterfaceSettings = x
 					}
 				}
 				if v, ok := l["eth_settings"]; ok {
@@ -836,6 +912,49 @@ func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 						if err == nil && x1 != nil {
 							o.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["dce_interface_settings"]; ok {
+					{
+						x := make([]*models.AdapterDceInterfaceSettings, 0)
+						switch reflect.TypeOf(v).Kind() {
+						case reflect.Slice:
+							s := reflect.ValueOf(v)
+							for i := 0; i < s.Len(); i++ {
+								o := models.AdapterDceInterfaceSettings{}
+								l := s.Index(i).Interface().(map[string]interface{})
+								if v, ok := l["additional_properties"]; ok {
+									{
+										x := []byte(v.(string))
+										var x1 interface{}
+										err := json.Unmarshal(x, &x1)
+										if err == nil && x1 != nil {
+											o.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1 = x1.(map[string]interface{})
+										}
+									}
+								}
+								if v, ok := l["fec_mode"]; ok {
+									{
+										x := (v.(string))
+										o.FecMode = &x
+									}
+								}
+								if v, ok := l["interface_id"]; ok {
+									{
+										x := int64(v.(int))
+										o.InterfaceID = x
+									}
+								}
+								if v, ok := l["object_type"]; ok {
+									{
+										x := (v.(string))
+										o.ObjectType = x
+									}
+								}
+								x = append(x, &o)
+							}
+						}
+						o.DceInterfaceSettings = x
 					}
 				}
 				if v, ok := l["eth_settings"]; ok {

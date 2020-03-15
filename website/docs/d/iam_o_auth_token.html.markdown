@@ -6,14 +6,12 @@ description: |-
 The meta data for generating OAuth2 token of a user.
 It is created when user logged in via OAuth2 using Authorization Code grant
 and deleted upon logout, expiration timeout or manual deletion.
-
 ---
 
 # Data Source: intersight_iam_o_auth_token
 The meta data for generating OAuth2 token of a user.
 It is created when user logged in via OAuth2 using Authorization Code grant
 and deleted upon logout, expiration timeout or manual deletion.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `access_expiration_time`:(string)Expiration time for the JWT token to which it can be used for api calls.

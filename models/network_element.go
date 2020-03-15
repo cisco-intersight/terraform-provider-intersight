@@ -8,21 +8,20 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NetworkElement Network:Element
 //
-// Fabric Interconnect of a UCS.
+// A Unified Computing Systems (UCS) Fabric Interconnect.
 //
 // swagger:model networkElement
 type NetworkElement struct {
 	EquipmentBase
 
-	// admin inband interface state
+	// The administrative state of the network Element inband management interface.
 	// Read Only: true
 	AdminInbandInterfaceState string `json:"AdminInbandInterfaceState,omitempty"`
 
@@ -37,21 +36,19 @@ type NetworkElement struct {
 	// fault summary
 	FaultSummary int64 `json:"FaultSummary,omitempty"`
 
-	// The Inband IP address of the network Element.
-	//
+	// The IP address of the network Element inband management interface.
 	// Read Only: true
 	InbandIPAddress string `json:"InbandIpAddress,omitempty"`
 
-	// The Inband IP Gateway of the network Element.
-	//
+	// The default gateway of the network Element inband management interface.
 	// Read Only: true
 	InbandIPGateway string `json:"InbandIpGateway,omitempty"`
 
-	// inband Ip mask
+	// The network mask of the network Element inband management interface.
 	// Read Only: true
 	InbandIPMask string `json:"InbandIpMask,omitempty"`
 
-	// inband vlan
+	// The VLAN ID of the network Element inband management interface.
 	// Read Only: true
 	InbandVlan int64 `json:"InbandVlan,omitempty"`
 
@@ -63,19 +60,40 @@ type NetworkElement struct {
 	// Read Only: true
 	ManagementEntity *ManagementEntityRef `json:"ManagementEntity,omitempty"`
 
-	// out of band Ip address
+	// The IP address of the network Element out-of-band management interface.
 	// Read Only: true
 	OutOfBandIPAddress string `json:"OutOfBandIpAddress,omitempty"`
 
-	// out of band Ip gateway
+	// The default gateway of the network Element out-of-band management interface.
 	// Read Only: true
 	OutOfBandIPGateway string `json:"OutOfBandIpGateway,omitempty"`
 
-	// out of band Ip mask
+	// The network mask of the network Element out-of-band management interface.
 	// Read Only: true
 	OutOfBandIPMask string `json:"OutOfBandIpMask,omitempty"`
 
-	// out of band mac
+	// The IPv4 address of the network Element out-of-band management interface.
+	// Read Only: true
+	OutOfBandIPV4Address string `json:"OutOfBandIpv4Address,omitempty"`
+
+	// The default IPv4 gateway of the network Element out-of-band management interface.
+	// Read Only: true
+	OutOfBandIPV4Gateway string `json:"OutOfBandIpv4Gateway,omitempty"`
+
+	// The network mask of the network Element out-of-band management interface.
+	// Read Only: true
+	OutOfBandIPV4Mask string `json:"OutOfBandIpv4Mask,omitempty"`
+
+	// The IPv6 address of the network Element out-of-band management interface.
+	OutOfBandIPV6Address string `json:"OutOfBandIpv6Address,omitempty"`
+
+	// The default IPv6 gateway of the network Element out-of-band management interface.
+	OutOfBandIPV6Gateway string `json:"OutOfBandIpv6Gateway,omitempty"`
+
+	// The network mask of the network Element out-of-band management interface.
+	OutOfBandIPV6Prefix string `json:"OutOfBandIpv6Prefix,omitempty"`
+
+	// The MAC address of the network Element out-of-band management interface.
 	// Read Only: true
 	OutOfBandMac string `json:"OutOfBandMac,omitempty"`
 
@@ -84,25 +102,19 @@ type NetworkElement struct {
 	Psus []*EquipmentPsuRef `json:"Psus"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The Switch Id of the network Element.
-	//
 	// Read Only: true
 	SwitchID string `json:"SwitchId,omitempty"`
 
 	// A collection of references to the [top.System](mo://top.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.
-	//
 	TopSystem *TopSystemRef `json:"TopSystem,omitempty"`
 
 	// A collection of references to the [firmware.RunningFirmware](mo://firmware.RunningFirmware) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [firmware.RunningFirmware](mo://firmware.RunningFirmware) MO unsets its reference to this deleted MO.
-	//
 	UcsmRunningFirmware *FirmwareRunningFirmwareRef `json:"UcsmRunningFirmware,omitempty"`
 }
 
@@ -142,6 +154,18 @@ func (m *NetworkElement) UnmarshalJSON(raw []byte) error {
 		OutOfBandIPGateway string `json:"OutOfBandIpGateway,omitempty"`
 
 		OutOfBandIPMask string `json:"OutOfBandIpMask,omitempty"`
+
+		OutOfBandIPV4Address string `json:"OutOfBandIpv4Address,omitempty"`
+
+		OutOfBandIPV4Gateway string `json:"OutOfBandIpv4Gateway,omitempty"`
+
+		OutOfBandIPV4Mask string `json:"OutOfBandIpv4Mask,omitempty"`
+
+		OutOfBandIPV6Address string `json:"OutOfBandIpv6Address,omitempty"`
+
+		OutOfBandIPV6Gateway string `json:"OutOfBandIpv6Gateway,omitempty"`
+
+		OutOfBandIPV6Prefix string `json:"OutOfBandIpv6Prefix,omitempty"`
 
 		OutOfBandMac string `json:"OutOfBandMac,omitempty"`
 
@@ -185,6 +209,18 @@ func (m *NetworkElement) UnmarshalJSON(raw []byte) error {
 
 	m.OutOfBandIPMask = dataAO1.OutOfBandIPMask
 
+	m.OutOfBandIPV4Address = dataAO1.OutOfBandIPV4Address
+
+	m.OutOfBandIPV4Gateway = dataAO1.OutOfBandIPV4Gateway
+
+	m.OutOfBandIPV4Mask = dataAO1.OutOfBandIPV4Mask
+
+	m.OutOfBandIPV6Address = dataAO1.OutOfBandIPV6Address
+
+	m.OutOfBandIPV6Gateway = dataAO1.OutOfBandIPV6Gateway
+
+	m.OutOfBandIPV6Prefix = dataAO1.OutOfBandIPV6Prefix
+
 	m.OutOfBandMac = dataAO1.OutOfBandMac
 
 	m.Psus = dataAO1.Psus
@@ -209,7 +245,6 @@ func (m NetworkElement) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminInbandInterfaceState string `json:"AdminInbandInterfaceState,omitempty"`
 
@@ -236,6 +271,18 @@ func (m NetworkElement) MarshalJSON() ([]byte, error) {
 		OutOfBandIPGateway string `json:"OutOfBandIpGateway,omitempty"`
 
 		OutOfBandIPMask string `json:"OutOfBandIpMask,omitempty"`
+
+		OutOfBandIPV4Address string `json:"OutOfBandIpv4Address,omitempty"`
+
+		OutOfBandIPV4Gateway string `json:"OutOfBandIpv4Gateway,omitempty"`
+
+		OutOfBandIPV4Mask string `json:"OutOfBandIpv4Mask,omitempty"`
+
+		OutOfBandIPV6Address string `json:"OutOfBandIpv6Address,omitempty"`
+
+		OutOfBandIPV6Gateway string `json:"OutOfBandIpv6Gateway,omitempty"`
+
+		OutOfBandIPV6Prefix string `json:"OutOfBandIpv6Prefix,omitempty"`
 
 		OutOfBandMac string `json:"OutOfBandMac,omitempty"`
 
@@ -276,6 +323,18 @@ func (m NetworkElement) MarshalJSON() ([]byte, error) {
 
 	dataAO1.OutOfBandIPMask = m.OutOfBandIPMask
 
+	dataAO1.OutOfBandIPV4Address = m.OutOfBandIPV4Address
+
+	dataAO1.OutOfBandIPV4Gateway = m.OutOfBandIPV4Gateway
+
+	dataAO1.OutOfBandIPV4Mask = m.OutOfBandIPV4Mask
+
+	dataAO1.OutOfBandIPV6Address = m.OutOfBandIPV6Address
+
+	dataAO1.OutOfBandIPV6Gateway = m.OutOfBandIPV6Gateway
+
+	dataAO1.OutOfBandIPV6Prefix = m.OutOfBandIPV6Prefix
+
 	dataAO1.OutOfBandMac = m.OutOfBandMac
 
 	dataAO1.Psus = m.Psus
@@ -293,7 +352,6 @@ func (m NetworkElement) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

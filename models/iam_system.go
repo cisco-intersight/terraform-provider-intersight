@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,37 +22,30 @@ type IamSystem struct {
 	MoBaseMo
 
 	// Privileges defined in end point devices such as UCS Fabric Interconnect, IMC, and HyperFlex managed by Intersight. These privileges are assigned to Intersight users using end point roles to perform operations such as GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointPrivileges []*IamEndPointPrivilegeRef `json:"EndPointPrivileges"`
 
 	// Roles defined in end point devices such as UCS Fabric Interconnect, IMC, HyperFlex managed by Intersight. These roles are assigned to Intersight users to perform end point operations such as GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
 
 	// Default Cisco IdP used for SAML authentication.
-	//
 	// Read Only: true
 	Idp *IamIdpRef `json:"Idp,omitempty"`
 
 	// Privilege set is a collection of privileges. Privilege sets are assigned to a user using roles.
-	//
 	// Read Only: true
 	PrivilegeSets []*IamPrivilegeSetRef `json:"PrivilegeSets"`
 
 	// Privileges are assigned to a user using privilege sets and roles. Privileges define user permissions and the actions a user can perform in Intersight.
-	//
 	// Read Only: true
 	Privileges []*IamPrivilegeRef `json:"Privileges"`
 
 	// A role is a collection of privilege sets that are assigned to a user using a permission object.
-	//
 	// Read Only: true
 	Roles []*IamRoleRef `json:"Roles"`
 
 	// SAML service provider which holds the SAML entity ID of the Intersight Service Provider and the metadata to integrate with the IdPs.
-	//
 	ServiceProvider *IamServiceProviderRef `json:"ServiceProvider,omitempty"`
 }
 
@@ -112,7 +104,6 @@ func (m IamSystem) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EndPointPrivileges []*IamEndPointPrivilegeRef `json:"EndPointPrivileges"`
 
@@ -148,7 +139,6 @@ func (m IamSystem) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

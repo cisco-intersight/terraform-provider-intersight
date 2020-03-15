@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_fan"
 sidebar_current: "docs-intersight-data-source-equipmentFan"
 description: |-
 Fan in a Fabric Interconnect / Chassis / RackUnit.
-
 ---
 
 # Data Source: intersight_equipment_fan
 Fan in a Fabric Interconnect / Chassis / RackUnit.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)This field is to provide description for the fan.

@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,30 +24,23 @@ type StorageDiskGroupPolicy struct {
 	PolicyAbstractPolicy
 
 	// A collection of disks used as hot spares for this RAID group.
-	//
 	DedicatedHotSpares []*StorageLocalDisk `json:"DedicatedHotSpares"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The supported RAID level for the disk group.
-	//
 	// Enum: [Raid0 Raid1 Raid5 Raid6 Raid10 Raid50 Raid60]
 	RaidLevel *string `json:"RaidLevel,omitempty"`
 
 	// Non spanned RAID levels like Raid0, Raid1, Raid5 and Raid6 expect a single group of disks whereas spanned RAID levels need multiple groups of disks with each group representing a span group. Non spanned RAID levels expect one span group and spanned RAID levels accept minimum 2 span groups and up to 8.
-	//
 	SpanGroups []*StorageSpanGroup `json:"SpanGroups"`
 
 	// A collection of references to the [storage.StoragePolicy](mo://storage.StoragePolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.StoragePolicy](mo://storage.StoragePolicy) MOs unset their reference to this deleted MO.
-	//
 	StoragePolicies []*StorageStoragePolicyRef `json:"StoragePolicies"`
 
 	// Selected disks in the disk group in JBOD state will be set to Unconfigured Good state before they are used in virtual drive creation.
-	//
 	UseJbods *bool `json:"UseJbods,omitempty"`
 }
 
@@ -103,7 +95,6 @@ func (m StorageDiskGroupPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DedicatedHotSpares []*StorageLocalDisk `json:"DedicatedHotSpares"`
 
@@ -135,7 +126,6 @@ func (m StorageDiskGroupPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

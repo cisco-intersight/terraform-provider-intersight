@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_ext_fc_storage_policy"
 sidebar_current: "docs-intersight-resource-hyperflexExtFcStoragePolicy"
 description: |-
   A policy specifying external storage connectivity information via Fabric attached FC storage.
-
 ---
 
 # Resource: intersight_hyperflex_ext_fc_storage_policy
 A policy specifying external storage connectivity information via Fabric attached FC storage.
-
 ## Argument Reference
 The following arguments are supported:
 * `admin_state`:(bool)Enables or disables external FC storage configuration.

@@ -103,7 +103,7 @@ func dataSourceServerConfigResultEntry() *schema.Resource {
 				Computed:    true,
 			},
 			"owner_id": {
-				Description: "",
+				Description: "The identifier of the object that owns the result message.The owner ID is used to correlate a given result entry to a task or entity. For example, a config resultentry that describes the result of a workflow task may have the task's instance ID as the owner.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -136,7 +136,7 @@ func dataSourceServerConfigResultEntry() *schema.Resource {
 				},
 			},
 			"state": {
-				Description: "Values  -- ok, ok-with-warning, errored.",
+				Description: "Values  -- Ok, Ok-with-warning, Errored.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

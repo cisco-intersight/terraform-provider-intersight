@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -26,16 +25,13 @@ type ApplianceBackup struct {
 	ApplianceBackupBase
 
 	// Backup managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Elapsed time in seconds since the backup process has started.
-	//
 	// Read Only: true
 	ElapsedTime int64 `json:"ElapsedTime,omitempty"`
 
 	// End date and time of the backup process.
-	//
 	// Read Only: true
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
@@ -44,22 +40,18 @@ type ApplianceBackup struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Messages generated during the backup process.
-	//
 	// Read Only: true
 	Messages []string `json:"Messages"`
 
 	// Password to authenticate the fileserver.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Start date and time of the backup process.
-	//
 	// Read Only: true
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// Status of the backup managed object.
-	//
 	// Read Only: true
 	// Enum: [Started Created Failed Completed Copied]
 	Status string `json:"Status,omitempty"`
@@ -124,7 +116,6 @@ func (m ApplianceBackup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -164,7 +155,6 @@ func (m ApplianceBackup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

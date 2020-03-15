@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AdapterEthSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *AdapterEthSettings) UnmarshalBinary(b []byte) error {
 }
 
 // AdapterEthSettingsAO1P1 adapter eth settings a o1 p1
+//
 // swagger:model AdapterEthSettingsAO1P1
 type AdapterEthSettingsAO1P1 struct {
 
 	// Status of LLDP protocol on the adapter interfaces.
-	//
 	LldpEnabled *bool `json:"LldpEnabled,omitempty"`
 
 	// adapter eth settings a o1 p1
@@ -118,7 +116,6 @@ func (m *AdapterEthSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Status of LLDP protocol on the adapter interfaces.
-		//
 		LldpEnabled *bool `json:"LldpEnabled,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *AdapterEthSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AdapterEthSettingsAO1P1
 
 	rcv.LldpEnabled = stage1.LldpEnabled
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *AdapterEthSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "LldpEnabled")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m AdapterEthSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Status of LLDP protocol on the adapter interfaces.
-		//
 		LldpEnabled *bool `json:"LldpEnabled,omitempty"`
 	}
 

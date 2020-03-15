@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_fan_module"
 sidebar_current: "docs-intersight-data-source-equipmentFanModule"
 description: |-
 Moudule housing one or more fans.
-
 ---
 
 # Data Source: intersight_equipment_fan_module
 Moudule housing one or more fans.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)This field is to provide description for the fan module.

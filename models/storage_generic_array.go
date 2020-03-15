@@ -6,22 +6,20 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageGenericArray Storage:Generic Array
 //
-// Abstract object which contains common attributes of storage array. It expects every storage array to inherit and set the value.
+// Abstract object which contains common attributes of a storage array. Every storage array should inherit from this object.
 //
 // swagger:model storageGenericArray
 type StorageGenericArray struct {
 	EquipmentAbstractDevice
 
 	// Storage utilization of an array, it contains total capacity, available capacity, used capacity and free capacity.
-	//
 	// Read Only: true
 	StorageUtilization *StorageCapacity `json:"StorageUtilization,omitempty"`
 }
@@ -57,7 +55,6 @@ func (m StorageGenericArray) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		StorageUtilization *StorageCapacity `json:"StorageUtilization,omitempty"`
 	}
@@ -69,7 +66,6 @@ func (m StorageGenericArray) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

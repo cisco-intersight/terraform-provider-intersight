@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m FirmwareHTTPServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *FirmwareHTTPServer) UnmarshalBinary(b []byte) error {
 }
 
 // FirmwareHTTPServerAO1P1 firmware HTTP server a o1 p1
+//
 // swagger:model FirmwareHTTPServerAO1P1
 type FirmwareHTTPServerAO1P1 struct {
 
 	// HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.
-	//
 	LocationLink string `json:"LocationLink,omitempty"`
 
 	// Mount option as configured on the HTTP server. Empty if nothing is configured.
-	//
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// firmware HTTP server a o1 p1
@@ -122,11 +119,9 @@ func (m *FirmwareHTTPServerAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.
-		//
 		LocationLink string `json:"LocationLink,omitempty"`
 
 		// Mount option as configured on the HTTP server. Empty if nothing is configured.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *FirmwareHTTPServerAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FirmwareHTTPServerAO1P1
 
 	rcv.LocationLink = stage1.LocationLink
-
 	rcv.MountOptions = stage1.MountOptions
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *FirmwareHTTPServerAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "LocationLink")
-
 	delete(stage2, "MountOptions")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m FirmwareHTTPServerAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.
-		//
 		LocationLink string `json:"LocationLink,omitempty"`
 
 		// Mount option as configured on the HTTP server. Empty if nothing is configured.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 	}
 
 	stage1.LocationLink = m.LocationLink
-
 	stage1.MountOptions = m.MountOptions
 
 	// make JSON object for known properties

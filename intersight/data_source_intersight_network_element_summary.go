@@ -15,7 +15,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 		Read: dataSourceNetworkElementSummaryRead,
 		Schema: map[string]*schema.Schema{
 			"admin_inband_interface_state": {
-				Description: "",
+				Description: "The administrative state of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -51,25 +51,25 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"inband_ip_address": {
-				Description: "The Inband IP address of the network Element.",
+				Description: "The IP address of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_ip_gateway": {
-				Description: "The Inband IP Gateway of the network Element.",
+				Description: "The default gateway of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_ip_mask": {
-				Description: "",
+				Description: "The network mask of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_vlan": {
-				Description: "",
+				Description: "The VLAN ID of the network Element inband management interface.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -141,25 +141,61 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"out_of_band_ip_address": {
-				Description: "",
+				Description: "The IP address of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_ip_gateway": {
-				Description: "",
+				Description: "The default gateway of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_ip_mask": {
-				Description: "",
+				Description: "The network mask of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_address": {
+				Description: "The IPv4 address of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_gateway": {
+				Description: "The default IPv4 gateway of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_mask": {
+				Description: "The network mask of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_address": {
+				Description: "The IPv6 address of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_gateway": {
+				Description: "The default IPv6 gateway of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_prefix": {
+				Description: "The network mask of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_mac": {
-				Description: "",
+				Description: "The MAC address of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -400,6 +436,30 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 		x := (v.(string))
 		o.OutOfBandIPMask = x
 	}
+	if v, ok := d.GetOk("out_of_band_ipv4_address"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Address = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv4_gateway"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Gateway = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv4_mask"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Mask = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_address"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Address = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_gateway"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Gateway = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_prefix"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Prefix = x
+	}
 	if v, ok := d.GetOk("out_of_band_mac"); ok {
 		x := (v.(string))
 		o.OutOfBandMac = x
@@ -525,6 +585,24 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 				return err
 			}
 			if err := d.Set("out_of_band_ip_mask", (s.OutOfBandIPMask)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_address", (s.OutOfBandIPV4Address)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_gateway", (s.OutOfBandIPV4Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_mask", (s.OutOfBandIPV4Mask)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_address", (s.OutOfBandIPV6Address)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_gateway", (s.OutOfBandIPV6Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_prefix", (s.OutOfBandIPV6Prefix)); err != nil {
 				return err
 			}
 			if err := d.Set("out_of_band_mac", (s.OutOfBandMac)); err != nil {

@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m HclProduct) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,41 +101,34 @@ func (m *HclProduct) UnmarshalBinary(b []byte) error {
 }
 
 // HclProductAO1P1 hcl product a o1 p1
+//
 // swagger:model HclProductAO1P1
 type HclProductAO1P1 struct {
 
 	// Supported driver names of the product.
-	//
 	DriverNames []string `json:"DriverNames"`
 
 	// Error code indicating the support status.
-	//
 	// Read Only: true
 	// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 	ErrorCode string `json:"ErrorCode,omitempty"`
 
 	// Supported firmwares list of the product.
-	//
 	Firmwares []*HclFirmware `json:"Firmwares"`
 
 	// Identifier of the product.
-	//
 	ID string `json:"Id,omitempty"`
 
 	// Model/PID of the product/adapter.
-	//
 	Model string `json:"Model,omitempty"`
 
 	// Revision of the adapter model.
-	//
 	Revision string `json:"Revision,omitempty"`
 
 	// Type of the product/adapter say OCP, PT, GPU.
-	//
 	Type string `json:"Type,omitempty"`
 
 	// Vendor of the product or adapter.
-	//
 	Vendor string `json:"Vendor,omitempty"`
 
 	// hcl product a o1 p1
@@ -150,37 +141,29 @@ func (m *HclProductAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Supported driver names of the product.
-		//
 		DriverNames []string `json:"DriverNames"`
 
 		// Error code indicating the support status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Supported firmwares list of the product.
-		//
 		Firmwares []*HclFirmware `json:"Firmwares"`
 
 		// Identifier of the product.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// Model/PID of the product/adapter.
-		//
 		Model string `json:"Model,omitempty"`
 
 		// Revision of the adapter model.
-		//
 		Revision string `json:"Revision,omitempty"`
 
 		// Type of the product/adapter say OCP, PT, GPU.
-		//
 		Type string `json:"Type,omitempty"`
 
 		// Vendor of the product or adapter.
-		//
 		Vendor string `json:"Vendor,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -189,21 +172,13 @@ func (m *HclProductAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HclProductAO1P1
 
 	rcv.DriverNames = stage1.DriverNames
-
 	rcv.ErrorCode = stage1.ErrorCode
-
 	rcv.Firmwares = stage1.Firmwares
-
 	rcv.ID = stage1.ID
-
 	rcv.Model = stage1.Model
-
 	rcv.Revision = stage1.Revision
-
 	rcv.Type = stage1.Type
-
 	rcv.Vendor = stage1.Vendor
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -213,21 +188,13 @@ func (m *HclProductAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DriverNames")
-
 	delete(stage2, "ErrorCode")
-
 	delete(stage2, "Firmwares")
-
 	delete(stage2, "Id")
-
 	delete(stage2, "Model")
-
 	delete(stage2, "Revision")
-
 	delete(stage2, "Type")
-
 	delete(stage2, "Vendor")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -249,54 +216,39 @@ func (m HclProductAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Supported driver names of the product.
-		//
 		DriverNames []string `json:"DriverNames"`
 
 		// Error code indicating the support status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Supported firmwares list of the product.
-		//
 		Firmwares []*HclFirmware `json:"Firmwares"`
 
 		// Identifier of the product.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// Model/PID of the product/adapter.
-		//
 		Model string `json:"Model,omitempty"`
 
 		// Revision of the adapter model.
-		//
 		Revision string `json:"Revision,omitempty"`
 
 		// Type of the product/adapter say OCP, PT, GPU.
-		//
 		Type string `json:"Type,omitempty"`
 
 		// Vendor of the product or adapter.
-		//
 		Vendor string `json:"Vendor,omitempty"`
 	}
 
 	stage1.DriverNames = m.DriverNames
-
 	stage1.ErrorCode = m.ErrorCode
-
 	stage1.Firmwares = m.Firmwares
-
 	stage1.ID = m.ID
-
 	stage1.Model = m.Model
-
 	stage1.Revision = m.Revision
-
 	stage1.Type = m.Type
-
 	stage1.Vendor = m.Vendor
 
 	// make JSON object for known properties

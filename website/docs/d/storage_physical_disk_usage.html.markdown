@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_physical_disk_usage"
 sidebar_current: "docs-intersight-data-source-storagePhysicalDiskUsage"
 description: |-
 Has usage map between physical disks and virtual drives.
-
 ---
 
 # Data Source: intersight_storage_physical_disk_usage
 Has usage map between physical disks and virtual drives.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

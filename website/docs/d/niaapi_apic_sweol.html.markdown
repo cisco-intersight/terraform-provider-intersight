@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_apic_sweol"
 sidebar_current: "docs-intersight-data-source-niaapiApicSweol"
 description: |-
 The software end of life notice for APIC.
-
 ---
 
 # Data Source: intersight_niaapi_apic_sweol
 The software end of life notice for APIC.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `affected_versions`:(string)String contains the Release versions affected by this notice, seperated by comma.

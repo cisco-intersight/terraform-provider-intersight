@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m ComputeServerConfig) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *ComputeServerConfig) UnmarshalBinary(b []byte) error {
 }
 
 // ComputeServerConfigAO1P1 compute server config a o1 p1
+//
 // swagger:model ComputeServerConfigAO1P1
 type ComputeServerConfigAO1P1 struct {
 
 	// User defined asset tag of the server.
-	//
 	AssetTag string `json:"AssetTag,omitempty"`
 
 	// User defined description of the server.
-	//
 	UserLabel string `json:"UserLabel,omitempty"`
 
 	// compute server config a o1 p1
@@ -122,11 +119,9 @@ func (m *ComputeServerConfigAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// User defined asset tag of the server.
-		//
 		AssetTag string `json:"AssetTag,omitempty"`
 
 		// User defined description of the server.
-		//
 		UserLabel string `json:"UserLabel,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *ComputeServerConfigAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ComputeServerConfigAO1P1
 
 	rcv.AssetTag = stage1.AssetTag
-
 	rcv.UserLabel = stage1.UserLabel
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *ComputeServerConfigAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AssetTag")
-
 	delete(stage2, "UserLabel")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m ComputeServerConfigAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// User defined asset tag of the server.
-		//
 		AssetTag string `json:"AssetTag,omitempty"`
 
 		// User defined description of the server.
-		//
 		UserLabel string `json:"UserLabel,omitempty"`
 	}
 
 	stage1.AssetTag = m.AssetTag
-
 	stage1.UserLabel = m.UserLabel
 
 	// make JSON object for known properties

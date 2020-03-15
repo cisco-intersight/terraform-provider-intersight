@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_eula"
 sidebar_current: "docs-intersight-data-source-firmwareEula"
 description: |-
 EULA (End User License Agreement) acceptance status for an account to use cisco.com, to download software.
-
 ---
 
 # Data Source: intersight_firmware_eula
 EULA (End User License Agreement) acceptance status for an account to use cisco.com, to download software.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `accepted`:(bool)EULA acceptance status for the account.

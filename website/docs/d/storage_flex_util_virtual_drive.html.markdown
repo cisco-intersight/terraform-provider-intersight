@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_util_virtual_drive"
 sidebar_current: "docs-intersight-data-source-storageFlexUtilVirtualDrive"
 description: |-
 Storage Flex Util Virtual Drive.
-
 ---
 
 # Data Source: intersight_storage_flex_util_virtual_drive
 Storage Flex Util Virtual Drive.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

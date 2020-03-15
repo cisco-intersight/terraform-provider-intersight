@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // TamAdvisoryInstanceList tam advisory instance list
+//
 // swagger:model tamAdvisoryInstanceList
 type TamAdvisoryInstanceList struct {
 

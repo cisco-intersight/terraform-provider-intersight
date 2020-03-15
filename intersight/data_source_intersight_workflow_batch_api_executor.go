@@ -263,8 +263,25 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 			},
 			"constraints": {
 				Description: "Enter the constraints on when this task should match against the task definition.",
-				Type:        schema.TypeString,
+				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"description": {
 				Description: "A detailed description about the batch APIs.",
@@ -391,10 +408,6 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 
 	url := "workflow/BatchApiExecutors"
 	var o models.WorkflowBatchAPIExecutor
-	if v, ok := d.GetOk("constraints"); ok {
-		x := (v.(string))
-		o.Constraints = x
-	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
 		o.Description = x
@@ -442,7 +455,8 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 			if err := d.Set("batch", flattenListWorkflowAPI(s.Batch, d)); err != nil {
 				return err
 			}
-			if err := d.Set("constraints", (s.Constraints)); err != nil {
+
+			if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
 				return err
 			}
 			if err := d.Set("description", (s.Description)); err != nil {

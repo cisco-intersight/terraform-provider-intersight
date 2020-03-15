@@ -5,21 +5,17 @@ sidebar_current: "docs-intersight-resource-workflowBatchApiExecutor"
 description: |-
   Intersight allows generic API tasks to be created by taking the API request
 body and a response parser specification in the form of content.Grammar object.
-
 Batch API associates the list of API requests to be executed as part of single
 task execution. Each API request takes the request body and a response parser
 specification.
-
 ---
 
 # Resource: intersight_workflow_batch_api_executor
 Intersight allows generic API tasks to be created by taking the API request
 body and a response parser specification in the form of content.Grammar object.
-
 Batch API associates the list of API requests to be executed as part of single
 task execution. Each API request takes the request body and a response parser
 specification.
-
 ## Argument Reference
 The following arguments are supported:
 * `batch`:(Array)Intersight Orchestrator supports one or a batch of APIs to be executed as part ofa task execution.The batch cannot be empty.
@@ -77,7 +73,12 @@ This complex property has following sub-properties:
     + `type`:(string)The type of the parameter. Accepted values are simple, complex,collection.
   + `skip_on_condition`:(string)The skip expression, if provided, allows the batch API executor to skip theapi execution when the given expression evaluates to true.The expression is given as such a golang template that has to beevaluated to a final content true/false. The expression is an optional and incase not provided, the API will always be executed.
   + `timeout`:(int)The duration in seconds by which the API response is expected from the API target.If the end point does not respond for the API request within this timeoutduration, the task will be marked as failed.
-* `constraints`:(string)Enter the constraints on when this task should match against the task definition.
+* `constraints`:(Array with Maximum of one item) -Enter the constraints on when this task should match against the task definition.
+This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+  + `target_data_type`:List of property constraints that helps to narrow down task implementations based on target device input.
 * `description`:(string)A detailed description about the batch APIs.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name for the batch API task.

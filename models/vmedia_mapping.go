@@ -8,14 +8,16 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // VmediaMapping Vmedia:Mapping
+//
+// Virtual Media mapping settings required to map images from remote server.
+//
 // swagger:model vmediaMapping
 type VmediaMapping struct {
 	MoBaseComplexType
@@ -57,7 +59,6 @@ func (m VmediaMapping) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -99,53 +100,44 @@ func (m *VmediaMapping) UnmarshalBinary(b []byte) error {
 }
 
 // VmediaMappingAO1P1 vmedia mapping a o1 p1
+//
 // swagger:model VmediaMappingAO1P1
 type VmediaMappingAO1P1 struct {
 
 	// Type of Authentication protocol when CIFS is used for communication with the remote server.
-	//
 	// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 	AuthenticationProtocol *string `json:"AuthenticationProtocol,omitempty"`
 
 	// Type of remote Virtual Media device.
-	//
 	// Enum: [cdd hdd]
 	DeviceType *string `json:"DeviceType,omitempty"`
 
 	// IP address or hostname of the remote server.
-	//
 	HostName string `json:"HostName,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
-	//
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// Protocol to use to communicate with the remote server.
-	//
 	// Enum: [nfs cifs http https]
 	MountProtocol *string `json:"MountProtocol,omitempty"`
 
 	// Password associated with the username.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
-	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// URL path to the location of the image on the remote server. The preferred format is '/path/'.
-	//
 	RemotePath string `json:"RemotePath,omitempty"`
 
 	// Username to log in to the remote server.
-	//
 	Username string `json:"Username,omitempty"`
 
 	// Identity of the image for Virtual Media mapping.
-	//
 	VolumeName string `json:"VolumeName,omitempty"`
 
 	// vmedia mapping a o1 p1
@@ -158,49 +150,39 @@ func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Type of Authentication protocol when CIFS is used for communication with the remote server.
-		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		AuthenticationProtocol *string `json:"AuthenticationProtocol,omitempty"`
 
 		// Type of remote Virtual Media device.
-		//
 		// Enum: [cdd hdd]
 		DeviceType *string `json:"DeviceType,omitempty"`
 
 		// IP address or hostname of the remote server.
-		//
 		HostName string `json:"HostName,omitempty"`
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Protocol to use to communicate with the remote server.
-		//
 		// Enum: [nfs cifs http https]
 		MountProtocol *string `json:"MountProtocol,omitempty"`
 
 		// Password associated with the username.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
-		//
 		RemotePath string `json:"RemotePath,omitempty"`
 
 		// Username to log in to the remote server.
-		//
 		Username string `json:"Username,omitempty"`
 
 		// Identity of the image for Virtual Media mapping.
-		//
 		VolumeName string `json:"VolumeName,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -209,27 +191,16 @@ func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VmediaMappingAO1P1
 
 	rcv.AuthenticationProtocol = stage1.AuthenticationProtocol
-
 	rcv.DeviceType = stage1.DeviceType
-
 	rcv.HostName = stage1.HostName
-
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.MountOptions = stage1.MountOptions
-
 	rcv.MountProtocol = stage1.MountProtocol
-
 	rcv.Password = stage1.Password
-
 	rcv.RemoteFile = stage1.RemoteFile
-
 	rcv.RemotePath = stage1.RemotePath
-
 	rcv.Username = stage1.Username
-
 	rcv.VolumeName = stage1.VolumeName
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -239,27 +210,16 @@ func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AuthenticationProtocol")
-
 	delete(stage2, "DeviceType")
-
 	delete(stage2, "HostName")
-
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "MountOptions")
-
 	delete(stage2, "MountProtocol")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "RemoteFile")
-
 	delete(stage2, "RemotePath")
-
 	delete(stage2, "Username")
-
 	delete(stage2, "VolumeName")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -281,72 +241,52 @@ func (m VmediaMappingAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Type of Authentication protocol when CIFS is used for communication with the remote server.
-		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		AuthenticationProtocol *string `json:"AuthenticationProtocol,omitempty"`
 
 		// Type of remote Virtual Media device.
-		//
 		// Enum: [cdd hdd]
 		DeviceType *string `json:"DeviceType,omitempty"`
 
 		// IP address or hostname of the remote server.
-		//
 		HostName string `json:"HostName,omitempty"`
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Protocol to use to communicate with the remote server.
-		//
 		// Enum: [nfs cifs http https]
 		MountProtocol *string `json:"MountProtocol,omitempty"`
 
 		// Password associated with the username.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
-		//
 		RemotePath string `json:"RemotePath,omitempty"`
 
 		// Username to log in to the remote server.
-		//
 		Username string `json:"Username,omitempty"`
 
 		// Identity of the image for Virtual Media mapping.
-		//
 		VolumeName string `json:"VolumeName,omitempty"`
 	}
 
 	stage1.AuthenticationProtocol = m.AuthenticationProtocol
-
 	stage1.DeviceType = m.DeviceType
-
 	stage1.HostName = m.HostName
-
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.MountOptions = m.MountOptions
-
 	stage1.MountProtocol = m.MountProtocol
-
 	stage1.Password = m.Password
-
 	stage1.RemoteFile = m.RemoteFile
-
 	stage1.RemotePath = m.RemotePath
-
 	stage1.Username = m.Username
-
 	stage1.VolumeName = m.VolumeName
 
 	// make JSON object for known properties

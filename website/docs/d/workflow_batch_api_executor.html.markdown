@@ -5,24 +5,19 @@ sidebar_current: "docs-intersight-data-source-workflowBatchApiExecutor"
 description: |-
 Intersight allows generic API tasks to be created by taking the API request
 body and a response parser specification in the form of content.Grammar object.
-
 Batch API associates the list of API requests to be executed as part of single
 task execution. Each API request takes the request body and a response parser
 specification.
-
 ---
 
 # Data Source: intersight_workflow_batch_api_executor
 Intersight allows generic API tasks to be created by taking the API request
 body and a response parser specification in the form of content.Grammar object.
-
 Batch API associates the list of API requests to be executed as part of single
 task execution. Each API request takes the request body and a response parser
 specification.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `constraints`:(string)Enter the constraints on when this task should match against the task definition.
 * `description`:(string)A detailed description about the batch APIs.
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name for the batch API task.

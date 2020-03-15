@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,8 +22,7 @@ type WorkflowTargetDataType struct {
 	WorkflowBaseDataType
 
 	// Reference to target device or endpoint managed object.
-	//
-	Properties []*WorkflowMoReferenceProperty `json:"Properties"`
+	Properties []*WorkflowTargetProperty `json:"Properties"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -38,7 +36,7 @@ func (m *WorkflowTargetDataType) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Properties []*WorkflowMoReferenceProperty `json:"Properties"`
+		Properties []*WorkflowTargetProperty `json:"Properties"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -58,9 +56,8 @@ func (m WorkflowTargetDataType) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
-		Properties []*WorkflowMoReferenceProperty `json:"Properties"`
+		Properties []*WorkflowTargetProperty `json:"Properties"`
 	}
 
 	dataAO1.Properties = m.Properties
@@ -70,7 +67,6 @@ func (m WorkflowTargetDataType) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

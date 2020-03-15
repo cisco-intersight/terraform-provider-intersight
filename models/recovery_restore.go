@@ -6,40 +6,34 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // RecoveryRestore Restore
+//
 // swagger:model recoveryRestore
 type RecoveryRestore struct {
 	MoBaseMo
 
 	// The backup info that needs to be restored in the target endpoint.
-	//
 	BackupInfo *RecoveryAbstractBackupInfoRef `json:"BackupInfo,omitempty"`
 
 	// Configuration parameters to be passed into the restore workflow.
-	//
 	ConfigParams *RecoveryConfigParams `json:"ConfigParams,omitempty"`
 
 	// The DeviceRegistration of the target endpoint.
-	//
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the RestoreStatus mo that tracks status of restore workflow.
-	//
 	// Read Only: true
 	RestoreStatus *RecoveryAbstractRestoreStatusRef `json:"RestoreStatus,omitempty"`
 
 	// The run time instance of the workflow for this upgrade operation.
-	//
 	// Read Only: true
 	Workflow *WorkflowWorkflowInfoRef `json:"Workflow,omitempty"`
 }
@@ -95,7 +89,6 @@ func (m RecoveryRestore) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupInfo *RecoveryAbstractBackupInfoRef `json:"BackupInfo,omitempty"`
 
@@ -127,7 +120,6 @@ func (m RecoveryRestore) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

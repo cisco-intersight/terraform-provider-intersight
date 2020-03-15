@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_vcenter_config_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexVcenterConfigPolicy"
 description: |-
 A policy specifying vCenter configuration.
-
 ---
 
 # Data Source: intersight_hyperflex_vcenter_config_policy
 A policy specifying vCenter configuration.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `data_center`:(string)The vCenter datacenter name.

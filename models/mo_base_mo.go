@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -23,51 +22,41 @@ import (
 type MoBaseMo struct {
 
 	// The Account ID for this managed object.
-	//
 	// Read Only: true
 	AccountMoid string `json:"AccountMoid,omitempty"`
 
 	// The array containing the MO references of the ancestors in the object containment hierarchy.
-	//
 	// Read Only: true
 	Ancestors []*MoBaseMoRef `json:"Ancestors"`
 
 	// The time when this managed object was created.
-	//
 	// Read Only: true
 	// Format: date-time
 	CreateTime strfmt.DateTime `json:"CreateTime,omitempty"`
 
 	// The DomainGroup ID for this managed object.
-	//
 	// Read Only: true
 	DomainGroupMoid string `json:"DomainGroupMoid,omitempty"`
 
 	// The time when this managed object was last modified.
-	//
 	// Read Only: true
 	// Format: date-time
 	ModTime strfmt.DateTime `json:"ModTime,omitempty"`
 
 	// The unique identifier of this Managed Object instance.
-	//
 	Moid string `json:"Moid,omitempty"`
 
 	// The fully-qualified type of this managed object, i.e. the class name.
 	// This property is optional. The ObjectType is implied from the URL path.
 	// If specified, the value of objectType must match the class name specified in the URL path.
-	//
-	//
 	// Read Only: true
 	ObjectType string `json:"ObjectType,omitempty"`
 
 	// The array of owners which represent effective ownership of this object.
-	//
 	// Read Only: true
 	Owners []string `json:"Owners"`
 
 	// The direct ancestor of this managed object in the containment hierarchy.
-	//
 	// Read Only: true
 	Parent *MoBaseMoRef `json:"Parent,omitempty"`
 
@@ -77,22 +66,18 @@ type MoBaseMo struct {
 	// If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will
 	// have PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.
 	// All profiles/policies created with in an organization will have the organization as PermissionResources.
-	//
 	// Read Only: true
 	PermissionResources []*MoBaseMoRef `json:"PermissionResources"`
 
 	// Intersight provides pre-built workflows, tasks and policies to end users through global catalogs.
 	// Objects that are made available through global catalogs are said to have a 'shared' ownership. Shared objects are either made globally available to all end users or restricted to end users based on their license entitlement. Users can use this property to differentiate the scope (global or a specific license tier) to which a shared MO belongs.
-	//
 	// Read Only: true
 	SharedScope string `json:"SharedScope,omitempty"`
 
 	// The array of tags, which allow to add key, value meta-data to managed objects.
-	//
 	Tags []*MoTag `json:"Tags"`
 
 	// The versioning info for this managed object.
-	//
 	// Read Only: true
 	VersionContext *MoVersionContext `json:"VersionContext,omitempty"`
 }
@@ -223,7 +208,6 @@ func (m MoBaseMo) MarshalJSON() ([]byte, error) {
 		return nil, errAO0
 	}
 	_parts = append(_parts, jsonDataAO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

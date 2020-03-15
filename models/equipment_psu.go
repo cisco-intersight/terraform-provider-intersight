@@ -6,47 +6,38 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // EquipmentPsu Equipment:Psu
+//
 // swagger:model equipmentPsu
 type EquipmentPsu struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.RackUnit](mo://compute.RackUnit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.RackUnit](mo://compute.RackUnit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
 	// This field is to provide description for the power supply unit.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentChassis *EquipmentChassisRef `json:"EquipmentChassis,omitempty"`
 
 	// A collection of references to the [equipment.RackEnclosure](mo://equipment.RackEnclosure) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.RackEnclosure](mo://equipment.RackEnclosure) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentRackEnclosure *EquipmentRackEnclosureRef `json:"EquipmentRackEnclosure,omitempty"`
 
 	// A collection of references to the [network.Element](mo://network.Element) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [network.Element](mo://network.Element) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	NetworkElement *NetworkElementRef `json:"NetworkElement,omitempty"`
 
@@ -55,22 +46,18 @@ type EquipmentPsu struct {
 	OperState string `json:"OperState,omitempty"`
 
 	// This field identifies the Part Number for this Power Supply Unit.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// This field identifies the Product ID for the Power Supply.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
 	// This field identifies the presence state of the psu.
-	//
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
 	// This field identifies the Firmware Version of the Power Supply.
-	//
 	// Read Only: true
 	PsuFwVersion string `json:"PsuFwVersion,omitempty"`
 
@@ -79,37 +66,30 @@ type EquipmentPsu struct {
 	PsuID int64 `json:"PsuId,omitempty"`
 
 	// This field identifies the input source for the Power Supply.
-	//
 	// Read Only: true
 	PsuInputSrc string `json:"PsuInputSrc,omitempty"`
 
 	// This field identifies the type of the Power Supply.
-	//
 	// Read Only: true
 	PsuType string `json:"PsuType,omitempty"`
 
 	// This field identifies the Wattage of the Power Supply.
-	//
 	// Read Only: true
 	PsuWattage string `json:"PsuWattage,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This field identifies the Stockkeeping Unit for this Power Supply.
-	//
 	// Read Only: true
 	Sku string `json:"Sku,omitempty"`
 
 	// This field identifies the Vendor ID for this Power Supply Unit.
-	//
 	// Read Only: true
 	Vid string `json:"Vid,omitempty"`
 
 	// This field is used to indicate the Voltage for this Power Supply.
-	//
 	// Read Only: true
 	Voltage string `json:"Voltage,omitempty"`
 }
@@ -213,7 +193,6 @@ func (m EquipmentPsu) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
@@ -293,7 +272,6 @@ func (m EquipmentPsu) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexHxZoneResiliencyInfoDt Hyperflex:Hx Zone Resiliency Info Dt
+//
 // swagger:model hyperflexHxZoneResiliencyInfoDt
 type HyperflexHxZoneResiliencyInfoDt struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m HyperflexHxZoneResiliencyInfoDt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,6 +97,7 @@ func (m *HyperflexHxZoneResiliencyInfoDt) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexHxZoneResiliencyInfoDtAO1P1 hyperflex hx zone resiliency info dt a o1 p1
+//
 // swagger:model HyperflexHxZoneResiliencyInfoDtAO1P1
 type HyperflexHxZoneResiliencyInfoDtAO1P1 struct {
 
@@ -132,9 +132,7 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) UnmarshalJSON(data []byte) error 
 	var rcv HyperflexHxZoneResiliencyInfoDtAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.ResiliencyInfo = stage1.ResiliencyInfo
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -144,9 +142,7 @@ func (m *HyperflexHxZoneResiliencyInfoDtAO1P1) UnmarshalJSON(data []byte) error 
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "ResiliencyInfo")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -177,7 +173,6 @@ func (m HyperflexHxZoneResiliencyInfoDtAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Name = m.Name
-
 	stage1.ResiliencyInfo = m.ResiliencyInfo
 
 	// make JSON object for known properties

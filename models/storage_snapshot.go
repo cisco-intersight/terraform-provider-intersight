@@ -6,59 +6,50 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // StorageSnapshot Storage:Snapshot
 //
-// Reference marker for volume at a particular point in time. It is a point-in-time copy of the volume.
+// Reference marker for volume. It is a point-in-time copy of the volume.
 //
 // swagger:model storageSnapshot
 type StorageSnapshot struct {
 	MoBaseMo
 
-	// Exact date and time on which snapshot is created.
-	//
+	// Exact date and time at which snapshot was created.
 	// Read Only: true
 	// Format: date-time
 	CreatedTime strfmt.DateTime `json:"CreatedTime,omitempty"`
 
-	// Name of the snapshot which represents point in time copy of volume.
-	//
+	// Name of the snapshot which represents point-in-time copy of volume.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// Name of the protection group to which the snapshot belongs. Value is emptry, if the snapshot is created directly on volume.
-	//
+	// Name of the protection group to which the snapshot belongs. Value is empty, if the snapshot is created directly on volume.
 	// Read Only: true
 	ProtectionGroupName string `json:"ProtectionGroupName,omitempty"`
 
 	// Protection group snapshot relationship object.
-	//
 	// Read Only: true
 	ProtectionGroupSnapshot *StorageProtectionGroupSnapshotRef `json:"ProtectionGroupSnapshot,omitempty"`
 
 	// Snapshot size represented in bytes.
-	//
 	// Read Only: true
 	Size int64 `json:"Size,omitempty"`
 
-	// Source object on which the snapshot is created. It is a name of the originating volume.
-	//
+	// Source object on which the snapshot is created. It is the name of the originating volume.
 	// Read Only: true
 	Source string `json:"Source,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
 	// Volume managed object where the snapshot is created.
-	//
 	// Read Only: true
 	Volume *StorageVolumeRef `json:"Volume,omitempty"`
 }
@@ -122,7 +113,6 @@ func (m StorageSnapshot) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CreatedTime strfmt.DateTime `json:"CreatedTime,omitempty"`
 
@@ -162,7 +152,6 @@ func (m StorageSnapshot) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

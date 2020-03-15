@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -19,7 +18,6 @@ import (
 //
 // A Baseparameter is an abstract definition of specific value to be extracted from a given API or
 // device response.
-//
 // The BaseParameter object provides the name, type and content specific path, such as XPath or
 // JSONPath, that points to the location of the parameter value in the content. Additional parameters
 // necessary to extract data based on content type needs to extend BaseParameter.
@@ -65,7 +63,6 @@ func (m ContentBaseParameter) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -107,45 +104,34 @@ func (m *ContentBaseParameter) UnmarshalBinary(b []byte) error {
 }
 
 // ContentBaseParameterAO1P1 content base parameter a o1 p1
+//
 // swagger:model ContentBaseParameterAO1P1
 type ContentBaseParameterAO1P1 struct {
 
 	// The flag that allows single values in content to be extracted as a
 	// single element collection in case the parameter is of Collection type.
-	//
 	// This flag is applicable for parameters of type Collection only.
-	//
-	//
 	AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
 
 	// The name of the complex type definition in case this is a complex
 	// parameter. The content.Grammar object must have a complex type, content.ComplexType,
 	// defined with the specified name in types collection property.
-	//
-	//
 	ComplexType string `json:"ComplexType,omitempty"`
 
 	// The type of the collection item in case this is a collection parameter.
-	//
-	//
 	// Enum: [simple complex collection]
 	ItemType *string `json:"ItemType,omitempty"`
 
 	// The name of the parameter.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The content specific path information that identifies the parameter
 	// value within the content. The value is usually a XPath or JSONPath or a
 	// regular expression in case of text content.
-	//
-	//
 	Path string `json:"Path,omitempty"`
 
 	// The type of the parameter. Accepted values are simple, complex,
 	// collection.
-	//
-	//
 	// Enum: [simple complex collection]
 	Type *string `json:"Type,omitempty"`
 
@@ -160,40 +146,28 @@ func (m *ContentBaseParameterAO1P1) UnmarshalJSON(data []byte) error {
 
 		// The flag that allows single values in content to be extracted as a
 		// single element collection in case the parameter is of Collection type.
-		//
 		// This flag is applicable for parameters of type Collection only.
-		//
-		//
 		AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
 
 		// The name of the complex type definition in case this is a complex
 		// parameter. The content.Grammar object must have a complex type, content.ComplexType,
 		// defined with the specified name in types collection property.
-		//
-		//
 		ComplexType string `json:"ComplexType,omitempty"`
 
 		// The type of the collection item in case this is a collection parameter.
-		//
-		//
 		// Enum: [simple complex collection]
 		ItemType *string `json:"ItemType,omitempty"`
 
 		// The name of the parameter.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The content specific path information that identifies the parameter
 		// value within the content. The value is usually a XPath or JSONPath or a
 		// regular expression in case of text content.
-		//
-		//
 		Path string `json:"Path,omitempty"`
 
 		// The type of the parameter. Accepted values are simple, complex,
 		// collection.
-		//
-		//
 		// Enum: [simple complex collection]
 		Type *string `json:"Type,omitempty"`
 	}
@@ -203,17 +177,11 @@ func (m *ContentBaseParameterAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ContentBaseParameterAO1P1
 
 	rcv.AcceptSingleValue = stage1.AcceptSingleValue
-
 	rcv.ComplexType = stage1.ComplexType
-
 	rcv.ItemType = stage1.ItemType
-
 	rcv.Name = stage1.Name
-
 	rcv.Path = stage1.Path
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -223,17 +191,11 @@ func (m *ContentBaseParameterAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AcceptSingleValue")
-
 	delete(stage2, "ComplexType")
-
 	delete(stage2, "ItemType")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Path")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -256,54 +218,37 @@ func (m ContentBaseParameterAO1P1) MarshalJSON() ([]byte, error) {
 
 		// The flag that allows single values in content to be extracted as a
 		// single element collection in case the parameter is of Collection type.
-		//
 		// This flag is applicable for parameters of type Collection only.
-		//
-		//
 		AcceptSingleValue *bool `json:"AcceptSingleValue,omitempty"`
 
 		// The name of the complex type definition in case this is a complex
 		// parameter. The content.Grammar object must have a complex type, content.ComplexType,
 		// defined with the specified name in types collection property.
-		//
-		//
 		ComplexType string `json:"ComplexType,omitempty"`
 
 		// The type of the collection item in case this is a collection parameter.
-		//
-		//
 		// Enum: [simple complex collection]
 		ItemType *string `json:"ItemType,omitempty"`
 
 		// The name of the parameter.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The content specific path information that identifies the parameter
 		// value within the content. The value is usually a XPath or JSONPath or a
 		// regular expression in case of text content.
-		//
-		//
 		Path string `json:"Path,omitempty"`
 
 		// The type of the parameter. Accepted values are simple, complex,
 		// collection.
-		//
-		//
 		// Enum: [simple complex collection]
 		Type *string `json:"Type,omitempty"`
 	}
 
 	stage1.AcceptSingleValue = m.AcceptSingleValue
-
 	stage1.ComplexType = m.ComplexType
-
 	stage1.ItemType = m.ItemType
-
 	stage1.Name = m.Name
-
 	stage1.Path = m.Path
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

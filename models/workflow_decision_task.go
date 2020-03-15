@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,19 +22,15 @@ type WorkflowDecisionTask struct {
 	WorkflowControlTask
 
 	// The condition to evaluate for this decision task. The condition can be a workflow or task variable or an expression based on the input parameters. Example value for condition if its Workflow/task variable is -  "${task1.output.var1} or ${workflow.input.var2}" which evaluates to a value matching any of the decision case values. Example value for condition if its an expression is - "if ( $.element ! = null && $.element > 0 ) 'true'; else 'false'; " which evaluates to 'true' or 'false' and will match one of the decision case values. Here "element" is a variable in decisiontask's inputParameters JSON formatted map. You can also use javascript like functions indexOf, toUpperCase in the expression which will be evaluated by the expression evaluator.
-	//
 	Condition string `json:"Condition,omitempty"`
 
 	// A list of potential decision task flows based off a condition.
-	//
 	DecisionCases []*WorkflowDecisionCase `json:"DecisionCases"`
 
 	// The default next Task to execute if the decision cannot be evaluated to any of the DecisionCases.
-	//
 	DefaultTask string `json:"DefaultTask,omitempty"`
 
 	// JSON formatted map that defines the input given to the decision task. The inputs are used as variables in the condition property of decision task. The input variables can be static values like "hello" , "24", "true" OR previous task outputs/workflow inputs like "${task2.output.var1}}". The input variables are referrenced as $.inputVariableName in the condition property.
-	//
 	InputParameters interface{} `json:"InputParameters,omitempty"`
 }
 
@@ -82,7 +77,6 @@ func (m WorkflowDecisionTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Condition string `json:"Condition,omitempty"`
 
@@ -106,7 +100,6 @@ func (m WorkflowDecisionTask) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

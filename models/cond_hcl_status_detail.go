@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,74 +23,57 @@ type CondHclStatusDetail struct {
 	MoBaseMo
 
 	// The related component associated to this status detail HclStatusDetail (adapter or storage controller).
-	//
 	// Read Only: true
 	Component *InventoryBaseRef `json:"Component,omitempty"`
 
 	// The model is considered as part of the hardware profile for the component. This will provide the HCL validation status for the hardware profile. The reasons can be one of the following "Incompatible-Server-With-Component" - the server model and component combination is not listed in HCL "Incompatible-Firmware" - The server's firmware is not listed for this component's hardware profile "Incompatible-Component" - the component's model is not listed in the HCL "Service-Unavailable" - HCL data service is unavailable at the moment (try again later). This could be due to HCL data updating "Not-Evaluated" - the hardware profile was not evaulated for the component because the server's hw/sw status is not listed or server is exempted. "Compatible" - this component's hardware profile is listed in the HCL.
-	//
 	// Enum: [Missing-Os-Driver-Info Incompatible-Server-With-Component Incompatible-Processor Incompatible-Os-Info Incompatible-Component-Model Incompatible-Firmware Incompatible-Driver Incompatible-Firmware-Driver Service-Unavailable Service-Error Unrecognized-Protocol Not-Evaluated Compatible]
 	HardwareStatus *string `json:"HardwareStatus,omitempty"`
 
 	// The current CIMC version for the server normalized for querying HCL data.
-	//
 	HclCimcVersion string `json:"HclCimcVersion,omitempty"`
 
 	// The current driver name of the component we are validating normalized for querying HCL data.
-	//
 	HclDriverName string `json:"HclDriverName,omitempty"`
 
 	// The current driver version of the component we are validating normalized for querying HCL data.
-	//
 	HclDriverVersion string `json:"HclDriverVersion,omitempty"`
 
 	// The current firmware version of the component model normalized for querying HCL data.
-	//
 	HclFirmwareVersion string `json:"HclFirmwareVersion,omitempty"`
 
 	// The component model we are trying to validate normalized for querying HCL data.
-	//
 	HclModel string `json:"HclModel,omitempty"`
 
 	// A collection of references to the [cond.HclStatus](mo://cond.HclStatus) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [cond.HclStatus](mo://cond.HclStatus) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	HclStatus *CondHclStatusRef `json:"HclStatus,omitempty"`
 
 	// The current CIMC version for the server as received from inventory.
-	//
 	InvCimcVersion string `json:"InvCimcVersion,omitempty"`
 
 	// The current driver name of the component we are validating as received from inventory.
-	//
 	InvDriverName string `json:"InvDriverName,omitempty"`
 
 	// The current driver version of the component we are validating as received from inventory.
-	//
 	InvDriverVersion string `json:"InvDriverVersion,omitempty"`
 
 	// The current firmware version of the component model as received from inventory.
-	//
 	InvFirmwareVersion string `json:"InvFirmwareVersion,omitempty"`
 
 	// The component model we are trying to validate as received from inventory.
-	//
 	InvModel string `json:"InvModel,omitempty"`
 
 	// The reason for the status. The reason can be one of "Incompatible-Server-With-Component" - HCL validation has failed because the server model is not validated with this component "Incompatible-Processor" - HCL validation has failed because the processor is not validated with this server "Incompatible-Os-Info" - HCL validation has failed because the os vendor and version is not validated with this server "Incompatible-Component-Model" - HCL validation has failed because the component model is not validated "Incompatible-Firmware" - HCL validation has failed because the component or server firmware version is not validated "Incompatible-Driver" - HCL validation has failed because the driver version is not validated "Incompatible-Firmware-Driver" - HCL validation has failed because the firmware version and driver version is not validated "Missing-Os-Driver-Info" - HCL validation was not performed because we are missing os driver information form the inventory "Service-Unavailable" - HCL data service is unavailable at the moment (try again later). This could be due to HCL data updating "Service-Error" - HCL data service is available but an error occured when making the request or parsing the response "Unrecognized-Protocol" - This service does not recognize the reason code in the response from the HCL data service "Compatible" - this component's inventory data has "Validated" status with the HCL. "Not-Evaluated" - The component is not evaluated against the HCL because the server is exempted.
-	//
 	// Enum: [Missing-Os-Driver-Info Incompatible-Server-With-Component Incompatible-Processor Incompatible-Os-Info Incompatible-Component-Model Incompatible-Firmware Incompatible-Driver Incompatible-Firmware-Driver Service-Unavailable Service-Error Unrecognized-Protocol Not-Evaluated Compatible]
 	Reason *string `json:"Reason,omitempty"`
 
 	// The firmware, driver name and driver version are considered as part of the software profile for the component. This will provide the HCL validation status for the software profile. The reasons can be one of the following "Incompatible-Firmware" - the component's firmware is not listed under the server's hardware and software profile and the component's hardware profile "Incompatible-Driver" - the component's driver is not listed under the server's hardware and software profile and the component's hardware profile "Incompatible-Firmware-Driver" - the component's firmware and driver are not listed under the server's hardware and software profile and the component's hardware profile "Service-Unavailable" - HCL data service is unavailable at the moment (try again later). This could be due to HCL data updating "Not-Evaluated" - the component's hardware status was not evaluated because the server's hardware or software profile is not listed or server is exempted. "Compatible" - this component's hardware profile is listed in the HCL.
-	//
 	// Enum: [Missing-Os-Driver-Info Incompatible-Server-With-Component Incompatible-Processor Incompatible-Os-Info Incompatible-Component-Model Incompatible-Firmware Incompatible-Driver Incompatible-Firmware-Driver Service-Unavailable Service-Error Unrecognized-Protocol Not-Evaluated Compatible]
 	SoftwareStatus *string `json:"SoftwareStatus,omitempty"`
 
 	// The status for the component model, firmware version, driver name, and driver version after validating against the HCL. The status can be one of the following "Unknown" - we do not have enough information to evaluate against the HCL data "Validated" - we have validated this component against the HCL and it has "Validated" status "Not-Validated" - we have validated this component against the HCL and it has "Not-Validated" status. "Not-Evaluated" - The component is not evaluated against the HCL because the server is exempted.
-	//
 	// Enum: [Incomplete Not-Found Not-Listed Validated Not-Evaluated]
 	Status *string `json:"Status,omitempty"`
 }
@@ -187,7 +169,6 @@ func (m CondHclStatusDetail) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Component *InventoryBaseRef `json:"Component,omitempty"`
 
@@ -259,7 +240,6 @@ func (m CondHclStatusDetail) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

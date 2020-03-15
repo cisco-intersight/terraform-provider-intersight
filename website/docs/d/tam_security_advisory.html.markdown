@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_tam_security_advisory"
 sidebar_current: "docs-intersight-data-source-tamSecurityAdvisory"
 description: |-
 Intersight representation of a Cisco PSIRT (https://tools.cisco.com/security/center/publicationListing.x) advisory definition. It includes the description of the security advisory and a corresponding reference to the published advisory. It also includes the Intersight data sources needed to evaluate the applicability of this advisory for relevant Intersight managed objects. A PSIRT definition is evaluated against all managed object referenced using the included data sources. Only Cisco TAC and Intersight devops engineers have the ability to create PSIRT definitions in Intersight.
-
 ---
 
 # Data Source: intersight_tam_security_advisory
 Intersight representation of a Cisco PSIRT (https://tools.cisco.com/security/center/publicationListing.x) advisory definition. It includes the description of the security advisory and a corresponding reference to the published advisory. It also includes the Intersight data sources needed to evaluate the applicability of this advisory for relevant Intersight managed objects. A PSIRT definition is evaluated against all managed object referenced using the included data sources. Only Cisco TAC and Intersight devops engineers have the ability to create PSIRT definitions in Intersight.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `advisory_id`:(string)Cisco generated identifier for the published security advisory.

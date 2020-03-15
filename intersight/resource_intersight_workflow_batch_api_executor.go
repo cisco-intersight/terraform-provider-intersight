@@ -285,8 +285,33 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 			},
 			"constraints": {
 				Description: "Enter the constraints on when this task should match against the task definition.",
-				Type:        schema.TypeString,
+				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"target_data_type": {
+							Description: "List of property constraints that helps to narrow down task implementations based on target device input.",
+							Type:        schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 			},
 			"description": {
 				Description: "A detailed description about the batch APIs.",
@@ -765,8 +790,37 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 	}
 
 	if v, ok := d.GetOk("constraints"); ok {
-		x := (v.(string))
-		o.Constraints = x
+		p := models.WorkflowTaskConstraints{}
+		if len(v.([]interface{})) > 0 {
+			o := models.WorkflowTaskConstraints{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1 = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["target_data_type"]; ok {
+				{
+					x := v
+					o.TargetDataType = &x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.Constraints = &x
 
 	}
 
@@ -963,7 +1017,7 @@ func resourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interface
 		return err
 	}
 
-	if err := d.Set("constraints", (s.Constraints)); err != nil {
+	if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
 		return err
 	}
 
@@ -1352,8 +1406,37 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 
 	if d.HasChange("constraints") {
 		v := d.Get("constraints")
-		x := (v.(string))
-		o.Constraints = x
+		p := models.WorkflowTaskConstraints{}
+		if len(v.([]interface{})) > 0 {
+			o := models.WorkflowTaskConstraints{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1 = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["target_data_type"]; ok {
+				{
+					x := v
+					o.TargetDataType = &x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.Constraints = &x
 	}
 
 	if d.HasChange("description") {

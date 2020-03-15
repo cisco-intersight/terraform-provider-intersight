@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_compute_server_setting"
 sidebar_current: "docs-intersight-data-source-computeServerSetting"
 description: |-
 Models the configurable properties of a server in Intersight.
-
 ---
 
 # Data Source: intersight_compute_server_setting
 Models the configurable properties of a server in Intersight.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_locator_led_state`:(string)User configured state of the locator LED for the server.

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,26 +23,21 @@ type IamEndPointPrivilege struct {
 	MoBaseMo
 
 	// The functionality of this privilege.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// The name of the end point privilege.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// A collection of references to the [iam.System](mo://iam.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.System](mo://iam.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 
 	// The type of the end point like Cisco UCS Fabric Interconnect or Cisco IMC.
-	//
 	// Read Only: true
-	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	Type string `json:"Type,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m IamEndPointPrivilege) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -114,7 +107,6 @@ func (m IamEndPointPrivilege) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -163,7 +155,7 @@ var iamEndPointPrivilegeTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

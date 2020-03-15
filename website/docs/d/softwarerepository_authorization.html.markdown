@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_softwarerepository_authorization"
 sidebar_current: "docs-intersight-data-source-softwarerepositoryAuthorization"
 description: |-
 Consent that a user has provided to Intersight for contacting an external software repository such as cisco.com, on the user account's behalf.
-
 ---
 
 # Data Source: intersight_softwarerepository_authorization
 Consent that a user has provided to Intersight for contacting an external software repository such as cisco.com, on the user account's behalf.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `is_password_set`:(bool)

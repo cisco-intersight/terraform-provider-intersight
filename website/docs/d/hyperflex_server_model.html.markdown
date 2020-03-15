@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_server_model"
 sidebar_current: "docs-intersight-data-source-hyperflexServerModel"
 description: |-
 A supported server model.
-
 ---
 
 # Data Source: intersight_hyperflex_server_model
 A supported server model.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

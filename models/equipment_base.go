@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,7 +20,6 @@ type EquipmentBase struct {
 	InventoryBase
 
 	// This field identifies the model of the given component.
-	//
 	// Read Only: true
 	Model string `json:"Model,omitempty"`
 
@@ -30,12 +28,10 @@ type EquipmentBase struct {
 	Revision string `json:"Revision,omitempty"`
 
 	// This field identifies the serial of the given component.
-	//
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
 	// This field identifies the vendor of the given component.
-	//
 	// Read Only: true
 	Vendor string `json:"Vendor,omitempty"`
 }
@@ -83,7 +79,6 @@ func (m EquipmentBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Model string `json:"Model,omitempty"`
 
@@ -107,7 +102,6 @@ func (m EquipmentBase) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

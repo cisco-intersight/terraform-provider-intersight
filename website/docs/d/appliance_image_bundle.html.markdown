@@ -8,12 +8,10 @@ Each ImageBundle managed object is derived from a software upgrade manifest. Ima
 additional properties computed during the manifest processing. Additional properties are the
 dynamic attributes of the software packages declared in the software manifest. For example,
 SHA256 values of the software packages are computed during the software manifest processing.
-
 An ImageBundle managed object named 'current' is always present in the Intersight Appliance.
 The software upgrade service creates another ImageBundle managed object named 'pending'
 when there is a pending software upgrade. The upgrade service renames the 'pending' bundle
 to the 'current' bundle after the software upgrade is successful.
-
 ---
 
 # Data Source: intersight_appliance_image_bundle
@@ -22,12 +20,10 @@ Each ImageBundle managed object is derived from a software upgrade manifest. Ima
 additional properties computed during the manifest processing. Additional properties are the
 dynamic attributes of the software packages declared in the software manifest. For example,
 SHA256 values of the software packages are computed during the software manifest processing.
-
 An ImageBundle managed object named 'current' is always present in the Intersight Appliance.
 The software upgrade service creates another ImageBundle managed object named 'pending'
 when there is a pending software upgrade. The upgrade service renames the 'pending' bundle
 to the 'current' bundle after the software upgrade is successful.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `auto_upgrade`:(bool)Indicates that the software upgrade was automatically initiated by the Intersight Appliance.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_node_config_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexNodeConfigPolicy"
 description: |-
 A policy specifying node details such as management and storage data IP ranges. For HyperFlex Edge, storage data IP range is pre-defined.
-
 ---
 
 # Data Source: intersight_hyperflex_node_config_policy
 A policy specifying node details such as management and storage data IP ranges. For HyperFlex Edge, storage data IP range is pre-defined.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_connector_pack"
 sidebar_current: "docs-intersight-data-source-iaasConnectorPack"
 description: |-
 Describes about all the connector pack versions running currently in UCSD.
-
 ---
 
 # Data Source: intersight_iaas_connector_pack
 Describes about all the connector pack versions running currently in UCSD.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `complete_version`:(string)Complete version of the connector pack including build number.

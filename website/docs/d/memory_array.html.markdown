@@ -4,16 +4,14 @@ page_title: "Intersight: intersight_memory_array"
 sidebar_current: "docs-intersight-data-source-memoryArray"
 description: |-
 Holder housing multiple memory units.
-
 ---
 
 # Data Source: intersight_memory_array
 Holder housing multiple memory units.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `array_id`:(int)
-* `cpuid`:(int)
+* `array_id`:(int)ID of the memory array on a server.
+* `cpuid`:(int)ID of the CPU that access this memory array.
 * `current_capacity`:(string)
 * `device_mo_id`:(string)
 * `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.

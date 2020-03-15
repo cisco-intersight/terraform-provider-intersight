@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_role"
 sidebar_current: "docs-intersight-data-source-iamRole"
 description: |-
 A role is a collection of privilege sets that are assigned to a user using a permission object.
-
 ---
 
 # Data Source: intersight_iam_role
 A role is a collection of privilege sets that are assigned to a user using a permission object.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Informative description about each role.

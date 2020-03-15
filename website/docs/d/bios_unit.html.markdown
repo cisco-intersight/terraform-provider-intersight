@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_bios_unit"
 sidebar_current: "docs-intersight-data-source-biosUnit"
 description: |-
 Bios Unit.
-
 ---
 
 # Data Source: intersight_bios_unit
 Bios Unit.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

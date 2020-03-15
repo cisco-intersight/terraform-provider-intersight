@@ -6,20 +6,20 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// PureconnectorInventoryRequestMessageRef pureconnector inventory request message ref
-// swagger:model pureconnectorInventoryRequestMessageRef
-type PureconnectorInventoryRequestMessageRef struct {
+// HyperflexPostInstallHostConfigRef hyperflex post install host config ref
+//
+// swagger:model hyperflexPostInstallHostConfigRef
+type HyperflexPostInstallHostConfigRef struct {
 	MoMoRef
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
-func (m *PureconnectorInventoryRequestMessageRef) UnmarshalJSON(raw []byte) error {
+func (m *HyperflexPostInstallHostConfigRef) UnmarshalJSON(raw []byte) error {
 	// AO0
 	var aO0 MoMoRef
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
@@ -31,7 +31,7 @@ func (m *PureconnectorInventoryRequestMessageRef) UnmarshalJSON(raw []byte) erro
 }
 
 // MarshalJSON marshals this object to a JSON structure
-func (m PureconnectorInventoryRequestMessageRef) MarshalJSON() ([]byte, error) {
+func (m HyperflexPostInstallHostConfigRef) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 1)
 
 	aO0, err := swag.WriteJSON(m.MoMoRef)
@@ -39,12 +39,11 @@ func (m PureconnectorInventoryRequestMessageRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
-// Validate validates this pureconnector inventory request message ref
-func (m *PureconnectorInventoryRequestMessageRef) Validate(formats strfmt.Registry) error {
+// Validate validates this hyperflex post install host config ref
+func (m *HyperflexPostInstallHostConfigRef) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// validation for a type composition with MoMoRef
@@ -59,7 +58,7 @@ func (m *PureconnectorInventoryRequestMessageRef) Validate(formats strfmt.Regist
 }
 
 // MarshalBinary interface implementation
-func (m *PureconnectorInventoryRequestMessageRef) MarshalBinary() ([]byte, error) {
+func (m *HyperflexPostInstallHostConfigRef) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -67,8 +66,8 @@ func (m *PureconnectorInventoryRequestMessageRef) MarshalBinary() ([]byte, error
 }
 
 // UnmarshalBinary interface implementation
-func (m *PureconnectorInventoryRequestMessageRef) UnmarshalBinary(b []byte) error {
-	var res PureconnectorInventoryRequestMessageRef
+func (m *HyperflexPostInstallHostConfigRef) UnmarshalBinary(b []byte) error {
+	var res HyperflexPostInstallHostConfigRef
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

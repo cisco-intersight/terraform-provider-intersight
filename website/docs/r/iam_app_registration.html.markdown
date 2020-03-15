@@ -9,16 +9,13 @@ Registered client applications have a set of metadata values associated with the
 at the Intersight authorization server, including the list of valid redirection URIs or a display name.
 The meta-data is used to specify how a client application can retrieve a OAuth2 Access Token and subsequently
 invoke Intersight API on behalf of this AppRegistration.
-
 To register an OAuth2 application, the following information must be provided.
 1) Application name
 2) An icon for the application
 3) URL to the application's home page
 4) A short description of the application
 5) A list of redirect URLs
-
 When an AppRegistration is created, a unique OAuth2 clientId is generated and returned in the HTTP response.
-
 ---
 
 # Resource: intersight_iam_app_registration
@@ -28,16 +25,13 @@ Registered client applications have a set of metadata values associated with the
 at the Intersight authorization server, including the list of valid redirection URIs or a display name.
 The meta-data is used to specify how a client application can retrieve a OAuth2 Access Token and subsequently
 invoke Intersight API on behalf of this AppRegistration.
-
 To register an OAuth2 application, the following information must be provided.
 1) Application name
 2) An icon for the application
 3) URL to the application's home page
 4) A short description of the application
 5) A list of redirect URLs
-
 When an AppRegistration is created, a unique OAuth2 clientId is generated and returned in the HTTP response.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)A collection of references to the [iam.Account](mo://iam.Account) Managed Object.When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.

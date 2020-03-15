@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_bios_boot_mode"
 sidebar_current: "docs-intersight-data-source-biosBootMode"
 description: |-
 The mode through which bios has booted.
-
 ---
 
 # Data Source: intersight_bios_boot_mode
 The mode through which bios has booted.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `actual_boot_mode`:(string)

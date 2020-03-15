@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,31 +22,24 @@ type KvmPolicy struct {
 	PolicyAbstractPolicy
 
 	// If enabled, displays KVM session on any monitor attached to the server.
-	//
 	EnableLocalServerVideo *bool `json:"EnableLocalServerVideo,omitempty"`
 
 	// If enabled, encrypts all video information sent through KVM.
-	//
 	EnableVideoEncryption *bool `json:"EnableVideoEncryption,omitempty"`
 
 	// State of the vKVM service on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// The maximum number of concurrent KVM sessions allowed.
-	//
 	MaximumSessions *int64 `json:"MaximumSessions,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// The port used for KVM communication.
-	//
 	RemotePort int64 `json:"RemotePort,omitempty"`
 }
 
@@ -106,7 +98,6 @@ func (m KvmPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EnableLocalServerVideo *bool `json:"EnableLocalServerVideo,omitempty"`
 
@@ -142,7 +133,6 @@ func (m KvmPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

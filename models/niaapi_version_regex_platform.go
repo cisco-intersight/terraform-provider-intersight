@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m NiaapiVersionRegexPlatform) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,27 +100,23 @@ func (m *NiaapiVersionRegexPlatform) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiVersionRegexPlatformAO1P1 niaapi version regex platform a o1 p1
+//
 // swagger:model NiaapiVersionRegexPlatformAO1P1
 type NiaapiVersionRegexPlatformAO1P1 struct {
 
 	// All long live version Regex pattern.
-	//
 	Anyllregex string `json:"Anyllregex,omitempty"`
 
 	// Current long live version Regex pattern.
-	//
 	Currentlltrain *NiaapiSoftwareRegex `json:"Currentlltrain,omitempty"`
 
 	// Latest short live version Regex pattern.
-	//
 	Latestsltrain *NiaapiSoftwareRegex `json:"Latestsltrain,omitempty"`
 
 	// List of short lived verison and Regex pattern.
-	//
 	Sltrain []*NiaapiSoftwareRegex `json:"Sltrain"`
 
 	// Upcoming short live version Regex pattern.
-	//
 	Upcominglltrain *NiaapiSoftwareRegex `json:"Upcominglltrain,omitempty"`
 
 	// niaapi version regex platform a o1 p1
@@ -135,23 +129,18 @@ func (m *NiaapiVersionRegexPlatformAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// All long live version Regex pattern.
-		//
 		Anyllregex string `json:"Anyllregex,omitempty"`
 
 		// Current long live version Regex pattern.
-		//
 		Currentlltrain *NiaapiSoftwareRegex `json:"Currentlltrain,omitempty"`
 
 		// Latest short live version Regex pattern.
-		//
 		Latestsltrain *NiaapiSoftwareRegex `json:"Latestsltrain,omitempty"`
 
 		// List of short lived verison and Regex pattern.
-		//
 		Sltrain []*NiaapiSoftwareRegex `json:"Sltrain"`
 
 		// Upcoming short live version Regex pattern.
-		//
 		Upcominglltrain *NiaapiSoftwareRegex `json:"Upcominglltrain,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -160,15 +149,10 @@ func (m *NiaapiVersionRegexPlatformAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiaapiVersionRegexPlatformAO1P1
 
 	rcv.Anyllregex = stage1.Anyllregex
-
 	rcv.Currentlltrain = stage1.Currentlltrain
-
 	rcv.Latestsltrain = stage1.Latestsltrain
-
 	rcv.Sltrain = stage1.Sltrain
-
 	rcv.Upcominglltrain = stage1.Upcominglltrain
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -178,15 +162,10 @@ func (m *NiaapiVersionRegexPlatformAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Anyllregex")
-
 	delete(stage2, "Currentlltrain")
-
 	delete(stage2, "Latestsltrain")
-
 	delete(stage2, "Sltrain")
-
 	delete(stage2, "Upcominglltrain")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -208,34 +187,25 @@ func (m NiaapiVersionRegexPlatformAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// All long live version Regex pattern.
-		//
 		Anyllregex string `json:"Anyllregex,omitempty"`
 
 		// Current long live version Regex pattern.
-		//
 		Currentlltrain *NiaapiSoftwareRegex `json:"Currentlltrain,omitempty"`
 
 		// Latest short live version Regex pattern.
-		//
 		Latestsltrain *NiaapiSoftwareRegex `json:"Latestsltrain,omitempty"`
 
 		// List of short lived verison and Regex pattern.
-		//
 		Sltrain []*NiaapiSoftwareRegex `json:"Sltrain"`
 
 		// Upcoming short live version Regex pattern.
-		//
 		Upcominglltrain *NiaapiSoftwareRegex `json:"Upcominglltrain,omitempty"`
 	}
 
 	stage1.Anyllregex = m.Anyllregex
-
 	stage1.Currentlltrain = m.Currentlltrain
-
 	stage1.Latestsltrain = m.Latestsltrain
-
 	stage1.Sltrain = m.Sltrain
-
 	stage1.Upcominglltrain = m.Upcominglltrain
 
 	// make JSON object for known properties

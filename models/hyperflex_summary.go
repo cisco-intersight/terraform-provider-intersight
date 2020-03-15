@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexSummary Hyperflex:Summary
+//
 // swagger:model hyperflexSummary
 type HyperflexSummary struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m HyperflexSummary) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,6 +97,7 @@ func (m *HyperflexSummary) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexSummaryAO1P1 hyperflex summary a o1 p1
+//
 // swagger:model HyperflexSummaryAO1P1
 type HyperflexSummaryAO1P1 struct {
 
@@ -284,47 +284,26 @@ func (m *HyperflexSummaryAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexSummaryAO1P1
 
 	rcv.ActiveNodes = stage1.ActiveNodes
-
 	rcv.Address = stage1.Address
-
 	rcv.Boottime = stage1.Boottime
-
 	rcv.ClusterAccessPolicy = stage1.ClusterAccessPolicy
-
 	rcv.CompressionSavings = stage1.CompressionSavings
-
 	rcv.DataReplicationCompliance = stage1.DataReplicationCompliance
-
 	rcv.DataReplicationFactor = stage1.DataReplicationFactor
-
 	rcv.DeduplicationSavings = stage1.DeduplicationSavings
-
 	rcv.Downtime = stage1.Downtime
-
 	rcv.FreeCapacity = stage1.FreeCapacity
-
 	rcv.HealingInfo = stage1.HealingInfo
-
 	rcv.Name = stage1.Name
-
 	rcv.ResiliencyDetails = stage1.ResiliencyDetails
-
 	rcv.ResiliencyDetailsSize = stage1.ResiliencyDetailsSize
-
 	rcv.ResiliencyInfo = stage1.ResiliencyInfo
-
 	rcv.SpaceStatus = stage1.SpaceStatus
-
 	rcv.State = stage1.State
-
 	rcv.TotalCapacity = stage1.TotalCapacity
-
 	rcv.TotalSavings = stage1.TotalSavings
-
 	rcv.Uptime = stage1.Uptime
-
 	rcv.UsedCapacity = stage1.UsedCapacity
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -334,47 +313,26 @@ func (m *HyperflexSummaryAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ActiveNodes")
-
 	delete(stage2, "Address")
-
 	delete(stage2, "Boottime")
-
 	delete(stage2, "ClusterAccessPolicy")
-
 	delete(stage2, "CompressionSavings")
-
 	delete(stage2, "DataReplicationCompliance")
-
 	delete(stage2, "DataReplicationFactor")
-
 	delete(stage2, "DeduplicationSavings")
-
 	delete(stage2, "Downtime")
-
 	delete(stage2, "FreeCapacity")
-
 	delete(stage2, "HealingInfo")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "ResiliencyDetails")
-
 	delete(stage2, "ResiliencyDetailsSize")
-
 	delete(stage2, "ResiliencyInfo")
-
 	delete(stage2, "SpaceStatus")
-
 	delete(stage2, "State")
-
 	delete(stage2, "TotalCapacity")
-
 	delete(stage2, "TotalSavings")
-
 	delete(stage2, "Uptime")
-
 	delete(stage2, "UsedCapacity")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -481,45 +439,25 @@ func (m HyperflexSummaryAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.ActiveNodes = m.ActiveNodes
-
 	stage1.Address = m.Address
-
 	stage1.Boottime = m.Boottime
-
 	stage1.ClusterAccessPolicy = m.ClusterAccessPolicy
-
 	stage1.CompressionSavings = m.CompressionSavings
-
 	stage1.DataReplicationCompliance = m.DataReplicationCompliance
-
 	stage1.DataReplicationFactor = m.DataReplicationFactor
-
 	stage1.DeduplicationSavings = m.DeduplicationSavings
-
 	stage1.Downtime = m.Downtime
-
 	stage1.FreeCapacity = m.FreeCapacity
-
 	stage1.HealingInfo = m.HealingInfo
-
 	stage1.Name = m.Name
-
 	stage1.ResiliencyDetails = m.ResiliencyDetails
-
 	stage1.ResiliencyDetailsSize = m.ResiliencyDetailsSize
-
 	stage1.ResiliencyInfo = m.ResiliencyInfo
-
 	stage1.SpaceStatus = m.SpaceStatus
-
 	stage1.State = m.State
-
 	stage1.TotalCapacity = m.TotalCapacity
-
 	stage1.TotalSavings = m.TotalSavings
-
 	stage1.Uptime = m.Uptime
-
 	stage1.UsedCapacity = m.UsedCapacity
 
 	// make JSON object for known properties

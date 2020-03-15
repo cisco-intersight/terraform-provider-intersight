@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_flex_util_controller"
 sidebar_current: "docs-intersight-data-source-storageFlexUtilController"
 description: |-
 Storage Flex Util Adapter.
-
 ---
 
 # Data Source: intersight_storage_flex_util_controller
 Storage Flex Util Adapter.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `controller_name`:(string)

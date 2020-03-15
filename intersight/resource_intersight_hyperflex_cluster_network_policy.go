@@ -275,7 +275,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"uplink_speed": {
-				Description: "Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G'. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.",
+				Description: "Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G+'. Use '10G+' for link speeds of 10G or above. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "default",

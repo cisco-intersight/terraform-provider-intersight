@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_sol_policy"
 sidebar_current: "docs-intersight-resource-solPolicy"
 description: |-
   Policy for configuring Serial Over LAN settings on endpoint.
-
 ---
 
 # Resource: intersight_sol_policy
 Policy for configuring Serial Over LAN settings on endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `baud_rate`:(int)Baud Rate used for Serial Over LAN communication.

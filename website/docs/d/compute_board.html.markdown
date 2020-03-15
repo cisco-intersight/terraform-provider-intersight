@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_compute_board"
 sidebar_current: "docs-intersight-data-source-computeBoard"
 description: |-
 Mother board of a server.
-
 ---
 
 # Data Source: intersight_compute_board
 Mother board of a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `board_id`:(int)

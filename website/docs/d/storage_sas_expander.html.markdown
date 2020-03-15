@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_sas_expander"
 sidebar_current: "docs-intersight-data-source-storageSasExpander"
 description: |-
 SAS Expander present in a server.
-
 ---
 
 # Data Source: intersight_storage_sas_expander
 SAS Expander present in a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

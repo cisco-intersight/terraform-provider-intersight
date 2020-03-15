@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,18 +20,14 @@ type AssetDeviceConfiguration struct {
 	MoBaseMo
 
 	// A collection of references to the [asset.DeviceRegistration](mo://asset.DeviceRegistration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [asset.DeviceRegistration](mo://asset.DeviceRegistration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// Specifies whether configuration through the platforms local management interface has been disabled, with only configuration through the Intersight service enabled.
-	//
 	LocalConfigurationLocked *bool `json:"LocalConfigurationLocked,omitempty"`
 
 	// The log level of the device connector service.
-	//
 	LogLevel string `json:"LogLevel,omitempty"`
 }
 
@@ -75,7 +70,6 @@ func (m AssetDeviceConfiguration) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
@@ -95,7 +89,6 @@ func (m AssetDeviceConfiguration) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

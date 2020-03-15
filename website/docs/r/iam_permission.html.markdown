@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_permission"
 sidebar_current: "docs-intersight-resource-iamPermission"
 description: |-
   Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-
 ---
 
 # Resource: intersight_iam_permission
 Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -(Computed)A collection of references to the [iam.Account](mo://iam.Account) Managed Object.When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.

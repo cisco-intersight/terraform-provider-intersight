@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_device_status"
 sidebar_current: "docs-intersight-data-source-iaasDeviceStatus"
 description: |-
 List of infra accounts managed by UCSD.
-
 ---
 
 # Data Source: intersight_iaas_device_status
 List of infra accounts managed by UCSD.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `account_name`:(string)The UCSD infra account name. Account Name is created when UCSD admin adds any new infra account (Physical/Virtual/Compute/Network) to be managed by UCSD.

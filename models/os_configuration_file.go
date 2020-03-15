@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -18,7 +17,6 @@ import (
 //
 // A ConfigurationFile is an OS specific answer file that helps with the unattended
 // installation.
-//
 // The file can also be a template file with placeholders instead of actual answers.
 // Intersight supports the golang template syntax specified in https://golang.org/pkg/text/template/.
 // The template supports placeholders for all the properties of os.Answers MO type
@@ -31,40 +29,29 @@ type OsConfigurationFile struct {
 	MoBaseMo
 
 	// A collection of references to the [os.Catalog](mo://os.Catalog) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [os.Catalog](mo://os.Catalog) MO unsets its reference to this deleted MO.
-	//
 	Catalog *OsCatalogRef `json:"Catalog,omitempty"`
 
 	// This captures the operating system for which this configuration file is
 	// defined.
-	//
 	Distributions []*HclOperatingSystemRef `json:"Distributions"`
 
 	// The content of the entire configuration file is stored as value. The content
 	// can either be a static file content or a template content.
-	//
 	// The template is expected to conform to the golang template syntax. The values
 	// from os.Answers properties will be used to populate this template.
-	//
-	//
 	FileContent string `json:"FileContent,omitempty"`
 
 	// The name of the OS ConfigurationFile that uniquely identifies the configuration file.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// This readonly property holds the list of placeholder names used in the
 	// configuration file content in case it is a template.
-	//
-	//
 	// Read Only: true
 	Placeholders []*OsPlaceHolder `json:"Placeholders"`
 
 	// An internal property that is used to distinguish between the pre-canned OS
 	// configuration file entries and user provided entries.
-	//
-	//
 	// Read Only: true
 	Supported *bool `json:"Supported,omitempty"`
 }
@@ -120,7 +107,6 @@ func (m OsConfigurationFile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Catalog *OsCatalogRef `json:"Catalog,omitempty"`
 
@@ -152,7 +138,6 @@ func (m OsConfigurationFile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

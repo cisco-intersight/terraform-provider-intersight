@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ssh_policy"
 sidebar_current: "docs-intersight-resource-sshPolicy"
 description: |-
   Secure shell policy on the endpoint.
-
 ---
 
 # Resource: intersight_ssh_policy
 Secure shell policy on the endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

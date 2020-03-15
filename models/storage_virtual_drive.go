@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -63,7 +62,6 @@ type StorageVirtualDrive struct {
 	DriveSecurity string `json:"DriveSecurity,omitempty"`
 
 	// It shows the Virtual drive state.
-	//
 	// Read Only: true
 	DriveState string `json:"DriveState,omitempty"`
 
@@ -80,7 +78,6 @@ type StorageVirtualDrive struct {
 	NumBlocks string `json:"NumBlocks,omitempty"`
 
 	// It shows the current operational state of Virtual drive.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
@@ -104,7 +101,6 @@ type StorageVirtualDrive struct {
 	ReadPolicy string `json:"ReadPolicy,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -117,14 +113,11 @@ type StorageVirtualDrive struct {
 	Size string `json:"Size,omitempty"`
 
 	// A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageController *StorageControllerRef `json:"StorageController,omitempty"`
 
 	// The strip size is the portion of a stripe that resides on a single drive in the drive group, this is measured in KB.
-	//
 	// Read Only: true
 	StripSize string `json:"StripSize,omitempty"`
 
@@ -137,7 +130,6 @@ type StorageVirtualDrive struct {
 	UUID string `json:"Uuid,omitempty"`
 
 	// It is a reference to LocalDisk to build up a VirtualDrive.
-	//
 	// Read Only: true
 	VdMemberEps []*StorageVdMemberEpRef `json:"VdMemberEps"`
 
@@ -146,9 +138,7 @@ type StorageVirtualDrive struct {
 	VendorUUID string `json:"VendorUuid,omitempty"`
 
 	// A collection of references to the [storage.VirtualDriveExtension](mo://storage.VirtualDriveExtension) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.VirtualDriveExtension](mo://storage.VirtualDriveExtension) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	VirtualDriveExtension *StorageVirtualDriveExtensionRef `json:"VirtualDriveExtension,omitempty"`
 
@@ -308,7 +298,6 @@ func (m StorageVirtualDrive) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccessPolicy string `json:"AccessPolicy,omitempty"`
 
@@ -440,7 +429,6 @@ func (m StorageVirtualDrive) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

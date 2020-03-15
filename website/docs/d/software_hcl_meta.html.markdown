@@ -4,16 +4,14 @@ page_title: "Intersight: intersight_software_hcl_meta"
 sidebar_current: "docs-intersight-data-source-softwareHclMeta"
 description: |-
 A Json file consisting Hcl meta uploaded to be consumed by HCL service.
-
 ---
 
 # Data Source: intersight_software_hcl_meta
 A Json file consisting Hcl meta uploaded to be consumed by HCL service.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bundle_type`:(string)The bundle type of the image, as published on cisco.com.
-* `content_type`:(string)Indicates what type of content the Json file is holding(Incremental or full dump).
+* `content_type`:(string)The type of content that the Json file holds (Incremental or full dump).
 * `description`:(string)User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.
 * `download_count`:(int)The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.
 * `guid`:(string)The unique identifier for an image in a Cisco repository.

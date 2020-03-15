@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_bios_policy"
 sidebar_current: "docs-intersight-data-source-biosPolicy"
 description: |-
 Policy for setting BIOS tokens on the endpoint.
-
 ---
 
 # Data Source: intersight_bios_policy
 Policy for setting BIOS tokens on the endpoint.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `acs_control_gpu1state`:(string)BIOS Token for setting ACS Control GPU-1 configuration.

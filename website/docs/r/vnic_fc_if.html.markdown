@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vnic_fc_if"
 sidebar_current: "docs-intersight-resource-vnicFcIf"
 description: |-
   Virtual Fibre Channel Interface.
-
 ---
 
 # Resource: intersight_vnic_fc_if
 Virtual Fibre Channel Interface.
-
 ## Argument Reference
 The following arguments are supported:
 * `fc_adapter_policy`:(Array with Maximum of one item) -Relationship to the the Fibre Channel Adapter Policy.

@@ -271,7 +271,7 @@ func dataSourceStorageController() *schema.Resource {
 				Computed:    true,
 			},
 			"running_firmware": {
-				Description: "",
+				Description: "It shows the currently running firmware version.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,

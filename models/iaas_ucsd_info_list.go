@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IaasUcsdInfoList iaas ucsd info list
+//
 // swagger:model iaasUcsdInfoList
 type IaasUcsdInfoList struct {
 

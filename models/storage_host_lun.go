@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,33 +19,27 @@ import (
 type StorageHostLun struct {
 	MoBaseMo
 
-	// Logical unit number (LUN) by which hosts address specified volume.
-	//
+	// Logical unit number (LUN) by which hosts address specified volume. Hlu is a decimal representation of the LUN from the endpoint.
 	// Read Only: true
-	Hlu string `json:"Hlu,omitempty"`
+	Hlu int64 `json:"Hlu,omitempty"`
 
 	// Host managed object where the volume is associated.
-	//
 	// Read Only: true
 	Host *StorageHostRef `json:"Host,omitempty"`
 
 	// Name of the host associated with LUN.
-	//
 	// Read Only: true
 	HostName string `json:"HostName,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
 	// Volume managed object used to create host lun.
-	//
 	// Read Only: true
 	Volume *StorageVolumeRef `json:"Volume,omitempty"`
 
 	// Name of the storage volume associated with LUN.
-	//
 	// Read Only: true
 	VolumeName string `json:"VolumeName,omitempty"`
 }
@@ -62,7 +55,7 @@ func (m *StorageHostLun) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Hlu string `json:"Hlu,omitempty"`
+		Hlu int64 `json:"Hlu,omitempty"`
 
 		Host *StorageHostRef `json:"Host,omitempty"`
 
@@ -102,9 +95,8 @@ func (m StorageHostLun) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
-		Hlu string `json:"Hlu,omitempty"`
+		Hlu int64 `json:"Hlu,omitempty"`
 
 		Host *StorageHostRef `json:"Host,omitempty"`
 
@@ -134,7 +126,6 @@ func (m StorageHostLun) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

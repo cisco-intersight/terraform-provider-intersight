@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_controller"
 sidebar_current: "docs-intersight-data-source-storageController"
 description: |-
 Storage Controller present in a server.
-
 ---
 
 # Data Source: intersight_storage_controller
 Storage Controller present in a server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `controller_flags`:(string)

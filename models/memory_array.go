@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -22,18 +21,16 @@ import (
 type MemoryArray struct {
 	EquipmentBase
 
-	// array Id
+	// ID of the memory array on a server.
 	// Read Only: true
 	ArrayID int64 `json:"ArrayId,omitempty"`
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
-	// Cpu Id
+	// ID of the CPU that access this memory array.
 	// Read Only: true
 	CPUID int64 `json:"CpuId,omitempty"`
 
@@ -57,8 +54,7 @@ type MemoryArray struct {
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
-	// This represents all the persistent memory modules found in a memory array of a server.
-	//
+	// All the Persistent Memory Modules found in a memory array of a server.
 	// Read Only: true
 	PersistentMemoryUnits []*MemoryPersistentMemoryUnitRef `json:"PersistentMemoryUnits"`
 
@@ -67,12 +63,10 @@ type MemoryArray struct {
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents all the DIMMs found in a memory array of a server. This includes both regular DIMMs and persistent memory modules.
-	//
+	// All the DIMMs found in a memory array of a server. This includes both regular DIMMs and Persistent Memory Modules.
 	// Read Only: true
 	Units []*MemoryUnitRef `json:"Units"`
 }
@@ -152,7 +146,6 @@ func (m MemoryArray) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ArrayID int64 `json:"ArrayId,omitempty"`
 
@@ -208,7 +201,6 @@ func (m MemoryArray) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

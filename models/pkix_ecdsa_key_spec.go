@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -29,7 +28,6 @@ type PkixEcdsaKeySpec struct {
 	PkixKeyGenerationSpec
 
 	// A specific set of Elliptic Curve parameters, as recommended by NIST in FIPS 186-4.
-	//
 	// Enum: [P256 P224 P384 P521]
 	Curve *string `json:"Curve,omitempty"`
 }
@@ -65,7 +63,6 @@ func (m PkixEcdsaKeySpec) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Curve *string `json:"Curve,omitempty"`
 	}
@@ -77,7 +74,6 @@ func (m PkixEcdsaKeySpec) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

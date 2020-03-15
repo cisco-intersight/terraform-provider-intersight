@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m PolicyConfigContext) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,24 +99,21 @@ func (m *PolicyConfigContext) UnmarshalBinary(b []byte) error {
 }
 
 // PolicyConfigContextAO1P1 policy config context a o1 p1
+//
 // swagger:model PolicyConfigContextAO1P1
 type PolicyConfigContextAO1P1 struct {
 
 	// Indicates a profile's configuration deploying state. Values -- Assigned, Not-assigned, Associated, Pending-changes, Validating, Configuring, Failed.
-	//
 	// Read Only: true
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// System action to trigger the appropriate workflow. Values -- No_op, ConfigChange, Deploy, Unbind.
-	//
 	ControlAction string `json:"ControlAction,omitempty"`
 
 	// Indicates a profile's error state. Values -- Validation-error (Static validation error), Pre-config-error (Runtime validation error), Config-error (Runtime configuration error).
-	//
 	ErrorState string `json:"ErrorState,omitempty"`
 
 	// Combined state (configState, and operational state of the associated physical resource) to indicate the current state of the profile. Values -- n/a, Power-off, Pending-changes, Configuring, Ok, Failed.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
@@ -132,20 +127,16 @@ func (m *PolicyConfigContextAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Indicates a profile's configuration deploying state. Values -- Assigned, Not-assigned, Associated, Pending-changes, Validating, Configuring, Failed.
-		//
 		// Read Only: true
 		ConfigState string `json:"ConfigState,omitempty"`
 
 		// System action to trigger the appropriate workflow. Values -- No_op, ConfigChange, Deploy, Unbind.
-		//
 		ControlAction string `json:"ControlAction,omitempty"`
 
 		// Indicates a profile's error state. Values -- Validation-error (Static validation error), Pre-config-error (Runtime validation error), Config-error (Runtime configuration error).
-		//
 		ErrorState string `json:"ErrorState,omitempty"`
 
 		// Combined state (configState, and operational state of the associated physical resource) to indicate the current state of the profile. Values -- n/a, Power-off, Pending-changes, Configuring, Ok, Failed.
-		//
 		// Read Only: true
 		OperState string `json:"OperState,omitempty"`
 	}
@@ -155,13 +146,9 @@ func (m *PolicyConfigContextAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PolicyConfigContextAO1P1
 
 	rcv.ConfigState = stage1.ConfigState
-
 	rcv.ControlAction = stage1.ControlAction
-
 	rcv.ErrorState = stage1.ErrorState
-
 	rcv.OperState = stage1.OperState
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -171,13 +158,9 @@ func (m *PolicyConfigContextAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ConfigState")
-
 	delete(stage2, "ControlAction")
-
 	delete(stage2, "ErrorState")
-
 	delete(stage2, "OperState")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -199,30 +182,23 @@ func (m PolicyConfigContextAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Indicates a profile's configuration deploying state. Values -- Assigned, Not-assigned, Associated, Pending-changes, Validating, Configuring, Failed.
-		//
 		// Read Only: true
 		ConfigState string `json:"ConfigState,omitempty"`
 
 		// System action to trigger the appropriate workflow. Values -- No_op, ConfigChange, Deploy, Unbind.
-		//
 		ControlAction string `json:"ControlAction,omitempty"`
 
 		// Indicates a profile's error state. Values -- Validation-error (Static validation error), Pre-config-error (Runtime validation error), Config-error (Runtime configuration error).
-		//
 		ErrorState string `json:"ErrorState,omitempty"`
 
 		// Combined state (configState, and operational state of the associated physical resource) to indicate the current state of the profile. Values -- n/a, Power-off, Pending-changes, Configuring, Ok, Failed.
-		//
 		// Read Only: true
 		OperState string `json:"OperState,omitempty"`
 	}
 
 	stage1.ConfigState = m.ConfigState
-
 	stage1.ControlAction = m.ControlAction
-
 	stage1.ErrorState = m.ErrorState
-
 	stage1.OperState = m.OperState
 
 	// make JSON object for known properties

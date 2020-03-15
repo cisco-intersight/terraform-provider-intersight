@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_firmware_upgrade"
 sidebar_current: "docs-intersight-resource-firmwareUpgrade"
 description: |-
   Firmware upgrade operation that downloads the image from Cisco/appliance/user provided HTTP repository or use the image from a network share and upgrade. The direct download is used for upgrade to use the image from Cisco repository or appliance repository. The network share is used for upgrade to use the image from a network share in user data center.
-
 ---
 
 # Resource: intersight_firmware_upgrade
 Firmware upgrade operation that downloads the image from Cisco/appliance/user provided HTTP repository or use the image from a network share and upgrade. The direct download is used for upgrade to use the image from Cisco repository or appliance repository. The network share is used for upgrade to use the image from a network share in user data center.
-
 ## Argument Reference
 The following arguments are supported:
 * `device`:(Array with Maximum of one item) -(Computed)The device onto which the upgrade is peformed.

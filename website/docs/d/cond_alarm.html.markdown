@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_cond_alarm"
 sidebar_current: "docs-intersight-data-source-condAlarm"
 description: |-
 A state-full entity representing a found problem. Alarms can be reported by the managed system itself or can be determined by Intersight.
-
 ---
 
 # Data Source: intersight_cond_alarm
 A state-full entity representing a found problem. Alarms can be reported by the managed system itself or can be determined by Intersight.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `affected_mo_id`:(string)MoId of the affected object from the managed system's point of view.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_recovery_schedule_config_policy"
 sidebar_current: "docs-intersight-resource-recoveryScheduleConfigPolicy"
 description: |-
   Base Schedule config which contains all the required inputs to do schedule on a local or remote server.
-
 ---
 
 # Resource: intersight_recovery_schedule_config_policy
 Base Schedule config which contains all the required inputs to do schedule on a local or remote server.
-
 ## Argument Reference
 The following arguments are supported:
 * `backup_profiles`:(Array)List of Backup profiles using this policy.

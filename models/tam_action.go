@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m TamAction) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,37 +101,31 @@ func (m *TamAction) UnmarshalBinary(b []byte) error {
 }
 
 // TamActionAO1P1 tam action a o1 p1
+//
 // swagger:model TamActionAO1P1
 type TamActionAO1P1 struct {
 
 	// Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
-	//
 	AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
 	// Alert type is used to denote the category of an Intersight alert (FieldNotice, equipment Fault etc.).
-	//
 	// Enum: [psirt fieldNotice]
 	AlertType *string `json:"AlertType,omitempty"`
 
 	// Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.
-	//
 	Identifiers []*TamIdentifiers `json:"Identifiers"`
 
 	// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
-	//
 	// Enum: [create remove]
 	OperationType *string `json:"OperationType,omitempty"`
 
 	// Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.
-	//
 	Queries []*TamQueryEntry `json:"Queries"`
 
 	// Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type.
-	//
 	// Enum: [restApi]
 	Type *string `json:"Type,omitempty"`
 
@@ -147,33 +139,26 @@ func (m *TamActionAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
-		//
 		AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
 		// Alert type is used to denote the category of an Intersight alert (FieldNotice, equipment Fault etc.).
-		//
 		// Enum: [psirt fieldNotice]
 		AlertType *string `json:"AlertType,omitempty"`
 
 		// Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.
-		//
 		Identifiers []*TamIdentifiers `json:"Identifiers"`
 
 		// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
-		//
 		// Enum: [create remove]
 		OperationType *string `json:"OperationType,omitempty"`
 
 		// Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.
-		//
 		Queries []*TamQueryEntry `json:"Queries"`
 
 		// Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type.
-		//
 		// Enum: [restApi]
 		Type *string `json:"Type,omitempty"`
 	}
@@ -183,19 +168,12 @@ func (m *TamActionAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv TamActionAO1P1
 
 	rcv.AffectedObjectType = stage1.AffectedObjectType
-
 	rcv.AlertType = stage1.AlertType
-
 	rcv.Identifiers = stage1.Identifiers
-
 	rcv.Name = stage1.Name
-
 	rcv.OperationType = stage1.OperationType
-
 	rcv.Queries = stage1.Queries
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -205,19 +183,12 @@ func (m *TamActionAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AffectedObjectType")
-
 	delete(stage2, "AlertType")
-
 	delete(stage2, "Identifiers")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "OperationType")
-
 	delete(stage2, "Queries")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -239,49 +210,36 @@ func (m TamActionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
-		//
 		AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
 		// Alert type is used to denote the category of an Intersight alert (FieldNotice, equipment Fault etc.).
-		//
 		// Enum: [psirt fieldNotice]
 		AlertType *string `json:"AlertType,omitempty"`
 
 		// Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.
-		//
 		Identifiers []*TamIdentifiers `json:"Identifiers"`
 
 		// Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
-		//
 		// Enum: [create remove]
 		OperationType *string `json:"OperationType,omitempty"`
 
 		// Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.
-		//
 		Queries []*TamQueryEntry `json:"Queries"`
 
 		// Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type.
-		//
 		// Enum: [restApi]
 		Type *string `json:"Type,omitempty"`
 	}
 
 	stage1.AffectedObjectType = m.AffectedObjectType
-
 	stage1.AlertType = m.AlertType
-
 	stage1.Identifiers = m.Identifiers
-
 	stage1.Name = m.Name
-
 	stage1.OperationType = m.OperationType
-
 	stage1.Queries = m.Queries
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

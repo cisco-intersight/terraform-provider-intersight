@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_vmedia_policy"
 sidebar_current: "docs-intersight-resource-vmediaPolicy"
 description: |-
   Policy to configure virtual media settings on endpoint.
-
 ---
 
 # Resource: intersight_vmedia_policy
 Policy to configure virtual media settings on endpoint.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.

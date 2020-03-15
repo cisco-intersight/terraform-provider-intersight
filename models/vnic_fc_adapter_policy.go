@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,55 +20,42 @@ type VnicFcAdapterPolicy struct {
 	PolicyAbstractPolicy
 
 	// Error Detection Timeout, also referred to as EDTOV, is the number of milliseconds to wait before the system assumes that an error has occurred.
-	//
 	ErrorDetectionTimeout int64 `json:"ErrorDetectionTimeout,omitempty"`
 
 	// Fibre Channel Error Recovery Settings.
-	//
 	ErrorRecoverySettings *VnicFcErrorRecoverySettings `json:"ErrorRecoverySettings,omitempty"`
 
 	// Fibre Channel Flogi Settings.
-	//
 	FlogiSettings *VnicFlogiSettings `json:"FlogiSettings,omitempty"`
 
 	// Interrupt Settings for the virtual fibre channel interface.
-	//
 	InterruptSettings *VnicFcInterruptSettings `json:"InterruptSettings,omitempty"`
 
 	// The maximum number of data or control I/O operations that can be pending for the virtual interface at one time. If this value is exceeded, the additional I/O operations wait in the queue until the number of pending I/O operations decreases and the additional operations can be processed.
-	//
 	IoThrottleCount int64 `json:"IoThrottleCount,omitempty"`
 
 	// The maximum number of LUNs that the Fibre Channel driver will export or show. The maximum number of LUNs is usually controlled by the operating system running on the server.
-	//
 	LunCount int64 `json:"LunCount,omitempty"`
 
 	// The number of commands that the HBA can send and receive in a single transmission per LUN.
-	//
 	LunQueueDepth int64 `json:"LunQueueDepth,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Fibre Channel Plogi Settings.
-	//
 	PlogiSettings *VnicPlogiSettings `json:"PlogiSettings,omitempty"`
 
 	// Resource Allocation Timeout, also referred to as RATOV, is the number of milliseconds to wait before the system assumes that a resource cannot be properly allocated.
-	//
 	ResourceAllocationTimeout int64 `json:"ResourceAllocationTimeout,omitempty"`
 
 	// Fibre Channel Receive Queue Settings.
-	//
 	RxQueueSettings *VnicFcQueueSettings `json:"RxQueueSettings,omitempty"`
 
 	// SCSI Input/Output Queue Settings.
-	//
 	ScsiQueueSettings *VnicScsiQueueSettings `json:"ScsiQueueSettings,omitempty"`
 
 	// Fibre Channel Transmit Queue Settings.
-	//
 	TxQueueSettings *VnicFcQueueSettings `json:"TxQueueSettings,omitempty"`
 }
 
@@ -152,7 +138,6 @@ func (m VnicFcAdapterPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ErrorDetectionTimeout int64 `json:"ErrorDetectionTimeout,omitempty"`
 
@@ -212,7 +197,6 @@ func (m VnicFcAdapterPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

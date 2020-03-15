@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_adapter_host_eth_interface"
 sidebar_current: "docs-intersight-data-source-adapterHostEthInterface"
 description: |-
 Physical / Virtual port of an adapter as seen by the host.
-
 ---
 
 # Data Source: intersight_adapter_host_eth_interface
 Physical / Virtual port of an adapter as seen by the host.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(string)

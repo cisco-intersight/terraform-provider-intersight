@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,28 +22,21 @@ type EquipmentFanModule struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.RackUnit](mo://compute.RackUnit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.RackUnit](mo://compute.RackUnit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
 	// This field is to provide description for the fan module.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentChassis *EquipmentChassisRef `json:"EquipmentChassis,omitempty"`
 
 	// A collection of references to the [equipment.RackEnclosure](mo://equipment.RackEnclosure) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.RackEnclosure](mo://equipment.RackEnclosure) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentRackEnclosure *EquipmentRackEnclosureRef `json:"EquipmentRackEnclosure,omitempty"`
 
@@ -53,54 +45,43 @@ type EquipmentFanModule struct {
 	Fans []*EquipmentFanRef `json:"Fans"`
 
 	// This field acts as the identifier for this particular Module, within the Fabric Interconnect.
-	//
 	// Read Only: true
 	ModuleID int64 `json:"ModuleId,omitempty"`
 
 	// A collection of references to the [network.Element](mo://network.Element) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [network.Element](mo://network.Element) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	NetworkElement *NetworkElementRef `json:"NetworkElement,omitempty"`
 
 	// This field is used to indicate this fan module's operational state.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// This field identifies the Part Number for this Fan Module.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// This field identifies the Product ID for the fan module.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
 	// This field is used to indicate this fan module's presence.
-	//
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This field identifies the Stockkeeping Unit for this Fan Module.
-	//
 	// Read Only: true
 	Sku string `json:"Sku,omitempty"`
 
 	// Tray identifier for the fan module.
-	//
 	// Read Only: true
 	TrayID int64 `json:"TrayId,omitempty"`
 
 	// This field identifies the Vendor ID for this Fan Module.
-	//
 	// Read Only: true
 	Vid string `json:"Vid,omitempty"`
 }
@@ -192,7 +173,6 @@ func (m EquipmentFanModule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
@@ -260,7 +240,6 @@ func (m EquipmentFanModule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

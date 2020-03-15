@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiaapiDcnmFieldNoticeList niaapi dcnm field notice list
+//
 // swagger:model niaapiDcnmFieldNoticeList
 type NiaapiDcnmFieldNoticeList struct {
 

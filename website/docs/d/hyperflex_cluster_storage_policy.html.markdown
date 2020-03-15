@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_cluster_storage_policy"
 sidebar_current: "docs-intersight-data-source-hyperflexClusterStoragePolicy"
 description: |-
 A policy specifying HyperFlex cluster storage settings (optional).
-
 ---
 
 # Data Source: intersight_hyperflex_cluster_storage_policy
 A policy specifying HyperFlex cluster storage settings (optional).
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

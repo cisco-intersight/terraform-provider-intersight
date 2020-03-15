@@ -15,13 +15,13 @@ func dataSourceMemoryArray() *schema.Resource {
 		Read: dataSourceMemoryArrayRead,
 		Schema: map[string]*schema.Schema{
 			"array_id": {
-				Description: "",
+				Description: "ID of the memory array on a server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"cpuid": {
-				Description: "",
+				Description: "ID of the CPU that access this memory array.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -144,7 +144,7 @@ func dataSourceMemoryArray() *schema.Resource {
 				},
 			},
 			"persistent_memory_units": {
-				Description: "This represents all the persistent memory modules found in a memory array of a server.",
+				Description: "All the Persistent Memory Modules found in a memory array of a server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -256,7 +256,7 @@ func dataSourceMemoryArray() *schema.Resource {
 				Computed: true,
 			},
 			"units": {
-				Description: "This represents all the DIMMs found in a memory array of a server. This includes both regular DIMMs and persistent memory modules.",
+				Description: "All the DIMMs found in a memory array of a server. This includes both regular DIMMs and Persistent Memory Modules.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,

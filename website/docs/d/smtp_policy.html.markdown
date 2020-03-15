@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_smtp_policy"
 sidebar_current: "docs-intersight-data-source-smtpPolicy"
 description: |-
 Name that identifies the SMTP Policy.
-
 ---
 
 # Data Source: intersight_smtp_policy
 Name that identifies the SMTP Policy.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

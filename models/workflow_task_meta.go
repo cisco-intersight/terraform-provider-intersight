@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,55 +20,42 @@ type WorkflowTaskMeta struct {
 	MoBaseMo
 
 	// A task execution type to indicate if it is a system task.
-	//
 	ActionType string `json:"ActionType,omitempty"`
 
 	// A description of the task.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Input keys for the task which specifies parameters the task can take in as inputs.
-	//
 	InputKeys []string `json:"InputKeys"`
 
 	// Denotes whether or not this is an internal task.  Internal tasks will be hidden from the UI within a workflow.
-	//
 	Internal *bool `json:"Internal,omitempty"`
 
 	// A task name that should be unique in Conductor DB.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Output keys for the task which specifies parameters the task will output at the end of execution.
-	//
 	OutputKeys []string `json:"OutputKeys"`
 
 	// The worker respnose timeout value.
-	//
 	ResponseTimeoutSec int64 `json:"ResponseTimeoutSec,omitempty"`
 
 	// A number of reties for this task.
-	//
 	RetryCount int64 `json:"RetryCount,omitempty"`
 
 	// The time on which the retry will be delayed.
-	//
 	RetryDelaySec int64 `json:"RetryDelaySec,omitempty"`
 
 	// A logic which defines the way to handle retry (FIXED, EXPONENTIAL_BACKOFF).
-	//
 	RetryLogic string `json:"RetryLogic,omitempty"`
 
 	// A service owns the task metadata.
-	//
 	Src string `json:"Src,omitempty"`
 
 	// A policy which defines the way to handle timeout (RETRY, TIME_OUT_WF, ALERT_ONLY).
-	//
 	TimeoutPolicy string `json:"TimeoutPolicy,omitempty"`
 
 	// A timeout value for the task in seconds.
-	//
 	TimeoutSec int64 `json:"TimeoutSec,omitempty"`
 }
 
@@ -152,7 +138,6 @@ func (m WorkflowTaskMeta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ActionType string `json:"ActionType,omitempty"`
 
@@ -212,7 +197,6 @@ func (m WorkflowTaskMeta) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

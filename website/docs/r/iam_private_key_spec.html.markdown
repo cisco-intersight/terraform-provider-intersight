@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_private_key_spec"
 sidebar_current: "docs-intersight-resource-iamPrivateKeySpec"
 description: |-
   Parameters used to generate a private key.
-
 ---
 
 # Resource: intersight_iam_private_key_spec
 Parameters used to generate a private key.
-
 ## Argument Reference
 The following arguments are supported:
 * `algorithm`:(Array with Maximum of one item) -Algorithm used to generate the key pair and algorithm-speicifc parameters, such as RSA modulus size.

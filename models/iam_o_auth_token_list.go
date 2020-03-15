@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamOAuthTokenList iam o auth token list
+//
 // swagger:model iamOAuthTokenList
 type IamOAuthTokenList struct {
 

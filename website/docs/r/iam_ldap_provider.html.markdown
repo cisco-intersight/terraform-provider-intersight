@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_ldap_provider"
 sidebar_current: "docs-intersight-resource-iamLdapProvider"
 description: |-
   LDAP Provider or LDAP Server for user authentication.
-
 ---
 
 # Resource: intersight_iam_ldap_provider
 LDAP Provider or LDAP Server for user authentication.
-
 ## Argument Reference
 The following arguments are supported:
 * `ldap_policy`:(Array with Maximum of one item) -A collection of references to the [iam.LdapPolicy](mo://iam.LdapPolicy) Managed Object.When this managed object is deleted, the referenced [iam.LdapPolicy](mo://iam.LdapPolicy) MO unsets its reference to this deleted MO.

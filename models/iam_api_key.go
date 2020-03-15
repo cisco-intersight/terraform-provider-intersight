@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,26 +23,20 @@ type IamAPIKey struct {
 	MoBaseMo
 
 	// The cryptographic hash algorithm to calculate the message digest.
-	//
-	//
 	// Enum: [SHA256 SHA384 SHA512 SHA512_224 SHA512_256]
 	HashAlgorithm *string `json:"HashAlgorithm,omitempty"`
 
 	// The key generation specification provides the algorithm and the parameters required for this algorithm to generate a private key, public key pair. Supported key generation schemes include RSA, ECDSA and Edwards-Curve Digital Signature Algorithm (EdDSA).
-	//
 	KeySpec *PkixKeyGenerationSpec `json:"KeySpec,omitempty"`
 
 	// Permissions associated with the API key. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	// Read Only: true
 	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 	// Holds the private key for the API key.
-	//
 	PrivateKey string `json:"PrivateKey,omitempty"`
 
 	// The purpose of the API Key.
-	//
 	Purpose string `json:"Purpose,omitempty"`
 
 	// The signing algorithm used by the client to authenticate API requests to Intersight.
@@ -52,15 +45,11 @@ type IamAPIKey struct {
 	// 2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,
 	// 3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.
 	// The signing algorithm must be compatible with the key generation specification.
-	//
-	//
 	// Enum: [RSASSA-PKCS1-v1_5 RSASSA-PSS Ed25519 Ecdsa]
 	SigningAlgorithm *string `json:"SigningAlgorithm,omitempty"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 }
@@ -120,7 +109,6 @@ func (m IamAPIKey) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		HashAlgorithm *string `json:"HashAlgorithm,omitempty"`
 
@@ -156,7 +144,6 @@ func (m IamAPIKey) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

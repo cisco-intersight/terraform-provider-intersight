@@ -85,6 +85,41 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
+			"hypervisor_version": {
+				Description: "Desired  hypervisor version to apply for all the nodes on the HyperFlex cluster.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"hypervisor_version_info": {
+				Description: "Bundle metadata information for the desired Hypervisor version.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
 				Type:        schema.TypeString,
@@ -230,6 +265,12 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"upgrade_types": {
+				Description: "List of components to be upgraded on the HyperFlex Cluster.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString}},
 		},
 	}
 }
@@ -311,6 +352,43 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.HxdpVersionInfo = &x
+
+	}
+
+	if v, ok := d.GetOk("hypervisor_version"); ok {
+		x := (v.(string))
+		o.HypervisorVersion = x
+
+	}
+
+	if v, ok := d.GetOk("hypervisor_version_info"); ok {
+		p := models.SoftwareHyperflexDistributableRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.SoftwareHyperflexDistributableRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.HypervisorVersionInfo = &x
 
 	}
 
@@ -476,6 +554,17 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 
 	}
 
+	if v, ok := d.GetOk("upgrade_types"); ok {
+		x := make([]*string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			a := y.Index(i).Interface().(string)
+			x = append(x, &a)
+		}
+		o.UpgradeTypes = x
+
+	}
+
 	url := "hyperflex/SoftwareVersionPolicies"
 	data, err := o.MarshalJSON()
 	if err != nil {
@@ -532,6 +621,14 @@ func resourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta int
 		return err
 	}
 
+	if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+		return err
+	}
+
+	if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRef(s.HypervisorVersionInfo, d)); err != nil {
+		return err
+	}
+
 	if err := d.Set("moid", (s.Moid)); err != nil {
 		return err
 	}
@@ -561,6 +658,10 @@ func resourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta int
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("upgrade_types", (s.UpgradeTypes)); err != nil {
 		return err
 	}
 
@@ -647,6 +748,43 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.HxdpVersionInfo = &x
+	}
+
+	if d.HasChange("hypervisor_version") {
+		v := d.Get("hypervisor_version")
+		x := (v.(string))
+		o.HypervisorVersion = x
+	}
+
+	if d.HasChange("hypervisor_version_info") {
+		v := d.Get("hypervisor_version_info")
+		p := models.SoftwareHyperflexDistributableRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.SoftwareHyperflexDistributableRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.HypervisorVersionInfo = &x
 	}
 
 	if d.HasChange("moid") {
@@ -809,6 +947,17 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			}
 		}
 		o.Tags = x
+	}
+
+	if d.HasChange("upgrade_types") {
+		v := d.Get("upgrade_types")
+		x := make([]*string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			a := y.Index(i).Interface().(string)
+			x = append(x, &a)
+		}
+		o.UpgradeTypes = x
 	}
 
 	url := "hyperflex/SoftwareVersionPolicies" + "/" + d.Id()

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_shared_io_module"
 sidebar_current: "docs-intersight-data-source-equipmentSharedIoModule"
 description: |-
 I/O Controller present inside SIOC to provide data path from S-series server to FI.
-
 ---
 
 # Data Source: intersight_equipment_shared_io_module
 I/O Controller present inside SIOC to provide data path from S-series server to FI.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `config_state`:(string)This field identifies the configuration state for this SIOM Unit.

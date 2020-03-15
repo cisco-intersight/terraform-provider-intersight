@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -24,7 +23,6 @@ import (
 //         Network
 //         Storage
 //      TechSupport
-//
 // When the DataExportPolicy for a category is enabled/disabled, all the sub-category configurations
 // are enabled/disabled as well. For example, if you enable/disable Inventory, all its sub-category
 // configurations (ie. Network and Storage) are also enabled/disabled.
@@ -34,27 +32,21 @@ type ApplianceDataExportPolicy struct {
 	MoBaseMo
 
 	// DataExportPolicy managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Status of the data collection mode. If the value is 'true', then data collection is enabled.
-	//
 	Enable *bool `json:"Enable,omitempty"`
 
 	// Name of the Data Export Policy.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// A collection of references to the [appliance.DataExportPolicy](mo://appliance.DataExportPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [appliance.DataExportPolicy](mo://appliance.DataExportPolicy) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ParentConfig *ApplianceDataExportPolicyRef `json:"ParentConfig,omitempty"`
 
 	// Sub-configurations of the current Data Export Policy. For example, if the current Data Export Policy is Inventory, the sub-configurations would include the Network and Storage inventory.
-	//
 	// Read Only: true
 	SubConfigs []*ApplianceDataExportPolicyRef `json:"SubConfigs"`
 }
@@ -106,7 +98,6 @@ func (m ApplianceDataExportPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -134,7 +125,6 @@ func (m ApplianceDataExportPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

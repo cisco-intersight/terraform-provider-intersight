@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_pure_controller"
 sidebar_current: "docs-intersight-data-source-storagePureController"
 description: |-
 A storage controller entity in Pure FlashArray.
-
 ---
 
 # Data Source: intersight_storage_pure_controller
 A storage controller entity in Pure FlashArray.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `device_mo_id`:(string)

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_pci_link"
 sidebar_current: "docs-intersight-data-source-pciLink"
 description: |-
 PCI Switch Link connected to PCIe Switch.
-
 ---
 
 # Data Source: intersight_pci_link
 PCI Switch Link connected to PCIe Switch.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `adapter`:(string)It shows the name of the pci device.

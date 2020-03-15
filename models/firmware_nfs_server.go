@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m FirmwareNfsServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,23 +99,20 @@ func (m *FirmwareNfsServer) UnmarshalBinary(b []byte) error {
 }
 
 // FirmwareNfsServerAO1P1 firmware nfs server a o1 p1
+//
 // swagger:model FirmwareNfsServerAO1P1
 type FirmwareNfsServerAO1P1 struct {
 
 	// Mount option as configured on the NFS Server. Example:nolock.
-	//
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7.
-	//
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Directory where the image is stored. Example:/share/subfolder.
-	//
 	RemoteShare string `json:"RemoteShare,omitempty"`
 
 	// firmware nfs server a o1 p1
@@ -130,19 +125,15 @@ func (m *FirmwareNfsServerAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Mount option as configured on the NFS Server. Example:nolock.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7.
-		//
 		RemoteIP string `json:"RemoteIp,omitempty"`
 
 		// Directory where the image is stored. Example:/share/subfolder.
-		//
 		RemoteShare string `json:"RemoteShare,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -151,13 +142,9 @@ func (m *FirmwareNfsServerAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FirmwareNfsServerAO1P1
 
 	rcv.MountOptions = stage1.MountOptions
-
 	rcv.RemoteFile = stage1.RemoteFile
-
 	rcv.RemoteIP = stage1.RemoteIP
-
 	rcv.RemoteShare = stage1.RemoteShare
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -167,13 +154,9 @@ func (m *FirmwareNfsServerAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "MountOptions")
-
 	delete(stage2, "RemoteFile")
-
 	delete(stage2, "RemoteIp")
-
 	delete(stage2, "RemoteShare")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -195,28 +178,21 @@ func (m FirmwareNfsServerAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Mount option as configured on the NFS Server. Example:nolock.
-		//
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7.
-		//
 		RemoteIP string `json:"RemoteIp,omitempty"`
 
 		// Directory where the image is stored. Example:/share/subfolder.
-		//
 		RemoteShare string `json:"RemoteShare,omitempty"`
 	}
 
 	stage1.MountOptions = m.MountOptions
-
 	stage1.RemoteFile = m.RemoteFile
-
 	stage1.RemoteIP = m.RemoteIP
-
 	stage1.RemoteShare = m.RemoteShare
 
 	// make JSON object for known properties

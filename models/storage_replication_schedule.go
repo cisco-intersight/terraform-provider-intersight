@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,23 +19,19 @@ import (
 type StorageReplicationSchedule struct {
 	MoBaseMo
 
-	// Replication frequency. It is an interval on which replication is set to trigger.
+	// Replication frequency. It is an interval at which replication is set to trigger.
 	// Examples:
-	//     PT2H, Snapshot is performed for every 2 hours.
+	//     PT2H, Snapshot is generated every 2 hours.
 	//     P30D, Snapshot is scheduled for every 30 days.
 	//     PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.
-	//
-	//
 	// Read Only: true
 	Frequency string `json:"Frequency,omitempty"`
 
 	// Replication schedule name.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Protection group relationship object.
-	//
 	// Read Only: true
 	ProtectionGroup *StorageProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
@@ -44,23 +39,18 @@ type StorageReplicationSchedule struct {
 	// It is applicable only if the replication frequency is set for a day or more.
 	// Format: hh:mm:ss
 	// Example: 15:00:00, Replication is set for 3:00 PM.
-	//
-	//
 	// Read Only: true
 	ReplicationTime string `json:"ReplicationTime,omitempty"`
 
 	// Duration to keep the replicated snapshots on the targets.
-	// Replicated snapshots are deleted from target array once mentioned rentention period is elapsed.
+	// Replicated snapshots are deleted from target array once the retention period has elapsed.
 	// Examples:
 	// P30D, Snapshots are available for 30 days.
 	// PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.
-	//
-	//
 	// Read Only: true
 	RetentionTime string `json:"RetentionTime,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 }
@@ -116,7 +106,6 @@ func (m StorageReplicationSchedule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Frequency string `json:"Frequency,omitempty"`
 
@@ -148,7 +137,6 @@ func (m StorageReplicationSchedule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_enclosure"
 sidebar_current: "docs-intersight-data-source-storageEnclosure"
 description: |-
 Storage Enclosure for physical disks.
-
 ---
 
 # Data Source: intersight_storage_enclosure
 Storage Enclosure for physical disks.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `chassis_id`:(int)

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_asset_managed_device"
 sidebar_current: "docs-intersight-resource-assetManagedDevice"
 description: |-
   Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
-
 ---
 
 # Resource: intersight_asset_managed_device
 Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -ManagedDevice to Account MO relationship.

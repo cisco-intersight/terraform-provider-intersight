@@ -260,6 +260,12 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"total_phases": {
+				Description: "TotalPhase represents the total number of the upgradePhases for one upgrade.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"ui_packages": {
 				Description: "Name of the UI packages that are upgraded. For example, if the software upgrade has updates for five Intersight micro-service UI packages, then this field will have the names of those five micro-services.",
 				Type:        schema.TypeList,
@@ -322,6 +328,10 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
 		o.Status = x
+	}
+	if v, ok := d.GetOk("total_phases"); ok {
+		x := int64(v.(int))
+		o.TotalPhases = x
 	}
 	if v, ok := d.GetOk("version"); ok {
 		x := (v.(string))
@@ -410,6 +420,9 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+				return err
+			}
+			if err := d.Set("total_phases", (s.TotalPhases)); err != nil {
 				return err
 			}
 			if err := d.Set("ui_packages", (s.UIPackages)); err != nil {

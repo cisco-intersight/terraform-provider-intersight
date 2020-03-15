@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m PkixKeyGenerationSpec) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,11 +100,11 @@ func (m *PkixKeyGenerationSpec) UnmarshalBinary(b []byte) error {
 }
 
 // PkixKeyGenerationSpecAO1P1 pkix key generation spec a o1 p1
+//
 // swagger:model PkixKeyGenerationSpecAO1P1
 type PkixKeyGenerationSpecAO1P1 struct {
 
 	// Name of the key generation algorithm.
-	//
 	// Read Only: true
 	// Enum: [RSA]
 	Name string `json:"Name,omitempty"`
@@ -121,7 +119,6 @@ func (m *PkixKeyGenerationSpecAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Name of the key generation algorithm.
-		//
 		// Read Only: true
 		// Enum: [RSA]
 		Name string `json:"Name,omitempty"`
@@ -132,7 +129,6 @@ func (m *PkixKeyGenerationSpecAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PkixKeyGenerationSpecAO1P1
 
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -142,7 +138,6 @@ func (m *PkixKeyGenerationSpecAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -164,7 +159,6 @@ func (m PkixKeyGenerationSpecAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name of the key generation algorithm.
-		//
 		// Read Only: true
 		// Enum: [RSA]
 		Name string `json:"Name,omitempty"`

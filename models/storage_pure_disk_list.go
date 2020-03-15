@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StoragePureDiskList storage pure disk list
+//
 // swagger:model storagePureDiskList
 type StoragePureDiskList struct {
 

@@ -3,13 +3,11 @@ layout: "intersight"
 page_title: "Intersight: intersight_server_profile"
 sidebar_current: "docs-intersight-resource-serverProfile"
 description: |-
-  Server Profile enables server management using policies.
-
+  A profile specifying configuration settings for a physical server.
 ---
 
 # Resource: intersight_server_profile
-Server Profile enables server management using policies.
-
+A profile specifying configuration settings for a physical server.
 ## Argument Reference
 The following arguments are supported:
 * `action`:(string)User initiated action. Each profile type has its own supported actions. For HyperFlex cluster profile, the supported actions are -- Validate, Deploy, Continue, Retry, Abort, Unassign For server profile, the support actions are -- Deploy, Unassign.
@@ -52,6 +50,7 @@ This complex property has following sub-properties:
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
 * `description`:(string)Description of the profile.
+* `is_pmc_deployed_secure_passphrase_set`:(bool)
 * `moid`:(string)The unique identifier of this Managed Object instance.
 * `name`:(string)Name of the concrete profile.
 * `object_type`:(string)(Computed)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
@@ -65,6 +64,7 @@ This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.
   + `object_type`:(string)(Computed)The Object Type of the referenced REST resource.
   + `selector`:(string)(Computed)An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.
+* `pmc_deployed_secure_passphrase`:(string)Secure passphrase that is already deployed on all the Persistent Memory Modules on the server. This deployed passphrase is required during deploy of server profile if secure passphrase is changed or security is disabled in the attached persistent memory policy.
 * `running_workflows`:(Array)(Computed)The WorkflowInfos in the workflow engine that are running for this server Profile.
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)The Moid of the referenced REST resource.

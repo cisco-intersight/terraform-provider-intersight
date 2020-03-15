@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_hyperflex_sys_config_policy"
 sidebar_current: "docs-intersight-resource-hyperflexSysConfigPolicy"
 description: |-
   A policy specifying system configuration such as timezone, DNS servers, and NTP Servers.
-
 ---
 
 # Resource: intersight_hyperflex_sys_config_policy
 A policy specifying system configuration such as timezone, DNS servers, and NTP Servers.
-
 ## Argument Reference
 The following arguments are supported:
 * `cluster_profiles`:(Array)List of cluster profiles using this policy.

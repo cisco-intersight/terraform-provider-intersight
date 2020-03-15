@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m WorkflowConstraints) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,25 +100,20 @@ func (m *WorkflowConstraints) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowConstraintsAO1P1 workflow constraints a o1 p1
+//
 // swagger:model WorkflowConstraintsAO1P1
 type WorkflowConstraintsAO1P1 struct {
 
 	// When the parameter is a enum then this list of enum entry is used to validate the input belongs to one of items in the list.
-	//
 	EnumList []*WorkflowEnumEntry `json:"EnumList"`
 
 	// Allowed maximum value of the parameter if parameter is integer/float or maximum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-	//
-	//
 	Max float64 `json:"Max,omitempty"`
 
 	// Allowed minimum value of the parameter if parameter is integer/float or minimum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-	//
-	//
 	Min float64 `json:"Min,omitempty"`
 
 	// When the parameter is a string this regular expression is used to ensure the value is valid.
-	//
 	Regex string `json:"Regex,omitempty"`
 
 	// workflow constraints a o1 p1
@@ -133,21 +126,15 @@ func (m *WorkflowConstraintsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// When the parameter is a enum then this list of enum entry is used to validate the input belongs to one of items in the list.
-		//
 		EnumList []*WorkflowEnumEntry `json:"EnumList"`
 
 		// Allowed maximum value of the parameter if parameter is integer/float or maximum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-		//
-		//
 		Max float64 `json:"Max,omitempty"`
 
 		// Allowed minimum value of the parameter if parameter is integer/float or minimum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-		//
-		//
 		Min float64 `json:"Min,omitempty"`
 
 		// When the parameter is a string this regular expression is used to ensure the value is valid.
-		//
 		Regex string `json:"Regex,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -156,13 +143,9 @@ func (m *WorkflowConstraintsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowConstraintsAO1P1
 
 	rcv.EnumList = stage1.EnumList
-
 	rcv.Max = stage1.Max
-
 	rcv.Min = stage1.Min
-
 	rcv.Regex = stage1.Regex
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -172,13 +155,9 @@ func (m *WorkflowConstraintsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "EnumList")
-
 	delete(stage2, "Max")
-
 	delete(stage2, "Min")
-
 	delete(stage2, "Regex")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -200,30 +179,21 @@ func (m WorkflowConstraintsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// When the parameter is a enum then this list of enum entry is used to validate the input belongs to one of items in the list.
-		//
 		EnumList []*WorkflowEnumEntry `json:"EnumList"`
 
 		// Allowed maximum value of the parameter if parameter is integer/float or maximum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-		//
-		//
 		Max float64 `json:"Max,omitempty"`
 
 		// Allowed minimum value of the parameter if parameter is integer/float or minimum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
-		//
-		//
 		Min float64 `json:"Min,omitempty"`
 
 		// When the parameter is a string this regular expression is used to ensure the value is valid.
-		//
 		Regex string `json:"Regex,omitempty"`
 	}
 
 	stage1.EnumList = m.EnumList
-
 	stage1.Max = m.Max
-
 	stage1.Min = m.Min
-
 	stage1.Regex = m.Regex
 
 	// make JSON object for known properties

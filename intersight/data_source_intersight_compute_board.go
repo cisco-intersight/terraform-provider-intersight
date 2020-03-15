@@ -97,7 +97,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				Computed:    true,
 			},
 			"equipment_tpms": {
-				Description: "",
+				Description: "The Trusted Platform Modules (TPM) present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -125,7 +125,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				},
 			},
 			"graphics_cards": {
-				Description: "It shows Graphics cards present in a server.",
+				Description: "The Graphics cards present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -205,7 +205,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				Computed:    true,
 			},
 			"pci_coprocessor_cards": {
-				Description: "It shows PCI CoprocessorCard present in a server.",
+				Description: "The PCI Coprocessor cards present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -233,7 +233,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				},
 			},
 			"pci_switch": {
-				Description: "It shows PCI Switches presen in a server.",
+				Description: "The PCI Switches present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -289,7 +289,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				},
 			},
 			"persistent_memory_configuration": {
-				Description: "This represents the configuration applied on the persistent memory modules on a server.",
+				Description: "Persistent Memory configuration applied on all the Persistent Memory Modules on a server.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -427,7 +427,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				Computed:    true,
 			},
 			"storage_controllers": {
-				Description: "",
+				Description: "The storage controllers present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -455,7 +455,7 @@ func dataSourceComputeBoard() *schema.Resource {
 				},
 			},
 			"storage_flex_flash_controllers": {
-				Description: "",
+				Description: "The storage flex flash controllers present in the server.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,

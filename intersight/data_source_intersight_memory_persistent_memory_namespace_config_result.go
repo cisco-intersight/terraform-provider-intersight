@@ -15,7 +15,7 @@ func dataSourceMemoryPersistentMemoryNamespaceConfigResult() *schema.Resource {
 		Read: dataSourceMemoryPersistentMemoryNamespaceConfigResultRead,
 		Schema: map[string]*schema.Schema{
 			"config_status": {
-				Description: "This represents the result of the previously configured Persistent Memory Namespace.",
+				Description: "Status of the Persistent Memory Namespace needed to be configured.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -68,7 +68,7 @@ func dataSourceMemoryPersistentMemoryNamespaceConfigResult() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "This represents the name of a Persistent Memory Namespace to be configured.",
+				Description: "Name of a Persistent Memory Namespace that needed to be configured.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -143,13 +143,13 @@ func dataSourceMemoryPersistentMemoryNamespaceConfigResult() *schema.Resource {
 				Computed:    true,
 			},
 			"socket_id": {
-				Description: "This represents the Socket ID in which the Persistent Memory Namespace needed to be configured.",
+				Description: "Socket ID in which the Persistent Memory Namespace needed to be configured.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"socket_memory_id": {
-				Description: "This represents the Socket Memory ID in which the Persistent Memory Namespace needed to be configured.",
+				Description: "Socket Memory ID in which the Persistent Memory Namespace needed to be configured.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

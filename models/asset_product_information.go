@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AssetProductInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,41 +99,35 @@ func (m *AssetProductInformation) UnmarshalBinary(b []byte) error {
 }
 
 // AssetProductInformationAO1P1 asset product information a o1 p1
+//
 // swagger:model AssetProductInformationAO1P1
 type AssetProductInformationAO1P1 struct {
 
 	// Billing address provided by customer while buying this Cisco product.
-	//
 	// Read Only: true
 	BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 	// Short description of the Cisco product that helps identify the product easily. example "DISTI:UCS 6248UP 1RU Fabric Int/No PSU/32 UP/ 12p LIC".
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// Family that the product belongs to. Example "UCSB".
-	//
 	// Read Only: true
 	Family string `json:"Family,omitempty"`
 
 	// Group that the product belongs to. It is one higher level categorization above family. example "Switch".
-	//
 	// Read Only: true
 	Group string `json:"Group,omitempty"`
 
 	// Product number that identifies the product. example PID. example "UCS-FI-6248UP-CH2".
-	//
 	// Read Only: true
 	Number string `json:"Number,omitempty"`
 
 	// Shipping address provided by customer while buying this Cisco product.
-	//
 	// Read Only: true
 	ShipTo *AssetAddressInformation `json:"ShipTo,omitempty"`
 
 	// Sub type of the product being specified. example "UCS 6200 SER".
-	//
 	// Read Only: true
 	SubType string `json:"SubType,omitempty"`
 
@@ -149,37 +141,30 @@ func (m *AssetProductInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Billing address provided by customer while buying this Cisco product.
-		//
 		// Read Only: true
 		BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 		// Short description of the Cisco product that helps identify the product easily. example "DISTI:UCS 6248UP 1RU Fabric Int/No PSU/32 UP/ 12p LIC".
-		//
 		// Read Only: true
 		Description string `json:"Description,omitempty"`
 
 		// Family that the product belongs to. Example "UCSB".
-		//
 		// Read Only: true
 		Family string `json:"Family,omitempty"`
 
 		// Group that the product belongs to. It is one higher level categorization above family. example "Switch".
-		//
 		// Read Only: true
 		Group string `json:"Group,omitempty"`
 
 		// Product number that identifies the product. example PID. example "UCS-FI-6248UP-CH2".
-		//
 		// Read Only: true
 		Number string `json:"Number,omitempty"`
 
 		// Shipping address provided by customer while buying this Cisco product.
-		//
 		// Read Only: true
 		ShipTo *AssetAddressInformation `json:"ShipTo,omitempty"`
 
 		// Sub type of the product being specified. example "UCS 6200 SER".
-		//
 		// Read Only: true
 		SubType string `json:"SubType,omitempty"`
 	}
@@ -189,19 +174,12 @@ func (m *AssetProductInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetProductInformationAO1P1
 
 	rcv.BillTo = stage1.BillTo
-
 	rcv.Description = stage1.Description
-
 	rcv.Family = stage1.Family
-
 	rcv.Group = stage1.Group
-
 	rcv.Number = stage1.Number
-
 	rcv.ShipTo = stage1.ShipTo
-
 	rcv.SubType = stage1.SubType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -211,19 +189,12 @@ func (m *AssetProductInformationAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "BillTo")
-
 	delete(stage2, "Description")
-
 	delete(stage2, "Family")
-
 	delete(stage2, "Group")
-
 	delete(stage2, "Number")
-
 	delete(stage2, "ShipTo")
-
 	delete(stage2, "SubType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -245,53 +216,40 @@ func (m AssetProductInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Billing address provided by customer while buying this Cisco product.
-		//
 		// Read Only: true
 		BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 		// Short description of the Cisco product that helps identify the product easily. example "DISTI:UCS 6248UP 1RU Fabric Int/No PSU/32 UP/ 12p LIC".
-		//
 		// Read Only: true
 		Description string `json:"Description,omitempty"`
 
 		// Family that the product belongs to. Example "UCSB".
-		//
 		// Read Only: true
 		Family string `json:"Family,omitempty"`
 
 		// Group that the product belongs to. It is one higher level categorization above family. example "Switch".
-		//
 		// Read Only: true
 		Group string `json:"Group,omitempty"`
 
 		// Product number that identifies the product. example PID. example "UCS-FI-6248UP-CH2".
-		//
 		// Read Only: true
 		Number string `json:"Number,omitempty"`
 
 		// Shipping address provided by customer while buying this Cisco product.
-		//
 		// Read Only: true
 		ShipTo *AssetAddressInformation `json:"ShipTo,omitempty"`
 
 		// Sub type of the product being specified. example "UCS 6200 SER".
-		//
 		// Read Only: true
 		SubType string `json:"SubType,omitempty"`
 	}
 
 	stage1.BillTo = m.BillTo
-
 	stage1.Description = m.Description
-
 	stage1.Family = m.Family
-
 	stage1.Group = m.Group
-
 	stage1.Number = m.Number
-
 	stage1.ShipTo = m.ShipTo
-
 	stage1.SubType = m.SubType
 
 	// make JSON object for known properties

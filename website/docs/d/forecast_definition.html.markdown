@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_forecast_definition"
 sidebar_current: "docs-intersight-data-source-forecastDefinition"
 description: |-
 Definition for forecast metric settings.
-
 ---
 
 # Data Source: intersight_forecast_definition
 Definition for forecast metric settings.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `alert_threshold_in_percentage`:(int)Threshold above which user needs to be indicated through alarm/alert.

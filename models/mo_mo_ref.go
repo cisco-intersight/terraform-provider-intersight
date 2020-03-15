@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,12 +19,10 @@ import (
 type MoMoRef struct {
 
 	// The Moid of the referenced REST resource.
-	//
 	// Read Only: true
 	Moid string `json:"Moid,omitempty"`
 
 	// The Object Type of the referenced REST resource.
-	//
 	// Read Only: true
 	ObjectType string `json:"ObjectType,omitempty"`
 
@@ -36,8 +33,6 @@ type MoMoRef struct {
 	// instance being inserted/updated to fulfill the REST request. An error is returned if the filter
 	// matches zero or more than one REST resource.
 	// An example filter string is: Serial eq '3AA8B7T11'.
-	//
-	//
 	// Read Only: true
 	Selector string `json:"Selector,omitempty"`
 }
@@ -88,7 +83,6 @@ func (m MoMoRef) MarshalJSON() ([]byte, error) {
 		return nil, errAO0
 	}
 	_parts = append(_parts, jsonDataAO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

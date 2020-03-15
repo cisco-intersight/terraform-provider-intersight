@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_ldap_policy"
 sidebar_current: "docs-intersight-data-source-iamLdapPolicy"
 description: |-
 LDAP Policy configurations.
-
 ---
 
 # Data Source: intersight_iam_ldap_policy
 LDAP Policy configurations.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `description`:(string)Description of the policy.

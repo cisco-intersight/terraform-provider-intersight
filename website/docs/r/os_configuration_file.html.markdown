@@ -5,27 +5,23 @@ sidebar_current: "docs-intersight-resource-osConfigurationFile"
 description: |-
   A ConfigurationFile is an OS specific answer file that helps with the unattended
 installation.
-
 The file can also be a template file with placeholders instead of actual answers.
 Intersight supports the golang template syntax specified in https://golang.org/pkg/text/template/.
 The template supports placeholders for all the properties of os.Answers MO type
 as well as any additional user-defined properties. The values for these placeholders
 shall be given during OS installation in the form of os.Answers type and 'additionalProperties' in
 os.OsInstall object.
-
 ---
 
 # Resource: intersight_os_configuration_file
 A ConfigurationFile is an OS specific answer file that helps with the unattended
 installation.
-
 The file can also be a template file with placeholders instead of actual answers.
 Intersight supports the golang template syntax specified in https://golang.org/pkg/text/template/.
 The template supports placeholders for all the properties of os.Answers MO type
 as well as any additional user-defined properties. The values for these placeholders
 shall be given during OS installation in the form of os.Answers type and 'additionalProperties' in
 os.OsInstall object.
-
 ## Argument Reference
 The following arguments are supported:
 * `catalog`:(Array with Maximum of one item) -A collection of references to the [os.Catalog](mo://os.Catalog) Managed Object.When this managed object is deleted, the referenced [os.Catalog](mo://os.Catalog) MO unsets its reference to this deleted MO.
@@ -65,8 +61,8 @@ This complex property has following sub-properties:
     + `override`:(bool)Override the default value provided for the data type. When true, allow the user to enter value for the data type.
     + `value`:Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
   + `description`:(string)Provide a detailed description of the data type.
-  + `label`:(string)Descriptive name for the data type.
-  + `name`:(string)Pick a descriptive name for the data type.
+  + `label`:(string)Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.
+  + `name`:(string)Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `properties`:(Array with Maximum of one item) -Primitive data type properties.
 This complex property has following sub-properties:
@@ -87,8 +83,17 @@ This complex property has following sub-properties:
   + `min`:(float)Allowed minimum value of the parameter if parameter is integer/float or minimum length of the parameter if the parameter is string. When max and min are set to 0, then the limits are not checked.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `regex`:(string)When the parameter is a string this regular expression is used to ensure the value is valid.
+  + `inventory_selector`:(Array)List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.
+This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `display_attributes`:
+                (Array of schema.TypeString) -List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
+    + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
+    + `selector`:(string)Field to hold an Intersight API along with an optional filter to narrow down the search options.
+    + `value_attribute`:(string)A property from the Intersight object, value of which can be used as value for referenced input definition.
   + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
-  + `secure`:(bool)Intersight allows the secure properties to be used as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.
+  + `secure`:(bool)Intersight supports secure properties as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.
   + `type`:(string)Specify the enum type for primitive data type.
   + `required`:(bool)Specifies whether this parameter is required. The field is applicable for task and workflow.
   + `value`:Value for placeholder provided by user.

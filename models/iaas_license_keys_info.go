@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m IaasLicenseKeysInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *IaasLicenseKeysInfo) UnmarshalBinary(b []byte) error {
 }
 
 // IaasLicenseKeysInfoAO1P1 iaas license keys info a o1 p1
+//
 // swagger:model IaasLicenseKeysInfoAO1P1
 type IaasLicenseKeysInfoAO1P1 struct {
 
 	// Number of licenses available for the UCSD PID (Product ID).
-	//
 	// Read Only: true
 	Count int64 `json:"Count,omitempty"`
 
 	// Expiration date for the license.
-	//
 	// Read Only: true
 	ExpirationDate string `json:"ExpirationDate,omitempty"`
 
 	// UCS Director Unique license ID.
-	//
 	// Read Only: true
 	LicenseID string `json:"LicenseId,omitempty"`
 
 	// PID (Product ID) for UCSD License.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
@@ -134,22 +129,18 @@ func (m *IaasLicenseKeysInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Number of licenses available for the UCSD PID (Product ID).
-		//
 		// Read Only: true
 		Count int64 `json:"Count,omitempty"`
 
 		// Expiration date for the license.
-		//
 		// Read Only: true
 		ExpirationDate string `json:"ExpirationDate,omitempty"`
 
 		// UCS Director Unique license ID.
-		//
 		// Read Only: true
 		LicenseID string `json:"LicenseId,omitempty"`
 
 		// PID (Product ID) for UCSD License.
-		//
 		// Read Only: true
 		Pid string `json:"Pid,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *IaasLicenseKeysInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IaasLicenseKeysInfoAO1P1
 
 	rcv.Count = stage1.Count
-
 	rcv.ExpirationDate = stage1.ExpirationDate
-
 	rcv.LicenseID = stage1.LicenseID
-
 	rcv.Pid = stage1.Pid
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *IaasLicenseKeysInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Count")
-
 	delete(stage2, "ExpirationDate")
-
 	delete(stage2, "LicenseId")
-
 	delete(stage2, "Pid")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m IaasLicenseKeysInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Number of licenses available for the UCSD PID (Product ID).
-		//
 		// Read Only: true
 		Count int64 `json:"Count,omitempty"`
 
 		// Expiration date for the license.
-		//
 		// Read Only: true
 		ExpirationDate string `json:"ExpirationDate,omitempty"`
 
 		// UCS Director Unique license ID.
-		//
 		// Read Only: true
 		LicenseID string `json:"LicenseId,omitempty"`
 
 		// PID (Product ID) for UCSD License.
-		//
 		// Read Only: true
 		Pid string `json:"Pid,omitempty"`
 	}
 
 	stage1.Count = m.Count
-
 	stage1.ExpirationDate = m.ExpirationDate
-
 	stage1.LicenseID = m.LicenseID
-
 	stage1.Pid = m.Pid
 
 	// make JSON object for known properties

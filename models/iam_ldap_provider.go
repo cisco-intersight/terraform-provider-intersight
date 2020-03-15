@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,13 @@ type IamLdapProvider struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.LdapPolicy](mo://iam.LdapPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.LdapPolicy](mo://iam.LdapPolicy) MO unsets its reference to this deleted MO.
-	//
 	LdapPolicy *IamLdapPolicyRef `json:"LdapPolicy,omitempty"`
 
 	// LDAP Server Port for connection establishment.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// LDAP Server Address, can be IP address or hostname.
-	//
 	Server string `json:"Server,omitempty"`
 }
 
@@ -74,7 +69,6 @@ func (m IamLdapProvider) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		LdapPolicy *IamLdapPolicyRef `json:"LdapPolicy,omitempty"`
 
@@ -94,7 +88,6 @@ func (m IamLdapProvider) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

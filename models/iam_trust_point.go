@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -25,19 +24,15 @@ type IamTrustPoint struct {
 	MoBaseMo
 
 	// The account associated with the Trustpoint.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The collection of certificates in X509 certificate format.
 	// This was obtained by parsing the chain property which holds the base 64 encoded chain of certificates.
-	//
-	//
 	// Read Only: true
 	Certificates []*X509Certificate `json:"Certificates"`
 
 	// The certificate information for this trusted point. The certificate must be in Base64 encoded X.509 (CER) format.
-	//
 	Chain string `json:"Chain,omitempty"`
 }
 
@@ -80,7 +75,6 @@ func (m IamTrustPoint) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -100,7 +94,6 @@ func (m IamTrustPoint) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

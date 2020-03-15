@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_ls_service_profile"
 sidebar_current: "docs-intersight-data-source-lsServiceProfile"
 description: |-
 Logical Profile that can be associated to a physical server.
-
 ---
 
 # Data Source: intersight_ls_service_profile
 Logical Profile that can be associated to a physical server.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `assign_state`:(string)Assignment state of the service profile.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_workflow_task_meta"
 sidebar_current: "docs-intersight-data-source-workflowTaskMeta"
 description: |-
 This MO contains a task definition.
-
 ---
 
 # Data Source: intersight_workflow_task_meta
 This MO contains a task definition.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action_type`:(string)A task execution type to indicate if it is a system task.

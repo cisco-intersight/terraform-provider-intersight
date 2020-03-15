@@ -6,12 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // HyperflexSoftwareVersionPolicy HyperFlex Software Version Selection Policy
@@ -23,30 +24,34 @@ type HyperflexSoftwareVersionPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// Desired HyperFlex Data Platform software version to apply on the HyperFlex cluster.
-	//
 	HxdpVersion string `json:"HxdpVersion,omitempty"`
 
 	// Bundle metadata information for the desired HyperFlex Data Platform software version.
-	//
 	// Read Only: true
 	HxdpVersionInfo *SoftwareHyperflexDistributableRef `json:"HxdpVersionInfo,omitempty"`
 
+	// Desired  hypervisor version to apply for all the nodes on the HyperFlex cluster.
+	HypervisorVersion string `json:"HypervisorVersion,omitempty"`
+
+	// Bundle metadata information for the desired Hypervisor version.
+	// Read Only: true
+	HypervisorVersionInfo *SoftwareHyperflexDistributableRef `json:"HypervisorVersionInfo,omitempty"`
+
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Desired server firmware version to apply on the HyperFlex Cluster.
-	//
 	ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 
 	// Server firmware bundle metadata information for the desired server firmware software version.
-	//
 	// Read Only: true
 	ServerFirmwareVersionInfo *FirmwareDistributableRef `json:"ServerFirmwareVersionInfo,omitempty"`
+
+	// List of components to be upgraded on the HyperFlex Cluster.
+	UpgradeTypes []*string `json:"UpgradeTypes"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -66,11 +71,17 @@ func (m *HyperflexSoftwareVersionPolicy) UnmarshalJSON(raw []byte) error {
 
 		HxdpVersionInfo *SoftwareHyperflexDistributableRef `json:"HxdpVersionInfo,omitempty"`
 
+		HypervisorVersion string `json:"HypervisorVersion,omitempty"`
+
+		HypervisorVersionInfo *SoftwareHyperflexDistributableRef `json:"HypervisorVersionInfo,omitempty"`
+
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 
 		ServerFirmwareVersionInfo *FirmwareDistributableRef `json:"ServerFirmwareVersionInfo,omitempty"`
+
+		UpgradeTypes []*string `json:"UpgradeTypes"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -82,11 +93,17 @@ func (m *HyperflexSoftwareVersionPolicy) UnmarshalJSON(raw []byte) error {
 
 	m.HxdpVersionInfo = dataAO1.HxdpVersionInfo
 
+	m.HypervisorVersion = dataAO1.HypervisorVersion
+
+	m.HypervisorVersionInfo = dataAO1.HypervisorVersionInfo
+
 	m.Organization = dataAO1.Organization
 
 	m.ServerFirmwareVersion = dataAO1.ServerFirmwareVersion
 
 	m.ServerFirmwareVersionInfo = dataAO1.ServerFirmwareVersionInfo
+
+	m.UpgradeTypes = dataAO1.UpgradeTypes
 
 	return nil
 }
@@ -100,7 +117,6 @@ func (m HyperflexSoftwareVersionPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -108,11 +124,17 @@ func (m HyperflexSoftwareVersionPolicy) MarshalJSON() ([]byte, error) {
 
 		HxdpVersionInfo *SoftwareHyperflexDistributableRef `json:"HxdpVersionInfo,omitempty"`
 
+		HypervisorVersion string `json:"HypervisorVersion,omitempty"`
+
+		HypervisorVersionInfo *SoftwareHyperflexDistributableRef `json:"HypervisorVersionInfo,omitempty"`
+
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 		ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 
 		ServerFirmwareVersionInfo *FirmwareDistributableRef `json:"ServerFirmwareVersionInfo,omitempty"`
+
+		UpgradeTypes []*string `json:"UpgradeTypes"`
 	}
 
 	dataAO1.ClusterProfiles = m.ClusterProfiles
@@ -121,18 +143,23 @@ func (m HyperflexSoftwareVersionPolicy) MarshalJSON() ([]byte, error) {
 
 	dataAO1.HxdpVersionInfo = m.HxdpVersionInfo
 
+	dataAO1.HypervisorVersion = m.HypervisorVersion
+
+	dataAO1.HypervisorVersionInfo = m.HypervisorVersionInfo
+
 	dataAO1.Organization = m.Organization
 
 	dataAO1.ServerFirmwareVersion = m.ServerFirmwareVersion
 
 	dataAO1.ServerFirmwareVersionInfo = m.ServerFirmwareVersionInfo
 
+	dataAO1.UpgradeTypes = m.UpgradeTypes
+
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -153,11 +180,19 @@ func (m *HyperflexSoftwareVersionPolicy) Validate(formats strfmt.Registry) error
 		res = append(res, err)
 	}
 
+	if err := m.validateHypervisorVersionInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrganization(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateServerFirmwareVersionInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpgradeTypes(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -210,6 +245,24 @@ func (m *HyperflexSoftwareVersionPolicy) validateHxdpVersionInfo(formats strfmt.
 	return nil
 }
 
+func (m *HyperflexSoftwareVersionPolicy) validateHypervisorVersionInfo(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.HypervisorVersionInfo) { // not required
+		return nil
+	}
+
+	if m.HypervisorVersionInfo != nil {
+		if err := m.HypervisorVersionInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("HypervisorVersionInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *HyperflexSoftwareVersionPolicy) validateOrganization(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Organization) { // not required
@@ -241,6 +294,46 @@ func (m *HyperflexSoftwareVersionPolicy) validateServerFirmwareVersionInfo(forma
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var hyperflexSoftwareVersionPolicyUpgradeTypesItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["NONE","Hxdp","Hypervisor"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		hyperflexSoftwareVersionPolicyUpgradeTypesItemsEnum = append(hyperflexSoftwareVersionPolicyUpgradeTypesItemsEnum, v)
+	}
+}
+
+func (m *HyperflexSoftwareVersionPolicy) validateUpgradeTypesItemsEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, hyperflexSoftwareVersionPolicyUpgradeTypesItemsEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *HyperflexSoftwareVersionPolicy) validateUpgradeTypes(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpgradeTypes) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.UpgradeTypes); i++ {
+		if swag.IsZero(m.UpgradeTypes[i]) { // not required
+			continue
+		}
+
+		// value enum
+		if err := m.validateUpgradeTypesItemsEnum("UpgradeTypes"+"."+strconv.Itoa(i), "body", *m.UpgradeTypes[i]); err != nil {
+			return err
+		}
+
 	}
 
 	return nil

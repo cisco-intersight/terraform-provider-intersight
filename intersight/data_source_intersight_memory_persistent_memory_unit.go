@@ -21,7 +21,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"app_direct_capacity": {
-				Description: "This represents the appdirect capacity in GB of a persistent memory module on a server.",
+				Description: "AppDirect capacity in GB of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -51,7 +51,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"count_status": {
-				Description: "This represents the count status of a persistent memory module on a server.",
+				Description: "Count status of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -69,7 +69,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"firmware_version": {
-				Description: "This represents the firmware version of the firware running on a persistent memory module on a server.",
+				Description: "Firmware version of the firware running on the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -81,13 +81,13 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"frozen_status": {
-				Description: "This represents the frozen status of a persistent memory module on a server.",
+				Description: "Frozen status of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"health_state": {
-				Description: "This represents the health state of a persistent memory module on a server.",
+				Description: "Health state of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -105,7 +105,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"lock_status": {
-				Description: "This represents the lock status of a persistent memory module on a server.",
+				Description: "Lock status of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -140,13 +140,13 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				},
 			},
 			"memory_capacity": {
-				Description: "This represents the memory capacity in GB of a persistent memory module on a server.",
+				Description: "Memory capacity in GB of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"memory_id": {
-				Description: "This represents the ID of a persistent memory module on a server.",
+				Description: "ID of the Persistent Memory Module on a server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -216,7 +216,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				},
 			},
 			"persistent_memory_capacity": {
-				Description: "This represents the persistent memory capacity in GB of a persistent memory module on a server.",
+				Description: "Persistent Memory capacity in GB of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -257,7 +257,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				},
 			},
 			"reserved_capacity": {
-				Description: "This represents the reserved capacity in GB of a persistent memory module on a server.",
+				Description: "Reserved capacity in GB of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -275,7 +275,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"security_status": {
-				Description: "This represents the security status of a persistent memory module on a server.",
+				Description: "Security status of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -293,13 +293,13 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"socket_id": {
-				Description: "This represents the Socket ID of a persistent memory module on a server.",
+				Description: "Socket ID of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"socket_memory_id": {
-				Description: "This represents the Socket Memory ID of a persistent memory module on a server.",
+				Description: "Socket Memory ID of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -348,7 +348,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"total_capacity": {
-				Description: "This represents the total capacity in GB of a persistent memory module on a server.",
+				Description: "Total capacity in GB of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -360,7 +360,7 @@ func dataSourceMemoryPersistentMemoryUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"uid": {
-				Description: "This represents the uid of a persistent memory module on a server.",
+				Description: "UID of the Persistent Memory Module on a server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

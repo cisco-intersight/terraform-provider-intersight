@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_tpm"
 sidebar_current: "docs-intersight-data-source-equipmentTpm"
 description: |-
 TPM security chip on server board.
-
 ---
 
 # Data Source: intersight_equipment_tpm
 TPM security chip on server board.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `activation_status`:(string)

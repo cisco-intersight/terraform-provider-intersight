@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,31 +20,24 @@ type ServerConfigImport struct {
 	MoBaseMo
 
 	// Description of the imported profile.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Policy prefix for the policies of the imported server profile.
-	//
 	PolicyPrefix string `json:"PolicyPrefix,omitempty"`
 
 	// Types of the policies to be imported for the imported server profile.
-	//
 	PolicyTypes []string `json:"PolicyTypes"`
 
 	// Profile name for the imported server profile.
-	//
 	ProfileName string `json:"ProfileName,omitempty"`
 
 	// The physical server on which import action will be triggered.
-	//
 	Server *ComputeRackUnitRef `json:"Server,omitempty"`
 
 	// The server profile which will be generated upon successful import.
-	//
 	// Read Only: true
 	ServerProfile *ServerProfileRef `json:"ServerProfile,omitempty"`
 }
@@ -105,7 +97,6 @@ func (m ServerConfigImport) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -141,7 +132,6 @@ func (m ServerConfigImport) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

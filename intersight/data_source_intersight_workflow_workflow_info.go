@@ -77,11 +77,16 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
+			"last_action": {
+				Description: "The last action that was issued on the workflow is saved in this field.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"message": {
 				Description: "Collection of Workflow execution messages with severity.",
 				Type:        schema.TypeList,
 				Optional:    true,
-				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -107,6 +112,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"meta_version": {
 				Description: "Version of the workflow metadata for which this workflow execution was started.",
@@ -338,6 +344,38 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"properties": {
+				Description: "Type to capture all the properties for the workflow info passed on from workflow definition.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"retryable": {
+							Description: "When true, this workflow can be retried if has not been modified for more than a period of 2 weeks.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+					},
+				},
+			},
+			"retry_from_task_name": {
+				Description: "This field is applicable when Retry action is issued for a workflow which is in a final state. When this field is not specified then the workflow will retry from the start of the workflow. When this field is specified then the workflow will be retried from the specified task. The field should carry the task name which is the unique name of the task within the workflow. The task name must be one of the tasks that completed or failed in the previous run, you cannot retry a workflow from a task which wasn't run in the previous iteration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"src": {
 				Description: "The source microservice name which is the owner for this workflow.",
 				Type:        schema.TypeString,
@@ -517,6 +555,10 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 		x := (v.(bool))
 		o.Internal = &x
 	}
+	if v, ok := d.GetOk("last_action"); ok {
+		x := (v.(string))
+		o.LastAction = x
+	}
 	if v, ok := d.GetOk("meta_version"); ok {
 		x := int64(v.(int))
 		o.MetaVersion = x
@@ -536,6 +578,10 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 	if v, ok := d.GetOk("progress"); ok {
 		x := v.(float32)
 		o.Progress = x
+	}
+	if v, ok := d.GetOk("retry_from_task_name"); ok {
+		x := (v.(string))
+		o.RetryFromTaskName = x
 	}
 	if v, ok := d.GetOk("src"); ok {
 		x := (v.(string))
@@ -624,6 +670,9 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 			if err := d.Set("internal", (s.Internal)); err != nil {
 				return err
 			}
+			if err := d.Set("last_action", (s.LastAction)); err != nil {
+				return err
+			}
 
 			if err := d.Set("message", flattenListWorkflowMessage(s.Message, d)); err != nil {
 				return err
@@ -669,6 +718,13 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 				return err
 			}
 			if err := d.Set("progress", (s.Progress)); err != nil {
+				return err
+			}
+
+			if err := d.Set("properties", flattenMapWorkflowWorkflowInfoProperties(s.Properties, d)); err != nil {
+				return err
+			}
+			if err := d.Set("retry_from_task_name", (s.RetryFromTaskName)); err != nil {
 				return err
 			}
 			if err := d.Set("src", (s.Src)); err != nil {

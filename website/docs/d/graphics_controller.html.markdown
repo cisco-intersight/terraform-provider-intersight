@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_graphics_controller"
 sidebar_current: "docs-intersight-data-source-graphicsController"
 description: |-
 Controller for a Graphics Card.
-
 ---
 
 # Data Source: intersight_graphics_controller
 Controller for a Graphics Card.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `controller_id`:(int)It shows the id of graphics controller.

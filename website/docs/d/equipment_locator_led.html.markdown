@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_equipment_locator_led"
 sidebar_current: "docs-intersight-data-source-equipmentLocatorLed"
 description: |-
 Locator Led of an Equipment like Rack, Disk etc.
-
 ---
 
 # Data Source: intersight_equipment_locator_led
 Locator Led of an Equipment like Rack, Disk etc.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `color`:(string)

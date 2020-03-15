@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_storage_disk_group_policy"
 sidebar_current: "docs-intersight-resource-storageDiskGroupPolicy"
 description: |-
   A reusable RAID disk group configuration that can be applied across multiple servers. Also provides options to move JBOD disks in the disk group to Unconfigured Good state before they are used in the disk group.
-
 ---
 
 # Resource: intersight_storage_disk_group_policy
 A reusable RAID disk group configuration that can be applied across multiple servers. Also provides options to move JBOD disks in the disk group to Unconfigured Good state before they are used in the disk group.
-
 ## Argument Reference
 The following arguments are supported:
 * `dedicated_hot_spares`:(Array)A collection of disks used as hot spares for this RAID group.

@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iam_end_point_role"
 sidebar_current: "docs-intersight-data-source-iamEndPointRole"
 description: |-
 The role defined in the end point which can be assigned to a user.
-
 ---
 
 # Data Source: intersight_iam_end_point_role
 The role defined in the end point which can be assigned to a user.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `moid`:(string)The unique identifier of this Managed Object instance.

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,17 +22,14 @@ type ForecastCatalog struct {
 	MoBaseMo
 
 	// The list of forecast definitions.
-	//
 	// Read Only: true
 	Definition []*ForecastDefinitionRef `json:"Definition"`
 
 	// The time at which the regression model needs to run for all the metrics specified in catalog.
-	//
 	// Read Only: true
 	SchedTime string `json:"SchedTime,omitempty"`
 
 	// The catalog version used in forecast configuration service.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -77,7 +73,6 @@ func (m ForecastCatalog) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Definition []*ForecastDefinitionRef `json:"Definition"`
 
@@ -97,7 +92,6 @@ func (m ForecastCatalog) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

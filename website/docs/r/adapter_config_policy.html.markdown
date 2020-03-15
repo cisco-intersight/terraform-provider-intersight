@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_adapter_config_policy"
 sidebar_current: "docs-intersight-resource-adapterConfigPolicy"
 description: |-
   An Adapter Configuration Policy configures the Ethernet and Fibre-Channel settings for the VIC adapter.
-
 ---
 
 # Resource: intersight_adapter_config_policy
 An Adapter Configuration Policy configures the Ethernet and Fibre-Channel settings for the VIC adapter.
-
 ## Argument Reference
 The following arguments are supported:
 * `description`:(string)Description of the policy.
@@ -35,6 +33,13 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `dce_interface_settings`:(Array)Collection of DCE interface settings for this adapter.
+This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `fec_mode`:(string)Forward Error Correction (FEC) mode setting for the DCE interfaces of the adapter. FEC mode setting is supported only for Cisco VIC 14xx adapters. FEC mode 'cl74' is unsupported for Cisco VIC 1495/1497. This setting will be ignored for unsupported adapters and for unavailable DCE interfaces.
+    + `interface_id`:(int)DCE interface id on which settings needs to be configured. Supported values are (0-3).
+    + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `eth_settings`:(Array with Maximum of one item) -Global Ethernet settings for this adapter.
 This complex property has following sub-properties:
     + `additional_properties`:
@@ -52,7 +57,7 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
-    + `enabled`:(bool)When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server.
+    + `enabled`:(bool)When Port Channel is enabled, two vNICs and two vHBAs are available for use on the adapter card. When disabled, four vNICs and four vHBAs are available for use on the adapter card. Disabling port channel reboots the server. Port Channel is supported only for Cisco VIC 1455/1457 adapters.
     + `object_type`:(string)The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.
   + `slot_id`:(string)PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
 * `tags`:(Array)The array of tags, which allow to add key, value meta-data to managed objects.

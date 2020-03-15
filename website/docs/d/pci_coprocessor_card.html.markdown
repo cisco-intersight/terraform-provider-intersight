@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_pci_coprocessor_card"
 sidebar_current: "docs-intersight-data-source-pciCoprocessorCard"
 description: |-
 PCIe Compression and Cryptographic CPU Offload Card.
-
 ---
 
 # Data Source: intersight_pci_coprocessor_card
 PCIe Compression and Cryptographic CPU Offload Card.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `card_id`:(int)It shows the id for the coprocessor card.

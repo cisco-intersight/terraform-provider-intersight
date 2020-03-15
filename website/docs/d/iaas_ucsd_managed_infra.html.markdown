@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_iaas_ucsd_managed_infra"
 sidebar_current: "docs-intersight-data-source-iaasUcsdManagedInfra"
 description: |-
 Describes about UCSD Managed infrastructure statistics.
-
 ---
 
 # Data Source: intersight_iaas_ucsd_managed_infra
 Describes about UCSD Managed infrastructure statistics.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `advanced_catalog_count`:(int)Total advanced catalogs in UCSD.

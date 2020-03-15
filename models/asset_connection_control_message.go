@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m AssetConnectionControlMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,40 +100,33 @@ func (m *AssetConnectionControlMessage) UnmarshalBinary(b []byte) error {
 }
 
 // AssetConnectionControlMessageAO1P1 asset connection control message a o1 p1
+//
 // swagger:model AssetConnectionControlMessageAO1P1
 type AssetConnectionControlMessageAO1P1 struct {
 
 	// The account id to which the device belongs.
-	//
 	Account string `json:"Account,omitempty"`
 
 	// The version of the device connector currently running on the platform. Deprecated by newer connectors that will report this directly to the device connector gateway in a websocket header, but included to continue to support older versions which report any version change after connect.
-	//
 	ConnectorVersion string `json:"ConnectorVersion,omitempty"`
 
 	// The Moid of the device under change. Used to route the message to a devices connection.
-	//
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// The domain group id to which the device belongs.
-	//
 	DomainGroup string `json:"DomainGroup,omitempty"`
 
 	// Flag to force any open connections to be evicted. Used in case device has been deleted or blacklisted.
-	//
 	Evict *bool `json:"Evict,omitempty"`
 
 	// The current leadership of a device cluster member.
-	//
 	// Enum: [Unknown Primary Secondary]
 	Leadership *string `json:"Leadership,omitempty"`
 
 	// The new identity assigned to a device on ownership change (claim/unclaim).
-	//
 	NewIdentity string `json:"NewIdentity,omitempty"`
 
 	// The partition the device was last connected to, used to address the control message to the device connector gateway instance holding the devices connection.
-	//
 	Partition int64 `json:"Partition,omitempty"`
 
 	// asset connection control message a o1 p1
@@ -148,36 +139,28 @@ func (m *AssetConnectionControlMessageAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The account id to which the device belongs.
-		//
 		Account string `json:"Account,omitempty"`
 
 		// The version of the device connector currently running on the platform. Deprecated by newer connectors that will report this directly to the device connector gateway in a websocket header, but included to continue to support older versions which report any version change after connect.
-		//
 		ConnectorVersion string `json:"ConnectorVersion,omitempty"`
 
 		// The Moid of the device under change. Used to route the message to a devices connection.
-		//
 		DeviceID string `json:"DeviceId,omitempty"`
 
 		// The domain group id to which the device belongs.
-		//
 		DomainGroup string `json:"DomainGroup,omitempty"`
 
 		// Flag to force any open connections to be evicted. Used in case device has been deleted or blacklisted.
-		//
 		Evict *bool `json:"Evict,omitempty"`
 
 		// The current leadership of a device cluster member.
-		//
 		// Enum: [Unknown Primary Secondary]
 		Leadership *string `json:"Leadership,omitempty"`
 
 		// The new identity assigned to a device on ownership change (claim/unclaim).
-		//
 		NewIdentity string `json:"NewIdentity,omitempty"`
 
 		// The partition the device was last connected to, used to address the control message to the device connector gateway instance holding the devices connection.
-		//
 		Partition int64 `json:"Partition,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -186,21 +169,13 @@ func (m *AssetConnectionControlMessageAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetConnectionControlMessageAO1P1
 
 	rcv.Account = stage1.Account
-
 	rcv.ConnectorVersion = stage1.ConnectorVersion
-
 	rcv.DeviceID = stage1.DeviceID
-
 	rcv.DomainGroup = stage1.DomainGroup
-
 	rcv.Evict = stage1.Evict
-
 	rcv.Leadership = stage1.Leadership
-
 	rcv.NewIdentity = stage1.NewIdentity
-
 	rcv.Partition = stage1.Partition
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -210,21 +185,13 @@ func (m *AssetConnectionControlMessageAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Account")
-
 	delete(stage2, "ConnectorVersion")
-
 	delete(stage2, "DeviceId")
-
 	delete(stage2, "DomainGroup")
-
 	delete(stage2, "Evict")
-
 	delete(stage2, "Leadership")
-
 	delete(stage2, "NewIdentity")
-
 	delete(stage2, "Partition")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -246,53 +213,38 @@ func (m AssetConnectionControlMessageAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The account id to which the device belongs.
-		//
 		Account string `json:"Account,omitempty"`
 
 		// The version of the device connector currently running on the platform. Deprecated by newer connectors that will report this directly to the device connector gateway in a websocket header, but included to continue to support older versions which report any version change after connect.
-		//
 		ConnectorVersion string `json:"ConnectorVersion,omitempty"`
 
 		// The Moid of the device under change. Used to route the message to a devices connection.
-		//
 		DeviceID string `json:"DeviceId,omitempty"`
 
 		// The domain group id to which the device belongs.
-		//
 		DomainGroup string `json:"DomainGroup,omitempty"`
 
 		// Flag to force any open connections to be evicted. Used in case device has been deleted or blacklisted.
-		//
 		Evict *bool `json:"Evict,omitempty"`
 
 		// The current leadership of a device cluster member.
-		//
 		// Enum: [Unknown Primary Secondary]
 		Leadership *string `json:"Leadership,omitempty"`
 
 		// The new identity assigned to a device on ownership change (claim/unclaim).
-		//
 		NewIdentity string `json:"NewIdentity,omitempty"`
 
 		// The partition the device was last connected to, used to address the control message to the device connector gateway instance holding the devices connection.
-		//
 		Partition int64 `json:"Partition,omitempty"`
 	}
 
 	stage1.Account = m.Account
-
 	stage1.ConnectorVersion = m.ConnectorVersion
-
 	stage1.DeviceID = m.DeviceID
-
 	stage1.DomainGroup = m.DomainGroup
-
 	stage1.Evict = m.Evict
-
 	stage1.Leadership = m.Leadership
-
 	stage1.NewIdentity = m.NewIdentity
-
 	stage1.Partition = m.Partition
 
 	// make JSON object for known properties

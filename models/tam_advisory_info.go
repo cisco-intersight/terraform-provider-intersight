@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,16 +23,13 @@ type TamAdvisoryInfo struct {
 	MoBaseMo
 
 	// The account associated with Advisory count.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Reference to the source Intersight advisory.
-	//
 	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
 	// Current state of the advisory for the owner. Indicates if the user is interested in getting updates for the advisory.
-	//
 	// Enum: [active acknowledged]
 	State *string `json:"State,omitempty"`
 }
@@ -77,7 +73,6 @@ func (m TamAdvisoryInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -97,7 +92,6 @@ func (m TamAdvisoryInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

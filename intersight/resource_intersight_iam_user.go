@@ -203,7 +203,7 @@ func resourceIamUser() *schema.Resource {
 				ForceNew:    true,
 			},
 			"name": {
-				Description: "UserID as configured in the IdP.",
+				Description: "Name as configured in the IdP.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -361,6 +361,12 @@ func resourceIamUser() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"user_id_or_email": {
+				Description: "UserID or email as configured in the IdP.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
 			},
 			"user_type": {
 				Description: "Type of the User. If a user is added manually by specifying the email address, or has logged in using groups, based on the IdP attributes received during authentication. If added manually, the user type will be static, otherwise dynamic.",
@@ -758,6 +764,12 @@ func resourceIamUserCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
+	if v, ok := d.GetOk("user_id_or_email"); ok {
+		x := (v.(string))
+		o.UserIDOrEmail = x
+
+	}
+
 	if v, ok := d.GetOk("user_type"); ok {
 		x := (v.(string))
 		o.UserType = x
@@ -873,6 +885,10 @@ func resourceIamUserRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("user_id_or_email", (s.UserIDOrEmail)); err != nil {
 		return err
 	}
 
@@ -1269,6 +1285,12 @@ func resourceIamUserUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 		}
 		o.Tags = x
+	}
+
+	if d.HasChange("user_id_or_email") {
+		v := d.Get("user_id_or_email")
+		x := (v.(string))
+		o.UserIDOrEmail = x
 	}
 
 	if d.HasChange("user_type") {

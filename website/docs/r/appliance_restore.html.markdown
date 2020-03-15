@@ -6,14 +6,12 @@ description: |-
   Restore tracks requests to restore the Intersight Appliance. There will be only
 one Restore managed object with a 'Started' state at any time. All other Restore
 managed objects will be in terminal states.
-
 ---
 
 # Resource: intersight_appliance_restore
 Restore tracks requests to restore the Intersight Appliance. There will be only
 one Restore managed object with a 'Started' state at any time. All other Restore
 managed objects will be in terminal states.
-
 ## Argument Reference
 The following arguments are supported:
 * `account`:(Array with Maximum of one item) -Restore managed object to Account relationship.

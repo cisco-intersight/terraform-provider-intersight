@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AssetContractInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *AssetContractInformation) UnmarshalBinary(b []byte) error {
 }
 
 // AssetContractInformationAO1P1 asset contract information a o1 p1
+//
 // swagger:model AssetContractInformationAO1P1
 type AssetContractInformationAO1P1 struct {
 
 	// BillTo address of listed for the contract.
-	//
 	// Read Only: true
 	BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 	// BillToGlobalUltimate information listed in the contract.
-	//
 	// Read Only: true
 	BillToGlobalUltimate *AssetGlobalUltimate `json:"BillToGlobalUltimate,omitempty"`
 
 	// Contract number for the Cisco support contract purchased for the Cisco device.
-	//
 	// Read Only: true
 	ContractNumber string `json:"ContractNumber,omitempty"`
 
 	// Contract status as per the Cisco Contract APIx.
-	//
 	// Read Only: true
 	LineStatus string `json:"LineStatus,omitempty"`
 
@@ -134,22 +129,18 @@ func (m *AssetContractInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// BillTo address of listed for the contract.
-		//
 		// Read Only: true
 		BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 		// BillToGlobalUltimate information listed in the contract.
-		//
 		// Read Only: true
 		BillToGlobalUltimate *AssetGlobalUltimate `json:"BillToGlobalUltimate,omitempty"`
 
 		// Contract number for the Cisco support contract purchased for the Cisco device.
-		//
 		// Read Only: true
 		ContractNumber string `json:"ContractNumber,omitempty"`
 
 		// Contract status as per the Cisco Contract APIx.
-		//
 		// Read Only: true
 		LineStatus string `json:"LineStatus,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *AssetContractInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetContractInformationAO1P1
 
 	rcv.BillTo = stage1.BillTo
-
 	rcv.BillToGlobalUltimate = stage1.BillToGlobalUltimate
-
 	rcv.ContractNumber = stage1.ContractNumber
-
 	rcv.LineStatus = stage1.LineStatus
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *AssetContractInformationAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "BillTo")
-
 	delete(stage2, "BillToGlobalUltimate")
-
 	delete(stage2, "ContractNumber")
-
 	delete(stage2, "LineStatus")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m AssetContractInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// BillTo address of listed for the contract.
-		//
 		// Read Only: true
 		BillTo *AssetAddressInformation `json:"BillTo,omitempty"`
 
 		// BillToGlobalUltimate information listed in the contract.
-		//
 		// Read Only: true
 		BillToGlobalUltimate *AssetGlobalUltimate `json:"BillToGlobalUltimate,omitempty"`
 
 		// Contract number for the Cisco support contract purchased for the Cisco device.
-		//
 		// Read Only: true
 		ContractNumber string `json:"ContractNumber,omitempty"`
 
 		// Contract status as per the Cisco Contract APIx.
-		//
 		// Read Only: true
 		LineStatus string `json:"LineStatus,omitempty"`
 	}
 
 	stage1.BillTo = m.BillTo
-
 	stage1.BillToGlobalUltimate = m.BillToGlobalUltimate
-
 	stage1.ContractNumber = m.ContractNumber
-
 	stage1.LineStatus = m.LineStatus
 
 	// make JSON object for known properties

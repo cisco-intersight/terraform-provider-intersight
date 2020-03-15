@@ -4,12 +4,10 @@ page_title: "Intersight: intersight_niaapi_apic_hweol"
 sidebar_current: "docs-intersight-data-source-niaapiApicHweol"
 description: |-
 The hardware end of life notice for APIC.
-
 ---
 
 # Data Source: intersight_niaapi_apic_hweol
 The hardware end of life notice for APIC.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `affected_pids`:(string)String contains the PID of hardwares affected by this notice, seperated by comma.
