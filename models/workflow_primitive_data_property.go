@@ -7,10 +7,10 @@ package models
 
 import (
 	"encoding/json"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"strconv"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +60,6 @@ func (m WorkflowPrimitiveDataProperty) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,23 +101,22 @@ func (m *WorkflowPrimitiveDataProperty) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowPrimitiveDataPropertyAO1P1 workflow primitive data property a o1 p1
+//
 // swagger:model WorkflowPrimitiveDataPropertyAO1P1
 type WorkflowPrimitiveDataPropertyAO1P1 struct {
 
 	// Constraints that must be applied to the parameter value supplied for this data type.
-	//
 	Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
 
-	// Intersight allows the secure properties to be used as task input/output. The values of
+	// List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.
+	InventorySelector []*WorkflowMoReferenceProperty `json:"InventorySelector"`
+
+	// Intersight supports secure properties as task input/output. The values of
 	// these properties are encrypted and stored in Intersight.
-	//
 	// This flag marks the property to be secure when it is set to true.
-	//
-	//
 	Secure *bool `json:"Secure,omitempty"`
 
 	// Specify the enum type for primitive data type.
-	//
 	// Enum: [string integer float boolean json enum]
 	Type *string `json:"Type,omitempty"`
 
@@ -132,19 +130,17 @@ func (m *WorkflowPrimitiveDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Constraints that must be applied to the parameter value supplied for this data type.
-		//
 		Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
 
-		// Intersight allows the secure properties to be used as task input/output. The values of
+		// List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.
+		InventorySelector []*WorkflowMoReferenceProperty `json:"InventorySelector"`
+
+		// Intersight supports secure properties as task input/output. The values of
 		// these properties are encrypted and stored in Intersight.
-		//
 		// This flag marks the property to be secure when it is set to true.
-		//
-		//
 		Secure *bool `json:"Secure,omitempty"`
 
 		// Specify the enum type for primitive data type.
-		//
 		// Enum: [string integer float boolean json enum]
 		Type *string `json:"Type,omitempty"`
 	}
@@ -154,11 +150,9 @@ func (m *WorkflowPrimitiveDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowPrimitiveDataPropertyAO1P1
 
 	rcv.Constraints = stage1.Constraints
-
+	rcv.InventorySelector = stage1.InventorySelector
 	rcv.Secure = stage1.Secure
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -168,11 +162,9 @@ func (m *WorkflowPrimitiveDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Constraints")
-
+	delete(stage2, "InventorySelector")
 	delete(stage2, "Secure")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -194,27 +186,24 @@ func (m WorkflowPrimitiveDataPropertyAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Constraints that must be applied to the parameter value supplied for this data type.
-		//
 		Constraints *WorkflowConstraints `json:"Constraints,omitempty"`
 
-		// Intersight allows the secure properties to be used as task input/output. The values of
+		// List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.
+		InventorySelector []*WorkflowMoReferenceProperty `json:"InventorySelector"`
+
+		// Intersight supports secure properties as task input/output. The values of
 		// these properties are encrypted and stored in Intersight.
-		//
 		// This flag marks the property to be secure when it is set to true.
-		//
-		//
 		Secure *bool `json:"Secure,omitempty"`
 
 		// Specify the enum type for primitive data type.
-		//
 		// Enum: [string integer float boolean json enum]
 		Type *string `json:"Type,omitempty"`
 	}
 
 	stage1.Constraints = m.Constraints
-
+	stage1.InventorySelector = m.InventorySelector
 	stage1.Secure = m.Secure
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties
@@ -250,6 +239,10 @@ func (m *WorkflowPrimitiveDataPropertyAO1P1) Validate(formats strfmt.Registry) e
 		res = append(res, err)
 	}
 
+	if err := m.validateInventorySelector(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateType(formats); err != nil {
 		res = append(res, err)
 	}
@@ -273,6 +266,31 @@ func (m *WorkflowPrimitiveDataPropertyAO1P1) validateConstraints(formats strfmt.
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *WorkflowPrimitiveDataPropertyAO1P1) validateInventorySelector(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.InventorySelector) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.InventorySelector); i++ {
+		if swag.IsZero(m.InventorySelector[i]) { // not required
+			continue
+		}
+
+		if m.InventorySelector[i] != nil {
+			if err := m.InventorySelector[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("InventorySelector" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

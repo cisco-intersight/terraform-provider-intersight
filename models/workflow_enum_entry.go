@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowEnumEntry) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *WorkflowEnumEntry) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowEnumEntryAO1P1 workflow enum entry a o1 p1
+//
 // swagger:model WorkflowEnumEntryAO1P1
 type WorkflowEnumEntryAO1P1 struct {
 
 	// Label for the enum value. A user friendly short string to identify the enum value.
-	//
 	Label string `json:"Label,omitempty"`
 
 	// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
-	//
 	Value string `json:"Value,omitempty"`
 
 	// workflow enum entry a o1 p1
@@ -122,11 +119,9 @@ func (m *WorkflowEnumEntryAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Label for the enum value. A user friendly short string to identify the enum value.
-		//
 		Label string `json:"Label,omitempty"`
 
 		// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *WorkflowEnumEntryAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowEnumEntryAO1P1
 
 	rcv.Label = stage1.Label
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *WorkflowEnumEntryAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Label")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m WorkflowEnumEntryAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Label for the enum value. A user friendly short string to identify the enum value.
-		//
 		Label string `json:"Label,omitempty"`
 
 		// Enum value for this enum entry. Value will be passed to the workflow as string type for execution.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Label = m.Label
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

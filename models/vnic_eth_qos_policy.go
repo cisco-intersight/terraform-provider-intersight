@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,23 +20,18 @@ type VnicEthQosPolicy struct {
 	PolicyAbstractPolicy
 
 	// Class of Service to be associated to the traffic on the virtual interface.
-	//
 	Cos int64 `json:"Cos,omitempty"`
 
 	// The Maximum Transmission Unit (MTU) or packet size that the virtual interface accepts.
-	//
 	Mtu int64 `json:"Mtu,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The value in Mbps (0-100000) to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
-	//
 	RateLimit int64 `json:"RateLimit,omitempty"`
 
 	// Enables usage of the Class of Service provided by the operating system.
-	//
 	TrustHostCos *bool `json:"TrustHostCos,omitempty"`
 }
 
@@ -88,7 +82,6 @@ func (m VnicEthQosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Cos int64 `json:"Cos,omitempty"`
 
@@ -116,7 +109,6 @@ func (m VnicEthQosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

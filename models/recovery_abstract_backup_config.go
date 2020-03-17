@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -23,40 +22,30 @@ import (
 type RecoveryAbstractBackupConfig struct {
 	PolicyAbstractPolicy
 
-	// The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418
-	//
-	//
+	// The file name for the backup image. This name is added as a prefix in the name for the backup image. A unique file name for the backup image is created along with a timestamp. For example: prefix-1572431305418.
 	FileNamePrefix string `json:"FileNamePrefix,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Specifies whether the backup will be stored locally or remotely.
-	//
 	// Enum: [Network Share Local Storage]
 	LocationType *string `json:"LocationType,omitempty"`
 
 	// Backup server password.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The file system path where the backup images must be stored. Include the IP address/hostname of the network share location and the complete file system path. For example: 172.29.109.234/var/backups/
-	//
-	//
 	Path string `json:"Path,omitempty"`
 
 	// Protocol for transferring the backup image to the network share location.
-	//
 	// Enum: [SCP SFTP FTP]
 	Protocol *string `json:"Protocol,omitempty"`
 
 	// Number of backup copies maintained on the local or remote server. When the created backup files exceed this number, the initial backup files are overwritten in a sequential manner.
-	//
-	//
 	RetentionCount int64 `json:"RetentionCount,omitempty"`
 
 	// Backup server user name.
-	//
 	UserName string `json:"UserName,omitempty"`
 }
 
@@ -119,7 +108,6 @@ func (m RecoveryAbstractBackupConfig) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		FileNamePrefix string `json:"FileNamePrefix,omitempty"`
 
@@ -159,7 +147,6 @@ func (m RecoveryAbstractBackupConfig) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

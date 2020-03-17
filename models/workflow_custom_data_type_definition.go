@@ -8,13 +8,12 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// WorkflowCustomDataTypeDefinition Workflow:Custom Data Type Definition
+// WorkflowCustomDataTypeDefinition Custom Datatype
 //
 // Captures a customized data type definition that can be used for task or workflow input/output.  This can be reused across multiple tasks and workflow definitions.
 //
@@ -23,27 +22,21 @@ type WorkflowCustomDataTypeDefinition struct {
 	MoBaseMo
 
 	// The catalog under which the definition is present.
-	//
 	Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
 	// When true this data type definition is a collection of type definitions to represent composite data like JSON.
-	//
 	CompositeType *bool `json:"CompositeType,omitempty"`
 
 	// A human-friendly description of this custom data type indicating it's domain and usage.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// A user friendly short name to identify the custom data type definition.
-	//
 	Label string `json:"Label,omitempty"`
 
 	// The name of custom data type definition. The valid name can contain lower case and upper case alphabetic characters, degits and special characters '-' and '_'.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The properties of this custom data type definition.
-	//
 	TypeDefinition []*WorkflowBaseDataType `json:"TypeDefinition"`
 }
 
@@ -98,7 +91,6 @@ func (m WorkflowCustomDataTypeDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
@@ -130,7 +122,6 @@ func (m WorkflowCustomDataTypeDefinition) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

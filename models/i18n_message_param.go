@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m I18nMessageParam) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,16 +100,15 @@ func (m *I18nMessageParam) UnmarshalBinary(b []byte) error {
 }
 
 // I18nMessageParamAO1P1 i18n message param a o1 p1
+//
 // swagger:model I18nMessageParamAO1P1
 type I18nMessageParamAO1P1 struct {
 
 	// The name of a variable which is referenced in a i18n text template.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The value of a variable which is substituted in a i18n text template.
-	//
 	// Read Only: true
 	Value string `json:"Value,omitempty"`
 
@@ -125,12 +122,10 @@ func (m *I18nMessageParamAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The name of a variable which is referenced in a i18n text template.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// The value of a variable which is substituted in a i18n text template.
-		//
 		// Read Only: true
 		Value string `json:"Value,omitempty"`
 	}
@@ -140,9 +135,7 @@ func (m *I18nMessageParamAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv I18nMessageParamAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -152,9 +145,7 @@ func (m *I18nMessageParamAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -176,18 +167,15 @@ func (m I18nMessageParamAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The name of a variable which is referenced in a i18n text template.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// The value of a variable which is substituted in a i18n text template.
-		//
 		// Read Only: true
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

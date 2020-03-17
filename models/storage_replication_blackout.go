@@ -8,15 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageReplicationBlackout Storage:Replication Blackout
 //
-// Range of time at which to suspend replication. System disables replication during this interval.
+// Range of time during which to suspend replication. System disables replication during this interval.
 //
 // swagger:model storageReplicationBlackout
 type StorageReplicationBlackout struct {
@@ -59,7 +58,6 @@ func (m StorageReplicationBlackout) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,21 +99,18 @@ func (m *StorageReplicationBlackout) UnmarshalBinary(b []byte) error {
 }
 
 // StorageReplicationBlackoutAO1P1 storage replication blackout a o1 p1
+//
 // swagger:model StorageReplicationBlackoutAO1P1
 type StorageReplicationBlackoutAO1P1 struct {
 
 	// The end time of day for replication blackout window.
 	// Example: 17:00:01 which is 17 hours, 0 minutes, 1 seconds.
-	//
-	//
 	// Read Only: true
 	End string `json:"End,omitempty"`
 
 	// The start time of day when replication blackout is active. When replication blackout is active, the storage array temporarily disables replication.
 	// Example: 15:04:03.123 which is 15 hours, 4 minutes, 3 seconds and 123 milliseconds.
 	// The fractional seconds are written using the standard decimal notation which can be used for setting milliseconds and microseconds.
-	//
-	//
 	// Read Only: true
 	Start string `json:"Start,omitempty"`
 
@@ -130,16 +125,12 @@ func (m *StorageReplicationBlackoutAO1P1) UnmarshalJSON(data []byte) error {
 
 		// The end time of day for replication blackout window.
 		// Example: 17:00:01 which is 17 hours, 0 minutes, 1 seconds.
-		//
-		//
 		// Read Only: true
 		End string `json:"End,omitempty"`
 
 		// The start time of day when replication blackout is active. When replication blackout is active, the storage array temporarily disables replication.
 		// Example: 15:04:03.123 which is 15 hours, 4 minutes, 3 seconds and 123 milliseconds.
 		// The fractional seconds are written using the standard decimal notation which can be used for setting milliseconds and microseconds.
-		//
-		//
 		// Read Only: true
 		Start string `json:"Start,omitempty"`
 	}
@@ -149,9 +140,7 @@ func (m *StorageReplicationBlackoutAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageReplicationBlackoutAO1P1
 
 	rcv.End = stage1.End
-
 	rcv.Start = stage1.Start
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -161,9 +150,7 @@ func (m *StorageReplicationBlackoutAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "End")
-
 	delete(stage2, "Start")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -186,22 +173,17 @@ func (m StorageReplicationBlackoutAO1P1) MarshalJSON() ([]byte, error) {
 
 		// The end time of day for replication blackout window.
 		// Example: 17:00:01 which is 17 hours, 0 minutes, 1 seconds.
-		//
-		//
 		// Read Only: true
 		End string `json:"End,omitempty"`
 
 		// The start time of day when replication blackout is active. When replication blackout is active, the storage array temporarily disables replication.
 		// Example: 15:04:03.123 which is 15 hours, 4 minutes, 3 seconds and 123 milliseconds.
 		// The fractional seconds are written using the standard decimal notation which can be used for setting milliseconds and microseconds.
-		//
-		//
 		// Read Only: true
 		Start string `json:"Start,omitempty"`
 	}
 
 	stage1.End = m.End
-
 	stage1.Start = m.Start
 
 	// make JSON object for known properties

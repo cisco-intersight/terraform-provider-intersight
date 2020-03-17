@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,9 +22,7 @@ type StorageFlexFlashController struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -50,7 +47,6 @@ type StorageFlexFlashController struct {
 	FlexFlashVirtualDrives []*StorageFlexFlashVirtualDriveRef `json:"FlexFlashVirtualDrives"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -110,7 +106,6 @@ func (m StorageFlexFlashController) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -146,7 +141,6 @@ func (m StorageFlexFlashController) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

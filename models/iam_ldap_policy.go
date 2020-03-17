@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,45 +24,40 @@ type IamLdapPolicy struct {
 	PolicyAbstractPolicy
 
 	// The appliance account to which the appliance LDAP policy belongs.
-	//
 	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
 
 	// Base settings of LDAP required while configuring LDAP policy.
-	//
 	BaseProperties *IamLdapBaseProperties `json:"BaseProperties,omitempty"`
 
 	// Configuration settings to resolve LDAP servers, when DNS is enabled.
-	//
 	DNSParameters *IamLdapDNSParameters `json:"DnsParameters,omitempty"`
 
 	// Enables DNS to access LDAP servers.
-	//
 	EnableDNS *bool `json:"EnableDns,omitempty"`
 
 	// LDAP server performs authentication.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Relationship to collection of LDAP Groups.
-	//
 	Groups []*IamLdapGroupRef `json:"Groups"`
 
 	// The organization to which the LDAP policy belongs.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// Relationship to collection of LDAP Providers.
-	//
 	Providers []*IamLdapProviderRef `json:"Providers"`
 
 	// Search precedence between local user database and LDAP user database.
-	//
 	// Enum: [LocalUserDb LDAPUserDb]
 	UserSearchPrecedence *string `json:"UserSearchPrecedence,omitempty"`
+
+	// A collection of references to the [iam.Idp](mo://iam.Idp) Managed Object.
+	// When this managed object is deleted, the referenced [iam.Idp](mo://iam.Idp) MO unsets its reference to this deleted MO.
+	// Read Only: true
+	Nr0Idp *IamIdpRef `json:"_0_Idp,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -96,6 +90,8 @@ func (m *IamLdapPolicy) UnmarshalJSON(raw []byte) error {
 		Providers []*IamLdapProviderRef `json:"Providers"`
 
 		UserSearchPrecedence *string `json:"UserSearchPrecedence,omitempty"`
+
+		Nr0Idp *IamIdpRef `json:"_0_Idp,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -121,6 +117,8 @@ func (m *IamLdapPolicy) UnmarshalJSON(raw []byte) error {
 
 	m.UserSearchPrecedence = dataAO1.UserSearchPrecedence
 
+	m.Nr0Idp = dataAO1.Nr0Idp
+
 	return nil
 }
 
@@ -133,7 +131,6 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
 
@@ -154,6 +151,8 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 		Providers []*IamLdapProviderRef `json:"Providers"`
 
 		UserSearchPrecedence *string `json:"UserSearchPrecedence,omitempty"`
+
+		Nr0Idp *IamIdpRef `json:"_0_Idp,omitempty"`
 	}
 
 	dataAO1.ApplianceAccount = m.ApplianceAccount
@@ -176,12 +175,13 @@ func (m IamLdapPolicy) MarshalJSON() ([]byte, error) {
 
 	dataAO1.UserSearchPrecedence = m.UserSearchPrecedence
 
+	dataAO1.Nr0Idp = m.Nr0Idp
+
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -223,6 +223,10 @@ func (m *IamLdapPolicy) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUserSearchPrecedence(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNr0Idp(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -408,6 +412,24 @@ func (m *IamLdapPolicy) validateUserSearchPrecedence(formats strfmt.Registry) er
 	// value enum
 	if err := m.validateUserSearchPrecedenceEnum("UserSearchPrecedence", "body", *m.UserSearchPrecedence); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *IamLdapPolicy) validateNr0Idp(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Nr0Idp) { // not required
+		return nil
+	}
+
+	if m.Nr0Idp != nil {
+		if err := m.Nr0Idp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("_0_Idp")
+			}
+			return err
+		}
 	}
 
 	return nil

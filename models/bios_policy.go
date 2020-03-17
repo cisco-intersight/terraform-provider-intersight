@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,1265 +24,1012 @@ type BiosPolicy struct {
 	PolicyAbstractPolicy
 
 	// BIOS Token for setting ACS Control GPU-1 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu1state *string `json:"AcsControlGpu1state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-2 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu2state *string `json:"AcsControlGpu2state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-3 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu3state *string `json:"AcsControlGpu3state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-4 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu4state *string `json:"AcsControlGpu4state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-5 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu5state *string `json:"AcsControlGpu5state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-6 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu6state *string `json:"AcsControlGpu6state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-7 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu7state *string `json:"AcsControlGpu7state,omitempty"`
 
 	// BIOS Token for setting ACS Control GPU-8 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlGpu8state *string `json:"AcsControlGpu8state,omitempty"`
 
 	// BIOS Token for setting ACS Control Slot 11 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlSlot11state *string `json:"AcsControlSlot11state,omitempty"`
 
 	// BIOS Token for setting ACS Control Slot 12 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlSlot12state *string `json:"AcsControlSlot12state,omitempty"`
 
 	// BIOS Token for setting ACS Control Slot 13 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlSlot13state *string `json:"AcsControlSlot13state,omitempty"`
 
 	// BIOS Token for setting ACS Control Slot 14 configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AcsControlSlot14state *string `json:"AcsControlSlot14state,omitempty"`
 
 	// BIOS Token for setting Adjacent Cache Line Prefetcher configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AdjacentCacheLinePrefetch *string `json:"AdjacentCacheLinePrefetch,omitempty"`
 
 	// BIOS Token for setting All USB Devices configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AllUsbDevices *string `json:"AllUsbDevices,omitempty"`
 
 	// BIOS Token for setting Altitude configuration.
-	//
 	// Enum: [platform-default 1500-m 300-m 3000-m 900-m auto]
 	Altitude *string `json:"Altitude,omitempty"`
 
 	// BIOS Token for setting ASPM Support configuration.
-	//
 	// Enum: [platform-default Auto Disabled Force L0s L1 Only]
 	AspmSupport *string `json:"AspmSupport,omitempty"`
 
 	// BIOS Token for setting Assert NMI on PERR configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AssertNmiOnPerr *string `json:"AssertNmiOnPerr,omitempty"`
 
 	// BIOS Token for setting Assert NMI on SERR configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AssertNmiOnSerr *string `json:"AssertNmiOnSerr,omitempty"`
 
 	// BIOS Token for setting Autonomous Core C-state configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AutoCcState *string `json:"AutoCcState,omitempty"`
 
 	// BIOS Token for setting CPU Autonomous Cstate configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	AutonumousCstateEnable *string `json:"AutonumousCstateEnable,omitempty"`
 
 	// BIOS Token for setting Baud rate configuration.
-	//
 	// Enum: [platform-default 115200 19200 38400 57600 9600]
 	BaudRate *string `json:"BaudRate,omitempty"`
 
 	// BIOS Token for setting BME DMA Mitigation configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	BmeDmaMitigation *string `json:"BmeDmaMitigation,omitempty"`
 
 	// BIOS Token for setting Number of Retries configuration.
-	//
 	// Enum: [platform-default 13 5 Infinite]
 	BootOptionNumRetry *string `json:"BootOptionNumRetry,omitempty"`
 
 	// BIOS Token for setting Cool Down Time  (sec) configuration.
-	//
 	// Enum: [platform-default 15 45 90]
 	BootOptionReCoolDown *string `json:"BootOptionReCoolDown,omitempty"`
 
 	// BIOS Token for setting Boot option retry configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	BootOptionRetry *string `json:"BootOptionRetry,omitempty"`
 
 	// BIOS Token for setting Boot Performance Mode configuration.
-	//
 	// Enum: [platform-default Max Efficient Max Performance Set by Intel NM]
 	BootPerformanceMode *string `json:"BootPerformanceMode,omitempty"`
 
 	// BIOS Token for setting Core Performance Boost configuration.
-	//
 	// Enum: [platform-default Auto disabled]
 	CbsCmnCPUCpb *string `json:"CbsCmnCpuCpb,omitempty"`
 
 	// BIOS Token for setting Downcore control configuration.
-	//
 	// Enum: [platform-default Auto FOUR (2 + 2) FOUR (4 + 0) SIX (3 + 3) THREE (3 + 0) TWO (1 + 1) TWO (2 + 0)]
 	CbsCmnCPUGenDowncoreCtrl *string `json:"CbsCmnCpuGenDowncoreCtrl,omitempty"`
 
 	// BIOS Token for setting Global C-state Control configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	CbsCmnCPUGlobalCstateCtrl *string `json:"CbsCmnCpuGlobalCstateCtrl,omitempty"`
 
 	// BIOS Token for setting L1 Stream HW Prefetcher configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	CbsCmnCPUL1streamHwPrefetcher *string `json:"CbsCmnCpuL1streamHwPrefetcher,omitempty"`
 
 	// BIOS Token for setting L2 Stream HW Prefetcher configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	CbsCmnCPUL2streamHwPrefetcher *string `json:"CbsCmnCpuL2streamHwPrefetcher,omitempty"`
 
 	// BIOS Token for setting Determinism Slider configuration.
-	//
 	// Enum: [platform-default Auto Performance Power]
 	CbsCmnDeterminismSlider *string `json:"CbsCmnDeterminismSlider,omitempty"`
 
 	// BIOS Token for setting IOMMU configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	CbsCmnGnbNbIommu *string `json:"CbsCmnGnbNbIommu,omitempty"`
 
 	// BIOS Token for setting Bank Group Swap configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	CbsCmnMemCtrlBankGroupSwapDdr4 *string `json:"CbsCmnMemCtrlBankGroupSwapDdr4,omitempty"`
 
 	// BIOS Token for setting Chipselect Interleaving configuration.
-	//
 	// Enum: [platform-default Auto disabled]
 	CbsCmnMemMapBankInterleaveDdr4 *string `json:"CbsCmnMemMapBankInterleaveDdr4,omitempty"`
 
 	// BIOS Token for setting cTDP Control configuration.
-	//
 	// Enum: [platform-default Auto Manual]
 	CbsCmncTdpCtl *string `json:"CbsCmncTdpCtl,omitempty"`
 
 	// BIOS Token for setting Memory interleaving configuration.
-	//
 	// Enum: [platform-default Auto Channel Die None Socket]
 	CbsDfCmnMemIntlv *string `json:"CbsDfCmnMemIntlv,omitempty"`
 
 	// BIOS Token for setting Memory interleaving size configuration.
-	//
 	// Enum: [platform-default 1 KB 2 KB 256 Bytes 512 Bytes Auto]
 	CbsDfCmnMemIntlvSize *string `json:"CbsDfCmnMemIntlvSize,omitempty"`
 
 	// BIOS Token for setting Consistent Device Naming configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	CdnEnable *string `json:"CdnEnable,omitempty"`
 
 	// BIOS Token for setting CDN Support for LOM configuration.
-	//
 	// Enum: [platform-default disabled enabled LOMs Only]
 	CdnSupport *string `json:"CdnSupport,omitempty"`
 
 	// BIOS Token for setting Channel Interleaving configuration.
-	//
 	// Enum: [platform-default 1-way 2-way 3-way 4-way auto]
 	ChannelInterLeave *string `json:"ChannelInterLeave,omitempty"`
 
 	// BIOS Token for setting Adaptive Memory Training configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	CiscoAdaptiveMemTraining *string `json:"CiscoAdaptiveMemTraining,omitempty"`
 
 	// BIOS Token for setting BIOS Techlog Level configuration.
-	//
 	// Enum: [platform-default Maximum Minimum Normal]
 	CiscoDebugLevel *string `json:"CiscoDebugLevel,omitempty"`
 
 	// BIOS Token for setting OptionROM Launch Optimization configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	CiscoOpromLaunchOptimization *string `json:"CiscoOpromLaunchOptimization,omitempty"`
 
 	// BIOS Token for setting CKE Low Policy configuration.
-	//
 	// Enum: [platform-default auto disabled fast slow]
 	CkeLowPolicy *string `json:"CkeLowPolicy,omitempty"`
 
 	// BIOS Token for setting Closed Loop Therm Throt configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ClosedLoopThermThrotl *string `json:"ClosedLoopThermThrotl,omitempty"`
 
 	// BIOS Token for setting Processor CMCI configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	CmciEnable *string `json:"CmciEnable,omitempty"`
 
 	// BIOS Token for setting Config TDP configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ConfigTdp *string `json:"ConfigTdp,omitempty"`
 
 	// BIOS Token for setting Console redirection configuration.
-	//
 	// Enum: [platform-default com-0 com-1 disabled enabled serial-port-a]
 	ConsoleRedirection *string `json:"ConsoleRedirection,omitempty"`
 
 	// BIOS Token for setting Core MultiProcessing configuration.
-	//
 	// Enum: [platform-default 1 10 11 12 13 14 15 16 17 18 19 2 20 21 22 23 24 25 26 27 28 3 4 5 6 7 8 9 all]
 	CoreMultiProcessing *string `json:"CoreMultiProcessing,omitempty"`
 
 	// BIOS Token for setting Energy Performance configuration.
-	//
 	// Enum: [platform-default balanced-energy balanced-performance balanced-power energy-efficient performance power]
 	CPUEnergyPerformance *string `json:"CpuEnergyPerformance,omitempty"`
 
 	// BIOS Token for setting Frequency Floor Override configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	CPUFrequencyFloor *string `json:"CpuFrequencyFloor,omitempty"`
 
 	// BIOS Token for setting CPU Performance configuration.
-	//
 	// Enum: [platform-default custom enterprise high-throughput hpc]
 	CPUPerformance *string `json:"CpuPerformance,omitempty"`
 
 	// BIOS Token for setting Power Technology configuration.
-	//
 	// Enum: [platform-default custom disabled energy-efficient performance]
 	CPUPowerManagement *string `json:"CpuPowerManagement,omitempty"`
 
 	// BIOS Token for setting DCPMM Firmware Downgrade configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	DcpmmFirmwareDowngrade *string `json:"DcpmmFirmwareDowngrade,omitempty"`
 
 	// BIOS Token for setting Demand Scrub configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	DemandScrub *string `json:"DemandScrub,omitempty"`
 
 	// BIOS Token for setting Direct Cache Access Support configuration.
-	//
 	// Enum: [platform-default auto disabled enabled]
 	DirectCacheAccess *string `json:"DirectCacheAccess,omitempty"`
 
 	// BIOS Token for setting DRAM Clock Throttling configuration.
-	//
 	// Enum: [platform-default Auto Balanced Energy Efficient Performance]
 	DramClockThrottling *string `json:"DramClockThrottling,omitempty"`
 
 	// BIOS Token for setting DRAM Refresh Rate configuration.
-	//
 	// Enum: [platform-default 1x 2x 3x 4x Auto]
 	DramRefreshRate *string `json:"DramRefreshRate,omitempty"`
 
 	// BIOS Token for setting Energy Efficient Turbo configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	EnergyEfficientTurbo *string `json:"EnergyEfficientTurbo,omitempty"`
 
 	// BIOS Token for setting Energy Performance Tuning configuration.
-	//
 	// Enum: [platform-default BIOS OS]
 	EngPerfTuning *string `json:"EngPerfTuning,omitempty"`
 
 	// BIOS Token for setting Enhanced Intel Speedstep (R) Technology configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	EnhancedIntelSpeedStepTech *string `json:"EnhancedIntelSpeedStepTech,omitempty"`
 
 	// BIOS Token for setting EPP Profile configuration.
-	//
 	// Enum: [platform-default Balanced Performance Balanced Power Performance Power]
 	EppProfile *string `json:"EppProfile,omitempty"`
 
 	// BIOS Token for setting Execute Disable Bit configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ExecuteDisableBit *string `json:"ExecuteDisableBit,omitempty"`
 
 	// BIOS Token for setting Local X2 Apic configuration.
-	//
 	// Enum: [platform-default disabled enabled X2APIC XAPIC]
 	ExtendedApic *string `json:"ExtendedApic,omitempty"`
 
 	// BIOS Token for setting Flow Control configuration.
-	//
 	// Enum: [platform-default none rts-cts]
 	FlowControl *string `json:"FlowControl,omitempty"`
 
 	// BIOS Token for setting FRB-2 Timer configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Frb2enable *string `json:"Frb2enable,omitempty"`
 
 	// BIOS Token for setting Hardware Prefetcher configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	HardwarePrefetch *string `json:"HardwarePrefetch,omitempty"`
 
 	// BIOS Token for setting CPU Hardware Power Management configuration.
-	//
 	// Enum: [platform-default Disabled HWPM Native Mode HWPM OOB Mode NATIVE MODE Native Mode with no Legacy OOB MODE]
 	HwpmEnable *string `json:"HwpmEnable,omitempty"`
 
 	// BIOS Token for setting IMC Interleaving configuration.
-	//
 	// Enum: [platform-default 1-way Interleave 2-way Interleave Auto]
 	ImcInterleave *string `json:"ImcInterleave,omitempty"`
 
 	// BIOS Token for setting Intel HyperThreading Tech configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelHyperThreadingTech *string `json:"IntelHyperThreadingTech,omitempty"`
 
 	// BIOS Token for setting Intel Speed Select configuration.
-	//
 	// Enum: [platform-default Base Config 1 Config 2]
 	IntelSpeedSelect *string `json:"IntelSpeedSelect,omitempty"`
 
 	// BIOS Token for setting Intel Turbo Boost Tech configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelTurboBoostTech *string `json:"IntelTurboBoostTech,omitempty"`
 
 	// BIOS Token for setting Intel (R) VT configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVirtualizationTechnology *string `json:"IntelVirtualizationTechnology,omitempty"`
 
 	// BIOS Token for setting Intel VT for directed IO configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVtForDirectedIo *string `json:"IntelVtForDirectedIo,omitempty"`
 
 	// BIOS Token for setting Intel (R) VT-d Coherency Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVtdCoherencySupport *string `json:"IntelVtdCoherencySupport,omitempty"`
 
 	// BIOS Token for setting Intel (R) VT-d Interrupt Remapping configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVtdInterruptRemapping *string `json:"IntelVtdInterruptRemapping,omitempty"`
 
 	// BIOS Token for setting Intel (R) VT-d PassThrough DMA support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVtdPassThroughDmaSupport *string `json:"IntelVtdPassThroughDmaSupport,omitempty"`
 
 	// BIOS Token for setting Intel VTD ATS support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IntelVtdatsSupport *string `json:"IntelVtdatsSupport,omitempty"`
 
 	// BIOS Token for setting IIO Error Enable configuration.
-	//
 	// Enum: [platform-default No Yes]
 	IohErrorEnable *string `json:"IohErrorEnable,omitempty"`
 
 	// BIOS Token for setting IOH Resource Allocation configuration.
-	//
 	// Enum: [platform-default IOH0 24k IOH1 40k IOH0 32k IOH1 32k IOH0 40k IOH1 24k IOH0 48k IOH1 16k IOH0 56k IOH1 8k]
 	IohResource *string `json:"IohResource,omitempty"`
 
 	// BIOS Token for setting DCU IP Prefetcher configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	IPPrefetch *string `json:"IpPrefetch,omitempty"`
 
 	// BIOS Token for setting IPV6 PXE Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Ipv6pxe *string `json:"Ipv6pxe,omitempty"`
 
 	// BIOS Token for setting KTI Prefetch configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	KtiPrefetch *string `json:"KtiPrefetch,omitempty"`
 
 	// BIOS Token for setting Legacy OS redirection configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	LegacyOsRedirection *string `json:"LegacyOsRedirection,omitempty"`
 
 	// BIOS Token for setting Legacy USB Support configuration.
-	//
 	// Enum: [platform-default auto disabled enabled]
 	LegacyUsbSupport *string `json:"LegacyUsbSupport,omitempty"`
 
 	// BIOS Token for setting LLC Prefetch configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	LlcPrefetch *string `json:"LlcPrefetch,omitempty"`
 
 	// BIOS Token for setting LOM Port 0 OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort0state *string `json:"LomPort0state,omitempty"`
 
 	// BIOS Token for setting LOM Port 1 OptionRom configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort1state *string `json:"LomPort1state,omitempty"`
 
 	// BIOS Token for setting LOM Port 2 OptionRom configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort2state *string `json:"LomPort2state,omitempty"`
 
 	// BIOS Token for setting LOM Port 3 OptionRom configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort3state *string `json:"LomPort3state,omitempty"`
 
 	// BIOS Token for setting All Onboard LOM Ports configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	LomPortsAllState *string `json:"LomPortsAllState,omitempty"`
 
 	// BIOS Token for setting Low Voltage DDR Mode configuration.
-	//
 	// Enum: [platform-default auto performance-mode power-saving-mode]
 	LvDdrMode *string `json:"LvDdrMode,omitempty"`
 
 	// BIOS Token for setting Make Device Non Bootable configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	MakeDeviceNonBootable *string `json:"MakeDeviceNonBootable,omitempty"`
 
 	// BIOS Token for setting Memory Interleaving configuration.
-	//
 	// Enum: [platform-default 1 Way Node Interleave 2 Way Node Interleave 4 Way Node Interleave 8 Way Node Interleave disabled enabled]
 	MemoryInterLeave *string `json:"MemoryInterLeave,omitempty"`
 
 	// BIOS Token for setting Memory mapped IO above 4GB configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	MemoryMappedIoAbove4gb *string `json:"MemoryMappedIoAbove4gb,omitempty"`
 
 	// BIOS Token for setting Mirroring Mode configuration.
-	//
 	// Enum: [platform-default inter-socket intra-socket]
 	MirroringMode *string `json:"MirroringMode,omitempty"`
 
 	// BIOS Token for setting MMCFG BASE configuration.
-	//
 	// Enum: [platform-default 1 GB 2 GB 2.5 GB 3 GB Auto]
 	MmcfgBase *string `json:"MmcfgBase,omitempty"`
 
 	// BIOS Token for setting NUMA optimized configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	NumaOptimized *string `json:"NumaOptimized,omitempty"`
 
 	// BIOS Token for setting Onboard 10Gbit LOM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Onboard10gbitLom *string `json:"Onboard10gbitLom,omitempty"`
 
 	// BIOS Token for setting Onboard Gbit LOM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	OnboardGbitLom *string `json:"OnboardGbitLom,omitempty"`
 
 	// BIOS Token for setting Onboard SCU Storage Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	OnboardScuStorageSupport *string `json:"OnboardScuStorageSupport,omitempty"`
 
 	// BIOS Token for setting Onboard SCU Storage SW Stack configuration.
-	//
 	// Enum: [platform-default Intel RSTe LSI SW RAID]
 	OnboardScuStorageSwStack *string `json:"OnboardScuStorageSwStack,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// BIOS Token for setting OS Boot Watchdog Timer configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	OsBootWatchdogTimer *string `json:"OsBootWatchdogTimer,omitempty"`
 
 	// BIOS Token for setting OS Boot Watchdog Timer Policy configuration.
-	//
 	// Enum: [platform-default do-nothing power-off reset]
 	OsBootWatchdogTimerPolicy *string `json:"OsBootWatchdogTimerPolicy,omitempty"`
 
 	// BIOS Token for setting OS Boot Watchdog Timer Timeout configuration.
-	//
 	// Enum: [platform-default 10-minutes 15-minutes 20-minutes 5-minutes]
 	OsBootWatchdogTimerTimeout *string `json:"OsBootWatchdogTimerTimeout,omitempty"`
 
 	// BIOS Token for setting Out-of-Band Mgmt Port configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	OutOfBandMgmtPort *string `json:"OutOfBandMgmtPort,omitempty"`
 
 	// BIOS Token for setting Package C State Limit configuration.
-	//
 	// Enum: [platform-default Auto C0 C1 State C0/C1 C2 C6 Non Retention C6 Retention No Limit]
 	PackageCstateLimit *string `json:"PackageCstateLimit,omitempty"`
 
 	// BIOS Token for setting Patrol Scrub configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PatrolScrub *string `json:"PatrolScrub,omitempty"`
 
 	// BIOS Token for setting Patrol Scrub Interval configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PatrolScrubDuration *string `json:"PatrolScrubDuration,omitempty"`
 
 	// BIOS Token for setting NVMe SSD Hot-Plug Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PcIeSsdHotPlugSupport *string `json:"PcIeSsdHotPlugSupport,omitempty"`
 
 	// BIOS Token for setting xHCI Mode configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PchUsb30mode *string `json:"PchUsb30mode,omitempty"`
 
 	// BIOS Token for setting All PCIe Slots OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	PciOptionRoMs *string `json:"PciOptionRoMs,omitempty"`
 
 	// BIOS Token for setting PCI ROM CLP configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PciRomClp *string `json:"PciRomClp,omitempty"`
 
 	// BIOS Token for setting Power ON Password configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PopSupport *string `json:"PopSupport,omitempty"`
 
 	// BIOS Token for setting POST Error Pause configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	PostErrorPause *string `json:"PostErrorPause,omitempty"`
 
 	// BIOS Token for setting Processor C1E configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ProcessorC1e *string `json:"ProcessorC1e,omitempty"`
 
 	// BIOS Token for setting Processor C3 Report configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ProcessorC3report *string `json:"ProcessorC3report,omitempty"`
 
 	// BIOS Token for setting Processor C6 Report configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ProcessorC6report *string `json:"ProcessorC6report,omitempty"`
 
 	// BIOS Token for setting CPU C State configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	ProcessorCstate *string `json:"ProcessorCstate,omitempty"`
 
 	// Relationship to the profile objects.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// BIOS Token for setting P-SATA mode configuration.
-	//
 	// Enum: [platform-default AHCI Disabled LSI SW RAID]
 	Psata *string `json:"Psata,omitempty"`
 
 	// BIOS Token for setting P-STATE Coordination configuration.
-	//
 	// Enum: [platform-default HW ALL SW ALL SW ANY]
 	PstateCoordType *string `json:"PstateCoordType,omitempty"`
 
 	// BIOS Token for setting Putty KeyPad configuration.
-	//
 	// Enum: [platform-default ESCN LINUX SCO VT100 VT400 XTERMR6]
 	PuttyKeyPad *string `json:"PuttyKeyPad,omitempty"`
 
 	// BIOS Token for setting Power Performance Tuning configuration.
-	//
 	// Enum: [platform-default bios os]
 	PwrPerfTuning *string `json:"PwrPerfTuning,omitempty"`
 
 	// BIOS Token for setting QPI Link Frequency Select configuration.
-	//
 	// Enum: [platform-default 6.4-gt/s 7.2-gt/s 8.0-gt/s 9.6-gt/s auto]
 	QpiLinkFrequency *string `json:"QpiLinkFrequency,omitempty"`
 
 	// BIOS Token for setting QPI Snoop Mode configuration.
-	//
 	// Enum: [platform-default auto cluster-on-die early-snoop home-directory-snoop home-directory-snoop-with-osb home-snoop]
 	QpiSnoopMode *string `json:"QpiSnoopMode,omitempty"`
 
 	// BIOS Token for setting Rank Interleaving configuration.
-	//
 	// Enum: [platform-default 1-way 2-way 4-way 8-way auto]
 	RankInterLeave *string `json:"RankInterLeave,omitempty"`
 
 	// BIOS Token for setting Redirection After BIOS POST configuration.
-	//
 	// Enum: [platform-default Always Enable Bootloader]
 	RedirectionAfterPost *string `json:"RedirectionAfterPost,omitempty"`
 
 	// BIOS Token for setting SATA mode configuration.
-	//
 	// Enum: [platform-default AHCI Disabled LSI SW RAID]
 	SataModeSelect *string `json:"SataModeSelect,omitempty"`
 
 	// BIOS Token for setting SelectMemory RAS configuration configuration.
-	//
 	// Enum: [platform-default adddc-sparing lockstep maximum-performance mirror-mode-1lm mirroring sparing]
 	SelectMemoryRasConfiguration *string `json:"SelectMemoryRasConfiguration,omitempty"`
 
 	// BIOS Token for setting Serial A Enable configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SerialPortAenable *string `json:"SerialPortAenable,omitempty"`
 
 	// BIOS Token for setting Single PCTL configuration.
-	//
 	// Enum: [platform-default No Yes]
 	SinglePctlEnable *string `json:"SinglePctlEnable,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:10 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot10linkSpeed *string `json:"Slot10linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 10 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot10state *string `json:"Slot10state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:11 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot11linkSpeed *string `json:"Slot11linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 11 state configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Slot11state *string `json:"Slot11state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:12 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot12linkSpeed *string `json:"Slot12linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 12 state configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Slot12state *string `json:"Slot12state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot 13 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Slot13state *string `json:"Slot13state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot 14 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Slot14state *string `json:"Slot14state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot1linkSpeed *string `json:"Slot1linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 1 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot1state *string `json:"Slot1state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot2linkSpeed *string `json:"Slot2linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 2 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot2state *string `json:"Slot2state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:3 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot3linkSpeed *string `json:"Slot3linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 3 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot3state *string `json:"Slot3state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:4 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot4linkSpeed *string `json:"Slot4linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 4 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot4state *string `json:"Slot4state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:5 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot5linkSpeed *string `json:"Slot5linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 5 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot5state *string `json:"Slot5state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:6 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot6linkSpeed *string `json:"Slot6linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 6 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot6state *string `json:"Slot6state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:7 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot7linkSpeed *string `json:"Slot7linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 7 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot7state *string `json:"Slot7state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:8 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot8linkSpeed *string `json:"Slot8linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 8 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot8state *string `json:"Slot8state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:9 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot9linkSpeed *string `json:"Slot9linkSpeed,omitempty"`
 
 	// BIOS Token for setting Slot 9 state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot9state *string `json:"Slot9state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:FLOM Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotFlomLinkSpeed *string `json:"SlotFlomLinkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Front Nvme1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotFrontNvme1linkSpeed *string `json:"SlotFrontNvme1linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Front Nvme2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotFrontNvme2linkSpeed *string `json:"SlotFrontNvme2linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Front1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotFrontSlot5linkSpeed *string `json:"SlotFrontSlot5linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Front2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotFrontSlot6linkSpeed *string `json:"SlotFrontSlot6linkSpeed,omitempty"`
 
 	// BIOS Token for setting GPU1 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu1state *string `json:"SlotGpu1state,omitempty"`
 
 	// BIOS Token for setting GPU2 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu2state *string `json:"SlotGpu2state,omitempty"`
 
 	// BIOS Token for setting GPU3 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu3state *string `json:"SlotGpu3state,omitempty"`
 
 	// BIOS Token for setting GPU4 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu4state *string `json:"SlotGpu4state,omitempty"`
 
 	// BIOS Token for setting GPU5 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu5state *string `json:"SlotGpu5state,omitempty"`
 
 	// BIOS Token for setting GPU6 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu6state *string `json:"SlotGpu6state,omitempty"`
 
 	// BIOS Token for setting GPU7 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu7state *string `json:"SlotGpu7state,omitempty"`
 
 	// BIOS Token for setting GPU8 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotGpu8state *string `json:"SlotGpu8state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:HBA Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotHbaLinkSpeed *string `json:"SlotHbaLinkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:HBA OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotHbaState *string `json:"SlotHbaState,omitempty"`
 
 	// BIOS Token for setting PCIe LOM:1 Link configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotLom1link *string `json:"SlotLom1link,omitempty"`
 
 	// BIOS Token for setting PCIe LOM:2 Link configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotLom2link *string `json:"SlotLom2link,omitempty"`
 
 	// BIOS Token for setting Slot Mezz state configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotMezzState *string `json:"SlotMezzState,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:MLOM Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotMlomLinkSpeed *string `json:"SlotMlomLinkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot MLOM OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotMlomState *string `json:"SlotMlomState,omitempty"`
 
 	// BIOS Token for setting MRAID Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotMraidLinkSpeed *string `json:"SlotMraidLinkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot MRAID OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotMraidState *string `json:"SlotMraidState,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N10 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN10state *string `json:"SlotN10state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N11 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN11state *string `json:"SlotN11state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N12 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN12state *string `json:"SlotN12state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N13 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN13state *string `json:"SlotN13state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N14 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN14state *string `json:"SlotN14state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N15 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN15state *string `json:"SlotN15state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N16 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN16state *string `json:"SlotN16state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N17 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN17state *string `json:"SlotN17state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N18 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN18state *string `json:"SlotN18state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N19 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN19state *string `json:"SlotN19state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N1 OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotN1state *string `json:"SlotN1state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N20 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN20state *string `json:"SlotN20state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N21 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN21state *string `json:"SlotN21state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N22 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN22state *string `json:"SlotN22state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N23 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN23state *string `json:"SlotN23state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N24 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN24state *string `json:"SlotN24state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N2 OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotN2state *string `json:"SlotN2state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N3 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN3state *string `json:"SlotN3state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N4 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN4state *string `json:"SlotN4state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N5 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN5state *string `json:"SlotN5state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N6 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN6state *string `json:"SlotN6state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N7 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN7state *string `json:"SlotN7state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N8 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN8state *string `json:"SlotN8state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot N9 OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotN9state *string `json:"SlotN9state,omitempty"`
 
 	// BIOS Token for setting RAID Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRaidLinkSpeed *string `json:"SlotRaidLinkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot RAID OptionROM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRaidState *string `json:"SlotRaidState,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear Nvme1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRearNvme1linkSpeed *string `json:"SlotRearNvme1linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 1 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme1state *string `json:"SlotRearNvme1state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear Nvme2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRearNvme2linkSpeed *string `json:"SlotRearNvme2linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 2 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme2state *string `json:"SlotRearNvme2state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 3 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme3state *string `json:"SlotRearNvme3state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 4 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme4state *string `json:"SlotRearNvme4state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 5 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme5state *string `json:"SlotRearNvme5state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 6 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme6state *string `json:"SlotRearNvme6state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 7 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme7state *string `json:"SlotRearNvme7state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Rear NVME 8 OptionRom configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme8state *string `json:"SlotRearNvme8state,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser1linkSpeed *string `json:"SlotRiser1linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser1 Slot1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser1slot1linkSpeed *string `json:"SlotRiser1slot1linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser1 Slot2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser1slot2linkSpeed *string `json:"SlotRiser1slot2linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser1 Slot3 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser1slot3linkSpeed *string `json:"SlotRiser1slot3linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser2linkSpeed *string `json:"SlotRiser2linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser2 Slot4 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser2slot4linkSpeed *string `json:"SlotRiser2slot4linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser2 Slot5 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser2slot5linkSpeed *string `json:"SlotRiser2slot5linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:Riser2 Slot6 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRiser2slot6linkSpeed *string `json:"SlotRiser2slot6linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:SAS OptionROM configuration.
-	//
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotSasState *string `json:"SlotSasState,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:FrontPcie1 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotSsdSlot1linkSpeed *string `json:"SlotSsdSlot1linkSpeed,omitempty"`
 
 	// BIOS Token for setting PCIe Slot:FrontPcie2 Link Speed configuration.
-	//
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotSsdSlot2linkSpeed *string `json:"SlotSsdSlot2linkSpeed,omitempty"`
 
 	// BIOS Token for setting SMEE configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	Smee *string `json:"Smee,omitempty"`
 
 	// BIOS Token for setting SMT Mode configuration.
-	//
 	// Enum: [platform-default Auto Off]
 	SmtMode *string `json:"SmtMode,omitempty"`
 
 	// BIOS Token for setting Sub Numa Clustering configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	Snc *string `json:"Snc,omitempty"`
 
 	// BIOS Token for setting Sparing Mode configuration.
-	//
 	// Enum: [platform-default dimm-sparing rank-sparing]
 	SparingMode *string `json:"SparingMode,omitempty"`
 
 	// BIOS Token for setting SR-IOV Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SrIov *string `json:"SrIov,omitempty"`
 
 	// BIOS Token for setting DCU Streamer Prefetch configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	StreamerPrefetch *string `json:"StreamerPrefetch,omitempty"`
 
 	// BIOS Token for setting SVM Mode configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	SvmMode *string `json:"SvmMode,omitempty"`
 
 	// BIOS Token for setting Terminal Type configuration.
-	//
 	// Enum: [platform-default pc-ansi vt-utf8 vt100 vt100-plus]
 	TerminalType *string `json:"TerminalType,omitempty"`
 
 	// BIOS Token for setting Trusted Platform Module State configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	TpmControl *string `json:"TpmControl,omitempty"`
 
 	// BIOS Token for setting TPM Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	TpmSupport *string `json:"TpmSupport,omitempty"`
 
 	// BIOS Token for setting Intel Trusted Execution Technology Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	TxtSupport *string `json:"TxtSupport,omitempty"`
 
 	// BIOS Token for setting Boot Order Rules configuration.
-	//
 	// Enum: [platform-default Loose Strict]
 	UcsmBootOrderRule *string `json:"UcsmBootOrderRule,omitempty"`
 
 	// BIOS Token for setting Port 60/64 Emulation configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbEmul6064 *string `json:"UsbEmul6064,omitempty"`
 
 	// BIOS Token for setting USB Port Front configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortFront *string `json:"UsbPortFront,omitempty"`
 
 	// BIOS Token for setting USB Port Internal configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortInternal *string `json:"UsbPortInternal,omitempty"`
 
 	// BIOS Token for setting USB Port KVM configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortKvm *string `json:"UsbPortKvm,omitempty"`
 
 	// BIOS Token for setting USB Port Rear configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortRear *string `json:"UsbPortRear,omitempty"`
 
 	// BIOS Token for setting USB Port SD Card configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortSdCard *string `json:"UsbPortSdCard,omitempty"`
 
 	// BIOS Token for setting USB Port VMedia configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbPortVmedia *string `json:"UsbPortVmedia,omitempty"`
 
 	// BIOS Token for setting XHCI Legacy Support configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	UsbXhciSupport *string `json:"UsbXhciSupport,omitempty"`
 
 	// BIOS Token for setting VGA Priority configuration.
-	//
 	// Enum: [platform-default Offboard Onboard Onboard VGA Disabled]
 	VgaPriority *string `json:"VgaPriority,omitempty"`
 
 	// BIOS Token for setting VMD Enablement configuration.
-	//
 	// Enum: [platform-default enabled disabled]
 	VmdEnable *string `json:"VmdEnable,omitempty"`
 
 	// BIOS Token for setting Workload Configuration configuration.
-	//
 	// Enum: [platform-default Balanced I/O Sensitive NUMA UMA]
 	WorkLoadConfig *string `json:"WorkLoadConfig,omitempty"`
 
 	// BIOS Token for setting XPT Prefetch configuration.
-	//
 	// Enum: [platform-default Auto disabled enabled]
 	XptPrefetch *string `json:"XptPrefetch,omitempty"`
 }
@@ -2327,7 +2073,6 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AcsControlGpu1state *string `json:"AcsControlGpu1state,omitempty"`
 
@@ -3347,7 +3092,6 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

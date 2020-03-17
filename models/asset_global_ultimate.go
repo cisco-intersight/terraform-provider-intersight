@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AssetGlobalUltimate) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,15 @@ func (m *AssetGlobalUltimate) UnmarshalBinary(b []byte) error {
 }
 
 // AssetGlobalUltimateAO1P1 asset global ultimate a o1 p1
+//
 // swagger:model AssetGlobalUltimateAO1P1
 type AssetGlobalUltimateAO1P1 struct {
 
 	// ID of the user in BillToGlobal.
-	//
 	// Read Only: true
 	ID string `json:"Id,omitempty"`
 
 	// Name of the user in BillToGlobal.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
@@ -124,12 +121,10 @@ func (m *AssetGlobalUltimateAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// ID of the user in BillToGlobal.
-		//
 		// Read Only: true
 		ID string `json:"Id,omitempty"`
 
 		// Name of the user in BillToGlobal.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 	}
@@ -139,9 +134,7 @@ func (m *AssetGlobalUltimateAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetGlobalUltimateAO1P1
 
 	rcv.ID = stage1.ID
-
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *AssetGlobalUltimateAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Id")
-
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,18 +166,15 @@ func (m AssetGlobalUltimateAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// ID of the user in BillToGlobal.
-		//
 		// Read Only: true
 		ID string `json:"Id,omitempty"`
 
 		// Name of the user in BillToGlobal.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 	}
 
 	stage1.ID = m.ID
-
 	stage1.Name = m.Name
 
 	// make JSON object for known properties

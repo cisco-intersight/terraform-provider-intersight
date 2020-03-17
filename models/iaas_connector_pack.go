@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,39 +20,31 @@ type IaasConnectorPack struct {
 	MoBaseMo
 
 	// Complete version of the connector pack including build number.
-	//
 	// Read Only: true
 	CompleteVersion string `json:"CompleteVersion,omitempty"`
 
 	// List of dependent connectors on the UCSD for this connector. For example BigData depends on UCS Connector.
-	//
 	// Read Only: true
 	DependencyNames []string `json:"DependencyNames"`
 
 	// Version of the connector pack that is last downloaded successfully to UCSD.
-	//
 	// Read Only: true
 	DownloadedVersion string `json:"DownloadedVersion,omitempty"`
 
 	// A collection of references to the [iaas.UcsdInfo](mo://iaas.UcsdInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iaas.UcsdInfo](mo://iaas.UcsdInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
 	// Name of the connector pack running on the UCSD.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// State of the connector pack whether it is enabled or disabled.
-	//
 	// Read Only: true
 	State string `json:"State,omitempty"`
 
 	// Version of the connector pack.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -113,7 +104,6 @@ func (m IaasConnectorPack) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CompleteVersion string `json:"CompleteVersion,omitempty"`
 
@@ -149,7 +139,6 @@ func (m IaasConnectorPack) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

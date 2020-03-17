@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m BootDeviceBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *BootDeviceBase) UnmarshalBinary(b []byte) error {
 }
 
 // BootDeviceBaseAO1P1 boot device base a o1 p1
+//
 // swagger:model BootDeviceBaseAO1P1
 type BootDeviceBaseAO1P1 struct {
 
 	// Specifies if the boot device is enabled or disabled.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// A name that helps identify a boot device. It can be any string that adheres to the following constraints. It should start and end with an alphanumeric character. It can have underscores and hyphens. It cannot be more than 30 characters.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// boot device base a o1 p1
@@ -122,11 +119,9 @@ func (m *BootDeviceBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Specifies if the boot device is enabled or disabled.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// A name that helps identify a boot device. It can be any string that adheres to the following constraints. It should start and end with an alphanumeric character. It can have underscores and hyphens. It cannot be more than 30 characters.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *BootDeviceBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv BootDeviceBaseAO1P1
 
 	rcv.Enabled = stage1.Enabled
-
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *BootDeviceBaseAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enabled")
-
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m BootDeviceBaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Specifies if the boot device is enabled or disabled.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// A name that helps identify a boot device. It can be any string that adheres to the following constraints. It should start and end with an alphanumeric character. It can have underscores and hyphens. It cannot be more than 30 characters.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 
 	stage1.Enabled = m.Enabled
-
 	stage1.Name = m.Name
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m HclConstraint) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *HclConstraint) UnmarshalBinary(b []byte) error {
 }
 
 // HclConstraintAO1P1 hcl constraint a o1 p1
+//
 // swagger:model HclConstraintAO1P1
 type HclConstraintAO1P1 struct {
 
 	// Name or key of the applicable compatibility constraint.
-	//
 	ConstraintName string `json:"ConstraintName,omitempty"`
 
 	// Value of the applicable compatibility constraint. Could either be a string value or a regex.
-	//
 	ConstraintValue string `json:"ConstraintValue,omitempty"`
 
 	// hcl constraint a o1 p1
@@ -122,11 +119,9 @@ func (m *HclConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Name or key of the applicable compatibility constraint.
-		//
 		ConstraintName string `json:"ConstraintName,omitempty"`
 
 		// Value of the applicable compatibility constraint. Could either be a string value or a regex.
-		//
 		ConstraintValue string `json:"ConstraintValue,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *HclConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HclConstraintAO1P1
 
 	rcv.ConstraintName = stage1.ConstraintName
-
 	rcv.ConstraintValue = stage1.ConstraintValue
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *HclConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ConstraintName")
-
 	delete(stage2, "ConstraintValue")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m HclConstraintAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name or key of the applicable compatibility constraint.
-		//
 		ConstraintName string `json:"ConstraintName,omitempty"`
 
 		// Value of the applicable compatibility constraint. Could either be a string value or a regex.
-		//
 		ConstraintValue string `json:"ConstraintValue,omitempty"`
 	}
 
 	stage1.ConstraintName = m.ConstraintName
-
 	stage1.ConstraintValue = m.ConstraintValue
 
 	// make JSON object for known properties

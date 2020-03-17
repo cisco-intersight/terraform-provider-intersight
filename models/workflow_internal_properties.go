@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowInternalProperties) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *WorkflowInternalProperties) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowInternalPropertiesAO1P1 workflow internal properties a o1 p1
+//
 // swagger:model WorkflowInternalPropertiesAO1P1
 type WorkflowInternalPropertiesAO1P1 struct {
 
 	// This field will hold the base task type like HttpBaseTask or RemoteAnsibleBaseTask.
-	//
 	// Read Only: true
 	BaseTaskType string `json:"BaseTaskType,omitempty"`
 
 	// This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.
-	//
 	// Read Only: true
-	Constraints string `json:"Constraints,omitempty"`
+	Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
-	// Denotes this is an internal task.  Internal tasks will be hidden from the UI within a workflow.
-	//
+	// Denotes this is an internal task. Internal tasks will be hidden from the UI when executing a workflow.
 	// Read Only: true
 	Internal *bool `json:"Internal,omitempty"`
 
 	// The service that owns and is responsible for execution of the task.
-	//
 	// Read Only: true
 	Owner string `json:"Owner,omitempty"`
 
@@ -134,22 +129,18 @@ func (m *WorkflowInternalPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// This field will hold the base task type like HttpBaseTask or RemoteAnsibleBaseTask.
-		//
 		// Read Only: true
 		BaseTaskType string `json:"BaseTaskType,omitempty"`
 
 		// This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.
-		//
 		// Read Only: true
-		Constraints string `json:"Constraints,omitempty"`
+		Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
-		// Denotes this is an internal task.  Internal tasks will be hidden from the UI within a workflow.
-		//
+		// Denotes this is an internal task. Internal tasks will be hidden from the UI when executing a workflow.
 		// Read Only: true
 		Internal *bool `json:"Internal,omitempty"`
 
 		// The service that owns and is responsible for execution of the task.
-		//
 		// Read Only: true
 		Owner string `json:"Owner,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *WorkflowInternalPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowInternalPropertiesAO1P1
 
 	rcv.BaseTaskType = stage1.BaseTaskType
-
 	rcv.Constraints = stage1.Constraints
-
 	rcv.Internal = stage1.Internal
-
 	rcv.Owner = stage1.Owner
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *WorkflowInternalPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "BaseTaskType")
-
 	delete(stage2, "Constraints")
-
 	delete(stage2, "Internal")
-
 	delete(stage2, "Owner")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m WorkflowInternalPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// This field will hold the base task type like HttpBaseTask or RemoteAnsibleBaseTask.
-		//
 		// Read Only: true
 		BaseTaskType string `json:"BaseTaskType,omitempty"`
 
 		// This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.
-		//
 		// Read Only: true
-		Constraints string `json:"Constraints,omitempty"`
+		Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
-		// Denotes this is an internal task.  Internal tasks will be hidden from the UI within a workflow.
-		//
+		// Denotes this is an internal task. Internal tasks will be hidden from the UI when executing a workflow.
 		// Read Only: true
 		Internal *bool `json:"Internal,omitempty"`
 
 		// The service that owns and is responsible for execution of the task.
-		//
 		// Read Only: true
 		Owner string `json:"Owner,omitempty"`
 	}
 
 	stage1.BaseTaskType = m.BaseTaskType
-
 	stage1.Constraints = m.Constraints
-
 	stage1.Internal = m.Internal
-
 	stage1.Owner = m.Owner
 
 	// make JSON object for known properties
@@ -258,6 +234,33 @@ func (m WorkflowInternalPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 
 // Validate validates this workflow internal properties a o1 p1
 func (m *WorkflowInternalPropertiesAO1P1) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateConstraints(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *WorkflowInternalPropertiesAO1P1) validateConstraints(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Constraints) { // not required
+		return nil
+	}
+
+	if m.Constraints != nil {
+		if err := m.Constraints.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Constraints")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

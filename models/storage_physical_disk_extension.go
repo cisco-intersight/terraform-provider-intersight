@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,44 +20,34 @@ type StoragePhysicalDiskExtension struct {
 	EquipmentBase
 
 	// It shows whether disk is bootable or not.
-	//
 	// Read Only: true
 	Bootable string `json:"Bootable,omitempty"`
 
 	// It shows the Physical drive Dn.
-	//
 	// Read Only: true
 	DiskDn string `json:"DiskDn,omitempty"`
 
 	// It shows storage Enclosure slotId.
-	//
 	// Read Only: true
 	DiskID int64 `json:"DiskId,omitempty"`
 
 	// It shows the current drive state of disk.
-	//
 	// Read Only: true
 	DiskState string `json:"DiskState,omitempty"`
 
 	// It shows the current drive state of disk.
-	//
 	Health string `json:"Health,omitempty"`
 
 	// A collection of references to the [storage.PhysicalDisk](mo://storage.PhysicalDisk) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.PhysicalDisk](mo://storage.PhysicalDisk) MO unsets its reference to this deleted MO.
-	//
 	PhysicalDisk *StoragePhysicalDiskRef `json:"PhysicalDisk,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageController *StorageControllerRef `json:"StorageController,omitempty"`
 }
@@ -122,7 +111,6 @@ func (m StoragePhysicalDiskExtension) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Bootable string `json:"Bootable,omitempty"`
 
@@ -162,7 +150,6 @@ func (m StoragePhysicalDiskExtension) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

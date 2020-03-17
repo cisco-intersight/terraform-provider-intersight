@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,11 +20,9 @@ type NiaapiFileDownloader struct {
 	MoBaseMo
 
 	// Filename of this Metadata package file, folder will be handled by api.
-	//
 	FileName string `json:"FileName,omitempty"`
 
 	// The presigned URL from server to download this file.
-	//
 	PresignedURL string `json:"PresignedUrl,omitempty"`
 }
 
@@ -64,7 +61,6 @@ func (m NiaapiFileDownloader) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		FileName string `json:"FileName,omitempty"`
 
@@ -80,7 +76,6 @@ func (m NiaapiFileDownloader) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,33 +23,32 @@ import (
 type WorkflowWebAPI struct {
 	WorkflowAPI
 
+	// If the target type is Endpoint, this property determines whether the request is
+	// to be handled as internal request or external request by the device connector.
+	// Enum: [Internal External]
+	EndpointRequestType *string `json:"EndpointRequestType,omitempty"`
+
 	// Collection of key value pairs to set in the request header.
-	//
-	//
 	Headers interface{} `json:"Headers,omitempty"`
 
 	// The HTTP method to be executed in the given URL (GET, POST, PUT, etc).
 	// If the value is not specified, GET will be used as default.
-	//
-	//
 	Method string `json:"Method,omitempty"`
 
+	// The type of the intersight object for which API request is to be made.
+	// The property is valid in case of Intersight API calls and the base url is automatically prepended based on the value.
+	MoType string `json:"MoType,omitempty"`
+
 	// The accepted web protocol values are http and https.
-	//
-	//
 	Protocol string `json:"Protocol,omitempty"`
 
 	// If the web API is to be executed in a remote device connected to the
 	// Intersight through device connector, 'Endpoint' is expected as the value
 	// whereas if the API is an Intersight API, 'Local' is expected as the value.
-	//
-	//
 	// Enum: [Endpoint Local]
 	TargetType *string `json:"TargetType,omitempty"`
 
 	// The URL of the resource in the target to which the API request is made.
-	//
-	//
 	URL string `json:"Url,omitempty"`
 }
 
@@ -65,9 +63,13 @@ func (m *WorkflowWebAPI) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		EndpointRequestType *string `json:"EndpointRequestType,omitempty"`
+
 		Headers interface{} `json:"Headers,omitempty"`
 
 		Method string `json:"Method,omitempty"`
+
+		MoType string `json:"MoType,omitempty"`
 
 		Protocol string `json:"Protocol,omitempty"`
 
@@ -79,9 +81,13 @@ func (m *WorkflowWebAPI) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
+	m.EndpointRequestType = dataAO1.EndpointRequestType
+
 	m.Headers = dataAO1.Headers
 
 	m.Method = dataAO1.Method
+
+	m.MoType = dataAO1.MoType
 
 	m.Protocol = dataAO1.Protocol
 
@@ -101,11 +107,14 @@ func (m WorkflowWebAPI) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
+		EndpointRequestType *string `json:"EndpointRequestType,omitempty"`
+
 		Headers interface{} `json:"Headers,omitempty"`
 
 		Method string `json:"Method,omitempty"`
+
+		MoType string `json:"MoType,omitempty"`
 
 		Protocol string `json:"Protocol,omitempty"`
 
@@ -114,9 +123,13 @@ func (m WorkflowWebAPI) MarshalJSON() ([]byte, error) {
 		URL string `json:"Url,omitempty"`
 	}
 
+	dataAO1.EndpointRequestType = m.EndpointRequestType
+
 	dataAO1.Headers = m.Headers
 
 	dataAO1.Method = m.Method
+
+	dataAO1.MoType = m.MoType
 
 	dataAO1.Protocol = m.Protocol
 
@@ -129,7 +142,6 @@ func (m WorkflowWebAPI) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -142,6 +154,10 @@ func (m *WorkflowWebAPI) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateEndpointRequestType(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTargetType(formats); err != nil {
 		res = append(res, err)
 	}
@@ -149,6 +165,40 @@ func (m *WorkflowWebAPI) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var workflowWebApiTypeEndpointRequestTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Internal","External"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		workflowWebApiTypeEndpointRequestTypePropEnum = append(workflowWebApiTypeEndpointRequestTypePropEnum, v)
+	}
+}
+
+// property enum
+func (m *WorkflowWebAPI) validateEndpointRequestTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowWebApiTypeEndpointRequestTypePropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *WorkflowWebAPI) validateEndpointRequestType(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.EndpointRequestType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateEndpointRequestTypeEnum("EndpointRequestType", "body", *m.EndpointRequestType); err != nil {
+		return err
+	}
+
 	return nil
 }
 

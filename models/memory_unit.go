@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,19 +20,15 @@ type MemoryUnit struct {
 	MemoryAbstractUnit
 
 	// A collection of references to the [memory.Array](mo://memory.Array) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.Array](mo://memory.Array) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryArray *MemoryArrayRef `json:"MemoryArray,omitempty"`
 
 	// This represents the ID of a regular DIMM on a server.
-	//
 	// Read Only: true
 	MemoryID int64 `json:"MemoryId,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -77,7 +72,6 @@ func (m MemoryUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		MemoryArray *MemoryArrayRef `json:"MemoryArray,omitempty"`
 
@@ -97,7 +91,6 @@ func (m MemoryUnit) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,25 +20,32 @@ type LicenseCustomerOp struct {
 	MoBaseMo
 
 	// A collection of references to the [license.AccountLicenseData](mo://license.AccountLicenseData) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [license.AccountLicenseData](mo://license.AccountLicenseData) MO unsets its reference to this deleted MO.
-	//
 	AccountLicenseData *LicenseAccountLicenseDataRef `json:"AccountLicenseData,omitempty"`
 
+	// The license administrative state.
+	// Set this property to 'true' to activate the license entitlements.
+	ActiveAdmin *bool `json:"ActiveAdmin,omitempty"`
+
 	// Trigger de-registration/disable.
-	//
 	DeregisterDevice *bool `json:"DeregisterDevice,omitempty"`
 
+	// Enable trial for Intersight licensing.
+	EnableTrial *bool `json:"EnableTrial,omitempty"`
+
+	// The default Trial or Grace period customer is entitled to.
+	EvaluationPeriod int64 `json:"EvaluationPeriod,omitempty"`
+
+	// The number of days the trial Trial or Grace period is extended. The trial or grace period can be extended once.
+	ExtraEvaluation int64 `json:"ExtraEvaluation,omitempty"`
+
 	// Trigger renew authorization.
-	//
 	RenewAuthorization *bool `json:"RenewAuthorization,omitempty"`
 
 	// Trigger renew registration.
-	//
 	RenewIDCertificate *bool `json:"RenewIdCertificate,omitempty"`
 
 	// Trigger show tech support feature.
-	//
 	ShowAgentTechSupport *bool `json:"ShowAgentTechSupport,omitempty"`
 }
 
@@ -56,7 +62,15 @@ func (m *LicenseCustomerOp) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		AccountLicenseData *LicenseAccountLicenseDataRef `json:"AccountLicenseData,omitempty"`
 
+		ActiveAdmin *bool `json:"ActiveAdmin,omitempty"`
+
 		DeregisterDevice *bool `json:"DeregisterDevice,omitempty"`
+
+		EnableTrial *bool `json:"EnableTrial,omitempty"`
+
+		EvaluationPeriod int64 `json:"EvaluationPeriod,omitempty"`
+
+		ExtraEvaluation int64 `json:"ExtraEvaluation,omitempty"`
 
 		RenewAuthorization *bool `json:"RenewAuthorization,omitempty"`
 
@@ -70,7 +84,15 @@ func (m *LicenseCustomerOp) UnmarshalJSON(raw []byte) error {
 
 	m.AccountLicenseData = dataAO1.AccountLicenseData
 
+	m.ActiveAdmin = dataAO1.ActiveAdmin
+
 	m.DeregisterDevice = dataAO1.DeregisterDevice
+
+	m.EnableTrial = dataAO1.EnableTrial
+
+	m.EvaluationPeriod = dataAO1.EvaluationPeriod
+
+	m.ExtraEvaluation = dataAO1.ExtraEvaluation
 
 	m.RenewAuthorization = dataAO1.RenewAuthorization
 
@@ -90,11 +112,18 @@ func (m LicenseCustomerOp) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccountLicenseData *LicenseAccountLicenseDataRef `json:"AccountLicenseData,omitempty"`
 
+		ActiveAdmin *bool `json:"ActiveAdmin,omitempty"`
+
 		DeregisterDevice *bool `json:"DeregisterDevice,omitempty"`
+
+		EnableTrial *bool `json:"EnableTrial,omitempty"`
+
+		EvaluationPeriod int64 `json:"EvaluationPeriod,omitempty"`
+
+		ExtraEvaluation int64 `json:"ExtraEvaluation,omitempty"`
 
 		RenewAuthorization *bool `json:"RenewAuthorization,omitempty"`
 
@@ -105,7 +134,15 @@ func (m LicenseCustomerOp) MarshalJSON() ([]byte, error) {
 
 	dataAO1.AccountLicenseData = m.AccountLicenseData
 
+	dataAO1.ActiveAdmin = m.ActiveAdmin
+
 	dataAO1.DeregisterDevice = m.DeregisterDevice
+
+	dataAO1.EnableTrial = m.EnableTrial
+
+	dataAO1.EvaluationPeriod = m.EvaluationPeriod
+
+	dataAO1.ExtraEvaluation = m.ExtraEvaluation
 
 	dataAO1.RenewAuthorization = m.RenewAuthorization
 
@@ -118,7 +155,6 @@ func (m LicenseCustomerOp) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

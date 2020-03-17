@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // FirmwareServerConfigurationUtilityDistributableList firmware server configuration utility distributable list
+//
 // swagger:model firmwareServerConfigurationUtilityDistributableList
 type FirmwareServerConfigurationUtilityDistributableList struct {
 

@@ -9,14 +9,13 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-// WorkflowWorkflowDefinition Workflow:Workflow Definition
+// WorkflowWorkflowDefinition Workflow Definition
 //
 // Workflow definition is a collection of tasks that are sequenced in a certain way using control tasks. The tasks in the workflow definition is represented as a directed acyclic graph where each node in the graph is a task and the edges in the graph are transitions from one task to another.
 //
@@ -25,58 +24,52 @@ type WorkflowWorkflowDefinition struct {
 	MoBaseMo
 
 	// The catalog under which the definition is present.
-	//
 	Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
 	// When true this will be the workflow version that is used when a specific workflow definition version is not specified. The default version is used when user executes a workflow without specifying a version or when workflow is included in another workflow without a specific version. The very first workflow definition created with a name will be set as the default version, after that user can explicitly set any version of the workflow definition as the default version.
-	//
 	DefaultVersion *bool `json:"DefaultVersion,omitempty"`
 
 	// The description for this workflow.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The schema expected for input parameters for this workflow.
-	//
 	InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
 
-	// A user friendly short name to identify the workflow.
-	//
+	// A user friendly short name to identify the workflow. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:), space ( ) or an underscore (_).
 	Label string `json:"Label,omitempty"`
 
 	// License entitlement required to run this workflow. It is calculated based on the highest license requirement of all its tasks.
-	//
 	// Read Only: true
-	// Enum: [Base Essential Standard Advantage]
+	// Enum: [Base Essential Standard Advantage Premier]
 	LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
 
-	// The name for this workflow. You can have multiple version of the workflow with the same name.
-	//
+	// The maximum number of tasks that can be executed on this workflow.
+	// Read Only: true
+	MaxTaskCount int64 `json:"MaxTaskCount,omitempty"`
+
+	// The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_).
 	Name string `json:"Name,omitempty"`
 
 	// The schema expected for output parameters for this workflow.
-	//
 	OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 	// The output mappings for the workflow. The outputs for worflows will generally be task output variables that we want to export out at the end of the workflow. The format to specify the mapping is '${Source.output.JsonPath}'. 'Source' is the name of the task within the workflow. You can map any task output to a workflow output as long as the types are compatible. Following this is JSON path expression to extract JSON fragment from source's output.
-	//
 	OutputParameters interface{} `json:"OutputParameters,omitempty"`
 
+	// Type to capture the properties of a workflow definition. Some of these properties are passed to workflow execution instance.
+	Properties *WorkflowWorkflowProperties `json:"Properties,omitempty"`
+
 	// The tasks contained inside of the workflow.
-	//
 	Tasks []*WorkflowWorkflowTask `json:"Tasks"`
 
 	// This will hold the data needed for workflow to be rendered in the user interface.
-	//
 	UIRenderingData interface{} `json:"UiRenderingData,omitempty"`
 
 	// The current validation state and associated information for this workflow.
-	//
 	// Read Only: true
 	ValidationInformation *WorkflowValidationInformation `json:"ValidationInformation,omitempty"`
 
 	// The version of the workflow to support multiple versions.
-	//
 	Version int64 `json:"Version,omitempty"`
 }
 
@@ -103,11 +96,15 @@ func (m *WorkflowWorkflowDefinition) UnmarshalJSON(raw []byte) error {
 
 		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
 
+		MaxTaskCount int64 `json:"MaxTaskCount,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
+
+		Properties *WorkflowWorkflowProperties `json:"Properties,omitempty"`
 
 		Tasks []*WorkflowWorkflowTask `json:"Tasks"`
 
@@ -133,11 +130,15 @@ func (m *WorkflowWorkflowDefinition) UnmarshalJSON(raw []byte) error {
 
 	m.LicenseEntitlement = dataAO1.LicenseEntitlement
 
+	m.MaxTaskCount = dataAO1.MaxTaskCount
+
 	m.Name = dataAO1.Name
 
 	m.OutputDefinition = dataAO1.OutputDefinition
 
 	m.OutputParameters = dataAO1.OutputParameters
+
+	m.Properties = dataAO1.Properties
 
 	m.Tasks = dataAO1.Tasks
 
@@ -159,7 +160,6 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
@@ -173,11 +173,15 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 
 		LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
 
+		MaxTaskCount int64 `json:"MaxTaskCount,omitempty"`
+
 		Name string `json:"Name,omitempty"`
 
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 		OutputParameters interface{} `json:"OutputParameters,omitempty"`
+
+		Properties *WorkflowWorkflowProperties `json:"Properties,omitempty"`
 
 		Tasks []*WorkflowWorkflowTask `json:"Tasks"`
 
@@ -200,11 +204,15 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 
 	dataAO1.LicenseEntitlement = m.LicenseEntitlement
 
+	dataAO1.MaxTaskCount = m.MaxTaskCount
+
 	dataAO1.Name = m.Name
 
 	dataAO1.OutputDefinition = m.OutputDefinition
 
 	dataAO1.OutputParameters = m.OutputParameters
+
+	dataAO1.Properties = m.Properties
 
 	dataAO1.Tasks = m.Tasks
 
@@ -219,7 +227,6 @@ func (m WorkflowWorkflowDefinition) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -245,6 +252,10 @@ func (m *WorkflowWorkflowDefinition) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOutputDefinition(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProperties(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -309,7 +320,7 @@ var workflowWorkflowDefinitionTypeLicenseEntitlementPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -359,6 +370,24 @@ func (m *WorkflowWorkflowDefinition) validateOutputDefinition(formats strfmt.Reg
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *WorkflowWorkflowDefinition) validateProperties(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Properties) { // not required
+		return nil
+	}
+
+	if m.Properties != nil {
+		if err := m.Properties.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Properties")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // SyslogPolicyList syslog policy list
+//
 // swagger:model syslogPolicyList
 type SyslogPolicyList struct {
 

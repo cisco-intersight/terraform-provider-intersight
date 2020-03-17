@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,81 +21,63 @@ type NiaapiSoftwareEol struct {
 	MoBaseMo
 
 	// String contains the Release versions affected by this notice, seperated by comma.
-	//
 	AffectedVersions string `json:"AffectedVersions,omitempty"`
 
 	// Date time of this notice Announced.
-	//
 	// Format: date-time
 	AnnouncementDate strfmt.DateTime `json:"AnnouncementDate,omitempty"`
 
 	// Epoch time of this notice Announced.
-	//
 	AnnouncementDateEpoch int64 `json:"AnnouncementDateEpoch,omitempty"`
 
 	// The bulletinno of this software release end of life notice.
-	//
 	BulletinNo string `json:"BulletinNo,omitempty"`
 
 	// The description of this software release end of life notice.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Date time of End of New service attachment .
-	//
 	// Format: date-time
 	EndofNewServiceAttachmentDate strfmt.DateTime `json:"EndofNewServiceAttachmentDate,omitempty"`
 
 	// Epoch time of End of New service attachment .
-	//
 	EndofNewServiceAttachmentDateEpoch int64 `json:"EndofNewServiceAttachmentDateEpoch,omitempty"`
 
 	// Date time of End of Renewal of service contract .
-	//
 	// Format: date-time
 	EndofServiceContractRenewalDate strfmt.DateTime `json:"EndofServiceContractRenewalDate,omitempty"`
 
 	// Epoch time of End of Renewal of service contract .
-	//
 	EndofServiceContractRenewalDateEpoch int64 `json:"EndofServiceContractRenewalDateEpoch,omitempty"`
 
 	// Date time of End of Maintenance.
-	//
 	// Format: date-time
 	EndofSwMaintenanceDate strfmt.DateTime `json:"EndofSwMaintenanceDate,omitempty"`
 
 	// Epoch time of End of Maintenance.
-	//
 	EndofSwMaintenanceDateEpoch int64 `json:"EndofSwMaintenanceDateEpoch,omitempty"`
 
 	// The title of this software release end of life notice.
-	//
 	Headline string `json:"Headline,omitempty"`
 
 	// Date time of Last day of Support .
-	//
 	// Format: date-time
 	LastDateofSupport strfmt.DateTime `json:"LastDateofSupport,omitempty"`
 
 	// Epoch time of Last day of Support .
-	//
 	LastDateofSupportEpoch int64 `json:"LastDateofSupportEpoch,omitempty"`
 
 	// Date time of Lastship Date.
-	//
 	// Format: date-time
 	LastShipDate strfmt.DateTime `json:"LastShipDate,omitempty"`
 
 	// Epoch time of Lastship Date.
-	//
 	LastShipDateEpoch int64 `json:"LastShipDateEpoch,omitempty"`
 
 	// The URL of this migration notice.
-	//
 	MigrationURL string `json:"MigrationUrl,omitempty"`
 
 	// Software end of life notice URL link to the notice webpage.
-	//
 	SoftwareEolURL string `json:"SoftwareEolUrl,omitempty"`
 }
 
@@ -199,7 +180,6 @@ func (m NiaapiSoftwareEol) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AffectedVersions string `json:"AffectedVersions,omitempty"`
 
@@ -279,7 +259,6 @@ func (m NiaapiSoftwareEol) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m TamQueryEntry) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *TamQueryEntry) UnmarshalBinary(b []byte) error {
 }
 
 // TamQueryEntryAO1P1 tam query entry a o1 p1
+//
 // swagger:model TamQueryEntryAO1P1
 type TamQueryEntryAO1P1 struct {
 
 	// Name is used to unique identify and result of the given query which can be used by subsequent queries as input data source.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.
-	//
 	Priority int64 `json:"Priority,omitempty"`
 
 	// A SparkSQL query to be used on a given data source.
-	//
 	Query string `json:"Query,omitempty"`
 
 	// tam query entry a o1 p1
@@ -126,15 +122,12 @@ func (m *TamQueryEntryAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Name is used to unique identify and result of the given query which can be used by subsequent queries as input data source.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.
-		//
 		Priority int64 `json:"Priority,omitempty"`
 
 		// A SparkSQL query to be used on a given data source.
-		//
 		Query string `json:"Query,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *TamQueryEntryAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv TamQueryEntryAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.Priority = stage1.Priority
-
 	rcv.Query = stage1.Query
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *TamQueryEntryAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "Priority")
-
 	delete(stage2, "Query")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m TamQueryEntryAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name is used to unique identify and result of the given query which can be used by subsequent queries as input data source.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.
-		//
 		Priority int64 `json:"Priority,omitempty"`
 
 		// A SparkSQL query to be used on a given data source.
-		//
 		Query string `json:"Query,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.Priority = m.Priority
-
 	stage1.Query = m.Query
 
 	// make JSON object for known properties

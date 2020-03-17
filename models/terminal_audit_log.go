@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,24 +21,20 @@ type TerminalAuditLog struct {
 	MoBaseMo
 
 	// The device this terminal was opened on.
-	//
 	// Read Only: true
 	DeviceRegistration *AssetDeviceConnectionRef `json:"DeviceRegistration,omitempty"`
 
 	// The time the terminal was closed. If terminal has not closed, value is zero time.
-	//
 	// Read Only: true
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 	// The time the terminal session was opened.
-	//
 	// Read Only: true
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// The user that opened the terminal session.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 }
@@ -87,7 +82,6 @@ func (m TerminalAuditLog) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DeviceRegistration *AssetDeviceConnectionRef `json:"DeviceRegistration,omitempty"`
 
@@ -111,7 +105,6 @@ func (m TerminalAuditLog) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

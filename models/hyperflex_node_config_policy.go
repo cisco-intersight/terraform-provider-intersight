@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,33 +22,25 @@ type HyperflexNodeConfigPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// The range of storage data IPs to be assigned to the nodes.
-	//
 	DataIPRange *HyperflexIPAddrRange `json:"DataIpRange,omitempty"`
 
 	// The range of storage management IPs to be assigned to the nodes.
-	//
 	HxdpIPRange *HyperflexIPAddrRange `json:"HxdpIpRange,omitempty"`
 
 	// The range of management IPs to be assigned to the nodes.
-	//
 	MgmtIPRange *HyperflexIPAddrRange `json:"MgmtIpRange,omitempty"`
 
 	// The node name prefix that is used to automatically generate the default hostname for each server.
-	//
 	// A dash (-) will be appended to the prefix followed by the node number to form a hostname.
 	// This default naming scheme can be manually overridden in the node configuration.
 	// The maximum length of a prefix is 60, must only contain alphanumeric characters or dash (-), and must
 	// start with an alphanumeric character.
-	//
-	//
 	NodeNamePrefix string `json:"NodeNamePrefix,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
@@ -104,7 +95,6 @@ func (m HyperflexNodeConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -136,7 +126,6 @@ func (m HyperflexNodeConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

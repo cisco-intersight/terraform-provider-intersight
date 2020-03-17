@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -27,41 +26,32 @@ type OsInstall struct {
 	OsBaseInstallConfig
 
 	// If the answers source is selected as 'Template' in 'Answers' property, this relation provides the os.ConfigurationFile instance to be used for this OS install.
-	//
 	ConfigurationFile *OsConfigurationFileRef `json:"ConfigurationFile,omitempty"`
 
 	// OS Image to be installed as part of this OS installation.
-	//
 	Image *SoftwarerepositoryOperatingSystemFileRef `json:"Image,omitempty"`
 
 	// The name of the OS install configuration.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Location of the Intersight OS Deployment Utilityimage, if the user has downloaded and available locally, to be used for this OS install configuration. This image is applicable for vMedia install method.
 	// Cisco publishes a OS Deployment Utility image that bootstraps and installs the user provided operating system images along with answers for unattended instllation.
 	// If this property is empty for vMedia install type, the image hosted in Intersight image repository will be used. Note that in this case, the image will be downloaded from Intersight in every target server every time.
-	//
 	OsduImage *FirmwareServerConfigurationUtilityDistributableRef `json:"OsduImage,omitempty"`
 
 	// Post Install Scripts to be executed specified in order.
-	//
 	PostInstallScripts []*OsPostInstallScriptRef `json:"PostInstallScripts"`
 
 	// This relation provides the target server in which the OS is to be
 	// installed.
-	//
 	Server *ComputePhysicalRef `json:"Server,omitempty"`
 
 	// This relation is populated with the reference of OS install workflow
 	// started for this request. This workflow info MO shall be used for
 	// tracking further status and completion.
-	//
 	WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 }
 
@@ -124,7 +114,6 @@ func (m OsInstall) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigurationFile *OsConfigurationFileRef `json:"ConfigurationFile,omitempty"`
 
@@ -164,7 +153,6 @@ func (m OsInstall) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

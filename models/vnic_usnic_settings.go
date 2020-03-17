@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicUsnicSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *VnicUsnicSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicUsnicSettingsAO1P1 vnic usnic settings a o1 p1
+//
 // swagger:model VnicUsnicSettingsAO1P1
 type VnicUsnicSettingsAO1P1 struct {
 
 	// Class of Service to be used for traffic on the usNIC.
-	//
 	Cos int64 `json:"Cos,omitempty"`
 
 	// Number of usNIC interfaces to be created.
-	//
 	Count int64 `json:"Count,omitempty"`
 
 	// Ethernet Adapter policy to be associated with the usNICs.
-	//
 	UsnicAdapterPolicy string `json:"UsnicAdapterPolicy,omitempty"`
 
 	// vnic usnic settings a o1 p1
@@ -126,15 +122,12 @@ func (m *VnicUsnicSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Class of Service to be used for traffic on the usNIC.
-		//
 		Cos int64 `json:"Cos,omitempty"`
 
 		// Number of usNIC interfaces to be created.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// Ethernet Adapter policy to be associated with the usNICs.
-		//
 		UsnicAdapterPolicy string `json:"UsnicAdapterPolicy,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *VnicUsnicSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicUsnicSettingsAO1P1
 
 	rcv.Cos = stage1.Cos
-
 	rcv.Count = stage1.Count
-
 	rcv.UsnicAdapterPolicy = stage1.UsnicAdapterPolicy
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *VnicUsnicSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Cos")
-
 	delete(stage2, "Count")
-
 	delete(stage2, "UsnicAdapterPolicy")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m VnicUsnicSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Class of Service to be used for traffic on the usNIC.
-		//
 		Cos int64 `json:"Cos,omitempty"`
 
 		// Number of usNIC interfaces to be created.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// Ethernet Adapter policy to be associated with the usNICs.
-		//
 		UsnicAdapterPolicy string `json:"UsnicAdapterPolicy,omitempty"`
 	}
 
 	stage1.Cos = m.Cos
-
 	stage1.Count = m.Count
-
 	stage1.UsnicAdapterPolicy = m.UsnicAdapterPolicy
 
 	// make JSON object for known properties

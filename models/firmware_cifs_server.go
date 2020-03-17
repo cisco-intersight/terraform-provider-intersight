@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m FirmwareCifsServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,24 +100,21 @@ func (m *FirmwareCifsServer) UnmarshalBinary(b []byte) error {
 }
 
 // FirmwareCifsServerAO1P1 firmware cifs server a o1 p1
+//
 // swagger:model FirmwareCifsServerAO1P1
 type FirmwareCifsServerAO1P1 struct {
 
 	// Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.
-	//
 	// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 	MountOptions *string `json:"MountOptions,omitempty"`
 
 	// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7.
-	//
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Directory where the image is stored. Example:share/subfolder.
-	//
 	RemoteShare string `json:"RemoteShare,omitempty"`
 
 	// firmware cifs server a o1 p1
@@ -132,20 +127,16 @@ func (m *FirmwareCifsServerAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.
-		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		MountOptions *string `json:"MountOptions,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7.
-		//
 		RemoteIP string `json:"RemoteIp,omitempty"`
 
 		// Directory where the image is stored. Example:share/subfolder.
-		//
 		RemoteShare string `json:"RemoteShare,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -154,13 +145,9 @@ func (m *FirmwareCifsServerAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FirmwareCifsServerAO1P1
 
 	rcv.MountOptions = stage1.MountOptions
-
 	rcv.RemoteFile = stage1.RemoteFile
-
 	rcv.RemoteIP = stage1.RemoteIP
-
 	rcv.RemoteShare = stage1.RemoteShare
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -170,13 +157,9 @@ func (m *FirmwareCifsServerAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "MountOptions")
-
 	delete(stage2, "RemoteFile")
-
 	delete(stage2, "RemoteIp")
-
 	delete(stage2, "RemoteShare")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -198,29 +181,22 @@ func (m FirmwareCifsServerAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.
-		//
 		// Enum: [none ntlm ntlmi ntlmv2 ntlmv2i ntlmssp ntlmsspi]
 		MountOptions *string `json:"MountOptions,omitempty"`
 
 		// Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.
-		//
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
 		// CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7.
-		//
 		RemoteIP string `json:"RemoteIp,omitempty"`
 
 		// Directory where the image is stored. Example:share/subfolder.
-		//
 		RemoteShare string `json:"RemoteShare,omitempty"`
 	}
 
 	stage1.MountOptions = m.MountOptions
-
 	stage1.RemoteFile = m.RemoteFile
-
 	stage1.RemoteIP = m.RemoteIP
-
 	stage1.RemoteShare = m.RemoteShare
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,9 +22,7 @@ type StorageController struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -34,27 +31,22 @@ type StorageController struct {
 	ControllerFlags string `json:"ControllerFlags,omitempty"`
 
 	// It shows the Id of controller.
-	//
 	// Read Only: true
 	ControllerID string `json:"ControllerId,omitempty"`
 
 	// It shows the current status of controller.
-	//
 	// Read Only: true
 	ControllerStatus string `json:"ControllerStatus,omitempty"`
 
 	// It shows the hardware revision of controller.
-	//
 	// Read Only: true
 	HwRevision string `json:"HwRevision,omitempty"`
 
 	// It shows CIMC support for out-of-band configuration of controller.
-	//
 	// Read Only: true
 	OobInterfaceSupported string `json:"OobInterfaceSupported,omitempty"`
 
 	// It shows the current operational state of controller.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
@@ -63,32 +55,26 @@ type StorageController struct {
 	Operability string `json:"Operability,omitempty"`
 
 	// It shows the current pci address of controller.
-	//
 	// Read Only: true
 	PciAddr string `json:"PciAddr,omitempty"`
 
 	// It shows the pci slot name for the controller.
-	//
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
 	// Indicates a SCSI controller has physical connectivity to specified physical disk.
-	//
 	// Read Only: true
 	PhysicalDiskExtensions []*StoragePhysicalDiskExtensionRef `json:"PhysicalDiskExtensions"`
 
 	// Physical Disk on a server.
-	//
 	// Read Only: true
 	PhysicalDisks []*StoragePhysicalDiskRef `json:"PhysicalDisks"`
 
 	// It shows physical presence or absence of the controller on server.
-	//
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
 	// It shows the RAID levels supported by controller.
-	//
 	// Read Only: true
 	RaidSupport string `json:"RaidSupport,omitempty"`
 
@@ -97,11 +83,10 @@ type StorageController struct {
 	RebuildRate string `json:"RebuildRate,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// running firmware
+	// It shows the currently running firmware version.
 	// Read Only: true
 	RunningFirmware []*FirmwareRunningFirmwareRef `json:"RunningFirmware"`
 
@@ -109,7 +94,6 @@ type StorageController struct {
 	SelfEncryptEnabled string `json:"SelfEncryptEnabled,omitempty"`
 
 	// Controller types are SAS, SATA, PCH, NVME.
-	//
 	// Read Only: true
 	Type string `json:"Type,omitempty"`
 
@@ -118,7 +102,6 @@ type StorageController struct {
 	VirtualDriveExtensions []*StorageVirtualDriveExtensionRef `json:"VirtualDriveExtensions"`
 
 	// Storage physical drives are grouped as Drive Group, a drive group then can be partitioned into virtual drives.
-	//
 	// Read Only: true
 	VirtualDrives []*StorageVirtualDriveRef `json:"VirtualDrives"`
 }
@@ -234,7 +217,6 @@ func (m StorageController) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -326,7 +308,6 @@ func (m StorageController) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

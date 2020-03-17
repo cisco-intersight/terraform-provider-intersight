@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m AssetParentConnectionSignature) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,24 +100,21 @@ func (m *AssetParentConnectionSignature) UnmarshalBinary(b []byte) error {
 }
 
 // AssetParentConnectionSignatureAO1P1 asset parent connection signature a o1 p1
+//
 // swagger:model AssetParentConnectionSignatureAO1P1
 type AssetParentConnectionSignatureAO1P1 struct {
 
 	// The moid of the parent device registration.
-	//
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// The node identity of the parent device, corresponds to the parents ClusterMember.memberIdentity. Used on connect to establish through which device in a cluster the child is connected through.
-	//
 	NodeID string `json:"NodeId,omitempty"`
 
 	// The result of signing the deviceId appended with the timeStamp fields with the devices private key.
-	//
 	// Format: byte
 	Signature strfmt.Base64 `json:"Signature,omitempty"`
 
 	// The time at which the signature was generated. Date is accurate to Intersights clock. Used to expire the signature.
-	//
 	// Format: date-time
 	TimeStamp strfmt.DateTime `json:"TimeStamp,omitempty"`
 
@@ -133,20 +128,16 @@ func (m *AssetParentConnectionSignatureAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The moid of the parent device registration.
-		//
 		DeviceID string `json:"DeviceId,omitempty"`
 
 		// The node identity of the parent device, corresponds to the parents ClusterMember.memberIdentity. Used on connect to establish through which device in a cluster the child is connected through.
-		//
 		NodeID string `json:"NodeId,omitempty"`
 
 		// The result of signing the deviceId appended with the timeStamp fields with the devices private key.
-		//
 		// Format: byte
 		Signature strfmt.Base64 `json:"Signature,omitempty"`
 
 		// The time at which the signature was generated. Date is accurate to Intersights clock. Used to expire the signature.
-		//
 		// Format: date-time
 		TimeStamp strfmt.DateTime `json:"TimeStamp,omitempty"`
 	}
@@ -156,13 +147,9 @@ func (m *AssetParentConnectionSignatureAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetParentConnectionSignatureAO1P1
 
 	rcv.DeviceID = stage1.DeviceID
-
 	rcv.NodeID = stage1.NodeID
-
 	rcv.Signature = stage1.Signature
-
 	rcv.TimeStamp = stage1.TimeStamp
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -172,13 +159,9 @@ func (m *AssetParentConnectionSignatureAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DeviceId")
-
 	delete(stage2, "NodeId")
-
 	delete(stage2, "Signature")
-
 	delete(stage2, "TimeStamp")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -200,30 +183,23 @@ func (m AssetParentConnectionSignatureAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The moid of the parent device registration.
-		//
 		DeviceID string `json:"DeviceId,omitempty"`
 
 		// The node identity of the parent device, corresponds to the parents ClusterMember.memberIdentity. Used on connect to establish through which device in a cluster the child is connected through.
-		//
 		NodeID string `json:"NodeId,omitempty"`
 
 		// The result of signing the deviceId appended with the timeStamp fields with the devices private key.
-		//
 		// Format: byte
 		Signature strfmt.Base64 `json:"Signature,omitempty"`
 
 		// The time at which the signature was generated. Date is accurate to Intersights clock. Used to expire the signature.
-		//
 		// Format: date-time
 		TimeStamp strfmt.DateTime `json:"TimeStamp,omitempty"`
 	}
 
 	stage1.DeviceID = m.DeviceID
-
 	stage1.NodeID = m.NodeID
-
 	stage1.Signature = m.Signature
-
 	stage1.TimeStamp = m.TimeStamp
 
 	// make JSON object for known properties
@@ -255,10 +231,6 @@ func (m AssetParentConnectionSignatureAO1P1) MarshalJSON() ([]byte, error) {
 func (m *AssetParentConnectionSignatureAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateSignature(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateTimeStamp(formats); err != nil {
 		res = append(res, err)
 	}
@@ -266,17 +238,6 @@ func (m *AssetParentConnectionSignatureAO1P1) Validate(formats strfmt.Registry) 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *AssetParentConnectionSignatureAO1P1) validateSignature(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Signature) { // not required
-		return nil
-	}
-
-	// Format "byte" (base64 string) is already validated when unmarshalled
-
 	return nil
 }
 

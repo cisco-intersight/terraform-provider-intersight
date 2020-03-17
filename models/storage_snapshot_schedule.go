@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,45 +19,36 @@ import (
 type StorageSnapshotSchedule struct {
 	MoBaseMo
 
-	// Snapshot frequency. It is an interval on which snapshot is set to trigger on source array.
+	// Snapshot frequency. It is an interval at which snapshot is set to trigger on source array.
 	// Examples:
-	//     PT2H, Snapshot is performed for every 2 hours.
+	//     PT2H Snapshot is generated every 2 hours.
 	//     P4D, Snapshot is scheduled for every 4 days.
 	//     PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.
-	//
-	//
 	// Read Only: true
 	Frequency string `json:"Frequency,omitempty"`
 
 	// Name of the snapshot schedule.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Protection group relationship object.
-	//
 	// Read Only: true
 	ProtectionGroup *StorageProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 	// Duration to keep the snapshots on the source array.
-	// Once the period expires, system deletes the snapshot automatically from source array.
+	// Once this period expires, system deletes the snapshot automatically from source array.
 	// Examples:
 	// P200D,  200 days.
 	// PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.
-	//
-	//
 	// Read Only: true
 	RetentionTime string `json:"RetentionTime,omitempty"`
 
-	// Preferred time of the day to capture the snapshot. it is applicable only if the frequency is set for a day or more.
+	// Preferred time of the day to capture the snapshot. It is applicable only if the frequency is set for a day or more.
 	// Format: hh:mm:ss
 	// Example: 08:30:00, Snapshot is set for 08:30 AM.
-	//
-	//
 	// Read Only: true
 	SnapshotTime string `json:"SnapshotTime,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 }
@@ -114,7 +104,6 @@ func (m StorageSnapshotSchedule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Frequency string `json:"Frequency,omitempty"`
 
@@ -146,7 +135,6 @@ func (m StorageSnapshotSchedule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,73 +24,48 @@ type TamSecurityAdvisory struct {
 	TamAdvisory
 
 	// An array of actions that are to be taken when a given managed object matches the criteria specified for being affected by an alert definition.
-	//
 	Actions []*TamAction `json:"Actions"`
 
 	// Cisco generated identifier for the published security advisory.
-	//
-	//
 	AdvisoryID string `json:"AdvisoryId,omitempty"`
 
 	// An array of data sources that are used to provide data for queries used to identify an Intersight alert applicability.
-	//
 	APIDataSources []*TamAPIDataSource `json:"ApiDataSources"`
 
 	// CVSS version 3 base score for the security Advisory.
-	//
-	//
 	BaseScore float64 `json:"BaseScore,omitempty"`
 
 	// CVE (https://cve.mitre.org/about/faqs.html) identifiers associated with the published security Advisory.
-	//
-	//
 	CveIds []string `json:"CveIds"`
 
 	// Date when the security advisory was first published by Cisco.
-	//
-	//
 	// Format: date-time
 	DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
 
 	// Date when the security advisory was last updated by Cisco.
-	//
-	//
 	// Format: date-time
 	DateUpdated strfmt.DateTime `json:"DateUpdated,omitempty"`
 
 	// CVSS version 3 environmental score for the security Advisory.
-	//
-	//
 	EnvironmentalScore float64 `json:"EnvironmentalScore,omitempty"`
 
 	// A link to an external URL describing security Advisory in more details.
-	//
-	//
 	ExternalURL string `json:"ExternalUrl,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Recommended action to resolve the security advisory.
-	//
-	//
 	Recommendation string `json:"Recommendation,omitempty"`
 
 	// Cisco assigned status of the published advisory based on whether the investigation is complete or on-going.
-	//
-	//
 	// Enum: [interim final]
 	Status *string `json:"Status,omitempty"`
 
 	// CVSS version 3 temporal score for the security Advisory.
-	//
-	//
 	TemporalScore float64 `json:"TemporalScore,omitempty"`
 
 	// Cisco assigned advisory version after latest revision.
-	//
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -178,7 +152,6 @@ func (m TamSecurityAdvisory) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Actions []*TamAction `json:"Actions"`
 
@@ -242,7 +215,6 @@ func (m TamSecurityAdvisory) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

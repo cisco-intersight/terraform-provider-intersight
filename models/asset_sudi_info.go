@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m AssetSudiInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,28 +100,24 @@ func (m *AssetSudiInfo) UnmarshalBinary(b []byte) error {
 }
 
 // AssetSudiInfoAO1P1 asset sudi info a o1 p1
+//
 // swagger:model AssetSudiInfoAO1P1
 type AssetSudiInfoAO1P1 struct {
 
 	// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
-	//
 	Pid string `json:"Pid,omitempty"`
 
 	// The device SerialNumber extracted from the X.509 SUDI Leaf Certiicate.
-	//
 	SerialNumber string `json:"SerialNumber,omitempty"`
 
 	// The signature is obtained by taking the base64 encoding of the Serial Number + PID + Status, taking the SHA256 hash and then signing with the SUDI X.509 Leaf Certifiate.
-	//
 	Signature string `json:"Signature,omitempty"`
 
 	// The validation status of the device.
-	//
 	// Enum: [DeviceStatusUnknown Verified CertificateValidationFailed UnsupportedFirmware UnsupportedHardware DeviceNotResponding]
 	Status *string `json:"Status,omitempty"`
 
 	// The X.509 SUDI Leaf Certificate from the Trust Anchor Module. The certificate is serialized in PEM format (Base64 encoded DER certificate).
-	//
 	SudiCertificate *X509Certificate `json:"SudiCertificate,omitempty"`
 
 	// asset sudi info a o1 p1
@@ -136,24 +130,19 @@ func (m *AssetSudiInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
-		//
 		Pid string `json:"Pid,omitempty"`
 
 		// The device SerialNumber extracted from the X.509 SUDI Leaf Certiicate.
-		//
 		SerialNumber string `json:"SerialNumber,omitempty"`
 
 		// The signature is obtained by taking the base64 encoding of the Serial Number + PID + Status, taking the SHA256 hash and then signing with the SUDI X.509 Leaf Certifiate.
-		//
 		Signature string `json:"Signature,omitempty"`
 
 		// The validation status of the device.
-		//
 		// Enum: [DeviceStatusUnknown Verified CertificateValidationFailed UnsupportedFirmware UnsupportedHardware DeviceNotResponding]
 		Status *string `json:"Status,omitempty"`
 
 		// The X.509 SUDI Leaf Certificate from the Trust Anchor Module. The certificate is serialized in PEM format (Base64 encoded DER certificate).
-		//
 		SudiCertificate *X509Certificate `json:"SudiCertificate,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -162,15 +151,10 @@ func (m *AssetSudiInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetSudiInfoAO1P1
 
 	rcv.Pid = stage1.Pid
-
 	rcv.SerialNumber = stage1.SerialNumber
-
 	rcv.Signature = stage1.Signature
-
 	rcv.Status = stage1.Status
-
 	rcv.SudiCertificate = stage1.SudiCertificate
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -180,15 +164,10 @@ func (m *AssetSudiInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Pid")
-
 	delete(stage2, "SerialNumber")
-
 	delete(stage2, "Signature")
-
 	delete(stage2, "Status")
-
 	delete(stage2, "SudiCertificate")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -210,35 +189,26 @@ func (m AssetSudiInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The device model (PID) extracted from the X.509 SUDI Leaf Certificate.
-		//
 		Pid string `json:"Pid,omitempty"`
 
 		// The device SerialNumber extracted from the X.509 SUDI Leaf Certiicate.
-		//
 		SerialNumber string `json:"SerialNumber,omitempty"`
 
 		// The signature is obtained by taking the base64 encoding of the Serial Number + PID + Status, taking the SHA256 hash and then signing with the SUDI X.509 Leaf Certifiate.
-		//
 		Signature string `json:"Signature,omitempty"`
 
 		// The validation status of the device.
-		//
 		// Enum: [DeviceStatusUnknown Verified CertificateValidationFailed UnsupportedFirmware UnsupportedHardware DeviceNotResponding]
 		Status *string `json:"Status,omitempty"`
 
 		// The X.509 SUDI Leaf Certificate from the Trust Anchor Module. The certificate is serialized in PEM format (Base64 encoded DER certificate).
-		//
 		SudiCertificate *X509Certificate `json:"SudiCertificate,omitempty"`
 	}
 
 	stage1.Pid = m.Pid
-
 	stage1.SerialNumber = m.SerialNumber
-
 	stage1.Signature = m.Signature
-
 	stage1.Status = m.Status
-
 	stage1.SudiCertificate = m.SudiCertificate
 
 	// make JSON object for known properties

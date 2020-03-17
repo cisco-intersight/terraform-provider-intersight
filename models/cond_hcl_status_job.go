@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,12 +20,10 @@ type CondHclStatusJob struct {
 	MoBaseMo
 
 	// The related managed object that will be re-evaluated when this job executes.
-	//
 	// Read Only: true
 	ManagedObject *InventoryBaseRef `json:"ManagedObject,omitempty"`
 
 	// The registered device associated with this job. We need this to correctly set permissions for the HCLStatus that will be re-evaluated when this job executes.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -66,7 +63,6 @@ func (m CondHclStatusJob) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ManagedObject *InventoryBaseRef `json:"ManagedObject,omitempty"`
 
@@ -82,7 +78,6 @@ func (m CondHclStatusJob) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

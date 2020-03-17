@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -58,7 +57,6 @@ func (m WorkflowXMLAPI) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -97,5 +95,6 @@ func (m *WorkflowXMLAPI) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowXMLAPIAllOf1 workflow XML API all of1
+//
 // swagger:model WorkflowXMLAPIAllOf1
 type WorkflowXMLAPIAllOf1 interface{}

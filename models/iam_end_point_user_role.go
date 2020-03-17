@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,33 +22,26 @@ type IamEndPointUserRole struct {
 	MoBaseMo
 
 	// Denotes whether password has changed.
-	//
 	// Read Only: true
 	ChangePassword *bool `json:"ChangePassword,omitempty"`
 
 	// Enables the user account on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
-	// Roles.
-	//
+	// Roles associated with the user on the endpoint.
 	EndPointRole []*IamEndPointRoleRef `json:"EndPointRole"`
 
-	// User
-	//
+	// The of set End Point Users which are mapped to this role.
 	EndPointUser *IamEndPointUserRef `json:"EndPointUser,omitempty"`
 
 	// A collection of references to the [iam.EndPointUserPolicy](mo://iam.EndPointUserPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.EndPointUserPolicy](mo://iam.EndPointUserPolicy) MO unsets its reference to this deleted MO.
-	//
 	EndPointUserPolicy *IamEndPointUserPolicyRef `json:"EndPointUserPolicy,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Valid login password of the user.
-	//
 	Password string `json:"Password,omitempty"`
 }
 
@@ -108,7 +100,6 @@ func (m IamEndPointUserRole) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ChangePassword *bool `json:"ChangePassword,omitempty"`
 
@@ -144,7 +135,6 @@ func (m IamEndPointUserRole) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

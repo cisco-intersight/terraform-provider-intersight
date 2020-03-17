@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,14 @@ type SoftwarerepositoryCatalog struct {
 	MoBaseMo
 
 	// The name of the catalog. The names are populated and predefined during MO creation.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The organization under which this catalog exists. This relation will not be populated for the system catalog.
-	//
 	// Read Only: true
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The system under which this catalog exists. This relation will not be populated for organization catalogs.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 }
@@ -75,7 +71,6 @@ func (m SoftwarerepositoryCatalog) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
@@ -95,7 +90,6 @@ func (m SoftwarerepositoryCatalog) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

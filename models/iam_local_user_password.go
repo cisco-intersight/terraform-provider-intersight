@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,20 +20,16 @@ type IamLocalUserPassword struct {
 	MoBaseMo
 
 	// User-entered passsord to be compared to password for change password function.
-	//
 	CurrentPassword string `json:"CurrentPassword,omitempty"`
 
 	// New password that the user's password should be changed to.
-	//
 	NewPassword string `json:"NewPassword,omitempty"`
 
 	// User's current valid passsord.
-	//
 	// Format: byte
 	Password strfmt.Base64 `json:"Password,omitempty"`
 
 	// The backreference of the user password to it's user object.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 }
@@ -82,7 +77,6 @@ func (m IamLocalUserPassword) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CurrentPassword string `json:"CurrentPassword,omitempty"`
 
@@ -106,7 +100,6 @@ func (m IamLocalUserPassword) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -119,10 +112,6 @@ func (m *IamLocalUserPassword) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validatePassword(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateUser(formats); err != nil {
 		res = append(res, err)
 	}
@@ -130,17 +119,6 @@ func (m *IamLocalUserPassword) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *IamLocalUserPassword) validatePassword(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Password) { // not required
-		return nil
-	}
-
-	// Format "byte" (base64 string) is already validated when unmarshalled
-
 	return nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m StorageRemoteKeySetting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,6 +99,7 @@ func (m *StorageRemoteKeySetting) UnmarshalBinary(b []byte) error {
 }
 
 // StorageRemoteKeySettingAO1P1 storage remote key setting a o1 p1
+//
 // swagger:model StorageRemoteKeySettingAO1P1
 type StorageRemoteKeySettingAO1P1 struct {
 
@@ -108,27 +107,21 @@ type StorageRemoteKeySettingAO1P1 struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// The password for the KMIP server login.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The port to which the KMIP client should connect.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-	//
 	PrimaryServer string `json:"PrimaryServer,omitempty"`
 
 	// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-	//
 	SecondaryServer string `json:"SecondaryServer,omitempty"`
 
 	// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
-	//
 	ServerCertificate string `json:"ServerCertificate,omitempty"`
 
 	// The user name for the KMIP server login.
-	//
 	Username string `json:"Username,omitempty"`
 
 	// storage remote key setting a o1 p1
@@ -144,27 +137,21 @@ func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// The password for the KMIP server login.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// The port to which the KMIP client should connect.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-		//
 		PrimaryServer string `json:"PrimaryServer,omitempty"`
 
 		// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-		//
 		SecondaryServer string `json:"SecondaryServer,omitempty"`
 
 		// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
-		//
 		ServerCertificate string `json:"ServerCertificate,omitempty"`
 
 		// The user name for the KMIP server login.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -173,19 +160,12 @@ func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageRemoteKeySettingAO1P1
 
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.Password = stage1.Password
-
 	rcv.Port = stage1.Port
-
 	rcv.PrimaryServer = stage1.PrimaryServer
-
 	rcv.SecondaryServer = stage1.SecondaryServer
-
 	rcv.ServerCertificate = stage1.ServerCertificate
-
 	rcv.Username = stage1.Username
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -195,19 +175,12 @@ func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "Port")
-
 	delete(stage2, "PrimaryServer")
-
 	delete(stage2, "SecondaryServer")
-
 	delete(stage2, "ServerCertificate")
-
 	delete(stage2, "Username")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -232,42 +205,30 @@ func (m StorageRemoteKeySettingAO1P1) MarshalJSON() ([]byte, error) {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// The password for the KMIP server login.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// The port to which the KMIP client should connect.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// The IP address of the primary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-		//
 		PrimaryServer string `json:"PrimaryServer,omitempty"`
 
 		// The IP address of the secondary KMIP server. It could be an IPv4 address, an IPv6 address, or a hostname. Hostnames are valid only when Inband is configured for the CIMC address.
-		//
 		SecondaryServer string `json:"SecondaryServer,omitempty"`
 
 		// The certificate/ public key of the KMIP server. It is required for initiating secure communication with the server.
-		//
 		ServerCertificate string `json:"ServerCertificate,omitempty"`
 
 		// The user name for the KMIP server login.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.Password = m.Password
-
 	stage1.Port = m.Port
-
 	stage1.PrimaryServer = m.PrimaryServer
-
 	stage1.SecondaryServer = m.SecondaryServer
-
 	stage1.ServerCertificate = m.ServerCertificate
-
 	stage1.Username = m.Username
 
 	// make JSON object for known properties

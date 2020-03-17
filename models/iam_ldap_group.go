@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,21 +22,16 @@ type IamLdapGroup struct {
 	MoBaseMo
 
 	// LDAP server domain the Group resides in.
-	//
 	Domain string `json:"Domain,omitempty"`
 
 	// Role assigned to all users in this LDAP server group. This can be one of read-only, user, admin.
-	//
 	EndPointRole []*IamEndPointRoleRef `json:"EndPointRole"`
 
 	// A collection of references to the [iam.LdapPolicy](mo://iam.LdapPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.LdapPolicy](mo://iam.LdapPolicy) MO unsets its reference to this deleted MO.
-	//
 	LdapPolicy *IamLdapPolicyRef `json:"LdapPolicy,omitempty"`
 
 	// LDAP Group name in the LDAP server database.
-	//
 	Name string `json:"Name,omitempty"`
 }
 
@@ -84,7 +78,6 @@ func (m IamLdapGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Domain string `json:"Domain,omitempty"`
 
@@ -108,7 +101,6 @@ func (m IamLdapGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamResourceLimitsList iam resource limits list
+//
 // swagger:model iamResourceLimitsList
 type IamResourceLimitsList struct {
 

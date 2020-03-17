@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,39 +23,31 @@ type TamAdvisoryInstance struct {
 	MoBaseMo
 
 	// Reference to the Intersight advisory affecting the managed object.
-	//
 	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
 	// Reference to the Intersight managed object afftected by the advisory.
-	//
 	AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
 
 	// Moid of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
-	//
 	AffectedObjectMoid string `json:"AffectedObjectMoid,omitempty"`
 
 	// Object type of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
-	//
 	AffectedObjectType string `json:"AffectedObjectType,omitempty"`
 
 	// Device registation reference for the managed object affected by a given advisory instance. The managed object itself is represented using 'affectedObject' reference.
-	//
 	DeviceRegistration *AssetDeviceRegistrationRef `json:"DeviceRegistration,omitempty"`
 
 	// Timestamp when a state change was observed on this advisory instnace.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastStateChangeTime strfmt.DateTime `json:"LastStateChangeTime,omitempty"`
 
 	// Timestamp when this advisory was last evaluated.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastVerifiedTime strfmt.DateTime `json:"LastVerifiedTime,omitempty"`
 
 	// Current state of the advisory instance (Active/Cleared/Unknown etc.).
-	//
 	// Enum: [unknown active cleared]
 	State *string `json:"State,omitempty"`
 }
@@ -120,7 +111,6 @@ func (m TamAdvisoryInstance) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
 
@@ -160,7 +150,6 @@ func (m TamAdvisoryInstance) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

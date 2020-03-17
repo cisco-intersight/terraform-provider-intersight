@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicPlacementSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *VnicPlacementSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicPlacementSettingsAO1P1 vnic placement settings a o1 p1
+//
 // swagger:model VnicPlacementSettingsAO1P1
 type VnicPlacementSettingsAO1P1 struct {
 
 	// PCIe Slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-	//
 	ID string `json:"Id,omitempty"`
 
 	// The PCI Link used as transport for the virtual interface. All VIC adapters have a single PCI link except VIC 1385 which has two.
-	//
 	PciLink int64 `json:"PciLink,omitempty"`
 
 	// Adapter port on which the virtual interface will be created.
-	//
 	Uplink int64 `json:"Uplink,omitempty"`
 
 	// vnic placement settings a o1 p1
@@ -126,15 +122,12 @@ func (m *VnicPlacementSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// PCIe Slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// The PCI Link used as transport for the virtual interface. All VIC adapters have a single PCI link except VIC 1385 which has two.
-		//
 		PciLink int64 `json:"PciLink,omitempty"`
 
 		// Adapter port on which the virtual interface will be created.
-		//
 		Uplink int64 `json:"Uplink,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *VnicPlacementSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicPlacementSettingsAO1P1
 
 	rcv.ID = stage1.ID
-
 	rcv.PciLink = stage1.PciLink
-
 	rcv.Uplink = stage1.Uplink
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *VnicPlacementSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Id")
-
 	delete(stage2, "PciLink")
-
 	delete(stage2, "Uplink")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m VnicPlacementSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// PCIe Slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// The PCI Link used as transport for the virtual interface. All VIC adapters have a single PCI link except VIC 1385 which has two.
-		//
 		PciLink int64 `json:"PciLink,omitempty"`
 
 		// Adapter port on which the virtual interface will be created.
-		//
 		Uplink int64 `json:"Uplink,omitempty"`
 	}
 
 	stage1.ID = m.ID
-
 	stage1.PciLink = m.PciLink
-
 	stage1.Uplink = m.Uplink
 
 	// make JSON object for known properties

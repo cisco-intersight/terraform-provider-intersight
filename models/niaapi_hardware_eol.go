@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,108 +21,84 @@ type NiaapiHardwareEol struct {
 	MoBaseMo
 
 	// String contains the PID of hardwares affected by this notice, seperated by comma.
-	//
 	AffectedPids string `json:"AffectedPids,omitempty"`
 
 	// When this notice is announced.
-	//
 	// Format: date-time
 	AnnouncementDate strfmt.DateTime `json:"AnnouncementDate,omitempty"`
 
 	// Epoch time of Announcement Date.
-	//
 	AnnouncementDateEpoch int64 `json:"AnnouncementDateEpoch,omitempty"`
 
 	// The bulletinno of this hardware end of life notice.
-	//
 	BulletinNo string `json:"BulletinNo,omitempty"`
 
 	// The description of this hardware end of life notice.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Date time of end of new services attachment  .
-	//
 	// Format: date-time
 	EndofNewServiceAttachmentDate strfmt.DateTime `json:"EndofNewServiceAttachmentDate,omitempty"`
 
 	// Epoch time of New service attachment Date .
-	//
 	EndofNewServiceAttachmentDateEpoch int64 `json:"EndofNewServiceAttachmentDateEpoch,omitempty"`
 
 	// Date time of end of routinefailure analysis.
-	//
 	// Format: date-time
 	EndofRoutineFailureAnalysisDate strfmt.DateTime `json:"EndofRoutineFailureAnalysisDate,omitempty"`
 
 	// Epoch time of End of Routine Failure Analysis Date.
-	//
 	EndofRoutineFailureAnalysisDateEpoch int64 `json:"EndofRoutineFailureAnalysisDateEpoch,omitempty"`
 
 	// When this hardware will end sale.
-	//
 	// Format: date-time
 	EndofSaleDate strfmt.DateTime `json:"EndofSaleDate,omitempty"`
 
 	// Epoch time of End of Sale Date.
-	//
 	EndofSaleDateEpoch int64 `json:"EndofSaleDateEpoch,omitempty"`
 
 	// Date time of end of security support .
-	//
 	// Format: date-time
 	EndofSecuritySupport strfmt.DateTime `json:"EndofSecuritySupport,omitempty"`
 
 	// Epoch time of End of Security Support Date .
-	//
 	EndofSecuritySupportEpoch int64 `json:"EndofSecuritySupportEpoch,omitempty"`
 
 	// Date time of end of service contract renew .
-	//
 	// Format: date-time
 	EndofServiceContractRenewalDate strfmt.DateTime `json:"EndofServiceContractRenewalDate,omitempty"`
 
 	// Epoch time of End of Renewal service contract.
-	//
 	EndofServiceContractRenewalDateEpoch int64 `json:"EndofServiceContractRenewalDateEpoch,omitempty"`
 
 	// The date of end of maintainance.
-	//
 	// Format: date-time
 	EndofSwMaintenanceDate strfmt.DateTime `json:"EndofSwMaintenanceDate,omitempty"`
 
 	// Epoch time of End of maintenance Date.
-	//
 	EndofSwMaintenanceDateEpoch int64 `json:"EndofSwMaintenanceDateEpoch,omitempty"`
 
 	// Hardware end of sale URL link to the notice webpage.
-	//
 	HardwareEolURL string `json:"HardwareEolUrl,omitempty"`
 
 	// The title of this hardware end of life notice.
-	//
 	Headline string `json:"Headline,omitempty"`
 
 	// Date time of end of support .
-	//
 	// Format: date-time
 	LastDateofSupport strfmt.DateTime `json:"LastDateofSupport,omitempty"`
 
 	// Epoch time of last date of support .
-	//
 	LastDateofSupportEpoch int64 `json:"LastDateofSupportEpoch,omitempty"`
 
 	// Date time of Lastship Date.
-	//
 	// Format: date-time
 	LastShipDate strfmt.DateTime `json:"LastShipDate,omitempty"`
 
 	// Epoch time of last ship Date.
-	//
 	LastShipDateEpoch int64 `json:"LastShipDateEpoch,omitempty"`
 
 	// The URL of this migration notice.
-	//
 	MigrationURL string `json:"MigrationUrl,omitempty"`
 }
 
@@ -250,7 +225,6 @@ func (m NiaapiHardwareEol) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AffectedPids string `json:"AffectedPids,omitempty"`
 
@@ -354,7 +328,6 @@ func (m NiaapiHardwareEol) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

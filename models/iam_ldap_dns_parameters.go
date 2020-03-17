@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m IamLdapDNSParameters) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,19 +100,17 @@ func (m *IamLdapDNSParameters) UnmarshalBinary(b []byte) error {
 }
 
 // IamLdapDNSParametersAO1P1 iam ldap DNS parameters a o1 p1
+//
 // swagger:model IamLdapDNSParametersAO1P1
 type IamLdapDNSParametersAO1P1 struct {
 
 	// Domain name that acts as a source for a DNS query.
-	//
 	SearchDomain string `json:"SearchDomain,omitempty"`
 
 	// Forest name that acts as a source for a DNS query.
-	//
 	SearchForest string `json:"SearchForest,omitempty"`
 
 	// Source of the domain name used for the DNS SRV request.
-	//
 	// Enum: [Extracted Configured ConfiguredExtracted]
 	Source *string `json:"Source,omitempty"`
 
@@ -128,15 +124,12 @@ func (m *IamLdapDNSParametersAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Domain name that acts as a source for a DNS query.
-		//
 		SearchDomain string `json:"SearchDomain,omitempty"`
 
 		// Forest name that acts as a source for a DNS query.
-		//
 		SearchForest string `json:"SearchForest,omitempty"`
 
 		// Source of the domain name used for the DNS SRV request.
-		//
 		// Enum: [Extracted Configured ConfiguredExtracted]
 		Source *string `json:"Source,omitempty"`
 	}
@@ -146,11 +139,8 @@ func (m *IamLdapDNSParametersAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamLdapDNSParametersAO1P1
 
 	rcv.SearchDomain = stage1.SearchDomain
-
 	rcv.SearchForest = stage1.SearchForest
-
 	rcv.Source = stage1.Source
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -160,11 +150,8 @@ func (m *IamLdapDNSParametersAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "SearchDomain")
-
 	delete(stage2, "SearchForest")
-
 	delete(stage2, "Source")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -186,23 +173,18 @@ func (m IamLdapDNSParametersAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Domain name that acts as a source for a DNS query.
-		//
 		SearchDomain string `json:"SearchDomain,omitempty"`
 
 		// Forest name that acts as a source for a DNS query.
-		//
 		SearchForest string `json:"SearchForest,omitempty"`
 
 		// Source of the domain name used for the DNS SRV request.
-		//
 		// Enum: [Extracted Configured ConfiguredExtracted]
 		Source *string `json:"Source,omitempty"`
 	}
 
 	stage1.SearchDomain = m.SearchDomain
-
 	stage1.SearchForest = m.SearchForest
-
 	stage1.Source = m.Source
 
 	// make JSON object for known properties

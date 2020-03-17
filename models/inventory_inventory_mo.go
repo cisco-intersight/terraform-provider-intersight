@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m InventoryInventoryMo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *InventoryInventoryMo) UnmarshalBinary(b []byte) error {
 }
 
 // InventoryInventoryMoAO1P1 inventory inventory mo a o1 p1
+//
 // swagger:model InventoryInventoryMoAO1P1
 type InventoryInventoryMoAO1P1 struct {
 
 	// The UCS DN of the MO for which the latest inventory to be fetched. If this property is empty and moId property has the Moid of the MO to be updated, the Moid will be used. If this property is empty and moId is also empty, all the MOs of the given moType will be updated.
-	//
 	MoDn string `json:"MoDn,omitempty"`
 
 	// The MO id of an MO for which the latest inventory to be fetched. If this property is empty and moDn property has the UCS DN of the MO to be updated, the DN will be used. If this property is empty and moDn is also empty, all the MOs of the given moType will be updated.
-	//
 	MoID string `json:"MoId,omitempty"`
 
 	// The type of the MO for which the latest inventory to be fetched.
-	//
 	MoType string `json:"MoType,omitempty"`
 
 	// inventory inventory mo a o1 p1
@@ -126,15 +122,12 @@ func (m *InventoryInventoryMoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The UCS DN of the MO for which the latest inventory to be fetched. If this property is empty and moId property has the Moid of the MO to be updated, the Moid will be used. If this property is empty and moId is also empty, all the MOs of the given moType will be updated.
-		//
 		MoDn string `json:"MoDn,omitempty"`
 
 		// The MO id of an MO for which the latest inventory to be fetched. If this property is empty and moDn property has the UCS DN of the MO to be updated, the DN will be used. If this property is empty and moDn is also empty, all the MOs of the given moType will be updated.
-		//
 		MoID string `json:"MoId,omitempty"`
 
 		// The type of the MO for which the latest inventory to be fetched.
-		//
 		MoType string `json:"MoType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *InventoryInventoryMoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv InventoryInventoryMoAO1P1
 
 	rcv.MoDn = stage1.MoDn
-
 	rcv.MoID = stage1.MoID
-
 	rcv.MoType = stage1.MoType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *InventoryInventoryMoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "MoDn")
-
 	delete(stage2, "MoId")
-
 	delete(stage2, "MoType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m InventoryInventoryMoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The UCS DN of the MO for which the latest inventory to be fetched. If this property is empty and moId property has the Moid of the MO to be updated, the Moid will be used. If this property is empty and moId is also empty, all the MOs of the given moType will be updated.
-		//
 		MoDn string `json:"MoDn,omitempty"`
 
 		// The MO id of an MO for which the latest inventory to be fetched. If this property is empty and moDn property has the UCS DN of the MO to be updated, the DN will be used. If this property is empty and moDn is also empty, all the MOs of the given moType will be updated.
-		//
 		MoID string `json:"MoId,omitempty"`
 
 		// The type of the MO for which the latest inventory to be fetched.
-		//
 		MoType string `json:"MoType,omitempty"`
 	}
 
 	stage1.MoDn = m.MoDn
-
 	stage1.MoID = m.MoID
-
 	stage1.MoType = m.MoType
 
 	// make JSON object for known properties

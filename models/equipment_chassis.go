@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -27,22 +26,18 @@ type EquipmentChassis struct {
 	Blades []*ComputeBladeRef `json:"Blades"`
 
 	// The assigned identifier for a chassis.
-	//
 	// Read Only: true
 	ChassisID int64 `json:"ChassisId,omitempty"`
 
 	// This field identifies the connectivity path for the chassis enclosure.
-	//
 	// Read Only: true
 	ConnectionPath string `json:"ConnectionPath,omitempty"`
 
 	// This field identifies the connectivity status for the chassis enclosure.
-	//
 	// Read Only: true
 	ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
 	// This field is to provide description for chassis model.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
@@ -58,7 +53,6 @@ type EquipmentChassis struct {
 	Ioms []*EquipmentIoCardRef `json:"Ioms"`
 
 	// This field identifies the name for the chassis enclosure.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
@@ -67,12 +61,10 @@ type EquipmentChassis struct {
 	OperState string `json:"OperState,omitempty"`
 
 	// Part Number identifier for the chassis enclosure.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// This field identifies the Product ID for the chassis enclosure.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
@@ -80,7 +72,6 @@ type EquipmentChassis struct {
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// This field identifies the Product Name for the chassis enclosure.
-	//
 	// Read Only: true
 	ProductName string `json:"ProductName,omitempty"`
 
@@ -89,7 +80,6 @@ type EquipmentChassis struct {
 	Psus []*EquipmentPsuRef `json:"Psus"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -102,17 +92,14 @@ type EquipmentChassis struct {
 	Siocs []*EquipmentSystemIoControllerRef `json:"Siocs"`
 
 	// This field identifies the Stock Keeping Unit for the chassis enclosure.
-	//
 	// Read Only: true
 	Sku string `json:"Sku,omitempty"`
 
 	// This field identifies the chassis enclosures.
-	//
 	// Read Only: true
 	StorageEnclosures []*StorageEnclosureRef `json:"StorageEnclosures"`
 
 	// This field identifies the Vendor ID for the chassis enclosure.
-	//
 	// Read Only: true
 	Vid string `json:"Vid,omitempty"`
 }
@@ -228,7 +215,6 @@ func (m EquipmentChassis) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Blades []*ComputeBladeRef `json:"Blades"`
 
@@ -320,7 +306,6 @@ func (m EquipmentChassis) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

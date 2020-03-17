@@ -9,13 +9,13 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexHxUuIDDt Hyperflex:Hx Uu Id Dt
+//
 // swagger:model hyperflexHxUuIdDt
 type HyperflexHxUuIDDt struct {
 	MoBaseComplexType
@@ -57,7 +57,6 @@ func (m HyperflexHxUuIDDt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -99,6 +98,7 @@ func (m *HyperflexHxUuIDDt) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexHxUuIDDtAO1P1 hyperflex hx uu ID dt a o1 p1
+//
 // swagger:model HyperflexHxUuIDDtAO1P1
 type HyperflexHxUuIDDtAO1P1 struct {
 
@@ -133,9 +133,7 @@ func (m *HyperflexHxUuIDDtAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexHxUuIDDtAO1P1
 
 	rcv.Links = stage1.Links
-
 	rcv.UUID = stage1.UUID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -145,9 +143,7 @@ func (m *HyperflexHxUuIDDtAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Links")
-
 	delete(stage2, "Uuid")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -178,7 +174,6 @@ func (m HyperflexHxUuIDDtAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Links = m.Links
-
 	stage1.UUID = m.UUID
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m StorageVirtualDriveConfig) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,56 +100,46 @@ func (m *StorageVirtualDriveConfig) UnmarshalBinary(b []byte) error {
 }
 
 // StorageVirtualDriveConfigAO1P1 storage virtual drive config a o1 p1
+//
 // swagger:model StorageVirtualDriveConfigAO1P1
 type StorageVirtualDriveConfigAO1P1 struct {
 
-	// This property holds the access policy that host has on this virtual drive.
-	//
+	// Access policy that host has on this virtual drive.
 	// Enum: [Default ReadWrite ReadOnly Blocked]
 	AccessPolicy *string `json:"AccessPolicy,omitempty"`
 
 	// This flag enables the use of this virtual drive as a boot drive.
-	//
 	BootDrive *bool `json:"BootDrive,omitempty"`
 
 	// Disk group policy that has the disk group in which this virtual drive needs to be created.
-	//
 	// Read Only: true
 	DiskGroupName string `json:"DiskGroupName,omitempty"`
 
 	// Disk group policy that has the disk group in which this virtual drive needs to be created.
-	//
 	DiskGroupPolicy string `json:"DiskGroupPolicy,omitempty"`
 
 	// This property expect disk cache policy.
-	//
 	// Enum: [Default NoChange Enable Disable]
 	DriveCache *string `json:"DriveCache,omitempty"`
 
 	// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
-	//
 	ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
 	// This property expects the desired IO mode - direct IO or cached IO.
-	//
 	// Enum: [Default Direct Cached]
 	IoPolicy *string `json:"IoPolicy,omitempty"`
 
 	// The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed.
-	//
 	Name string `json:"Name,omitempty"`
 
-	// This property holds the read ahead mode to be used.
-	//
+	// Read ahead mode to be used to read data from this virtual drive.
 	// Enum: [Default ReadAhead NoReadAhead]
 	ReadPolicy *string `json:"ReadPolicy,omitempty"`
 
 	// Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.
-	//
 	Size int64 `json:"Size,omitempty"`
 
-	// This property holds the write mode used to write the data in this virtual drive.
-	//
+	// Write mode to be used to write data to this virtual drive.
 	// Enum: [Default WriteThrough WriteBackGoodBbu AlwaysWriteBack]
 	WritePolicy *string `json:"WritePolicy,omitempty"`
 
@@ -164,53 +152,42 @@ func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// This property holds the access policy that host has on this virtual drive.
-		//
+		// Access policy that host has on this virtual drive.
 		// Enum: [Default ReadWrite ReadOnly Blocked]
 		AccessPolicy *string `json:"AccessPolicy,omitempty"`
 
 		// This flag enables the use of this virtual drive as a boot drive.
-		//
 		BootDrive *bool `json:"BootDrive,omitempty"`
 
 		// Disk group policy that has the disk group in which this virtual drive needs to be created.
-		//
 		// Read Only: true
 		DiskGroupName string `json:"DiskGroupName,omitempty"`
 
 		// Disk group policy that has the disk group in which this virtual drive needs to be created.
-		//
 		DiskGroupPolicy string `json:"DiskGroupPolicy,omitempty"`
 
 		// This property expect disk cache policy.
-		//
 		// Enum: [Default NoChange Enable Disable]
 		DriveCache *string `json:"DriveCache,omitempty"`
 
 		// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
-		//
 		ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
 		// This property expects the desired IO mode - direct IO or cached IO.
-		//
 		// Enum: [Default Direct Cached]
 		IoPolicy *string `json:"IoPolicy,omitempty"`
 
 		// The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed.
-		//
 		Name string `json:"Name,omitempty"`
 
-		// This property holds the read ahead mode to be used.
-		//
+		// Read ahead mode to be used to read data from this virtual drive.
 		// Enum: [Default ReadAhead NoReadAhead]
 		ReadPolicy *string `json:"ReadPolicy,omitempty"`
 
 		// Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.
-		//
 		Size int64 `json:"Size,omitempty"`
 
-		// This property holds the write mode used to write the data in this virtual drive.
-		//
+		// Write mode to be used to write data to this virtual drive.
 		// Enum: [Default WriteThrough WriteBackGoodBbu AlwaysWriteBack]
 		WritePolicy *string `json:"WritePolicy,omitempty"`
 	}
@@ -220,27 +197,16 @@ func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageVirtualDriveConfigAO1P1
 
 	rcv.AccessPolicy = stage1.AccessPolicy
-
 	rcv.BootDrive = stage1.BootDrive
-
 	rcv.DiskGroupName = stage1.DiskGroupName
-
 	rcv.DiskGroupPolicy = stage1.DiskGroupPolicy
-
 	rcv.DriveCache = stage1.DriveCache
-
 	rcv.ExpandToAvailable = stage1.ExpandToAvailable
-
 	rcv.IoPolicy = stage1.IoPolicy
-
 	rcv.Name = stage1.Name
-
 	rcv.ReadPolicy = stage1.ReadPolicy
-
 	rcv.Size = stage1.Size
-
 	rcv.WritePolicy = stage1.WritePolicy
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -250,27 +216,16 @@ func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AccessPolicy")
-
 	delete(stage2, "BootDrive")
-
 	delete(stage2, "DiskGroupName")
-
 	delete(stage2, "DiskGroupPolicy")
-
 	delete(stage2, "DriveCache")
-
 	delete(stage2, "ExpandToAvailable")
-
 	delete(stage2, "IoPolicy")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "ReadPolicy")
-
 	delete(stage2, "Size")
-
 	delete(stage2, "WritePolicy")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -291,77 +246,56 @@ func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 func (m StorageVirtualDriveConfigAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// This property holds the access policy that host has on this virtual drive.
-		//
+		// Access policy that host has on this virtual drive.
 		// Enum: [Default ReadWrite ReadOnly Blocked]
 		AccessPolicy *string `json:"AccessPolicy,omitempty"`
 
 		// This flag enables the use of this virtual drive as a boot drive.
-		//
 		BootDrive *bool `json:"BootDrive,omitempty"`
 
 		// Disk group policy that has the disk group in which this virtual drive needs to be created.
-		//
 		// Read Only: true
 		DiskGroupName string `json:"DiskGroupName,omitempty"`
 
 		// Disk group policy that has the disk group in which this virtual drive needs to be created.
-		//
 		DiskGroupPolicy string `json:"DiskGroupPolicy,omitempty"`
 
 		// This property expect disk cache policy.
-		//
 		// Enum: [Default NoChange Enable Disable]
 		DriveCache *string `json:"DriveCache,omitempty"`
 
 		// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
-		//
 		ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
 		// This property expects the desired IO mode - direct IO or cached IO.
-		//
 		// Enum: [Default Direct Cached]
 		IoPolicy *string `json:"IoPolicy,omitempty"`
 
 		// The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed.
-		//
 		Name string `json:"Name,omitempty"`
 
-		// This property holds the read ahead mode to be used.
-		//
+		// Read ahead mode to be used to read data from this virtual drive.
 		// Enum: [Default ReadAhead NoReadAhead]
 		ReadPolicy *string `json:"ReadPolicy,omitempty"`
 
 		// Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.
-		//
 		Size int64 `json:"Size,omitempty"`
 
-		// This property holds the write mode used to write the data in this virtual drive.
-		//
+		// Write mode to be used to write data to this virtual drive.
 		// Enum: [Default WriteThrough WriteBackGoodBbu AlwaysWriteBack]
 		WritePolicy *string `json:"WritePolicy,omitempty"`
 	}
 
 	stage1.AccessPolicy = m.AccessPolicy
-
 	stage1.BootDrive = m.BootDrive
-
 	stage1.DiskGroupName = m.DiskGroupName
-
 	stage1.DiskGroupPolicy = m.DiskGroupPolicy
-
 	stage1.DriveCache = m.DriveCache
-
 	stage1.ExpandToAvailable = m.ExpandToAvailable
-
 	stage1.IoPolicy = m.IoPolicy
-
 	stage1.Name = m.Name
-
 	stage1.ReadPolicy = m.ReadPolicy
-
 	stage1.Size = m.Size
-
 	stage1.WritePolicy = m.WritePolicy
 
 	// make JSON object for known properties

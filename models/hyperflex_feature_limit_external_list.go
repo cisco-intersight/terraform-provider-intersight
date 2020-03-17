@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexFeatureLimitExternalList hyperflex feature limit external list
+//
 // swagger:model hyperflexFeatureLimitExternalList
 type HyperflexFeatureLimitExternalList struct {
 

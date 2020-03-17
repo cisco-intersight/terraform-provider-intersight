@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m SnmpTrap) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,32 +100,27 @@ func (m *SnmpTrap) UnmarshalBinary(b []byte) error {
 }
 
 // SnmpTrapAO1P1 snmp trap a o1 p1
+//
 // swagger:model SnmpTrapAO1P1
 type SnmpTrapAO1P1 struct {
 
 	// Address to which the SNMP trap information is sent.
-	//
 	Destination string `json:"Destination,omitempty"`
 
 	// Enables/disables the trap on the server If enabled, trap is active on the server.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// Type of trap which decides whether to receive a notification when a trap is received at the destination.
-	//
 	// Enum: [Trap Inform]
 	Type *string `json:"Type,omitempty"`
 
 	// SNMP user for the trap. Applicable only to SNMPv3.
-	//
 	User string `json:"User,omitempty"`
 
 	// SNMP version used for the trap.
-	//
 	// Enum: [V3 V2]
 	Version *string `json:"Version,omitempty"`
 
@@ -141,28 +134,22 @@ func (m *SnmpTrapAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Address to which the SNMP trap information is sent.
-		//
 		Destination string `json:"Destination,omitempty"`
 
 		// Enables/disables the trap on the server If enabled, trap is active on the server.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// Type of trap which decides whether to receive a notification when a trap is received at the destination.
-		//
 		// Enum: [Trap Inform]
 		Type *string `json:"Type,omitempty"`
 
 		// SNMP user for the trap. Applicable only to SNMPv3.
-		//
 		User string `json:"User,omitempty"`
 
 		// SNMP version used for the trap.
-		//
 		// Enum: [V3 V2]
 		Version *string `json:"Version,omitempty"`
 	}
@@ -172,17 +159,11 @@ func (m *SnmpTrapAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SnmpTrapAO1P1
 
 	rcv.Destination = stage1.Destination
-
 	rcv.Enabled = stage1.Enabled
-
 	rcv.Port = stage1.Port
-
 	rcv.Type = stage1.Type
-
 	rcv.User = stage1.User
-
 	rcv.Version = stage1.Version
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -192,17 +173,11 @@ func (m *SnmpTrapAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Destination")
-
 	delete(stage2, "Enabled")
-
 	delete(stage2, "Port")
-
 	delete(stage2, "Type")
-
 	delete(stage2, "User")
-
 	delete(stage2, "Version")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -224,42 +199,31 @@ func (m SnmpTrapAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Address to which the SNMP trap information is sent.
-		//
 		Destination string `json:"Destination,omitempty"`
 
 		// Enables/disables the trap on the server If enabled, trap is active on the server.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// Port used by the server to communicate with trap destination. Enter a value between 1-65535.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// Type of trap which decides whether to receive a notification when a trap is received at the destination.
-		//
 		// Enum: [Trap Inform]
 		Type *string `json:"Type,omitempty"`
 
 		// SNMP user for the trap. Applicable only to SNMPv3.
-		//
 		User string `json:"User,omitempty"`
 
 		// SNMP version used for the trap.
-		//
 		// Enum: [V3 V2]
 		Version *string `json:"Version,omitempty"`
 	}
 
 	stage1.Destination = m.Destination
-
 	stage1.Enabled = m.Enabled
-
 	stage1.Port = m.Port
-
 	stage1.Type = m.Type
-
 	stage1.User = m.User
-
 	stage1.Version = m.Version
 
 	// make JSON object for known properties

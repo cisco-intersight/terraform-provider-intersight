@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -29,12 +28,10 @@ type StorageVdMemberEp struct {
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Role of the disk normal or hot-spare, used by virtual-drive.
-	//
 	// Read Only: true
 	Role string `json:"Role,omitempty"`
 
@@ -43,14 +40,11 @@ type StorageVdMemberEp struct {
 	SpanID string `json:"SpanId,omitempty"`
 
 	// A collection of references to the [storage.VirtualDrive](mo://storage.VirtualDrive) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.VirtualDrive](mo://storage.VirtualDrive) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageVirtualDrive *StorageVirtualDriveRef `json:"StorageVirtualDrive,omitempty"`
 
 	// It shows local disk slot number as id.
-	//
 	// Read Only: true
 	VdMemberEpID int64 `json:"VdMemberEpId,omitempty"`
 }
@@ -110,7 +104,6 @@ func (m StorageVdMemberEp) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		OperQualifierReason string `json:"OperQualifierReason,omitempty"`
 
@@ -146,7 +139,6 @@ func (m StorageVdMemberEp) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

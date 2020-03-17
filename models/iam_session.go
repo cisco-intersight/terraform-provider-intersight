@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,47 +23,38 @@ type IamSession struct {
 	MoBaseMo
 
 	// The accounts and the permissions within each account which a user can select after authentication. After authentication if user has access to multiple permissions, then user and session object are created in onboarding user account and asked to select one of these permissions.
-	//
 	// Read Only: true
 	AccountPermissions []*IamAccountPermissions `json:"AccountPermissions"`
 
 	// The user agent IP address from which the session is launched.
-	//
 	// Read Only: true
 	ClientIPAddress string `json:"ClientIpAddress,omitempty"`
 
 	// Expiration time for the session.
-	//
 	// Read Only: true
 	// Format: date-time
 	Expiration strfmt.DateTime `json:"Expiration,omitempty"`
 
 	// Idle time expiration for the session.
-	//
 	// Read Only: true
 	// Format: date-time
 	IdleTimeExpiration strfmt.DateTime `json:"IdleTimeExpiration,omitempty"`
 
 	// The client address from which last login is initiated.
-	//
 	// Read Only: true
 	LastLoginClient string `json:"LastLoginClient,omitempty"`
 
 	// The last login time for user.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastLoginTime strfmt.DateTime `json:"LastLoginTime,omitempty"`
 
 	// Permissions associated with the web session. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	// Read Only: true
 	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 }
@@ -128,7 +118,6 @@ func (m IamSession) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccountPermissions []*IamAccountPermissions `json:"AccountPermissions"`
 
@@ -168,7 +157,6 @@ func (m IamSession) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,15 +20,12 @@ type WorkflowAbstractWorkerTask struct {
 	WorkflowWorkflowTask
 
 	// JSON formatted map that defines the input given to the task. JSONPath is used for chaining output from previous tasks as inputs into the current task. The format to specify the mapping is '${Source.input/output.JsonPath}'. 'Source' can be either workflow or the name of the task within the workflow. You can map the task input to either a workflow input or a task output. Following this is JSON path expression to extract JSON fragment from source's input/output.
-	//
 	InputParameters interface{} `json:"InputParameters,omitempty"`
 
 	// This specifies the name of the next task to run if Task fails.  This is the unique name given to the task instance within the workflow. In a graph model, denotes an edge to another Task Node.
-	//
 	OnFailure string `json:"OnFailure,omitempty"`
 
 	// This specifies the name of the next task to run if Task succeeds.  This is the unique name given to the task instance within the workflow. In a graph model, denotes an edge to another Task Node.
-	//
 	OnSuccess string `json:"OnSuccess,omitempty"`
 }
 
@@ -72,7 +68,6 @@ func (m WorkflowAbstractWorkerTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		InputParameters interface{} `json:"InputParameters,omitempty"`
 
@@ -92,7 +87,6 @@ func (m WorkflowAbstractWorkerTask) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -35,12 +34,10 @@ type ComputePhysicalSummary struct {
 	AvailableMemory int64 `json:"AvailableMemory,omitempty"`
 
 	// The id of the chassis that the blade is located in.
-	//
 	// Read Only: true
 	ChassisID string `json:"ChassisId,omitempty"`
 
 	// CPU Capacity = Number of CPU Sockets x Enabled Cores x Speed (GHz).
-	//
 	// Read Only: true
 	CPUCapacity float32 `json:"CpuCapacity,omitempty"`
 
@@ -49,7 +46,6 @@ type ComputePhysicalSummary struct {
 	DeviceMoID string `json:"DeviceMoId,omitempty"`
 
 	// The Distinguished Name unambiguously identifies an object in the system.
-	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
@@ -58,17 +54,14 @@ type ComputePhysicalSummary struct {
 	FaultSummary int64 `json:"FaultSummary,omitempty"`
 
 	// The firmware version of the Cisco Integrated Management Controller (CIMC) for this server.
-	//
 	// Read Only: true
 	Firmware string `json:"Firmware,omitempty"`
 
 	// The IPv4 address configured on the management interface of the Integrated Management Controller.
-	//
 	// Read Only: true
 	IPV4Address string `json:"Ipv4Address,omitempty"`
 
 	// KVM address of the device.
-	//
 	// Read Only: true
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
@@ -76,55 +69,45 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	MemorySpeed string `json:"MemorySpeed,omitempty"`
 
-	// The IP address of the management interface on the UCS Fabric Interconnect or Cisco Integrated Management Controller.
-	//
+	// Management address of the server.
 	// Read Only: true
 	MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
 
 	// This field identifies the model of the given component.
-	//
 	// Read Only: true
 	Model string `json:"Model,omitempty"`
 
 	// The name of the UCS Fabric Interconnect cluster or Cisco Integrated Management Controller (CIMC).
-	//
 	// When this server is attached to a UCS Fabric Interconnect, the value of this property is the name of the UCS Fabric Interconnect.
 	// When this server configured in standalone mode, the value of this property is the name of the Cisco Integrated Management Controller.
-	//
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Total number of Adaptors available.
-	//
 	// Read Only: true
 	NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
-	// num Cpu cores
+	// Total number of CPU cores available.
 	// Read Only: true
 	NumCPUCores int64 `json:"NumCpuCores,omitempty"`
 
 	// Number of CPU cores enabled.
-	//
 	// Read Only: true
 	NumCPUCoresEnabled int64 `json:"NumCpuCoresEnabled,omitempty"`
 
 	// Total number of CPU's available.
-	//
 	// Read Only: true
 	NumCpus int64 `json:"NumCpus,omitempty"`
 
 	// Number of Ethernet Host Interfaces.
-	//
 	// Read Only: true
 	NumEthHostInterfaces int64 `json:"NumEthHostInterfaces,omitempty"`
 
-	// num fc host interfaces
+	// Number of Fibre channel Host Interfaces.
 	// Read Only: true
 	NumFcHostInterfaces int64 `json:"NumFcHostInterfaces,omitempty"`
 
 	// Number of threads enabled.
-	//
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
@@ -141,7 +124,6 @@ type ComputePhysicalSummary struct {
 	Operability string `json:"Operability,omitempty"`
 
 	// Platform type of the device.
-	//
 	// Read Only: true
 	PlatformType string `json:"PlatformType,omitempty"`
 
@@ -150,7 +132,6 @@ type ComputePhysicalSummary struct {
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -159,7 +140,6 @@ type ComputePhysicalSummary struct {
 	Revision string `json:"Revision,omitempty"`
 
 	// The Relative Name uniquely identifies an object within a given context.
-	//
 	// Read Only: true
 	Rn string `json:"Rn,omitempty"`
 
@@ -168,15 +148,14 @@ type ComputePhysicalSummary struct {
 	ScaledMode string `json:"ScaledMode,omitempty"`
 
 	// This field identifies the serial of the given component.
-	//
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
-	// server Id
+	// The server id of the Rack server.
 	// Read Only: true
 	ServerID int64 `json:"ServerId,omitempty"`
 
-	// service profile
+	// The service profile assigned.
 	// Read Only: true
 	ServiceProfile string `json:"ServiceProfile,omitempty"`
 
@@ -185,7 +164,6 @@ type ComputePhysicalSummary struct {
 	SlotID int64 `json:"SlotId,omitempty"`
 
 	// The source object type of this view MO.
-	//
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`
 
@@ -202,7 +180,6 @@ type ComputePhysicalSummary struct {
 	UUID string `json:"Uuid,omitempty"`
 
 	// This field identifies the vendor of the given component.
-	//
 	// Read Only: true
 	Vendor string `json:"Vendor,omitempty"`
 }
@@ -394,7 +371,6 @@ func (m ComputePhysicalSummary) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminPowerState string `json:"AdminPowerState,omitempty"`
 
@@ -562,7 +538,6 @@ func (m ComputePhysicalSummary) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

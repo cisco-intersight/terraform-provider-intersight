@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // DeviceconnectorPolicyList deviceconnector policy list
+//
 // swagger:model deviceconnectorPolicyList
 type DeviceconnectorPolicyList struct {
 

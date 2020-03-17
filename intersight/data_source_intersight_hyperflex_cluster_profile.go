@@ -40,7 +40,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -49,7 +49,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"auto_support": {
-				Description: "A collection of references to the [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -68,7 +68,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -78,7 +78,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"cluster_network": {
-				Description: "A collection of references to the [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -97,7 +97,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -107,7 +107,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"cluster_storage": {
-				Description: "A collection of references to the [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -126,7 +126,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -164,7 +164,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -200,7 +200,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -219,7 +219,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"ext_fc_storage": {
-				Description: "A collection of references to the [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -238,7 +238,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -248,7 +248,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"ext_iscsi_storage": {
-				Description: "A collection of references to the [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -267,7 +267,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -282,7 +282,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"local_credential": {
-				Description: "A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -301,7 +301,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -337,7 +337,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"node_config": {
-				Description: "A collection of references to the [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -356,7 +356,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -384,7 +384,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -394,7 +394,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -419,7 +419,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -429,7 +429,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -448,7 +448,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -457,7 +457,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"proxy_setting": {
-				Description: "A collection of references to the [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -476,7 +476,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -510,7 +510,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -519,7 +519,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"software_version": {
-				Description: "A collection of references to the [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -538,7 +538,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -567,7 +567,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -589,18 +589,18 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"name": {
-							Description: "The name of the VLAN.The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.",
+							Description: "The name of the VLAN.\nThe name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"vlan_id": {
-							Description: "The ID of the named VLAN. An ID of 0 means the traffic is untagged.The ID can be any number between 0 and 4095, inclusive.",
+							Description: "The ID of the named VLAN. An ID of 0 means the traffic is untagged.\nThe ID can be any number between 0 and 4095, inclusive.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -609,7 +609,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"sys_config": {
-				Description: "A collection of references to the [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -628,7 +628,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -654,7 +654,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -674,7 +674,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"ucsm_config": {
-				Description: "A collection of references to the [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -693,7 +693,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -703,7 +703,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"vcenter_config": {
-				Description: "A collection of references to the [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) Managed Object.When this managed object is deleted, the referenced [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -722,7 +722,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,

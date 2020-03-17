@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,68 +23,54 @@ type SoftwarerepositoryFile struct {
 	MoBaseMo
 
 	// User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.
-	//
 	// Read Only: true
 	DownloadCount int64 `json:"DownloadCount,omitempty"`
 
 	// The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source.
-	//
 	// Enum: [None GeneratePreSignedUploadUrl GeneratePreSignedDownloadUrl CompleteImportProcess PreCache Cancel Evict]
 	ImportAction *string `json:"ImportAction,omitempty"`
 
 	// The state  of this file in the repository or Appliance. The importState is updated during the import operation and as part of the repository monitoring process.
-	//
 	// Read Only: true
 	// Enum: [ReadyForImport Importing Imported Failed MetaOnly ReadyForCache Caching Cached CachingFailed Corrupted Evicted]
 	ImportState string `json:"ImportState,omitempty"`
 
 	// The time at which this image or file was imported/cached into the repositry. if the 'ImportState' is 'Imported', the time at which this image or file was imported. if the 'ImportState' is 'Cached', the time at which this image or file was cached.
-	//
 	// Read Only: true
 	// Format: date-time
 	ImportedTime strfmt.DateTime `json:"ImportedTime,omitempty"`
 
 	// The time at which this file was last downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastAccessTime strfmt.DateTime `json:"LastAccessTime,omitempty"`
 
 	// The md5sum checksum of the file. This information is available for all Cisco distributed images and files imported to the local repository.
-	//
 	Md5sum string `json:"Md5sum,omitempty"`
 
 	// The name of the file. It is populated as part of the image import operation.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The date on which the file was released or distributed by its vendor.
-	//
 	// Format: date-time
 	ReleaseDate strfmt.DateTime `json:"ReleaseDate,omitempty"`
 
 	// The sha512sum of the file. This information is available for all Cisco distributed images and files imported to the local repository.
-	//
 	Sha512sum string `json:"Sha512sum,omitempty"`
 
 	// The size (in bytes) of the file. This information is available for all Cisco distributed images and files imported to the local repository.
-	//
 	Size int64 `json:"Size,omitempty"`
 
 	// The software advisory, if any, provided by the vendor for this file.
-	//
 	SoftwareAdvisoryURL string `json:"SoftwareAdvisoryUrl,omitempty"`
 
 	// Location of the file in an external repository.
-	//
 	Source *SoftwarerepositoryFileServer `json:"Source,omitempty"`
 
 	// Vendor provided version for the file.
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -172,7 +157,6 @@ func (m SoftwarerepositoryFile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -236,7 +220,6 @@ func (m SoftwarerepositoryFile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

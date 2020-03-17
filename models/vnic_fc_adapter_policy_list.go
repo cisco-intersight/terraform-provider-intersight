@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // VnicFcAdapterPolicyList vnic fc adapter policy list
+//
 // swagger:model vnicFcAdapterPolicyList
 type VnicFcAdapterPolicyList struct {
 

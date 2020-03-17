@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,24 +24,19 @@ type BootPrecisionPolicy struct {
 	PolicyAbstractPolicy
 
 	// Set of boot devices to be configured.
-	//
 	BootDevices []*BootDeviceBase `json:"BootDevices"`
 
 	// Sets the BIOS boot mode. UEFI uses the GUID Partition Table (GPT) whereas Legacy mode uses the Master Boot Record (MBR) partitioning scheme.
-	//
 	// Enum: [Legacy Uefi]
 	ConfiguredBootMode *string `json:"ConfiguredBootMode,omitempty"`
 
 	// If UEFI secure boot is enabled, the boot mode is set to UEFI by default. Secure boot enforces that device boots using only software that is trusted by the Original Equipment Manufacturer (OEM).
-	//
 	EnforceUefiSecureBoot *bool `json:"EnforceUefiSecureBoot,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Reference to the profile objects that this policy is a part of.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -93,7 +87,6 @@ func (m BootPrecisionPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BootDevices []*BootDeviceBase `json:"BootDevices"`
 
@@ -121,7 +114,6 @@ func (m BootPrecisionPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

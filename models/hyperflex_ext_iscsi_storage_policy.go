@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,23 +22,18 @@ type HyperflexExtIscsiStoragePolicy struct {
 	PolicyAbstractPolicy
 
 	// Enable or disable external FCoE storage configuration.
-	//
 	AdminState *bool `json:"AdminState,omitempty"`
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// VLAN for the primary Fabric Interconnect external FCoE storage traffic.
-	//
 	ExtaTraffic *HyperflexNamedVlan `json:"ExtaTraffic,omitempty"`
 
 	// VLAN for the secondary Fabric Interconnect external FCoE storage traffic.
-	//
 	ExtbTraffic *HyperflexNamedVlan `json:"ExtbTraffic,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m HyperflexExtIscsiStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminState *bool `json:"AdminState,omitempty"`
 
@@ -118,7 +111,6 @@ func (m HyperflexExtIscsiStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

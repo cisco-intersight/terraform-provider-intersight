@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,29 +20,23 @@ type EquipmentFan struct {
 	EquipmentBase
 
 	// This field is to provide description for the fan.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// A collection of references to the [equipment.FanModule](mo://equipment.FanModule) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.FanModule](mo://equipment.FanModule) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentFanModule *EquipmentFanModuleRef `json:"EquipmentFanModule,omitempty"`
 
 	// This field acts as the identifier for this particular Fan, within the Fabric Interconnect.
-	//
 	// Read Only: true
 	FanID int64 `json:"FanId,omitempty"`
 
 	// This field is used to identify the Fan Module to which this Fan belongs.
-	//
 	// Read Only: true
 	FanModuleID int64 `json:"FanModuleId,omitempty"`
 
 	// Fan module Identifier for the fan.
-	//
 	// Read Only: true
 	ModuleID int64 `json:"ModuleId,omitempty"`
 
@@ -52,37 +45,30 @@ type EquipmentFan struct {
 	OperState string `json:"OperState,omitempty"`
 
 	// This field identifies the Part Number for this Fan Unit.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// This field identifies the Product ID for the fans.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
 	// This field is used to indicate this fan unit's presence.
-	//
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This field identifies the Stockkeeping Unit for this Fan Unit.
-	//
 	// Read Only: true
 	Sku string `json:"Sku,omitempty"`
 
 	// Tray identifier for the fan module.
-	//
 	// Read Only: true
 	TrayID int64 `json:"TrayId,omitempty"`
 
 	// This field identifies the Vendor ID for this Fan Unit.
-	//
 	// Read Only: true
 	Vid string `json:"Vid,omitempty"`
 }
@@ -166,7 +152,6 @@ func (m EquipmentFan) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -226,7 +211,6 @@ func (m EquipmentFan) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

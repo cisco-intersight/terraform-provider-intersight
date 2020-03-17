@@ -6,13 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // RecoveryBackupConfigPolicyRef recovery backup config policy ref
+//
 // swagger:model recoveryBackupConfigPolicyRef
 type RecoveryBackupConfigPolicyRef struct {
 	MoMoRef
@@ -39,7 +39,6 @@ func (m RecoveryBackupConfigPolicyRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

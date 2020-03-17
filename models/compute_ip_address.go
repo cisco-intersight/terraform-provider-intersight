@@ -8,16 +8,15 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // ComputeIPAddress Compute:Ip Address
 //
-// Complex type representing an ip address in UCSM.
+// Complex type representing an IP address in UCSM.
 //
 // swagger:model computeIpAddress
 type ComputeIPAddress struct {
@@ -60,7 +59,6 @@ func (m ComputeIPAddress) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,6 +100,7 @@ func (m *ComputeIPAddress) UnmarshalBinary(b []byte) error {
 }
 
 // ComputeIPAddressAO1P1 compute IP address a o1 p1
+//
 // swagger:model ComputeIPAddressAO1P1
 type ComputeIPAddressAO1P1 struct {
 
@@ -114,7 +113,7 @@ type ComputeIPAddressAO1P1 struct {
 	// Enum: [Equipment ServiceProfile]
 	Category string `json:"Category,omitempty"`
 
-	// default gateway
+	// Gateway address of the KVM IP address.
 	// Read Only: true
 	DefaultGateway string `json:"DefaultGateway,omitempty"`
 
@@ -130,7 +129,7 @@ type ComputeIPAddressAO1P1 struct {
 	// Read Only: true
 	HTTPSPort int64 `json:"HttpsPort,omitempty"`
 
-	// kvm port
+	// Port number on which the KVM is running.
 	// Read Only: true
 	KvmPort int64 `json:"KvmPort,omitempty"`
 
@@ -139,7 +138,7 @@ type ComputeIPAddressAO1P1 struct {
 	// Enum: [Outband Inband]
 	Name string `json:"Name,omitempty"`
 
-	// subnet
+	// Subnet of the KVM IP address.
 	// Read Only: true
 	Subnet string `json:"Subnet,omitempty"`
 
@@ -166,7 +165,7 @@ func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 		// Enum: [Equipment ServiceProfile]
 		Category string `json:"Category,omitempty"`
 
-		// default gateway
+		// Gateway address of the KVM IP address.
 		// Read Only: true
 		DefaultGateway string `json:"DefaultGateway,omitempty"`
 
@@ -182,7 +181,7 @@ func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		HTTPSPort int64 `json:"HttpsPort,omitempty"`
 
-		// kvm port
+		// Port number on which the KVM is running.
 		// Read Only: true
 		KvmPort int64 `json:"KvmPort,omitempty"`
 
@@ -191,7 +190,7 @@ func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 		// Enum: [Outband Inband]
 		Name string `json:"Name,omitempty"`
 
-		// subnet
+		// Subnet of the KVM IP address.
 		// Read Only: true
 		Subnet string `json:"Subnet,omitempty"`
 
@@ -206,25 +205,15 @@ func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ComputeIPAddressAO1P1
 
 	rcv.Address = stage1.Address
-
 	rcv.Category = stage1.Category
-
 	rcv.DefaultGateway = stage1.DefaultGateway
-
 	rcv.Dn = stage1.Dn
-
 	rcv.HTTPPort = stage1.HTTPPort
-
 	rcv.HTTPSPort = stage1.HTTPSPort
-
 	rcv.KvmPort = stage1.KvmPort
-
 	rcv.Name = stage1.Name
-
 	rcv.Subnet = stage1.Subnet
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -234,25 +223,15 @@ func (m *ComputeIPAddressAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Address")
-
 	delete(stage2, "Category")
-
 	delete(stage2, "DefaultGateway")
-
 	delete(stage2, "Dn")
-
 	delete(stage2, "HttpPort")
-
 	delete(stage2, "HttpsPort")
-
 	delete(stage2, "KvmPort")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Subnet")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -282,7 +261,7 @@ func (m ComputeIPAddressAO1P1) MarshalJSON() ([]byte, error) {
 		// Enum: [Equipment ServiceProfile]
 		Category string `json:"Category,omitempty"`
 
-		// default gateway
+		// Gateway address of the KVM IP address.
 		// Read Only: true
 		DefaultGateway string `json:"DefaultGateway,omitempty"`
 
@@ -298,7 +277,7 @@ func (m ComputeIPAddressAO1P1) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		HTTPSPort int64 `json:"HttpsPort,omitempty"`
 
-		// kvm port
+		// Port number on which the KVM is running.
 		// Read Only: true
 		KvmPort int64 `json:"KvmPort,omitempty"`
 
@@ -307,7 +286,7 @@ func (m ComputeIPAddressAO1P1) MarshalJSON() ([]byte, error) {
 		// Enum: [Outband Inband]
 		Name string `json:"Name,omitempty"`
 
-		// subnet
+		// Subnet of the KVM IP address.
 		// Read Only: true
 		Subnet string `json:"Subnet,omitempty"`
 
@@ -318,23 +297,14 @@ func (m ComputeIPAddressAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Address = m.Address
-
 	stage1.Category = m.Category
-
 	stage1.DefaultGateway = m.DefaultGateway
-
 	stage1.Dn = m.Dn
-
 	stage1.HTTPPort = m.HTTPPort
-
 	stage1.HTTPSPort = m.HTTPSPort
-
 	stage1.KvmPort = m.KvmPort
-
 	stage1.Name = m.Name
-
 	stage1.Subnet = m.Subnet
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

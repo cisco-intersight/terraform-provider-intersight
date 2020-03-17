@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -25,14 +24,11 @@ type IamSecurityHolder struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Per resource (organization) aggregate permissions and associated roles.
-	//
 	// Read Only: true
 	ResourcePermissions []*IamResourcePermissionRef `json:"ResourcePermissions"`
 }
@@ -72,7 +68,6 @@ func (m IamSecurityHolder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -88,7 +83,6 @@ func (m IamSecurityHolder) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // AssetDeviceContractInformationList asset device contract information list
+//
 // swagger:model assetDeviceContractInformationList
 type AssetDeviceContractInformationList struct {
 

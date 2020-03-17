@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,14 @@ type StoragePurePort struct {
 	StoragePhysicalPort
 
 	// Name of the port to which this port has failed over.
-	//
 	// Read Only: true
 	Failover string `json:"Failover,omitempty"`
 
 	// Ip address of iSCSI portal configured on the port.
-	//
 	// Read Only: true
 	Portal string `json:"Portal,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -75,7 +71,6 @@ func (m StoragePurePort) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Failover string `json:"Failover,omitempty"`
 
@@ -95,7 +90,6 @@ func (m StoragePurePort) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

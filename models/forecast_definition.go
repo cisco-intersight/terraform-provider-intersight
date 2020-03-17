@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,39 +20,31 @@ type ForecastDefinition struct {
 	MoBaseMo
 
 	// Threshold above which user needs to be indicated through alarm/alert.
-	//
 	// Read Only: true
 	AlertThresholdInPercentage int64 `json:"AlertThresholdInPercentage,omitempty"`
 
 	// A collection of references to the [forecast.Catalog](mo://forecast.Catalog) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [forecast.Catalog](mo://forecast.Catalog) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Catalog *ForecastCatalogRef `json:"Catalog,omitempty"`
 
 	// Data source from where we get the data for the metrics to compute regression model. For example Druid.
-	//
 	// Read Only: true
 	DataSource string `json:"DataSource,omitempty"`
 
 	// Metric for which forecast prediction is done. Metrics are defined in the catalog file. Currently its only HyperFlex cluster storage capacity usage.
-	//
 	// Read Only: true
 	MetricName string `json:"MetricName,omitempty"`
 
 	// Minimum number of days of data required for computing forecast model.
-	//
 	// Read Only: true
 	MinNumOfDaysOfData int64 `json:"MinNumOfDaysOfData,omitempty"`
 
 	// Number of days of data queried from the data source (example Druid ) which is used as input data for computing forecast model.
-	//
 	// Read Only: true
 	NumOfDaysOfHistoricalData int64 `json:"NumOfDaysOfHistoricalData,omitempty"`
 
 	// The platform type for which we want to compute forecast. For example HyperFlex, NetworkElement.
-	//
 	// Read Only: true
 	PlatformType string `json:"PlatformType,omitempty"`
 }
@@ -113,7 +104,6 @@ func (m ForecastDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AlertThresholdInPercentage int64 `json:"AlertThresholdInPercentage,omitempty"`
 
@@ -149,7 +139,6 @@ func (m ForecastDefinition) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

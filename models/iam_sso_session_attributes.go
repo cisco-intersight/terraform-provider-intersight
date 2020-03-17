@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m IamSsoSessionAttributes) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,15 @@ func (m *IamSsoSessionAttributes) UnmarshalBinary(b []byte) error {
 }
 
 // IamSsoSessionAttributesAO1P1 iam sso session attributes a o1 p1
+//
 // swagger:model IamSsoSessionAttributesAO1P1
 type IamSsoSessionAttributesAO1P1 struct {
 
 	// SAML SessionNotOnOrAfter attribute sent by IdP in the assertion. IdP uses this to control for how long SP session maybe. SP does not issue SLO if the session is not valid.
-	//
 	// Read Only: true
 	IdpSessionExpiration string `json:"IdpSessionExpiration,omitempty"`
 
 	// SAML SessionIndex attribute sent by IdP in the assertion. This has to be sent back to IdP in LogoutRequest.
-	//
 	// Read Only: true
 	IdpSessionIndex string `json:"IdpSessionIndex,omitempty"`
 
@@ -124,12 +121,10 @@ func (m *IamSsoSessionAttributesAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// SAML SessionNotOnOrAfter attribute sent by IdP in the assertion. IdP uses this to control for how long SP session maybe. SP does not issue SLO if the session is not valid.
-		//
 		// Read Only: true
 		IdpSessionExpiration string `json:"IdpSessionExpiration,omitempty"`
 
 		// SAML SessionIndex attribute sent by IdP in the assertion. This has to be sent back to IdP in LogoutRequest.
-		//
 		// Read Only: true
 		IdpSessionIndex string `json:"IdpSessionIndex,omitempty"`
 	}
@@ -139,9 +134,7 @@ func (m *IamSsoSessionAttributesAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamSsoSessionAttributesAO1P1
 
 	rcv.IdpSessionExpiration = stage1.IdpSessionExpiration
-
 	rcv.IdpSessionIndex = stage1.IdpSessionIndex
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *IamSsoSessionAttributesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "IdpSessionExpiration")
-
 	delete(stage2, "IdpSessionIndex")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,18 +166,15 @@ func (m IamSsoSessionAttributesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// SAML SessionNotOnOrAfter attribute sent by IdP in the assertion. IdP uses this to control for how long SP session maybe. SP does not issue SLO if the session is not valid.
-		//
 		// Read Only: true
 		IdpSessionExpiration string `json:"IdpSessionExpiration,omitempty"`
 
 		// SAML SessionIndex attribute sent by IdP in the assertion. This has to be sent back to IdP in LogoutRequest.
-		//
 		// Read Only: true
 		IdpSessionIndex string `json:"IdpSessionIndex,omitempty"`
 	}
 
 	stage1.IdpSessionExpiration = m.IdpSessionExpiration
-
 	stage1.IdpSessionIndex = m.IdpSessionIndex
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicCompletionQueueSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *VnicCompletionQueueSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicCompletionQueueSettingsAO1P1 vnic completion queue settings a o1 p1
+//
 // swagger:model VnicCompletionQueueSettingsAO1P1
 type VnicCompletionQueueSettingsAO1P1 struct {
 
 	// The number of completion queue resources to allocate. In general, the number of completion queue resources you should allocate is equal to the number of transmit queue resources plus the number of receive queue resources.
-	//
 	Count int64 `json:"Count,omitempty"`
 
 	// The number of descriptors in each completion queue.
-	//
 	// Read Only: true
 	RingSize int64 `json:"RingSize,omitempty"`
 
@@ -123,11 +120,9 @@ func (m *VnicCompletionQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The number of completion queue resources to allocate. In general, the number of completion queue resources you should allocate is equal to the number of transmit queue resources plus the number of receive queue resources.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// The number of descriptors in each completion queue.
-		//
 		// Read Only: true
 		RingSize int64 `json:"RingSize,omitempty"`
 	}
@@ -137,9 +132,7 @@ func (m *VnicCompletionQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicCompletionQueueSettingsAO1P1
 
 	rcv.Count = stage1.Count
-
 	rcv.RingSize = stage1.RingSize
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -149,9 +142,7 @@ func (m *VnicCompletionQueueSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Count")
-
 	delete(stage2, "RingSize")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -173,17 +164,14 @@ func (m VnicCompletionQueueSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The number of completion queue resources to allocate. In general, the number of completion queue resources you should allocate is equal to the number of transmit queue resources plus the number of receive queue resources.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// The number of descriptors in each completion queue.
-		//
 		// Read Only: true
 		RingSize int64 `json:"RingSize,omitempty"`
 	}
 
 	stage1.Count = m.Count
-
 	stage1.RingSize = m.RingSize
 
 	// make JSON object for known properties

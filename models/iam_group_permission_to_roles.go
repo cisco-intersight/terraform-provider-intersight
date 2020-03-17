@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m IamGroupPermissionToRoles) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,16 +100,15 @@ func (m *IamGroupPermissionToRoles) UnmarshalBinary(b []byte) error {
 }
 
 // IamGroupPermissionToRolesAO1P1 iam group permission to roles a o1 p1
+//
 // swagger:model IamGroupPermissionToRolesAO1P1
 type IamGroupPermissionToRolesAO1P1 struct {
 
 	// Moid of the resource group.
-	//
 	// Read Only: true
 	Group *CmrfCmRf `json:"Group,omitempty"`
 
 	// Moids of the associated organizations.
-	//
 	// Read Only: true
 	Orgs []*CmrfCmRf `json:"Orgs"`
 
@@ -125,12 +122,10 @@ func (m *IamGroupPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Moid of the resource group.
-		//
 		// Read Only: true
 		Group *CmrfCmRf `json:"Group,omitempty"`
 
 		// Moids of the associated organizations.
-		//
 		// Read Only: true
 		Orgs []*CmrfCmRf `json:"Orgs"`
 	}
@@ -140,9 +135,7 @@ func (m *IamGroupPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamGroupPermissionToRolesAO1P1
 
 	rcv.Group = stage1.Group
-
 	rcv.Orgs = stage1.Orgs
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -152,9 +145,7 @@ func (m *IamGroupPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Group")
-
 	delete(stage2, "Orgs")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -176,18 +167,15 @@ func (m IamGroupPermissionToRolesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Moid of the resource group.
-		//
 		// Read Only: true
 		Group *CmrfCmRf `json:"Group,omitempty"`
 
 		// Moids of the associated organizations.
-		//
 		// Read Only: true
 		Orgs []*CmrfCmRf `json:"Orgs"`
 	}
 
 	stage1.Group = m.Group
-
 	stage1.Orgs = m.Orgs
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,7 +23,6 @@ type ExternalsiteAuthorization struct {
 	MoBaseMo
 
 	// Reference of the account to which this authorization configuration is owned.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -35,16 +33,13 @@ type ExternalsiteAuthorization struct {
 	IsUserIDSet *bool `json:"IsUserIdSet,omitempty"`
 
 	// The password of the given username to download the image from external repository like cisco.com.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The repository type to which this authorization will be requested. Cisco is the only available repository today.
-	//
 	// Enum: [cisco]
 	RepositoryType *string `json:"RepositoryType,omitempty"`
 
 	// The username that has permission to download the image from external repository like cisco.com.
-	//
 	UserID string `json:"UserId,omitempty"`
 }
 
@@ -99,7 +94,6 @@ func (m ExternalsiteAuthorization) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -131,7 +125,6 @@ func (m ExternalsiteAuthorization) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

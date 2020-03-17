@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,39 +22,30 @@ type IamPrivilegeSet struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// A privilege set can be associated to other privilege sets.
-	//
 	AssociatedPrivilegeSets []*IamPrivilegeSetRef `json:"AssociatedPrivilegeSets"`
 
 	// Description of the privilege set.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// Name of the privilege set.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Names of the privileges in the privilege set.
-	//
 	// Read Only: true
 	PrivilegeNames []string `json:"PrivilegeNames"`
 
 	// Reference to the privileges. Privilege represents an action which can be performed in Intersight such as creating server profile, deleting a user etc. Privileges are assigned to a user using privilege sets and roles.
-	//
 	// Read Only: true
 	Privileges []*IamPrivilegeRef `json:"Privileges"`
 
 	// A collection of references to the [iam.System](mo://iam.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.System](mo://iam.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 }
@@ -115,7 +105,6 @@ func (m IamPrivilegeSet) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -151,7 +140,6 @@ func (m IamPrivilegeSet) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

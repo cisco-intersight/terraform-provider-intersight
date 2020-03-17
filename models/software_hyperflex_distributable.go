@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,7 +20,6 @@ type SoftwareHyperflexDistributable struct {
 	FirmwareBaseDistributable
 
 	// The catalog where this image is present.
-	//
 	Catalog *SoftwarerepositoryCatalogRef `json:"Catalog,omitempty"`
 }
 
@@ -56,7 +54,6 @@ func (m SoftwareHyperflexDistributable) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Catalog *SoftwarerepositoryCatalogRef `json:"Catalog,omitempty"`
 	}
@@ -68,7 +65,6 @@ func (m SoftwareHyperflexDistributable) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

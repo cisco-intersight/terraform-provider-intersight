@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,19 +23,15 @@ type PolicyAbstractProfile struct {
 	MoBaseMo
 
 	// Description of the profile.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Name of the concrete profile.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The source profile template to apply to the profile instance. All configuration settings from the profile template will be applied to the profile instance.
-	//
 	SrcTemplate *PolicyAbstractProfileRef `json:"SrcTemplate,omitempty"`
 
 	// Defines the type of the profile. Accepted value is instance.
-	//
 	// Enum: [instance]
 	Type *string `json:"Type,omitempty"`
 }
@@ -84,7 +79,6 @@ func (m PolicyAbstractProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -108,7 +102,6 @@ func (m PolicyAbstractProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,20 +20,16 @@ type WorkflowWorkerTask struct {
 	WorkflowAbstractWorkerTask
 
 	// Specify the catalog moid that this task belongs.
-	//
 	CatalogMoid string `json:"CatalogMoid,omitempty"`
 
 	// The resolved referenced task definition managed object.
-	//
 	// Read Only: true
 	TaskDefinitionID string `json:"TaskDefinitionId,omitempty"`
 
 	// The qualified name of task that should be executed.
-	//
 	TaskDefinitionName string `json:"TaskDefinitionName,omitempty"`
 
 	// The task definition version to use in this workflow. When no version is specified then the default version of the task at the time of creating or updating this workflow is used.
-	//
 	Version int64 `json:"Version,omitempty"`
 }
 
@@ -81,7 +76,6 @@ func (m WorkflowWorkerTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CatalogMoid string `json:"CatalogMoid,omitempty"`
 
@@ -105,7 +99,6 @@ func (m WorkflowWorkerTask) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

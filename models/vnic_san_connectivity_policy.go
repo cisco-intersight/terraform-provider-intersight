@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,17 +22,13 @@ type VnicSanConnectivityPolicy struct {
 	PolicyAbstractPolicy
 
 	// A collection of references to the [vnic.FcIf](mo://vnic.FcIf) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [vnic.FcIf](mo://vnic.FcIf) MOs on the other side of the relationship are deleted.
-	//
 	FcIfs []*VnicFcIfRef `json:"FcIfs"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the server profile.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -76,7 +71,6 @@ func (m VnicSanConnectivityPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		FcIfs []*VnicFcIfRef `json:"FcIfs"`
 
@@ -96,7 +90,6 @@ func (m VnicSanConnectivityPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

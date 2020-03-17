@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,47 +20,36 @@ type VnicEthIf struct {
 	MoBaseMo
 
 	// Consistent Device Naming configuration for the virtual NIC.
-	//
 	Cdn *VnicCdn `json:"Cdn,omitempty"`
 
 	// Relationship to the the Ethernet Adapter Policy.
-	//
 	EthAdapterPolicy *VnicEthAdapterPolicyRef `json:"EthAdapterPolicy,omitempty"`
 
 	// Relationship to the Ethernet Network Policy.
-	//
 	EthNetworkPolicy *VnicEthNetworkPolicyRef `json:"EthNetworkPolicy,omitempty"`
 
 	// Relationship to the Ethernet QoS Policy.
-	//
 	EthQosPolicy *VnicEthQosPolicyRef `json:"EthQosPolicy,omitempty"`
 
 	// Relationship to the LAN Connectivity Policy.
-	//
 	LanConnectivityPolicy *VnicLanConnectivityPolicyRef `json:"LanConnectivityPolicy,omitempty"`
 
 	// Name of the virtual ethernet interface.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The order in which the virtual interface is brought up. The order assigned to an interface should be unique for all the Ethernet and Fibre-Channel interfaces on each PCI link on a VIC adapter. The maximum value of PCI order is limited by the number of virtual interfaces (Ethernet and Fibre-Channel) on each PCI link on a VIC adapter. All VIC adapters have a single PCI link except VIC 1385 which has two.
-	//
 	Order int64 `json:"Order,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Placement Settings for the virtual interface.
-	//
 	Placement *VnicPlacementSettings `json:"Placement,omitempty"`
 
 	// User Space NIC Settings that enable low-latency and higher throughput by bypassing the kernel layer when sending/receiving packets.
-	//
 	UsnicSettings *VnicUsnicSettings `json:"UsnicSettings,omitempty"`
 
 	// Virtual Machine Queue Settings for the virtual interface that allow efficient transfer of network traffic to the guest OS.
-	//
 	VmqSettings *VnicVmqSettings `json:"VmqSettings,omitempty"`
 }
 
@@ -136,7 +124,6 @@ func (m VnicEthIf) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Cdn *VnicCdn `json:"Cdn,omitempty"`
 
@@ -188,7 +175,6 @@ func (m VnicEthIf) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

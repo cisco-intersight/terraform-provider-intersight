@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -17,7 +16,6 @@ import (
 // DiagSetting model is used for changing the password of the operating system's diagnostic
 // user account. The diagnostic user account can be used to login to the Intersight Appliance
 // virtual machine.
-//
 // The diagnostic user account is protected by two separate authentication mechanisms: user's
 // password and Cisco CT-engine generated key. Only the Intersight Appliance's local account
 // administrator has the privileges to use this REST API.
@@ -27,18 +25,15 @@ type ApplianceDiagSetting struct {
 	MoBaseMo
 
 	// DiagSetting managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Status message of the password change operation.
-	//
 	Message string `json:"Message,omitempty"`
 
 	// Password of the Intersight Appliance's OS diagnostic user account.
-	//
 	Password string `json:"Password,omitempty"`
 }
 
@@ -85,7 +80,6 @@ func (m ApplianceDiagSetting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -109,7 +103,6 @@ func (m ApplianceDiagSetting) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

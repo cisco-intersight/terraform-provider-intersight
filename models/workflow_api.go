@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -19,7 +18,6 @@ import (
 //
 // Intersight Orchestrator supports generic API workflow tasks that can execute
 // an API given the request body and response parser specification.
-//
 // API type models a single API request within a batch of requests that get
 // executed within a single workflow task.
 //
@@ -64,7 +62,6 @@ func (m WorkflowAPI) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -106,74 +103,53 @@ func (m *WorkflowAPI) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowAPIAO1P1 workflow API a o1 p1
+//
 // swagger:model WorkflowAPIAO1P1
 type WorkflowAPIAO1P1 struct {
 
 	// The optional request body that is sent as part of this API request.
-	//
 	// The request body can contain a golang template that can be populated with task input
 	// parameters and previous API output parameters.
-	//
-	//
 	Body string `json:"Body,omitempty"`
 
 	// Intersight Orchestrator, with the support of response parser specification,
 	// can extract the values from API responses and map them to task output parameters.
 	// The value extraction is supported for response content types XML and JSON.
-	//
 	// The type of the content that gets passed as payload and response in this
 	// API.
-	//
-	//
 	// Enum: [json xml text]
 	ContentType *string `json:"ContentType,omitempty"`
 
 	// A reference name for this API request within the batch API request.
-	//
 	// This name shall be used to map the API output parameters to subsequent
 	// API input parameters within a batch API task.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// All the possible outcomes of this API are captured here. Outcomes property
 	// is a collection property of type workflow.Outcome objects.
-	//
 	// The outcomes can be mapped to the message to be shown. The outcomes are
 	// evaluated in the order they are given. At the end of the outcomes list,
 	// an catchall success/fail outcome can be added with condition as 'true'.
-	//
 	// This is an optional
 	// property and if not specified the task will be marked as success.
-	//
-	//
 	Outcomes interface{} `json:"Outcomes,omitempty"`
 
 	// The optional grammar specification for parsing the response to extract the
 	// required values.
-	//
 	// The specification should have extraction specification specified for
 	// all the API output parameters.
-	//
-	//
 	ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
 	// The skip expression, if provided, allows the batch API executor to skip the
 	// api execution when the given expression evaluates to true.
-	//
 	// The expression is given as such a golang template that has to be
 	// evaluated to a final content true/false. The expression is an optional and in
 	// case not provided, the API will always be executed.
-	//
-	//
 	SkipOnCondition string `json:"SkipOnCondition,omitempty"`
 
 	// The duration in seconds by which the API response is expected from the API target.
-	//
 	// If the end point does not respond for the API request within this timeout
 	// duration, the task will be marked as failed.
-	//
-	//
 	Timeout int64 `json:"Timeout,omitempty"`
 
 	// workflow API a o1 p1
@@ -186,70 +162,48 @@ func (m *WorkflowAPIAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The optional request body that is sent as part of this API request.
-		//
 		// The request body can contain a golang template that can be populated with task input
 		// parameters and previous API output parameters.
-		//
-		//
 		Body string `json:"Body,omitempty"`
 
 		// Intersight Orchestrator, with the support of response parser specification,
 		// can extract the values from API responses and map them to task output parameters.
 		// The value extraction is supported for response content types XML and JSON.
-		//
 		// The type of the content that gets passed as payload and response in this
 		// API.
-		//
-		//
 		// Enum: [json xml text]
 		ContentType *string `json:"ContentType,omitempty"`
 
 		// A reference name for this API request within the batch API request.
-		//
 		// This name shall be used to map the API output parameters to subsequent
 		// API input parameters within a batch API task.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// All the possible outcomes of this API are captured here. Outcomes property
 		// is a collection property of type workflow.Outcome objects.
-		//
 		// The outcomes can be mapped to the message to be shown. The outcomes are
 		// evaluated in the order they are given. At the end of the outcomes list,
 		// an catchall success/fail outcome can be added with condition as 'true'.
-		//
 		// This is an optional
 		// property and if not specified the task will be marked as success.
-		//
-		//
 		Outcomes interface{} `json:"Outcomes,omitempty"`
 
 		// The optional grammar specification for parsing the response to extract the
 		// required values.
-		//
 		// The specification should have extraction specification specified for
 		// all the API output parameters.
-		//
-		//
 		ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
 		// The skip expression, if provided, allows the batch API executor to skip the
 		// api execution when the given expression evaluates to true.
-		//
 		// The expression is given as such a golang template that has to be
 		// evaluated to a final content true/false. The expression is an optional and in
 		// case not provided, the API will always be executed.
-		//
-		//
 		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
 
 		// The duration in seconds by which the API response is expected from the API target.
-		//
 		// If the end point does not respond for the API request within this timeout
 		// duration, the task will be marked as failed.
-		//
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -258,19 +212,12 @@ func (m *WorkflowAPIAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowAPIAO1P1
 
 	rcv.Body = stage1.Body
-
 	rcv.ContentType = stage1.ContentType
-
 	rcv.Name = stage1.Name
-
 	rcv.Outcomes = stage1.Outcomes
-
 	rcv.ResponseSpec = stage1.ResponseSpec
-
 	rcv.SkipOnCondition = stage1.SkipOnCondition
-
 	rcv.Timeout = stage1.Timeout
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -280,19 +227,12 @@ func (m *WorkflowAPIAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Body")
-
 	delete(stage2, "ContentType")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Outcomes")
-
 	delete(stage2, "ResponseSpec")
-
 	delete(stage2, "SkipOnCondition")
-
 	delete(stage2, "Timeout")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -314,85 +254,57 @@ func (m WorkflowAPIAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The optional request body that is sent as part of this API request.
-		//
 		// The request body can contain a golang template that can be populated with task input
 		// parameters and previous API output parameters.
-		//
-		//
 		Body string `json:"Body,omitempty"`
 
 		// Intersight Orchestrator, with the support of response parser specification,
 		// can extract the values from API responses and map them to task output parameters.
 		// The value extraction is supported for response content types XML and JSON.
-		//
 		// The type of the content that gets passed as payload and response in this
 		// API.
-		//
-		//
 		// Enum: [json xml text]
 		ContentType *string `json:"ContentType,omitempty"`
 
 		// A reference name for this API request within the batch API request.
-		//
 		// This name shall be used to map the API output parameters to subsequent
 		// API input parameters within a batch API task.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// All the possible outcomes of this API are captured here. Outcomes property
 		// is a collection property of type workflow.Outcome objects.
-		//
 		// The outcomes can be mapped to the message to be shown. The outcomes are
 		// evaluated in the order they are given. At the end of the outcomes list,
 		// an catchall success/fail outcome can be added with condition as 'true'.
-		//
 		// This is an optional
 		// property and if not specified the task will be marked as success.
-		//
-		//
 		Outcomes interface{} `json:"Outcomes,omitempty"`
 
 		// The optional grammar specification for parsing the response to extract the
 		// required values.
-		//
 		// The specification should have extraction specification specified for
 		// all the API output parameters.
-		//
-		//
 		ResponseSpec *ContentGrammar `json:"ResponseSpec,omitempty"`
 
 		// The skip expression, if provided, allows the batch API executor to skip the
 		// api execution when the given expression evaluates to true.
-		//
 		// The expression is given as such a golang template that has to be
 		// evaluated to a final content true/false. The expression is an optional and in
 		// case not provided, the API will always be executed.
-		//
-		//
 		SkipOnCondition string `json:"SkipOnCondition,omitempty"`
 
 		// The duration in seconds by which the API response is expected from the API target.
-		//
 		// If the end point does not respond for the API request within this timeout
 		// duration, the task will be marked as failed.
-		//
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 
 	stage1.Body = m.Body
-
 	stage1.ContentType = m.ContentType
-
 	stage1.Name = m.Name
-
 	stage1.Outcomes = m.Outcomes
-
 	stage1.ResponseSpec = m.ResponseSpec
-
 	stage1.SkipOnCondition = m.SkipOnCondition
-
 	stage1.Timeout = m.Timeout
 
 	// make JSON object for known properties

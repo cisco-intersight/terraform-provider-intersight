@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -26,140 +25,106 @@ type HyperflexCluster struct {
 	MoBaseMo
 
 	// The alarms that have been raised for this HyperFlex cluster.
-	//
 	// New alarms are added to this collection, and existing alarms are updated if the severity changes.
 	// Deleted alarms are not removed but are cleared by marking them as green.
-	//
 	// Read Only: true
 	Alarm []*HyperflexAlarmRef `json:"Alarm"`
 
 	// The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.
-	//
 	// Default value is math.MaxInt32 to indicate that the capacity runway is "Unknown" for a cluster that is not connected or with not sufficient data.
-	//
-	//
 	// Read Only: true
 	CapacityRunway int64 `json:"CapacityRunway,omitempty"`
 
 	// The name of this HyperFlex cluster.
-	//
 	// Read Only: true
 	ClusterName string `json:"ClusterName,omitempty"`
 
 	// The storage type of this cluster (All Flash or Hybrid).
-	//
 	// Read Only: true
 	ClusterType int64 `json:"ClusterType,omitempty"`
 
 	// The unique identifier for this HyperFlex cluster.
-	//
 	// Read Only: true
 	ClusterUUID string `json:"ClusterUuid,omitempty"`
 
 	// The number of compute nodes that belong to this cluster.
-	//
 	// Read Only: true
 	ComputeNodeCount int64 `json:"ComputeNodeCount,omitempty"`
 
 	// The number of converged nodes that belong to this cluster.
-	//
 	// Read Only: true
 	ConvergedNodeCount int64 `json:"ConvergedNodeCount,omitempty"`
 
 	// The deployment type of the HyperFlex cluster.
-	//
 	// The cluster can have one of the following configurations:
 	// 1. Datacenter: The HyperFlex cluster consists of UCS Fabric Interconnect-attached nodes on a single site.
 	// 2. Stretched Cluster: The HyperFlex cluster consists of UCS Fabric Interconnect-attached nodes distributed across multiple sites.
 	// 3. Edge: The HyperFlex cluster consists of 2-4 standalone nodes.
-	//
 	// If the cluster is running a HyperFlex Data Platform version less than 4.0 or if the deployment type cannot be determined,
 	// the deployment type is set as 'NA' (not available).
-	//
-	//
 	// Read Only: true
 	// Enum: [NA Datacenter Stretched Cluster Edge]
 	DeploymentType string `json:"DeploymentType,omitempty"`
 
 	// The unique identifier of the device registration that represents this HyperFlex cluster's connection to Intersight.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// The number of yellow (warning) and red (critical) alarms stored as an aggregate.
-	//
 	// The first 16 bits indicate the number of red alarms, and the last 16 bits contain the number of yellow alarms.
-	//
-	//
 	// Read Only: true
 	FltAggr int64 `json:"FltAggr,omitempty"`
 
 	// The health of the HyperFlex cluster.
-	//
 	// Detailed information concerning the cluster health, which includes cluster operational status, resiliency health status,
 	// number of node and disk failues tolerable, and the status of services such as the ZooKeeper ensemble and arbitration service.
 	// This relationship is only populated for devices with HyperFlex Data Platform 3.0+. For clusters running an older version, refer
 	// to the Summary property of the hyperflex/Clusters API.
-	//
 	// Read Only: true
 	Health *HyperflexHealthRef `json:"Health,omitempty"`
 
 	// The HyperFlex Data Platform version of this cluster.
-	//
 	// Read Only: true
 	HxVersion string `json:"HxVersion,omitempty"`
 
 	// The version and build number of the HyperFlex Data Platform for this cluster.
-	//
 	// After a cluster upgrade, this version string will be updated on the next inventory cycle to reflect
 	// the newly installed version.
-	//
-	//
 	// Read Only: true
 	HxdpBuildVersion string `json:"HxdpBuildVersion,omitempty"`
 
 	// The type of hypervisor running on this cluster.
-	//
 	// Read Only: true
-	// Enum: [Unknown Hyper-V ESXi]
+	// Enum: [ESXi]
 	HypervisorType string `json:"HypervisorType,omitempty"`
 
 	// The version of hypervisor running on this cluster.
-	//
 	// Read Only: true
 	HypervisorVersion string `json:"HypervisorVersion,omitempty"`
 
 	// The nodes belonging to this HyperFlex cluster.
-	//
 	// The node object contains inventory information about a specific HyperFlex node, such as host IP address,
 	// hypervisor type and version, and operational status.
-	//
 	// Read Only: true
 	Nodes []*HyperflexNodeRef `json:"Nodes"`
 
 	// The registration that represents this HyperFlex cluster's connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The summary of HyperFlex cluster health, storage, and number of nodes.
-	//
-	//
 	// Read Only: true
 	Summary *HyperflexSummary `json:"Summary,omitempty"`
 
 	// The storage utilization percentage is computed based on total capacity and current capacity utilization.
-	//
 	// Read Only: true
 	UtilizationPercentage float32 `json:"UtilizationPercentage,omitempty"`
 
 	// The storage utilization trend percentage represents the trend in percentage computed using the first and last point from historical data.
-	//
 	// Read Only: true
 	UtilizationTrendPercentage float32 `json:"UtilizationTrendPercentage,omitempty"`
 
 	// The number of virtual machines present on this cluster.
-	//
 	// Read Only: true
 	VMCount int64 `json:"VmCount,omitempty"`
 }
@@ -275,7 +240,6 @@ func (m HyperflexCluster) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Alarm []*HyperflexAlarmRef `json:"Alarm"`
 
@@ -367,7 +331,6 @@ func (m HyperflexCluster) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -495,7 +458,7 @@ var hyperflexClusterTypeHypervisorTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

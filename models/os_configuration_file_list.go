@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // OsConfigurationFileList os configuration file list
+//
 // swagger:model osConfigurationFileList
 type OsConfigurationFileList struct {
 

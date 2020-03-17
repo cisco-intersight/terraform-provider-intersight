@@ -8,16 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexMacAddrPrefixRange Hyperflex:Mac Addr Prefix Range
 //
 // A MAC address prefix range.
-//
 // The range is inclusive and comprised of a start and end MAC addresses.
 // A single address can be specified by setting it as the start and end of the range.
 //
@@ -62,7 +60,6 @@ func (m HyperflexMacAddrPrefixRange) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -104,15 +101,14 @@ func (m *HyperflexMacAddrPrefixRange) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexMacAddrPrefixRangeAO1P1 hyperflex mac addr prefix range a o1 p1
+//
 // swagger:model HyperflexMacAddrPrefixRangeAO1P1
 type HyperflexMacAddrPrefixRangeAO1P1 struct {
 
 	// The end MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-	//
 	EndAddr string `json:"EndAddr,omitempty"`
 
 	// The start MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-	//
 	StartAddr string `json:"StartAddr,omitempty"`
 
 	// hyperflex mac addr prefix range a o1 p1
@@ -125,11 +121,9 @@ func (m *HyperflexMacAddrPrefixRangeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The end MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-		//
 		EndAddr string `json:"EndAddr,omitempty"`
 
 		// The start MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-		//
 		StartAddr string `json:"StartAddr,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -138,9 +132,7 @@ func (m *HyperflexMacAddrPrefixRangeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexMacAddrPrefixRangeAO1P1
 
 	rcv.EndAddr = stage1.EndAddr
-
 	rcv.StartAddr = stage1.StartAddr
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -150,9 +142,7 @@ func (m *HyperflexMacAddrPrefixRangeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "EndAddr")
-
 	delete(stage2, "StartAddr")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -174,16 +164,13 @@ func (m HyperflexMacAddrPrefixRangeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The end MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-		//
 		EndAddr string `json:"EndAddr,omitempty"`
 
 		// The start MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.
-		//
 		StartAddr string `json:"StartAddr,omitempty"`
 	}
 
 	stage1.EndAddr = m.EndAddr
-
 	stage1.StartAddr = m.StartAddr
 
 	// make JSON object for known properties

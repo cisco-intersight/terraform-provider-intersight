@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamResourcePermissionList iam resource permission list
+//
 // swagger:model iamResourcePermissionList
 type IamResourcePermissionList struct {
 

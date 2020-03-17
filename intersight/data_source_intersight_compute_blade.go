@@ -15,10 +15,9 @@ func dataSourceComputeBlade() *schema.Resource {
 		Read: dataSourceComputeBladeRead,
 		Schema: map[string]*schema.Schema{
 			"adapters": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -34,7 +33,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -43,28 +42,24 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"admin_power_state": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"asset_tag": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"available_memory": {
-				Description: "",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"bios_units": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -80,7 +75,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -89,11 +84,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"bmc": {
-				Description: "",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				MaxItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -109,7 +103,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -118,11 +112,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"board": {
-				Description: "",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				MaxItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -138,7 +131,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -153,10 +146,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -165,7 +157,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"equipment_chassis": {
-				Description: "A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.When this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.\nWhen this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -185,7 +177,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -194,10 +186,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"equipment_io_expanders": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -213,7 +204,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -222,15 +213,13 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"fault_summary": {
-				Description: "",
-				Type:        schema.TypeInt,
-				Optional:    true,
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 			"generic_inventory_holders": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -246,7 +235,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -266,81 +255,73 @@ func dataSourceComputeBlade() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"address": {
-							Description: "",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"category": {
-							Description: "",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"default_gateway": {
-							Description: "",
+							Description: "Gateway address of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"dn": {
-							Description: "",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"http_port": {
-							Description: "",
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"https_port": {
-							Description: "",
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"kvm_port": {
-							Description: "",
+							Description: "Port number on which the KVM is running.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
 						},
 						"name": {
-							Description: "",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"subnet": {
-							Description: "",
+							Description: "Subnet of the KVM IP address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"type": {
-							Description: "",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
 				Computed: true,
 			},
 			"locator_led": {
-				Description: "",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				MaxItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -356,7 +337,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -365,10 +346,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"memory_speed": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"mgmt_ip_address": {
 				Description: "Management address of the server.",
@@ -394,7 +374,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"num_cpu_cores": {
-				Description: "",
+				Description: "Total number of CPU cores available.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -418,7 +398,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"num_fc_host_interfaces": {
-				Description: "",
+				Description: "Number of Fibre channel Host Interfaces.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -430,34 +410,30 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"oper_state": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"operability": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"pci_devices": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -473,7 +449,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -482,7 +458,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -501,7 +477,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -515,10 +491,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				Optional:    true,
 			},
 			"presence": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"registered_device": {
 				Description: "The Device to which this Managed Object is associated.",
@@ -541,7 +516,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -550,10 +525,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"revision": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -562,10 +536,9 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"scaled_mode": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"serial": {
 				Description: "This field identifies the serial of the given component.",
@@ -574,22 +547,20 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"service_profile": {
-				Description: "",
+				Description: "The service profile assigned.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"slot_id": {
-				Description: "",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"storage_enclosures": {
-				Description: "",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -605,7 +576,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -630,7 +601,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -645,7 +616,7 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed: true,
 			},
 			"top_system": {
-				Description: "A collection of references to the [top.System](mo://top.System) Managed Object.When this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [top.System](mo://top.System) Managed Object.\nWhen this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -664,7 +635,7 @@ func dataSourceComputeBlade() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -674,22 +645,19 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed: true,
 			},
 			"total_memory": {
-				Description: "",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"uuid": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"user_label": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",

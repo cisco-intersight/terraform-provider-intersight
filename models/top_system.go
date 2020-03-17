@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -30,12 +29,10 @@ type TopSystem struct {
 	ComputeRackUnits []*ComputeRackUnitRef `json:"ComputeRackUnits"`
 
 	// The IPv4 address of system.
-	//
 	// Read Only: true
 	IPV4Address string `json:"Ipv4Address,omitempty"`
 
 	// The IPv6 address of system.
-	//
 	// Read Only: true
 	IPV6Address string `json:"Ipv6Address,omitempty"`
 
@@ -55,12 +52,10 @@ type TopSystem struct {
 	NetworkElements []*NetworkElementRef `json:"NetworkElements"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The operational timezone of the system, empty indicates no timezone has been set specifically.
-	//
 	TimeZone string `json:"TimeZone,omitempty"`
 }
 
@@ -131,7 +126,6 @@ func (m TopSystem) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBlades []*ComputeBladeRef `json:"ComputeBlades"`
 
@@ -179,7 +173,6 @@ func (m TopSystem) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

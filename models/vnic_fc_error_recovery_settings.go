@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicFcErrorRecoverySettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,27 +99,23 @@ func (m *VnicFcErrorRecoverySettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicFcErrorRecoverySettingsAO1P1 vnic fc error recovery settings a o1 p1
+//
 // swagger:model VnicFcErrorRecoverySettingsAO1P1
 type VnicFcErrorRecoverySettingsAO1P1 struct {
 
 	// Enables Fibre Channel Error recovery.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// The number of times an I/O request to a port is retried because the port is busy before the system decides the port is unavailable.
-	//
 	IoRetryCount int64 `json:"IoRetryCount,omitempty"`
 
 	// The number of seconds the adapter waits before aborting the pending command and resending the same IO request.
-	//
 	IoRetryTimeout int64 `json:"IoRetryTimeout,omitempty"`
 
 	// The number of milliseconds the port should actually be down before it is marked down and fabric connectivity is lost.
-	//
 	LinkDownTimeout int64 `json:"LinkDownTimeout,omitempty"`
 
 	// The number of milliseconds a remote Fibre Channel port should be offline before informing the SCSI upper layer that the port is unavailable. For a server with a VIC adapter running ESXi, the recommended value is 10000. For a server with a port used to boot a Windows OS from the SAN, the recommended value is 5000 milliseconds.
-	//
 	PortDownTimeout int64 `json:"PortDownTimeout,omitempty"`
 
 	// vnic fc error recovery settings a o1 p1
@@ -134,23 +128,18 @@ func (m *VnicFcErrorRecoverySettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Enables Fibre Channel Error recovery.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// The number of times an I/O request to a port is retried because the port is busy before the system decides the port is unavailable.
-		//
 		IoRetryCount int64 `json:"IoRetryCount,omitempty"`
 
 		// The number of seconds the adapter waits before aborting the pending command and resending the same IO request.
-		//
 		IoRetryTimeout int64 `json:"IoRetryTimeout,omitempty"`
 
 		// The number of milliseconds the port should actually be down before it is marked down and fabric connectivity is lost.
-		//
 		LinkDownTimeout int64 `json:"LinkDownTimeout,omitempty"`
 
 		// The number of milliseconds a remote Fibre Channel port should be offline before informing the SCSI upper layer that the port is unavailable. For a server with a VIC adapter running ESXi, the recommended value is 10000. For a server with a port used to boot a Windows OS from the SAN, the recommended value is 5000 milliseconds.
-		//
 		PortDownTimeout int64 `json:"PortDownTimeout,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -159,15 +148,10 @@ func (m *VnicFcErrorRecoverySettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicFcErrorRecoverySettingsAO1P1
 
 	rcv.Enabled = stage1.Enabled
-
 	rcv.IoRetryCount = stage1.IoRetryCount
-
 	rcv.IoRetryTimeout = stage1.IoRetryTimeout
-
 	rcv.LinkDownTimeout = stage1.LinkDownTimeout
-
 	rcv.PortDownTimeout = stage1.PortDownTimeout
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -177,15 +161,10 @@ func (m *VnicFcErrorRecoverySettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enabled")
-
 	delete(stage2, "IoRetryCount")
-
 	delete(stage2, "IoRetryTimeout")
-
 	delete(stage2, "LinkDownTimeout")
-
 	delete(stage2, "PortDownTimeout")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -207,34 +186,25 @@ func (m VnicFcErrorRecoverySettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enables Fibre Channel Error recovery.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// The number of times an I/O request to a port is retried because the port is busy before the system decides the port is unavailable.
-		//
 		IoRetryCount int64 `json:"IoRetryCount,omitempty"`
 
 		// The number of seconds the adapter waits before aborting the pending command and resending the same IO request.
-		//
 		IoRetryTimeout int64 `json:"IoRetryTimeout,omitempty"`
 
 		// The number of milliseconds the port should actually be down before it is marked down and fabric connectivity is lost.
-		//
 		LinkDownTimeout int64 `json:"LinkDownTimeout,omitempty"`
 
 		// The number of milliseconds a remote Fibre Channel port should be offline before informing the SCSI upper layer that the port is unavailable. For a server with a VIC adapter running ESXi, the recommended value is 10000. For a server with a port used to boot a Windows OS from the SAN, the recommended value is 5000 milliseconds.
-		//
 		PortDownTimeout int64 `json:"PortDownTimeout,omitempty"`
 	}
 
 	stage1.Enabled = m.Enabled
-
 	stage1.IoRetryCount = m.IoRetryCount
-
 	stage1.IoRetryTimeout = m.IoRetryTimeout
-
 	stage1.LinkDownTimeout = m.LinkDownTimeout
-
 	stage1.PortDownTimeout = m.PortDownTimeout
 
 	// make JSON object for known properties

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,26 +20,23 @@ type PolicyAbstractConfigResultEntry struct {
 	MoBaseMo
 
 	// The completed time of the task in installer.
-	//
 	CompletedTime string `json:"CompletedTime,omitempty"`
 
 	// Context information on the change.
-	//
 	Context *PolicyConfigResultContext `json:"Context,omitempty"`
 
 	// Localized message based on the locale setting of the user's context.
-	//
 	Message string `json:"Message,omitempty"`
 
-	// owner Id
+	// The identifier of the object that owns the result message.
+	// The owner ID is used to correlate a given result entry to a task or entity. For example, a config result
+	// entry that describes the result of a workflow task may have the task's instance ID as the owner.
 	OwnerID string `json:"OwnerId,omitempty"`
 
-	// Values  -- ok, ok-with-warning, errored.
-	//
+	// Values  -- Ok, Ok-with-warning, Errored.
 	State string `json:"State,omitempty"`
 
 	// Indicates if the result is reported during the logical model validation/resource allocation phase. or the configuration applying phase. Values -- validation, config.
-	//
 	Type string `json:"Type,omitempty"`
 }
 
@@ -95,7 +91,6 @@ func (m PolicyAbstractConfigResultEntry) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CompletedTime string `json:"CompletedTime,omitempty"`
 
@@ -127,7 +122,6 @@ func (m PolicyAbstractConfigResultEntry) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -15,7 +15,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 		Read: dataSourceOsConfigurationFileRead,
 		Schema: map[string]*schema.Schema{
 			"catalog": {
-				Description: "A collection of references to the [os.Catalog](mo://os.Catalog) Managed Object.When this managed object is deleted, the referenced [os.Catalog](mo://os.Catalog) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [os.Catalog](mo://os.Catalog) Managed Object.\nWhen this managed object is deleted, the referenced [os.Catalog](mo://os.Catalog) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -34,7 +34,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -44,7 +44,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 				Computed: true,
 			},
 			"distributions": {
-				Description: "This captures the operating system for which this configuration file isdefined.",
+				Description: "This captures the operating system for which this configuration file is\ndefined.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
@@ -62,7 +62,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -72,7 +72,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 				Computed: true,
 			},
 			"file_content": {
-				Description: "The content of the entire configuration file is stored as value. The contentcan either be a static file content or a template content.The template is expected to conform to the golang template syntax. The valuesfrom os.Answers properties will be used to populate this template.",
+				Description: "The content of the entire configuration file is stored as value. The content\ncan either be a static file content or a template content.\nThe template is expected to conform to the golang template syntax. The values\nfrom os.Answers properties will be used to populate this template.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -88,13 +88,13 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 				Optional:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -113,7 +113,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -122,7 +122,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 				},
 			},
 			"placeholders": {
-				Description: "This readonly property holds the list of placeholder names used in theconfiguration file content in case it is a template.",
+				Description: "This readonly property holds the list of placeholder names used in the\nconfiguration file content in case it is a template.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -139,7 +139,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -169,7 +169,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 													DiffSuppressFunc: SuppressDiffAdditionProps,
 												},
 												"object_type": {
-													Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
 													Computed:    true,
@@ -189,17 +189,17 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 										Optional:    true,
 									},
 									"label": {
-										Description: "Descriptive name for the data type.",
+										Description: "Descriptive label for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), space ( ) or an underscore (_). The first and last character in label must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
 									"name": {
-										Description: "Pick a descriptive name for the data type.",
+										Description: "Descriptive name for the data type. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-) or an underscore (_). The first and last character in name must be an alphanumeric character.",
 										Type:        schema.TypeString,
 										Optional:    true,
 									},
 									"object_type": {
-										Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
@@ -245,7 +245,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 																			Optional:    true,
 																		},
 																		"object_type": {
-																			Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+																			Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																			Type:        schema.TypeString,
 																			Optional:    true,
 																			Computed:    true,
@@ -270,7 +270,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 																Optional:    true,
 															},
 															"object_type": {
-																Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+																Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																Type:        schema.TypeString,
 																Optional:    true,
 																Computed:    true,
@@ -284,14 +284,51 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 													},
 													Computed: true,
 												},
+												"inventory_selector": {
+													Description: "List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.",
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"additional_properties": {
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: SuppressDiffAdditionProps,
+															},
+															"display_attributes": {
+																Description: "List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.",
+																Type:        schema.TypeList,
+																Optional:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString}},
+															"object_type": {
+																Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+															},
+															"selector": {
+																Description: "Field to hold an Intersight API along with an optional filter to narrow down the search options.",
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"value_attribute": {
+																Description: "A property from the Intersight object, value of which can be used as value for referenced input definition.",
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+													Computed: true,
+												},
 												"object_type": {
-													Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
 													Computed:    true,
 												},
 												"secure": {
-													Description: "Intersight allows the secure properties to be used as task input/output. The values ofthese properties are encrypted and stored in Intersight.This flag marks the property to be secure when it is set to true.",
+													Description: "Intersight supports secure properties as task input/output. The values of\nthese properties are encrypted and stored in Intersight.\nThis flag marks the property to be secure when it is set to true.",
 													Type:        schema.TypeBool,
 													Optional:    true,
 												},
@@ -317,7 +354,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 				},
 			},
 			"supported": {
-				Description: "An internal property that is used to distinguish between the pre-canned OSconfiguration file entries and user provided entries.",
+				Description: "An internal property that is used to distinguish between the pre-canned OS\nconfiguration file entries and user provided entries.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Computed:    true,
@@ -339,7 +376,7 @@ func dataSourceOsConfigurationFile() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m FirmwareNetworkShare) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,40 +100,34 @@ func (m *FirmwareNetworkShare) UnmarshalBinary(b []byte) error {
 }
 
 // FirmwareNetworkShareAO1P1 firmware network share a o1 p1
+//
 // swagger:model FirmwareNetworkShareAO1P1
 type FirmwareNetworkShareAO1P1 struct {
 
 	// CIFS file server option for network share upgrade.
-	//
 	CifsServer *FirmwareCifsServer `json:"CifsServer,omitempty"`
 
 	// HTTP (for WWW) file server option for network share upgrade.
-	//
 	HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.
-	//
 	// Enum: [nfs cifs www]
 	MapType *string `json:"MapType,omitempty"`
 
 	// NFS file server option for network share upgrade.
-	//
 	NfsServer *FirmwareNfsServer `json:"NfsServer,omitempty"`
 
 	// Password as configured on the file server.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Option to control the upgrade, e.g., 1) nw_upgrade_mount_only - mount the image from a file server and run upgrade on-next server boot 2) nw_upgrade_full - mount the image and run upgrade immediately.
-	//
 	// Enum: [nw_upgrade_full nw_upgrade_mount_only]
 	Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 	// Username as configured on the file server.
-	//
 	Username string `json:"Username,omitempty"`
 
 	// firmware network share a o1 p1
@@ -148,36 +140,29 @@ func (m *FirmwareNetworkShareAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// CIFS file server option for network share upgrade.
-		//
 		CifsServer *FirmwareCifsServer `json:"CifsServer,omitempty"`
 
 		// HTTP (for WWW) file server option for network share upgrade.
-		//
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.
-		//
 		// Enum: [nfs cifs www]
 		MapType *string `json:"MapType,omitempty"`
 
 		// NFS file server option for network share upgrade.
-		//
 		NfsServer *FirmwareNfsServer `json:"NfsServer,omitempty"`
 
 		// Password as configured on the file server.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Option to control the upgrade, e.g., 1) nw_upgrade_mount_only - mount the image from a file server and run upgrade on-next server boot 2) nw_upgrade_full - mount the image and run upgrade immediately.
-		//
 		// Enum: [nw_upgrade_full nw_upgrade_mount_only]
 		Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 		// Username as configured on the file server.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -186,21 +171,13 @@ func (m *FirmwareNetworkShareAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FirmwareNetworkShareAO1P1
 
 	rcv.CifsServer = stage1.CifsServer
-
 	rcv.HTTPServer = stage1.HTTPServer
-
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.MapType = stage1.MapType
-
 	rcv.NfsServer = stage1.NfsServer
-
 	rcv.Password = stage1.Password
-
 	rcv.Upgradeoption = stage1.Upgradeoption
-
 	rcv.Username = stage1.Username
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -210,21 +187,13 @@ func (m *FirmwareNetworkShareAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "CifsServer")
-
 	delete(stage2, "HttpServer")
-
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "MapType")
-
 	delete(stage2, "NfsServer")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "Upgradeoption")
-
 	delete(stage2, "Username")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -246,53 +215,39 @@ func (m FirmwareNetworkShareAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// CIFS file server option for network share upgrade.
-		//
 		CifsServer *FirmwareCifsServer `json:"CifsServer,omitempty"`
 
 		// HTTP (for WWW) file server option for network share upgrade.
-		//
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
 		// is password set
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.
-		//
 		// Enum: [nfs cifs www]
 		MapType *string `json:"MapType,omitempty"`
 
 		// NFS file server option for network share upgrade.
-		//
 		NfsServer *FirmwareNfsServer `json:"NfsServer,omitempty"`
 
 		// Password as configured on the file server.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Option to control the upgrade, e.g., 1) nw_upgrade_mount_only - mount the image from a file server and run upgrade on-next server boot 2) nw_upgrade_full - mount the image and run upgrade immediately.
-		//
 		// Enum: [nw_upgrade_full nw_upgrade_mount_only]
 		Upgradeoption *string `json:"Upgradeoption,omitempty"`
 
 		// Username as configured on the file server.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 
 	stage1.CifsServer = m.CifsServer
-
 	stage1.HTTPServer = m.HTTPServer
-
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.MapType = m.MapType
-
 	stage1.NfsServer = m.NfsServer
-
 	stage1.Password = m.Password
-
 	stage1.Upgradeoption = m.Upgradeoption
-
 	stage1.Username = m.Username
 
 	// make JSON object for known properties

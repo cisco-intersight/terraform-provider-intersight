@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m HyperflexAbstractAppSetting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *HyperflexAbstractAppSetting) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexAbstractAppSettingAO1P1 hyperflex abstract app setting a o1 p1
+//
 // swagger:model HyperflexAbstractAppSettingAO1P1
 type HyperflexAbstractAppSettingAO1P1 struct {
 
 	// The application setting identifier.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The application setting value.
-	//
 	Value string `json:"Value,omitempty"`
 
 	// hyperflex abstract app setting a o1 p1
@@ -122,11 +119,9 @@ func (m *HyperflexAbstractAppSettingAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The application setting identifier.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The application setting value.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *HyperflexAbstractAppSettingAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexAbstractAppSettingAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *HyperflexAbstractAppSettingAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m HyperflexAbstractAppSettingAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The application setting identifier.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The application setting value.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

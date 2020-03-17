@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,15 +20,12 @@ type PolicyAbstractConfigResult struct {
 	MoBaseMo
 
 	// The current running stage of the configuration or workflow.
-	//
 	ConfigStage string `json:"ConfigStage,omitempty"`
 
-	// Indicates overall configuration state for applying the configuration to the end point. Values  -- ok, ok-with-warning, errored.
-	//
+	// Indicates overall configuration state for applying the configuration to the end point. Values  -- Ok, Ok-with-warning, Errored.
 	ConfigState string `json:"ConfigState,omitempty"`
 
-	// Indicates overall state for logical model validation. Values  -- ok, ok-with-warning, errored.
-	//
+	// Indicates overall state for logical model validation. Values  -- Ok, Ok-with-warning, Errored.
 	ValidationState string `json:"ValidationState,omitempty"`
 }
 
@@ -72,7 +68,6 @@ func (m PolicyAbstractConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigStage string `json:"ConfigStage,omitempty"`
 
@@ -92,7 +87,6 @@ func (m PolicyAbstractConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

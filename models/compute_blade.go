@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -39,14 +38,11 @@ type ComputeBlade struct {
 	Board *ComputeBoardRef `json:"Board,omitempty"`
 
 	// The id of the chassis that the blade is located in.
-	//
 	// Read Only: true
 	ChassisID string `json:"ChassisId,omitempty"`
 
 	// A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentChassis *EquipmentChassisRef `json:"EquipmentChassis,omitempty"`
 
@@ -67,7 +63,6 @@ type ComputeBlade struct {
 	PciDevices []*PciDeviceRef `json:"PciDevices"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -84,9 +79,7 @@ type ComputeBlade struct {
 	StorageEnclosures []*StorageEnclosureRef `json:"StorageEnclosures"`
 
 	// A collection of references to the [top.System](mo://top.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.
-	//
 	TopSystem *TopSystemRef `json:"TopSystem,omitempty"`
 }
 
@@ -177,7 +170,6 @@ func (m ComputeBlade) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Adapters []*AdapterUnitRef `json:"Adapters"`
 
@@ -245,7 +237,6 @@ func (m ComputeBlade) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

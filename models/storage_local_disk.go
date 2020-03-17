@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m StorageLocalDisk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *StorageLocalDisk) UnmarshalBinary(b []byte) error {
 }
 
 // StorageLocalDiskAO1P1 storage local disk a o1 p1
+//
 // swagger:model StorageLocalDiskAO1P1
 type StorageLocalDiskAO1P1 struct {
 
 	// The slot number of the disk to be referenced. As this is a policy, this slot number may or may not be valid depending on the number of disks in the associated server.
-	//
 	SlotNumber int64 `json:"SlotNumber,omitempty"`
 
 	// storage local disk a o1 p1
@@ -118,7 +116,6 @@ func (m *StorageLocalDiskAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The slot number of the disk to be referenced. As this is a policy, this slot number may or may not be valid depending on the number of disks in the associated server.
-		//
 		SlotNumber int64 `json:"SlotNumber,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *StorageLocalDiskAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageLocalDiskAO1P1
 
 	rcv.SlotNumber = stage1.SlotNumber
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *StorageLocalDiskAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "SlotNumber")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m StorageLocalDiskAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The slot number of the disk to be referenced. As this is a policy, this slot number may or may not be valid depending on the number of disks in the associated server.
-		//
 		SlotNumber int64 `json:"SlotNumber,omitempty"`
 	}
 

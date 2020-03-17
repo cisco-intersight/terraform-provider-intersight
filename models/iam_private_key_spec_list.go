@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // IamPrivateKeySpecList iam private key spec list
+//
 // swagger:model iamPrivateKeySpecList
 type IamPrivateKeySpecList struct {
 

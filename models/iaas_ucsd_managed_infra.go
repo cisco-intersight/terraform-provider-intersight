@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,64 +20,51 @@ type IaasUcsdManagedInfra struct {
 	MoBaseMo
 
 	// Total advanced catalogs in UCSD.
-	//
 	// Read Only: true
 	AdvancedCatalogCount int64 `json:"AdvancedCatalogCount,omitempty"`
 
 	// Total bare metal catalogs in UCSD.
-	//
 	// Read Only: true
 	BmCatalogCount int64 `json:"BmCatalogCount,omitempty"`
 
 	// Total service container catalogs in UCSD.
-	//
 	// Read Only: true
 	ContainerCatalogCount int64 `json:"ContainerCatalogCount,omitempty"`
 
 	// Total ESXi hosts in UCSD.
-	//
 	// Read Only: true
 	EsxiHostCount int64 `json:"EsxiHostCount,omitempty"`
 
 	// Total external (Ldap) groups in UCSD.
-	//
 	// Read Only: true
 	ExternalGroupCount int64 `json:"ExternalGroupCount,omitempty"`
 
 	// A collection of references to the [iaas.UcsdInfo](mo://iaas.UcsdInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iaas.UcsdInfo](mo://iaas.UcsdInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
 	// Total HyperV hosts in UCSD.
-	//
 	// Read Only: true
 	HypervHostCount int64 `json:"HypervHostCount,omitempty"`
 
 	// Total local groups in UCSD.
-	//
 	// Read Only: true
 	LocalGroupCount int64 `json:"LocalGroupCount,omitempty"`
 
 	// Total standard catalogs in UCSD.
-	//
 	// Read Only: true
 	StandardCatalogCount int64 `json:"StandardCatalogCount,omitempty"`
 
 	// Total user accounts in UCSD.
-	//
 	// Read Only: true
 	UserCount int64 `json:"UserCount,omitempty"`
 
 	// Total virtual datacenters in UCSD.
-	//
 	// Read Only: true
 	VdcCount int64 `json:"VdcCount,omitempty"`
 
 	// Total Virtual machines in UCSD.
-	//
 	// Read Only: true
 	VMCount int64 `json:"VmCount,omitempty"`
 }
@@ -158,7 +144,6 @@ func (m IaasUcsdManagedInfra) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdvancedCatalogCount int64 `json:"AdvancedCatalogCount,omitempty"`
 
@@ -214,7 +199,6 @@ func (m IaasUcsdManagedInfra) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,43 +22,32 @@ type IamPermission struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The informative description about each permission.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The end point roles assigned to this permission. The user can perform end point operations like GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
 
 	// The name of the permission which has to be granted to user.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The resource and roles assigned to this permission. Resource role specifies the organization and the collection of roles the permission has on the organization.
-	//
 	ResourceRoles []*IamResourceRolesRef `json:"ResourceRoles"`
 
 	// The roles assigned to this permission. Role is a collection of privilege sets. Roles are assigned to a user using the permission object.
-	//
 	Roles []*IamRoleRef `json:"Roles"`
 
 	// A collection of references to the [iam.UserGroup](mo://iam.UserGroup) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.UserGroup](mo://iam.UserGroup) MOs unset their reference to this deleted MO.
-	//
 	UserGroups []*IamUserGroupRef `json:"UserGroups"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.User](mo://iam.User) MOs unset their reference to this deleted MO.
-	//
 	Users []*IamUserRef `json:"Users"`
 }
 
@@ -122,7 +110,6 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -162,7 +149,6 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

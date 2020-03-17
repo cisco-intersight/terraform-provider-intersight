@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexStPlatformClusterResiliencyInfo Hyperflex:St Platform Cluster Resiliency Info
+//
 // swagger:model hyperflexStPlatformClusterResiliencyInfo
 type HyperflexStPlatformClusterResiliencyInfo struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m HyperflexStPlatformClusterResiliencyInfo) MarshalJSON() ([]byte, error) 
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,6 +97,7 @@ func (m *HyperflexStPlatformClusterResiliencyInfo) UnmarshalBinary(b []byte) err
 }
 
 // HyperflexStPlatformClusterResiliencyInfoAO1P1 hyperflex st platform cluster resiliency info a o1 p1
+//
 // swagger:model HyperflexStPlatformClusterResiliencyInfoAO1P1
 type HyperflexStPlatformClusterResiliencyInfoAO1P1 struct {
 
@@ -172,19 +172,12 @@ func (m *HyperflexStPlatformClusterResiliencyInfoAO1P1) UnmarshalJSON(data []byt
 	var rcv HyperflexStPlatformClusterResiliencyInfoAO1P1
 
 	rcv.HddFailuresTolerable = stage1.HddFailuresTolerable
-
 	rcv.Messages = stage1.Messages
-
 	rcv.MessagesIterator = stage1.MessagesIterator
-
 	rcv.MessagesSize = stage1.MessagesSize
-
 	rcv.NodeFailuresTolerable = stage1.NodeFailuresTolerable
-
 	rcv.SsdFailuresTolerable = stage1.SsdFailuresTolerable
-
 	rcv.State = stage1.State
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -194,19 +187,12 @@ func (m *HyperflexStPlatformClusterResiliencyInfoAO1P1) UnmarshalJSON(data []byt
 	}
 
 	delete(stage2, "HddFailuresTolerable")
-
 	delete(stage2, "Messages")
-
 	delete(stage2, "MessagesIterator")
-
 	delete(stage2, "MessagesSize")
-
 	delete(stage2, "NodeFailuresTolerable")
-
 	delete(stage2, "SsdFailuresTolerable")
-
 	delete(stage2, "State")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -257,17 +243,11 @@ func (m HyperflexStPlatformClusterResiliencyInfoAO1P1) MarshalJSON() ([]byte, er
 	}
 
 	stage1.HddFailuresTolerable = m.HddFailuresTolerable
-
 	stage1.Messages = m.Messages
-
 	stage1.MessagesIterator = m.MessagesIterator
-
 	stage1.MessagesSize = m.MessagesSize
-
 	stage1.NodeFailuresTolerable = m.NodeFailuresTolerable
-
 	stage1.SsdFailuresTolerable = m.SsdFailuresTolerable
-
 	stage1.State = m.State
 
 	// make JSON object for known properties

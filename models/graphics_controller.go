@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,29 +20,23 @@ type GraphicsController struct {
 	EquipmentBase
 
 	// It shows the id of graphics controller.
-	//
 	// Read Only: true
 	ControllerID int64 `json:"ControllerId,omitempty"`
 
 	// A collection of references to the [graphics.Card](mo://graphics.Card) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [graphics.Card](mo://graphics.Card) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GraphicsCard *GraphicsCardRef `json:"GraphicsCard,omitempty"`
 
 	// It shows the pci address of graphics controller.
-	//
 	// Read Only: true
 	PciAddr string `json:"PciAddr,omitempty"`
 
 	// It shows the pci slot inforamtion of graphics controller.
-	//
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -95,7 +88,6 @@ func (m GraphicsController) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ControllerID int64 `json:"ControllerId,omitempty"`
 
@@ -123,7 +115,6 @@ func (m GraphicsController) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

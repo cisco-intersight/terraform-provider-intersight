@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,12 +19,10 @@ import (
 // Content handler framework supports extraction of required values from API/device
 // responses. These responses may be of various content types such as XML, JSON, etc.
 // The values of importance are modeled as parameters in the content handler framework.
-//
 // The parameters can be of a scalar value type or a collection of values. A group
 // of related parameters can be modeled as a single complex type parameter. These
 // complex types will be very useful to extract a set of repeating group of related
 // parameters.
-//
 // A grammar specification defines the set of parameters that need to be extracted
 // from the content. The grammar specification allows complex type definitions to be
 // defined for any complex parameters.
@@ -71,7 +68,6 @@ func (m ContentGrammar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -113,30 +109,23 @@ func (m *ContentGrammar) UnmarshalBinary(b []byte) error {
 }
 
 // ContentGrammarAO1P1 content grammar a o1 p1
+//
 // swagger:model ContentGrammarAO1P1
 type ContentGrammarAO1P1 struct {
 
 	// The list of parameter definitions, if found in a given API/device response,
 	// makes the content handlers to treat the response as error response.
-	//
 	// This is optional parameter.
-	//
-	//
 	ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 	// The list of parameter definitions that mark the parameters to be
 	// extracted using this grammar specification.
-	//
-	//
 	Parameters []*ContentBaseParameter `json:"Parameters"`
 
 	// The collection of complex types definitions used in this grammar
 	// specification.
-	//
 	// This is required only if any of the parameters provided in this grammar
 	// is of complex type.
-	//
-	//
 	Types []*ContentComplexType `json:"Types"`
 
 	// content grammar a o1 p1
@@ -150,25 +139,17 @@ func (m *ContentGrammarAO1P1) UnmarshalJSON(data []byte) error {
 
 		// The list of parameter definitions, if found in a given API/device response,
 		// makes the content handlers to treat the response as error response.
-		//
 		// This is optional parameter.
-		//
-		//
 		ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 		// The list of parameter definitions that mark the parameters to be
 		// extracted using this grammar specification.
-		//
-		//
 		Parameters []*ContentBaseParameter `json:"Parameters"`
 
 		// The collection of complex types definitions used in this grammar
 		// specification.
-		//
 		// This is required only if any of the parameters provided in this grammar
 		// is of complex type.
-		//
-		//
 		Types []*ContentComplexType `json:"Types"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -177,11 +158,8 @@ func (m *ContentGrammarAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ContentGrammarAO1P1
 
 	rcv.ErrorParameters = stage1.ErrorParameters
-
 	rcv.Parameters = stage1.Parameters
-
 	rcv.Types = stage1.Types
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -191,11 +169,8 @@ func (m *ContentGrammarAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ErrorParameters")
-
 	delete(stage2, "Parameters")
-
 	delete(stage2, "Types")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -218,32 +193,22 @@ func (m ContentGrammarAO1P1) MarshalJSON() ([]byte, error) {
 
 		// The list of parameter definitions, if found in a given API/device response,
 		// makes the content handlers to treat the response as error response.
-		//
 		// This is optional parameter.
-		//
-		//
 		ErrorParameters []*ContentBaseParameter `json:"ErrorParameters"`
 
 		// The list of parameter definitions that mark the parameters to be
 		// extracted using this grammar specification.
-		//
-		//
 		Parameters []*ContentBaseParameter `json:"Parameters"`
 
 		// The collection of complex types definitions used in this grammar
 		// specification.
-		//
 		// This is required only if any of the parameters provided in this grammar
 		// is of complex type.
-		//
-		//
 		Types []*ContentComplexType `json:"Types"`
 	}
 
 	stage1.ErrorParameters = m.ErrorParameters
-
 	stage1.Parameters = m.Parameters
-
 	stage1.Types = m.Types
 
 	// make JSON object for known properties

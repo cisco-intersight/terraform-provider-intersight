@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,55 +23,43 @@ type AssetManagedDevice struct {
 	MoBaseMo
 
 	// ManagedDevice to Account MO relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Credentials to manage Managed Device.
-	//
 	Credential *CommCredential `json:"Credential,omitempty"`
 
 	// Intersight Assist Appliance Device within the asset Device Registration.
-	//
 	DeviceConnectorManager *AssetDeviceRegistrationRef `json:"DeviceConnectorManager,omitempty"`
 
 	// Type of the Device such as VMware, Pure Storage supported by Intersight Assist.
-	//
-	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	DeviceType string `json:"DeviceType,omitempty"`
 
 	// Ignore Certificates with protocol https for connecting to the Managed Device. It is not used for other protocols.
-	//
 	IgnoreCert *bool `json:"IgnoreCert,omitempty"`
 
 	// Device is Enabled/Disabled.
-	//
 	IsEnabled *bool `json:"IsEnabled,omitempty"`
 
 	// Management address of the device. It can be IPv4, IPv6 or FQDN.
-	//
 	ManagementAddress string `json:"ManagementAddress,omitempty"`
 
 	// Port to use for connecting to the Managed Device. Port is optional. If not specified, default port for protocol is used.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// Protocol to use for connecting to the Managed Device.
-	//
 	// Enum: [https http]
 	Protocol *string `json:"Protocol,omitempty"`
 
 	// ManagedDevice once auto claimed within the asset Device Registration.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Status of communication releated to Managed Device.
-	//
 	// Read Only: true
 	Status *AssetManagedDeviceStatus `json:"Status,omitempty"`
 
 	// Worklfow managed object reference associated with managed device. No managed device operations are supported, in case of associated worklfow is in progress.
-	//
 	// Read Only: true
 	WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 }
@@ -152,7 +139,6 @@ func (m AssetManagedDevice) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -208,7 +194,6 @@ func (m AssetManagedDevice) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -317,7 +302,7 @@ var assetManagedDeviceTypeDeviceTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

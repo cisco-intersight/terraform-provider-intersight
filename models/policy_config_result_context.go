@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m PolicyConfigResultContext) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,23 +99,20 @@ func (m *PolicyConfigResultContext) UnmarshalBinary(b []byte) error {
 }
 
 // PolicyConfigResultContextAO1P1 policy config result context a o1 p1
+//
 // swagger:model PolicyConfigResultContextAO1P1
 type PolicyConfigResultContextAO1P1 struct {
 
 	// The data of the object present in config result context.
-	//
 	EntityData interface{} `json:"EntityData,omitempty"`
 
 	// The Moid of the object present in config result context.
-	//
 	EntityMoid string `json:"EntityMoid,omitempty"`
 
 	// The name of the object present in config result context.
-	//
 	EntityName string `json:"EntityName,omitempty"`
 
 	// The type of the object present in config result context.
-	//
 	EntityType string `json:"EntityType,omitempty"`
 
 	// policy config result context a o1 p1
@@ -130,19 +125,15 @@ func (m *PolicyConfigResultContextAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The data of the object present in config result context.
-		//
 		EntityData interface{} `json:"EntityData,omitempty"`
 
 		// The Moid of the object present in config result context.
-		//
 		EntityMoid string `json:"EntityMoid,omitempty"`
 
 		// The name of the object present in config result context.
-		//
 		EntityName string `json:"EntityName,omitempty"`
 
 		// The type of the object present in config result context.
-		//
 		EntityType string `json:"EntityType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -151,13 +142,9 @@ func (m *PolicyConfigResultContextAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PolicyConfigResultContextAO1P1
 
 	rcv.EntityData = stage1.EntityData
-
 	rcv.EntityMoid = stage1.EntityMoid
-
 	rcv.EntityName = stage1.EntityName
-
 	rcv.EntityType = stage1.EntityType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -167,13 +154,9 @@ func (m *PolicyConfigResultContextAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "EntityData")
-
 	delete(stage2, "EntityMoid")
-
 	delete(stage2, "EntityName")
-
 	delete(stage2, "EntityType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -195,28 +178,21 @@ func (m PolicyConfigResultContextAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The data of the object present in config result context.
-		//
 		EntityData interface{} `json:"EntityData,omitempty"`
 
 		// The Moid of the object present in config result context.
-		//
 		EntityMoid string `json:"EntityMoid,omitempty"`
 
 		// The name of the object present in config result context.
-		//
 		EntityName string `json:"EntityName,omitempty"`
 
 		// The type of the object present in config result context.
-		//
 		EntityType string `json:"EntityType,omitempty"`
 	}
 
 	stage1.EntityData = m.EntityData
-
 	stage1.EntityMoid = m.EntityMoid
-
 	stage1.EntityName = m.EntityName
-
 	stage1.EntityType = m.EntityType
 
 	// make JSON object for known properties

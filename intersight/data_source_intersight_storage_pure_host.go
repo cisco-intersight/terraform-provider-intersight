@@ -21,7 +21,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 				Computed:    true,
 			},
 			"host_group": {
-				Description: "A collection of references to the [storage.PureHost](mo://storage.PureHost) Managed Object.When this managed object is deleted, the referenced [storage.PureHost](mo://storage.PureHost) MO unsets its reference to this deleted MO.",
+				Description: "Relationship to the Host Group that the host belongs to.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -41,7 +41,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -50,45 +50,10 @@ func dataSourceStoragePureHost() *schema.Resource {
 				},
 			},
 			"host_group_name": {
-				Description: "Name of host group where the host belongs to. Empty if HostType is set as HostGroup.",
+				Description: "Name of host group where the host belongs to. Empty if host is not part of any HostGroup.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-			},
-			"host_names": {
-				Description: "Names of the host which are associated with the host group. Empty if HostType is set as Host.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString}},
-			"hosts": {
-				Description: "List of host object associated to the host group.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"initiators": {
 				Description: "List of initiators which are associated with host.",
@@ -103,7 +68,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"iqn": {
-							Description: "IQN (iSCSI qualified name). Can be up to 255 characters long and has the following format, iqn.yyyy-mm.naming-authority:unique name.",
+							Description: "IQN (iSCSI qualified name). Can be up to 255 characters long and has the format iqn.yyyy-mm.naming-authority:unique name.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -115,7 +80,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -148,7 +113,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 				Computed:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -160,7 +125,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -179,7 +144,36 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"protection_group": {
+				Description: "A collection of references to the [storage.PureProtectionGroup](mo://storage.PureProtectionGroup) Managed Object.\nWhen this managed object is deleted, the referenced [storage.PureProtectionGroup](mo://storage.PureProtectionGroup) MO unsets its reference to this deleted MO.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -208,7 +202,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -237,7 +231,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -259,7 +253,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"available": {
-							Description: "Total consumable storage capacity represented in bytes. System may reserve some space for internal purpose which is excluded from total capacity.",
+							Description: "Total consumable storage capacity represented in bytes. System may reserve some space for internal purposes which is excluded from total capacity.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
@@ -271,13 +265,13 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"free": {
-							Description: "Unused space available for user to consume, represented in bytes.",
+							Description: "Unused space available for applications to consume, represented in bytes.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -295,7 +289,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Computed:    true,
 						},
 						"total": {
-							Description: "Total storage capacity, represented in bytes. It is set by the component manufacture.",
+							Description: "Total storage capacity, represented in bytes. It is set by the component manufacturer.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
@@ -338,7 +332,7 @@ func dataSourceStoragePureHost() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -351,12 +345,6 @@ func dataSourceStoragePureHost() *schema.Resource {
 					},
 				},
 				Computed: true,
-			},
-			"type": {
-				Description: "Type of host entity whether it is a single host or host group (collection of host).",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
 			},
 		},
 	}
@@ -392,10 +380,6 @@ func dataSourceStoragePureHostRead(d *schema.ResourceData, meta interface{}) err
 		x := (v.(string))
 		o.OsType = x
 	}
-	if v, ok := d.GetOk("type"); ok {
-		x := (v.(string))
-		o.Type = x
-	}
 
 	data, err := o.MarshalJSON()
 	body, err := conn.SendGetRequest(url, data)
@@ -423,17 +407,10 @@ func dataSourceStoragePureHostRead(d *schema.ResourceData, meta interface{}) err
 				return err
 			}
 
-			if err := d.Set("host_group", flattenMapStoragePureHostRef(s.HostGroup, d)); err != nil {
+			if err := d.Set("host_group", flattenMapStoragePureHostGroupRef(s.HostGroup, d)); err != nil {
 				return err
 			}
 			if err := d.Set("host_group_name", (s.HostGroupName)); err != nil {
-				return err
-			}
-			if err := d.Set("host_names", (s.HostNames)); err != nil {
-				return err
-			}
-
-			if err := d.Set("hosts", flattenListStoragePureHostRef(s.Hosts, d)); err != nil {
 				return err
 			}
 
@@ -457,6 +434,10 @@ func dataSourceStoragePureHostRead(d *schema.ResourceData, meta interface{}) err
 				return err
 			}
 
+			if err := d.Set("protection_group", flattenMapStoragePureProtectionGroupRef(s.ProtectionGroup, d)); err != nil {
+				return err
+			}
+
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
@@ -470,9 +451,6 @@ func dataSourceStoragePureHostRead(d *schema.ResourceData, meta interface{}) err
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
-			}
-			if err := d.Set("type", (s.Type)); err != nil {
 				return err
 			}
 			d.SetId(s.Moid)

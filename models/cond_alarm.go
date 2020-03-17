@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,62 +23,48 @@ type CondAlarm struct {
 	MoBaseMo
 
 	// MoId of the affected object from the managed system's point of view.
-	//
 	AffectedMoID string `json:"AffectedMoId,omitempty"`
 
 	// Managed system affected object type. For example Adaptor, FI, CIMC.
-	//
 	AffectedMoType string `json:"AffectedMoType,omitempty"`
 
 	// A unique key for an alarm instance, consists of a combination of a unique system name and msAffectedObject.
-	//
 	AffectedObject string `json:"AffectedObject,omitempty"`
 
 	// Parent MoId of the fault from managed system. For example, Blade moid for adaptor fault.
-	//
 	AncestorMoID string `json:"AncestorMoId,omitempty"`
 
 	// Parent MO type of the fault from managed system. For example, Blade for adaptor fault.
-	//
 	AncestorMoType string `json:"AncestorMoType,omitempty"`
 
 	// A unique alarm code. For alarms mapped from UCS faults, this will be the same as the UCS fault code.
-	//
 	Code string `json:"Code,omitempty"`
 
 	// The time the alarm was created.
-	//
 	// Format: date-time
 	CreationTime strfmt.DateTime `json:"CreationTime,omitempty"`
 
 	// A longer description of the alarm than the name. The description contains details of the component reporting the issue.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The time the alarm last had a change in severity.
-	//
 	// Format: date-time
 	LastTransitionTime strfmt.DateTime `json:"LastTransitionTime,omitempty"`
 
 	// A unique key for the alarm from the managed system's point of view. For example, in the case of UCS, this is the fault's dn.
-	//
 	MsAffectedObject string `json:"MsAffectedObject,omitempty"`
 
 	// Uniquely identifies the type of alarm. For alarms originating from Intersight, this will be a descriptive name. For alarms that are mapped from faults, the name will be derived from fault properties. For example, alarms mapped from UCS faults will use a prefix of UCS and appended with the fault code.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The original severity when the alarm was first created.
-	//
 	// Enum: [None Info Critical Warning Cleared]
 	OrigSeverity *string `json:"OrigSeverity,omitempty"`
 
 	// Relationship to set accountMoid on Alarms. With "onpeerdelete" set to "cascade", Alarms get deleted when the associated registered device is deleted.
-	//
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The severity of the alarm. Valid values are Critical, Warning, Info, and Cleared.
-	//
 	// Enum: [None Info Critical Warning Cleared]
 	Severity *string `json:"Severity,omitempty"`
 }
@@ -167,7 +152,6 @@ func (m CondAlarm) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AffectedMoID string `json:"AffectedMoId,omitempty"`
 
@@ -231,7 +215,6 @@ func (m CondAlarm) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

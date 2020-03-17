@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,84 +22,66 @@ type IamAccount struct {
 	MoBaseMo
 
 	// List of registered OAuth2 applications created from the account.
-	//
 	// Read Only: true
 	AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
 
 	// The domain Groups are configured in an account for scaling purpose. Currently, only onboarding-device account has multiple domain groups and other accounts have only one domain group per account.
-	//
 	// Read Only: true
 	DomainGroups []*IamDomainGroupRef `json:"DomainGroups"`
 
 	// User defined end point roles. These roles are assigned to Intersight users to perform end point operations such as GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
 
 	// System created IdPs configured for authentication in an account. By default Cisco IdP is created upon account creation.
-	//
 	// Read Only: true
 	Idpreferences []*IamIdpReferenceRef `json:"Idpreferences"`
 
 	// IdPs configured for authentication in an account. IdP object handles the third-party IdP details.
-	//
 	// Read Only: true
 	Idps []*IamIdpRef `json:"Idps"`
 
 	// Name of the Intersight account. By default, name is same as the MoID of the account.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// System defined permissions within an account. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	// Read Only: true
 	Permissions []*IamPermissionRef `json:"Permissions"`
 
 	// User defined privilege sets. Privilege set is a collection of privileges. Privilege sets are assigned to a user using roles.
-	//
 	// Read Only: true
 	PrivilegeSets []*IamPrivilegeSetRef `json:"PrivilegeSets"`
 
 	// Privileges are assigned to a user using privilege sets and roles. Privileges define user permissions and the actions a user can perform in Intersight.
-	//
 	// Read Only: true
 	Privileges []*IamPrivilegeRef `json:"Privileges"`
 
 	// User and user group related configuration limits.
-	//
 	// Read Only: true
 	ResourceLimits *IamResourceLimitsRef `json:"ResourceLimits,omitempty"`
 
 	// User defined roles created within an account. Role is a collection of privilege sets. Roles are assigned to user using permission object.
-	//
 	// Read Only: true
 	Roles []*IamRoleRef `json:"Roles"`
 
 	// Holder for organization aggregated permissions and global account permissions.
-	//
 	// Read Only: true
 	SecurityHolder *IamSecurityHolderRef `json:"SecurityHolder,omitempty"`
 
 	// Session related configuration limits.
-	//
 	// Read Only: true
 	SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
 
 	// Status of the account. To activate the Intersight account, claim a device to the account.
-	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 
 	// A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.
-	//
 	Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
 
 	// A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.
-	//
 	Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
 }
 
@@ -195,7 +176,6 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
 
@@ -267,7 +247,6 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

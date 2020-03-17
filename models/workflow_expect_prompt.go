@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowExpectPrompt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *WorkflowExpectPrompt) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowExpectPromptAO1P1 workflow expect prompt a o1 p1
+//
 // swagger:model WorkflowExpectPromptAO1P1
 type WorkflowExpectPromptAO1P1 struct {
 
 	// The regex of the expect prompt of the interactive command.
-	//
 	Expect string `json:"Expect,omitempty"`
 
 	// The answer string to the expect prompt.
-	//
 	Send string `json:"Send,omitempty"`
 
 	// workflow expect prompt a o1 p1
@@ -122,11 +119,9 @@ func (m *WorkflowExpectPromptAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The regex of the expect prompt of the interactive command.
-		//
 		Expect string `json:"Expect,omitempty"`
 
 		// The answer string to the expect prompt.
-		//
 		Send string `json:"Send,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *WorkflowExpectPromptAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowExpectPromptAO1P1
 
 	rcv.Expect = stage1.Expect
-
 	rcv.Send = stage1.Send
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *WorkflowExpectPromptAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Expect")
-
 	delete(stage2, "Send")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m WorkflowExpectPromptAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The regex of the expect prompt of the interactive command.
-		//
 		Expect string `json:"Expect,omitempty"`
 
 		// The answer string to the expect prompt.
-		//
 		Send string `json:"Send,omitempty"`
 	}
 
 	stage1.Expect = m.Expect
-
 	stage1.Send = m.Send
 
 	// make JSON object for known properties

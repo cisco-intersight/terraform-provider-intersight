@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -27,16 +26,12 @@ type ComputeBoard struct {
 	BoardID int64 `json:"BoardId,omitempty"`
 
 	// A collection of references to the [compute.Blade](mo://compute.Blade) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Blade](mo://compute.Blade) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBlade *ComputeBladeRef `json:"ComputeBlade,omitempty"`
 
 	// A collection of references to the [compute.RackUnit](mo://compute.RackUnit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.RackUnit](mo://compute.RackUnit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
@@ -44,12 +39,11 @@ type ComputeBoard struct {
 	// Read Only: true
 	CPUTypeController string `json:"CpuTypeController,omitempty"`
 
-	// equipment tpms
+	// The Trusted Platform Modules (TPM) present in the server.
 	// Read Only: true
 	EquipmentTpms []*EquipmentTpmRef `json:"EquipmentTpms"`
 
-	// It shows Graphics cards present in a server.
-	//
+	// The Graphics cards present in the server.
 	// Read Only: true
 	GraphicsCards []*GraphicsCardRef `json:"GraphicsCards"`
 
@@ -61,18 +55,15 @@ type ComputeBoard struct {
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
-	// It shows PCI CoprocessorCard present in a server.
-	//
+	// The PCI Coprocessor cards present in the server.
 	// Read Only: true
 	PciCoprocessorCards []*PciCoprocessorCardRef `json:"PciCoprocessorCards"`
 
-	// It shows PCI Switches presen in a server.
-	//
+	// The PCI Switches present in the server.
 	// Read Only: true
 	PciSwitch []*PciSwitchRef `json:"PciSwitch"`
 
-	// This represents the configuration applied on the persistent memory modules on a server.
-	//
+	// Persistent Memory configuration applied on all the Persistent Memory Modules on a server.
 	// Read Only: true
 	PersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"PersistentMemoryConfiguration,omitempty"`
 
@@ -85,7 +76,6 @@ type ComputeBoard struct {
 	Processors []*ProcessorUnitRef `json:"Processors"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -93,11 +83,11 @@ type ComputeBoard struct {
 	// Read Only: true
 	SecurityUnits []*SecurityUnitRef `json:"SecurityUnits"`
 
-	// storage controllers
+	// The storage controllers present in the server.
 	// Read Only: true
 	StorageControllers []*StorageControllerRef `json:"StorageControllers"`
 
-	// storage flex flash controllers
+	// The storage flex flash controllers present in the server.
 	// Read Only: true
 	StorageFlexFlashControllers []*StorageFlexFlashControllerRef `json:"StorageFlexFlashControllers"`
 
@@ -205,7 +195,6 @@ func (m ComputeBoard) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BoardID int64 `json:"BoardId,omitempty"`
 
@@ -285,7 +274,6 @@ func (m ComputeBoard) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

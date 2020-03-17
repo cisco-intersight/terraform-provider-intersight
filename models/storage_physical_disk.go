@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,7 +22,6 @@ type StoragePhysicalDisk struct {
 	EquipmentBase
 
 	// The block size of the physical disk.
-	//
 	// Read Only: true
 	BlockSize string `json:"BlockSize,omitempty"`
 
@@ -48,7 +46,6 @@ type StoragePhysicalDisk struct {
 	DiskID string `json:"DiskId,omitempty"`
 
 	// This field identifies the health of the disk.
-	//
 	// Read Only: true
 	DiskState string `json:"DiskState,omitempty"`
 
@@ -75,7 +72,6 @@ type StoragePhysicalDisk struct {
 	LocatorLed *EquipmentLocatorLedRef `json:"LocatorLed,omitempty"`
 
 	// The number of blocks present on the physical disk.
-	//
 	// Read Only: true
 	NumBlocks string `json:"NumBlocks,omitempty"`
 
@@ -96,11 +92,9 @@ type StoragePhysicalDisk struct {
 	PhysicalBlockSize string `json:"PhysicalBlockSize,omitempty"`
 
 	// The physical connectivity between a SCSI controller and physical disks.
-	//
 	PhysicalDiskExtensions []*StoragePhysicalDiskExtensionRef `json:"PhysicalDiskExtensions"`
 
 	// This field identifies the Product ID for physicalDisk.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
@@ -117,7 +111,6 @@ type StoragePhysicalDisk struct {
 	RawSize string `json:"RawSize,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -126,12 +119,10 @@ type StoragePhysicalDisk struct {
 	RunningFirmware []*FirmwareRunningFirmwareRef `json:"RunningFirmware"`
 
 	// It is a reference to SAS Port to physical disk.
-	//
 	// Read Only: true
 	SasPorts []*StorageSasPortRef `json:"SasPorts"`
 
 	// This field identifies whether the disk is encrypted.
-	//
 	Secured string `json:"Secured,omitempty"`
 
 	// size
@@ -139,16 +130,12 @@ type StoragePhysicalDisk struct {
 	Size string `json:"Size,omitempty"`
 
 	// A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageController *StorageControllerRef `json:"StorageController,omitempty"`
 
 	// A collection of references to the [storage.Enclosure](mo://storage.Enclosure) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Enclosure](mo://storage.Enclosure) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageEnclosure *StorageEnclosureRef `json:"StorageEnclosure,omitempty"`
 
@@ -324,7 +311,6 @@ func (m StoragePhysicalDisk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BlockSize string `json:"BlockSize,omitempty"`
 
@@ -464,7 +450,6 @@ func (m StoragePhysicalDisk) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -31,28 +30,21 @@ type SoftwarerepositoryCifsServer struct {
 	// * USERNAME=VALUE.
 	// * PASSWORD=VALUE.
 	// * sec=VALUE (VALUE could be None, Ntlm, Ntlmi, Ntlmssp, Ntlmsspi, Ntlmv2, Ntlmv2i).
-	//
-	//
 	MountOption string `json:"MountOption,omitempty"`
 
 	// Password configured on the file server.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Filename of the image in the CIFS server. For example:ucs-c220m5-huu-3.1.2c.iso.
-	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// Hostname or IP Address of the CIFS server.
-	//
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Remote directory where the image is present. For example:/share/subfolder.
-	//
 	RemoteShare string `json:"RemoteShare,omitempty"`
 
 	// Username configured on the CIFS server.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -111,7 +103,6 @@ func (m SoftwarerepositoryCifsServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
@@ -147,7 +138,6 @@ func (m SoftwarerepositoryCifsServer) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

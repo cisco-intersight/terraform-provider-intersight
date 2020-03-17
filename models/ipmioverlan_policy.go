@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,29 +24,23 @@ type IpmioverlanPolicy struct {
 	PolicyAbstractPolicy
 
 	// State of the IPMI Over LAN service on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// The encryption key to use for IPMI communication. It should have an even number of hexadecimal characters and not exceed 40 characters.
-	//
 	EncryptionKey string `json:"EncryptionKey,omitempty"`
 
 	// Indicates whether the value of the 'encryptionKey' property has been set.
-	//
 	// Read Only: true
 	IsEncryptionKeySet *bool `json:"IsEncryptionKeySet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The highest privilege level that can be assigned to an IPMI session on a server.
-	//
 	// Enum: [admin user read-only]
 	Privilege *string `json:"Privilege,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -102,7 +95,6 @@ func (m IpmioverlanPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Enabled *bool `json:"Enabled,omitempty"`
 
@@ -134,7 +126,6 @@ func (m IpmioverlanPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -25,23 +24,18 @@ type StoragePureReplicationSchedule struct {
 	// Total number of snapshots per day to be available on target above and over the specified retention time. PureStorage
 	// FlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired.
 	// In case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.
-	//
-	//
 	// Read Only: true
 	DailyLimit int64 `json:"DailyLimit,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Blackout intervals for replication operation in PureStorage FlashArray. System disables replication during these intervals. Blackout periods only apply to scheduled replications. On-demand replications do not observe the blackout period.
-	//
 	// Read Only: true
-	ReplicationBlackoutIntervals []*StorageReplicationBlackout `json:"ReplicationBlackoutIntervals"`
+	ReplicationBlackoutIntervals []*StoragePureReplicationBlackout `json:"ReplicationBlackoutIntervals"`
 
 	// Duration to keep the daily limit snapshots on target array. StorageArray deletes the snapshots permanently from the targets beyond this period.
-	//
 	// Read Only: true
 	SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 }
@@ -61,7 +55,7 @@ func (m *StoragePureReplicationSchedule) UnmarshalJSON(raw []byte) error {
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-		ReplicationBlackoutIntervals []*StorageReplicationBlackout `json:"ReplicationBlackoutIntervals"`
+		ReplicationBlackoutIntervals []*StoragePureReplicationBlackout `json:"ReplicationBlackoutIntervals"`
 
 		SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 	}
@@ -89,13 +83,12 @@ func (m StoragePureReplicationSchedule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-		ReplicationBlackoutIntervals []*StorageReplicationBlackout `json:"ReplicationBlackoutIntervals"`
+		ReplicationBlackoutIntervals []*StoragePureReplicationBlackout `json:"ReplicationBlackoutIntervals"`
 
 		SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 	}
@@ -113,7 +106,6 @@ func (m StoragePureReplicationSchedule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

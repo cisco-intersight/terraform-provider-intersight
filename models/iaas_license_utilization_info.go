@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m IaasLicenseUtilizationInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *IaasLicenseUtilizationInfo) UnmarshalBinary(b []byte) error {
 }
 
 // IaasLicenseUtilizationInfoAO1P1 iaas license utilization info a o1 p1
+//
 // swagger:model IaasLicenseUtilizationInfoAO1P1
 type IaasLicenseUtilizationInfoAO1P1 struct {
 
 	// Number of licenses actually used for this feature.
-	//
 	// Read Only: true
 	ActualUsed int64 `json:"ActualUsed,omitempty"`
 
 	// License Label.
-	//
 	// Read Only: true
 	Label string `json:"Label,omitempty"`
 
 	// License limit for this license feature.
-	//
 	// Read Only: true
 	LicensedLimit string `json:"LicensedLimit,omitempty"`
 
 	// SKU for the license.
-	//
 	// Read Only: true
 	Sku string `json:"Sku,omitempty"`
 
@@ -134,22 +129,18 @@ func (m *IaasLicenseUtilizationInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Number of licenses actually used for this feature.
-		//
 		// Read Only: true
 		ActualUsed int64 `json:"ActualUsed,omitempty"`
 
 		// License Label.
-		//
 		// Read Only: true
 		Label string `json:"Label,omitempty"`
 
 		// License limit for this license feature.
-		//
 		// Read Only: true
 		LicensedLimit string `json:"LicensedLimit,omitempty"`
 
 		// SKU for the license.
-		//
 		// Read Only: true
 		Sku string `json:"Sku,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *IaasLicenseUtilizationInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IaasLicenseUtilizationInfoAO1P1
 
 	rcv.ActualUsed = stage1.ActualUsed
-
 	rcv.Label = stage1.Label
-
 	rcv.LicensedLimit = stage1.LicensedLimit
-
 	rcv.Sku = stage1.Sku
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *IaasLicenseUtilizationInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ActualUsed")
-
 	delete(stage2, "Label")
-
 	delete(stage2, "LicensedLimit")
-
 	delete(stage2, "Sku")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m IaasLicenseUtilizationInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Number of licenses actually used for this feature.
-		//
 		// Read Only: true
 		ActualUsed int64 `json:"ActualUsed,omitempty"`
 
 		// License Label.
-		//
 		// Read Only: true
 		Label string `json:"Label,omitempty"`
 
 		// License limit for this license feature.
-		//
 		// Read Only: true
 		LicensedLimit string `json:"LicensedLimit,omitempty"`
 
 		// SKU for the license.
-		//
 		// Read Only: true
 		Sku string `json:"Sku,omitempty"`
 	}
 
 	stage1.ActualUsed = m.ActualUsed
-
 	stage1.Label = m.Label
-
 	stage1.LicensedLimit = m.LicensedLimit
-
 	stage1.Sku = m.Sku
 
 	// make JSON object for known properties

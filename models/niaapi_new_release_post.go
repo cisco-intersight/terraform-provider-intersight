@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,24 +21,19 @@ type NiaapiNewReleasePost struct {
 	MoBaseMo
 
 	// The date when this new release notice is posted.
-	//
 	// Format: date-time
 	PostDate strfmt.DateTime `json:"PostDate,omitempty"`
 
 	// Detail of this post including the content and the date it was posted.
-	//
 	PostDetail *NiaapiNewReleaseDetail `json:"PostDetail,omitempty"`
 
 	// The document type of this post.
-	//
 	PostType string `json:"PostType,omitempty"`
 
 	// Identificator of this inbox post.
-	//
 	Postid string `json:"Postid,omitempty"`
 
 	// Revision number of this notice.
-	//
 	Revision string `json:"Revision,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m NiaapiNewReleasePost) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		PostDate strfmt.DateTime `json:"PostDate,omitempty"`
 
@@ -118,7 +111,6 @@ func (m NiaapiNewReleasePost) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

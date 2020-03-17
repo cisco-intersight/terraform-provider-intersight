@@ -6,49 +6,41 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryNamespaceConfigResult Memory:Persistent Memory Namespace Config Result
 //
-// This represents a result of a previously configured Persistent Memory Namespace on a server.
+// Result of a previously configured Persistent Memory Namespace on a server.
 //
 // swagger:model memoryPersistentMemoryNamespaceConfigResult
 type MemoryPersistentMemoryNamespaceConfigResult struct {
 	InventoryBase
 
-	// This represents the result of the previously configured Persistent Memory Namespace.
-	//
+	// Status of the Persistent Memory Namespace needed to be configured.
 	// Read Only: true
 	ConfigStatus string `json:"ConfigStatus,omitempty"`
 
 	// A collection of references to the [memory.PersistentMemoryConfigResult](mo://memory.PersistentMemoryConfigResult) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.PersistentMemoryConfigResult](mo://memory.PersistentMemoryConfigResult) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryPersistentMemoryConfigResult *MemoryPersistentMemoryConfigResultRef `json:"MemoryPersistentMemoryConfigResult,omitempty"`
 
-	// This represents the name of a Persistent Memory Namespace to be configured.
-	//
+	// Name of a Persistent Memory Namespace that needed to be configured.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents the Socket ID in which the Persistent Memory Namespace needed to be configured.
-	//
+	// Socket ID in which the Persistent Memory Namespace needed to be configured.
 	// Read Only: true
 	SocketID string `json:"SocketId,omitempty"`
 
-	// This represents the Socket Memory ID in which the Persistent Memory Namespace needed to be configured.
-	//
+	// Socket Memory ID in which the Persistent Memory Namespace needed to be configured.
 	// Read Only: true
 	SocketMemoryID string `json:"SocketMemoryId,omitempty"`
 }
@@ -104,7 +96,6 @@ func (m MemoryPersistentMemoryNamespaceConfigResult) MarshalJSON() ([]byte, erro
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigStatus string `json:"ConfigStatus,omitempty"`
 
@@ -136,7 +127,6 @@ func (m MemoryPersistentMemoryNamespaceConfigResult) MarshalJSON() ([]byte, erro
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

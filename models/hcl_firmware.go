@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m HclFirmware) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,38 +100,32 @@ func (m *HclFirmware) UnmarshalBinary(b []byte) error {
 }
 
 // HclFirmwareAO1P1 hcl firmware a o1 p1
+//
 // swagger:model HclFirmwareAO1P1
 type HclFirmwareAO1P1 struct {
 
 	// Protocol for which the driver is provided. E.g.  enic, fnic, lsi_mr3.
-	//
 	DriverName string `json:"DriverName,omitempty"`
 
 	// Version of the Driver supported.
-	//
 	DriverVersion string `json:"DriverVersion,omitempty"`
 
 	// Error code for the support status.
-	//
 	// Read Only: true
 	// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 	ErrorCode string `json:"ErrorCode,omitempty"`
 
 	// Firmware version of the product/adapter supported.
-	//
 	FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
 	// Identifier of the firmware.
-	//
 	ID string `json:"Id,omitempty"`
 
 	// True if the driver is latest recommended driver.
-	//
 	// Read Only: true
 	LatestDriver *bool `json:"LatestDriver,omitempty"`
 
 	// True if the firmware is latest recommended firmware.
-	//
 	// Read Only: true
 	LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 
@@ -147,34 +139,27 @@ func (m *HclFirmwareAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Protocol for which the driver is provided. E.g.  enic, fnic, lsi_mr3.
-		//
 		DriverName string `json:"DriverName,omitempty"`
 
 		// Version of the Driver supported.
-		//
 		DriverVersion string `json:"DriverVersion,omitempty"`
 
 		// Error code for the support status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Firmware version of the product/adapter supported.
-		//
 		FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
 		// Identifier of the firmware.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// True if the driver is latest recommended driver.
-		//
 		// Read Only: true
 		LatestDriver *bool `json:"LatestDriver,omitempty"`
 
 		// True if the firmware is latest recommended firmware.
-		//
 		// Read Only: true
 		LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 	}
@@ -184,19 +169,12 @@ func (m *HclFirmwareAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HclFirmwareAO1P1
 
 	rcv.DriverName = stage1.DriverName
-
 	rcv.DriverVersion = stage1.DriverVersion
-
 	rcv.ErrorCode = stage1.ErrorCode
-
 	rcv.FirmwareVersion = stage1.FirmwareVersion
-
 	rcv.ID = stage1.ID
-
 	rcv.LatestDriver = stage1.LatestDriver
-
 	rcv.LatestFirmware = stage1.LatestFirmware
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -206,19 +184,12 @@ func (m *HclFirmwareAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DriverName")
-
 	delete(stage2, "DriverVersion")
-
 	delete(stage2, "ErrorCode")
-
 	delete(stage2, "FirmwareVersion")
-
 	delete(stage2, "Id")
-
 	delete(stage2, "LatestDriver")
-
 	delete(stage2, "LatestFirmware")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -240,50 +211,37 @@ func (m HclFirmwareAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Protocol for which the driver is provided. E.g.  enic, fnic, lsi_mr3.
-		//
 		DriverName string `json:"DriverName,omitempty"`
 
 		// Version of the Driver supported.
-		//
 		DriverVersion string `json:"DriverVersion,omitempty"`
 
 		// Error code for the support status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Firmware version of the product/adapter supported.
-		//
 		FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
 		// Identifier of the firmware.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// True if the driver is latest recommended driver.
-		//
 		// Read Only: true
 		LatestDriver *bool `json:"LatestDriver,omitempty"`
 
 		// True if the firmware is latest recommended firmware.
-		//
 		// Read Only: true
 		LatestFirmware *bool `json:"LatestFirmware,omitempty"`
 	}
 
 	stage1.DriverName = m.DriverName
-
 	stage1.DriverVersion = m.DriverVersion
-
 	stage1.ErrorCode = m.ErrorCode
-
 	stage1.FirmwareVersion = m.FirmwareVersion
-
 	stage1.ID = m.ID
-
 	stage1.LatestDriver = m.LatestDriver
-
 	stage1.LatestFirmware = m.LatestFirmware
 
 	// make JSON object for known properties

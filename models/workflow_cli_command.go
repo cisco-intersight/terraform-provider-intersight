@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,41 +24,27 @@ type WorkflowCliCommand struct {
 	WorkflowAPI
 
 	// The command to run on the device connector.
-	//
-	//
 	Command string `json:"Command,omitempty"`
 
 	// The regex string that identifies the end of the command response.
-	//
-	//
 	EndPrompt string `json:"EndPrompt,omitempty"`
 
 	// Cli prompts required as part of interactive command execution. For e.g. login credentials will be part of prompts
 	// which are provided as list of expect prompt regex and corresponding answer string.
-	//
-	//
 	ExpectPrompts []*WorkflowExpectPrompt `json:"ExpectPrompts"`
 
 	// Skips the execution status check of the terminal command. One use case for this is while exiting the
 	// terminal session from esxi host.
-	//
-	//
 	SkipStatusCheck *bool `json:"SkipStatusCheck,omitempty"`
 
 	// If this flag is set, it marks the end of the terminal session where the previous commands were executed.
-	//
-	//
 	TerminalEnd *bool `json:"TerminalEnd,omitempty"`
 
 	// If this flag is set, the execution of this command initiates a terminal session in which the subsequent
 	// CLI commands are executed until a command with terminalEnd flag is encountered or the end of the batch.
-	//
-	//
 	TerminalStart *bool `json:"TerminalStart,omitempty"`
 
 	// The type of the command - can be interactive or non-interactive.
-	//
-	//
 	// Enum: [NonInteractive Interactive]
 	Type *string `json:"Type,omitempty"`
 }
@@ -119,7 +104,6 @@ func (m WorkflowCliCommand) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Command string `json:"Command,omitempty"`
 
@@ -155,7 +139,6 @@ func (m WorkflowCliCommand) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

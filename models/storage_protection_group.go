@@ -6,39 +6,33 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageProtectionGroup Storage:Protection Group
 //
-// A protection group contains list of members, that are protected together through snapshots with point-in-time consistency across the members.
-// The members within the protection group have common data protection requirements and the same snapshot, replication, and retention schedules.
+// A protection group contains list of members that are protected together through snapshots with point-in-time consistency across the members.
+// Members within the protection group have common data protection requirements and also the same snapshot, replication, and retention schedules.
 //
 // swagger:model storageProtectionGroup
 type StorageProtectionGroup struct {
 	MoBaseMo
 
 	// Name of the protection Group.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Prefix used for all generated snapshots from the protection group.
-	//
 	Prefix string `json:"Prefix,omitempty"`
 
-	// Flag to determine if the replication is enabled. Snapshots are created on target array if the flag is set.
-	//
+	// Flag to determine if replication is enabled. Snapshots are replicated to the target array if this flag is set.
 	ReplicationEnabled *bool `json:"ReplicationEnabled,omitempty"`
 
-	// Flag to determine if the snapshot is enabled. Snapshots are created on local array if the flag is set.
-	//
+	// Flag to determine if snapshot creation is enabled. Snapshots are created on local array if this flag is set.
 	SnapshotEnabled *bool `json:"SnapshotEnabled,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 }
@@ -90,7 +84,6 @@ func (m StorageProtectionGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
@@ -118,7 +111,6 @@ func (m StorageProtectionGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m UcsdConnectorPack) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,41 +99,35 @@ func (m *UcsdConnectorPack) UnmarshalBinary(b []byte) error {
 }
 
 // UcsdConnectorPackAO1P1 ucsd connector pack a o1 p1
+//
 // swagger:model UcsdConnectorPackAO1P1
 type UcsdConnectorPackAO1P1 struct {
 
 	// State of the connector pack whether it is enabled or disabled.
-	//
 	// Read Only: true
 	ConnectorFeature string `json:"ConnectorFeature,omitempty"`
 
 	// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-	//
 	// Read Only: true
 	DependencyNames []string `json:"DependencyNames"`
 
 	// Version of the connector pack that is last downloaded successfully to UCS Director.
-	//
 	// Read Only: true
 	DownloadedVersion string `json:"DownloadedVersion,omitempty"`
 
 	// Name of the connector pack running on the UCS Director.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-	//
 	// Read Only: true
 	Services []string `json:"Services"`
 
 	// State of the connector pack whether it is enabled or disabled.
-	//
 	// Read Only: true
 	State string `json:"State,omitempty"`
 
 	// Version of the connector pack.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 
@@ -149,37 +141,30 @@ func (m *UcsdConnectorPackAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// State of the connector pack whether it is enabled or disabled.
-		//
 		// Read Only: true
 		ConnectorFeature string `json:"ConnectorFeature,omitempty"`
 
 		// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-		//
 		// Read Only: true
 		DependencyNames []string `json:"DependencyNames"`
 
 		// Version of the connector pack that is last downloaded successfully to UCS Director.
-		//
 		// Read Only: true
 		DownloadedVersion string `json:"DownloadedVersion,omitempty"`
 
 		// Name of the connector pack running on the UCS Director.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-		//
 		// Read Only: true
 		Services []string `json:"Services"`
 
 		// State of the connector pack whether it is enabled or disabled.
-		//
 		// Read Only: true
 		State string `json:"State,omitempty"`
 
 		// Version of the connector pack.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 	}
@@ -189,19 +174,12 @@ func (m *UcsdConnectorPackAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv UcsdConnectorPackAO1P1
 
 	rcv.ConnectorFeature = stage1.ConnectorFeature
-
 	rcv.DependencyNames = stage1.DependencyNames
-
 	rcv.DownloadedVersion = stage1.DownloadedVersion
-
 	rcv.Name = stage1.Name
-
 	rcv.Services = stage1.Services
-
 	rcv.State = stage1.State
-
 	rcv.Version = stage1.Version
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -211,19 +189,12 @@ func (m *UcsdConnectorPackAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ConnectorFeature")
-
 	delete(stage2, "DependencyNames")
-
 	delete(stage2, "DownloadedVersion")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Services")
-
 	delete(stage2, "State")
-
 	delete(stage2, "Version")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -245,53 +216,40 @@ func (m UcsdConnectorPackAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// State of the connector pack whether it is enabled or disabled.
-		//
 		// Read Only: true
 		ConnectorFeature string `json:"ConnectorFeature,omitempty"`
 
 		// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-		//
 		// Read Only: true
 		DependencyNames []string `json:"DependencyNames"`
 
 		// Version of the connector pack that is last downloaded successfully to UCS Director.
-		//
 		// Read Only: true
 		DownloadedVersion string `json:"DownloadedVersion,omitempty"`
 
 		// Name of the connector pack running on the UCS Director.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// List of dependent connectors on the UCS Director for this connector. For example BigData depends on UCS Connector.
-		//
 		// Read Only: true
 		Services []string `json:"Services"`
 
 		// State of the connector pack whether it is enabled or disabled.
-		//
 		// Read Only: true
 		State string `json:"State,omitempty"`
 
 		// Version of the connector pack.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 	}
 
 	stage1.ConnectorFeature = m.ConnectorFeature
-
 	stage1.DependencyNames = m.DependencyNames
-
 	stage1.DownloadedVersion = m.DownloadedVersion
-
 	stage1.Name = m.Name
-
 	stage1.Services = m.Services
-
 	stage1.State = m.State
-
 	stage1.Version = m.Version
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,48 +23,37 @@ type FirmwareUpgradeStatus struct {
 	MoBaseMo
 
 	// The error message from the endpoint during the download.
-	//
 	DownloadError string `json:"DownloadError,omitempty"`
 
 	// The percentage of the image downloaded in the endpoint.
-	//
 	DownloadPercentage int64 `json:"DownloadPercentage,omitempty"`
 
 	// The image download stages. Example:downloading, flashing.
-	//
 	DownloadStage string `json:"DownloadStage,omitempty"`
 
 	// The download status of the image in the endpoint.
-	//
 	DownloadStatus string `json:"DownloadStatus,omitempty"`
 
 	// The server power status after the upgrade request is submitted in the endpoint.
-	//
 	// Enum: [none powered on powered off]
 	EpPowerStatus *string `json:"EpPowerStatus,omitempty"`
 
 	// The reason for the operation failure.
-	//
 	OverallError string `json:"OverallError,omitempty"`
 
 	// The overall percentage of the operation.
-	//
 	OverallPercentage int64 `json:"OverallPercentage,omitempty"`
 
 	// The overall status of the operation.
-	//
 	// Enum: [none started download initiating download initiated downloading downloaded upgrade initiating upgrade initiated upgrading upgraded success failed pending]
 	Overallstatus *string `json:"Overallstatus,omitempty"`
 
 	// Pending reason for the upgrade waiting.
-	//
 	// Enum: [none pending for next reboot]
 	PendingType *string `json:"PendingType,omitempty"`
 
 	// A collection of references to the [firmware.Upgrade](mo://firmware.Upgrade) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [firmware.Upgrade](mo://firmware.Upgrade) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Upgrade *FirmwareUpgradeRef `json:"Upgrade,omitempty"`
 }
@@ -137,7 +125,6 @@ func (m FirmwareUpgradeStatus) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DownloadError string `json:"DownloadError,omitempty"`
 
@@ -185,7 +172,6 @@ func (m FirmwareUpgradeStatus) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

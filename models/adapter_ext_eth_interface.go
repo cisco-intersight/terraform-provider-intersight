@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,13 +20,11 @@ type AdapterExtEthInterface struct {
 	EquipmentBase
 
 	// A collection of references to the [adapter.Unit](mo://adapter.Unit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [adapter.Unit](mo://adapter.Unit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	AdapterUnit *AdapterUnitRef `json:"AdapterUnit,omitempty"`
 
-	// admin state
+	// The administrative state of the physical port.
 	// Read Only: true
 	AdminState string `json:"AdminState,omitempty"`
 
@@ -47,7 +44,7 @@ type AdapterExtEthInterface struct {
 	// Read Only: true
 	MacAddress string `json:"MacAddress,omitempty"`
 
-	// oper state
+	// The operational state of the physical port.
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
@@ -56,7 +53,6 @@ type AdapterExtEthInterface struct {
 	PeerDn string `json:"PeerDn,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -124,7 +120,6 @@ func (m AdapterExtEthInterface) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdapterUnit *AdapterUnitRef `json:"AdapterUnit,omitempty"`
 
@@ -168,7 +163,6 @@ func (m AdapterExtEthInterface) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

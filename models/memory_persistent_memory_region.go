@@ -8,79 +8,65 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryRegion Memory:Persistent Memory Region
 //
-// This represents a Persistent Memory Region configured on the persistent memory modules on a server.
+// Persistent Memory Region configured on the Persistent Memory Modules on a server.
 //
 // swagger:model memoryPersistentMemoryRegion
 type MemoryPersistentMemoryRegion struct {
 	InventoryBase
 
-	// This represents a set of DIMM locator IDs that are included in the Persistent Memory Region.
-	//
-	// Read Only: true
-	DimmLocaterIds string `json:"DimmLocaterIds,omitempty"`
-
-	// This represents the free capacity in GB of a Persistent Memory Region.
-	//
+	// Free capacity in GB of the Persistent Memory Region.
 	// Read Only: true
 	FreeCapacity string `json:"FreeCapacity,omitempty"`
 
-	// This represents the health state of a Persistent Memory Region.
-	//
+	// Health state of the Persistent Memory Region.
 	// Read Only: true
 	HealthState string `json:"HealthState,omitempty"`
 
-	// This represents the ID of a Interleaved Set formed for a Persistent Memory Region.
-	//
+	// ID of the Interleaved Set formed for this Persistent Memory Region.
 	// Read Only: true
 	InterleavedSetID string `json:"InterleavedSetId,omitempty"`
 
+	// Set of locator IDs that are included in the Persistent Memory Region.
+	// Read Only: true
+	LocaterIds string `json:"LocaterIds,omitempty"`
+
 	// A collection of references to the [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryPersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"MemoryPersistentMemoryConfiguration,omitempty"`
 
-	// This represents the collection of all the persistent memory namespaces configured within a persistent memory region.
-	//
+	// Collection of all the Persistent Memory Namespaces configured within this Persistent Memory Region.
 	// Read Only: true
 	PersistentMemoryNamespaces []*MemoryPersistentMemoryNamespaceRef `json:"PersistentMemoryNamespaces"`
 
-	// This represents the persistent memory type of a Persistent Memory Region.
-	//
+	// Persistent Memory type of the Persistent Memory Region.
 	// Read Only: true
 	PersistentMemoryType string `json:"PersistentMemoryType,omitempty"`
 
-	// This represents the ID of a Persistent Memory Region.
-	//
+	// ID of the Persistent Memory Region.
 	// Read Only: true
 	RegionID string `json:"RegionId,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents the Socket ID of a Persistent Memory Region.
-	//
+	// Socket ID of the Persistent Memory Region.
 	// Read Only: true
 	SocketID string `json:"SocketId,omitempty"`
 
-	// This represents the Socket Memory ID of a Persistent Memory Region.
-	//
+	// Socket Memory ID of the Persistent Memory Region.
 	// Read Only: true
 	SocketMemoryID string `json:"SocketMemoryId,omitempty"`
 
-	// This represents the total capacity in GB of a Persistent Memory Region.
-	//
+	// Total capacity in GB of the Persistent Memory Region.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 }
@@ -96,13 +82,13 @@ func (m *MemoryPersistentMemoryRegion) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		DimmLocaterIds string `json:"DimmLocaterIds,omitempty"`
-
 		FreeCapacity string `json:"FreeCapacity,omitempty"`
 
 		HealthState string `json:"HealthState,omitempty"`
 
 		InterleavedSetID string `json:"InterleavedSetId,omitempty"`
+
+		LocaterIds string `json:"LocaterIds,omitempty"`
 
 		MemoryPersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"MemoryPersistentMemoryConfiguration,omitempty"`
 
@@ -124,13 +110,13 @@ func (m *MemoryPersistentMemoryRegion) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
-	m.DimmLocaterIds = dataAO1.DimmLocaterIds
-
 	m.FreeCapacity = dataAO1.FreeCapacity
 
 	m.HealthState = dataAO1.HealthState
 
 	m.InterleavedSetID = dataAO1.InterleavedSetID
+
+	m.LocaterIds = dataAO1.LocaterIds
 
 	m.MemoryPersistentMemoryConfiguration = dataAO1.MemoryPersistentMemoryConfiguration
 
@@ -160,15 +146,14 @@ func (m MemoryPersistentMemoryRegion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
-		DimmLocaterIds string `json:"DimmLocaterIds,omitempty"`
-
 		FreeCapacity string `json:"FreeCapacity,omitempty"`
 
 		HealthState string `json:"HealthState,omitempty"`
 
 		InterleavedSetID string `json:"InterleavedSetId,omitempty"`
+
+		LocaterIds string `json:"LocaterIds,omitempty"`
 
 		MemoryPersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"MemoryPersistentMemoryConfiguration,omitempty"`
 
@@ -187,13 +172,13 @@ func (m MemoryPersistentMemoryRegion) MarshalJSON() ([]byte, error) {
 		TotalCapacity string `json:"TotalCapacity,omitempty"`
 	}
 
-	dataAO1.DimmLocaterIds = m.DimmLocaterIds
-
 	dataAO1.FreeCapacity = m.FreeCapacity
 
 	dataAO1.HealthState = m.HealthState
 
 	dataAO1.InterleavedSetID = m.InterleavedSetID
+
+	dataAO1.LocaterIds = m.LocaterIds
 
 	dataAO1.MemoryPersistentMemoryConfiguration = m.MemoryPersistentMemoryConfiguration
 
@@ -216,7 +201,6 @@ func (m MemoryPersistentMemoryRegion) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

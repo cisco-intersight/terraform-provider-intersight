@@ -15,16 +15,9 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 		Read: dataSourceMemoryPersistentMemoryRegionRead,
 		Schema: map[string]*schema.Schema{
 			"device_mo_id": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"dimm_locater_ids": {
-				Description: "This represents a set of DIMM locator IDs that are included in the Persistent Memory Region.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -33,25 +26,31 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed:    true,
 			},
 			"free_capacity": {
-				Description: "This represents the free capacity in GB of a Persistent Memory Region.",
+				Description: "Free capacity in GB of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"health_state": {
-				Description: "This represents the health state of a Persistent Memory Region.",
+				Description: "Health state of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"interleaved_set_id": {
-				Description: "This represents the ID of a Interleaved Set formed for a Persistent Memory Region.",
+				Description: "ID of the Interleaved Set formed for this Persistent Memory Region.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"locater_ids": {
+				Description: "Set of locator IDs that are included in the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"memory_persistent_memory_configuration": {
-				Description: "A collection of references to the [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) Managed Object.When this managed object is deleted, the referenced [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) MO unsets its reference to this deleted MO.",
+				Description: "A collection of references to the [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) Managed Object.\nWhen this managed object is deleted, the referenced [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -71,7 +70,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -86,13 +85,13 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -111,7 +110,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -120,7 +119,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				},
 			},
 			"persistent_memory_namespaces": {
-				Description: "This represents the collection of all the persistent memory namespaces configured within a persistent memory region.",
+				Description: "Collection of all the Persistent Memory Namespaces configured within this Persistent Memory Region.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -139,7 +138,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -148,13 +147,13 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				},
 			},
 			"persistent_memory_type": {
-				Description: "This represents the persistent memory type of a Persistent Memory Region.",
+				Description: "Persistent Memory type of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"region_id": {
-				Description: "This represents the ID of a Persistent Memory Region.",
+				Description: "ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -180,7 +179,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -195,13 +194,13 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed:    true,
 			},
 			"socket_id": {
-				Description: "This represents the Socket ID of a Persistent Memory Region.",
+				Description: "Socket ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"socket_memory_id": {
-				Description: "This represents the Socket Memory ID of a Persistent Memory Region.",
+				Description: "Socket Memory ID of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -223,7 +222,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -238,7 +237,7 @@ func dataSourceMemoryPersistentMemoryRegion() *schema.Resource {
 				Computed: true,
 			},
 			"total_capacity": {
-				Description: "This represents the total capacity in GB of a Persistent Memory Region.",
+				Description: "Total capacity in GB of the Persistent Memory Region.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -257,10 +256,6 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 		x := (v.(string))
 		o.DeviceMoID = x
 	}
-	if v, ok := d.GetOk("dimm_locater_ids"); ok {
-		x := (v.(string))
-		o.DimmLocaterIds = x
-	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
 		o.Dn = x
@@ -276,6 +271,10 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 	if v, ok := d.GetOk("interleaved_set_id"); ok {
 		x := (v.(string))
 		o.InterleavedSetID = x
+	}
+	if v, ok := d.GetOk("locater_ids"); ok {
+		x := (v.(string))
+		o.LocaterIds = x
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -335,9 +334,6 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
 				return err
 			}
-			if err := d.Set("dimm_locater_ids", (s.DimmLocaterIds)); err != nil {
-				return err
-			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
 				return err
 			}
@@ -348,6 +344,9 @@ func dataSourceMemoryPersistentMemoryRegionRead(d *schema.ResourceData, meta int
 				return err
 			}
 			if err := d.Set("interleaved_set_id", (s.InterleavedSetID)); err != nil {
+				return err
+			}
+			if err := d.Set("locater_ids", (s.LocaterIds)); err != nil {
 				return err
 			}
 

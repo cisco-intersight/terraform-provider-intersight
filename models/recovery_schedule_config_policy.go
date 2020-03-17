@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,15 +22,12 @@ type RecoveryScheduleConfigPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of Backup profiles using this policy.
-	//
 	BackupProfiles []*RecoveryBackupProfileRef `json:"BackupProfiles"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Schedule to create a backup on the target device. Minimum is 4 hours and Max is 1440 hours (30 Days).
-	//
 	Schedule *RecoveryBackupSchedule `json:"Schedule,omitempty"`
 }
 
@@ -74,7 +70,6 @@ func (m RecoveryScheduleConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupProfiles []*RecoveryBackupProfileRef `json:"BackupProfiles"`
 
@@ -94,7 +89,6 @@ func (m RecoveryScheduleConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

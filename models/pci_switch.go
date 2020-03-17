@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,78 +22,62 @@ type PciSwitch struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
 	// It shows the device id of the switch.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// It shows the composite health of the switch.
-	//
 	// Read Only: true
 	Health string `json:"Health,omitempty"`
 
 	// It shows the number of gpus and pci adapters under each switch.
-	//
 	// Read Only: true
 	Links []*PciLinkRef `json:"Links"`
 
 	// It shows the number of gpus and pci adapters connected the switch.
-	//
 	// Read Only: true
 	NumOfAdaptors string `json:"NumOfAdaptors,omitempty"`
 
 	// It shows shows the PCI address of switch.
-	//
 	// Read Only: true
 	PciAddress string `json:"PciAddress,omitempty"`
 
 	// It shows the PCI slot name for switch.
-	//
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
 	// It shows the model information for the switch.
-	//
 	// Read Only: true
 	ProductName string `json:"ProductName,omitempty"`
 
 	// It shows the revision for the product.
-	//
 	// Read Only: true
 	ProductRevision string `json:"ProductRevision,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// It shows the sub device id of the switch.
-	//
 	// Read Only: true
 	SubDeviceID string `json:"SubDeviceId,omitempty"`
 
 	// It shows the sub vendor id of the switch.
-	//
 	// Read Only: true
 	SubVendorID string `json:"SubVendorId,omitempty"`
 
 	// It shows the current temperature of the switch.
-	//
 	// Read Only: true
 	Temperature string `json:"Temperature,omitempty"`
 
 	// It shows the type inforamtion of switch.
-	//
 	Type string `json:"Type,omitempty"`
 
 	// It shows the vendor id of the switch.
-	//
 	// Read Only: true
 	VendorID string `json:"VendorId,omitempty"`
 }
@@ -186,7 +169,6 @@ func (m PciSwitch) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
@@ -254,7 +236,6 @@ func (m PciSwitch) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

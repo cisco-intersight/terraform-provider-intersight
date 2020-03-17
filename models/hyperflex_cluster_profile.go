@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,132 +24,95 @@ type HyperflexClusterProfile struct {
 	PolicyAbstractConfigProfile
 
 	// HyperFlex cluster associated with this cluster profile.
-	//
 	// Read Only: true
 	AssociatedCluster *HyperflexClusterRef `json:"AssociatedCluster,omitempty"`
 
 	// A collection of references to the [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) MO unsets its reference to this deleted MO.
-	//
 	AutoSupport *HyperflexAutoSupportPolicyRef `json:"AutoSupport,omitempty"`
 
 	// A collection of references to the [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) MO unsets its reference to this deleted MO.
-	//
 	ClusterNetwork *HyperflexClusterNetworkPolicyRef `json:"ClusterNetwork,omitempty"`
 
 	// A collection of references to the [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) MO unsets its reference to this deleted MO.
-	//
 	ClusterStorage *HyperflexClusterStoragePolicyRef `json:"ClusterStorage,omitempty"`
 
 	// The profile configuration (deploy, validation) results with the overall state and detailed result messages.
-	//
 	// Read Only: true
 	ConfigResult *HyperflexConfigResultRef `json:"ConfigResult,omitempty"`
 
 	// The storage data IP address for the HyperFlex cluster.
-	//
 	DataIPAddress string `json:"DataIpAddress,omitempty"`
 
 	// A collection of references to the [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) MO unsets its reference to this deleted MO.
-	//
 	ExtFcStorage *HyperflexExtFcStoragePolicyRef `json:"ExtFcStorage,omitempty"`
 
 	// A collection of references to the [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) MO unsets its reference to this deleted MO.
-	//
 	ExtIscsiStorage *HyperflexExtIscsiStoragePolicyRef `json:"ExtIscsiStorage,omitempty"`
 
 	// The hypervisor type for the HyperFlex cluster.
-	//
-	// Enum: [Unknown Hyper-V ESXi]
+	// Enum: [ESXi]
 	HypervisorType *string `json:"HypervisorType,omitempty"`
 
 	// A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) MO unsets its reference to this deleted MO.
-	//
 	LocalCredential *HyperflexLocalCredentialPolicyRef `json:"LocalCredential,omitempty"`
 
 	// The MAC address prefix in the form of 00:25:B5:XX.
-	//
 	MacAddressPrefix string `json:"MacAddressPrefix,omitempty"`
 
 	// The management IP address for the HyperFlex cluster.
-	//
 	MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
 
 	// The management platform for the HyperFlex cluster.
-	//
 	// Enum: [FI EDGE]
 	MgmtPlatform *string `json:"MgmtPlatform,omitempty"`
 
 	// A collection of references to the [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	NodeConfig *HyperflexNodeConfigPolicyRef `json:"NodeConfig,omitempty"`
 
 	// List of node profiles representing the configuraion of the corresponding HX cluster nodes.
-	//
 	NodeProfileConfig []*HyperflexNodeProfileRef `json:"NodeProfileConfig"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// A collection of references to the [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) MO unsets its reference to this deleted MO.
-	//
 	ProxySetting *HyperflexProxySettingPolicyRef `json:"ProxySetting,omitempty"`
 
 	// The number of copies of each data block written.
-	//
 	Replication int64 `json:"Replication,omitempty"`
 
 	// List of workflows that are currently running for this cluster profile.
-	//
 	// Read Only: true
 	RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 
 	// A collection of references to the [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) MO unsets its reference to this deleted MO.
-	//
 	SoftwareVersion *HyperflexSoftwareVersionPolicyRef `json:"SoftwareVersion,omitempty"`
 
 	// The VLAN for the HyperFlex storage data traffic.
-	//
 	StorageDataVlan *HyperflexNamedVlan `json:"StorageDataVlan,omitempty"`
 
 	// A collection of references to the [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	SysConfig *HyperflexSysConfigPolicyRef `json:"SysConfig,omitempty"`
 
 	// A collection of references to the [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	UcsmConfig *HyperflexUcsmConfigPolicyRef `json:"UcsmConfig,omitempty"`
 
 	// A collection of references to the [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	VcenterConfig *HyperflexVcenterConfigPolicyRef `json:"VcenterConfig,omitempty"`
 
 	// The WWxN prefix in the form of 20:00:00:25:B5:XX.
-	//
 	WwxnPrefix string `json:"WwxnPrefix,omitempty"`
 }
 
@@ -281,7 +243,6 @@ func (m HyperflexClusterProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AssociatedCluster *HyperflexClusterRef `json:"AssociatedCluster,omitempty"`
 
@@ -389,7 +350,6 @@ func (m HyperflexClusterProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -618,7 +578,7 @@ var hyperflexClusterProfileTypeHypervisorTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

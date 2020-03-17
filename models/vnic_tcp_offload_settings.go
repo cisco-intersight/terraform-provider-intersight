@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicTCPOffloadSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,23 +99,20 @@ func (m *VnicTCPOffloadSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicTCPOffloadSettingsAO1P1 vnic TCP offload settings a o1 p1
+//
 // swagger:model VnicTCPOffloadSettingsAO1P1
 type VnicTCPOffloadSettingsAO1P1 struct {
 
 	// Enables the reassembly of segmented packets in hardware before sending them to the CPU.
-	//
 	LargeReceive *bool `json:"LargeReceive,omitempty"`
 
 	// Enables the CPU to send large packets to the hardware for segmentation.
-	//
 	LargeSend *bool `json:"LargeSend,omitempty"`
 
 	// When enabled, the CPU sends all packet checksums to the hardware for validation.
-	//
 	RxChecksum *bool `json:"RxChecksum,omitempty"`
 
 	// When enabled, the CPU sends all packets to the hardware so that the checksum can be calculated.
-	//
 	TxChecksum *bool `json:"TxChecksum,omitempty"`
 
 	// vnic TCP offload settings a o1 p1
@@ -130,19 +125,15 @@ func (m *VnicTCPOffloadSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Enables the reassembly of segmented packets in hardware before sending them to the CPU.
-		//
 		LargeReceive *bool `json:"LargeReceive,omitempty"`
 
 		// Enables the CPU to send large packets to the hardware for segmentation.
-		//
 		LargeSend *bool `json:"LargeSend,omitempty"`
 
 		// When enabled, the CPU sends all packet checksums to the hardware for validation.
-		//
 		RxChecksum *bool `json:"RxChecksum,omitempty"`
 
 		// When enabled, the CPU sends all packets to the hardware so that the checksum can be calculated.
-		//
 		TxChecksum *bool `json:"TxChecksum,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -151,13 +142,9 @@ func (m *VnicTCPOffloadSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicTCPOffloadSettingsAO1P1
 
 	rcv.LargeReceive = stage1.LargeReceive
-
 	rcv.LargeSend = stage1.LargeSend
-
 	rcv.RxChecksum = stage1.RxChecksum
-
 	rcv.TxChecksum = stage1.TxChecksum
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -167,13 +154,9 @@ func (m *VnicTCPOffloadSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "LargeReceive")
-
 	delete(stage2, "LargeSend")
-
 	delete(stage2, "RxChecksum")
-
 	delete(stage2, "TxChecksum")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -195,28 +178,21 @@ func (m VnicTCPOffloadSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enables the reassembly of segmented packets in hardware before sending them to the CPU.
-		//
 		LargeReceive *bool `json:"LargeReceive,omitempty"`
 
 		// Enables the CPU to send large packets to the hardware for segmentation.
-		//
 		LargeSend *bool `json:"LargeSend,omitempty"`
 
 		// When enabled, the CPU sends all packet checksums to the hardware for validation.
-		//
 		RxChecksum *bool `json:"RxChecksum,omitempty"`
 
 		// When enabled, the CPU sends all packets to the hardware so that the checksum can be calculated.
-		//
 		TxChecksum *bool `json:"TxChecksum,omitempty"`
 	}
 
 	stage1.LargeReceive = m.LargeReceive
-
 	stage1.LargeSend = m.LargeSend
-
 	stage1.RxChecksum = m.RxChecksum
-
 	stage1.TxChecksum = m.TxChecksum
 
 	// make JSON object for known properties

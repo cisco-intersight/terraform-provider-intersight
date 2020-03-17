@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // WorkflowCustomDataTypeDefinitionList workflow custom data type definition list
+//
 // swagger:model workflowCustomDataTypeDefinitionList
 type WorkflowCustomDataTypeDefinitionList struct {
 

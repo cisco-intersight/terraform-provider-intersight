@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -22,27 +21,23 @@ type AaaAbstractAuditRecord struct {
 
 	// The operation that was performed on this Managed Object.
 	// The event is a compound string that includes the CRUD operation such as Create, Modify, Delete, and a string representing the Managed Object type.
-	//
 	Event string `json:"Event,omitempty"`
 
+	// The user-friendly names of the changed MO.
+	MoDisplayNames interface{} `json:"MoDisplayNames,omitempty"`
+
 	// The object type of the REST resource that was created, modified or deleted.
-	//
 	MoType string `json:"MoType,omitempty"`
 
 	// The Moid of the REST resource that was created, modified or deleted.
-	//
 	ObjectMoid string `json:"ObjectMoid,omitempty"`
 
 	// The body of the REST request that was received from a client to create or modify a REST resource, represented as a JSON document.
-	//
 	Request interface{} `json:"Request,omitempty"`
 
 	// The trace id of the request that was used to create, modify or delete a REST resource.
-	//
 	// A trace id is a unique identifier for one particular REST request. It may be used for troubleshooting purpose
 	// by the Intersight technical support team.
-	//
-	//
 	TraceID string `json:"TraceId,omitempty"`
 }
 
@@ -59,6 +54,8 @@ func (m *AaaAbstractAuditRecord) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Event string `json:"Event,omitempty"`
 
+		MoDisplayNames interface{} `json:"MoDisplayNames,omitempty"`
+
 		MoType string `json:"MoType,omitempty"`
 
 		ObjectMoid string `json:"ObjectMoid,omitempty"`
@@ -72,6 +69,8 @@ func (m *AaaAbstractAuditRecord) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.Event = dataAO1.Event
+
+	m.MoDisplayNames = dataAO1.MoDisplayNames
 
 	m.MoType = dataAO1.MoType
 
@@ -93,9 +92,10 @@ func (m AaaAbstractAuditRecord) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Event string `json:"Event,omitempty"`
+
+		MoDisplayNames interface{} `json:"MoDisplayNames,omitempty"`
 
 		MoType string `json:"MoType,omitempty"`
 
@@ -107,6 +107,8 @@ func (m AaaAbstractAuditRecord) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.Event = m.Event
+
+	dataAO1.MoDisplayNames = m.MoDisplayNames
 
 	dataAO1.MoType = m.MoType
 
@@ -121,7 +123,6 @@ func (m AaaAbstractAuditRecord) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

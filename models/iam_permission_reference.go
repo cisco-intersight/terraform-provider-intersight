@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m IamPermissionReference) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,15 @@ func (m *IamPermissionReference) UnmarshalBinary(b []byte) error {
 }
 
 // IamPermissionReferenceAO1P1 iam permission reference a o1 p1
+//
 // swagger:model IamPermissionReferenceAO1P1
 type IamPermissionReferenceAO1P1 struct {
 
 	// MOID of the permission which user has access to.
-	//
 	// Read Only: true
 	PermissionIdentifier string `json:"PermissionIdentifier,omitempty"`
 
 	// Name of the permission which user has access to.
-	//
 	// Read Only: true
 	PermissionName string `json:"PermissionName,omitempty"`
 
@@ -124,12 +121,10 @@ func (m *IamPermissionReferenceAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// MOID of the permission which user has access to.
-		//
 		// Read Only: true
 		PermissionIdentifier string `json:"PermissionIdentifier,omitempty"`
 
 		// Name of the permission which user has access to.
-		//
 		// Read Only: true
 		PermissionName string `json:"PermissionName,omitempty"`
 	}
@@ -139,9 +134,7 @@ func (m *IamPermissionReferenceAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamPermissionReferenceAO1P1
 
 	rcv.PermissionIdentifier = stage1.PermissionIdentifier
-
 	rcv.PermissionName = stage1.PermissionName
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *IamPermissionReferenceAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "PermissionIdentifier")
-
 	delete(stage2, "PermissionName")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,18 +166,15 @@ func (m IamPermissionReferenceAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// MOID of the permission which user has access to.
-		//
 		// Read Only: true
 		PermissionIdentifier string `json:"PermissionIdentifier,omitempty"`
 
 		// Name of the permission which user has access to.
-		//
 		// Read Only: true
 		PermissionName string `json:"PermissionName,omitempty"`
 	}
 
 	stage1.PermissionIdentifier = m.PermissionIdentifier
-
 	stage1.PermissionName = m.PermissionName
 
 	// make JSON object for known properties

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // ResourceGroupMemberList resource group member list
+//
 // swagger:model resourceGroupMemberList
 type ResourceGroupMemberList struct {
 

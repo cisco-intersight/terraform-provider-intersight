@@ -7,10 +7,10 @@ package models
 
 import (
 	"encoding/json"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"strconv"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +59,6 @@ func (m AdapterAdapterConfig) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,23 +100,23 @@ func (m *AdapterAdapterConfig) UnmarshalBinary(b []byte) error {
 }
 
 // AdapterAdapterConfigAO1P1 adapter adapter config a o1 p1
+//
 // swagger:model AdapterAdapterConfigAO1P1
 type AdapterAdapterConfigAO1P1 struct {
 
+	// Collection of DCE interface settings for this adapter.
+	DceInterfaceSettings []*AdapterDceInterfaceSettings `json:"DceInterfaceSettings"`
+
 	// Global Ethernet settings for this adapter.
-	//
 	EthSettings *AdapterEthSettings `json:"EthSettings,omitempty"`
 
 	// Global Fibre Channel settings for this adapter.
-	//
 	FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
 	// Port Channel settings for this adapter.
-	//
 	PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 	// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-	//
 	SlotID string `json:"SlotId,omitempty"`
 
 	// adapter adapter config a o1 p1
@@ -129,20 +128,19 @@ func (m *AdapterAdapterConfigAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
+		// Collection of DCE interface settings for this adapter.
+		DceInterfaceSettings []*AdapterDceInterfaceSettings `json:"DceInterfaceSettings"`
+
 		// Global Ethernet settings for this adapter.
-		//
 		EthSettings *AdapterEthSettings `json:"EthSettings,omitempty"`
 
 		// Global Fibre Channel settings for this adapter.
-		//
 		FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
 		// Port Channel settings for this adapter.
-		//
 		PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 		// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-		//
 		SlotID string `json:"SlotId,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -150,14 +148,11 @@ func (m *AdapterAdapterConfigAO1P1) UnmarshalJSON(data []byte) error {
 	}
 	var rcv AdapterAdapterConfigAO1P1
 
+	rcv.DceInterfaceSettings = stage1.DceInterfaceSettings
 	rcv.EthSettings = stage1.EthSettings
-
 	rcv.FcSettings = stage1.FcSettings
-
 	rcv.PortChannelSettings = stage1.PortChannelSettings
-
 	rcv.SlotID = stage1.SlotID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -166,14 +161,11 @@ func (m *AdapterAdapterConfigAO1P1) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	delete(stage2, "DceInterfaceSettings")
 	delete(stage2, "EthSettings")
-
 	delete(stage2, "FcSettings")
-
 	delete(stage2, "PortChannelSettings")
-
 	delete(stage2, "SlotId")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -194,29 +186,26 @@ func (m *AdapterAdapterConfigAO1P1) UnmarshalJSON(data []byte) error {
 func (m AdapterAdapterConfigAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
+		// Collection of DCE interface settings for this adapter.
+		DceInterfaceSettings []*AdapterDceInterfaceSettings `json:"DceInterfaceSettings"`
+
 		// Global Ethernet settings for this adapter.
-		//
 		EthSettings *AdapterEthSettings `json:"EthSettings,omitempty"`
 
 		// Global Fibre Channel settings for this adapter.
-		//
 		FcSettings *AdapterFcSettings `json:"FcSettings,omitempty"`
 
 		// Port Channel settings for this adapter.
-		//
 		PortChannelSettings *AdapterPortChannelSettings `json:"PortChannelSettings,omitempty"`
 
 		// PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.
-		//
 		SlotID string `json:"SlotId,omitempty"`
 	}
 
+	stage1.DceInterfaceSettings = m.DceInterfaceSettings
 	stage1.EthSettings = m.EthSettings
-
 	stage1.FcSettings = m.FcSettings
-
 	stage1.PortChannelSettings = m.PortChannelSettings
-
 	stage1.SlotID = m.SlotID
 
 	// make JSON object for known properties
@@ -248,6 +237,10 @@ func (m AdapterAdapterConfigAO1P1) MarshalJSON() ([]byte, error) {
 func (m *AdapterAdapterConfigAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDceInterfaceSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateEthSettings(formats); err != nil {
 		res = append(res, err)
 	}
@@ -263,6 +256,31 @@ func (m *AdapterAdapterConfigAO1P1) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *AdapterAdapterConfigAO1P1) validateDceInterfaceSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DceInterfaceSettings) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DceInterfaceSettings); i++ {
+		if swag.IsZero(m.DceInterfaceSettings[i]) { // not required
+			continue
+		}
+
+		if m.DceInterfaceSettings[i] != nil {
+			if err := m.DceInterfaceSettings[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("DceInterfaceSettings" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

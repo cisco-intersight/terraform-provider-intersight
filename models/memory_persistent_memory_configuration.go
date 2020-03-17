@@ -8,74 +8,61 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryConfiguration Memory:Persistent Memory Configuration
 //
-// This represents the configuration on the Persistent Memory Modules on a server.
+// Persistent Memory configuration on all the Persistent Memory Modules on a server.
 //
 // swagger:model memoryPersistentMemoryConfiguration
 type MemoryPersistentMemoryConfiguration struct {
 	InventoryBase
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
-	// This represents the memory capacity in GB of a persistent memory configuration on a server.
-	//
+	// Memory capacity in GB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
-	// This represents the number of persistent memory modules of a Persistent Memory Configuration on a server.
-	//
+	// Number of Persistent Memory Modules on a server.
 	// Read Only: true
-	NumOfDimms string `json:"NumOfDimms,omitempty"`
+	NumOfModules string `json:"NumOfModules,omitempty"`
 
-	// This represents the number of regions of a Persistent Memory Configuration on a server.
-	//
+	// Number of Persistent Memory Regions on a server.
 	// Read Only: true
 	NumOfRegions string `json:"NumOfRegions,omitempty"`
 
-	// This represents the persistent memory capacity in GB of a persistent memory configuration on a server.
-	//
+	// Persistent memory capacity in GB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	PersistentMemoryCapacity string `json:"PersistentMemoryCapacity,omitempty"`
 
-	// This represents the result of a previously applied Persistent Memory Configuration on a server.
-	//
+	// Result of a previously applied Persistent Memory configuration on a server.
 	// Read Only: true
 	PersistentMemoryConfigResult *MemoryPersistentMemoryConfigResultRef `json:"PersistentMemoryConfigResult,omitempty"`
 
-	// This represents the collection of all the persistent memory regions configured on a server.
-	//
+	// Collection of all the Persistent Memory Regions configured on a server.
 	// Read Only: true
 	PersistentMemoryRegions []*MemoryPersistentMemoryRegionRef `json:"PersistentMemoryRegions"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// This represents the reserved capacity in GB of a persistent memory configuration on a server.
-	//
+	// Reserved capacity in GB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	ReservedCapacity string `json:"ReservedCapacity,omitempty"`
 
-	// This represents the collective security state of all persistent memory modules on a server.
-	//
+	// Collective security state of all Persistent Memory modules on a server.
 	// Read Only: true
 	SecurityState string `json:"SecurityState,omitempty"`
 
-	// This represents the total capacity in GB of a persistent memory configuration on a server.
-	//
+	// Total capacity in GB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 }
@@ -95,7 +82,7 @@ func (m *MemoryPersistentMemoryConfiguration) UnmarshalJSON(raw []byte) error {
 
 		MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
-		NumOfDimms string `json:"NumOfDimms,omitempty"`
+		NumOfModules string `json:"NumOfModules,omitempty"`
 
 		NumOfRegions string `json:"NumOfRegions,omitempty"`
 
@@ -121,7 +108,7 @@ func (m *MemoryPersistentMemoryConfiguration) UnmarshalJSON(raw []byte) error {
 
 	m.MemoryCapacity = dataAO1.MemoryCapacity
 
-	m.NumOfDimms = dataAO1.NumOfDimms
+	m.NumOfModules = dataAO1.NumOfModules
 
 	m.NumOfRegions = dataAO1.NumOfRegions
 
@@ -151,13 +138,12 @@ func (m MemoryPersistentMemoryConfiguration) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
 		MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
-		NumOfDimms string `json:"NumOfDimms,omitempty"`
+		NumOfModules string `json:"NumOfModules,omitempty"`
 
 		NumOfRegions string `json:"NumOfRegions,omitempty"`
 
@@ -180,7 +166,7 @@ func (m MemoryPersistentMemoryConfiguration) MarshalJSON() ([]byte, error) {
 
 	dataAO1.MemoryCapacity = m.MemoryCapacity
 
-	dataAO1.NumOfDimms = m.NumOfDimms
+	dataAO1.NumOfModules = m.NumOfModules
 
 	dataAO1.NumOfRegions = m.NumOfRegions
 
@@ -203,7 +189,6 @@ func (m MemoryPersistentMemoryConfiguration) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

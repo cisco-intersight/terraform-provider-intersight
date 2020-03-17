@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m VnicEthInterruptSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,24 +100,21 @@ func (m *VnicEthInterruptSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicEthInterruptSettingsAO1P1 vnic eth interrupt settings a o1 p1
+//
 // swagger:model VnicEthInterruptSettingsAO1P1
 type VnicEthInterruptSettingsAO1P1 struct {
 
 	// The time to wait between interrupts or the idle period that must be encountered before an interrupt is sent. To turn off interrupt coalescing, enter 0 (zero) in this field.
-	//
 	CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
 	// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
-	//
 	// Enum: [MIN IDLE]
 	CoalescingType *string `json:"CoalescingType,omitempty"`
 
 	// The number of interrupt resources to allocate. Typical value is be equal to the number of completion queue resources.
-	//
 	Count int64 `json:"Count,omitempty"`
 
 	// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-	//
 	// Enum: [MSIx MSI INTx]
 	Mode *string `json:"Mode,omitempty"`
 
@@ -133,20 +128,16 @@ func (m *VnicEthInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The time to wait between interrupts or the idle period that must be encountered before an interrupt is sent. To turn off interrupt coalescing, enter 0 (zero) in this field.
-		//
 		CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
 		// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
-		//
 		// Enum: [MIN IDLE]
 		CoalescingType *string `json:"CoalescingType,omitempty"`
 
 		// The number of interrupt resources to allocate. Typical value is be equal to the number of completion queue resources.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
 	}
@@ -156,13 +147,9 @@ func (m *VnicEthInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicEthInterruptSettingsAO1P1
 
 	rcv.CoalescingTime = stage1.CoalescingTime
-
 	rcv.CoalescingType = stage1.CoalescingType
-
 	rcv.Count = stage1.Count
-
 	rcv.Mode = stage1.Mode
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -172,13 +159,9 @@ func (m *VnicEthInterruptSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "CoalescingTime")
-
 	delete(stage2, "CoalescingType")
-
 	delete(stage2, "Count")
-
 	delete(stage2, "Mode")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -200,30 +183,23 @@ func (m VnicEthInterruptSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The time to wait between interrupts or the idle period that must be encountered before an interrupt is sent. To turn off interrupt coalescing, enter 0 (zero) in this field.
-		//
 		CoalescingTime int64 `json:"CoalescingTime,omitempty"`
 
 		// Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.
-		//
 		// Enum: [MIN IDLE]
 		CoalescingType *string `json:"CoalescingType,omitempty"`
 
 		// The number of interrupt resources to allocate. Typical value is be equal to the number of completion queue resources.
-		//
 		Count int64 `json:"Count,omitempty"`
 
 		// Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.
-		//
 		// Enum: [MSIx MSI INTx]
 		Mode *string `json:"Mode,omitempty"`
 	}
 
 	stage1.CoalescingTime = m.CoalescingTime
-
 	stage1.CoalescingType = m.CoalescingType
-
 	stage1.Count = m.Count
-
 	stage1.Mode = m.Mode
 
 	// make JSON object for known properties

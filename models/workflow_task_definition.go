@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,52 +24,43 @@ type WorkflowTaskDefinition struct {
 	MoBaseMo
 
 	// The catalog under which the definition has been added.
-	//
 	Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
 	// When true this will be the task version that is used when a specific task definition version is not specified. The very first task definition created with a name will be set as the default version, after that user can explicitly set any version of the task definition as the default version.
-	//
 	DefaultVersion *bool `json:"DefaultVersion,omitempty"`
 
 	// The task definition description to describe what this task will do when executed.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// List of all the implemented task for this TaskDefinition. When this list is populated it implies that this TaskDefinition has multiple implementations.
-	//
 	ImplementedTasks []*WorkflowTaskDefinitionRef `json:"ImplementedTasks"`
 
 	// A collection of references to the [workflow.TaskDefinition](mo://workflow.TaskDefinition) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [workflow.TaskDefinition](mo://workflow.TaskDefinition) MO unsets its reference to this deleted MO.
-	//
 	InterfaceTask *WorkflowTaskDefinitionRef `json:"InterfaceTask,omitempty"`
 
 	// Type to capture all the internal properties for the task definition.
-	//
 	// Read Only: true
 	InternalProperties *WorkflowInternalProperties `json:"InternalProperties,omitempty"`
 
 	// A user friendly short name to identify the task definition.
-	//
 	Label string `json:"Label,omitempty"`
 
 	// License entitlement required to run this task. It is determined by license requirement of features.
-	//
 	// Read Only: true
-	// Enum: [Base Essential Standard Advantage]
+	// Enum: [Base Essential Standard Advantage Premier]
 	LicenseEntitlement string `json:"LicenseEntitlement,omitempty"`
 
 	// The name of the task definition. The name should follow this convention <Verb or Action><Category><Vendor><Product><Noun or object> Verb or Action is a required portion of the name and this must be part of the pre-approved verb list. Category is an optional field and this will refer to the broad category of the task referring to the type of resource or endpoint. If there is no specific category then use "Generic" if required. Vendor is an optional field and this will refer to the specific vendor this task applies to. If the task is generic and not tied to a vendor, then do not specify anything. Product is an optional field, this will contain the vendor product and model when desired. Noun or object is a required field and  this will contain the noun or object on which the action is being performed. Examples SendEmail  - This is a task in Generic category for sending email. NewStorageVolume - This is a vendor agnostic task under Storage device category for creating a new volume.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Type to capture all the properties for the task definition.
-	//
 	Properties *WorkflowProperties `json:"Properties,omitempty"`
 
+	// If set to true, the task requires access to secure properties and uses an encyption token associated with a workflow moid to encrypt or decrypt the secure properties.
+	SecurePropAccess *bool `json:"SecurePropAccess,omitempty"`
+
 	// The version of the task definition so we can support multiple versions of a task definition.
-	//
 	Version int64 `json:"Version,omitempty"`
 }
 
@@ -105,6 +95,8 @@ func (m *WorkflowTaskDefinition) UnmarshalJSON(raw []byte) error {
 
 		Properties *WorkflowProperties `json:"Properties,omitempty"`
 
+		SecurePropAccess *bool `json:"SecurePropAccess,omitempty"`
+
 		Version int64 `json:"Version,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -131,6 +123,8 @@ func (m *WorkflowTaskDefinition) UnmarshalJSON(raw []byte) error {
 
 	m.Properties = dataAO1.Properties
 
+	m.SecurePropAccess = dataAO1.SecurePropAccess
+
 	m.Version = dataAO1.Version
 
 	return nil
@@ -145,7 +139,6 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Catalog *WorkflowCatalogRef `json:"Catalog,omitempty"`
 
@@ -166,6 +159,8 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 		Name string `json:"Name,omitempty"`
 
 		Properties *WorkflowProperties `json:"Properties,omitempty"`
+
+		SecurePropAccess *bool `json:"SecurePropAccess,omitempty"`
 
 		Version int64 `json:"Version,omitempty"`
 	}
@@ -190,6 +185,8 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Properties = m.Properties
 
+	dataAO1.SecurePropAccess = m.SecurePropAccess
+
 	dataAO1.Version = m.Version
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
@@ -197,7 +194,6 @@ func (m WorkflowTaskDefinition) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -323,7 +319,7 @@ var workflowTaskDefinitionTypeLicenseEntitlementPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

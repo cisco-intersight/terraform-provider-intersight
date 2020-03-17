@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -57,7 +56,6 @@ func (m SyslogRemoteLoggingClient) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -96,5 +94,6 @@ func (m *SyslogRemoteLoggingClient) UnmarshalBinary(b []byte) error {
 }
 
 // SyslogRemoteLoggingClientAllOf1 syslog remote logging client all of1
+//
 // swagger:model SyslogRemoteLoggingClientAllOf1
 type SyslogRemoteLoggingClientAllOf1 interface{}

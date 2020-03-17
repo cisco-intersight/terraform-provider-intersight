@@ -25,6 +25,30 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		adapteradapterconfig["dce_interface_settings"] = (func(p []*models.AdapterDceInterfaceSettings, d *schema.ResourceData) []map[string]interface{} {
+			var adapterdceinterfacesettingss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			for _, item := range p {
+				item := *item
+				adapterdceinterfacesettings := make(map[string]interface{})
+				if len(item.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1) != 0 {
+
+					j, err := json.Marshal(item.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1)
+					if err == nil {
+						adapterdceinterfacesettings["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+				}
+				adapterdceinterfacesettings["fec_mode"] = item.FecMode
+				adapterdceinterfacesettings["interface_id"] = item.InterfaceID
+				adapterdceinterfacesettings["object_type"] = item.ObjectType
+				adapterdceinterfacesettingss = append(adapterdceinterfacesettingss, adapterdceinterfacesettings)
+			}
+			return adapterdceinterfacesettingss
+		})(item.DceInterfaceSettings, d)
 		adapteradapterconfig["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterethsettingss []map[string]interface{}
 			if p == nil {
@@ -1634,6 +1658,58 @@ func flattenListMemoryArrayRef(p []*models.MemoryArrayRef, d *schema.ResourceDat
 	}
 	return memoryarrayrefs
 }
+func flattenListMemoryPersistentMemoryGoal(p []*models.MemoryPersistentMemoryGoal, d *schema.ResourceData) []map[string]interface{} {
+	var memorypersistentmemorygoals []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		memorypersistentmemorygoal := make(map[string]interface{})
+		if len(item.MemoryPersistentMemoryGoalAO1P1.MemoryPersistentMemoryGoalAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MemoryPersistentMemoryGoalAO1P1.MemoryPersistentMemoryGoalAO1P1)
+			if err == nil {
+				memorypersistentmemorygoal["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		memorypersistentmemorygoal["memory_mode_percentage"] = item.MemoryModePercentage
+		memorypersistentmemorygoal["object_type"] = item.ObjectType
+		memorypersistentmemorygoal["persistent_memory_type"] = item.PersistentMemoryType
+		memorypersistentmemorygoal["socket_id"] = item.SocketID
+		memorypersistentmemorygoals = append(memorypersistentmemorygoals, memorypersistentmemorygoal)
+	}
+	return memorypersistentmemorygoals
+}
+func flattenListMemoryPersistentMemoryLogicalNamespace(p []*models.MemoryPersistentMemoryLogicalNamespace, d *schema.ResourceData) []map[string]interface{} {
+	var memorypersistentmemorylogicalnamespaces []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		memorypersistentmemorylogicalnamespace := make(map[string]interface{})
+		if len(item.MemoryPersistentMemoryLogicalNamespaceAO1P1.MemoryPersistentMemoryLogicalNamespaceAO1P1) != 0 {
+
+			j, err := json.Marshal(item.MemoryPersistentMemoryLogicalNamespaceAO1P1.MemoryPersistentMemoryLogicalNamespaceAO1P1)
+			if err == nil {
+				memorypersistentmemorylogicalnamespace["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		memorypersistentmemorylogicalnamespace["capacity"] = item.Capacity
+		memorypersistentmemorylogicalnamespace["mode"] = item.Mode
+		memorypersistentmemorylogicalnamespace["name"] = item.Name
+		memorypersistentmemorylogicalnamespace["object_type"] = item.ObjectType
+		memorypersistentmemorylogicalnamespace["socket_id"] = item.SocketID
+		memorypersistentmemorylogicalnamespace["socket_memory_id"] = item.SocketMemoryID
+		memorypersistentmemorylogicalnamespaces = append(memorypersistentmemorylogicalnamespaces, memorypersistentmemorylogicalnamespace)
+	}
+	return memorypersistentmemorylogicalnamespaces
+}
 func flattenListMemoryPersistentMemoryNamespaceConfigResultRef(p []*models.MemoryPersistentMemoryNamespaceConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorynamespaceconfigresultrefs []map[string]interface{}
 	if p == nil {
@@ -1919,6 +1995,29 @@ func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.Res
 	}
 	return onpremimagepackages
 }
+func flattenListOnpremUpgradeNote(p []*models.OnpremUpgradeNote, d *schema.ResourceData) []map[string]interface{} {
+	var onpremupgradenotes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		onpremupgradenote := make(map[string]interface{})
+		if len(item.OnpremUpgradeNoteAO1P1.OnpremUpgradeNoteAO1P1) != 0 {
+
+			j, err := json.Marshal(item.OnpremUpgradeNoteAO1P1.OnpremUpgradeNoteAO1P1)
+			if err == nil {
+				onpremupgradenote["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		onpremupgradenote["message"] = item.Message
+		onpremupgradenote["object_type"] = item.ObjectType
+		onpremupgradenotes = append(onpremupgradenotes, onpremupgradenote)
+	}
+	return onpremupgradenotes
+}
 func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
 	var onpremupgradephases []map[string]interface{}
 	if p == nil {
@@ -2098,6 +2197,31 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 					workflowconstraintss = append(workflowconstraintss, workflowconstraints)
 					return workflowconstraintss
 				})(item.Constraints, d)
+				workflowprimitivedataproperty["inventory_selector"] = (func(p []*models.WorkflowMoReferenceProperty, d *schema.ResourceData) []map[string]interface{} {
+					var workflowmoreferencepropertys []map[string]interface{}
+					if p == nil {
+						return nil
+					}
+					for _, item := range p {
+						item := *item
+						workflowmoreferenceproperty := make(map[string]interface{})
+						if len(item.WorkflowMoReferencePropertyAO1P1.WorkflowMoReferencePropertyAO1P1) != 0 {
+
+							j, err := json.Marshal(item.WorkflowMoReferencePropertyAO1P1.WorkflowMoReferencePropertyAO1P1)
+							if err == nil {
+								workflowmoreferenceproperty["additional_properties"] = string(j)
+							} else {
+								log.Printf("Error occured while flattening and json parsing: %s", err)
+							}
+						}
+						workflowmoreferenceproperty["display_attributes"] = item.DisplayAttributes
+						workflowmoreferenceproperty["object_type"] = item.ObjectType
+						workflowmoreferenceproperty["selector"] = item.Selector
+						workflowmoreferenceproperty["value_attribute"] = item.ValueAttribute
+						workflowmoreferencepropertys = append(workflowmoreferencepropertys, workflowmoreferenceproperty)
+					}
+					return workflowmoreferencepropertys
+				})(item.InventorySelector, d)
 				workflowprimitivedataproperty["object_type"] = item.ObjectType
 				workflowprimitivedataproperty["secure"] = item.Secure
 				workflowprimitivedataproperty["type"] = item.Type
@@ -2429,6 +2553,90 @@ func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceD
 		sdcardpartitions = append(sdcardpartitions, sdcardpartition)
 	}
 	return sdcardpartitions
+}
+func flattenListSdwanNetworkConfigurationType(p []*models.SdwanNetworkConfigurationType, d *schema.ResourceData) []map[string]interface{} {
+	var sdwannetworkconfigurationtypes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sdwannetworkconfigurationtype := make(map[string]interface{})
+		if len(item.SdwanNetworkConfigurationTypeAO1P1.SdwanNetworkConfigurationTypeAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SdwanNetworkConfigurationTypeAO1P1.SdwanNetworkConfigurationTypeAO1P1)
+			if err == nil {
+				sdwannetworkconfigurationtype["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		sdwannetworkconfigurationtype["network_type"] = item.NetworkType
+		sdwannetworkconfigurationtype["object_type"] = item.ObjectType
+		sdwannetworkconfigurationtype["port_group"] = item.PortGroup
+		sdwannetworkconfigurationtype["vlan"] = item.Vlan
+		sdwannetworkconfigurationtypes = append(sdwannetworkconfigurationtypes, sdwannetworkconfigurationtype)
+	}
+	return sdwannetworkconfigurationtypes
+}
+func flattenListSdwanProfileRef(p []*models.SdwanProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var sdwanprofilerefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sdwanprofileref := make(map[string]interface{})
+		sdwanprofileref["moid"] = item.Moid
+		sdwanprofileref["object_type"] = item.ObjectType
+		sdwanprofileref["selector"] = item.Selector
+		sdwanprofilerefs = append(sdwanprofilerefs, sdwanprofileref)
+	}
+	return sdwanprofilerefs
+}
+func flattenListSdwanRouterNodeRef(p []*models.SdwanRouterNodeRef, d *schema.ResourceData) []map[string]interface{} {
+	var sdwanrouternoderefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sdwanrouternoderef := make(map[string]interface{})
+		sdwanrouternoderef["moid"] = item.Moid
+		sdwanrouternoderef["object_type"] = item.ObjectType
+		sdwanrouternoderef["selector"] = item.Selector
+		sdwanrouternoderefs = append(sdwanrouternoderefs, sdwanrouternoderef)
+	}
+	return sdwanrouternoderefs
+}
+func flattenListSdwanTemplateInputsType(p []*models.SdwanTemplateInputsType, d *schema.ResourceData) []map[string]interface{} {
+	var sdwantemplateinputstypes []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		sdwantemplateinputstype := make(map[string]interface{})
+		if len(item.SdwanTemplateInputsTypeAO1P1.SdwanTemplateInputsTypeAO1P1) != 0 {
+
+			j, err := json.Marshal(item.SdwanTemplateInputsTypeAO1P1.SdwanTemplateInputsTypeAO1P1)
+			if err == nil {
+				sdwantemplateinputstype["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		sdwantemplateinputstype["editable"] = item.Editable
+		sdwantemplateinputstype["key"] = item.Key
+		sdwantemplateinputstype["object_type"] = item.ObjectType
+		sdwantemplateinputstype["required"] = item.Required
+		sdwantemplateinputstype["template"] = item.Template
+		sdwantemplateinputstype["title"] = item.Title
+		sdwantemplateinputstype["type"] = item.Type
+		sdwantemplateinputstype["value"] = item.Value
+		sdwantemplateinputstypes = append(sdwantemplateinputstypes, sdwantemplateinputstype)
+	}
+	return sdwantemplateinputstypes
 }
 func flattenListSecurityUnitRef(p []*models.SecurityUnitRef, d *schema.ResourceData) []map[string]interface{} {
 	var securityunitrefs []map[string]interface{}
@@ -2811,6 +3019,21 @@ func flattenListStoragePhysicalDiskUsageRef(p []*models.StoragePhysicalDiskUsage
 	}
 	return storagephysicaldiskusagerefs
 }
+func flattenListStoragePureHostGroupRef(p []*models.StoragePureHostGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurehostgrouprefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storagepurehostgroupref := make(map[string]interface{})
+		storagepurehostgroupref["moid"] = item.Moid
+		storagepurehostgroupref["object_type"] = item.ObjectType
+		storagepurehostgroupref["selector"] = item.Selector
+		storagepurehostgrouprefs = append(storagepurehostgrouprefs, storagepurehostgroupref)
+	}
+	return storagepurehostgrouprefs
+}
 func flattenListStoragePureHostRef(p []*models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostrefs []map[string]interface{}
 	if p == nil {
@@ -2826,6 +3049,28 @@ func flattenListStoragePureHostRef(p []*models.StoragePureHostRef, d *schema.Res
 	}
 	return storagepurehostrefs
 }
+func flattenListStoragePureReplicationBlackout(p []*models.StoragePureReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurereplicationblackouts []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		storagepurereplicationblackout := make(map[string]interface{})
+		if len(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1) != 0 {
+
+			j, err := json.Marshal(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1)
+			if err == nil {
+				storagepurereplicationblackout["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		storagepurereplicationblackout["object_type"] = item.ObjectType
+		storagepurereplicationblackouts = append(storagepurereplicationblackouts, storagepurereplicationblackout)
+	}
+	return storagepurereplicationblackouts
+}
 func flattenListStoragePureVolumeRef(p []*models.StoragePureVolumeRef, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurevolumerefs []map[string]interface{}
 	if p == nil {
@@ -2840,28 +3085,6 @@ func flattenListStoragePureVolumeRef(p []*models.StoragePureVolumeRef, d *schema
 		storagepurevolumerefs = append(storagepurevolumerefs, storagepurevolumeref)
 	}
 	return storagepurevolumerefs
-}
-func flattenListStorageReplicationBlackout(p []*models.StorageReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
-	var storagereplicationblackouts []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	for _, item := range p {
-		item := *item
-		storagereplicationblackout := make(map[string]interface{})
-		if len(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1) != 0 {
-
-			j, err := json.Marshal(item.StorageReplicationBlackoutAO1P1.StorageReplicationBlackoutAO1P1)
-			if err == nil {
-				storagereplicationblackout["additional_properties"] = string(j)
-			} else {
-				log.Printf("Error occured while flattening and json parsing: %s", err)
-			}
-		}
-		storagereplicationblackout["object_type"] = item.ObjectType
-		storagereplicationblackouts = append(storagereplicationblackouts, storagereplicationblackout)
-	}
-	return storagereplicationblackouts
 }
 func flattenListStorageSasExpanderRef(p []*models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrefs []map[string]interface{}
@@ -3235,6 +3458,36 @@ func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.Resou
 		ucsdconnectorpacks = append(ucsdconnectorpacks, ucsdconnectorpack)
 	}
 	return ucsdconnectorpacks
+}
+func flattenListVirtualizationVmwareDatastoreRef(p []*models.VirtualizationVmwareDatastoreRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwaredatastorerefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		virtualizationvmwaredatastoreref := make(map[string]interface{})
+		virtualizationvmwaredatastoreref["moid"] = item.Moid
+		virtualizationvmwaredatastoreref["object_type"] = item.ObjectType
+		virtualizationvmwaredatastoreref["selector"] = item.Selector
+		virtualizationvmwaredatastorerefs = append(virtualizationvmwaredatastorerefs, virtualizationvmwaredatastoreref)
+	}
+	return virtualizationvmwaredatastorerefs
+}
+func flattenListVirtualizationVmwareHostRef(p []*models.VirtualizationVmwareHostRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarehostrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := *item
+		virtualizationvmwarehostref := make(map[string]interface{})
+		virtualizationvmwarehostref["moid"] = item.Moid
+		virtualizationvmwarehostref["object_type"] = item.ObjectType
+		virtualizationvmwarehostref["selector"] = item.Selector
+		virtualizationvmwarehostrefs = append(virtualizationvmwarehostrefs, virtualizationvmwarehostref)
+	}
+	return virtualizationvmwarehostrefs
 }
 func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData) []map[string]interface{} {
 	var vmediamappings []map[string]interface{}
@@ -4358,6 +4611,54 @@ func flattenMapComputeBoardRef(p *models.ComputeBoardRef, d *schema.ResourceData
 
 	computeboardrefs = append(computeboardrefs, computeboardref)
 	return computeboardrefs
+}
+func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemoryOperation, d *schema.ResourceData) []map[string]interface{} {
+	var computepersistentmemoryoperations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	computepersistentmemoryoperation := make(map[string]interface{})
+	delete(item.ComputePersistentMemoryOperationAO1P1.ComputePersistentMemoryOperationAO1P1, "ObjectType")
+	if len(item.ComputePersistentMemoryOperationAO1P1.ComputePersistentMemoryOperationAO1P1) != 0 {
+		j, err := json.Marshal(item.ComputePersistentMemoryOperationAO1P1.ComputePersistentMemoryOperationAO1P1)
+		if err == nil {
+			computepersistentmemoryoperation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	computepersistentmemoryoperation["admin_action"] = item.AdminAction
+	computepersistentmemoryoperation["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
+	computepersistentmemoryoperation["modules"] = (func(p []*models.ComputePersistentMemoryModule, d *schema.ResourceData) []map[string]interface{} {
+		var computepersistentmemorymodules []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		for _, item := range p {
+			item := *item
+			computepersistentmemorymodule := make(map[string]interface{})
+			if len(item.ComputePersistentMemoryModuleAO1P1.ComputePersistentMemoryModuleAO1P1) != 0 {
+
+				j, err := json.Marshal(item.ComputePersistentMemoryModuleAO1P1.ComputePersistentMemoryModuleAO1P1)
+				if err == nil {
+					computepersistentmemorymodule["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+			}
+			computepersistentmemorymodule["object_type"] = item.ObjectType
+			computepersistentmemorymodule["socket_id"] = item.SocketID
+			computepersistentmemorymodule["socket_memory_id"] = item.SocketMemoryID
+			computepersistentmemorymodules = append(computepersistentmemorymodules, computepersistentmemorymodule)
+		}
+		return computepersistentmemorymodules
+	})(item.Modules, d)
+	computepersistentmemoryoperation["object_type"] = item.ObjectType
+	computepersistentmemoryoperation["secure_passphrase"] = item.SecurePassphrase
+
+	computepersistentmemoryoperations = append(computepersistentmemoryoperations, computepersistentmemoryoperation)
+	return computepersistentmemoryoperations
 }
 func flattenMapComputePhysicalRef(p *models.ComputePhysicalRef, d *schema.ResourceData) []map[string]interface{} {
 	var computephysicalrefs []map[string]interface{}
@@ -5964,6 +6265,30 @@ func flattenMapIamUserRef(p *models.IamUserRef, d *schema.ResourceData) []map[st
 	iamuserrefs = append(iamuserrefs, iamuserref)
 	return iamuserrefs
 }
+func flattenMapInfraHardwareInfo(p *models.InfraHardwareInfo, d *schema.ResourceData) []map[string]interface{} {
+	var infrahardwareinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	infrahardwareinfo := make(map[string]interface{})
+	delete(item.InfraHardwareInfoAO1P1.InfraHardwareInfoAO1P1, "ObjectType")
+	if len(item.InfraHardwareInfoAO1P1.InfraHardwareInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.InfraHardwareInfoAO1P1.InfraHardwareInfoAO1P1)
+		if err == nil {
+			infrahardwareinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	infrahardwareinfo["cpu_cores"] = item.CPUCores
+	infrahardwareinfo["cpu_speed"] = item.CPUSpeed
+	infrahardwareinfo["memory_size"] = item.MemorySize
+	infrahardwareinfo["object_type"] = item.ObjectType
+
+	infrahardwareinfos = append(infrahardwareinfos, infrahardwareinfo)
+	return infrahardwareinfos
+}
 func flattenMapInventoryBaseRef(p *models.InventoryBaseRef, d *schema.ResourceData) []map[string]interface{} {
 	var inventorybaserefs []map[string]interface{}
 	if p == nil {
@@ -6103,6 +6428,30 @@ func flattenMapMemoryPersistentMemoryConfigurationRef(p *models.MemoryPersistent
 
 	memorypersistentmemoryconfigurationrefs = append(memorypersistentmemoryconfigurationrefs, memorypersistentmemoryconfigurationref)
 	return memorypersistentmemoryconfigurationrefs
+}
+func flattenMapMemoryPersistentMemoryLocalSecurity(p *models.MemoryPersistentMemoryLocalSecurity, d *schema.ResourceData) []map[string]interface{} {
+	var memorypersistentmemorylocalsecuritys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	memorypersistentmemorylocalsecurity := make(map[string]interface{})
+	delete(item.MemoryPersistentMemoryLocalSecurityAO1P1.MemoryPersistentMemoryLocalSecurityAO1P1, "ObjectType")
+	if len(item.MemoryPersistentMemoryLocalSecurityAO1P1.MemoryPersistentMemoryLocalSecurityAO1P1) != 0 {
+		j, err := json.Marshal(item.MemoryPersistentMemoryLocalSecurityAO1P1.MemoryPersistentMemoryLocalSecurityAO1P1)
+		if err == nil {
+			memorypersistentmemorylocalsecurity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	memorypersistentmemorylocalsecurity["enabled"] = item.Enabled
+	memorypersistentmemorylocalsecurity["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
+	memorypersistentmemorylocalsecurity["object_type"] = item.ObjectType
+	memorypersistentmemorylocalsecurity["secure_passphrase"] = item.SecurePassphrase
+
+	memorypersistentmemorylocalsecuritys = append(memorypersistentmemorylocalsecuritys, memorypersistentmemorylocalsecurity)
+	return memorypersistentmemorylocalsecuritys
 }
 func flattenMapMemoryPersistentMemoryRegionRef(p *models.MemoryPersistentMemoryRegionRef, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryregionrefs []map[string]interface{}
@@ -6451,6 +6800,7 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 		return commipv4interfaces
 	})(item.IPV4Config, d)
 	osanswers["is_answer_file_set"] = item.IsAnswerFileSet
+	osanswers["is_root_password_crypted"] = item.IsRootPasswordCrypted
 	osanswers["is_root_password_set"] = item.IsRootPasswordSet
 	osanswers["nameserver"] = item.Nameserver
 	osanswers["object_type"] = item.ObjectType
@@ -6884,6 +7234,48 @@ func flattenMapResourceMembershipHolderRef(p *models.ResourceMembershipHolderRef
 	resourcemembershipholderrefs = append(resourcemembershipholderrefs, resourcemembershipholderref)
 	return resourcemembershipholderrefs
 }
+func flattenMapSdwanProfileRef(p *models.SdwanProfileRef, d *schema.ResourceData) []map[string]interface{} {
+	var sdwanprofilerefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sdwanprofileref := make(map[string]interface{})
+	sdwanprofileref["moid"] = item.Moid
+	sdwanprofileref["object_type"] = item.ObjectType
+	sdwanprofileref["selector"] = item.Selector
+
+	sdwanprofilerefs = append(sdwanprofilerefs, sdwanprofileref)
+	return sdwanprofilerefs
+}
+func flattenMapSdwanRouterPolicyRef(p *models.SdwanRouterPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var sdwanrouterpolicyrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sdwanrouterpolicyref := make(map[string]interface{})
+	sdwanrouterpolicyref["moid"] = item.Moid
+	sdwanrouterpolicyref["object_type"] = item.ObjectType
+	sdwanrouterpolicyref["selector"] = item.Selector
+
+	sdwanrouterpolicyrefs = append(sdwanrouterpolicyrefs, sdwanrouterpolicyref)
+	return sdwanrouterpolicyrefs
+}
+func flattenMapSdwanVmanageAccountPolicyRef(p *models.SdwanVmanageAccountPolicyRef, d *schema.ResourceData) []map[string]interface{} {
+	var sdwanvmanageaccountpolicyrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	sdwanvmanageaccountpolicyref := make(map[string]interface{})
+	sdwanvmanageaccountpolicyref["moid"] = item.Moid
+	sdwanvmanageaccountpolicyref["object_type"] = item.ObjectType
+	sdwanvmanageaccountpolicyref["selector"] = item.Selector
+
+	sdwanvmanageaccountpolicyrefs = append(sdwanvmanageaccountpolicyrefs, sdwanvmanageaccountpolicyref)
+	return sdwanvmanageaccountpolicyrefs
+}
 func flattenMapServerConfigResultRef(p *models.ServerConfigResultRef, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigresultrefs []map[string]interface{}
 	if p == nil {
@@ -6925,6 +7317,20 @@ func flattenMapSoftwareHyperflexDistributableRef(p *models.SoftwareHyperflexDist
 
 	softwarehyperflexdistributablerefs = append(softwarehyperflexdistributablerefs, softwarehyperflexdistributableref)
 	return softwarehyperflexdistributablerefs
+}
+func flattenMapSoftwareSolutionDistributableRef(p *models.SoftwareSolutionDistributableRef, d *schema.ResourceData) []map[string]interface{} {
+	var softwaresolutiondistributablerefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	softwaresolutiondistributableref := make(map[string]interface{})
+	softwaresolutiondistributableref["moid"] = item.Moid
+	softwaresolutiondistributableref["object_type"] = item.ObjectType
+	softwaresolutiondistributableref["selector"] = item.Selector
+
+	softwaresolutiondistributablerefs = append(softwaresolutiondistributablerefs, softwaresolutiondistributableref)
+	return softwaresolutiondistributablerefs
 }
 func flattenMapSoftwarerepositoryCatalogRef(p *models.SoftwarerepositoryCatalogRef, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositorycatalogrefs []map[string]interface{}
@@ -7170,19 +7576,33 @@ func flattenMapStorageProtectionGroupSnapshotRef(p *models.StorageProtectionGrou
 	storageprotectiongroupsnapshotrefs = append(storageprotectiongroupsnapshotrefs, storageprotectiongroupsnapshotref)
 	return storageprotectiongroupsnapshotrefs
 }
-func flattenMapStoragePureHostRef(p *models.StoragePureHostRef, d *schema.ResourceData) []map[string]interface{} {
-	var storagepurehostrefs []map[string]interface{}
+func flattenMapStoragePureHostGroupRef(p *models.StoragePureHostGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurehostgrouprefs []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storagepurehostref := make(map[string]interface{})
-	storagepurehostref["moid"] = item.Moid
-	storagepurehostref["object_type"] = item.ObjectType
-	storagepurehostref["selector"] = item.Selector
+	storagepurehostgroupref := make(map[string]interface{})
+	storagepurehostgroupref["moid"] = item.Moid
+	storagepurehostgroupref["object_type"] = item.ObjectType
+	storagepurehostgroupref["selector"] = item.Selector
 
-	storagepurehostrefs = append(storagepurehostrefs, storagepurehostref)
-	return storagepurehostrefs
+	storagepurehostgrouprefs = append(storagepurehostgrouprefs, storagepurehostgroupref)
+	return storagepurehostgrouprefs
+}
+func flattenMapStoragePureProtectionGroupRef(p *models.StoragePureProtectionGroupRef, d *schema.ResourceData) []map[string]interface{} {
+	var storagepureprotectiongrouprefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagepureprotectiongroupref := make(map[string]interface{})
+	storagepureprotectiongroupref["moid"] = item.Moid
+	storagepureprotectiongroupref["object_type"] = item.ObjectType
+	storagepureprotectiongroupref["selector"] = item.Selector
+
+	storagepureprotectiongrouprefs = append(storagepureprotectiongrouprefs, storagepureprotectiongroupref)
+	return storagepureprotectiongrouprefs
 }
 func flattenMapStorageSasExpanderRef(p *models.StorageSasExpanderRef, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrefs []map[string]interface{}
@@ -7288,6 +7708,355 @@ func flattenMapTopSystemRef(p *models.TopSystemRef, d *schema.ResourceData) []ma
 
 	topsystemrefs = append(topsystemrefs, topsystemref)
 	return topsystemrefs
+}
+func flattenMapVirtualizationComputeCapacity(p *models.VirtualizationComputeCapacity, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationcomputecapacitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationcomputecapacity := make(map[string]interface{})
+	delete(item.VirtualizationComputeCapacityAO1P1.VirtualizationComputeCapacityAO1P1, "ObjectType")
+	if len(item.VirtualizationComputeCapacityAO1P1.VirtualizationComputeCapacityAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationComputeCapacityAO1P1.VirtualizationComputeCapacityAO1P1)
+		if err == nil {
+			virtualizationcomputecapacity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationcomputecapacity["capacity"] = item.Capacity
+	virtualizationcomputecapacity["free"] = item.Free
+	virtualizationcomputecapacity["object_type"] = item.ObjectType
+	virtualizationcomputecapacity["used"] = item.Used
+
+	virtualizationcomputecapacitys = append(virtualizationcomputecapacitys, virtualizationcomputecapacity)
+	return virtualizationcomputecapacitys
+}
+func flattenMapVirtualizationCPUInfo(p *models.VirtualizationCPUInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationcpuinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationcpuinfo := make(map[string]interface{})
+	delete(item.VirtualizationCPUInfoAO1P1.VirtualizationCPUInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationCPUInfoAO1P1.VirtualizationCPUInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationCPUInfoAO1P1.VirtualizationCPUInfoAO1P1)
+		if err == nil {
+			virtualizationcpuinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationcpuinfo["cores"] = item.Cores
+	virtualizationcpuinfo["description"] = item.Description
+	virtualizationcpuinfo["object_type"] = item.ObjectType
+	virtualizationcpuinfo["sockets"] = item.Sockets
+	virtualizationcpuinfo["speed"] = item.Speed
+	virtualizationcpuinfo["vendor"] = item.Vendor
+
+	virtualizationcpuinfos = append(virtualizationcpuinfos, virtualizationcpuinfo)
+	return virtualizationcpuinfos
+}
+func flattenMapVirtualizationGuestInfo(p *models.VirtualizationGuestInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationguestinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationguestinfo := make(map[string]interface{})
+	delete(item.VirtualizationGuestInfoAO1P1.VirtualizationGuestInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationGuestInfoAO1P1.VirtualizationGuestInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationGuestInfoAO1P1.VirtualizationGuestInfoAO1P1)
+		if err == nil {
+			virtualizationguestinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationguestinfo["hostname"] = item.Hostname
+	virtualizationguestinfo["ip_address"] = item.IPAddress
+	virtualizationguestinfo["name"] = item.Name
+	virtualizationguestinfo["object_type"] = item.ObjectType
+	virtualizationguestinfo["operating_system"] = item.OperatingSystem
+
+	virtualizationguestinfos = append(virtualizationguestinfos, virtualizationguestinfo)
+	return virtualizationguestinfos
+}
+func flattenMapVirtualizationMemoryCapacity(p *models.VirtualizationMemoryCapacity, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationmemorycapacitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationmemorycapacity := make(map[string]interface{})
+	delete(item.VirtualizationMemoryCapacityAO1P1.VirtualizationMemoryCapacityAO1P1, "ObjectType")
+	if len(item.VirtualizationMemoryCapacityAO1P1.VirtualizationMemoryCapacityAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationMemoryCapacityAO1P1.VirtualizationMemoryCapacityAO1P1)
+		if err == nil {
+			virtualizationmemorycapacity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationmemorycapacity["capacity"] = item.Capacity
+	virtualizationmemorycapacity["free"] = item.Free
+	virtualizationmemorycapacity["object_type"] = item.ObjectType
+	virtualizationmemorycapacity["used"] = item.Used
+
+	virtualizationmemorycapacitys = append(virtualizationmemorycapacitys, virtualizationmemorycapacity)
+	return virtualizationmemorycapacitys
+}
+func flattenMapVirtualizationProductInfo(p *models.VirtualizationProductInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationproductinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationproductinfo := make(map[string]interface{})
+	delete(item.VirtualizationProductInfoAO1P1.VirtualizationProductInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationProductInfoAO1P1.VirtualizationProductInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationProductInfoAO1P1.VirtualizationProductInfoAO1P1)
+		if err == nil {
+			virtualizationproductinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationproductinfo["object_type"] = item.ObjectType
+	virtualizationproductinfo["product_name"] = item.ProductName
+	virtualizationproductinfo["product_type"] = item.ProductType
+	virtualizationproductinfo["product_vendor"] = item.ProductVendor
+	virtualizationproductinfo["version"] = item.Version
+
+	virtualizationproductinfos = append(virtualizationproductinfos, virtualizationproductinfo)
+	return virtualizationproductinfos
+}
+func flattenMapVirtualizationRemoteDisplayInfo(p *models.VirtualizationRemoteDisplayInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationremotedisplayinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationremotedisplayinfo := make(map[string]interface{})
+	delete(item.VirtualizationRemoteDisplayInfoAO1P1.VirtualizationRemoteDisplayInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationRemoteDisplayInfoAO1P1.VirtualizationRemoteDisplayInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationRemoteDisplayInfoAO1P1.VirtualizationRemoteDisplayInfoAO1P1)
+		if err == nil {
+			virtualizationremotedisplayinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationremotedisplayinfo["object_type"] = item.ObjectType
+	virtualizationremotedisplayinfo["remote_display_password"] = item.RemoteDisplayPassword
+	virtualizationremotedisplayinfo["remote_display_vnc_key"] = item.RemoteDisplayVncKey
+	virtualizationremotedisplayinfo["remote_display_vnc_port"] = item.RemoteDisplayVncPort
+
+	virtualizationremotedisplayinfos = append(virtualizationremotedisplayinfos, virtualizationremotedisplayinfo)
+	return virtualizationremotedisplayinfos
+}
+func flattenMapVirtualizationResourceConsumption(p *models.VirtualizationResourceConsumption, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationresourceconsumptions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationresourceconsumption := make(map[string]interface{})
+	delete(item.VirtualizationResourceConsumptionAO1P1.VirtualizationResourceConsumptionAO1P1, "ObjectType")
+	if len(item.VirtualizationResourceConsumptionAO1P1.VirtualizationResourceConsumptionAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationResourceConsumptionAO1P1.VirtualizationResourceConsumptionAO1P1)
+		if err == nil {
+			virtualizationresourceconsumption["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationresourceconsumption["cpu_consumed"] = item.CPUConsumed
+	virtualizationresourceconsumption["memory_consumed"] = item.MemoryConsumed
+	virtualizationresourceconsumption["object_type"] = item.ObjectType
+
+	virtualizationresourceconsumptions = append(virtualizationresourceconsumptions, virtualizationresourceconsumption)
+	return virtualizationresourceconsumptions
+}
+func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapacity, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationstoragecapacitys []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationstoragecapacity := make(map[string]interface{})
+	delete(item.VirtualizationStorageCapacityAO1P1.VirtualizationStorageCapacityAO1P1, "ObjectType")
+	if len(item.VirtualizationStorageCapacityAO1P1.VirtualizationStorageCapacityAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationStorageCapacityAO1P1.VirtualizationStorageCapacityAO1P1)
+		if err == nil {
+			virtualizationstoragecapacity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationstoragecapacity["capacity"] = item.Capacity
+	virtualizationstoragecapacity["free"] = item.Free
+	virtualizationstoragecapacity["object_type"] = item.ObjectType
+	virtualizationstoragecapacity["used"] = item.Used
+
+	virtualizationstoragecapacitys = append(virtualizationstoragecapacitys, virtualizationstoragecapacity)
+	return virtualizationstoragecapacitys
+}
+func flattenMapVirtualizationVMCPUShareInfo(p *models.VirtualizationVMCPUShareInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmcpushareinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmcpushareinfo := make(map[string]interface{})
+	delete(item.VirtualizationVMCPUShareInfoAO1P1.VirtualizationVMCPUShareInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationVMCPUShareInfoAO1P1.VirtualizationVMCPUShareInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationVMCPUShareInfoAO1P1.VirtualizationVMCPUShareInfoAO1P1)
+		if err == nil {
+			virtualizationvmcpushareinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationvmcpushareinfo["cpu_limit"] = item.CPULimit
+	virtualizationvmcpushareinfo["cpu_overhead_limit"] = item.CPUOverheadLimit
+	virtualizationvmcpushareinfo["cpu_reservation"] = item.CPUReservation
+	virtualizationvmcpushareinfo["cpu_shares"] = item.CPUShares
+	virtualizationvmcpushareinfo["object_type"] = item.ObjectType
+
+	virtualizationvmcpushareinfos = append(virtualizationvmcpushareinfos, virtualizationvmcpushareinfo)
+	return virtualizationvmcpushareinfos
+}
+func flattenMapVirtualizationVMCPUSocketInfo(p *models.VirtualizationVMCPUSocketInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmcpusocketinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmcpusocketinfo := make(map[string]interface{})
+	delete(item.VirtualizationVMCPUSocketInfoAO1P1.VirtualizationVMCPUSocketInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationVMCPUSocketInfoAO1P1.VirtualizationVMCPUSocketInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationVMCPUSocketInfoAO1P1.VirtualizationVMCPUSocketInfoAO1P1)
+		if err == nil {
+			virtualizationvmcpusocketinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationvmcpusocketinfo["cores_per_socket"] = item.CoresPerSocket
+	virtualizationvmcpusocketinfo["num_cpus"] = item.NumCpus
+	virtualizationvmcpusocketinfo["num_sockets"] = item.NumSockets
+	virtualizationvmcpusocketinfo["object_type"] = item.ObjectType
+
+	virtualizationvmcpusocketinfos = append(virtualizationvmcpusocketinfos, virtualizationvmcpusocketinfo)
+	return virtualizationvmcpusocketinfos
+}
+func flattenMapVirtualizationVMDiskCommitInfo(p *models.VirtualizationVMDiskCommitInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmdiskcommitinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmdiskcommitinfo := make(map[string]interface{})
+	delete(item.VirtualizationVMDiskCommitInfoAO1P1.VirtualizationVMDiskCommitInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationVMDiskCommitInfoAO1P1.VirtualizationVMDiskCommitInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationVMDiskCommitInfoAO1P1.VirtualizationVMDiskCommitInfoAO1P1)
+		if err == nil {
+			virtualizationvmdiskcommitinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationvmdiskcommitinfo["committed_disk"] = item.CommittedDisk
+	virtualizationvmdiskcommitinfo["object_type"] = item.ObjectType
+	virtualizationvmdiskcommitinfo["un_committed_disk"] = item.UnCommittedDisk
+	virtualizationvmdiskcommitinfo["unshared_disk"] = item.UnsharedDisk
+
+	virtualizationvmdiskcommitinfos = append(virtualizationvmdiskcommitinfos, virtualizationvmdiskcommitinfo)
+	return virtualizationvmdiskcommitinfos
+}
+func flattenMapVirtualizationVMMemoryShareInfo(p *models.VirtualizationVMMemoryShareInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmmemoryshareinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmmemoryshareinfo := make(map[string]interface{})
+	delete(item.VirtualizationVMMemoryShareInfoAO1P1.VirtualizationVMMemoryShareInfoAO1P1, "ObjectType")
+	if len(item.VirtualizationVMMemoryShareInfoAO1P1.VirtualizationVMMemoryShareInfoAO1P1) != 0 {
+		j, err := json.Marshal(item.VirtualizationVMMemoryShareInfoAO1P1.VirtualizationVMMemoryShareInfoAO1P1)
+		if err == nil {
+			virtualizationvmmemoryshareinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	virtualizationvmmemoryshareinfo["mem_limit"] = item.MemLimit
+	virtualizationvmmemoryshareinfo["mem_overhead_limit"] = item.MemOverheadLimit
+	virtualizationvmmemoryshareinfo["mem_reservation"] = item.MemReservation
+	virtualizationvmmemoryshareinfo["mem_shares"] = item.MemShares
+	virtualizationvmmemoryshareinfo["object_type"] = item.ObjectType
+
+	virtualizationvmmemoryshareinfos = append(virtualizationvmmemoryshareinfos, virtualizationvmmemoryshareinfo)
+	return virtualizationvmmemoryshareinfos
+}
+func flattenMapVirtualizationVmwareClusterRef(p *models.VirtualizationVmwareClusterRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwareclusterrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwareclusterref := make(map[string]interface{})
+	virtualizationvmwareclusterref["moid"] = item.Moid
+	virtualizationvmwareclusterref["object_type"] = item.ObjectType
+	virtualizationvmwareclusterref["selector"] = item.Selector
+
+	virtualizationvmwareclusterrefs = append(virtualizationvmwareclusterrefs, virtualizationvmwareclusterref)
+	return virtualizationvmwareclusterrefs
+}
+func flattenMapVirtualizationVmwareDatacenterRef(p *models.VirtualizationVmwareDatacenterRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwaredatacenterrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwaredatacenterref := make(map[string]interface{})
+	virtualizationvmwaredatacenterref["moid"] = item.Moid
+	virtualizationvmwaredatacenterref["object_type"] = item.ObjectType
+	virtualizationvmwaredatacenterref["selector"] = item.Selector
+
+	virtualizationvmwaredatacenterrefs = append(virtualizationvmwaredatacenterrefs, virtualizationvmwaredatacenterref)
+	return virtualizationvmwaredatacenterrefs
+}
+func flattenMapVirtualizationVmwareHostRef(p *models.VirtualizationVmwareHostRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarehostrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarehostref := make(map[string]interface{})
+	virtualizationvmwarehostref["moid"] = item.Moid
+	virtualizationvmwarehostref["object_type"] = item.ObjectType
+	virtualizationvmwarehostref["selector"] = item.Selector
+
+	virtualizationvmwarehostrefs = append(virtualizationvmwarehostrefs, virtualizationvmwarehostref)
+	return virtualizationvmwarehostrefs
+}
+func flattenMapVirtualizationVmwareVcenterRef(p *models.VirtualizationVmwareVcenterRef, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarevcenterrefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarevcenterref := make(map[string]interface{})
+	virtualizationvmwarevcenterref["moid"] = item.Moid
+	virtualizationvmwarevcenterref["object_type"] = item.ObjectType
+	virtualizationvmwarevcenterref["selector"] = item.Selector
+
+	virtualizationvmwarevcenterrefs = append(virtualizationvmwarevcenterrefs, virtualizationvmwarevcenterref)
+	return virtualizationvmwarevcenterrefs
 }
 func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicarfssettingss []map[string]interface{}
@@ -7920,7 +8689,28 @@ func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, 
 		}
 	}
 	workflowinternalproperties["base_task_type"] = item.BaseTaskType
-	workflowinternalproperties["constraints"] = item.Constraints
+	workflowinternalproperties["constraints"] = (func(p *models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
+		var workflowtaskconstraintss []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		workflowtaskconstraints := make(map[string]interface{})
+		delete(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1, "ObjectType")
+		if len(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1) != 0 {
+			j, err := json.Marshal(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1)
+			if err == nil {
+				workflowtaskconstraints["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+		}
+		workflowtaskconstraints["object_type"] = item.ObjectType
+		workflowtaskconstraints["target_data_type"] = item.TargetDataType
+
+		workflowtaskconstraintss = append(workflowtaskconstraintss, workflowtaskconstraints)
+		return workflowtaskconstraintss
+	})(item.Constraints, d)
 	workflowinternalproperties["internal"] = item.Internal
 	workflowinternalproperties["object_type"] = item.ObjectType
 	workflowinternalproperties["owner"] = item.Owner
@@ -7958,6 +8748,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowproperties["external_meta"] = item.ExternalMeta
 	workflowproperties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
 		var workflowbasedatatypes []map[string]interface{}
 		if p == nil {
@@ -8060,11 +8851,34 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 	workflowproperties["retry_count"] = item.RetryCount
 	workflowproperties["retry_delay"] = item.RetryDelay
 	workflowproperties["retry_policy"] = item.RetryPolicy
+	workflowproperties["support_status"] = item.SupportStatus
 	workflowproperties["timeout"] = item.Timeout
 	workflowproperties["timeout_policy"] = item.TimeoutPolicy
 
 	workflowpropertiess = append(workflowpropertiess, workflowproperties)
 	return workflowpropertiess
+}
+func flattenMapWorkflowTaskConstraints(p *models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
+	var workflowtaskconstraintss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	workflowtaskconstraints := make(map[string]interface{})
+	delete(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1, "ObjectType")
+	if len(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1)
+		if err == nil {
+			workflowtaskconstraints["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	workflowtaskconstraints["object_type"] = item.ObjectType
+	workflowtaskconstraints["target_data_type"] = item.TargetDataType
+
+	workflowtaskconstraintss = append(workflowtaskconstraintss, workflowtaskconstraints)
+	return workflowtaskconstraintss
 }
 func flattenMapWorkflowTaskDefinitionRef(p *models.WorkflowTaskDefinitionRef, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskdefinitionrefs []map[string]interface{}
@@ -8156,6 +8970,28 @@ func flattenMapWorkflowWorkflowDefinitionRef(p *models.WorkflowWorkflowDefinitio
 	workflowworkflowdefinitionrefs = append(workflowworkflowdefinitionrefs, workflowworkflowdefinitionref)
 	return workflowworkflowdefinitionrefs
 }
+func flattenMapWorkflowWorkflowInfoProperties(p *models.WorkflowWorkflowInfoProperties, d *schema.ResourceData) []map[string]interface{} {
+	var workflowworkflowinfopropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	workflowworkflowinfoproperties := make(map[string]interface{})
+	delete(item.WorkflowWorkflowInfoPropertiesAO1P1.WorkflowWorkflowInfoPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowWorkflowInfoPropertiesAO1P1.WorkflowWorkflowInfoPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowWorkflowInfoPropertiesAO1P1.WorkflowWorkflowInfoPropertiesAO1P1)
+		if err == nil {
+			workflowworkflowinfoproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	workflowworkflowinfoproperties["object_type"] = item.ObjectType
+	workflowworkflowinfoproperties["retryable"] = item.Retryable
+
+	workflowworkflowinfopropertiess = append(workflowworkflowinfopropertiess, workflowworkflowinfoproperties)
+	return workflowworkflowinfopropertiess
+}
 func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowinforefs []map[string]interface{}
 	if p == nil {
@@ -8169,6 +9005,30 @@ func flattenMapWorkflowWorkflowInfoRef(p *models.WorkflowWorkflowInfoRef, d *sch
 
 	workflowworkflowinforefs = append(workflowworkflowinforefs, workflowworkflowinforef)
 	return workflowworkflowinforefs
+}
+func flattenMapWorkflowWorkflowProperties(p *models.WorkflowWorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
+	var workflowworkflowpropertiess []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	workflowworkflowproperties := make(map[string]interface{})
+	delete(item.WorkflowWorkflowPropertiesAO1P1.WorkflowWorkflowPropertiesAO1P1, "ObjectType")
+	if len(item.WorkflowWorkflowPropertiesAO1P1.WorkflowWorkflowPropertiesAO1P1) != 0 {
+		j, err := json.Marshal(item.WorkflowWorkflowPropertiesAO1P1.WorkflowWorkflowPropertiesAO1P1)
+		if err == nil {
+			workflowworkflowproperties["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+	}
+	workflowworkflowproperties["external_meta"] = item.ExternalMeta
+	workflowworkflowproperties["object_type"] = item.ObjectType
+	workflowworkflowproperties["retryable"] = item.Retryable
+	workflowworkflowproperties["support_status"] = item.SupportStatus
+
+	workflowworkflowpropertiess = append(workflowworkflowpropertiess, workflowworkflowproperties)
+	return workflowworkflowpropertiess
 }
 func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
 	var x509certificates []map[string]interface{}

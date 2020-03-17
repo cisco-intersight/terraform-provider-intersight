@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,68 +23,55 @@ type IaasUcsdInfo struct {
 	MoBaseMo
 
 	// Relationship to a collection of connector packs installed on the UCSD.
-	//
 	// Read Only: true
 	ConnectorPack []*IaasConnectorPackRef `json:"ConnectorPack"`
 
 	// Moid of the UCSD device connector's asset.DeviceRegistration.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// Relationship to a collection of infra accounts managed by the UCSD.
-	//
 	// Read Only: true
 	DeviceStatus []*IaasDeviceStatusRef `json:"DeviceStatus"`
 
 	// Unique ID of UCSD getting registerd with Intersight.
-	//
 	// Read Only: true
 	GUID string `json:"Guid,omitempty"`
 
 	// The UCSD host name.
-	//
 	// Read Only: true
 	HostName string `json:"HostName,omitempty"`
 
 	// The UCSD IP address.
-	//
 	// Read Only: true
 	IP string `json:"Ip,omitempty"`
 
 	// Last successful backup created for this UCS Director appliance if backup is configured.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastBackup strfmt.DateTime `json:"LastBackup,omitempty"`
 
 	// Relationship to license information of the UCSD.
-	//
 	// Read Only: true
 	LicenseInfo *IaasLicenseInfoRef `json:"LicenseInfo,omitempty"`
 
 	// Relationship to collection of MostRunTasks objects with cascade on delete of UcsdInfo object.
-	//
 	// Read Only: true
 	MostRunTasks []*IaasMostRunTasksRef `json:"MostRunTasks"`
 
 	// NodeType specifies if UCSD is deployed in Stand-alone or Multi Node.
-	//
 	// Read Only: true
 	NodeType string `json:"NodeType,omitempty"`
 
 	// The UCSD product name.
-	//
 	// Read Only: true
 	ProductName string `json:"ProductName,omitempty"`
 
 	// The UCSD product vendor.
-	//
 	// Read Only: true
 	ProductVendor string `json:"ProductVendor,omitempty"`
 
 	// The UCSD product/platform version.
-	//
 	// Read Only: true
 	ProductVersion string `json:"ProductVersion,omitempty"`
 
@@ -94,12 +80,10 @@ type IaasUcsdInfo struct {
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The UCSD status. Possible values are Active, Inactive, Unknown.
-	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 
 	// Relationship to infrastructure being managed by the UCSD.
-	//
 	// Read Only: true
 	UcsdManagedInfra *IaasUcsdManagedInfraRef `json:"UcsdManagedInfra,omitempty"`
 }
@@ -195,7 +179,6 @@ func (m IaasUcsdInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConnectorPack []*IaasConnectorPackRef `json:"ConnectorPack"`
 
@@ -267,7 +250,6 @@ func (m IaasUcsdInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

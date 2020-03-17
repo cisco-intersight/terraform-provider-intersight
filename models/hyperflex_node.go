@@ -8,14 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // HyperflexNode Hyperflex:Node
+//
 // swagger:model hyperflexNode
 type HyperflexNode struct {
 	MoBaseMo
@@ -25,14 +25,11 @@ type HyperflexNode struct {
 	BuildNumber string `json:"BuildNumber,omitempty"`
 
 	// A collection of references to the [hyperflex.Cluster](mo://hyperflex.Cluster) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.Cluster](mo://hyperflex.Cluster) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Cluster *HyperflexClusterRef `json:"Cluster,omitempty"`
 
 	// A relationship to the ClusterMember that represents this node's registration to Intersight.
-	//
 	// Read Only: true
 	ClusterMember *AssetClusterMemberRef `json:"ClusterMember,omitempty"`
 
@@ -65,7 +62,6 @@ type HyperflexNode struct {
 	ModelNumber string `json:"ModelNumber,omitempty"`
 
 	// A relationship to the UCS server associated with this node.
-	//
 	// Read Only: true
 	PhysicalServer *ComputePhysicalRef `json:"PhysicalServer,omitempty"`
 
@@ -175,7 +171,6 @@ func (m HyperflexNode) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BuildNumber string `json:"BuildNumber,omitempty"`
 
@@ -243,7 +238,6 @@ func (m HyperflexNode) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

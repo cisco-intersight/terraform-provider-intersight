@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,7 +23,6 @@ type SoftwarerepositoryAuthorization struct {
 	MoBaseMo
 
 	// The account, on behalf of which, the authorization is being provided.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -35,16 +33,13 @@ type SoftwarerepositoryAuthorization struct {
 	IsUserIDSet *bool `json:"IsUserIdSet,omitempty"`
 
 	// The password that will be used by Intersight to create OAuth2 tokens for interacting with the external repository, on the user account's behalf.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The external repository for which this authorization has been provided. The only supported repository today is cisco.com.
-	//
 	// Enum: [Cisco IntersightCloud LocalMachine NetworkShare]
 	RepositoryType *string `json:"RepositoryType,omitempty"`
 
 	// The username that will be used by Intersight to create OAuth2 tokens for interacting with the external repository, on the user account's behalf.
-	//
 	UserID string `json:"UserId,omitempty"`
 }
 
@@ -99,7 +94,6 @@ func (m SoftwarerepositoryAuthorization) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -131,7 +125,6 @@ func (m SoftwarerepositoryAuthorization) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

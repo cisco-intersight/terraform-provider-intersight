@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicRoceSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,23 +99,20 @@ func (m *VnicRoceSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicRoceSettingsAO1P1 vnic roce settings a o1 p1
+//
 // swagger:model VnicRoceSettingsAO1P1
 type VnicRoceSettingsAO1P1 struct {
 
 	// If enabled sets RDMA over Converged Ethernet (RoCE) on this virtual interface.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// The number of memory regions per adapter. Recommended value = integer power of 2.
-	//
 	MemoryRegions int64 `json:"MemoryRegions,omitempty"`
 
 	// The number of queue pairs per adapter. Recommended value = integer power of 2.
-	//
 	QueuePairs int64 `json:"QueuePairs,omitempty"`
 
 	// The number of resource groups per adapter. Recommended value = be an integer power of 2 greater than or equal to the number of CPU cores on the system for optimum performance.
-	//
 	ResourceGroups int64 `json:"ResourceGroups,omitempty"`
 
 	// vnic roce settings a o1 p1
@@ -130,19 +125,15 @@ func (m *VnicRoceSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// If enabled sets RDMA over Converged Ethernet (RoCE) on this virtual interface.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// The number of memory regions per adapter. Recommended value = integer power of 2.
-		//
 		MemoryRegions int64 `json:"MemoryRegions,omitempty"`
 
 		// The number of queue pairs per adapter. Recommended value = integer power of 2.
-		//
 		QueuePairs int64 `json:"QueuePairs,omitempty"`
 
 		// The number of resource groups per adapter. Recommended value = be an integer power of 2 greater than or equal to the number of CPU cores on the system for optimum performance.
-		//
 		ResourceGroups int64 `json:"ResourceGroups,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -151,13 +142,9 @@ func (m *VnicRoceSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicRoceSettingsAO1P1
 
 	rcv.Enabled = stage1.Enabled
-
 	rcv.MemoryRegions = stage1.MemoryRegions
-
 	rcv.QueuePairs = stage1.QueuePairs
-
 	rcv.ResourceGroups = stage1.ResourceGroups
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -167,13 +154,9 @@ func (m *VnicRoceSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enabled")
-
 	delete(stage2, "MemoryRegions")
-
 	delete(stage2, "QueuePairs")
-
 	delete(stage2, "ResourceGroups")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -195,28 +178,21 @@ func (m VnicRoceSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// If enabled sets RDMA over Converged Ethernet (RoCE) on this virtual interface.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// The number of memory regions per adapter. Recommended value = integer power of 2.
-		//
 		MemoryRegions int64 `json:"MemoryRegions,omitempty"`
 
 		// The number of queue pairs per adapter. Recommended value = integer power of 2.
-		//
 		QueuePairs int64 `json:"QueuePairs,omitempty"`
 
 		// The number of resource groups per adapter. Recommended value = be an integer power of 2 greater than or equal to the number of CPU cores on the system for optimum performance.
-		//
 		ResourceGroups int64 `json:"ResourceGroups,omitempty"`
 	}
 
 	stage1.Enabled = m.Enabled
-
 	stage1.MemoryRegions = m.MemoryRegions
-
 	stage1.QueuePairs = m.QueuePairs
-
 	stage1.ResourceGroups = m.ResourceGroups
 
 	// make JSON object for known properties

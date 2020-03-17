@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiaapiDcnmSweolList niaapi dcnm sweol list
+//
 // swagger:model niaapiDcnmSweolList
 type NiaapiDcnmSweolList struct {
 

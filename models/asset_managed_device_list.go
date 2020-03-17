@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // AssetManagedDeviceList asset managed device list
+//
 // swagger:model assetManagedDeviceList
 type AssetManagedDeviceList struct {
 

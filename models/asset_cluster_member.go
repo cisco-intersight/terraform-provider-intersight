@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,34 +23,27 @@ type AssetClusterMember struct {
 	AssetDeviceConnection
 
 	// A collection of references to the [asset.DeviceRegistration](mo://asset.DeviceRegistration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [asset.DeviceRegistration](mo://asset.DeviceRegistration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
 	// The current leadershipstate of this member. Updated by the device connector on failover or leadership change. If a member is elected as Primary within the cluster this connection will be the same as the DeviceRegistration connection. E.g a message addressed to the DeviceRegistration will be forwarded to the ClusterMember connection.
-	//
 	// Read Only: true
 	// Enum: [Unknown Primary Secondary]
 	Leadership string `json:"Leadership,omitempty"`
 
 	// Devices lock their leadership on failure to heartbeat with peers. Value acts as a third party tie breaker in election between nodes. Intersight enforces that only one cluster member exists with this value set to true.
-	//
 	LockedLeader *bool `json:"LockedLeader,omitempty"`
 
 	// The unique identity of the member within the cluster. The identity is retrieved from the platform and reported by the device connector at connection time.
-	//
 	// Read Only: true
 	MemberIdentity string `json:"MemberIdentity,omitempty"`
 
 	// The member idenity of the cluster member through which this device is connected if applicable.
-	//
 	// Read Only: true
 	ParentClusterMemberIdentity string `json:"ParentClusterMemberIdentity,omitempty"`
 
 	// The SUDI status read from the Trust Anchor Module on a device.
-	//
 	// Read Only: true
 	Sudi *AssetSudiInfo `json:"Sudi,omitempty"`
 }
@@ -107,7 +99,6 @@ func (m AssetClusterMember) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Device *AssetDeviceRegistrationRef `json:"Device,omitempty"`
 
@@ -139,7 +130,6 @@ func (m AssetClusterMember) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

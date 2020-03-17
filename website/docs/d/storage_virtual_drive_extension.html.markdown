@@ -4,25 +4,23 @@ page_title: "Intersight: intersight_storage_virtual_drive_extension"
 sidebar_current: "docs-intersight-data-source-storageVirtualDriveExtension"
 description: |-
 Information of virtual drives as reported by a storage controller. In certain cases like S-series servers, virtual drive information will be reported by the controller separately and this represents such information.
-
 ---
 
 # Data Source: intersight_storage_virtual_drive_extension
 Information of virtual drives as reported by a storage controller. In certain cases like S-series servers, virtual drive information will be reported by the controller separately and this represents such information.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `bootable`:(string)It shows virtual drive is bootable.
+* `bootable`:(string)"It shows virtual drive is bootable."
 * `container_id`:(int)
 * `device_mo_id`:(string)
-* `dn`:(string)The Distinguished Name unambiguously identifies an object in the system.
+* `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
 * `drive_state`:(string)
-* `moid`:(string)The unique identifier of this Managed Object instance.
+* `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)
-* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
 * `oper_device_id`:(string)
-* `rn`:(string)The Relative Name uniquely identifies an object within a given context.
+* `rn`:(string)"The Relative Name uniquely identifies an object within a given context."
 * `uuid`:(string)
 * `vendor_uuid`:(string)
 * `virtual_drive_dn`:(string)
-* `virtual_drive_id`:(string)It shows virtual drive Id.
+* `virtual_drive_id`:(string)"It shows virtual drive Id."

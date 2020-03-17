@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,30 +23,24 @@ type BootPxe struct {
 	BootDeviceBase
 
 	// The name of the underlying virtual ethernet interface used by the PXE boot device.
-	//
 	InterfaceName string `json:"InterfaceName,omitempty"`
 
 	// Lists the supported Interface Source for PXE device. Supported values are "name" and "mac".
-	//
 	// Enum: [name mac port]
 	InterfaceSource *string `json:"InterfaceSource,omitempty"`
 
 	// The IP Address family type to use during the PXE Boot process.
-	//
 	// Enum: [None IPv4 IPv6]
 	IPType *string `json:"IpType,omitempty"`
 
 	// The MAC Address of the underlying virtual ethernet interface used by the PXE boot device.
-	//
 	MacAddress string `json:"MacAddress,omitempty"`
 
 	// The logical port id of the ethernet interface used by the PXE device. Port is a deprecated property. Default value is changed to '-1' as this is invalid port. New or modified pxe device has the port value always set to '-1'.
-	//
 	// Read Only: true
 	Port int64 `json:"Port,omitempty"`
 
 	// The slot ID of the adapter on which the underlying virtual ethernet interface is present. Supported values are ( 1 - 255, "MLOM", "L", "L1", "L2", "OCP").
-	//
 	Slot string `json:"Slot,omitempty"`
 }
 
@@ -102,7 +95,6 @@ func (m BootPxe) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		InterfaceName string `json:"InterfaceName,omitempty"`
 
@@ -134,7 +126,6 @@ func (m BootPxe) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

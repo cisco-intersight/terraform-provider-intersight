@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowTaskRetryInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *WorkflowTaskRetryInfo) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowTaskRetryInfoAO1P1 workflow task retry info a o1 p1
+//
 // swagger:model WorkflowTaskRetryInfoAO1P1
 type WorkflowTaskRetryInfoAO1P1 struct {
 
 	// Status of the retried task.
-	//
 	Status string `json:"Status,omitempty"`
 
 	// Retry instance will get a unique instance id.
-	//
 	TaskInstID string `json:"TaskInstId,omitempty"`
 
 	// workflow task retry info a o1 p1
@@ -122,11 +119,9 @@ func (m *WorkflowTaskRetryInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Status of the retried task.
-		//
 		Status string `json:"Status,omitempty"`
 
 		// Retry instance will get a unique instance id.
-		//
 		TaskInstID string `json:"TaskInstId,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *WorkflowTaskRetryInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowTaskRetryInfoAO1P1
 
 	rcv.Status = stage1.Status
-
 	rcv.TaskInstID = stage1.TaskInstID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *WorkflowTaskRetryInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Status")
-
 	delete(stage2, "TaskInstId")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m WorkflowTaskRetryInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Status of the retried task.
-		//
 		Status string `json:"Status,omitempty"`
 
 		// Retry instance will get a unique instance id.
-		//
 		TaskInstID string `json:"TaskInstId,omitempty"`
 	}
 
 	stage1.Status = m.Status
-
 	stage1.TaskInstID = m.TaskInstID
 
 	// make JSON object for known properties

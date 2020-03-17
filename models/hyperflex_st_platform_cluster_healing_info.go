@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexStPlatformClusterHealingInfo Hyperflex:St Platform Cluster Healing Info
+//
 // swagger:model hyperflexStPlatformClusterHealingInfo
 type HyperflexStPlatformClusterHealingInfo struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m HyperflexStPlatformClusterHealingInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,6 +97,7 @@ func (m *HyperflexStPlatformClusterHealingInfo) UnmarshalBinary(b []byte) error 
 }
 
 // HyperflexStPlatformClusterHealingInfoAO1P1 hyperflex st platform cluster healing info a o1 p1
+//
 // swagger:model HyperflexStPlatformClusterHealingInfoAO1P1
 type HyperflexStPlatformClusterHealingInfoAO1P1 struct {
 
@@ -164,17 +164,11 @@ func (m *HyperflexStPlatformClusterHealingInfoAO1P1) UnmarshalJSON(data []byte) 
 	var rcv HyperflexStPlatformClusterHealingInfoAO1P1
 
 	rcv.EstimatedCompletionTimeInSeconds = stage1.EstimatedCompletionTimeInSeconds
-
 	rcv.InProgress = stage1.InProgress
-
 	rcv.Messages = stage1.Messages
-
 	rcv.MessagesIterator = stage1.MessagesIterator
-
 	rcv.MessagesSize = stage1.MessagesSize
-
 	rcv.PercentComplete = stage1.PercentComplete
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -184,17 +178,11 @@ func (m *HyperflexStPlatformClusterHealingInfoAO1P1) UnmarshalJSON(data []byte) 
 	}
 
 	delete(stage2, "EstimatedCompletionTimeInSeconds")
-
 	delete(stage2, "InProgress")
-
 	delete(stage2, "Messages")
-
 	delete(stage2, "MessagesIterator")
-
 	delete(stage2, "MessagesSize")
-
 	delete(stage2, "PercentComplete")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -241,15 +229,10 @@ func (m HyperflexStPlatformClusterHealingInfoAO1P1) MarshalJSON() ([]byte, error
 	}
 
 	stage1.EstimatedCompletionTimeInSeconds = m.EstimatedCompletionTimeInSeconds
-
 	stage1.InProgress = m.InProgress
-
 	stage1.Messages = m.Messages
-
 	stage1.MessagesIterator = m.MessagesIterator
-
 	stage1.MessagesSize = m.MessagesSize
-
 	stage1.PercentComplete = m.PercentComplete
 
 	// make JSON object for known properties

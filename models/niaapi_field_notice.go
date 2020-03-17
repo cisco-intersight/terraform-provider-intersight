@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,39 +22,30 @@ type NiaapiFieldNotice struct {
 	MoBaseMo
 
 	// Bug Id associated with this notice.
-	//
 	Bugid string `json:"Bugid,omitempty"`
 
 	// Field notice Description.
-	//
 	FieldNoticeDesc string `json:"FieldNoticeDesc,omitempty"`
 
 	// Fieldnotice Id of this notice.
-	//
 	FieldNoticeID string `json:"FieldNoticeId,omitempty"`
 
 	// Field notice URL link to the notice webpage.
-	//
 	FieldNoticeURL string `json:"FieldNoticeUrl,omitempty"`
 
 	// The headline of this field notice.
-	//
 	Headline string `json:"Headline,omitempty"`
 
 	// Hardware PID for affected models.
-	//
 	Hwpid string `json:"Hwpid,omitempty"`
 
 	// Revision detail infomation .
-	//
 	RevisionInfo []*NiaapiRevisionInfo `json:"RevisionInfo"`
 
 	// Software Release number for affected versions.
-	//
 	SwRelease string `json:"SwRelease,omitempty"`
 
 	// URL of workaround of this notice.
-	//
 	WorkaroundURL string `json:"WorkaroundUrl,omitempty"`
 }
 
@@ -122,7 +112,6 @@ func (m NiaapiFieldNotice) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Bugid string `json:"Bugid,omitempty"`
 
@@ -166,7 +155,6 @@ func (m NiaapiFieldNotice) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

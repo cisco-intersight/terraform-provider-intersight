@@ -15,13 +15,13 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 		Read: dataSourceStoragePureReplicationScheduleRead,
 		Schema: map[string]*schema.Schema{
 			"daily_limit": {
-				Description: "Total number of snapshots per day to be available on target above and over the specified retention time. PureStorageFlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired.In case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.",
+				Description: "Total number of snapshots per day to be available on target above and over the specified retention time. PureStorage\nFlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired.\nIn case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"frequency": {
-				Description: "Replication frequency. It is an interval on which replication is set to trigger.Examples:    PT2H, Snapshot is performed for every 2 hours.    P30D, Snapshot is scheduled for every 30 days.    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Replication frequency. It is an interval at which replication is set to trigger.\nExamples:\n    PT2H, Snapshot is generated every 2 hours.\n    P30D, Snapshot is scheduled for every 30 days.\n    PT2H34M56.123S is 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -39,13 +39,13 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				Computed:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -64,7 +64,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -93,7 +93,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -122,7 +122,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -143,7 +143,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -152,7 +152,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"retention_time": {
-				Description: "Duration to keep the replicated snapshots on the targets.Replicated snapshots are deleted from target array once mentioned rentention period is elapsed.Examples:P30D, Snapshots are available for 30 days.PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
+				Description: "Duration to keep the replicated snapshots on the targets.\nReplicated snapshots are deleted from target array once the retention period has elapsed.\nExamples:\nP30D, Snapshots are available for 30 days.\nPT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -184,7 +184,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -209,7 +209,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -312,7 +312,7 @@ func dataSourceStoragePureReplicationScheduleRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("replication_blackout_intervals", flattenListStorageReplicationBlackout(s.ReplicationBlackoutIntervals, d)); err != nil {
+			if err := d.Set("replication_blackout_intervals", flattenListStoragePureReplicationBlackout(s.ReplicationBlackoutIntervals, d)); err != nil {
 				return err
 			}
 			if err := d.Set("retention_time", (s.RetentionTime)); err != nil {

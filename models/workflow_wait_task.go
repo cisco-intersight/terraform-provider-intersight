@@ -6,9 +6,10 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"strconv"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,7 +21,8 @@ import (
 type WorkflowWaitTask struct {
 	WorkflowAbstractWorkerTask
 
-	WorkflowWaitTaskAllOf1
+	// List of prompts for this wait task. These prompts are useful to provide options to the user who is running a workflow that contains wait task on how to proceed after the wait task.
+	Prompts []*WorkflowWaitTaskPrompt `json:"Prompts"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -33,11 +35,14 @@ func (m *WorkflowWaitTask) UnmarshalJSON(raw []byte) error {
 	m.WorkflowAbstractWorkerTask = aO0
 
 	// AO1
-	var aO1 WorkflowWaitTaskAllOf1
-	if err := swag.ReadJSON(raw, &aO1); err != nil {
+	var dataAO1 struct {
+		Prompts []*WorkflowWaitTaskPrompt `json:"Prompts"`
+	}
+	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
-	m.WorkflowWaitTaskAllOf1 = aO1
+
+	m.Prompts = dataAO1.Prompts
 
 	return nil
 }
@@ -51,13 +56,17 @@ func (m WorkflowWaitTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
-	aO1, err := swag.WriteJSON(m.WorkflowWaitTaskAllOf1)
-	if err != nil {
-		return nil, err
+	var dataAO1 struct {
+		Prompts []*WorkflowWaitTaskPrompt `json:"Prompts"`
 	}
-	_parts = append(_parts, aO1)
 
+	dataAO1.Prompts = m.Prompts
+
+	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
+	if errAO1 != nil {
+		return nil, errAO1
+	}
+	_parts = append(_parts, jsonDataAO1)
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -69,11 +78,39 @@ func (m *WorkflowWaitTask) Validate(formats strfmt.Registry) error {
 	if err := m.WorkflowAbstractWorkerTask.Validate(formats); err != nil {
 		res = append(res, err)
 	}
-	// validation for a type composition with WorkflowWaitTaskAllOf1
+
+	if err := m.validatePrompts(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *WorkflowWaitTask) validatePrompts(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Prompts) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Prompts); i++ {
+		if swag.IsZero(m.Prompts[i]) { // not required
+			continue
+		}
+
+		if m.Prompts[i] != nil {
+			if err := m.Prompts[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Prompts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -94,7 +131,3 @@ func (m *WorkflowWaitTask) UnmarshalBinary(b []byte) error {
 	*m = res
 	return nil
 }
-
-// WorkflowWaitTaskAllOf1 workflow wait task all of1
-// swagger:model WorkflowWaitTaskAllOf1
-type WorkflowWaitTaskAllOf1 interface{}

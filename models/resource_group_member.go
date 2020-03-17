@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,12 +20,10 @@ type ResourceGroupMember struct {
 	MoBaseMo
 
 	// The resource group to which the resource is a member.
-	//
 	// Read Only: true
 	Group *ResourceGroupRef `json:"Group,omitempty"`
 
 	// Reference to the resolved resource.
-	//
 	// Read Only: true
 	Resource *MoBaseMoRef `json:"Resource,omitempty"`
 }
@@ -66,7 +63,6 @@ func (m ResourceGroupMember) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Group *ResourceGroupRef `json:"Group,omitempty"`
 
@@ -82,7 +78,6 @@ func (m ResourceGroupMember) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

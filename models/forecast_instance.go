@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,47 +20,38 @@ type ForecastInstance struct {
 	MoBaseMo
 
 	// Experimental predictive model generated from the historical data using experimental algorithm. The two models are used to plot and do a comparision.
-	//
 	// Read Only: true
 	AltModel []float64 `json:"AltModel"`
 
 	// The Moid of the Intersight managed device instance for which regression model is derived.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// The relationship to the forecast definition based on which the instance is generated.
-	//
 	// Read Only: true
 	ForecastDef *ForecastDefinitionRef `json:"ForecastDef,omitempty"`
 
 	// The number of days remaining before the device reaches its full functional capacity.
-	//
 	// Read Only: true
 	FullCapDays int64 `json:"FullCapDays,omitempty"`
 
 	// The name of the metric for which regression model is generated.
-	//
 	// Read Only: true
 	MetricName string `json:"MetricName,omitempty"`
 
 	// The minimum number of days the HyperFlex cluster should be up for computing forecast.
-	//
 	// Read Only: true
 	MinDaysForForecast int64 `json:"MinDaysForForecast,omitempty"`
 
 	// Predictive model generated from the historical data of a device or source.
-	//
 	// Read Only: true
 	Model *ForecastModel `json:"Model,omitempty"`
 
 	// The relationship to the registered device for which forecast is computed.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The number of days remaining before the device reaches the specified threshold for the metric as defined in definition.
-	//
 	// Read Only: true
 	ThresholdDays int64 `json:"ThresholdDays,omitempty"`
 }
@@ -129,7 +119,6 @@ func (m ForecastInstance) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AltModel []float64 `json:"AltModel"`
 
@@ -173,7 +162,6 @@ func (m ForecastInstance) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

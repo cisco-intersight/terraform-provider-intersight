@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m NiaapiRevisionInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,20 +100,18 @@ func (m *NiaapiRevisionInfo) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiRevisionInfoAO1P1 niaapi revision info a o1 p1
+//
 // swagger:model NiaapiRevisionInfoAO1P1
 type NiaapiRevisionInfoAO1P1 struct {
 
 	// The date the revision is made.
-	//
 	// Format: date-time
 	DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
 
 	// The changes made in this revision.
-	//
 	RevisionComment string `json:"RevisionComment,omitempty"`
 
 	// The Revision No. of this revision.
-	//
 	RevisionNo string `json:"RevisionNo,omitempty"`
 
 	// niaapi revision info a o1 p1
@@ -128,16 +124,13 @@ func (m *NiaapiRevisionInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The date the revision is made.
-		//
 		// Format: date-time
 		DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
 
 		// The changes made in this revision.
-		//
 		RevisionComment string `json:"RevisionComment,omitempty"`
 
 		// The Revision No. of this revision.
-		//
 		RevisionNo string `json:"RevisionNo,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -146,11 +139,8 @@ func (m *NiaapiRevisionInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiaapiRevisionInfoAO1P1
 
 	rcv.DatePublished = stage1.DatePublished
-
 	rcv.RevisionComment = stage1.RevisionComment
-
 	rcv.RevisionNo = stage1.RevisionNo
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -160,11 +150,8 @@ func (m *NiaapiRevisionInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DatePublished")
-
 	delete(stage2, "RevisionComment")
-
 	delete(stage2, "RevisionNo")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -186,23 +173,18 @@ func (m NiaapiRevisionInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The date the revision is made.
-		//
 		// Format: date-time
 		DatePublished strfmt.DateTime `json:"DatePublished,omitempty"`
 
 		// The changes made in this revision.
-		//
 		RevisionComment string `json:"RevisionComment,omitempty"`
 
 		// The Revision No. of this revision.
-		//
 		RevisionNo string `json:"RevisionNo,omitempty"`
 	}
 
 	stage1.DatePublished = m.DatePublished
-
 	stage1.RevisionComment = m.RevisionComment
-
 	stage1.RevisionNo = m.RevisionNo
 
 	// make JSON object for known properties

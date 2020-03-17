@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,14 +22,11 @@ type ServerConfigResult struct {
 	PolicyAbstractConfigResult
 
 	// A collection of references to the [server.Profile](mo://server.Profile) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Profile *ServerProfileRef `json:"Profile,omitempty"`
 
 	// Detailed result entries for both validation & configration. Each result entry can be error/warning/info messages and the context.
-	//
 	ResultEntries []*ServerConfigResultEntryRef `json:"ResultEntries"`
 }
 
@@ -69,7 +65,6 @@ func (m ServerConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Profile *ServerProfileRef `json:"Profile,omitempty"`
 
@@ -85,7 +80,6 @@ func (m ServerConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

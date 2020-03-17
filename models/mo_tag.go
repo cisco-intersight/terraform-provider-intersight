@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m MoTag) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,15 +100,14 @@ func (m *MoTag) UnmarshalBinary(b []byte) error {
 }
 
 // MoTagAO1P1 mo tag a o1 p1
+//
 // swagger:model MoTagAO1P1
 type MoTagAO1P1 struct {
 
 	// The string representation of a tag key.
-	//
 	Key string `json:"Key,omitempty"`
 
 	// The string representation of a tag value.
-	//
 	Value string `json:"Value,omitempty"`
 
 	// mo tag a o1 p1
@@ -123,11 +120,9 @@ func (m *MoTagAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The string representation of a tag key.
-		//
 		Key string `json:"Key,omitempty"`
 
 		// The string representation of a tag value.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -136,9 +131,7 @@ func (m *MoTagAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv MoTagAO1P1
 
 	rcv.Key = stage1.Key
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -148,9 +141,7 @@ func (m *MoTagAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Key")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -172,16 +163,13 @@ func (m MoTagAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The string representation of a tag key.
-		//
 		Key string `json:"Key,omitempty"`
 
 		// The string representation of a tag value.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Key = m.Key
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

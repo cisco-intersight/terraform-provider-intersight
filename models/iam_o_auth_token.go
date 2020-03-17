@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,69 +23,54 @@ type IamOAuthToken struct {
 	MoBaseMo
 
 	// Expiration time for the JWT token to which it can be used for api calls.
-	//
 	// Read Only: true
 	// Format: date-time
 	AccessExpirationTime strfmt.DateTime `json:"AccessExpirationTime,omitempty"`
 
 	// A collection of references to the [iam.AppRegistration](mo://iam.AppRegistration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.AppRegistration](mo://iam.AppRegistration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	AppRegistration *IamAppRegistrationRef `json:"AppRegistration,omitempty"`
 
 	// The identifier of the registered application to which the token belongs.
-	//
 	ClientID string `json:"ClientId,omitempty"`
 
 	// The user agent IP address from which the auth token is launched.
-	//
 	// Read Only: true
 	ClientIPAddress string `json:"ClientIpAddress,omitempty"`
 
 	// The name of the registered application to which the token belongs.
-	//
 	ClientName string `json:"ClientName,omitempty"`
 
 	// Expiration time for the JWT token to which it can be refreshed.
-	//
 	// Read Only: true
 	// Format: date-time
 	ExpirationTime strfmt.DateTime `json:"ExpirationTime,omitempty"`
 
 	// The client address from which last login is initiated.
-	//
 	// Read Only: true
 	LastLoginClient string `json:"LastLoginClient,omitempty"`
 
 	// The last login time for user.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastLoginTime strfmt.DateTime `json:"LastLoginTime,omitempty"`
 
 	// Permissions associated with the OAuth session.
 	// Permissions provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	// Read Only: true
 	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 	// Token identifier. Not the Access Token itself.
-	//
-	//
 	// Read Only: true
 	TokenID string `json:"TokenId,omitempty"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 
 	// User Device meta information.
-	//
 	UserMeta *IamClientMeta `json:"UserMeta,omitempty"`
 }
 
@@ -165,7 +149,6 @@ func (m IamOAuthToken) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccessExpirationTime strfmt.DateTime `json:"AccessExpirationTime,omitempty"`
 
@@ -221,7 +204,6 @@ func (m IamOAuthToken) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
