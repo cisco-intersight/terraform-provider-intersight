@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,23 +21,24 @@ type StoragePureVolume struct {
 	StorageVolume
 
 	// Creation time of the volume.
-	//
 	// Read Only: true
 	// Format: date-time
 	Created strfmt.DateTime `json:"Created,omitempty"`
 
+	// A collection of references to the [storage.PureProtectionGroup](mo://storage.PureProtectionGroup) Managed Object.
+	// When this managed object is deleted, the referenced [storage.PureProtectionGroup](mo://storage.PureProtectionGroup) MO unsets its reference to this deleted MO.
+	// Read Only: true
+	ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
+
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Serial number of the volume.
-	//
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
 	// Source from which the volume is created. Applicable only if the volume is cloned from other volume or snapshot.
-	//
 	// Read Only: true
 	Source string `json:"Source,omitempty"`
 }
@@ -56,6 +56,8 @@ func (m *StoragePureVolume) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Created strfmt.DateTime `json:"Created,omitempty"`
 
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Serial string `json:"Serial,omitempty"`
@@ -67,6 +69,8 @@ func (m *StoragePureVolume) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.Created = dataAO1.Created
+
+	m.ProtectionGroup = dataAO1.ProtectionGroup
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
@@ -86,9 +90,10 @@ func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Created strfmt.DateTime `json:"Created,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -98,6 +103,8 @@ func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.Created = m.Created
+
+	dataAO1.ProtectionGroup = m.ProtectionGroup
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
@@ -110,7 +117,6 @@ func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -124,6 +130,10 @@ func (m *StoragePureVolume) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCreated(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProtectionGroup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -145,6 +155,24 @@ func (m *StoragePureVolume) validateCreated(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("Created", "body", "date-time", m.Created.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *StoragePureVolume) validateProtectionGroup(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ProtectionGroup) { // not required
+		return nil
+	}
+
+	if m.ProtectionGroup != nil {
+		if err := m.ProtectionGroup.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ProtectionGroup")
+			}
+			return err
+		}
 	}
 
 	return nil

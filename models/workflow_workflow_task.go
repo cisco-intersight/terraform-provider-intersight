@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowWorkflowTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,19 +99,17 @@ func (m *WorkflowWorkflowTask) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowWorkflowTaskAO1P1 workflow workflow task a o1 p1
+//
 // swagger:model WorkflowWorkflowTaskAO1P1
 type WorkflowWorkflowTaskAO1P1 struct {
 
 	// The description of this task instance in the workflow.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// A user defined label identifier of the workflow task used for UI display.
-	//
 	Label string `json:"Label,omitempty"`
 
 	// The name of the task within the workflow and it must be unique among all WorkflowTasks within a workflow definition. This name serves as the internal unique identifier for the task and is used to pick input and output parameters to feed into other tasks.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// workflow workflow task a o1 p1
@@ -126,15 +122,12 @@ func (m *WorkflowWorkflowTaskAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The description of this task instance in the workflow.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// A user defined label identifier of the workflow task used for UI display.
-		//
 		Label string `json:"Label,omitempty"`
 
 		// The name of the task within the workflow and it must be unique among all WorkflowTasks within a workflow definition. This name serves as the internal unique identifier for the task and is used to pick input and output parameters to feed into other tasks.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -143,11 +136,8 @@ func (m *WorkflowWorkflowTaskAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowWorkflowTaskAO1P1
 
 	rcv.Description = stage1.Description
-
 	rcv.Label = stage1.Label
-
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,11 +147,8 @@ func (m *WorkflowWorkflowTaskAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Description")
-
 	delete(stage2, "Label")
-
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -183,22 +170,17 @@ func (m WorkflowWorkflowTaskAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The description of this task instance in the workflow.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// A user defined label identifier of the workflow task used for UI display.
-		//
 		Label string `json:"Label,omitempty"`
 
 		// The name of the task within the workflow and it must be unique among all WorkflowTasks within a workflow definition. This name serves as the internal unique identifier for the task and is used to pick input and output parameters to feed into other tasks.
-		//
 		Name string `json:"Name,omitempty"`
 	}
 
 	stage1.Description = m.Description
-
 	stage1.Label = m.Label
-
 	stage1.Name = m.Name
 
 	// make JSON object for known properties

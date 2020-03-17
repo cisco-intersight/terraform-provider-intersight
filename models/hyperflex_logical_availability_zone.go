@@ -8,16 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexLogicalAvailabilityZone Hyperflex:Logical Availability Zone
 //
 // A configuration for the Logical Availability Zone.
-//
 // Logical Availability Zones (LAZ) allow for increased fault tolerance by dividing clusters into logical partitions
 // where a given block of data is only written to a zone once. This allows replications of data to be distributed evenly
 // across zones. LAZ configurations are compatible with HyperFlex clusters meeting all of the following criteria:
@@ -66,7 +64,6 @@ func (m HyperflexLogicalAvailabilityZone) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -108,12 +105,12 @@ func (m *HyperflexLogicalAvailabilityZone) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexLogicalAvailabilityZoneAO1P1 hyperflex logical availability zone a o1 p1
+//
 // swagger:model HyperflexLogicalAvailabilityZoneAO1P1
 type HyperflexLogicalAvailabilityZoneAO1P1 struct {
 
 	// Enable or disable Logical Availability Zones (LAZ).
 	// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
-	//
 	AutoConfig *bool `json:"AutoConfig,omitempty"`
 
 	// hyperflex logical availability zone a o1 p1
@@ -127,7 +124,6 @@ func (m *HyperflexLogicalAvailabilityZoneAO1P1) UnmarshalJSON(data []byte) error
 
 		// Enable or disable Logical Availability Zones (LAZ).
 		// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
-		//
 		AutoConfig *bool `json:"AutoConfig,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -136,7 +132,6 @@ func (m *HyperflexLogicalAvailabilityZoneAO1P1) UnmarshalJSON(data []byte) error
 	var rcv HyperflexLogicalAvailabilityZoneAO1P1
 
 	rcv.AutoConfig = stage1.AutoConfig
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -146,7 +141,6 @@ func (m *HyperflexLogicalAvailabilityZoneAO1P1) UnmarshalJSON(data []byte) error
 	}
 
 	delete(stage2, "AutoConfig")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -169,7 +163,6 @@ func (m HyperflexLogicalAvailabilityZoneAO1P1) MarshalJSON() ([]byte, error) {
 
 		// Enable or disable Logical Availability Zones (LAZ).
 		// If enabled, HyperFlex Data Platform automatically selects and groups nodes into different availability zones. For HyperFlex Data Platform versions prior to 3.0 release, this setting does not apply. For HyperFlex Data Platform versions 3.0 or higher, this setting is only applicable to Fabric Interconnect attached HyperFlex systems with 8 or more converged nodes.
-		//
 		AutoConfig *bool `json:"AutoConfig,omitempty"`
 	}
 

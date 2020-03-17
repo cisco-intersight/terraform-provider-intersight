@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m VnicCdn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,16 +100,15 @@ func (m *VnicCdn) UnmarshalBinary(b []byte) error {
 }
 
 // VnicCdnAO1P1 vnic cdn a o1 p1
+//
 // swagger:model VnicCdnAO1P1
 type VnicCdnAO1P1 struct {
 
 	// Source of the CDN. It can either be user specified or be the same as the vNIC name.
-	//
 	// Enum: [vnic user]
 	Source *string `json:"Source,omitempty"`
 
 	// The CDN value entered in case of user defined mode.
-	//
 	Value string `json:"Value,omitempty"`
 
 	// vnic cdn a o1 p1
@@ -124,12 +121,10 @@ func (m *VnicCdnAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Source of the CDN. It can either be user specified or be the same as the vNIC name.
-		//
 		// Enum: [vnic user]
 		Source *string `json:"Source,omitempty"`
 
 		// The CDN value entered in case of user defined mode.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -138,9 +133,7 @@ func (m *VnicCdnAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicCdnAO1P1
 
 	rcv.Source = stage1.Source
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -150,9 +143,7 @@ func (m *VnicCdnAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Source")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -174,17 +165,14 @@ func (m VnicCdnAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Source of the CDN. It can either be user specified or be the same as the vNIC name.
-		//
 		// Enum: [vnic user]
 		Source *string `json:"Source,omitempty"`
 
 		// The CDN value entered in case of user defined mode.
-		//
 		Value string `json:"Value,omitempty"`
 	}
 
 	stage1.Source = m.Source
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

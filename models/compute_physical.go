@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -38,7 +37,6 @@ type ComputePhysical struct {
 	FaultSummary int64 `json:"FaultSummary,omitempty"`
 
 	// KVM address of the device.
-	//
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
 	// memory speed
@@ -46,39 +44,33 @@ type ComputePhysical struct {
 	MemorySpeed string `json:"MemorySpeed,omitempty"`
 
 	// Management address of the server.
-	//
 	MgmtIPAddress string `json:"MgmtIpAddress,omitempty"`
 
 	// Total number of Adaptors available.
-	//
 	// Read Only: true
 	NumAdaptors int64 `json:"NumAdaptors,omitempty"`
 
-	// num Cpu cores
+	// Total number of CPU cores available.
 	// Read Only: true
 	NumCPUCores int64 `json:"NumCpuCores,omitempty"`
 
 	// Number of CPU cores enabled.
-	//
 	// Read Only: true
 	NumCPUCoresEnabled int64 `json:"NumCpuCoresEnabled,omitempty"`
 
 	// Total number of CPU's available.
-	//
 	// Read Only: true
 	NumCpus int64 `json:"NumCpus,omitempty"`
 
 	// Number of Ethernet Host Interfaces.
-	//
 	// Read Only: true
 	NumEthHostInterfaces int64 `json:"NumEthHostInterfaces,omitempty"`
 
-	// num fc host interfaces
+	// Number of Fibre channel Host Interfaces.
 	// Read Only: true
 	NumFcHostInterfaces int64 `json:"NumFcHostInterfaces,omitempty"`
 
 	// Number of threads enabled.
-	//
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
@@ -95,14 +87,13 @@ type ComputePhysical struct {
 	Operability string `json:"Operability,omitempty"`
 
 	// Platform type of the device.
-	//
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// presence
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
-	// service profile
+	// The service profile assigned.
 	// Read Only: true
 	ServiceProfile string `json:"ServiceProfile,omitempty"`
 
@@ -238,7 +229,6 @@ func (m ComputePhysical) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminPowerState string `json:"AdminPowerState,omitempty"`
 
@@ -338,7 +328,6 @@ func (m ComputePhysical) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

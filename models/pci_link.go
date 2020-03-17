@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,44 +20,35 @@ type PciLink struct {
 	EquipmentBase
 
 	// It shows the name of the pci device.
-	//
 	// Read Only: true
 	Adapter string `json:"Adapter,omitempty"`
 
 	// It shows the upstream link speed for device.
-	//
 	// Read Only: true
 	LinkSpeed string `json:"LinkSpeed,omitempty"`
 
 	// It shows the upstream link status for device.
-	//
 	// Read Only: true
 	LinkStatus string `json:"LinkStatus,omitempty"`
 
 	// It shows the upstream link width for device.
-	//
 	// Read Only: true
 	LinkWidth string `json:"LinkWidth,omitempty"`
 
 	// It shows pci slot name for the pci device.
-	//
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
 	// A collection of references to the [pci.Switch](mo://pci.Switch) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [pci.Switch](mo://pci.Switch) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	PciSwitch *PciSwitchRef `json:"PciSwitch,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// It shows the health information for pci device.
-	//
 	// Read Only: true
 	SlotStatus string `json:"SlotStatus,omitempty"`
 }
@@ -122,7 +112,6 @@ func (m PciLink) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Adapter string `json:"Adapter,omitempty"`
 
@@ -162,7 +151,6 @@ func (m PciLink) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

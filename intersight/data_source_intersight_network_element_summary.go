@@ -15,16 +15,15 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 		Read: dataSourceNetworkElementSummaryRead,
 		Schema: map[string]*schema.Schema{
 			"admin_inband_interface_state": {
-				Description: "",
+				Description: "The administrative state of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -33,10 +32,9 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"fault_summary": {
-				Description: "",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"firmware": {
 				Description: "Running firmware information.",
@@ -51,25 +49,25 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"inband_ip_address": {
-				Description: "The Inband IP address of the network Element.",
+				Description: "The IP address of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_ip_gateway": {
-				Description: "The Inband IP Gateway of the network Element.",
+				Description: "The default gateway of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_ip_mask": {
-				Description: "",
+				Description: "The network mask of the network Element inband management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"inband_vlan": {
-				Description: "",
+				Description: "The VLAN ID of the network Element inband management interface.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -135,37 +133,73 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_ip_address": {
-				Description: "",
+				Description: "The IP address of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_ip_gateway": {
-				Description: "",
+				Description: "The default gateway of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_ip_mask": {
-				Description: "",
+				Description: "The network mask of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_address": {
+				Description: "The IPv4 address of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_gateway": {
+				Description: "The default IPv4 gateway of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv4_mask": {
+				Description: "The network mask of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_address": {
+				Description: "The IPv6 address of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_gateway": {
+				Description: "The default IPv6 gateway of the network Element out-of-band management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"out_of_band_ipv6_prefix": {
+				Description: "The network mask of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"out_of_band_mac": {
-				Description: "",
+				Description: "The MAC address of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -184,7 +218,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -213,7 +247,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -222,10 +256,9 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				},
 			},
 			"revision": {
-				Description: "",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -268,7 +301,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -400,6 +433,30 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 		x := (v.(string))
 		o.OutOfBandIPMask = x
 	}
+	if v, ok := d.GetOk("out_of_band_ipv4_address"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Address = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv4_gateway"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Gateway = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv4_mask"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV4Mask = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_address"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Address = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_gateway"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Gateway = x
+	}
+	if v, ok := d.GetOk("out_of_band_ipv6_prefix"); ok {
+		x := (v.(string))
+		o.OutOfBandIPV6Prefix = x
+	}
 	if v, ok := d.GetOk("out_of_band_mac"); ok {
 		x := (v.(string))
 		o.OutOfBandMac = x
@@ -525,6 +582,24 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 				return err
 			}
 			if err := d.Set("out_of_band_ip_mask", (s.OutOfBandIPMask)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_address", (s.OutOfBandIPV4Address)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_gateway", (s.OutOfBandIPV4Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv4_mask", (s.OutOfBandIPV4Mask)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_address", (s.OutOfBandIPV6Address)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_gateway", (s.OutOfBandIPV6Gateway)); err != nil {
+				return err
+			}
+			if err := d.Set("out_of_band_ipv6_prefix", (s.OutOfBandIPV6Prefix)); err != nil {
 				return err
 			}
 			if err := d.Set("out_of_band_mac", (s.OutOfBandMac)); err != nil {

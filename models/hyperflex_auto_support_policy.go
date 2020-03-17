@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,19 +22,15 @@ type HyperflexAutoSupportPolicy struct {
 	PolicyAbstractPolicy
 
 	// Enable or disable Auto Support.
-	//
 	AdminState *bool `json:"AdminState,omitempty"`
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The email address recipient for support tickets.
-	//
 	ServiceTicketReceipient string `json:"ServiceTicketReceipient,omitempty"`
 }
 
@@ -82,7 +77,6 @@ func (m HyperflexAutoSupportPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminState *bool `json:"AdminState,omitempty"`
 
@@ -106,7 +100,6 @@ func (m HyperflexAutoSupportPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

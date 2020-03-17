@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,25 +20,20 @@ type SoftwarerepositoryLocalMachine struct {
 	SoftwarerepositoryFileServer
 
 	// When import action in file MO is updated with 'GeneratePreSignedDownloadUrl', Intersight shall return a presigned URL in this property as part of the PATCH response. The user is expected to subsequently download the file using this URL.
-	//
 	// Read Only: true
 	DownloadURL string `json:"DownloadUrl,omitempty"`
 
 	// Chunk size (in bytes) of the each part of file to be uploaded.
-	//
 	PartSize int64 `json:"PartSize,omitempty"`
 
 	// When the import action in file MO is updated with 'GeneratePreSignedUploadUrl', Intersight shall return a upload Id in this property as part of the PATCH response.
-	//
 	UploadID string `json:"UploadId,omitempty"`
 
 	// When a file MO is created with 'LocalMachine' as the source, Intersight shall return a presigned URL in this property as part of the POST response. The user is expected to subsequently upload the file content using this URL. Once this upload has been completed, the user is expected to PATCH the Uploader object's transfer state to success.
-	//
 	// Read Only: true
 	UploadURL string `json:"UploadUrl,omitempty"`
 
 	// When an file MO is created with 'LocalMachine' as the source, Intersight shall return a list of presigned URLs in this property as part of the POST response. The user is expected to subsequently upload the file content in parts using these URLs. Once these uploads have been completed, the user is expected to PATCH the Uploader object's transfer state to success.
-	//
 	// Read Only: true
 	UploadUrls []string `json:"UploadUrls"`
 }
@@ -91,7 +85,6 @@ func (m SoftwarerepositoryLocalMachine) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DownloadURL string `json:"DownloadUrl,omitempty"`
 
@@ -119,7 +112,6 @@ func (m SoftwarerepositoryLocalMachine) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

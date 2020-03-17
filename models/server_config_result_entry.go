@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,9 +20,7 @@ type ServerConfigResultEntry struct {
 	PolicyAbstractConfigResultEntry
 
 	// A collection of references to the [server.ConfigResult](mo://server.ConfigResult) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [server.ConfigResult](mo://server.ConfigResult) MO unsets its reference to this deleted MO.
-	//
 	ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 }
 
@@ -58,7 +55,6 @@ func (m ServerConfigResultEntry) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 	}
@@ -70,7 +66,6 @@ func (m ServerConfigResultEntry) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -62,7 +61,6 @@ func (m OnpremUpgradePhase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -104,11 +102,11 @@ func (m *OnpremUpgradePhase) UnmarshalBinary(b []byte) error {
 }
 
 // OnpremUpgradePhaseAO1P1 onprem upgrade phase a o1 p1
+//
 // swagger:model OnpremUpgradePhaseAO1P1
 type OnpremUpgradePhaseAO1P1 struct {
 
 	// Name of the upgrade phase.
-	//
 	// Read Only: true
 	// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 	Name string `json:"Name,omitempty"`
@@ -123,7 +121,6 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Name of the upgrade phase.
-		//
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`
@@ -134,7 +131,6 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv OnpremUpgradePhaseAO1P1
 
 	rcv.Name = stage1.Name
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -144,7 +140,6 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -166,7 +161,6 @@ func (m OnpremUpgradePhaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name of the upgrade phase.
-		//
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`

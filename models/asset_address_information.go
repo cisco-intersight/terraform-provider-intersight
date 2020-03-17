@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AssetAddressInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,46 +99,39 @@ func (m *AssetAddressInformation) UnmarshalBinary(b []byte) error {
 }
 
 // AssetAddressInformationAO1P1 asset address information a o1 p1
+//
 // swagger:model AssetAddressInformationAO1P1
 type AssetAddressInformationAO1P1 struct {
 
 	// Address Line one of the address information. example "PO BOX 641570".
-	//
 	// Read Only: true
 	Address1 string `json:"Address1,omitempty"`
 
 	// Address Line two of the address information. example "Cisco Systems".
-	//
 	// Read Only: true
 	Address2 string `json:"Address2,omitempty"`
 
 	// City in which the address resides. example "San Jose".
-	//
 	// Read Only: true
 	City string `json:"City,omitempty"`
 
 	// Country in which the address resides. example "US".
-	//
 	// Read Only: true
 	Country string `json:"Country,omitempty"`
 
 	// Location in which the address resides. example "14852".
-	//
 	// Read Only: true
 	Location string `json:"Location,omitempty"`
 
 	// Name of the user whose address is being populated.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Postal Code in which the address resides. example "95164-1570".
-	//
 	// Read Only: true
 	PostalCode string `json:"PostalCode,omitempty"`
 
 	// State in which the address resides. example "CA".
-	//
 	// Read Only: true
 	State string `json:"State,omitempty"`
 
@@ -154,42 +145,34 @@ func (m *AssetAddressInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Address Line one of the address information. example "PO BOX 641570".
-		//
 		// Read Only: true
 		Address1 string `json:"Address1,omitempty"`
 
 		// Address Line two of the address information. example "Cisco Systems".
-		//
 		// Read Only: true
 		Address2 string `json:"Address2,omitempty"`
 
 		// City in which the address resides. example "San Jose".
-		//
 		// Read Only: true
 		City string `json:"City,omitempty"`
 
 		// Country in which the address resides. example "US".
-		//
 		// Read Only: true
 		Country string `json:"Country,omitempty"`
 
 		// Location in which the address resides. example "14852".
-		//
 		// Read Only: true
 		Location string `json:"Location,omitempty"`
 
 		// Name of the user whose address is being populated.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Postal Code in which the address resides. example "95164-1570".
-		//
 		// Read Only: true
 		PostalCode string `json:"PostalCode,omitempty"`
 
 		// State in which the address resides. example "CA".
-		//
 		// Read Only: true
 		State string `json:"State,omitempty"`
 	}
@@ -199,21 +182,13 @@ func (m *AssetAddressInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AssetAddressInformationAO1P1
 
 	rcv.Address1 = stage1.Address1
-
 	rcv.Address2 = stage1.Address2
-
 	rcv.City = stage1.City
-
 	rcv.Country = stage1.Country
-
 	rcv.Location = stage1.Location
-
 	rcv.Name = stage1.Name
-
 	rcv.PostalCode = stage1.PostalCode
-
 	rcv.State = stage1.State
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -223,21 +198,13 @@ func (m *AssetAddressInformationAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Address1")
-
 	delete(stage2, "Address2")
-
 	delete(stage2, "City")
-
 	delete(stage2, "Country")
-
 	delete(stage2, "Location")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "PostalCode")
-
 	delete(stage2, "State")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -259,60 +226,45 @@ func (m AssetAddressInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Address Line one of the address information. example "PO BOX 641570".
-		//
 		// Read Only: true
 		Address1 string `json:"Address1,omitempty"`
 
 		// Address Line two of the address information. example "Cisco Systems".
-		//
 		// Read Only: true
 		Address2 string `json:"Address2,omitempty"`
 
 		// City in which the address resides. example "San Jose".
-		//
 		// Read Only: true
 		City string `json:"City,omitempty"`
 
 		// Country in which the address resides. example "US".
-		//
 		// Read Only: true
 		Country string `json:"Country,omitempty"`
 
 		// Location in which the address resides. example "14852".
-		//
 		// Read Only: true
 		Location string `json:"Location,omitempty"`
 
 		// Name of the user whose address is being populated.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Postal Code in which the address resides. example "95164-1570".
-		//
 		// Read Only: true
 		PostalCode string `json:"PostalCode,omitempty"`
 
 		// State in which the address resides. example "CA".
-		//
 		// Read Only: true
 		State string `json:"State,omitempty"`
 	}
 
 	stage1.Address1 = m.Address1
-
 	stage1.Address2 = m.Address2
-
 	stage1.City = m.City
-
 	stage1.Country = m.Country
-
 	stage1.Location = m.Location
-
 	stage1.Name = m.Name
-
 	stage1.PostalCode = m.PostalCode
-
 	stage1.State = m.State
 
 	// make JSON object for known properties

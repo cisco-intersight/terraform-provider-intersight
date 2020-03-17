@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m ResourceSelector) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *ResourceSelector) UnmarshalBinary(b []byte) error {
 }
 
 // ResourceSelectorAO1P1 resource selector a o1 p1
+//
 // swagger:model ResourceSelectorAO1P1
 type ResourceSelectorAO1P1 struct {
 
 	// ODATA filter to select resources. The group selector may include URLs of individual resource, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host).
-	//
 	Selector string `json:"Selector,omitempty"`
 
 	// resource selector a o1 p1
@@ -118,7 +116,6 @@ func (m *ResourceSelectorAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// ODATA filter to select resources. The group selector may include URLs of individual resource, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host).
-		//
 		Selector string `json:"Selector,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *ResourceSelectorAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ResourceSelectorAO1P1
 
 	rcv.Selector = stage1.Selector
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *ResourceSelectorAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Selector")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m ResourceSelectorAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// ODATA filter to select resources. The group selector may include URLs of individual resource, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host).
-		//
 		Selector string `json:"Selector,omitempty"`
 	}
 

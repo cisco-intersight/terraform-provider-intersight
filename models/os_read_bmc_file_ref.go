@@ -6,13 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // OsReadBmcFileRef os read bmc file ref
+//
 // swagger:model osReadBmcFileRef
 type OsReadBmcFileRef struct {
 	MoMoRef
@@ -39,7 +39,6 @@ func (m OsReadBmcFileRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

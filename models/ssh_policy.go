@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,23 +22,18 @@ type SSHPolicy struct {
 	PolicyAbstractPolicy
 
 	// State of SSH service on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Port used for secure shell access.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// Relationship to the server profile.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// Number of seconds to wait before the system considers a SSH request to have timed out.
-	//
 	Timeout int64 `json:"Timeout,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m SSHPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Enabled *bool `json:"Enabled,omitempty"`
 
@@ -118,7 +111,6 @@ func (m SSHPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryConfigResultList memory persistent memory config result list
+//
 // swagger:model memoryPersistentMemoryConfigResultList
 type MemoryPersistentMemoryConfigResultList struct {
 

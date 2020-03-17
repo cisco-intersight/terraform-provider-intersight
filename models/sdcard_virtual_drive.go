@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m SdcardVirtualDrive) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *SdcardVirtualDrive) UnmarshalBinary(b []byte) error {
 }
 
 // SdcardVirtualDriveAO1P1 sdcard virtual drive a o1 p1
+//
 // swagger:model SdcardVirtualDriveAO1P1
 type SdcardVirtualDriveAO1P1 struct {
 
 	// Enable the respective virtual drive to be available to the host.
-	//
 	Enable *bool `json:"Enable,omitempty"`
 
 	// sdcard virtual drive a o1 p1
@@ -118,7 +116,6 @@ func (m *SdcardVirtualDriveAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Enable the respective virtual drive to be available to the host.
-		//
 		Enable *bool `json:"Enable,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *SdcardVirtualDriveAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SdcardVirtualDriveAO1P1
 
 	rcv.Enable = stage1.Enable
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *SdcardVirtualDriveAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enable")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m SdcardVirtualDriveAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enable the respective virtual drive to be available to the host.
-		//
 		Enable *bool `json:"Enable,omitempty"`
 	}
 

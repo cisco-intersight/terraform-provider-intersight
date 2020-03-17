@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexHxNetworkAddressDt Hyperflex:Hx Network Address Dt
+//
 // swagger:model hyperflexHxNetworkAddressDt
 type HyperflexHxNetworkAddressDt struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m HyperflexHxNetworkAddressDt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,6 +97,7 @@ func (m *HyperflexHxNetworkAddressDt) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexHxNetworkAddressDtAO1P1 hyperflex hx network address dt a o1 p1
+//
 // swagger:model HyperflexHxNetworkAddressDtAO1P1
 type HyperflexHxNetworkAddressDtAO1P1 struct {
 
@@ -140,11 +140,8 @@ func (m *HyperflexHxNetworkAddressDtAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexHxNetworkAddressDtAO1P1
 
 	rcv.Address = stage1.Address
-
 	rcv.Fqdn = stage1.Fqdn
-
 	rcv.IP = stage1.IP
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -154,11 +151,8 @@ func (m *HyperflexHxNetworkAddressDtAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Address")
-
 	delete(stage2, "Fqdn")
-
 	delete(stage2, "Ip")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -193,9 +187,7 @@ func (m HyperflexHxNetworkAddressDtAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Address = m.Address
-
 	stage1.Fqdn = m.Fqdn
-
 	stage1.IP = m.IP
 
 	// make JSON object for known properties

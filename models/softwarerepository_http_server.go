@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -24,15 +23,12 @@ type SoftwarerepositoryHTTPServer struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// HTTP/HTTPS link to the image. Accepted formats are HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.
-	//
 	LocationLink string `json:"LocationLink,omitempty"`
 
 	// Password as configured on the HTTP[S] server for user authentication. It is generally required to authenticate user provided HTTP[S] based software repositories.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Username as configured on the HTTP[S] server for user authentication. It is generally required to authenticate user provided HTTP[S] based software repositories.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -79,7 +75,6 @@ func (m SoftwarerepositoryHTTPServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
@@ -103,7 +98,6 @@ func (m SoftwarerepositoryHTTPServer) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

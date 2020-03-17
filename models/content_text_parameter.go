@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -22,24 +21,16 @@ type ContentTextParameter struct {
 
 	// Data to be extracted from text content can be simple type or complex type or collection of
 	// simple/complex types. Complex types are group of simple or complex type.
-	//
 	// Delimiter is required to stop parsing list and complex data types.
-	//
 	// isDelimiter specifies whether given TextParameter is a delimiter or regular rule to capture
 	// the text data.
-	//
-	//
 	IsDelimiter *bool `json:"IsDelimiter,omitempty"`
 
 	// Set to true of the next value to capture resides on the same text line of current match.
 	// By default textFSM engine gets the next text line on finding the first match.
-	//
-	//
 	IsNextCaptureOnSameLine *bool `json:"IsNextCaptureOnSameLine,omitempty"`
 
 	// Regular expression of the line containing the data to be extracted from text content.
-	//
-	//
 	RegexLine string `json:"RegexLine,omitempty"`
 }
 
@@ -82,7 +73,6 @@ func (m ContentTextParameter) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		IsDelimiter *bool `json:"IsDelimiter,omitempty"`
 
@@ -102,7 +92,6 @@ func (m ContentTextParameter) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,33 +22,25 @@ type HyperflexProxySettingPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// HTTP Proxy server FQDN or IP.
-	//
 	Hostname string `json:"Hostname,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The password for the HTTP Proxy.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The HTTP Proxy port number.
-	//
 	// The port number of the HTTP proxy must be between 1 and 65535, inclusive.
-	//
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// The username for the HTTP Proxy.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -108,7 +99,6 @@ func (m HyperflexProxySettingPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -144,7 +134,6 @@ func (m HyperflexProxySettingPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

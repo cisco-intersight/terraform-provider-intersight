@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,14 +23,12 @@ import (
 // at the Intersight authorization server, including the list of valid redirection URIs or a display name.
 // The meta-data is used to specify how a client application can retrieve a OAuth2 Access Token and subsequently
 // invoke Intersight API on behalf of this AppRegistration.
-//
 // To register an OAuth2 application, the following information must be provided.
 // 1) Application name
 // 2) An icon for the application
 // 3) URL to the application's home page
 // 4) A short description of the application
 // 5) A list of redirect URLs
-//
 // When an AppRegistration is created, a unique OAuth2 clientId is generated and returned in the HTTP response.
 //
 // swagger:model iamAppRegistration
@@ -39,60 +36,43 @@ type IamAppRegistration struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// A unique identifier for the OAuth2 client application.
 	// The client ID is auto-generated when the AppRegistration object is created.
-	//
-	//
 	// Read Only: true
 	ClientID string `json:"ClientId,omitempty"`
 
 	// App Registration name specified by user.
-	//
-	//
 	ClientName string `json:"ClientName,omitempty"`
 
 	// The OAuth2 client secret.
 	// The value of this property is generated when grantType includes 'client-credentials'.
 	// Otherwise, no client-secret is generated.
-	//
-	//
 	ClientSecret string `json:"ClientSecret,omitempty"`
 
 	// The type of the OAuth2 client (public or confidential), as specified in https://tools.ietf.org/html/rfc6749#section-2.1.
-	//
-	//
 	// Enum: [public confidential]
 	ClientType *string `json:"ClientType,omitempty"`
 
 	// Description of the application.
-	//
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The set of grant types that OAuth2 clients can use for this application.
 	// The grant type is used in the OAuth2 login flow to validate the grant type that has been requested by the client.
 	// See https://tools.ietf.org/html/rfc7591#page-9 for more details.
-	//
 	// # It is set automatically when AppRegistration is created since currently we do not provide option for the user.
-	//
-	//
 	// Read Only: true
 	GrantTypes []*string `json:"GrantTypes"`
 
 	// Collection of the OAuth2 tokens. Each OAuth2 token represents valid OAuth session.
 	// OAuth2 token is created when login over OAuth2 is performed using Authorization Code grant type.
-	//
 	// Read Only: true
 	OauthTokens []*IamOAuthTokenRef `json:"OauthTokens"`
 
 	// Permission associated with OAuth token issued through Client Credentials flow. Permission of the current session will be used.
-	//
 	// Read Only: true
 	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
@@ -103,30 +83,22 @@ type IamAppRegistration struct {
 	// For native and mobile apps, Intersight allows a user to register a URL scheme such as myapp:// which can then be used
 	// in the redirect URL. The authorization server allows arbitrary URL schemes to be registered in order to support
 	// registering redirect URLs for native apps.
-	//
 	// Redirect URLs are a critical part of the OAuth flow. After a user successfully authorizes an application,
 	// the authorization server will redirect the user back to the application with either an authorization code or access
 	// token in the URL. Because the redirect URL will contain sensitive information, it is critical that the service
 	// doesn’t redirect the user to arbitrary locations.
 	// The best way to ensure the user will only be directed to appropriate locations is to require the developer to
 	// register one or more redirect URLs when they create the application.
-	//
 	// The redirection endpoint URI MUST be an absolute URI.
-	//
-	//
 	RedirectUris []string `json:"RedirectUris"`
 
 	// Set value to true to renew the client-secret. Applicable to client_credentials grant type.
-	//
-	//
 	RenewClientSecret *bool `json:"RenewClientSecret,omitempty"`
 
 	// The set of response types that a OAuth2 client can use.
 	// This is static list and it is set automatically when AppRegistration is created.
 	// According to RFC, it is used in OAuth2 login flow to check that this AppRegistration supports response type from the request.
 	// See https://tools.ietf.org/html/rfc7591#page-9 for more details.
-	//
-	//
 	// Read Only: true
 	ResponseTypes []*string `json:"ResponseTypes"`
 
@@ -134,16 +106,12 @@ type IamAppRegistration struct {
 	// Updated only internally is case Revoke property come from UI with value true.
 	// On each request with OAuth2 access token the CreationTime of the OAuth2 token will be compared to RevokationTimestamp of the
 	// corresponding App Registration.
-	//
-	//
 	// Read Only: true
 	// Format: date-time
 	RevocationTimestamp strfmt.DateTime `json:"RevocationTimestamp,omitempty"`
 
 	// Used to trigger update the revocationTimestamp value.
 	// If UI sent updating request with the Revoke value is true, then update RevocationTimestamp.
-	//
-	//
 	Revoke *bool `json:"Revoke,omitempty"`
 
 	// The set of roles that can be used when a OAuth2 client is accessing this registered application.
@@ -151,18 +119,14 @@ type IamAppRegistration struct {
 	// with the 'Read-Only' role when accessing Intersight through a registered application.
 	// In that case, the 'roles' property should contain a single element referencing the 'Read-Only' role.
 	// A user can only assign roles they already have.
-	//
 	// This relationship is deprecated. Authorization is now performed by passing the 'scope' query parameter
 	// in the first request of the Authorization Code OAuth2 flow.
 	// The value of the 'scope' parameter is a list of scope names separated by comma:
 	// ROLE.Account Administrator, ROLE.<any role name>.
-	//
 	Roles []*IamRoleRef `json:"Roles"`
 
 	// A collection of references to the [iam.User](mo://iam.User) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
 }
@@ -258,7 +222,6 @@ func (m IamAppRegistration) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -330,7 +293,6 @@ func (m IamAppRegistration) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

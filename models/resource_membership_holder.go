@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,17 +22,14 @@ type ResourceMembershipHolder struct {
 	MoBaseMo
 
 	// The account to which this resource membership holder belongs to.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The list of all resources and their membership which are part of resource groups.
-	//
 	// Read Only: true
 	Memberships []*ResourceMembershipRef `json:"Memberships"`
 
 	// The name of this resource membership holder.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 }
@@ -77,7 +73,6 @@ func (m ResourceMembershipHolder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -97,7 +92,6 @@ func (m ResourceMembershipHolder) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

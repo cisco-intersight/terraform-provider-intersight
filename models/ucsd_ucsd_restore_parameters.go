@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,28 +22,22 @@ type UcsdUcsdRestoreParameters struct {
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// The complete location of the path on the server. The location should be specified in the following format- hostname-or-ipv4address<:port>/absolute-file-path
-	//
+	// The complete location of the path on the server. The location should be specified in the following format- hostname-or-ipv4address<:port>/absolute-file-path.
 	Location string `json:"Location,omitempty"`
 
 	// The password of the target backup server. Only required if the target server is accessed using SFTP or SCP protocol.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// The protocol used to backup the UCS Director.
-	//
 	Protocol string `json:"Protocol,omitempty"`
 
-	// Decides whether UCS Director property files should also be restored
-	//
+	// Decides whether UCS Director property files should also be restored.
 	RestoreConfigurationFiles *bool `json:"RestoreConfigurationFiles,omitempty"`
 
-	// Decides whether license should also be restored
-	//
+	// Decides whether license should also be restored.
 	RestoreLicense *bool `json:"RestoreLicense,omitempty"`
 
 	// The username of the target backup server. Only required if the target server is accessed using SFTP or SCP protocol.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -103,7 +96,6 @@ func (m UcsdUcsdRestoreParameters) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
@@ -139,7 +131,6 @@ func (m UcsdUcsdRestoreParameters) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

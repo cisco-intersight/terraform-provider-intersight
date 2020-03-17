@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -63,7 +62,6 @@ func (m CmrfCmRf) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -105,11 +103,11 @@ func (m *CmrfCmRf) UnmarshalBinary(b []byte) error {
 }
 
 // CmrfCmRfAO1P1 cmrf cm rf a o1 p1
+//
 // swagger:model CmrfCmRfAO1P1
 type CmrfCmRfAO1P1 struct {
 
 	// The Moid of the referenced REST resource.
-	//
 	// Read Only: true
 	Moid string `json:"Moid,omitempty"`
 
@@ -123,7 +121,6 @@ func (m *CmrfCmRfAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The Moid of the referenced REST resource.
-		//
 		// Read Only: true
 		Moid string `json:"Moid,omitempty"`
 	}
@@ -133,7 +130,6 @@ func (m *CmrfCmRfAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv CmrfCmRfAO1P1
 
 	rcv.Moid = stage1.Moid
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -143,7 +139,6 @@ func (m *CmrfCmRfAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Moid")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -165,7 +160,6 @@ func (m CmrfCmRfAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The Moid of the referenced REST resource.
-		//
 		// Read Only: true
 		Moid string `json:"Moid,omitempty"`
 	}

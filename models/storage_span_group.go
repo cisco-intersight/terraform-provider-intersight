@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m StorageSpanGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,11 +100,11 @@ func (m *StorageSpanGroup) UnmarshalBinary(b []byte) error {
 }
 
 // StorageSpanGroupAO1P1 storage span group a o1 p1
+//
 // swagger:model StorageSpanGroupAO1P1
 type StorageSpanGroupAO1P1 struct {
 
 	// Collection of local disks that are part of this span group. The minimum number of disks needed in a span group varies based on RAID level. Raid0 requires at least one disk, Raid1 and Raid10 requires at least 2 and in multiples of 2, Raid5 Raid50 Raid6 and Raid60 require at least 3 disks in a span group.
-	//
 	Disks []*StorageLocalDisk `json:"Disks"`
 
 	// storage span group a o1 p1
@@ -119,7 +117,6 @@ func (m *StorageSpanGroupAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Collection of local disks that are part of this span group. The minimum number of disks needed in a span group varies based on RAID level. Raid0 requires at least one disk, Raid1 and Raid10 requires at least 2 and in multiples of 2, Raid5 Raid50 Raid6 and Raid60 require at least 3 disks in a span group.
-		//
 		Disks []*StorageLocalDisk `json:"Disks"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -128,7 +125,6 @@ func (m *StorageSpanGroupAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageSpanGroupAO1P1
 
 	rcv.Disks = stage1.Disks
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -138,7 +134,6 @@ func (m *StorageSpanGroupAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Disks")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -160,7 +155,6 @@ func (m StorageSpanGroupAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Collection of local disks that are part of this span group. The minimum number of disks needed in a span group varies based on RAID level. Raid0 requires at least one disk, Raid1 and Raid10 requires at least 2 and in multiples of 2, Raid5 Raid50 Raid6 and Raid60 require at least 3 disks in a span group.
-		//
 		Disks []*StorageLocalDisk `json:"Disks"`
 	}
 

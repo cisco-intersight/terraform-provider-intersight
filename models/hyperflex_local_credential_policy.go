@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,37 +22,29 @@ type HyperflexLocalCredentialPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// Indicates if Hypervisor password is the factory set default password. For HyperFlex Data Platform versions 3.0 or higher, enable this if the default password was not changed on the Hypervisor. It is required to supply a new custom Hypervisor password that will be applied to the Hypervisor during deployment. For HyperFlex Data Platform versions prior to 3.0 release, this setting has no effect and the default password will be used for initial install. The Hypervisor password should be changed after deployment.
-	//
 	FactoryHypervisorPassword *bool `json:"FactoryHypervisorPassword,omitempty"`
 
 	// HyperFlex storage controller VM password must contain a minimum of 10 characters, with at least 1 lowercase, 1 uppercase, 1 numeric, and 1 of these -_@#$%^&*! special characters.
-	//
 	HxdpRootPwd string `json:"HxdpRootPwd,omitempty"`
 
 	// Hypervisor administrator username must contain only alphanumeric characters. Use the root account for ESXi deployments.
-	//
 	HypervisorAdmin string `json:"HypervisorAdmin,omitempty"`
 
 	// The ESXi root password. For HyperFlex Data Platform 3.0 or later, if the factory default password was not manually changed, you must set a new custom password. If the password was manually changed, you must not enable the factory default password property and provide the current hypervisor password. Note - All HyperFlex nodes require the same hypervisor password for installation. For HyperFlex Data Platform prior to 3.0, use the default password "Cisco123" for newly manufactured HyperFlex servers. A custom password should only be entered if hypervisor credentials were manually changed prior to deployment.
-	//
 	HypervisorAdminPwd string `json:"HypervisorAdminPwd,omitempty"`
 
 	// Indicates whether the value of the 'hxdpRootPwd' property has been set.
-	//
 	// Read Only: true
 	IsHxdpRootPwdSet *bool `json:"IsHxdpRootPwdSet,omitempty"`
 
 	// Indicates whether the value of the 'hypervisorAdminPwd' property has been set.
-	//
 	// Read Only: true
 	IsHypervisorAdminPwdSet *bool `json:"IsHypervisorAdminPwdSet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
@@ -116,7 +107,6 @@ func (m HyperflexLocalCredentialPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -156,7 +146,6 @@ func (m HyperflexLocalCredentialPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

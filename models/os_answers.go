@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -63,7 +62,6 @@ func (m OsAnswers) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -105,71 +103,57 @@ func (m *OsAnswers) UnmarshalBinary(b []byte) error {
 }
 
 // OsAnswersAO1P1 os answers a o1 p1
+//
 // swagger:model OsAnswersAO1P1
 type OsAnswersAO1P1 struct {
 
 	// If the source of the answers is a static file, the content of the file is stored as value
 	// in this property.
-	//
 	// The value is mandatory only when the 'Source' property has been set to 'File'.
-	//
-	//
 	AnswerFile string `json:"AnswerFile,omitempty"`
 
 	// Hostname to be configured for the server in the OS.
-	//
-	//
 	Hostname string `json:"Hostname,omitempty"`
 
 	// IP configuration type. Values are Static or Dynamic configuration of IP.
-	//
 	// In case of static IP configuration, IP address, gateway and other details need
 	// to be populated. In case of dynamic the IP configuration is obtained dynamically
 	// from DHCP.
-	//
-	//
 	// Enum: [static DHCP]
 	IPConfigType *string `json:"IpConfigType,omitempty"`
 
 	// In case of static IP configuration, IP address, netmask and gateway details are
 	// provided.
-	//
-	//
 	IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
 
 	// Indicates whether the value of the 'answerFile' property has been set.
-	//
 	// Read Only: true
 	IsAnswerFileSet *bool `json:"IsAnswerFileSet,omitempty"`
+
+	// Enable to indicate Root Password provided is encrypted.
+	IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
 	// is root password set
 	IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 	// IP address of the name server to be configured in the OS.
-	//
-	//
 	Nameserver string `json:"Nameserver,omitempty"`
 
 	// The product key to be used for a specific version of Windows installation.
-	//
-	//
 	ProductKey string `json:"ProductKey,omitempty"`
 
-	// Password to be configured for the root / administrator user in the OS.
-	//
-	//
+	// Password configured for the root / administrator user in the OS. You can enter a plain text or an encrypted password.
+	// Intersight encrypts the plaintext password. Enable the Encrypted Password option to provide an encrypted password.
+	// For more details on encrypting passwords, see Help Center.
 	RootPassword string `json:"RootPassword,omitempty"`
 
 	// Answer values can be provided from three sources - Embedded in OS image, static file,
 	// or as placeholder values for an answer file template.
-	//
 	// Source of the answers is given as value, Embedded/File/Template.
 	// 'Embedded' option indicates that the answer file is embedded within the OS Image. 'File'
 	// option indicates that the answers are provided as a file. 'Template' indicates that the
 	// placeholders in the selected os.ConfigurationFile MO are replaced with values provided
 	// as os.Answers MO.
-	//
-	//
 	// Enum: [None Embedded File Template]
 	Source *string `json:"Source,omitempty"`
 
@@ -184,66 +168,51 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 
 		// If the source of the answers is a static file, the content of the file is stored as value
 		// in this property.
-		//
 		// The value is mandatory only when the 'Source' property has been set to 'File'.
-		//
-		//
 		AnswerFile string `json:"AnswerFile,omitempty"`
 
 		// Hostname to be configured for the server in the OS.
-		//
-		//
 		Hostname string `json:"Hostname,omitempty"`
 
 		// IP configuration type. Values are Static or Dynamic configuration of IP.
-		//
 		// In case of static IP configuration, IP address, gateway and other details need
 		// to be populated. In case of dynamic the IP configuration is obtained dynamically
 		// from DHCP.
-		//
-		//
 		// Enum: [static DHCP]
 		IPConfigType *string `json:"IpConfigType,omitempty"`
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		//
-		//
 		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
 
 		// Indicates whether the value of the 'answerFile' property has been set.
-		//
 		// Read Only: true
 		IsAnswerFileSet *bool `json:"IsAnswerFileSet,omitempty"`
+
+		// Enable to indicate Root Password provided is encrypted.
+		IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
 		// is root password set
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 		// IP address of the name server to be configured in the OS.
-		//
-		//
 		Nameserver string `json:"Nameserver,omitempty"`
 
 		// The product key to be used for a specific version of Windows installation.
-		//
-		//
 		ProductKey string `json:"ProductKey,omitempty"`
 
-		// Password to be configured for the root / administrator user in the OS.
-		//
-		//
+		// Password configured for the root / administrator user in the OS. You can enter a plain text or an encrypted password.
+		// Intersight encrypts the plaintext password. Enable the Encrypted Password option to provide an encrypted password.
+		// For more details on encrypting passwords, see Help Center.
 		RootPassword string `json:"RootPassword,omitempty"`
 
 		// Answer values can be provided from three sources - Embedded in OS image, static file,
 		// or as placeholder values for an answer file template.
-		//
 		// Source of the answers is given as value, Embedded/File/Template.
 		// 'Embedded' option indicates that the answer file is embedded within the OS Image. 'File'
 		// option indicates that the answers are provided as a file. 'Template' indicates that the
 		// placeholders in the selected os.ConfigurationFile MO are replaced with values provided
 		// as os.Answers MO.
-		//
-		//
 		// Enum: [None Embedded File Template]
 		Source *string `json:"Source,omitempty"`
 	}
@@ -253,25 +222,16 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv OsAnswersAO1P1
 
 	rcv.AnswerFile = stage1.AnswerFile
-
 	rcv.Hostname = stage1.Hostname
-
 	rcv.IPConfigType = stage1.IPConfigType
-
 	rcv.IPV4Config = stage1.IPV4Config
-
 	rcv.IsAnswerFileSet = stage1.IsAnswerFileSet
-
+	rcv.IsRootPasswordCrypted = stage1.IsRootPasswordCrypted
 	rcv.IsRootPasswordSet = stage1.IsRootPasswordSet
-
 	rcv.Nameserver = stage1.Nameserver
-
 	rcv.ProductKey = stage1.ProductKey
-
 	rcv.RootPassword = stage1.RootPassword
-
 	rcv.Source = stage1.Source
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -281,25 +241,16 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AnswerFile")
-
 	delete(stage2, "Hostname")
-
 	delete(stage2, "IpConfigType")
-
 	delete(stage2, "IpV4Config")
-
 	delete(stage2, "IsAnswerFileSet")
-
+	delete(stage2, "IsRootPasswordCrypted")
 	delete(stage2, "IsRootPasswordSet")
-
 	delete(stage2, "Nameserver")
-
 	delete(stage2, "ProductKey")
-
 	delete(stage2, "RootPassword")
-
 	delete(stage2, "Source")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -322,88 +273,65 @@ func (m OsAnswersAO1P1) MarshalJSON() ([]byte, error) {
 
 		// If the source of the answers is a static file, the content of the file is stored as value
 		// in this property.
-		//
 		// The value is mandatory only when the 'Source' property has been set to 'File'.
-		//
-		//
 		AnswerFile string `json:"AnswerFile,omitempty"`
 
 		// Hostname to be configured for the server in the OS.
-		//
-		//
 		Hostname string `json:"Hostname,omitempty"`
 
 		// IP configuration type. Values are Static or Dynamic configuration of IP.
-		//
 		// In case of static IP configuration, IP address, gateway and other details need
 		// to be populated. In case of dynamic the IP configuration is obtained dynamically
 		// from DHCP.
-		//
-		//
 		// Enum: [static DHCP]
 		IPConfigType *string `json:"IpConfigType,omitempty"`
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		//
-		//
 		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
 
 		// Indicates whether the value of the 'answerFile' property has been set.
-		//
 		// Read Only: true
 		IsAnswerFileSet *bool `json:"IsAnswerFileSet,omitempty"`
+
+		// Enable to indicate Root Password provided is encrypted.
+		IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
 		// is root password set
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 		// IP address of the name server to be configured in the OS.
-		//
-		//
 		Nameserver string `json:"Nameserver,omitempty"`
 
 		// The product key to be used for a specific version of Windows installation.
-		//
-		//
 		ProductKey string `json:"ProductKey,omitempty"`
 
-		// Password to be configured for the root / administrator user in the OS.
-		//
-		//
+		// Password configured for the root / administrator user in the OS. You can enter a plain text or an encrypted password.
+		// Intersight encrypts the plaintext password. Enable the Encrypted Password option to provide an encrypted password.
+		// For more details on encrypting passwords, see Help Center.
 		RootPassword string `json:"RootPassword,omitempty"`
 
 		// Answer values can be provided from three sources - Embedded in OS image, static file,
 		// or as placeholder values for an answer file template.
-		//
 		// Source of the answers is given as value, Embedded/File/Template.
 		// 'Embedded' option indicates that the answer file is embedded within the OS Image. 'File'
 		// option indicates that the answers are provided as a file. 'Template' indicates that the
 		// placeholders in the selected os.ConfigurationFile MO are replaced with values provided
 		// as os.Answers MO.
-		//
-		//
 		// Enum: [None Embedded File Template]
 		Source *string `json:"Source,omitempty"`
 	}
 
 	stage1.AnswerFile = m.AnswerFile
-
 	stage1.Hostname = m.Hostname
-
 	stage1.IPConfigType = m.IPConfigType
-
 	stage1.IPV4Config = m.IPV4Config
-
 	stage1.IsAnswerFileSet = m.IsAnswerFileSet
-
+	stage1.IsRootPasswordCrypted = m.IsRootPasswordCrypted
 	stage1.IsRootPasswordSet = m.IsRootPasswordSet
-
 	stage1.Nameserver = m.Nameserver
-
 	stage1.ProductKey = m.ProductKey
-
 	stage1.RootPassword = m.RootPassword
-
 	stage1.Source = m.Source
 
 	// make JSON object for known properties

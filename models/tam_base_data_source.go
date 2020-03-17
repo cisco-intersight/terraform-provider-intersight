@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m TamBaseDataSource) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,15 +100,14 @@ func (m *TamBaseDataSource) UnmarshalBinary(b []byte) error {
 }
 
 // TamBaseDataSourceAO1P1 tam base data source a o1 p1
+//
 // swagger:model TamBaseDataSourceAO1P1
 type TamBaseDataSourceAO1P1 struct {
 
 	// Name is used to unique identify and refer a given data source in an alert definition.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
-	//
 	// Enum: [nxos intersightApi]
 	Type *string `json:"Type,omitempty"`
 
@@ -124,11 +121,9 @@ func (m *TamBaseDataSourceAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Name is used to unique identify and refer a given data source in an alert definition.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
-		//
 		// Enum: [nxos intersightApi]
 		Type *string `json:"Type,omitempty"`
 	}
@@ -138,9 +133,7 @@ func (m *TamBaseDataSourceAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv TamBaseDataSourceAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -150,9 +143,7 @@ func (m *TamBaseDataSourceAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -174,17 +165,14 @@ func (m TamBaseDataSourceAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Name is used to unique identify and refer a given data source in an alert definition.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
-		//
 		// Enum: [nxos intersightApi]
 		Type *string `json:"Type,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

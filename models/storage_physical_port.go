@@ -8,70 +8,60 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // StoragePhysicalPort Storage:Physical Port
 //
-// Common attributes for physical port in storage array.
+// Common attributes for a physical port in a storage array.
 //
 // swagger:model storagePhysicalPort
 type StoragePhysicalPort struct {
 	MoBaseMo
 
 	// Parent storage array controller object.
-	//
 	// Read Only: true
 	Controller *StorageArrayControllerRef `json:"Controller,omitempty"`
 
-	// ISCSI qualified name applicable for ethernet port. eg 'iqn.2008-05.com.storage:fnm00151300643-514f0c50141faf05'.
-	//
+	// ISCSI qualified name applicable for ethernet port. Example - 'iqn.2008-05.com.storage:fnm00151300643-514f0c50141faf05'.
 	// Read Only: true
 	Iqn string `json:"Iqn,omitempty"`
 
 	// Name of the physical port available in storage array.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Operational speed of physical port measured in Gbps.
-	//
 	// Read Only: true
 	Speed int64 `json:"Speed,omitempty"`
 
 	// Status of storage array port.
-	//
 	// Read Only: true
 	// Enum: [Unknown Ok Degraded Critical Offline Identifying NotAvailable Updating Unrecognized]
 	Status string `json:"Status,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
-	// Port type, it can be a any of the following category FC, FCoE and iSCSI.
-	//
+	// Port type - possible values are FC, FCoE and iSCSI.
 	// Read Only: true
 	// Enum: [FC iSCSI FCoE]
 	Type string `json:"Type,omitempty"`
 
-	// World wide name of FC port. It is a combination of WWNN and WWPN represented in 128 bit hexa decimal formatted with colon. e.g '51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01'.
-	//
+	// World wide name of FC port. It is a combination of WWNN and WWPN represented in 128 bit hexadecimal formatted with colon.
+	// Example: '51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01'.
 	// Read Only: true
 	Wwn string `json:"Wwn,omitempty"`
 
-	// World wide node name of FC port. Represented in 64 bit digit hexa formatted with colon eg '51:4f:0c:50:14:1f:af:01'.
-	//
+	// World wide node name of FC port. Represented in 64 bit hex digits, formatted with colon. Example - '51:4f:0c:50:14:1f:af:01'.
 	// Read Only: true
 	Wwnn string `json:"Wwnn,omitempty"`
 
-	// World wide port name of FC port. Represented in 64 bit digit hexa formatted with colon eg '51:4f:0c:51:14:1f:af:01'.
-	//
+	// World wide port name of FC port. Represented in 64 bit hex digits, formatted with colon. Example - '51:4f:0c:51:14:1f:af:01'.
 	// Read Only: true
 	Wwpn string `json:"Wwpn,omitempty"`
 }
@@ -143,7 +133,6 @@ func (m StoragePhysicalPort) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Controller *StorageArrayControllerRef `json:"Controller,omitempty"`
 
@@ -191,7 +180,6 @@ func (m StoragePhysicalPort) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

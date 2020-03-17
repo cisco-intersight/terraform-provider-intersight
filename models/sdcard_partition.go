@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m SdcardPartition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,16 +101,15 @@ func (m *SdcardPartition) UnmarshalBinary(b []byte) error {
 }
 
 // SdcardPartitionAO1P1 sdcard partition a o1 p1
+//
 // swagger:model SdcardPartitionAO1P1
 type SdcardPartitionAO1P1 struct {
 
 	// This specifies the type of the partition. Allowed values are OS, Utility.
-	//
 	// Enum: [OS Utility]
 	Type *string `json:"Type,omitempty"`
 
 	// Collection of available virtual drives.
-	//
 	VirtualDrives []*SdcardVirtualDrive `json:"VirtualDrives"`
 
 	// sdcard partition a o1 p1
@@ -125,12 +122,10 @@ func (m *SdcardPartitionAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// This specifies the type of the partition. Allowed values are OS, Utility.
-		//
 		// Enum: [OS Utility]
 		Type *string `json:"Type,omitempty"`
 
 		// Collection of available virtual drives.
-		//
 		VirtualDrives []*SdcardVirtualDrive `json:"VirtualDrives"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -139,9 +134,7 @@ func (m *SdcardPartitionAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SdcardPartitionAO1P1
 
 	rcv.Type = stage1.Type
-
 	rcv.VirtualDrives = stage1.VirtualDrives
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -151,9 +144,7 @@ func (m *SdcardPartitionAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Type")
-
 	delete(stage2, "VirtualDrives")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -175,17 +166,14 @@ func (m SdcardPartitionAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// This specifies the type of the partition. Allowed values are OS, Utility.
-		//
 		// Enum: [OS Utility]
 		Type *string `json:"Type,omitempty"`
 
 		// Collection of available virtual drives.
-		//
 		VirtualDrives []*SdcardVirtualDrive `json:"VirtualDrives"`
 	}
 
 	stage1.Type = m.Type
-
 	stage1.VirtualDrives = m.VirtualDrives
 
 	// make JSON object for known properties

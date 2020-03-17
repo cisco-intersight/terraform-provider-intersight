@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,43 +20,33 @@ type HclExemptedCatalog struct {
 	MoBaseMo
 
 	// Reason for the exemption.
-	//
 	Comments string `json:"Comments,omitempty"`
 
 	// A unique descriptive name of the exemption.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Vendor of the Operating System.
-	//
 	OsVendor string `json:"OsVendor,omitempty"`
 
 	// Version of the Operating system.
-	//
 	OsVersion string `json:"OsVersion,omitempty"`
 
 	// Name of the processor supported for the server.
-	//
 	ProcessorName string `json:"ProcessorName,omitempty"`
 
 	// Models of the product/adapter.
-	//
 	ProductModels []string `json:"ProductModels"`
 
 	// Type of the product/adapter say PT for Pass Through controllers.
-	//
 	ProductType string `json:"ProductType,omitempty"`
 
 	// Three part ID representing the server model as returned by UCSM/CIMC XML APIs.
-	//
 	ServerPid string `json:"ServerPid,omitempty"`
 
 	// Version of the UCS software.
-	//
 	UcsVersion string `json:"UcsVersion,omitempty"`
 
 	// Type of the UCS version indicating whether it is a UCSM release vesion or a IMC release.
-	//
 	VersionType string `json:"VersionType,omitempty"`
 }
 
@@ -128,7 +117,6 @@ func (m HclExemptedCatalog) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Comments string `json:"Comments,omitempty"`
 
@@ -176,7 +164,6 @@ func (m HclExemptedCatalog) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,14 @@ type FirmwareEula struct {
 	MoBaseMo
 
 	// EULA acceptance status for the account.
-	//
 	// Read Only: true
 	Accepted *bool `json:"Accepted,omitempty"`
 
 	// The account associated with this EULA acceptance status.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// EULA acceptance form content provided by cisco.com.
-	//
 	// Read Only: true
 	Content string `json:"Content,omitempty"`
 }
@@ -75,7 +71,6 @@ func (m FirmwareEula) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Accepted *bool `json:"Accepted,omitempty"`
 
@@ -95,7 +90,6 @@ func (m FirmwareEula) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -66,21 +65,18 @@ type ComputeRackUnit struct {
 	Psus []*EquipmentPsuRef `json:"Psus"`
 
 	// A collection of references to the [equipment.RackEnclosureSlot](mo://equipment.RackEnclosureSlot) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.RackEnclosureSlot](mo://equipment.RackEnclosureSlot) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	RackEnclosureSlot *EquipmentRackEnclosureSlotRef `json:"RackEnclosureSlot,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// sas expanders
 	SasExpanders []*StorageSasExpanderRef `json:"SasExpanders"`
 
-	// server Id
+	// The server id of the Rack server.
 	// Read Only: true
 	ServerID int64 `json:"ServerId,omitempty"`
 
@@ -89,9 +85,7 @@ type ComputeRackUnit struct {
 	StorageEnclosures []*StorageEnclosureRef `json:"StorageEnclosures"`
 
 	// A collection of references to the [top.System](mo://top.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	TopSystem *TopSystemRef `json:"TopSystem,omitempty"`
 }
@@ -191,7 +185,6 @@ func (m ComputeRackUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Adapters []*AdapterUnitRef `json:"Adapters"`
 
@@ -267,7 +260,6 @@ func (m ComputeRackUnit) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

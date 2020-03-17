@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,14 @@ type StoragePureSnapshotSchedule struct {
 	StorageSnapshotSchedule
 
 	// Total number of snapshots per day to be available on source above and over the specified retention time. PureStorage FlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired. In case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.
-	//
 	// Read Only: true
 	DailyLimit int64 `json:"DailyLimit,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Duration to keep the daily limit snapshots on source array. StorageArray deletes the snapshots permanently from source beyond this period.
-	//
 	// Read Only: true
 	SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 }
@@ -75,7 +71,6 @@ func (m StoragePureSnapshotSchedule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
 
@@ -95,7 +90,6 @@ func (m StoragePureSnapshotSchedule) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

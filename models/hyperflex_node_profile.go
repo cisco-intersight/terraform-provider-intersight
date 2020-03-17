@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -22,29 +21,22 @@ type HyperflexNodeProfile struct {
 	PolicyAbstractProfile
 
 	// The physical server assigned to this node profile.
-	//
 	AssignedServer *ComputeRackUnitRef `json:"AssignedServer,omitempty"`
 
 	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
-	//
 	ClusterProfile *HyperflexClusterProfileRef `json:"ClusterProfile,omitempty"`
 
 	// IP address for storage data network (Controller VM interface).
-	//
 	HxdpDataIP string `json:"HxdpDataIp,omitempty"`
 
 	// IP address for HyperFlex management network.
-	//
 	HxdpMgmtIP string `json:"HxdpMgmtIp,omitempty"`
 
 	// IP address for storage data network (Hypervisor interface).
-	//
 	HypervisorDataIP string `json:"HypervisorDataIp,omitempty"`
 
 	// IP address for Hypervisor management network.
-	//
 	HypervisorMgmtIP string `json:"HypervisorMgmtIp,omitempty"`
 }
 
@@ -99,7 +91,6 @@ func (m HyperflexNodeProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AssignedServer *ComputeRackUnitRef `json:"AssignedServer,omitempty"`
 
@@ -131,7 +122,6 @@ func (m HyperflexNodeProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

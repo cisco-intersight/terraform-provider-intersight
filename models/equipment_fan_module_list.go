@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // EquipmentFanModuleList equipment fan module list
+//
 // swagger:model equipmentFanModuleList
 type EquipmentFanModuleList struct {
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowDynamicWorkflowActionTaskList) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *WorkflowDynamicWorkflowActionTaskList) UnmarshalBinary(b []byte) error 
 }
 
 // WorkflowDynamicWorkflowActionTaskListAO1P1 workflow dynamic workflow action task list a o1 p1
+//
 // swagger:model WorkflowDynamicWorkflowActionTaskListAO1P1
 type WorkflowDynamicWorkflowActionTaskListAO1P1 struct {
 
 	// The action of the Dynamic Workflow.
-	//
 	Action string `json:"Action,omitempty"`
 
 	// The task list that has precedence which dictates how the workflow should be constructed.
-	//
 	Tasks interface{} `json:"Tasks,omitempty"`
 
 	// workflow dynamic workflow action task list a o1 p1
@@ -122,11 +119,9 @@ func (m *WorkflowDynamicWorkflowActionTaskListAO1P1) UnmarshalJSON(data []byte) 
 	var stage1 struct {
 
 		// The action of the Dynamic Workflow.
-		//
 		Action string `json:"Action,omitempty"`
 
 		// The task list that has precedence which dictates how the workflow should be constructed.
-		//
 		Tasks interface{} `json:"Tasks,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *WorkflowDynamicWorkflowActionTaskListAO1P1) UnmarshalJSON(data []byte) 
 	var rcv WorkflowDynamicWorkflowActionTaskListAO1P1
 
 	rcv.Action = stage1.Action
-
 	rcv.Tasks = stage1.Tasks
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *WorkflowDynamicWorkflowActionTaskListAO1P1) UnmarshalJSON(data []byte) 
 	}
 
 	delete(stage2, "Action")
-
 	delete(stage2, "Tasks")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m WorkflowDynamicWorkflowActionTaskListAO1P1) MarshalJSON() ([]byte, error
 	var stage1 struct {
 
 		// The action of the Dynamic Workflow.
-		//
 		Action string `json:"Action,omitempty"`
 
 		// The task list that has precedence which dictates how the workflow should be constructed.
-		//
 		Tasks interface{} `json:"Tasks,omitempty"`
 	}
 
 	stage1.Action = m.Action
-
 	stage1.Tasks = m.Tasks
 
 	// make JSON object for known properties

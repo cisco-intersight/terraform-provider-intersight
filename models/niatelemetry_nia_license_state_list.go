@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiatelemetryNiaLicenseStateList niatelemetry nia license state list
+//
 // swagger:model niatelemetryNiaLicenseStateList
 type NiatelemetryNiaLicenseStateList struct {
 

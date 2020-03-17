@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,34 +22,27 @@ type HyperflexVcenterConfigPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// The vCenter datacenter name.
-	//
 	DataCenter string `json:"DataCenter,omitempty"`
 
 	// The vCenter server FQDN or IP.
-	//
 	Hostname string `json:"Hostname,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The password for authenticating with vCenter. Follow the corresponding password policy governed by vCenter.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Overrides the default vCenter Single Sign-On URL. Do not specify unless instructed by Cisco TAC.
-	//
 	SsoURL string `json:"SsoUrl,omitempty"`
 
 	// The vCenter username (e.g. administrator@vsphere.local).
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -113,7 +105,6 @@ func (m HyperflexVcenterConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -153,7 +144,6 @@ func (m HyperflexVcenterConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

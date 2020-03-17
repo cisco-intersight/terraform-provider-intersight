@@ -6,75 +6,62 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // EquipmentSystemIoController Equipment:System Io Controller
+//
 // swagger:model equipmentSystemIoController
 type EquipmentSystemIoController struct {
 	EquipmentBase
 
 	// The assigned identifier for a chassis.
-	//
 	// Read Only: true
 	ChassisID string `json:"ChassisId,omitempty"`
 
 	// Connection Path identifies the data path available between IOModule and FI.
-	//
 	// Read Only: true
 	ConnectionPath string `json:"ConnectionPath,omitempty"`
 
 	// Connection status identifies the status of data path.
-	//
 	// Read Only: true
 	ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
 	// This field gives a brief information on systemIOController.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// A collection of references to the [equipment.Chassis](mo://equipment.Chassis) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [equipment.Chassis](mo://equipment.Chassis) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	EquipmentChassis *EquipmentChassisRef `json:"EquipmentChassis,omitempty"`
 
 	// This field identifies the CIMC that manages the controller.
-	//
 	// Read Only: true
 	ManagingInstance string `json:"ManagingInstance,omitempty"`
 
 	// This field identifies the SIOC operational state.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// Part Number identifier for the IO module.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// This field identifies the Product ID for systemIOController.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This represents the adaptor housed in system I/O controller.
-	//
 	SharedIoModule *EquipmentSharedIoModuleRef `json:"SharedIoModule,omitempty"`
 
 	// This represents system I/O Controller identifier.
-	//
 	// Read Only: true
 	SystemIoControllerID int64 `json:"SystemIoControllerId,omitempty"`
 }
@@ -154,7 +141,6 @@ func (m EquipmentSystemIoController) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ChassisID string `json:"ChassisId,omitempty"`
 
@@ -210,7 +196,6 @@ func (m EquipmentSystemIoController) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

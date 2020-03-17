@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,29 +22,20 @@ type HyperflexUcsmConfigPolicy struct {
 	PolicyAbstractPolicy
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// The Out-of-band KVM IP range.
-	//
 	// Configures the service profiles to use IP addresses within this range for setting the KVM IP of a server.
-	//
-	//
 	KvmIPRange *HyperflexIPAddrRange `json:"KvmIpRange,omitempty"`
 
 	// The MAC address prefix range for configuring vNICs.
-	//
 	// Configures the service profiles to use MAC address prefixes within this range for setting the MAC address of server vNICs.
-	//
-	//
 	MacPrefixRange *HyperflexMacAddrPrefixRange `json:"MacPrefixRange,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The server firmware bundle version used for server components such as CIMC, adapters, BIOS, etc.
-	//
 	ServerFirmwareVersion string `json:"ServerFirmwareVersion,omitempty"`
 }
 
@@ -96,7 +86,6 @@ func (m HyperflexUcsmConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
@@ -124,7 +113,6 @@ func (m HyperflexUcsmConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

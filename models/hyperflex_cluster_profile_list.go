@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexClusterProfileList hyperflex cluster profile list
+//
 // swagger:model hyperflexClusterProfileList
 type HyperflexClusterProfileList struct {
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,15 +23,12 @@ type IamCertificate struct {
 	MoBaseMo
 
 	// User-input pem-encoded certificate, signed by a CAcert.
-	//
 	Certificate *X509Certificate `json:"Certificate,omitempty"`
 
 	// The certificate signing request associated with this certificate.
-	//
 	CertificateRequest *IamCertificateRequestRef `json:"CertificateRequest,omitempty"`
 
 	// Status of the certificate.
-	//
 	// Read Only: true
 	// Enum: [PendingValidation Valid Invalid]
 	Status string `json:"Status,omitempty"`
@@ -77,7 +73,6 @@ func (m IamCertificate) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Certificate *X509Certificate `json:"Certificate,omitempty"`
 
@@ -97,7 +92,6 @@ func (m IamCertificate) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

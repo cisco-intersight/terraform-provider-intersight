@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,51 +22,39 @@ type NetworkconfigPolicy struct {
 	PolicyAbstractPolicy
 
 	// IP address of the secondary DNS server.
-	//
 	AlternateIpv4dnsServer string `json:"AlternateIpv4dnsServer,omitempty"`
 
 	// IP address of the secondary DNS server.
-	//
 	AlternateIpv6dnsServer string `json:"AlternateIpv6dnsServer,omitempty"`
 
 	// The appliance account to which the appliance Network Connectivity policy belongs.
-	//
 	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
 
 	// The domain name appended to a hostname for a Dynamic DNS (DDNS) update. If left blank, only a hostname is sent to the DDNS update request.
-	//
 	DynamicDNSDomain string `json:"DynamicDnsDomain,omitempty"`
 
 	// If enabled, updates the resource records to the DNS from Cisco IMC.
-	//
 	EnableDynamicDNS *bool `json:"EnableDynamicDns,omitempty"`
 
 	// If enabled, Cisco IMC retrieves the DNS server addresses from DHCP. Use DHCP field must be enabled for IPv4 in Cisco IMC to enable it.
-	//
 	EnableIpv4dnsFromDhcp *bool `json:"EnableIpv4dnsFromDhcp,omitempty"`
 
 	// If enabled, allows to configure IPv6 properties.
-	//
 	EnableIPV6 *bool `json:"EnableIpv6,omitempty"`
 
 	// If enabled, Cisco IMC retrieves the DNS server addresses from DHCP. Use DHCP field must be enabled for IPv6 in Cisco IMC to enable it.
-	//
 	EnableIpv6dnsFromDhcp *bool `json:"EnableIpv6dnsFromDhcp,omitempty"`
 
 	// The organization to which the Network Connectivity policy belongs.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// IP address of the primary DNS server.
-	//
 	PreferredIpv4dnsServer string `json:"PreferredIpv4dnsServer,omitempty"`
 
 	// IP address of the primary DNS server.
-	//
 	PreferredIpv6dnsServer string `json:"PreferredIpv6dnsServer,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -146,7 +133,6 @@ func (m NetworkconfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AlternateIpv4dnsServer string `json:"AlternateIpv4dnsServer,omitempty"`
 
@@ -202,7 +188,6 @@ func (m NetworkconfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

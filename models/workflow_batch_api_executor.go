@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -18,7 +17,6 @@ import (
 //
 // Intersight allows generic API tasks to be created by taking the API request
 // body and a response parser specification in the form of content.Grammar object.
-//
 // Batch API associates the list of API requests to be executed as part of single
 // task execution. Each API request takes the request body and a response parser
 // specification.
@@ -29,62 +27,42 @@ type WorkflowBatchAPIExecutor struct {
 
 	// Intersight Orchestrator supports one or a batch of APIs to be executed as part of
 	// a task execution.
-	//
 	// The batch cannot be empty.
-	//
-	//
 	Batch []*WorkflowAPI `json:"Batch"`
 
 	// Enter the constraints on when this task should match against the task definition.
-	//
-	//
-	Constraints string `json:"Constraints,omitempty"`
+	Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
 	// A detailed description about the batch APIs.
-	//
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Name for the batch API task.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// All the possible outcomes of this task are captured here. Outcomes property
 	// is a collection property of type workflow.Outcome objects.
-	//
 	// The outcomes can be mapped to the message to be shown. The outcomes are
 	// evaluated in the order they are given. At the end of the outcomes list,
 	// an catchall success/fail outcome can be added with condition as 'true'.
-	//
 	// This is an optional
 	// property and if not specified the task will be marked as success.
-	//
-	//
 	Outcomes interface{} `json:"Outcomes,omitempty"`
 
 	// Intersight Orchestrator allows the extraction of required values from API
 	// responses using the API response grammar. These extracted values can be mapped
 	// to task output parameters defined in task definition.
-	//
 	// The mapping of API output parameters to the task output parameters is provided
 	// as JSON in this property.
-	//
-	//
 	Output interface{} `json:"Output,omitempty"`
 
 	// The skip expression, if provided, allows the batch API executor to skip the
 	// task execution when the given expression evaluates to true.
-	//
 	// The expression is given as such a golang template that has to be
 	// evaluated to a final content true/false. The expression is an optional and in
 	// case not provided, the API will always be executed.
-	//
-	//
 	SkipOnCondition string `json:"SkipOnCondition,omitempty"`
 
 	// The interface task definition for which this batch API is one of the implementation.
-	//
 	TaskDefinition *WorkflowTaskDefinitionRef `json:"TaskDefinition,omitempty"`
 }
 
@@ -101,7 +79,7 @@ func (m *WorkflowBatchAPIExecutor) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Batch []*WorkflowAPI `json:"Batch"`
 
-		Constraints string `json:"Constraints,omitempty"`
+		Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
 		Description string `json:"Description,omitempty"`
 
@@ -147,11 +125,10 @@ func (m WorkflowBatchAPIExecutor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Batch []*WorkflowAPI `json:"Batch"`
 
-		Constraints string `json:"Constraints,omitempty"`
+		Constraints *WorkflowTaskConstraints `json:"Constraints,omitempty"`
 
 		Description string `json:"Description,omitempty"`
 
@@ -187,7 +164,6 @@ func (m WorkflowBatchAPIExecutor) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -201,6 +177,10 @@ func (m *WorkflowBatchAPIExecutor) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateBatch(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateConstraints(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -234,6 +214,24 @@ func (m *WorkflowBatchAPIExecutor) validateBatch(formats strfmt.Registry) error 
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *WorkflowBatchAPIExecutor) validateConstraints(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Constraints) { // not required
+		return nil
+	}
+
+	if m.Constraints != nil {
+		if err := m.Constraints.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Constraints")
+			}
+			return err
+		}
 	}
 
 	return nil

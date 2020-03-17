@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,51 +20,61 @@ type ManagementInterface struct {
 	InventoryBase
 
 	// Default gateway for the interface.
-	//
 	// Read Only: true
 	Gateway string `json:"Gateway,omitempty"`
 
 	// Hostname configured for the interface.
-	//
 	HostName string `json:"HostName,omitempty"`
 
 	// IP address of the interface.
-	//
 	// Read Only: true
 	IPAddress string `json:"IpAddress,omitempty"`
 
+	// IPv4 address of the interface.
+	// Read Only: true
+	IPV4Address string `json:"Ipv4Address,omitempty"`
+
+	// IPv4 default gateway for the interface.
+	// Read Only: true
+	IPV4Gateway string `json:"Ipv4Gateway,omitempty"`
+
+	// IPv4 Netmask for the interface.
+	// Read Only: true
+	IPV4Mask string `json:"Ipv4Mask,omitempty"`
+
+	// IPv6 address of the interface.
+	IPV6Address string `json:"Ipv6Address,omitempty"`
+
+	// IPv6 default gateway for the interface.
+	IPV6Gateway string `json:"Ipv6Gateway,omitempty"`
+
+	// IPv6 prefix for the interface.
+	IPV6Prefix int64 `json:"Ipv6Prefix,omitempty"`
+
 	// MAC address configured for the interface.
-	//
 	// Read Only: true
 	MacAddress string `json:"MacAddress,omitempty"`
 
 	// A collection of references to the [management.Controller](mo://management.Controller) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [management.Controller](mo://management.Controller) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ManagementController *ManagementControllerRef `json:"ManagementController,omitempty"`
 
 	// Netmask for the interface.
-	//
 	// Read Only: true
 	Mask string `json:"Mask,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Switch Id of the interface.
-	//
 	SwitchID string `json:"SwitchId,omitempty"`
 
 	// Status of UEM connection.
-	//
 	UemConnStatus string `json:"UemConnStatus,omitempty"`
 
 	// Virtual hostname configured for the interface in case of clustered environment.
-	//
 	VirtualHostName string `json:"VirtualHostName,omitempty"`
 }
 
@@ -85,6 +94,18 @@ func (m *ManagementInterface) UnmarshalJSON(raw []byte) error {
 		HostName string `json:"HostName,omitempty"`
 
 		IPAddress string `json:"IpAddress,omitempty"`
+
+		IPV4Address string `json:"Ipv4Address,omitempty"`
+
+		IPV4Gateway string `json:"Ipv4Gateway,omitempty"`
+
+		IPV4Mask string `json:"Ipv4Mask,omitempty"`
+
+		IPV6Address string `json:"Ipv6Address,omitempty"`
+
+		IPV6Gateway string `json:"Ipv6Gateway,omitempty"`
+
+		IPV6Prefix int64 `json:"Ipv6Prefix,omitempty"`
 
 		MacAddress string `json:"MacAddress,omitempty"`
 
@@ -109,6 +130,18 @@ func (m *ManagementInterface) UnmarshalJSON(raw []byte) error {
 	m.HostName = dataAO1.HostName
 
 	m.IPAddress = dataAO1.IPAddress
+
+	m.IPV4Address = dataAO1.IPV4Address
+
+	m.IPV4Gateway = dataAO1.IPV4Gateway
+
+	m.IPV4Mask = dataAO1.IPV4Mask
+
+	m.IPV6Address = dataAO1.IPV6Address
+
+	m.IPV6Gateway = dataAO1.IPV6Gateway
+
+	m.IPV6Prefix = dataAO1.IPV6Prefix
 
 	m.MacAddress = dataAO1.MacAddress
 
@@ -136,13 +169,24 @@ func (m ManagementInterface) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Gateway string `json:"Gateway,omitempty"`
 
 		HostName string `json:"HostName,omitempty"`
 
 		IPAddress string `json:"IpAddress,omitempty"`
+
+		IPV4Address string `json:"Ipv4Address,omitempty"`
+
+		IPV4Gateway string `json:"Ipv4Gateway,omitempty"`
+
+		IPV4Mask string `json:"Ipv4Mask,omitempty"`
+
+		IPV6Address string `json:"Ipv6Address,omitempty"`
+
+		IPV6Gateway string `json:"Ipv6Gateway,omitempty"`
+
+		IPV6Prefix int64 `json:"Ipv6Prefix,omitempty"`
 
 		MacAddress string `json:"MacAddress,omitempty"`
 
@@ -165,6 +209,18 @@ func (m ManagementInterface) MarshalJSON() ([]byte, error) {
 
 	dataAO1.IPAddress = m.IPAddress
 
+	dataAO1.IPV4Address = m.IPV4Address
+
+	dataAO1.IPV4Gateway = m.IPV4Gateway
+
+	dataAO1.IPV4Mask = m.IPV4Mask
+
+	dataAO1.IPV6Address = m.IPV6Address
+
+	dataAO1.IPV6Gateway = m.IPV6Gateway
+
+	dataAO1.IPV6Prefix = m.IPV6Prefix
+
 	dataAO1.MacAddress = m.MacAddress
 
 	dataAO1.ManagementController = m.ManagementController
@@ -184,7 +240,6 @@ func (m ManagementInterface) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m PolicyinventoryJobInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,28 +100,25 @@ func (m *PolicyinventoryJobInfo) UnmarshalBinary(b []byte) error {
 }
 
 // PolicyinventoryJobInfoAO1P1 policyinventory job info a o1 p1
+//
 // swagger:model PolicyinventoryJobInfoAO1P1
 type PolicyinventoryJobInfoAO1P1 struct {
 
 	// Execution status of the inventory job.
-	//
 	// Read Only: true
 	// Enum: [Scheduled Completed Error]
 	ExecutionStatus string `json:"ExecutionStatus,omitempty"`
 
 	// Last scheduled time of the inventory job.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastScheduledTime strfmt.DateTime `json:"LastScheduledTime,omitempty"`
 
 	// Policy ID for the inventory job.
-	//
 	// Read Only: true
 	PolicyID string `json:"PolicyId,omitempty"`
 
 	// Policy name for the inventory job.
-	//
 	// Read Only: true
 	PolicyName string `json:"PolicyName,omitempty"`
 
@@ -137,24 +132,20 @@ func (m *PolicyinventoryJobInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Execution status of the inventory job.
-		//
 		// Read Only: true
 		// Enum: [Scheduled Completed Error]
 		ExecutionStatus string `json:"ExecutionStatus,omitempty"`
 
 		// Last scheduled time of the inventory job.
-		//
 		// Read Only: true
 		// Format: date-time
 		LastScheduledTime strfmt.DateTime `json:"LastScheduledTime,omitempty"`
 
 		// Policy ID for the inventory job.
-		//
 		// Read Only: true
 		PolicyID string `json:"PolicyId,omitempty"`
 
 		// Policy name for the inventory job.
-		//
 		// Read Only: true
 		PolicyName string `json:"PolicyName,omitempty"`
 	}
@@ -164,13 +155,9 @@ func (m *PolicyinventoryJobInfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PolicyinventoryJobInfoAO1P1
 
 	rcv.ExecutionStatus = stage1.ExecutionStatus
-
 	rcv.LastScheduledTime = stage1.LastScheduledTime
-
 	rcv.PolicyID = stage1.PolicyID
-
 	rcv.PolicyName = stage1.PolicyName
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -180,13 +167,9 @@ func (m *PolicyinventoryJobInfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ExecutionStatus")
-
 	delete(stage2, "LastScheduledTime")
-
 	delete(stage2, "PolicyId")
-
 	delete(stage2, "PolicyName")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -208,34 +191,27 @@ func (m PolicyinventoryJobInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Execution status of the inventory job.
-		//
 		// Read Only: true
 		// Enum: [Scheduled Completed Error]
 		ExecutionStatus string `json:"ExecutionStatus,omitempty"`
 
 		// Last scheduled time of the inventory job.
-		//
 		// Read Only: true
 		// Format: date-time
 		LastScheduledTime strfmt.DateTime `json:"LastScheduledTime,omitempty"`
 
 		// Policy ID for the inventory job.
-		//
 		// Read Only: true
 		PolicyID string `json:"PolicyId,omitempty"`
 
 		// Policy name for the inventory job.
-		//
 		// Read Only: true
 		PolicyName string `json:"PolicyName,omitempty"`
 	}
 
 	stage1.ExecutionStatus = m.ExecutionStatus
-
 	stage1.LastScheduledTime = m.LastScheduledTime
-
 	stage1.PolicyID = m.PolicyID
-
 	stage1.PolicyName = m.PolicyName
 
 	// make JSON object for known properties

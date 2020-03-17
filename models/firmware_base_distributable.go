@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,48 +20,38 @@ type FirmwareBaseDistributable struct {
 	SoftwarerepositoryFile
 
 	// The bundle type of the image, as published on cisco.com.
-	//
 	// Read Only: true
 	BundleType string `json:"BundleType,omitempty"`
 
 	// The unique identifier for an image in a Cisco repository.
-	//
 	// Read Only: true
 	GUID string `json:"Guid,omitempty"`
 
 	// The mdfid of the image provided by cisco.com.
-	//
 	Mdfid string `json:"Mdfid,omitempty"`
 
 	// The endpoint model for which this firmware image is applicable.
-	//
 	// Read Only: true
 	Model string `json:"Model,omitempty"`
 
 	// The platform type of the image.
-	//
 	// Read Only: true
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// The build which is recommended by Cisco.
-	//
 	RecommendedBuild string `json:"RecommendedBuild,omitempty"`
 
 	// The url for the release notes of this image.
-	//
 	ReleaseNotesURL string `json:"ReleaseNotesUrl,omitempty"`
 
 	// The software type id provided by cisco.com.
-	//
 	// Read Only: true
 	SoftwareTypeID string `json:"SoftwareTypeId,omitempty"`
 
 	// The server models for which this image is applicable.
-	//
 	SupportedModels []string `json:"SupportedModels"`
 
 	// The vendor or publisher of this file.
-	//
 	Vendor *string `json:"Vendor,omitempty"`
 }
 
@@ -133,7 +122,6 @@ func (m FirmwareBaseDistributable) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BundleType string `json:"BundleType,omitempty"`
 
@@ -181,7 +169,6 @@ func (m FirmwareBaseDistributable) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

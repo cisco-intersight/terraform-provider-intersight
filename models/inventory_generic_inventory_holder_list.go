@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // InventoryGenericInventoryHolderList inventory generic inventory holder list
+//
 // swagger:model inventoryGenericInventoryHolderList
 type InventoryGenericInventoryHolderList struct {
 

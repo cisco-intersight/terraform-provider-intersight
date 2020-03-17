@@ -8,14 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // HyperflexHxLinkDt Hyperflex:Hx Link Dt
+//
 // swagger:model hyperflexHxLinkDt
 type HyperflexHxLinkDt struct {
 	MoBaseComplexType
@@ -57,7 +57,6 @@ func (m HyperflexHxLinkDt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -99,6 +98,7 @@ func (m *HyperflexHxLinkDt) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexHxLinkDtAO1P1 hyperflex hx link dt a o1 p1
+//
 // swagger:model HyperflexHxLinkDtAO1P1
 type HyperflexHxLinkDtAO1P1 struct {
 
@@ -151,13 +151,9 @@ func (m *HyperflexHxLinkDtAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexHxLinkDtAO1P1
 
 	rcv.Comments = stage1.Comments
-
 	rcv.Href = stage1.Href
-
 	rcv.Method = stage1.Method
-
 	rcv.Rel = stage1.Rel
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -167,13 +163,9 @@ func (m *HyperflexHxLinkDtAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Comments")
-
 	delete(stage2, "Href")
-
 	delete(stage2, "Method")
-
 	delete(stage2, "Rel")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -213,11 +205,8 @@ func (m HyperflexHxLinkDtAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.Comments = m.Comments
-
 	stage1.Href = m.Href
-
 	stage1.Method = m.Method
-
 	stage1.Rel = m.Rel
 
 	// make JSON object for known properties

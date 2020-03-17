@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m SyslogRemoteClientBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,28 +100,24 @@ func (m *SyslogRemoteClientBase) UnmarshalBinary(b []byte) error {
 }
 
 // SyslogRemoteClientBaseAO1P1 syslog remote client base a o1 p1
+//
 // swagger:model SyslogRemoteClientBaseAO1P1
 type SyslogRemoteClientBaseAO1P1 struct {
 
 	// Enables/disables remote logging for the endpoint If enabled, log messages will be sent to the syslog server mentioned in the Hostname/IP Address field.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Hostname or IP Address of the syslog server where log should be stored.
-	//
 	Hostname string `json:"Hostname,omitempty"`
 
 	// Lowest level of messages to be included in the remote log.
-	//
 	// Enum: [warning emergency alert critical error notice informational debug]
 	MinSeverity *string `json:"MinSeverity,omitempty"`
 
 	// Port number used for logging on syslog server.
-	//
 	Port int64 `json:"Port,omitempty"`
 
 	// Transport layer protocol for transmission of log messages to syslog server.
-	//
 	// Enum: [udp tcp]
 	Protocol *string `json:"Protocol,omitempty"`
 
@@ -137,24 +131,19 @@ func (m *SyslogRemoteClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Enables/disables remote logging for the endpoint If enabled, log messages will be sent to the syslog server mentioned in the Hostname/IP Address field.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// Hostname or IP Address of the syslog server where log should be stored.
-		//
 		Hostname string `json:"Hostname,omitempty"`
 
 		// Lowest level of messages to be included in the remote log.
-		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
 
 		// Port number used for logging on syslog server.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// Transport layer protocol for transmission of log messages to syslog server.
-		//
 		// Enum: [udp tcp]
 		Protocol *string `json:"Protocol,omitempty"`
 	}
@@ -164,15 +153,10 @@ func (m *SyslogRemoteClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SyslogRemoteClientBaseAO1P1
 
 	rcv.Enabled = stage1.Enabled
-
 	rcv.Hostname = stage1.Hostname
-
 	rcv.MinSeverity = stage1.MinSeverity
-
 	rcv.Port = stage1.Port
-
 	rcv.Protocol = stage1.Protocol
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -182,15 +166,10 @@ func (m *SyslogRemoteClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Enabled")
-
 	delete(stage2, "Hostname")
-
 	delete(stage2, "MinSeverity")
-
 	delete(stage2, "Port")
-
 	delete(stage2, "Protocol")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -212,36 +191,27 @@ func (m SyslogRemoteClientBaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Enables/disables remote logging for the endpoint If enabled, log messages will be sent to the syslog server mentioned in the Hostname/IP Address field.
-		//
 		Enabled *bool `json:"Enabled,omitempty"`
 
 		// Hostname or IP Address of the syslog server where log should be stored.
-		//
 		Hostname string `json:"Hostname,omitempty"`
 
 		// Lowest level of messages to be included in the remote log.
-		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
 
 		// Port number used for logging on syslog server.
-		//
 		Port int64 `json:"Port,omitempty"`
 
 		// Transport layer protocol for transmission of log messages to syslog server.
-		//
 		// Enum: [udp tcp]
 		Protocol *string `json:"Protocol,omitempty"`
 	}
 
 	stage1.Enabled = m.Enabled
-
 	stage1.Hostname = m.Hostname
-
 	stage1.MinSeverity = m.MinSeverity
-
 	stage1.Port = m.Port
-
 	stage1.Protocol = m.Protocol
 
 	// make JSON object for known properties

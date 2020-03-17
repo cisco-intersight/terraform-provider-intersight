@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,51 +24,39 @@ type WorkflowPendingDynamicWorkflowInfo struct {
 	MoBaseMo
 
 	// The inputs of the workflow.
-	//
 	Input interface{} `json:"Input,omitempty"`
 
 	// A name for the pending dynamic workflow.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The pending services the dynamic workflow is waiting for to return the task list.
-	//
 	PendingServices []string `json:"PendingServices"`
 
 	// The src is workflow owner service.
-	//
 	Src string `json:"Src,omitempty"`
 
 	// The current status of the PendingDynamicWorkflowInfo.
-	//
 	// Enum: [GatheringTasks Waiting]
 	Status *string `json:"Status,omitempty"`
 
 	// When set to true workflow engine will wait for a duplicate to finish before starting a new one.
-	//
 	WaitOnDuplicate *bool `json:"WaitOnDuplicate,omitempty"`
 
 	// The task lists returned by services for building dynamic workflows.  There will be an entry for every different workflow action.
-	//
 	WorkflowActionTaskLists []*WorkflowDynamicWorkflowActionTaskList `json:"WorkflowActionTaskLists"`
 
 	// The workflow's workflow context which contains initiator and target information.
-	//
 	WorkflowCtx interface{} `json:"WorkflowCtx,omitempty"`
 
 	// A collection of references to the [workflow.WorkflowInfo](mo://workflow.WorkflowInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [workflow.WorkflowInfo](mo://workflow.WorkflowInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	WorkflowInfo *WorkflowWorkflowInfoRef `json:"WorkflowInfo,omitempty"`
 
 	// This key contains workflow, initiator and target name. Workflow engine uses the key to do workflow dedup.
-	//
 	WorkflowKey string `json:"WorkflowKey,omitempty"`
 
 	// The metadata of the workflow.
-	//
 	WorkflowMeta interface{} `json:"WorkflowMeta,omitempty"`
 }
 
@@ -144,7 +131,6 @@ func (m WorkflowPendingDynamicWorkflowInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Input interface{} `json:"Input,omitempty"`
 
@@ -196,7 +182,6 @@ func (m WorkflowPendingDynamicWorkflowInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

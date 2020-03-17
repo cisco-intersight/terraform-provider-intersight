@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiaapiNiaMetadataList niaapi nia metadata list
+//
 // swagger:model niaapiNiaMetadataList
 type NiaapiNiaMetadataList struct {
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -62,7 +61,6 @@ func (m OnpremImagePackage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -104,47 +102,40 @@ func (m *OnpremImagePackage) UnmarshalBinary(b []byte) error {
 }
 
 // OnpremImagePackageAO1P1 onprem image package a o1 p1
+//
 // swagger:model OnpremImagePackageAO1P1
 type OnpremImagePackageAO1P1 struct {
 
 	// Optional file path of the image package.
-	//
 	// Read Only: true
 	FilePath string `json:"FilePath,omitempty"`
 
 	// Image file's fingerprint. Fingerprint is calculated using SHA256 algorithm.
-	//
 	// Read Only: true
 	FileSha string `json:"FileSha,omitempty"`
 
 	// Image file size in bytes.
-	//
 	// Read Only: true
 	FileSize int64 `json:"FileSize,omitempty"`
 
 	// Image file's last modified date and time.
-	//
 	// Read Only: true
 	// Format: date-time
 	FileTime strfmt.DateTime `json:"FileTime,omitempty"`
 
 	// Filename of the image package.
-	//
 	// Read Only: true
 	Filename string `json:"Filename,omitempty"`
 
 	// Name of the software image package.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Image package type (e.g. service, system etc.).
-	//
 	// Read Only: true
 	PackageType string `json:"PackageType,omitempty"`
 
 	// Image package version string.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 
@@ -158,43 +149,35 @@ func (m *OnpremImagePackageAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Optional file path of the image package.
-		//
 		// Read Only: true
 		FilePath string `json:"FilePath,omitempty"`
 
 		// Image file's fingerprint. Fingerprint is calculated using SHA256 algorithm.
-		//
 		// Read Only: true
 		FileSha string `json:"FileSha,omitempty"`
 
 		// Image file size in bytes.
-		//
 		// Read Only: true
 		FileSize int64 `json:"FileSize,omitempty"`
 
 		// Image file's last modified date and time.
-		//
 		// Read Only: true
 		// Format: date-time
 		FileTime strfmt.DateTime `json:"FileTime,omitempty"`
 
 		// Filename of the image package.
-		//
 		// Read Only: true
 		Filename string `json:"Filename,omitempty"`
 
 		// Name of the software image package.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Image package type (e.g. service, system etc.).
-		//
 		// Read Only: true
 		PackageType string `json:"PackageType,omitempty"`
 
 		// Image package version string.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 	}
@@ -204,21 +187,13 @@ func (m *OnpremImagePackageAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv OnpremImagePackageAO1P1
 
 	rcv.FilePath = stage1.FilePath
-
 	rcv.FileSha = stage1.FileSha
-
 	rcv.FileSize = stage1.FileSize
-
 	rcv.FileTime = stage1.FileTime
-
 	rcv.Filename = stage1.Filename
-
 	rcv.Name = stage1.Name
-
 	rcv.PackageType = stage1.PackageType
-
 	rcv.Version = stage1.Version
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -228,21 +203,13 @@ func (m *OnpremImagePackageAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "FilePath")
-
 	delete(stage2, "FileSha")
-
 	delete(stage2, "FileSize")
-
 	delete(stage2, "FileTime")
-
 	delete(stage2, "Filename")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "PackageType")
-
 	delete(stage2, "Version")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -264,61 +231,46 @@ func (m OnpremImagePackageAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Optional file path of the image package.
-		//
 		// Read Only: true
 		FilePath string `json:"FilePath,omitempty"`
 
 		// Image file's fingerprint. Fingerprint is calculated using SHA256 algorithm.
-		//
 		// Read Only: true
 		FileSha string `json:"FileSha,omitempty"`
 
 		// Image file size in bytes.
-		//
 		// Read Only: true
 		FileSize int64 `json:"FileSize,omitempty"`
 
 		// Image file's last modified date and time.
-		//
 		// Read Only: true
 		// Format: date-time
 		FileTime strfmt.DateTime `json:"FileTime,omitempty"`
 
 		// Filename of the image package.
-		//
 		// Read Only: true
 		Filename string `json:"Filename,omitempty"`
 
 		// Name of the software image package.
-		//
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
 		// Image package type (e.g. service, system etc.).
-		//
 		// Read Only: true
 		PackageType string `json:"PackageType,omitempty"`
 
 		// Image package version string.
-		//
 		// Read Only: true
 		Version string `json:"Version,omitempty"`
 	}
 
 	stage1.FilePath = m.FilePath
-
 	stage1.FileSha = m.FileSha
-
 	stage1.FileSize = m.FileSize
-
 	stage1.FileTime = m.FileTime
-
 	stage1.Filename = m.Filename
-
 	stage1.Name = m.Name
-
 	stage1.PackageType = m.PackageType
-
 	stage1.Version = m.Version
 
 	// make JSON object for known properties

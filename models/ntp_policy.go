@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,23 +22,18 @@ type NtpPolicy struct {
 	PolicyAbstractPolicy
 
 	// The appliance account to which the appliance NTP policy belongs.
-	//
 	ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
 
 	// State of NTP service on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Collection of NTP Server IP addresses or hostnames.
-	//
 	NtpServers []string `json:"NtpServers"`
 
 	// The organization to which the NTP policy belongs.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile objects.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -90,7 +84,6 @@ func (m NtpPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ApplianceAccount *IamAccountRef `json:"ApplianceAccount,omitempty"`
 
@@ -118,7 +111,6 @@ func (m NtpPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

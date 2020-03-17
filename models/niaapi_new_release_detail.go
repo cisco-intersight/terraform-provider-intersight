@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m NiaapiNewReleaseDetail) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,39 +99,32 @@ func (m *NiaapiNewReleaseDetail) UnmarshalBinary(b []byte) error {
 }
 
 // NiaapiNewReleaseDetailAO1P1 niaapi new release detail a o1 p1
+//
 // swagger:model NiaapiNewReleaseDetailAO1P1
 type NiaapiNewReleaseDetailAO1P1 struct {
 
 	// Description of this new verison release post.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// Link of downloading the release file.
-	//
 	Link string `json:"Link,omitempty"`
 
 	// The link used to provide a gateway for customer to review the release note.
-	//
 	ReleaseNoteLink string `json:"ReleaseNoteLink,omitempty"`
 
 	// The link title used to provide a gateway for customer to review the release note.
-	//
 	ReleaseNoteLinkTitle string `json:"ReleaseNoteLinkTitle,omitempty"`
 
 	// The link used to provide a gateway for customer to download the release.
-	//
 	SoftwareDownloadLink string `json:"SoftwareDownloadLink,omitempty"`
 
 	// The link title used to provide a gateway for customer to download the release.
-	//
 	SoftwareDownloadLinkTitle string `json:"SoftwareDownloadLinkTitle,omitempty"`
 
 	// Title of the new verison release post.
-	//
 	Title string `json:"Title,omitempty"`
 
 	// Version number Associate with this Post.
-	//
 	Version string `json:"Version,omitempty"`
 
 	// niaapi new release detail a o1 p1
@@ -146,35 +137,27 @@ func (m *NiaapiNewReleaseDetailAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Description of this new verison release post.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// Link of downloading the release file.
-		//
 		Link string `json:"Link,omitempty"`
 
 		// The link used to provide a gateway for customer to review the release note.
-		//
 		ReleaseNoteLink string `json:"ReleaseNoteLink,omitempty"`
 
 		// The link title used to provide a gateway for customer to review the release note.
-		//
 		ReleaseNoteLinkTitle string `json:"ReleaseNoteLinkTitle,omitempty"`
 
 		// The link used to provide a gateway for customer to download the release.
-		//
 		SoftwareDownloadLink string `json:"SoftwareDownloadLink,omitempty"`
 
 		// The link title used to provide a gateway for customer to download the release.
-		//
 		SoftwareDownloadLinkTitle string `json:"SoftwareDownloadLinkTitle,omitempty"`
 
 		// Title of the new verison release post.
-		//
 		Title string `json:"Title,omitempty"`
 
 		// Version number Associate with this Post.
-		//
 		Version string `json:"Version,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -183,21 +166,13 @@ func (m *NiaapiNewReleaseDetailAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiaapiNewReleaseDetailAO1P1
 
 	rcv.Description = stage1.Description
-
 	rcv.Link = stage1.Link
-
 	rcv.ReleaseNoteLink = stage1.ReleaseNoteLink
-
 	rcv.ReleaseNoteLinkTitle = stage1.ReleaseNoteLinkTitle
-
 	rcv.SoftwareDownloadLink = stage1.SoftwareDownloadLink
-
 	rcv.SoftwareDownloadLinkTitle = stage1.SoftwareDownloadLinkTitle
-
 	rcv.Title = stage1.Title
-
 	rcv.Version = stage1.Version
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -207,21 +182,13 @@ func (m *NiaapiNewReleaseDetailAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Description")
-
 	delete(stage2, "Link")
-
 	delete(stage2, "ReleaseNoteLink")
-
 	delete(stage2, "ReleaseNoteLinkTitle")
-
 	delete(stage2, "SoftwareDownloadLink")
-
 	delete(stage2, "SoftwareDownloadLinkTitle")
-
 	delete(stage2, "Title")
-
 	delete(stage2, "Version")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -243,52 +210,37 @@ func (m NiaapiNewReleaseDetailAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Description of this new verison release post.
-		//
 		Description string `json:"Description,omitempty"`
 
 		// Link of downloading the release file.
-		//
 		Link string `json:"Link,omitempty"`
 
 		// The link used to provide a gateway for customer to review the release note.
-		//
 		ReleaseNoteLink string `json:"ReleaseNoteLink,omitempty"`
 
 		// The link title used to provide a gateway for customer to review the release note.
-		//
 		ReleaseNoteLinkTitle string `json:"ReleaseNoteLinkTitle,omitempty"`
 
 		// The link used to provide a gateway for customer to download the release.
-		//
 		SoftwareDownloadLink string `json:"SoftwareDownloadLink,omitempty"`
 
 		// The link title used to provide a gateway for customer to download the release.
-		//
 		SoftwareDownloadLinkTitle string `json:"SoftwareDownloadLinkTitle,omitempty"`
 
 		// Title of the new verison release post.
-		//
 		Title string `json:"Title,omitempty"`
 
 		// Version number Associate with this Post.
-		//
 		Version string `json:"Version,omitempty"`
 	}
 
 	stage1.Description = m.Description
-
 	stage1.Link = m.Link
-
 	stage1.ReleaseNoteLink = m.ReleaseNoteLink
-
 	stage1.ReleaseNoteLinkTitle = m.ReleaseNoteLinkTitle
-
 	stage1.SoftwareDownloadLink = m.SoftwareDownloadLink
-
 	stage1.SoftwareDownloadLinkTitle = m.SoftwareDownloadLinkTitle
-
 	stage1.Title = m.Title
-
 	stage1.Version = m.Version
 
 	// make JSON object for known properties

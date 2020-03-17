@@ -8,16 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexNamedVsan Hyperflex:Named Vsan
 //
 // A VSAN with a name and ID.
-//
 // VSANs are used when defining Fibre Channel external storage policies for the cluster.
 //
 // swagger:model hyperflexNamedVsan
@@ -61,7 +59,6 @@ func (m HyperflexNamedVsan) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,21 +100,16 @@ func (m *HyperflexNamedVsan) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexNamedVsanAO1P1 hyperflex named vsan a o1 p1
+//
 // swagger:model HyperflexNamedVsanAO1P1
 type HyperflexNamedVsanAO1P1 struct {
 
 	// The name of the VSAN.
-	//
 	// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The ID of the named VSAN.
-	//
 	// The ID can be any number between 1 and 4093, inclusive.
-	//
-	//
 	VsanID int64 `json:"VsanId,omitempty"`
 
 	// hyperflex named vsan a o1 p1
@@ -130,17 +122,11 @@ func (m *HyperflexNamedVsanAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The name of the VSAN.
-		//
 		// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The ID of the named VSAN.
-		//
 		// The ID can be any number between 1 and 4093, inclusive.
-		//
-		//
 		VsanID int64 `json:"VsanId,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -149,9 +135,7 @@ func (m *HyperflexNamedVsanAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexNamedVsanAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.VsanID = stage1.VsanID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -161,9 +145,7 @@ func (m *HyperflexNamedVsanAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "VsanId")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -185,22 +167,15 @@ func (m HyperflexNamedVsanAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The name of the VSAN.
-		//
 		// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The ID of the named VSAN.
-		//
 		// The ID can be any number between 1 and 4093, inclusive.
-		//
-		//
 		VsanID int64 `json:"VsanId,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.VsanID = m.VsanID
 
 	// make JSON object for known properties

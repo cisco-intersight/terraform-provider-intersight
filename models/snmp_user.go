@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m SnmpUser) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,20 +100,18 @@ func (m *SnmpUser) UnmarshalBinary(b []byte) error {
 }
 
 // SnmpUserAO1P1 snmp user a o1 p1
+//
 // swagger:model SnmpUserAO1P1
 type SnmpUserAO1P1 struct {
 
 	// Authorization password for the user.
-	//
 	AuthPassword string `json:"AuthPassword,omitempty"`
 
 	// Authorization protocol for authenticating the user.
-	//
 	// Enum: [NA MD5 SHA]
 	AuthType *string `json:"AuthType,omitempty"`
 
 	// Indicates whether the value of the 'authPassword' property has been set.
-	//
 	// Read Only: true
 	IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
@@ -124,20 +120,16 @@ type SnmpUserAO1P1 struct {
 	IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 
 	// SNMP username. Must have a minimum of 1 and and a maximum of 31 characters.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Privacy password for the user.
-	//
 	PrivacyPassword string `json:"PrivacyPassword,omitempty"`
 
 	// Privacy protocol for the user.
-	//
 	// Enum: [NA DES AES]
 	PrivacyType *string `json:"PrivacyType,omitempty"`
 
 	// Security mechanism used for communication between agent and manager.
-	//
 	// Enum: [AuthPriv NoAuthNoPriv AuthNoPriv]
 	SecurityLevel *string `json:"SecurityLevel,omitempty"`
 
@@ -151,16 +143,13 @@ func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Authorization password for the user.
-		//
 		AuthPassword string `json:"AuthPassword,omitempty"`
 
 		// Authorization protocol for authenticating the user.
-		//
 		// Enum: [NA MD5 SHA]
 		AuthType *string `json:"AuthType,omitempty"`
 
 		// Indicates whether the value of the 'authPassword' property has been set.
-		//
 		// Read Only: true
 		IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
@@ -169,20 +158,16 @@ func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 		IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 
 		// SNMP username. Must have a minimum of 1 and and a maximum of 31 characters.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Privacy password for the user.
-		//
 		PrivacyPassword string `json:"PrivacyPassword,omitempty"`
 
 		// Privacy protocol for the user.
-		//
 		// Enum: [NA DES AES]
 		PrivacyType *string `json:"PrivacyType,omitempty"`
 
 		// Security mechanism used for communication between agent and manager.
-		//
 		// Enum: [AuthPriv NoAuthNoPriv AuthNoPriv]
 		SecurityLevel *string `json:"SecurityLevel,omitempty"`
 	}
@@ -192,21 +177,13 @@ func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SnmpUserAO1P1
 
 	rcv.AuthPassword = stage1.AuthPassword
-
 	rcv.AuthType = stage1.AuthType
-
 	rcv.IsAuthPasswordSet = stage1.IsAuthPasswordSet
-
 	rcv.IsPrivacyPasswordSet = stage1.IsPrivacyPasswordSet
-
 	rcv.Name = stage1.Name
-
 	rcv.PrivacyPassword = stage1.PrivacyPassword
-
 	rcv.PrivacyType = stage1.PrivacyType
-
 	rcv.SecurityLevel = stage1.SecurityLevel
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -216,21 +193,13 @@ func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AuthPassword")
-
 	delete(stage2, "AuthType")
-
 	delete(stage2, "IsAuthPasswordSet")
-
 	delete(stage2, "IsPrivacyPasswordSet")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "PrivacyPassword")
-
 	delete(stage2, "PrivacyType")
-
 	delete(stage2, "SecurityLevel")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -252,16 +221,13 @@ func (m SnmpUserAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Authorization password for the user.
-		//
 		AuthPassword string `json:"AuthPassword,omitempty"`
 
 		// Authorization protocol for authenticating the user.
-		//
 		// Enum: [NA MD5 SHA]
 		AuthType *string `json:"AuthType,omitempty"`
 
 		// Indicates whether the value of the 'authPassword' property has been set.
-		//
 		// Read Only: true
 		IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
@@ -270,38 +236,27 @@ func (m SnmpUserAO1P1) MarshalJSON() ([]byte, error) {
 		IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 
 		// SNMP username. Must have a minimum of 1 and and a maximum of 31 characters.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// Privacy password for the user.
-		//
 		PrivacyPassword string `json:"PrivacyPassword,omitempty"`
 
 		// Privacy protocol for the user.
-		//
 		// Enum: [NA DES AES]
 		PrivacyType *string `json:"PrivacyType,omitempty"`
 
 		// Security mechanism used for communication between agent and manager.
-		//
 		// Enum: [AuthPriv NoAuthNoPriv AuthNoPriv]
 		SecurityLevel *string `json:"SecurityLevel,omitempty"`
 	}
 
 	stage1.AuthPassword = m.AuthPassword
-
 	stage1.AuthType = m.AuthType
-
 	stage1.IsAuthPasswordSet = m.IsAuthPasswordSet
-
 	stage1.IsPrivacyPasswordSet = m.IsPrivacyPasswordSet
-
 	stage1.Name = m.Name
-
 	stage1.PrivacyPassword = m.PrivacyPassword
-
 	stage1.PrivacyType = m.PrivacyType
-
 	stage1.SecurityLevel = m.SecurityLevel
 
 	// make JSON object for known properties

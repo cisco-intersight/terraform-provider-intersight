@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,132 +23,107 @@ type AssetDeviceContractInformation struct {
 	MoBaseMo
 
 	// Contract information for the Cisco support contract purchased for the Cisco device.
-	//
 	// Read Only: true
 	Contract *AssetContractInformation `json:"Contract,omitempty"`
 
 	// Calculated contract status that is derived based on the service line status and contract end date. It is different from serviceLineStatus property. serviceLineStatus gives us ACTIVE, OVERDUE, EXPIRED. These are transformed into Active, Expiring Soon and Not Covered.
-	//
 	// Read Only: true
 	// Enum: [Not Covered Active Expiring Soon]
 	ContractStatus string `json:"ContractStatus,omitempty"`
 
 	// End date of the covered product line. The coverage end date is fetched from Cisco SN2INFO API.
-	//
 	// Read Only: true
 	CoveredProductLineEndDate string `json:"CoveredProductLineEndDate,omitempty"`
 
 	// Unique identifier of the Cisco device. This information is used to query Cisco APIx SN2INFO and CCWR databases.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// Type used to classify the device in Cisco Intersight. Currently supported values are Server and FabricInterconnect. This will be expanded to support more types in future.
-	//
 	// Read Only: true
 	// Enum: [None CiscoUcsServer CiscoUcsFI CiscoUcsChassis]
 	DeviceType string `json:"DeviceType,omitempty"`
 
 	// End customer information for the Cisco support contract purchased for the Cisco device.
-	//
 	// Read Only: true
 	EndCustomer *AssetCustomerInformation `json:"EndCustomer,omitempty"`
 
 	// EndUserGlobalUltimate information listed in the contract.
-	//
 	// Read Only: true
 	EndUserGlobalUltimate *AssetGlobalUltimate `json:"EndUserGlobalUltimate,omitempty"`
 
 	// Validates if the device is a genuine Cisco device. Validated is done using the Cisco SN2INFO APIs.
-	//
 	// Read Only: true
 	IsValid *bool `json:"IsValid,omitempty"`
 
 	// Item type of this specific Cisco device. example "Chassis".
-	//
 	// Read Only: true
 	ItemType string `json:"ItemType,omitempty"`
 
 	// Maintenance purchase order number for the Cisco device.
-	//
 	// Read Only: true
 	MaintenancePurchaseOrderNumber string `json:"MaintenancePurchaseOrderNumber,omitempty"`
 
 	// Maintenance sales order number for the Cisco device.
-	//
 	// Read Only: true
 	MaintenanceSalesOrderNumber string `json:"MaintenanceSalesOrderNumber,omitempty"`
 
 	// The platform type of the Cisco device.
-	//
 	// Read Only: true
-	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// Product information of the offering under a contract.
-	//
 	// Read Only: true
 	Product *AssetProductInformation `json:"Product,omitempty"`
 
 	// Purchase order number for the Cisco device. It is a unique number assigned for every purchase.
-	//
 	// Read Only: true
 	PurchaseOrderNumber string `json:"PurchaseOrderNumber,omitempty"`
 
 	// Reference to the device connector through which the device is connected.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// ResellerGlobalUltimate information listed in the contract.
-	//
 	// Read Only: true
 	ResellerGlobalUltimate *AssetGlobalUltimate `json:"ResellerGlobalUltimate,omitempty"`
 
 	// Sales order number for the Cisco device. It is a unique number assigned for every sale.
-	//
 	// Read Only: true
 	SalesOrderNumber string `json:"SalesOrderNumber,omitempty"`
 
 	// The type of service contract that covers the Cisco device.
-	//
 	// Read Only: true
 	ServiceDescription string `json:"ServiceDescription,omitempty"`
 
 	// End date for the Cisco service contract that covers this Cisco device.
-	//
 	// Read Only: true
 	// Format: date-time
 	ServiceEndDate strfmt.DateTime `json:"ServiceEndDate,omitempty"`
 
 	// The type of service contract that covers the Cisco device.
-	//
 	// Read Only: true
 	ServiceLevel string `json:"ServiceLevel,omitempty"`
 
 	// The SKU of the service contract that covers the Cisco device.
-	//
 	// Read Only: true
 	ServiceSku string `json:"ServiceSku,omitempty"`
 
 	// Start date for the Cisco service contract that covers this Cisco device.
-	//
 	// Read Only: true
 	// Format: date-time
 	ServiceStartDate strfmt.DateTime `json:"ServiceStartDate,omitempty"`
 
 	// Internal property used for triggering and tracking actions for contract information.
-	//
 	// Enum: [Update OK Failed Retry]
 	StateContract *string `json:"StateContract,omitempty"`
 
 	// End date for the warranty that covers the Cisco device.
-	//
 	// Read Only: true
 	WarrantyEndDate string `json:"WarrantyEndDate,omitempty"`
 
 	// Type of warranty that covers the Cisco device.
-	//
 	// Read Only: true
 	WarrantyType string `json:"WarrantyType,omitempty"`
 }
@@ -281,7 +255,6 @@ func (m AssetDeviceContractInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Contract *AssetContractInformation `json:"Contract,omitempty"`
 
@@ -389,7 +362,6 @@ func (m AssetDeviceContractInformation) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -582,7 +554,7 @@ var assetDeviceContractInformationTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

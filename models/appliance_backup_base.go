@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -26,28 +25,22 @@ type ApplianceBackupBase struct {
 	MoBaseMo
 
 	// Backup filename to backup or restore.
-	//
 	Filename string `json:"Filename,omitempty"`
 
 	// Communication protocol used by the file server (e.g. scp or sftp).
-	//
 	// Enum: [scp sftp]
 	Protocol *string `json:"Protocol,omitempty"`
 
 	// Hostname of the remote file server.
-	//
 	RemoteHost string `json:"RemoteHost,omitempty"`
 
 	// File server directory to copy the file.
-	//
 	RemotePath string `json:"RemotePath,omitempty"`
 
 	// Remote TCP port on the file server (e.g. 22 for scp).
-	//
 	RemotePort int64 `json:"RemotePort,omitempty"`
 
 	// Username to authenticate the fileserver.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -102,7 +95,6 @@ func (m ApplianceBackupBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Filename string `json:"Filename,omitempty"`
 
@@ -134,7 +126,6 @@ func (m ApplianceBackupBase) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

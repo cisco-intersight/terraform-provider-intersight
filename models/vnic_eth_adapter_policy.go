@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,51 +20,39 @@ type VnicEthAdapterPolicy struct {
 	PolicyAbstractPolicy
 
 	// Enables advanced filtering on the interface.
-	//
 	AdvancedFilter *bool `json:"AdvancedFilter,omitempty"`
 
 	// Settings for Accelerated Receive Flow Steering to reduce the network latency and increase CPU cache efficiency.
-	//
 	ArfsSettings *VnicArfsSettings `json:"ArfsSettings,omitempty"`
 
 	// Completion Queue resource settings.
-	//
 	CompletionQueueSettings *VnicCompletionQueueSettings `json:"CompletionQueueSettings,omitempty"`
 
 	// Interrupt Settings for the virtual ethernet interface.
-	//
 	InterruptSettings *VnicEthInterruptSettings `json:"InterruptSettings,omitempty"`
 
 	// Network Virtualization using Generic Routing Encapsulation Settings.
-	//
 	NvgreSettings *VnicNvgreSettings `json:"NvgreSettings,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Settings for RDMA over Converged Ethernet.
-	//
 	RoceSettings *VnicRoceSettings `json:"RoceSettings,omitempty"`
 
 	// Receive Side Scaling allows the incoming traffic to be spread across multiple CPU cores.
-	//
 	RssSettings *bool `json:"RssSettings,omitempty"`
 
 	// Receive Queue resouce settings.
-	//
 	RxQueueSettings *VnicEthRxQueueSettings `json:"RxQueueSettings,omitempty"`
 
 	// The TCP offload settings decide whether to offload the TCP related network functions from the CPU to the network hardware or not.
-	//
 	TCPOffloadSettings *VnicTCPOffloadSettings `json:"TcpOffloadSettings,omitempty"`
 
 	// Transmit Queue resource settings.
-	//
 	TxQueueSettings *VnicEthTxQueueSettings `json:"TxQueueSettings,omitempty"`
 
 	// Virtual Extensible LAN Protocol Settings.
-	//
 	VxlanSettings *VnicVxlanSettings `json:"VxlanSettings,omitempty"`
 }
 
@@ -144,7 +131,6 @@ func (m VnicEthAdapterPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdvancedFilter *bool `json:"AdvancedFilter,omitempty"`
 
@@ -200,7 +186,6 @@ func (m VnicEthAdapterPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

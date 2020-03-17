@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,32 +24,25 @@ type StorageStoragePolicy struct {
 	PolicyAbstractPolicy
 
 	// Relationship to the used disk group policies.
-	//
 	DiskGroupPolicies []*StorageDiskGroupPolicyRef `json:"DiskGroupPolicies"`
 
 	// A collection of disks used as hot spares globally for all the RAID groups.
-	//
 	GlobalHotSpares []*StorageLocalDisk `json:"GlobalHotSpares"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile objects.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// Retains the virtual drives defined in policy if they exist already. If this flag is false, the existing virtual drives are removed and created again based on virtual drives in the policy.
-	//
 	RetainPolicyVirtualDrives *bool `json:"RetainPolicyVirtualDrives,omitempty"`
 
 	// This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.
-	//
 	// Enum: [UnconfiguredGood Jbod]
 	UnusedDisksState *string `json:"UnusedDisksState,omitempty"`
 
 	// The list of virtual drives and the disk groups that need to be created through this policy.
-	//
 	VirtualDrives []*StorageVirtualDriveConfig `json:"VirtualDrives"`
 }
 
@@ -109,7 +101,6 @@ func (m StorageStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DiskGroupPolicies []*StorageDiskGroupPolicyRef `json:"DiskGroupPolicies"`
 
@@ -145,7 +136,6 @@ func (m StorageStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiatelemetryDiskinfo Niatelemetry:Diskinfo
+//
 // swagger:model niatelemetryDiskinfo
 type NiatelemetryDiskinfo struct {
 	MoBaseComplexType
@@ -56,7 +56,6 @@ func (m NiatelemetryDiskinfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -98,23 +97,20 @@ func (m *NiatelemetryDiskinfo) UnmarshalBinary(b []byte) error {
 }
 
 // NiatelemetryDiskinfoAO1P1 niatelemetry diskinfo a o1 p1
+//
 // swagger:model NiatelemetryDiskinfoAO1P1
 type NiatelemetryDiskinfoAO1P1 struct {
 
 	// The free disk capacity, currently the type of this field is set to integer.
-	//
 	Free int64 `json:"Free,omitempty"`
 
 	// Disk Name used to identified the disk usage record.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
-	//
 	Total int64 `json:"Total,omitempty"`
 
 	// The used disk capacity, currently the type of this field is set to integer.
-	//
 	Used int64 `json:"Used,omitempty"`
 
 	// niatelemetry diskinfo a o1 p1
@@ -127,19 +123,15 @@ func (m *NiatelemetryDiskinfoAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The free disk capacity, currently the type of this field is set to integer.
-		//
 		Free int64 `json:"Free,omitempty"`
 
 		// Disk Name used to identified the disk usage record.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
-		//
 		Total int64 `json:"Total,omitempty"`
 
 		// The used disk capacity, currently the type of this field is set to integer.
-		//
 		Used int64 `json:"Used,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -148,13 +140,9 @@ func (m *NiatelemetryDiskinfoAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv NiatelemetryDiskinfoAO1P1
 
 	rcv.Free = stage1.Free
-
 	rcv.Name = stage1.Name
-
 	rcv.Total = stage1.Total
-
 	rcv.Used = stage1.Used
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -164,13 +152,9 @@ func (m *NiatelemetryDiskinfoAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Free")
-
 	delete(stage2, "Name")
-
 	delete(stage2, "Total")
-
 	delete(stage2, "Used")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -192,28 +176,21 @@ func (m NiatelemetryDiskinfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The free disk capacity, currently the type of this field is set to integer.
-		//
 		Free int64 `json:"Free,omitempty"`
 
 		// Disk Name used to identified the disk usage record.
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
-		//
 		Total int64 `json:"Total,omitempty"`
 
 		// The used disk capacity, currently the type of this field is set to integer.
-		//
 		Used int64 `json:"Used,omitempty"`
 	}
 
 	stage1.Free = m.Free
-
 	stage1.Name = m.Name
-
 	stage1.Total = m.Total
-
 	stage1.Used = m.Used
 
 	// make JSON object for known properties

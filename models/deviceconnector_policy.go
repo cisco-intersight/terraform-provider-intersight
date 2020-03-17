@@ -8,30 +8,26 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // DeviceconnectorPolicy Device Connector
 //
-// Device Connector Policy.
+// Policy to control configuration changes allowed from Cisco IMC.
 //
 // swagger:model deviceconnectorPolicy
 type DeviceconnectorPolicy struct {
 	PolicyAbstractPolicy
 
 	// Enables configuration lockout on the endpoint.
-	//
 	LockoutEnabled *bool `json:"LockoutEnabled,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 }
 
@@ -74,7 +70,6 @@ func (m DeviceconnectorPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		LockoutEnabled *bool `json:"LockoutEnabled,omitempty"`
 
@@ -94,7 +89,6 @@ func (m DeviceconnectorPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

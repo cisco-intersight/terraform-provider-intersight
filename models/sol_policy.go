@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,29 +24,23 @@ type SolPolicy struct {
 	PolicyAbstractPolicy
 
 	// Baud Rate used for Serial Over LAN communication.
-	//
 	// Enum: [9600 19200 38400 57600 115200]
 	BaudRate *int64 `json:"BaudRate,omitempty"`
 
 	// Serial port through which the system routes Serial Over LAN communication. This field is available only on some Cisco UCS C-Series servers. If it is unavailable, the server uses COM port 0 by default.
-	//
 	// Enum: [com0 com1]
 	ComPort *string `json:"ComPort,omitempty"`
 
 	// State of Serial Over LAN service on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// SSH port used to access Serial Over LAN directly. Enables bypassing Cisco IMC shell to provide direct access to Serial Over LAN.
-	//
 	SSHPort int64 `json:"SshPort,omitempty"`
 }
 
@@ -102,7 +95,6 @@ func (m SolPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BaudRate *int64 `json:"BaudRate,omitempty"`
 
@@ -134,7 +126,6 @@ func (m SolPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

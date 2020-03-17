@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,17 +20,13 @@ type HyperflexHxdpVersion struct {
 	MoBaseMo
 
 	// A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.
-	//
 	AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
 	// Corresponding installer image for the HyperFlex Data Platform version.
-	//
 	InstallerImage *HyperflexInstallerImageRef `json:"InstallerImage,omitempty"`
 
 	// The HyperFlex Data Platform version.
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -74,7 +69,6 @@ func (m HyperflexHxdpVersion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
@@ -94,7 +88,6 @@ func (m HyperflexHxdpVersion) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

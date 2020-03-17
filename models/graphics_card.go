@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,68 +22,54 @@ type GraphicsCard struct {
 	EquipmentBase
 
 	// It shows the id of graphics card.
-	//
 	// Read Only: true
 	CardID int64 `json:"CardId,omitempty"`
 
 	// A collection of references to the [compute.Board](mo://compute.Board) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Board](mo://compute.Board) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
 	// It shows the device id of grphics card.
-	//
 	// Read Only: true
 	DeviceID int64 `json:"DeviceId,omitempty"`
 
 	// It shows the expander slot inforamtion for the card.
-	//
 	// Read Only: true
 	ExpanderSlot string `json:"ExpanderSlot,omitempty"`
 
 	// It shows current firmware version of graphics card.
-	//
 	// Read Only: true
 	FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
 	// It shows the controllers under each graphics card.
-	//
 	// Read Only: true
 	GraphicsControllers []*GraphicsControllerRef `json:"GraphicsControllers"`
 
 	// It shows the current mode of graphics card.
-	//
 	// Read Only: true
 	Mode string `json:"Mode,omitempty"`
 
 	// It shows number of controllers under each card.
-	//
 	NumGpus string `json:"NumGpus,omitempty"`
 
 	// It shows the current operational state of graphics card.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// It shows the pci address of graphics card.
-	//
 	// Read Only: true
 	PciAddress string `json:"PciAddress,omitempty"`
 
 	// This list contains the pci address of all controllers for corresponding card.
-	//
 	// Read Only: true
 	PciAddressList string `json:"PciAddressList,omitempty"`
 
 	// It shows the pci slot name for grapchics card.
-	//
 	// Read Only: true
 	PciSlot string `json:"PciSlot,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -168,7 +153,6 @@ func (m GraphicsCard) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CardID int64 `json:"CardId,omitempty"`
 
@@ -228,7 +212,6 @@ func (m GraphicsCard) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

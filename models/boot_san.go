@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,15 +20,12 @@ type BootSan struct {
 	BootDeviceBase
 
 	// Details of the bootloader to be used during SAN boot.
-	//
 	Bootloader *BootBootloader `json:"Bootloader,omitempty"`
 
 	// The Logical Unit Number (LUN) of the device.
-	//
 	Lun int64 `json:"Lun,omitempty"`
 
 	// Slot ID of the device. Supported values are ( 1 - 255, "MLOM", "L1", "L2" ).
-	//
 	Slot string `json:"Slot,omitempty"`
 }
 
@@ -72,7 +68,6 @@ func (m BootSan) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Bootloader *BootBootloader `json:"Bootloader,omitempty"`
 
@@ -92,7 +87,6 @@ func (m BootSan) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

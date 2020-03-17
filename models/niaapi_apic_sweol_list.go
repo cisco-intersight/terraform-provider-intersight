@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiaapiApicSweolList niaapi apic sweol list
+//
 // swagger:model niaapiApicSweolList
 type NiaapiApicSweolList struct {
 

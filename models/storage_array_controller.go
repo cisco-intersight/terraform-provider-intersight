@@ -8,45 +8,39 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // StorageArrayController Storage:Array Controller
 //
-// Common attributes for Storage array controller. It can be a hardware or software unit which manages the physical storage disk available in array.
+// Common attributes for a Storage array controller. It can be a hardware or software unit which manages the physical storage disks available in the array.
 //
 // swagger:model storageArrayController
 type StorageArrayController struct {
 	EquipmentBase
 
 	// Storage array controller name.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Controller running mode, Primary or Secondary.
-	//
 	// Read Only: true
 	// Enum: [Unknown Primary Secondary Maintenance]
 	OperationalMode string `json:"OperationalMode,omitempty"`
 
 	// Status of the storage controller.
-	//
 	// Read Only: true
 	// Enum: [Unknown Ok Degraded Critical Offline Identifying NotAvailable Updating Unrecognized]
 	Status string `json:"Status,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
 	// Software version running on a storage controller.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -98,7 +92,6 @@ func (m StorageArrayController) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
@@ -126,7 +119,6 @@ func (m StorageArrayController) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

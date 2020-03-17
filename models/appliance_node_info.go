@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -27,22 +26,18 @@ type ApplianceNodeInfo struct {
 	MoBaseMo
 
 	// Cluster node's FQDN or IP address.
-	//
 	// Read Only: true
 	Hostname string `json:"Hostname,omitempty"`
 
 	// System assigned unique ID of the Intersight Appliance node. The system incrementally assigns identifiers to each node in the Intersight Appliance cluster starting with a value of 1.
-	//
 	// Read Only: true
 	NodeID int64 `json:"NodeId,omitempty"`
 
 	// IPv4 subnet and gateway configuration of the Intersight Appliance node.
-	//
 	// Read Only: true
 	NodeIPV4Config *CommIPV4Interface `json:"NodeIpV4Config,omitempty"`
 
 	// Operational status of the Intersight Appliance node.
-	//
 	// Read Only: true
 	// Enum: [Unknown Operational Impaired AttentionNeeded]
 	OperationalStatus string `json:"OperationalStatus,omitempty"`
@@ -91,7 +86,6 @@ func (m ApplianceNodeInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Hostname string `json:"Hostname,omitempty"`
 
@@ -115,7 +109,6 @@ func (m ApplianceNodeInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

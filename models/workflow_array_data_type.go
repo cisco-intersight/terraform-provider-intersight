@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,15 +20,12 @@ type WorkflowArrayDataType struct {
 	WorkflowBaseDataType
 
 	// Data item within the array data type.
-	//
 	ArrayItemType *WorkflowArrayItem `json:"ArrayItemType,omitempty"`
 
 	// Specify the maximum value of the array.
-	//
 	Max int64 `json:"Max,omitempty"`
 
 	// Specify the minimum value of the array.
-	//
 	Min int64 `json:"Min,omitempty"`
 }
 
@@ -72,7 +68,6 @@ func (m WorkflowArrayDataType) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ArrayItemType *WorkflowArrayItem `json:"ArrayItemType,omitempty"`
 
@@ -92,7 +87,6 @@ func (m WorkflowArrayDataType) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

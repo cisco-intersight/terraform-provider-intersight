@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,29 +20,23 @@ type IamSessionLimits struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The idle timeout interval for the web session in seconds. The default value is 1800 seconds. When a session is not refreshed for this duration, backend will mark the session as idle and remove the session.
-	//
 	// Read Only: true
 	IdleTimeOut int64 `json:"IdleTimeOut,omitempty"`
 
 	// The maximum number of sessions allowed in an account. The default value is 128.
-	//
 	// Read Only: true
 	MaximumLimit int64 `json:"MaximumLimit,omitempty"`
 
 	// The maximum number of sessions allowed per user. Default value is 32.
-	//
 	// Read Only: true
 	PerUserLimit int64 `json:"PerUserLimit,omitempty"`
 
 	// The session expiry duration in seconds. The default value is 57600 seconds or 16 hours.
-	//
 	// Read Only: true
 	SessionTimeOut int64 `json:"SessionTimeOut,omitempty"`
 }
@@ -95,7 +88,6 @@ func (m IamSessionLimits) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -123,7 +115,6 @@ func (m IamSessionLimits) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

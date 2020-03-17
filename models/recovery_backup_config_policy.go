@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,11 +22,9 @@ type RecoveryBackupConfigPolicy struct {
 	RecoveryAbstractBackupConfig
 
 	// List of Backup profiles using this policy.
-	//
 	BackupProfiles []*RecoveryBackupProfileRef `json:"BackupProfiles"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 }
 
@@ -66,7 +63,6 @@ func (m RecoveryBackupConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupProfiles []*RecoveryBackupProfileRef `json:"BackupProfiles"`
 
@@ -82,7 +78,6 @@ func (m RecoveryBackupConfigPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

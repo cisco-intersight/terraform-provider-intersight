@@ -35,7 +35,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -76,7 +76,42 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+			},
+			"hypervisor_version": {
+				Description: "Desired  hypervisor version to apply for all the nodes on the HyperFlex cluster.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"hypervisor_version_info": {
+				Description: "Bundle metadata information for the desired Hypervisor version.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -98,7 +133,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.",
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -123,7 +158,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -135,7 +170,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				ForceNew:   true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.These resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.All logical and physical resources part of an organization will have organization in PermissionResources field.If DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects willhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.All profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
@@ -154,7 +189,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -189,7 +224,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'is set and 'moid' is empty/absent from the request, Intersight will determine the Moid of theresource matching the filter expression and populate it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request. An error is returned if the filtermatches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -215,7 +250,7 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"object_type": {
-							Description: "The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -230,6 +265,12 @@ func resourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"upgrade_types": {
+				Description: "List of components to be upgraded on the HyperFlex Cluster.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString}},
 		},
 	}
 }
@@ -311,6 +352,43 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.HxdpVersionInfo = &x
+
+	}
+
+	if v, ok := d.GetOk("hypervisor_version"); ok {
+		x := (v.(string))
+		o.HypervisorVersion = x
+
+	}
+
+	if v, ok := d.GetOk("hypervisor_version_info"); ok {
+		p := models.SoftwareHyperflexDistributableRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.SoftwareHyperflexDistributableRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.HypervisorVersionInfo = &x
 
 	}
 
@@ -476,6 +554,17 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 
 	}
 
+	if v, ok := d.GetOk("upgrade_types"); ok {
+		x := make([]*string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			a := y.Index(i).Interface().(string)
+			x = append(x, &a)
+		}
+		o.UpgradeTypes = x
+
+	}
+
 	url := "hyperflex/SoftwareVersionPolicies"
 	data, err := o.MarshalJSON()
 	if err != nil {
@@ -532,6 +621,14 @@ func resourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta int
 		return err
 	}
 
+	if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+		return err
+	}
+
+	if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRef(s.HypervisorVersionInfo, d)); err != nil {
+		return err
+	}
+
 	if err := d.Set("moid", (s.Moid)); err != nil {
 		return err
 	}
@@ -561,6 +658,10 @@ func resourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta int
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("upgrade_types", (s.UpgradeTypes)); err != nil {
 		return err
 	}
 
@@ -647,6 +748,43 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.HxdpVersionInfo = &x
+	}
+
+	if d.HasChange("hypervisor_version") {
+		v := d.Get("hypervisor_version")
+		x := (v.(string))
+		o.HypervisorVersion = x
+	}
+
+	if d.HasChange("hypervisor_version_info") {
+		v := d.Get("hypervisor_version_info")
+		p := models.SoftwareHyperflexDistributableRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.SoftwareHyperflexDistributableRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		o.HypervisorVersionInfo = &x
 	}
 
 	if d.HasChange("moid") {
@@ -809,6 +947,17 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			}
 		}
 		o.Tags = x
+	}
+
+	if d.HasChange("upgrade_types") {
+		v := d.Get("upgrade_types")
+		x := make([]*string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			a := y.Index(i).Interface().(string)
+			x = append(x, &a)
+		}
+		o.UpgradeTypes = x
 	}
 
 	url := "hyperflex/SoftwareVersionPolicies" + "/" + d.Id()

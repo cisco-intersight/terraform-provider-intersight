@@ -8,14 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // HyperflexHxResiliencyInfoDt Hyperflex:Hx Resiliency Info Dt
+//
 // swagger:model hyperflexHxResiliencyInfoDt
 type HyperflexHxResiliencyInfoDt struct {
 	MoBaseComplexType
@@ -57,7 +57,6 @@ func (m HyperflexHxResiliencyInfoDt) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -99,6 +98,7 @@ func (m *HyperflexHxResiliencyInfoDt) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexHxResiliencyInfoDtAO1P1 hyperflex hx resiliency info dt a o1 p1
+//
 // swagger:model HyperflexHxResiliencyInfoDtAO1P1
 type HyperflexHxResiliencyInfoDtAO1P1 struct {
 
@@ -179,19 +179,12 @@ func (m *HyperflexHxResiliencyInfoDtAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexHxResiliencyInfoDtAO1P1
 
 	rcv.DataReplicationFactor = stage1.DataReplicationFactor
-
 	rcv.HddFailuresTolerable = stage1.HddFailuresTolerable
-
 	rcv.Messages = stage1.Messages
-
 	rcv.NodeFailuresTolerable = stage1.NodeFailuresTolerable
-
 	rcv.PolicyCompliance = stage1.PolicyCompliance
-
 	rcv.ResiliencyState = stage1.ResiliencyState
-
 	rcv.SsdFailuresTolerable = stage1.SsdFailuresTolerable
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -201,19 +194,12 @@ func (m *HyperflexHxResiliencyInfoDtAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DataReplicationFactor")
-
 	delete(stage2, "HddFailuresTolerable")
-
 	delete(stage2, "Messages")
-
 	delete(stage2, "NodeFailuresTolerable")
-
 	delete(stage2, "PolicyCompliance")
-
 	delete(stage2, "ResiliencyState")
-
 	delete(stage2, "SsdFailuresTolerable")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -267,17 +253,11 @@ func (m HyperflexHxResiliencyInfoDtAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.DataReplicationFactor = m.DataReplicationFactor
-
 	stage1.HddFailuresTolerable = m.HddFailuresTolerable
-
 	stage1.Messages = m.Messages
-
 	stage1.NodeFailuresTolerable = m.NodeFailuresTolerable
-
 	stage1.PolicyCompliance = m.PolicyCompliance
-
 	stage1.ResiliencyState = m.ResiliencyState
-
 	stage1.SsdFailuresTolerable = m.SsdFailuresTolerable
 
 	// make JSON object for known properties

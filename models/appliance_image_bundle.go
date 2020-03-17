@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -23,7 +22,6 @@ import (
 // additional properties computed during the manifest processing. Additional properties are the
 // dynamic attributes of the software packages declared in the software manifest. For example,
 // SHA256 values of the software packages are computed during the software manifest processing.
-//
 // An ImageBundle managed object named 'current' is always present in the Intersight Appliance.
 // The software upgrade service creates another ImageBundle managed object named 'pending'
 // when there is a pending software upgrade. The upgrade service renames the 'pending' bundle
@@ -34,127 +32,103 @@ type ApplianceImageBundle struct {
 	MoBaseMo
 
 	// Collection of the Intersight Appliance's system installation packages.
-	//
 	// Read Only: true
 	AnsiblePackages []*OnpremImagePackage `json:"AnsiblePackages"`
 
 	// Indicates that the software upgrade was automatically initiated by the Intersight Appliance.
-	//
 	// Read Only: true
 	AutoUpgrade *bool `json:"AutoUpgrade,omitempty"`
 
 	// Collection of the Intersight Appliance's device connector packages.
-	//
 	// Read Only: true
 	DcPackages []*OnpremImagePackage `json:"DcPackages"`
 
 	// Collection of the Intersight Appliance's developer debug packages. Optional, and not installed by default.
-	//
 	// Read Only: true
 	DebugPackages []*OnpremImagePackage `json:"DebugPackages"`
 
 	// Short description of the software upgrade bundle.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// Collection of the Intersight Appliance's endpoint UI packages such as Cisco UCSM, Cisco HyperFlex etc.
-	//
 	// Read Only: true
 	EndpointPackages []*OnpremImagePackage `json:"EndpointPackages"`
 
 	// Fingerprint of the software manifest from which this bundle is created. Fingerprint is calculated using the SHA256 algorithm.
-	//
 	// Read Only: true
 	Fingerprint string `json:"Fingerprint,omitempty"`
 
 	// Indicates that the ImageBundle has errors. The upgrade service sets this field when it encounters errors during the manifest processing.
-	//
 	// Read Only: true
 	HasError *bool `json:"HasError,omitempty"`
 
 	// Collection of the Intersight Appliance's infrastructure service packages such as database.
-	//
 	// Read Only: true
 	InfraPackages []*OnpremImagePackage `json:"InfraPackages"`
 
 	// Collection of the Intersight Appliance's initialization service packages.
-	//
 	// Read Only: true
 	InitPackages []*OnpremImagePackage `json:"InitPackages"`
 
 	// Name of the software upgrade bundle.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Detailed description of the software upgrade bundle.
-	//
 	// Read Only: true
 	Notes string `json:"Notes,omitempty"`
 
 	// Software upgrade manifest's upgrade priority. The upgrade service supports two priorities, Normal and Critical. Normal priority is used for regular software upgrades, and the upgrade service uses the Upgrade Policy to compute upgrade start time. Critical priority is used for the critical software security patches, and the upgrade service ignores the Upgrade Policy when it computes the upgrade start time.
-	//
 	// Read Only: true
 	// Enum: [Normal Critical]
 	Priority string `json:"Priority,omitempty"`
 
 	// Software upgrade manifest's release date and time.
-	//
 	// Read Only: true
 	// Format: date-time
 	ReleaseTime strfmt.DateTime `json:"ReleaseTime,omitempty"`
 
 	// Collection of the Intersight Appliance's micro-services pakages.
-	//
 	// Read Only: true
 	ServicePackages []*OnpremImagePackage `json:"ServicePackages"`
 
 	// Status message set during the manifest processing.
-	//
 	// Read Only: true
 	StatusMessage string `json:"StatusMessage,omitempty"`
 
 	// Collection of the Intersight Appliance's system packages such as DNS etc.
-	//
 	// Read Only: true
 	SystemPackages []*OnpremImagePackage `json:"SystemPackages"`
 
 	// Collection of the Intersight Appliance's UI packages of the micro-services.
-	//
 	// Read Only: true
 	UIPackages []*OnpremImagePackage `json:"UiPackages"`
 
 	// End date of the software upgrade process.
-	//
 	// Read Only: true
 	// Format: date-time
 	UpgradeEndTime strfmt.DateTime `json:"UpgradeEndTime,omitempty"`
 
 	// Grace period in seconds before the automatic upgrade is initiated. The upgrade service uses the grace period to compute the upgrade start time when it receives an upgrade notfication from the Intersight. If there is an Upgrade Policy configured for the Intersight Appliance, then the upgrade service uses the policy to compute the upgrade start time. However, the upgrade start time cannot not exceed the limit enforced by the grace period.
-	//
 	// Read Only: true
 	UpgradeGracePeriod int64 `json:"UpgradeGracePeriod,omitempty"`
 
 	// Duration (in minutes) for which services will be disrupted.
-	//
 	// Read Only: true
 	UpgradeImpactDuration int64 `json:"UpgradeImpactDuration,omitempty"`
 
 	// UpgradeImpactEnum is used to indicate the kind of impact the upgrade has on currently running services on the appliance.
-	//
 	// Read Only: true
 	// Enum: [None Disruptive Disruptive-reboot]
 	UpgradeImpactEnum string `json:"UpgradeImpactEnum,omitempty"`
 
 	// Start date of the software upgrade process.
-	//
 	// Read Only: true
 	// Format: date-time
 	UpgradeStartTime strfmt.DateTime `json:"UpgradeStartTime,omitempty"`
 
 	// Software upgrade manifest's version.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -282,7 +256,6 @@ func (m ApplianceImageBundle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AnsiblePackages []*OnpremImagePackage `json:"AnsiblePackages"`
 
@@ -386,7 +359,6 @@ func (m ApplianceImageBundle) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

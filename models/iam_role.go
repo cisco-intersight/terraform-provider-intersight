@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,35 +22,27 @@ type IamRole struct {
 	MoBaseMo
 
 	// A collection of references to the [iam.Account](mo://iam.Account) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Informative description about each role.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// The name of the role which has to be granted to user.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Names of the privileges in the role.
-	//
 	// Read Only: true
 	PrivilegeNames []string `json:"PrivilegeNames"`
 
 	// Reference to the privilege sets. Privilege set is a collection of privileges. Privilege sets are assigned to a user using roles.
-	//
 	// Read Only: true
 	PrivilegeSets []*IamPrivilegeSetRef `json:"PrivilegeSets"`
 
 	// A collection of references to the [iam.System](mo://iam.System) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.System](mo://iam.System) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	System *IamSystemRef `json:"System,omitempty"`
 }
@@ -107,7 +98,6 @@ func (m IamRole) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -139,7 +129,6 @@ func (m IamRole) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

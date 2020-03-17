@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,30 +24,23 @@ type HclHyperflexSoftwareCompatibilityInfo struct {
 	MoBaseMo
 
 	// A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.
-	//
 	AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
 	// Constraint for the matching software compatibility info, in case the match is applicable for certain cases only. For example a combination of (HyperFlex Data Platform, serverFw and hypervisor) versions can be applicable only for a HyperFlex Cluster UPGRADE operation, so a constraint of "supportedOperations=upgrade" can be added to the matching row.
-	//
 	Constraints []*HclConstraint `json:"Constraints"`
 
 	// HXDP component software version.
-	//
 	HxdpVersion string `json:"HxdpVersion,omitempty"`
 
 	// Type fo Hypervisor the HyperFlex components versions are compatible with. For example ESX, Hyperv or KVM.
-	//
-	// Enum: [Unknown Hyper-V ESXi]
+	// Enum: [ESXi]
 	HypervisorType *string `json:"HypervisorType,omitempty"`
 
 	// Hypervisor component software version.
-	//
 	HypervisorVersion string `json:"HypervisorVersion,omitempty"`
 
 	// UCS Server Firmware component software version.
-	//
 	ServerFwVersion string `json:"ServerFwVersion,omitempty"`
 }
 
@@ -103,7 +95,6 @@ func (m HclHyperflexSoftwareCompatibilityInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
@@ -135,7 +126,6 @@ func (m HclHyperflexSoftwareCompatibilityInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -213,7 +203,7 @@ var hclHyperflexSoftwareCompatibilityInfoTypeHypervisorTypePropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

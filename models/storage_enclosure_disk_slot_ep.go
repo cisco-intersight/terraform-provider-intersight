@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,30 +20,23 @@ type StorageEnclosureDiskSlotEp struct {
 	InventoryBase
 
 	// This field identifies the zoning configuration applied to  this enclosure slot.
-	//
 	DrivePath string `json:"DrivePath,omitempty"`
 
 	// This field identifies the health of the disk inserted in the slot.
-	//
 	Health string `json:"Health,omitempty"`
 
 	// This field identifies the disk is present in the enclosure slot.
-	//
 	Presence string `json:"Presence,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This field represents the slot Id in the storage enclosure.
-	//
 	Slot string `json:"Slot,omitempty"`
 
 	// A collection of references to the [storage.Enclosure](mo://storage.Enclosure) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Enclosure](mo://storage.Enclosure) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageEnclosure *StorageEnclosureRef `json:"StorageEnclosure,omitempty"`
 }
@@ -100,7 +92,6 @@ func (m StorageEnclosureDiskSlotEp) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DrivePath string `json:"DrivePath,omitempty"`
 
@@ -132,7 +123,6 @@ func (m StorageEnclosureDiskSlotEp) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

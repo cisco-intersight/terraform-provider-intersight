@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // ServerConfigChangeDetailList server config change detail list
+//
 // swagger:model serverConfigChangeDetailList
 type ServerConfigChangeDetailList struct {
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m IamClientMeta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,18 +99,16 @@ func (m *IamClientMeta) UnmarshalBinary(b []byte) error {
 }
 
 // IamClientMetaAO1P1 iam client meta a o1 p1
+//
 // swagger:model IamClientMetaAO1P1
 type IamClientMetaAO1P1 struct {
 
 	// Parsed device model from raw User-Agent.
-	//
 	DeviceModel string `json:"DeviceModel,omitempty"`
 
 	// The value of the "User-Agent" HTTP header, as sent by the HTTP client when it initiate a session to Intersight. This can be used to identify the client operating system, browser type and browser version.
 	// Example - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
 	// It is set when User successfully passed OAuth login flow and receives Access Token.
-	//
-	//
 	UserAgent string `json:"UserAgent,omitempty"`
 
 	// iam client meta a o1 p1
@@ -125,14 +121,11 @@ func (m *IamClientMetaAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Parsed device model from raw User-Agent.
-		//
 		DeviceModel string `json:"DeviceModel,omitempty"`
 
 		// The value of the "User-Agent" HTTP header, as sent by the HTTP client when it initiate a session to Intersight. This can be used to identify the client operating system, browser type and browser version.
 		// Example - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
 		// It is set when User successfully passed OAuth login flow and receives Access Token.
-		//
-		//
 		UserAgent string `json:"UserAgent,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -141,9 +134,7 @@ func (m *IamClientMetaAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamClientMetaAO1P1
 
 	rcv.DeviceModel = stage1.DeviceModel
-
 	rcv.UserAgent = stage1.UserAgent
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -153,9 +144,7 @@ func (m *IamClientMetaAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DeviceModel")
-
 	delete(stage2, "UserAgent")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -177,19 +166,15 @@ func (m IamClientMetaAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Parsed device model from raw User-Agent.
-		//
 		DeviceModel string `json:"DeviceModel,omitempty"`
 
 		// The value of the "User-Agent" HTTP header, as sent by the HTTP client when it initiate a session to Intersight. This can be used to identify the client operating system, browser type and browser version.
 		// Example - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
 		// It is set when User successfully passed OAuth login flow and receives Access Token.
-		//
-		//
 		UserAgent string `json:"UserAgent,omitempty"`
 	}
 
 	stage1.DeviceModel = m.DeviceModel
-
 	stage1.UserAgent = m.UserAgent
 
 	// make JSON object for known properties

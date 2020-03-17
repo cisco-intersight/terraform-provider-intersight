@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m WorkflowProperties) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,36 +101,37 @@ func (m *WorkflowProperties) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowPropertiesAO1P1 workflow properties a o1 p1
+//
 // swagger:model WorkflowPropertiesAO1P1
 type WorkflowPropertiesAO1P1 struct {
 
+	// When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.
+	ExternalMeta *bool `json:"ExternalMeta,omitempty"`
+
 	// The schema expected for input parameters for this task.
-	//
 	InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
 
 	// The schema expected for output parameters for this task.
-	//
 	OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 	// The number of times a task should be tried before marking as failed.
-	//
 	RetryCount int64 `json:"RetryCount,omitempty"`
 
 	// The delay in seconds after which the the task is re-tried.
-	//
 	RetryDelay int64 `json:"RetryDelay,omitempty"`
 
 	// The retry policy for the task.
-	//
 	// Enum: [Fixed]
 	RetryPolicy *string `json:"RetryPolicy,omitempty"`
 
+	// Supported status of the definition.
+	// Enum: [Supported Beta Deprecated]
+	SupportStatus *string `json:"SupportStatus,omitempty"`
+
 	// The timeout value in seconds after which task will be marked as timed out. Max allowed value is 7 days.
-	//
 	Timeout int64 `json:"Timeout,omitempty"`
 
 	// The timeout policy for the task.
-	//
 	// Enum: [Timeout Retry]
 	TimeoutPolicy *string `json:"TimeoutPolicy,omitempty"`
 
@@ -145,33 +144,33 @@ func (m *WorkflowPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
+		// When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.
+		ExternalMeta *bool `json:"ExternalMeta,omitempty"`
+
 		// The schema expected for input parameters for this task.
-		//
 		InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
 
 		// The schema expected for output parameters for this task.
-		//
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 		// The number of times a task should be tried before marking as failed.
-		//
 		RetryCount int64 `json:"RetryCount,omitempty"`
 
 		// The delay in seconds after which the the task is re-tried.
-		//
 		RetryDelay int64 `json:"RetryDelay,omitempty"`
 
 		// The retry policy for the task.
-		//
 		// Enum: [Fixed]
 		RetryPolicy *string `json:"RetryPolicy,omitempty"`
 
+		// Supported status of the definition.
+		// Enum: [Supported Beta Deprecated]
+		SupportStatus *string `json:"SupportStatus,omitempty"`
+
 		// The timeout value in seconds after which task will be marked as timed out. Max allowed value is 7 days.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 
 		// The timeout policy for the task.
-		//
 		// Enum: [Timeout Retry]
 		TimeoutPolicy *string `json:"TimeoutPolicy,omitempty"`
 	}
@@ -180,20 +179,15 @@ func (m *WorkflowPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 	var rcv WorkflowPropertiesAO1P1
 
+	rcv.ExternalMeta = stage1.ExternalMeta
 	rcv.InputDefinition = stage1.InputDefinition
-
 	rcv.OutputDefinition = stage1.OutputDefinition
-
 	rcv.RetryCount = stage1.RetryCount
-
 	rcv.RetryDelay = stage1.RetryDelay
-
 	rcv.RetryPolicy = stage1.RetryPolicy
-
+	rcv.SupportStatus = stage1.SupportStatus
 	rcv.Timeout = stage1.Timeout
-
 	rcv.TimeoutPolicy = stage1.TimeoutPolicy
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -202,20 +196,15 @@ func (m *WorkflowPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	delete(stage2, "ExternalMeta")
 	delete(stage2, "InputDefinition")
-
 	delete(stage2, "OutputDefinition")
-
 	delete(stage2, "RetryCount")
-
 	delete(stage2, "RetryDelay")
-
 	delete(stage2, "RetryPolicy")
-
+	delete(stage2, "SupportStatus")
 	delete(stage2, "Timeout")
-
 	delete(stage2, "TimeoutPolicy")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -236,49 +225,45 @@ func (m *WorkflowPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 func (m WorkflowPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
+		// When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.
+		ExternalMeta *bool `json:"ExternalMeta,omitempty"`
+
 		// The schema expected for input parameters for this task.
-		//
 		InputDefinition []*WorkflowBaseDataType `json:"InputDefinition"`
 
 		// The schema expected for output parameters for this task.
-		//
 		OutputDefinition []*WorkflowBaseDataType `json:"OutputDefinition"`
 
 		// The number of times a task should be tried before marking as failed.
-		//
 		RetryCount int64 `json:"RetryCount,omitempty"`
 
 		// The delay in seconds after which the the task is re-tried.
-		//
 		RetryDelay int64 `json:"RetryDelay,omitempty"`
 
 		// The retry policy for the task.
-		//
 		// Enum: [Fixed]
 		RetryPolicy *string `json:"RetryPolicy,omitempty"`
 
+		// Supported status of the definition.
+		// Enum: [Supported Beta Deprecated]
+		SupportStatus *string `json:"SupportStatus,omitempty"`
+
 		// The timeout value in seconds after which task will be marked as timed out. Max allowed value is 7 days.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 
 		// The timeout policy for the task.
-		//
 		// Enum: [Timeout Retry]
 		TimeoutPolicy *string `json:"TimeoutPolicy,omitempty"`
 	}
 
+	stage1.ExternalMeta = m.ExternalMeta
 	stage1.InputDefinition = m.InputDefinition
-
 	stage1.OutputDefinition = m.OutputDefinition
-
 	stage1.RetryCount = m.RetryCount
-
 	stage1.RetryDelay = m.RetryDelay
-
 	stage1.RetryPolicy = m.RetryPolicy
-
+	stage1.SupportStatus = m.SupportStatus
 	stage1.Timeout = m.Timeout
-
 	stage1.TimeoutPolicy = m.TimeoutPolicy
 
 	// make JSON object for known properties
@@ -319,6 +304,10 @@ func (m *WorkflowPropertiesAO1P1) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRetryPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSupportStatus(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -416,6 +405,52 @@ func (m *WorkflowPropertiesAO1P1) validateRetryPolicy(formats strfmt.Registry) e
 
 	// value enum
 	if err := m.validateRetryPolicyEnum("RetryPolicy", "body", *m.RetryPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var workflowPropertiesAO1P1TypeSupportStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Supported","Beta","Deprecated"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		workflowPropertiesAO1P1TypeSupportStatusPropEnum = append(workflowPropertiesAO1P1TypeSupportStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// WorkflowPropertiesAO1P1SupportStatusSupported captures enum value "Supported"
+	WorkflowPropertiesAO1P1SupportStatusSupported string = "Supported"
+
+	// WorkflowPropertiesAO1P1SupportStatusBeta captures enum value "Beta"
+	WorkflowPropertiesAO1P1SupportStatusBeta string = "Beta"
+
+	// WorkflowPropertiesAO1P1SupportStatusDeprecated captures enum value "Deprecated"
+	WorkflowPropertiesAO1P1SupportStatusDeprecated string = "Deprecated"
+)
+
+// prop value enum
+func (m *WorkflowPropertiesAO1P1) validateSupportStatusEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowPropertiesAO1P1TypeSupportStatusPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *WorkflowPropertiesAO1P1) validateSupportStatus(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SupportStatus) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateSupportStatusEnum("SupportStatus", "body", *m.SupportStatus); err != nil {
 		return err
 	}
 

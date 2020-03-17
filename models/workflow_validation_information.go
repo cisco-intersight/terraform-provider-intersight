@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m WorkflowValidationInformation) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,17 +101,16 @@ func (m *WorkflowValidationInformation) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowValidationInformationAO1P1 workflow validation information a o1 p1
+//
 // swagger:model WorkflowValidationInformationAO1P1
 type WorkflowValidationInformationAO1P1 struct {
 
 	// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
-	//
 	// Read Only: true
 	// Enum: [NotValidated Valid Invalid]
 	State string `json:"State,omitempty"`
 
 	// List of all workflow or task validation errors. The validation errors can be for worker task or for control tasks.
-	//
 	// Read Only: true
 	ValidationError []*WorkflowValidationError `json:"ValidationError"`
 
@@ -127,13 +124,11 @@ func (m *WorkflowValidationInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
-		//
 		// Read Only: true
 		// Enum: [NotValidated Valid Invalid]
 		State string `json:"State,omitempty"`
 
 		// List of all workflow or task validation errors. The validation errors can be for worker task or for control tasks.
-		//
 		// Read Only: true
 		ValidationError []*WorkflowValidationError `json:"ValidationError"`
 	}
@@ -143,9 +138,7 @@ func (m *WorkflowValidationInformationAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowValidationInformationAO1P1
 
 	rcv.State = stage1.State
-
 	rcv.ValidationError = stage1.ValidationError
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -155,9 +148,7 @@ func (m *WorkflowValidationInformationAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "State")
-
 	delete(stage2, "ValidationError")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -179,19 +170,16 @@ func (m WorkflowValidationInformationAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The current validation state of this workflow. The possible states are Valid, Invalid, NotValidated (default).
-		//
 		// Read Only: true
 		// Enum: [NotValidated Valid Invalid]
 		State string `json:"State,omitempty"`
 
 		// List of all workflow or task validation errors. The validation errors can be for worker task or for control tasks.
-		//
 		// Read Only: true
 		ValidationError []*WorkflowValidationError `json:"ValidationError"`
 	}
 
 	stage1.State = m.State
-
 	stage1.ValidationError = m.ValidationError
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m CommCredential) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,6 +99,7 @@ func (m *CommCredential) UnmarshalBinary(b []byte) error {
 }
 
 // CommCredentialAO1P1 comm credential a o1 p1
+//
 // swagger:model CommCredentialAO1P1
 type CommCredentialAO1P1 struct {
 
@@ -108,11 +107,9 @@ type CommCredentialAO1P1 struct {
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Password for the Managed Device.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Username for the Managed Device. Format and restrictions are not enforced here but usually follow the ManagedDevice requirements.
-	//
 	Username string `json:"Username,omitempty"`
 
 	// comm credential a o1 p1
@@ -128,11 +125,9 @@ func (m *CommCredentialAO1P1) UnmarshalJSON(data []byte) error {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password for the Managed Device.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Username for the Managed Device. Format and restrictions are not enforced here but usually follow the ManagedDevice requirements.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -141,11 +136,8 @@ func (m *CommCredentialAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv CommCredentialAO1P1
 
 	rcv.IsPasswordSet = stage1.IsPasswordSet
-
 	rcv.Password = stage1.Password
-
 	rcv.Username = stage1.Username
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -155,11 +147,8 @@ func (m *CommCredentialAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "IsPasswordSet")
-
 	delete(stage2, "Password")
-
 	delete(stage2, "Username")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -184,18 +173,14 @@ func (m CommCredentialAO1P1) MarshalJSON() ([]byte, error) {
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password for the Managed Device.
-		//
 		Password string `json:"Password,omitempty"`
 
 		// Username for the Managed Device. Format and restrictions are not enforced here but usually follow the ManagedDevice requirements.
-		//
 		Username string `json:"Username,omitempty"`
 	}
 
 	stage1.IsPasswordSet = m.IsPasswordSet
-
 	stage1.Password = m.Password
-
 	stage1.Username = m.Username
 
 	// make JSON object for known properties

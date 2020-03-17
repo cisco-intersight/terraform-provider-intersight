@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,29 +22,23 @@ type IaasLicenseInfo struct {
 	MoBaseMo
 
 	// A collection of references to the [iaas.UcsdInfo](mo://iaas.UcsdInfo) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iaas.UcsdInfo](mo://iaas.UcsdInfo) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
 	// Licese expiration date.
-	//
 	// Read Only: true
 	LicenseExpirationDate string `json:"LicenseExpirationDate,omitempty"`
 
 	// License keys info for UCSD.
-	//
 	// Read Only: true
 	LicenseKeysInfo []*IaasLicenseKeysInfo `json:"LicenseKeysInfo"`
 
 	// License type of UCSD whether it is EVAL/Permanent/Subscription..
-	//
 	// Read Only: true
 	LicenseType string `json:"LicenseType,omitempty"`
 
 	// List of license utilization info for UCSD.
-	//
 	// Read Only: true
 	LicenseUtilizationInfo []*IaasLicenseUtilizationInfo `json:"LicenseUtilizationInfo"`
 }
@@ -97,7 +90,6 @@ func (m IaasLicenseInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
@@ -125,7 +117,6 @@ func (m IaasLicenseInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

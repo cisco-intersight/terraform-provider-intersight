@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowValidationError) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *WorkflowValidationError) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowValidationErrorAO1P1 workflow validation error a o1 p1
+//
 // swagger:model WorkflowValidationErrorAO1P1
 type WorkflowValidationErrorAO1P1 struct {
 
 	// Description of the error.
-	//
 	// Read Only: true
 	ErrorLog string `json:"ErrorLog,omitempty"`
 
 	// When populated this refers to the input or output field within the workflow or task.
-	//
 	// Read Only: true
 	Field string `json:"Field,omitempty"`
 
 	// The task name on which the error is found, when empty the error applies to the top level workflow.
-	//
 	// Read Only: true
 	TaskName string `json:"TaskName,omitempty"`
 
 	// When populated this refers to the transition connection that has a problem. When this field has value OnSuccess it means the transition connection OnSuccess for the task has an issue.
-	//
 	// Read Only: true
 	TransitionName string `json:"TransitionName,omitempty"`
 
@@ -134,22 +129,18 @@ func (m *WorkflowValidationErrorAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Description of the error.
-		//
 		// Read Only: true
 		ErrorLog string `json:"ErrorLog,omitempty"`
 
 		// When populated this refers to the input or output field within the workflow or task.
-		//
 		// Read Only: true
 		Field string `json:"Field,omitempty"`
 
 		// The task name on which the error is found, when empty the error applies to the top level workflow.
-		//
 		// Read Only: true
 		TaskName string `json:"TaskName,omitempty"`
 
 		// When populated this refers to the transition connection that has a problem. When this field has value OnSuccess it means the transition connection OnSuccess for the task has an issue.
-		//
 		// Read Only: true
 		TransitionName string `json:"TransitionName,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *WorkflowValidationErrorAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowValidationErrorAO1P1
 
 	rcv.ErrorLog = stage1.ErrorLog
-
 	rcv.Field = stage1.Field
-
 	rcv.TaskName = stage1.TaskName
-
 	rcv.TransitionName = stage1.TransitionName
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *WorkflowValidationErrorAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ErrorLog")
-
 	delete(stage2, "Field")
-
 	delete(stage2, "TaskName")
-
 	delete(stage2, "TransitionName")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m WorkflowValidationErrorAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Description of the error.
-		//
 		// Read Only: true
 		ErrorLog string `json:"ErrorLog,omitempty"`
 
 		// When populated this refers to the input or output field within the workflow or task.
-		//
 		// Read Only: true
 		Field string `json:"Field,omitempty"`
 
 		// The task name on which the error is found, when empty the error applies to the top level workflow.
-		//
 		// Read Only: true
 		TaskName string `json:"TaskName,omitempty"`
 
 		// When populated this refers to the transition connection that has a problem. When this field has value OnSuccess it means the transition connection OnSuccess for the task has an issue.
-		//
 		// Read Only: true
 		TransitionName string `json:"TransitionName,omitempty"`
 	}
 
 	stage1.ErrorLog = m.ErrorLog
-
 	stage1.Field = m.Field
-
 	stage1.TaskName = m.TaskName
-
 	stage1.TransitionName = m.TransitionName
 
 	// make JSON object for known properties

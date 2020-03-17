@@ -8,42 +8,36 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageHost Storage:Host
 //
-// Generic storage host object. It is a logical object to associate initiators to expose volume as LUN.
+// Generic storage host object. It is a logical object to associate initiators to expose a volume as a LUN.
 //
 // swagger:model storageHost
 type StorageHost struct {
 	MoBaseMo
 
 	// Short description about the host.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// List of initiators which are associated with host.
-	//
 	// Read Only: true
 	Initiators []*StorageInitiator `json:"Initiators"`
 
 	// Name of the host in storage array.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Operating system running on the host.
-	//
 	// Read Only: true
 	OsType string `json:"OsType,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 }
@@ -95,7 +89,6 @@ func (m StorageHost) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -123,7 +116,6 @@ func (m StorageHost) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

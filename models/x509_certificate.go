@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m X509Certificate) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,42 +100,36 @@ func (m *X509Certificate) UnmarshalBinary(b []byte) error {
 }
 
 // X509CertificateAO1P1 x509 certificate a o1 p1
+//
 // swagger:model X509CertificateAO1P1
 type X509CertificateAO1P1 struct {
 
 	// The X.509 distinguished name of the issuer of this certificate.
-	//
 	// Read Only: true
 	Issuer *PkixDistinguishedName `json:"Issuer,omitempty"`
 
 	// The date on which the certificate's validity period ends.
-	//
 	// Read Only: true
 	// Format: date-time
 	NotAfter strfmt.DateTime `json:"NotAfter,omitempty"`
 
 	// The date on which the certificate's validity period begins.
-	//
 	// Read Only: true
 	// Format: date-time
 	NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
 
 	// The base64 encoded certificate in PEM format.
-	//
 	PemCertificate string `json:"PemCertificate,omitempty"`
 
 	// The computed SHA-256 fingerprint of the certificate. Equivalent to 'openssl x509 -fingerprint -sha256'.
-	//
 	// Read Only: true
 	Sha256Fingerprint string `json:"Sha256Fingerprint,omitempty"`
 
 	// Signature algorithm, as specified in [RFC 5280](https://tools.ietf.org/html/rfc5280).
-	//
 	// Read Only: true
 	SignatureAlgorithm string `json:"SignatureAlgorithm,omitempty"`
 
 	// The X.509 distinguished name of the subject of this certificate.
-	//
 	// Read Only: true
 	Subject *PkixDistinguishedName `json:"Subject,omitempty"`
 
@@ -151,38 +143,31 @@ func (m *X509CertificateAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The X.509 distinguished name of the issuer of this certificate.
-		//
 		// Read Only: true
 		Issuer *PkixDistinguishedName `json:"Issuer,omitempty"`
 
 		// The date on which the certificate's validity period ends.
-		//
 		// Read Only: true
 		// Format: date-time
 		NotAfter strfmt.DateTime `json:"NotAfter,omitempty"`
 
 		// The date on which the certificate's validity period begins.
-		//
 		// Read Only: true
 		// Format: date-time
 		NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
 
 		// The base64 encoded certificate in PEM format.
-		//
 		PemCertificate string `json:"PemCertificate,omitempty"`
 
 		// The computed SHA-256 fingerprint of the certificate. Equivalent to 'openssl x509 -fingerprint -sha256'.
-		//
 		// Read Only: true
 		Sha256Fingerprint string `json:"Sha256Fingerprint,omitempty"`
 
 		// Signature algorithm, as specified in [RFC 5280](https://tools.ietf.org/html/rfc5280).
-		//
 		// Read Only: true
 		SignatureAlgorithm string `json:"SignatureAlgorithm,omitempty"`
 
 		// The X.509 distinguished name of the subject of this certificate.
-		//
 		// Read Only: true
 		Subject *PkixDistinguishedName `json:"Subject,omitempty"`
 	}
@@ -192,19 +177,12 @@ func (m *X509CertificateAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv X509CertificateAO1P1
 
 	rcv.Issuer = stage1.Issuer
-
 	rcv.NotAfter = stage1.NotAfter
-
 	rcv.NotBefore = stage1.NotBefore
-
 	rcv.PemCertificate = stage1.PemCertificate
-
 	rcv.Sha256Fingerprint = stage1.Sha256Fingerprint
-
 	rcv.SignatureAlgorithm = stage1.SignatureAlgorithm
-
 	rcv.Subject = stage1.Subject
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -214,19 +192,12 @@ func (m *X509CertificateAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Issuer")
-
 	delete(stage2, "NotAfter")
-
 	delete(stage2, "NotBefore")
-
 	delete(stage2, "PemCertificate")
-
 	delete(stage2, "Sha256Fingerprint")
-
 	delete(stage2, "SignatureAlgorithm")
-
 	delete(stage2, "Subject")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -248,54 +219,41 @@ func (m X509CertificateAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The X.509 distinguished name of the issuer of this certificate.
-		//
 		// Read Only: true
 		Issuer *PkixDistinguishedName `json:"Issuer,omitempty"`
 
 		// The date on which the certificate's validity period ends.
-		//
 		// Read Only: true
 		// Format: date-time
 		NotAfter strfmt.DateTime `json:"NotAfter,omitempty"`
 
 		// The date on which the certificate's validity period begins.
-		//
 		// Read Only: true
 		// Format: date-time
 		NotBefore strfmt.DateTime `json:"NotBefore,omitempty"`
 
 		// The base64 encoded certificate in PEM format.
-		//
 		PemCertificate string `json:"PemCertificate,omitempty"`
 
 		// The computed SHA-256 fingerprint of the certificate. Equivalent to 'openssl x509 -fingerprint -sha256'.
-		//
 		// Read Only: true
 		Sha256Fingerprint string `json:"Sha256Fingerprint,omitempty"`
 
 		// Signature algorithm, as specified in [RFC 5280](https://tools.ietf.org/html/rfc5280).
-		//
 		// Read Only: true
 		SignatureAlgorithm string `json:"SignatureAlgorithm,omitempty"`
 
 		// The X.509 distinguished name of the subject of this certificate.
-		//
 		// Read Only: true
 		Subject *PkixDistinguishedName `json:"Subject,omitempty"`
 	}
 
 	stage1.Issuer = m.Issuer
-
 	stage1.NotAfter = m.NotAfter
-
 	stage1.NotBefore = m.NotBefore
-
 	stage1.PemCertificate = m.PemCertificate
-
 	stage1.Sha256Fingerprint = m.Sha256Fingerprint
-
 	stage1.SignatureAlgorithm = m.SignatureAlgorithm
-
 	stage1.Subject = m.Subject
 
 	// make JSON object for known properties

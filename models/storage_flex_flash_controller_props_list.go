@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StorageFlexFlashControllerPropsList storage flex flash controller props list
+//
 // swagger:model storageFlexFlashControllerPropsList
 type StorageFlexFlashControllerPropsList struct {
 

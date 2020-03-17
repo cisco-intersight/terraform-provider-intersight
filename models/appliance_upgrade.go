@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -28,82 +27,70 @@ type ApplianceUpgrade struct {
 	MoBaseMo
 
 	// Upgrade managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Indicates if the software upgrade is active or not.
-	//
 	// Read Only: true
 	Active *bool `json:"Active,omitempty"`
 
 	// Indicates that the request was automatically created by the system.
-	//
 	// Read Only: true
 	AutoCreated *bool `json:"AutoCreated,omitempty"`
 
 	// Collection of the completed software upgrade phases.
-	//
 	// Read Only: true
 	CompletedPhases []*OnpremUpgradePhase `json:"CompletedPhases"`
 
 	// Current phase of the Intersight Appliance's software upgrade.
-	//
 	// Read Only: true
 	CurrentPhase *OnpremUpgradePhase `json:"CurrentPhase,omitempty"`
 
 	// Description of the software upgrade.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// Elapsed time in seconds during the software upgrade.
-	//
 	// Read Only: true
 	ElapsedTime int64 `json:"ElapsedTime,omitempty"`
 
 	// End date of the software upgrade.
-	//
 	// Read Only: true
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 	// Software upgrade manifest's fingerprint.
-	//
 	// Read Only: true
 	Fingerprint string `json:"Fingerprint,omitempty"`
 
 	// Upgrade managed object to ImageBundle relationship.
-	//
 	// Read Only: true
 	ImageBundle *ApplianceImageBundleRef `json:"ImageBundle,omitempty"`
 
 	// Messages generated during the software upgrade process.
-	//
 	// Read Only: true
 	Messages []string `json:"Messages"`
 
 	// Services that are upgraded during the software upgrade process. For example, if the software upgrade has updates for five Intersight micro-services, then this field will have the names of those five micro-services.
-	//
 	// Read Only: true
 	Services []string `json:"Services"`
 
 	// Start date of the software upgrade. UI can modify startTime to re-schedule an upgrade.
-	//
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// Status of the Intersight Appliance's software upgrade.
-	//
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 
+	// TotalPhase represents the total number of the upgradePhases for one upgrade.
+	// Read Only: true
+	TotalPhases int64 `json:"TotalPhases,omitempty"`
+
 	// Name of the UI packages that are upgraded. For example, if the software upgrade has updates for five Intersight micro-service UI packages, then this field will have the names of those five micro-services.
-	//
 	// Read Only: true
 	UIPackages []string `json:"UiPackages"`
 
 	// Software upgrade manifest's version.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -147,6 +134,8 @@ func (m *ApplianceUpgrade) UnmarshalJSON(raw []byte) error {
 
 		Status string `json:"Status,omitempty"`
 
+		TotalPhases int64 `json:"TotalPhases,omitempty"`
+
 		UIPackages []string `json:"UiPackages"`
 
 		Version string `json:"Version,omitempty"`
@@ -183,6 +172,8 @@ func (m *ApplianceUpgrade) UnmarshalJSON(raw []byte) error {
 
 	m.Status = dataAO1.Status
 
+	m.TotalPhases = dataAO1.TotalPhases
+
 	m.UIPackages = dataAO1.UIPackages
 
 	m.Version = dataAO1.Version
@@ -199,7 +190,6 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -228,6 +218,8 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 		StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 		Status string `json:"Status,omitempty"`
+
+		TotalPhases int64 `json:"TotalPhases,omitempty"`
 
 		UIPackages []string `json:"UiPackages"`
 
@@ -262,6 +254,8 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Status = m.Status
 
+	dataAO1.TotalPhases = m.TotalPhases
+
 	dataAO1.UIPackages = m.UIPackages
 
 	dataAO1.Version = m.Version
@@ -271,7 +265,6 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,21 +22,16 @@ type HyperflexCapabilityInfo struct {
 	MoBaseMo
 
 	// A collection of references to the [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.AppCatalog](mo://hyperflex.AppCatalog) MO unsets its reference to this deleted MO.
-	//
 	AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
 	// Collection of constraints, which when applied together in tandem with an "AND" assertion, will correspond to the specified Value. Hence the Value will make sense only iff all the constraints match.
-	//
 	CapabilityConstraints []*HclConstraint `json:"CapabilityConstraints"`
 
 	// Name of the capability or feature set consisting of a collection of constraint rules and value.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// Capability Value which is valid only iff all specified constraints match.
-	//
 	// Read Only: true
 	Value string `json:"Value,omitempty"`
 }
@@ -85,7 +79,6 @@ func (m HyperflexCapabilityInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AppCatalog *HyperflexAppCatalogRef `json:"AppCatalog,omitempty"`
 
@@ -109,7 +102,6 @@ func (m HyperflexCapabilityInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

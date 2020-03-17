@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m PkixSubjectAlternateName) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *PkixSubjectAlternateName) UnmarshalBinary(b []byte) error {
 }
 
 // PkixSubjectAlternateNameAO1P1 pkix subject alternate name a o1 p1
+//
 // swagger:model PkixSubjectAlternateNameAO1P1
 type PkixSubjectAlternateNameAO1P1 struct {
 
 	// Alternate DNS names for the host.
-	//
 	// Read Only: true
 	DNSName []string `json:"DnsName"`
 
 	// Alternate email addresses for the host.
-	//
 	// Read Only: true
 	EmailAddress []string `json:"EmailAddress"`
 
 	// Alternate IP addresses for the host.
-	//
 	// Read Only: true
 	IPAddress []string `json:"IpAddress"`
 
 	// Alternate URIs for the host.
-	//
 	// Read Only: true
 	URI []string `json:"Uri"`
 
@@ -134,22 +129,18 @@ func (m *PkixSubjectAlternateNameAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Alternate DNS names for the host.
-		//
 		// Read Only: true
 		DNSName []string `json:"DnsName"`
 
 		// Alternate email addresses for the host.
-		//
 		// Read Only: true
 		EmailAddress []string `json:"EmailAddress"`
 
 		// Alternate IP addresses for the host.
-		//
 		// Read Only: true
 		IPAddress []string `json:"IpAddress"`
 
 		// Alternate URIs for the host.
-		//
 		// Read Only: true
 		URI []string `json:"Uri"`
 	}
@@ -159,13 +150,9 @@ func (m *PkixSubjectAlternateNameAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PkixSubjectAlternateNameAO1P1
 
 	rcv.DNSName = stage1.DNSName
-
 	rcv.EmailAddress = stage1.EmailAddress
-
 	rcv.IPAddress = stage1.IPAddress
-
 	rcv.URI = stage1.URI
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *PkixSubjectAlternateNameAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DnsName")
-
 	delete(stage2, "EmailAddress")
-
 	delete(stage2, "IpAddress")
-
 	delete(stage2, "Uri")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -203,32 +186,25 @@ func (m PkixSubjectAlternateNameAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Alternate DNS names for the host.
-		//
 		// Read Only: true
 		DNSName []string `json:"DnsName"`
 
 		// Alternate email addresses for the host.
-		//
 		// Read Only: true
 		EmailAddress []string `json:"EmailAddress"`
 
 		// Alternate IP addresses for the host.
-		//
 		// Read Only: true
 		IPAddress []string `json:"IpAddress"`
 
 		// Alternate URIs for the host.
-		//
 		// Read Only: true
 		URI []string `json:"Uri"`
 	}
 
 	stage1.DNSName = m.DNSName
-
 	stage1.EmailAddress = m.EmailAddress
-
 	stage1.IPAddress = m.IPAddress
-
 	stage1.URI = m.URI
 
 	// make JSON object for known properties

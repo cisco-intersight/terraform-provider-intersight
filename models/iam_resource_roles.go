@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,22 +22,17 @@ type IamResourceRoles struct {
 	MoBaseMo
 
 	// The end point roles assigned to this permission. The user can perform end point operations like GUI/CLI cross launch.
-	//
 	// Read Only: true
 	EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
 
 	// A collection of references to the [iam.Permission](mo://iam.Permission) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Permission](mo://iam.Permission) MO unsets its reference to this deleted MO.
-	//
 	Permission *IamPermissionRef `json:"Permission,omitempty"`
 
 	// Reference to the resource like organization which needs access control.
-	//
 	Resource *MoBaseMoRef `json:"Resource,omitempty"`
 
 	// The roles assigned to this resource. Role is a collection of privilege sets. Roles are assigned to a user or group using the permission object.
-	//
 	Roles []*IamRoleRef `json:"Roles"`
 }
 
@@ -85,7 +79,6 @@ func (m IamResourceRoles) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		EndPointRoles []*IamEndPointRoleRef `json:"EndPointRoles"`
 
@@ -109,7 +102,6 @@ func (m IamResourceRoles) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

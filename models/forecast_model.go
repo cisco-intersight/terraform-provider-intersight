@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m ForecastModel) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,19 +100,17 @@ func (m *ForecastModel) UnmarshalBinary(b []byte) error {
 }
 
 // ForecastModelAO1P1 forecast model a o1 p1
+//
 // swagger:model ForecastModelAO1P1
 type ForecastModelAO1P1 struct {
 
 	// The standard error of the estimate is a measure of the accuracy of predictions from predective modeling.
-	//
 	Accuracy float32 `json:"Accuracy,omitempty"`
 
 	// The collection of model data returned by running a predictive modeling. Data can range from slope, coefficient and more depending on the type of model used.
-	//
 	ModelData []float64 `json:"ModelData"`
 
 	// Model type indicating type of predictive model used for computing forecast.
-	//
 	// Enum: [Linear]
 	ModelType *string `json:"ModelType,omitempty"`
 
@@ -128,15 +124,12 @@ func (m *ForecastModelAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The standard error of the estimate is a measure of the accuracy of predictions from predective modeling.
-		//
 		Accuracy float32 `json:"Accuracy,omitempty"`
 
 		// The collection of model data returned by running a predictive modeling. Data can range from slope, coefficient and more depending on the type of model used.
-		//
 		ModelData []float64 `json:"ModelData"`
 
 		// Model type indicating type of predictive model used for computing forecast.
-		//
 		// Enum: [Linear]
 		ModelType *string `json:"ModelType,omitempty"`
 	}
@@ -146,11 +139,8 @@ func (m *ForecastModelAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ForecastModelAO1P1
 
 	rcv.Accuracy = stage1.Accuracy
-
 	rcv.ModelData = stage1.ModelData
-
 	rcv.ModelType = stage1.ModelType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -160,11 +150,8 @@ func (m *ForecastModelAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Accuracy")
-
 	delete(stage2, "ModelData")
-
 	delete(stage2, "ModelType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -186,23 +173,18 @@ func (m ForecastModelAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The standard error of the estimate is a measure of the accuracy of predictions from predective modeling.
-		//
 		Accuracy float32 `json:"Accuracy,omitempty"`
 
 		// The collection of model data returned by running a predictive modeling. Data can range from slope, coefficient and more depending on the type of model used.
-		//
 		ModelData []float64 `json:"ModelData"`
 
 		// Model type indicating type of predictive model used for computing forecast.
-		//
 		// Enum: [Linear]
 		ModelType *string `json:"ModelType,omitempty"`
 	}
 
 	stage1.Accuracy = m.Accuracy
-
 	stage1.ModelData = m.ModelData
-
 	stage1.ModelType = m.ModelType
 
 	// make JSON object for known properties

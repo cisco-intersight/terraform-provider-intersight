@@ -8,16 +8,14 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // HyperflexNamedVlan Hyperflex:Named Vlan
 //
 // A VLAN with a name and ID.
-//
 // Named VLANs are used for defining the network and iSCSI external storage policies for the cluster.
 //
 // swagger:model hyperflexNamedVlan
@@ -61,7 +59,6 @@ func (m HyperflexNamedVlan) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,21 +100,16 @@ func (m *HyperflexNamedVlan) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexNamedVlanAO1P1 hyperflex named vlan a o1 p1
+//
 // swagger:model HyperflexNamedVlanAO1P1
 type HyperflexNamedVlanAO1P1 struct {
 
 	// The name of the VLAN.
-	//
 	// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The ID of the named VLAN. An ID of 0 means the traffic is untagged.
-	//
 	// The ID can be any number between 0 and 4095, inclusive.
-	//
-	//
 	VlanID int64 `json:"VlanId,omitempty"`
 
 	// hyperflex named vlan a o1 p1
@@ -130,17 +122,11 @@ func (m *HyperflexNamedVlanAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The name of the VLAN.
-		//
 		// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The ID of the named VLAN. An ID of 0 means the traffic is untagged.
-		//
 		// The ID can be any number between 0 and 4095, inclusive.
-		//
-		//
 		VlanID int64 `json:"VlanId,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -149,9 +135,7 @@ func (m *HyperflexNamedVlanAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexNamedVlanAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.VlanID = stage1.VlanID
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -161,9 +145,7 @@ func (m *HyperflexNamedVlanAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "VlanId")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -185,22 +167,15 @@ func (m HyperflexNamedVlanAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The name of the VLAN.
-		//
 		// The name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The ID of the named VLAN. An ID of 0 means the traffic is untagged.
-		//
 		// The ID can be any number between 0 and 4095, inclusive.
-		//
-		//
 		VlanID int64 `json:"VlanId,omitempty"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.VlanID = m.VlanID
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m VnicPlogiSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *VnicPlogiSettings) UnmarshalBinary(b []byte) error {
 }
 
 // VnicPlogiSettingsAO1P1 vnic plogi settings a o1 p1
+//
 // swagger:model VnicPlogiSettingsAO1P1
 type VnicPlogiSettingsAO1P1 struct {
 
 	// The number of times that the system tries to log in to a port after the first failure.
-	//
 	Retries int64 `json:"Retries,omitempty"`
 
 	// The number of milliseconds that the system waits before it tries to log in again.
-	//
 	Timeout int64 `json:"Timeout,omitempty"`
 
 	// vnic plogi settings a o1 p1
@@ -122,11 +119,9 @@ func (m *VnicPlogiSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The number of times that the system tries to log in to a port after the first failure.
-		//
 		Retries int64 `json:"Retries,omitempty"`
 
 		// The number of milliseconds that the system waits before it tries to log in again.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *VnicPlogiSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv VnicPlogiSettingsAO1P1
 
 	rcv.Retries = stage1.Retries
-
 	rcv.Timeout = stage1.Timeout
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *VnicPlogiSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Retries")
-
 	delete(stage2, "Timeout")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m VnicPlogiSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The number of times that the system tries to log in to a port after the first failure.
-		//
 		Retries int64 `json:"Retries,omitempty"`
 
 		// The number of milliseconds that the system waits before it tries to log in again.
-		//
 		Timeout int64 `json:"Timeout,omitempty"`
 	}
 
 	stage1.Retries = m.Retries
-
 	stage1.Timeout = m.Timeout
 
 	// make JSON object for known properties

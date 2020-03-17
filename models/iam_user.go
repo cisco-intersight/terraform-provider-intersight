@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,61 +23,47 @@ type IamUser struct {
 	MoBaseMo
 
 	// Current user's API keys. API keys are used to programatically perform API calls.
-	//
 	// Read Only: true
 	APIKeys []*IamAPIKeyRef `json:"ApiKeys"`
 
 	// List of registered OAuth2 applications created by the User.
-	//
 	// Read Only: true
 	AppRegistrations []*IamAppRegistrationRef `json:"AppRegistrations"`
 
 	// IP address from which the user last logged in to Intersight.
-	//
 	// Read Only: true
 	ClientIPAddress string `json:"ClientIpAddress,omitempty"`
 
 	// Email of the user. Users are added to Intersight using the email configured in the IdP.
-	//
 	Email string `json:"Email,omitempty"`
 
 	// First name of the user. This field is populated from the IdP attributes received after authentication.
-	//
 	// Read Only: true
 	FirstName string `json:"FirstName,omitempty"`
 
 	// A collection of references to the [iam.Idp](mo://iam.Idp) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.Idp](mo://iam.Idp) MO unsets its reference to this deleted MO.
-	//
 	Idp *IamIdpRef `json:"Idp,omitempty"`
 
 	// A collection of references to the [iam.IdpReference](mo://iam.IdpReference) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.IdpReference](mo://iam.IdpReference) MO unsets its reference to this deleted MO.
-	//
 	Idpreference *IamIdpReferenceRef `json:"Idpreference,omitempty"`
 
 	// Last successful login time for user.
-	//
 	// Read Only: true
 	// Format: date-time
 	LastLoginTime strfmt.DateTime `json:"LastLoginTime,omitempty"`
 
 	// Last name of the user. This field is populated from the IdP attributes received after authentication.
-	//
 	// Read Only: true
 	LastName string `json:"LastName,omitempty"`
 
 	// A collection of references to the [iam.LocalUserPassword](mo://iam.LocalUserPassword) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [iam.LocalUserPassword](mo://iam.LocalUserPassword) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	LocalUserPassword *IamLocalUserPasswordRef `json:"LocalUserPassword,omitempty"`
 
-	// UserID as configured in the IdP.
-	//
+	// Name as configured in the IdP.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
@@ -86,21 +71,20 @@ type IamUser struct {
 	// Each OAuthToken lives 30 days unless it is deleted manually by User.
 	// OAuthToken is created when Login performed via OAuth Client (AppRegistration).
 	// OAuthToken itself is not sensitive data since it doesn't contain salt, salt is stored in Vault.
-	//
 	// Read Only: true
 	OauthTokens []*IamOAuthTokenRef `json:"OauthTokens"`
 
 	// Permissions assigned to the user. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.
-	//
 	Permissions []*IamPermissionRef `json:"Permissions"`
 
 	// Current user's web sessions. After a user logs into Intersight, a session object is created. This session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
-	//
 	// Read Only: true
 	Sessions []*IamSessionRef `json:"Sessions"`
 
+	// UserID or email as configured in the IdP.
+	UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
+
 	// Type of the User. If a user is added manually by specifying the email address, or has logged in using groups, based on the IdP attributes received during authentication. If added manually, the user type will be static, otherwise dynamic.
-	//
 	// Read Only: true
 	UserType string `json:"UserType,omitempty"`
 }
@@ -144,6 +128,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 
 		Sessions []*IamSessionRef `json:"Sessions"`
 
+		UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
+
 		UserType string `json:"UserType,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -178,6 +164,8 @@ func (m *IamUser) UnmarshalJSON(raw []byte) error {
 
 	m.Sessions = dataAO1.Sessions
 
+	m.UserIDOrEmail = dataAO1.UserIDOrEmail
+
 	m.UserType = dataAO1.UserType
 
 	return nil
@@ -192,7 +180,6 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		APIKeys []*IamAPIKeyRef `json:"ApiKeys"`
 
@@ -221,6 +208,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 		Permissions []*IamPermissionRef `json:"Permissions"`
 
 		Sessions []*IamSessionRef `json:"Sessions"`
+
+		UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
 
 		UserType string `json:"UserType,omitempty"`
 	}
@@ -253,6 +242,8 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Sessions = m.Sessions
 
+	dataAO1.UserIDOrEmail = m.UserIDOrEmail
+
 	dataAO1.UserType = m.UserType
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
@@ -260,7 +251,6 @@ func (m IamUser) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

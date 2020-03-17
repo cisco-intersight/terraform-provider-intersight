@@ -6,37 +6,31 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiatelemetryNiaLicenseState Niatelemetry:Nia License State
+//
 // swagger:model niatelemetryNiaLicenseState
 type NiatelemetryNiaLicenseState struct {
 	MoBaseMo
 
 	// A collection of references to the [niatelemetry.NiaInventory](mo://niatelemetry.NiaInventory) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [niatelemetry.NiaInventory](mo://niatelemetry.NiaInventory) MO unsets its reference to this deleted MO.
-	//
 	Device *NiatelemetryNiaInventoryRef `json:"Device,omitempty"`
 
 	// Features activated on device being inventoried
-	//
 	FeatureActivated string `json:"FeatureActivated,omitempty"`
 
 	// Licenses activated on device being inventoried
-	//
 	LicenseActivated string `json:"LicenseActivated,omitempty"`
 
 	// PID of device being inventoried
-	//
 	PidType string `json:"PidType,omitempty"`
 
 	// Serial number of device being inventoried
-	//
 	Serial string `json:"Serial,omitempty"`
 }
 
@@ -87,7 +81,6 @@ func (m NiatelemetryNiaLicenseState) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Device *NiatelemetryNiaInventoryRef `json:"Device,omitempty"`
 
@@ -115,7 +108,6 @@ func (m NiatelemetryNiaLicenseState) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

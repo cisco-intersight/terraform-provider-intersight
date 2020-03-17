@@ -8,66 +8,56 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // StorageArrayDisk Storage:Array Disk
 //
-// Common attributes of storage array disk.
+// Common attributes of a storage array disk.
 //
 // swagger:model storageArrayDisk
 type StorageArrayDisk struct {
 	EquipmentBase
 
 	// Disk name available in storage array.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// Storage disk part number.
-	//
 	// Read Only: true
 	PartNumber string `json:"PartNumber,omitempty"`
 
 	// Storage protocol used in disk for communication. Possible values are SAS, SATA and NVMe.
-	//
 	// Read Only: true
 	// Enum: [Unknown SAS NVMe SATA]
 	Protocol string `json:"Protocol,omitempty"`
 
 	// Disk speed for read or write operation measured in rpm.
-	//
 	// Read Only: true
 	Speed int64 `json:"Speed,omitempty"`
 
 	// Storage disk health status.
-	//
 	// Read Only: true
 	// Enum: [Unknown Ok Degraded Critical Offline Identifying NotAvailable Updating Unrecognized]
 	Status string `json:"Status,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
-	// Storage utilization information of storage disk.
-	//
+	// Utilization information of the storage disk.
 	// Read Only: true
 	StorageUtilization *StorageCapacity `json:"StorageUtilization,omitempty"`
 
-	// Storage disk type, it can be SSD, HDD, NVRAM.
-	//
+	// Storage disk type - it can be SSD, HDD, NVRAM.
 	// Read Only: true
 	// Enum: [Unknown SSD HDD NVRAM]
 	Type string `json:"Type,omitempty"`
 
 	// Storage disk version number.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -135,7 +125,6 @@ func (m StorageArrayDisk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Name string `json:"Name,omitempty"`
 
@@ -179,7 +168,6 @@ func (m StorageArrayDisk) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

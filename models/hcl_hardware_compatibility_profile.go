@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -61,7 +60,6 @@ func (m HclHardwareCompatibilityProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -103,53 +101,43 @@ func (m *HclHardwareCompatibilityProfile) UnmarshalBinary(b []byte) error {
 }
 
 // HclHardwareCompatibilityProfileAO1P1 hcl hardware compatibility profile a o1 p1
+//
 // swagger:model HclHardwareCompatibilityProfileAO1P1
 type HclHardwareCompatibilityProfileAO1P1 struct {
 
 	// Url for the ISO with the drivers supported for the server.
-	//
 	DriverIsoURL string `json:"DriverIsoUrl,omitempty"`
 
 	// Error code indicating the compatibility status.
-	//
 	// Read Only: true
 	// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 	ErrorCode string `json:"ErrorCode,omitempty"`
 
 	// Identifier of the hardware compatibility profile.
-	//
 	ID string `json:"Id,omitempty"`
 
 	// Vendor of the Operating System running on the server.
-	//
 	OsVendor string `json:"OsVendor,omitempty"`
 
 	// Version of the Operating System running on the server.
-	//
 	OsVersion string `json:"OsVersion,omitempty"`
 
 	// Model of the processor present in the server.
-	//
 	ProcessorModel string `json:"ProcessorModel,omitempty"`
 
 	// List of the products (adapters/storage controllers) for which compatibility status needs to be checked.
-	//
 	Products []*HclProduct `json:"Products"`
 
 	// Model of the server as returned by UCSM/CIMC XML API.
-	//
 	ServerModel string `json:"ServerModel,omitempty"`
 
 	// Revision of the server model.
-	//
 	ServerRevision string `json:"ServerRevision,omitempty"`
 
 	// Version of the UCS software.
-	//
 	UcsVersion string `json:"UcsVersion,omitempty"`
 
 	// Type of the UCS version indicating whether it is a UCSM release vesion or a IMC release.
-	//
 	// Enum: [UCSM IMC]
 	VersionType *string `json:"VersionType,omitempty"`
 
@@ -163,49 +151,38 @@ func (m *HclHardwareCompatibilityProfileAO1P1) UnmarshalJSON(data []byte) error 
 	var stage1 struct {
 
 		// Url for the ISO with the drivers supported for the server.
-		//
 		DriverIsoURL string `json:"DriverIsoUrl,omitempty"`
 
 		// Error code indicating the compatibility status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Identifier of the hardware compatibility profile.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// Vendor of the Operating System running on the server.
-		//
 		OsVendor string `json:"OsVendor,omitempty"`
 
 		// Version of the Operating System running on the server.
-		//
 		OsVersion string `json:"OsVersion,omitempty"`
 
 		// Model of the processor present in the server.
-		//
 		ProcessorModel string `json:"ProcessorModel,omitempty"`
 
 		// List of the products (adapters/storage controllers) for which compatibility status needs to be checked.
-		//
 		Products []*HclProduct `json:"Products"`
 
 		// Model of the server as returned by UCSM/CIMC XML API.
-		//
 		ServerModel string `json:"ServerModel,omitempty"`
 
 		// Revision of the server model.
-		//
 		ServerRevision string `json:"ServerRevision,omitempty"`
 
 		// Version of the UCS software.
-		//
 		UcsVersion string `json:"UcsVersion,omitempty"`
 
 		// Type of the UCS version indicating whether it is a UCSM release vesion or a IMC release.
-		//
 		// Enum: [UCSM IMC]
 		VersionType *string `json:"VersionType,omitempty"`
 	}
@@ -215,27 +192,16 @@ func (m *HclHardwareCompatibilityProfileAO1P1) UnmarshalJSON(data []byte) error 
 	var rcv HclHardwareCompatibilityProfileAO1P1
 
 	rcv.DriverIsoURL = stage1.DriverIsoURL
-
 	rcv.ErrorCode = stage1.ErrorCode
-
 	rcv.ID = stage1.ID
-
 	rcv.OsVendor = stage1.OsVendor
-
 	rcv.OsVersion = stage1.OsVersion
-
 	rcv.ProcessorModel = stage1.ProcessorModel
-
 	rcv.Products = stage1.Products
-
 	rcv.ServerModel = stage1.ServerModel
-
 	rcv.ServerRevision = stage1.ServerRevision
-
 	rcv.UcsVersion = stage1.UcsVersion
-
 	rcv.VersionType = stage1.VersionType
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -245,27 +211,16 @@ func (m *HclHardwareCompatibilityProfileAO1P1) UnmarshalJSON(data []byte) error 
 	}
 
 	delete(stage2, "DriverIsoUrl")
-
 	delete(stage2, "ErrorCode")
-
 	delete(stage2, "Id")
-
 	delete(stage2, "OsVendor")
-
 	delete(stage2, "OsVersion")
-
 	delete(stage2, "ProcessorModel")
-
 	delete(stage2, "Products")
-
 	delete(stage2, "ServerModel")
-
 	delete(stage2, "ServerRevision")
-
 	delete(stage2, "UcsVersion")
-
 	delete(stage2, "VersionType")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -287,73 +242,52 @@ func (m HclHardwareCompatibilityProfileAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Url for the ISO with the drivers supported for the server.
-		//
 		DriverIsoURL string `json:"DriverIsoUrl,omitempty"`
 
 		// Error code indicating the compatibility status.
-		//
 		// Read Only: true
 		// Enum: [Success Unknown UnknownServer InvalidUcsVersion ProcessorNotSupported OSNotSupported OSUnknown UCSVersionNotSupported UcsVersionServerOSCombinationNotSupported ProductUnknown ProductNotSupported DriverNameNotSupported FirmwareVersionNotSupported DriverVersionNotSupported FirmwareVersionDriverVersionCombinationNotSupported FirmwareVersionAndDriverVersionNotSupported FirmwareVersionAndDriverNameNotSupported InternalError MarshallingError Exempted]
 		ErrorCode string `json:"ErrorCode,omitempty"`
 
 		// Identifier of the hardware compatibility profile.
-		//
 		ID string `json:"Id,omitempty"`
 
 		// Vendor of the Operating System running on the server.
-		//
 		OsVendor string `json:"OsVendor,omitempty"`
 
 		// Version of the Operating System running on the server.
-		//
 		OsVersion string `json:"OsVersion,omitempty"`
 
 		// Model of the processor present in the server.
-		//
 		ProcessorModel string `json:"ProcessorModel,omitempty"`
 
 		// List of the products (adapters/storage controllers) for which compatibility status needs to be checked.
-		//
 		Products []*HclProduct `json:"Products"`
 
 		// Model of the server as returned by UCSM/CIMC XML API.
-		//
 		ServerModel string `json:"ServerModel,omitempty"`
 
 		// Revision of the server model.
-		//
 		ServerRevision string `json:"ServerRevision,omitempty"`
 
 		// Version of the UCS software.
-		//
 		UcsVersion string `json:"UcsVersion,omitempty"`
 
 		// Type of the UCS version indicating whether it is a UCSM release vesion or a IMC release.
-		//
 		// Enum: [UCSM IMC]
 		VersionType *string `json:"VersionType,omitempty"`
 	}
 
 	stage1.DriverIsoURL = m.DriverIsoURL
-
 	stage1.ErrorCode = m.ErrorCode
-
 	stage1.ID = m.ID
-
 	stage1.OsVendor = m.OsVendor
-
 	stage1.OsVersion = m.OsVersion
-
 	stage1.ProcessorModel = m.ProcessorModel
-
 	stage1.Products = m.Products
-
 	stage1.ServerModel = m.ServerModel
-
 	stage1.ServerRevision = m.ServerRevision
-
 	stage1.UcsVersion = m.UcsVersion
-
 	stage1.VersionType = m.VersionType
 
 	// make JSON object for known properties

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,7 +23,6 @@ type PkixRsaAlgorithm struct {
 	PkixKeyGenerationSpec
 
 	// The length of the RSA key, expressed in bits, for both public and private keys.
-	//
 	// Enum: [2048 2560 3072 3584 4096]
 	Modulus *int64 `json:"Modulus,omitempty"`
 }
@@ -60,7 +58,6 @@ func (m PkixRsaAlgorithm) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Modulus *int64 `json:"Modulus,omitempty"`
 	}
@@ -72,7 +69,6 @@ func (m PkixRsaAlgorithm) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

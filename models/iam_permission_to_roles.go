@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m IamPermissionToRoles) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,16 +100,15 @@ func (m *IamPermissionToRoles) UnmarshalBinary(b []byte) error {
 }
 
 // IamPermissionToRolesAO1P1 iam permission to roles a o1 p1
+//
 // swagger:model IamPermissionToRolesAO1P1
 type IamPermissionToRolesAO1P1 struct {
 
 	// Permission Id of the object.
-	//
 	// Read Only: true
 	Permission *CmrfCmRf `json:"Permission,omitempty"`
 
 	// Collection of Roles for the Permission.
-	//
 	// Read Only: true
 	Roles []*CmrfCmRf `json:"Roles"`
 
@@ -125,12 +122,10 @@ func (m *IamPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Permission Id of the object.
-		//
 		// Read Only: true
 		Permission *CmrfCmRf `json:"Permission,omitempty"`
 
 		// Collection of Roles for the Permission.
-		//
 		// Read Only: true
 		Roles []*CmrfCmRf `json:"Roles"`
 	}
@@ -140,9 +135,7 @@ func (m *IamPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamPermissionToRolesAO1P1
 
 	rcv.Permission = stage1.Permission
-
 	rcv.Roles = stage1.Roles
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -152,9 +145,7 @@ func (m *IamPermissionToRolesAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Permission")
-
 	delete(stage2, "Roles")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -176,18 +167,15 @@ func (m IamPermissionToRolesAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Permission Id of the object.
-		//
 		// Read Only: true
 		Permission *CmrfCmRf `json:"Permission,omitempty"`
 
 		// Collection of Roles for the Permission.
-		//
 		// Read Only: true
 		Roles []*CmrfCmRf `json:"Roles"`
 	}
 
 	stage1.Permission = m.Permission
-
 	stage1.Roles = m.Roles
 
 	// make JSON object for known properties

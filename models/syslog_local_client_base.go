@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m SyslogLocalClientBase) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,11 +100,11 @@ func (m *SyslogLocalClientBase) UnmarshalBinary(b []byte) error {
 }
 
 // SyslogLocalClientBaseAO1P1 syslog local client base a o1 p1
+//
 // swagger:model SyslogLocalClientBaseAO1P1
 type SyslogLocalClientBaseAO1P1 struct {
 
 	// Lowest level of messages to be included in the local log.
-	//
 	// Enum: [warning emergency alert critical error notice informational debug]
 	MinSeverity *string `json:"MinSeverity,omitempty"`
 
@@ -120,7 +118,6 @@ func (m *SyslogLocalClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Lowest level of messages to be included in the local log.
-		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
 	}
@@ -130,7 +127,6 @@ func (m *SyslogLocalClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv SyslogLocalClientBaseAO1P1
 
 	rcv.MinSeverity = stage1.MinSeverity
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -140,7 +136,6 @@ func (m *SyslogLocalClientBaseAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "MinSeverity")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -162,7 +157,6 @@ func (m SyslogLocalClientBaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Lowest level of messages to be included in the local log.
-		//
 		// Enum: [warning emergency alert critical error notice informational debug]
 		MinSeverity *string `json:"MinSeverity,omitempty"`
 	}

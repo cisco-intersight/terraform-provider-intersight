@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowMoReferenceProperty) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,16 +99,18 @@ func (m *WorkflowMoReferenceProperty) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowMoReferencePropertyAO1P1 workflow mo reference property a o1 p1
+//
 // swagger:model WorkflowMoReferencePropertyAO1P1
 type WorkflowMoReferencePropertyAO1P1 struct {
 
-	// List of properties from the Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
-	//
+	// List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
 	DisplayAttributes []string `json:"DisplayAttributes"`
 
 	// Field to hold an Intersight API along with an optional filter to narrow down the search options.
-	//
 	Selector string `json:"Selector,omitempty"`
+
+	// A property from the Intersight object, value of which can be used as value for referenced input definition.
+	ValueAttribute string `json:"ValueAttribute,omitempty"`
 
 	// workflow mo reference property a o1 p1
 	WorkflowMoReferencePropertyAO1P1 map[string]interface{} `json:"-"`
@@ -121,13 +121,14 @@ func (m *WorkflowMoReferencePropertyAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// List of properties from the Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
-		//
+		// List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
 		DisplayAttributes []string `json:"DisplayAttributes"`
 
 		// Field to hold an Intersight API along with an optional filter to narrow down the search options.
-		//
 		Selector string `json:"Selector,omitempty"`
+
+		// A property from the Intersight object, value of which can be used as value for referenced input definition.
+		ValueAttribute string `json:"ValueAttribute,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
@@ -135,9 +136,8 @@ func (m *WorkflowMoReferencePropertyAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowMoReferencePropertyAO1P1
 
 	rcv.DisplayAttributes = stage1.DisplayAttributes
-
 	rcv.Selector = stage1.Selector
-
+	rcv.ValueAttribute = stage1.ValueAttribute
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +147,8 @@ func (m *WorkflowMoReferencePropertyAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "DisplayAttributes")
-
 	delete(stage2, "Selector")
-
+	delete(stage2, "ValueAttribute")
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -170,18 +169,19 @@ func (m *WorkflowMoReferencePropertyAO1P1) UnmarshalJSON(data []byte) error {
 func (m WorkflowMoReferencePropertyAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// List of properties from the Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
-		//
+		// List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.
 		DisplayAttributes []string `json:"DisplayAttributes"`
 
 		// Field to hold an Intersight API along with an optional filter to narrow down the search options.
-		//
 		Selector string `json:"Selector,omitempty"`
+
+		// A property from the Intersight object, value of which can be used as value for referenced input definition.
+		ValueAttribute string `json:"ValueAttribute,omitempty"`
 	}
 
 	stage1.DisplayAttributes = m.DisplayAttributes
-
 	stage1.Selector = m.Selector
+	stage1.ValueAttribute = m.ValueAttribute
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)

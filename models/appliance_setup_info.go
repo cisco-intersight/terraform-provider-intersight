@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -20,7 +19,6 @@ import (
 // SetupInfo will have only one managed object. SetupInfo managed object is to keep
 // track of the Intersight Appliance's setup information and guide the UI through
 // the initial configuration of the Intersight Appliance.
-//
 // The SetupInfo managed object is created during the Intersight Appliance setup.
 // The Intersight UI uses this object to store the initial configuration states
 // that the user has completed. If the user closes the Intersight UI without
@@ -33,36 +31,29 @@ type ApplianceSetupInfo struct {
 	MoBaseMo
 
 	// SetupInfo managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Build type of the Intersight Appliance setup (e.g. release or debug).
-	//
 	// Read Only: true
 	BuildType string `json:"BuildType,omitempty"`
 
 	// The array of capabilities, that enable key-value metadata for Intersight Appliance. For example, Intersight Assist is one of the capabilities.
-	//
 	// Read Only: true
 	Capabilities []*ApplianceKeyValuePair `json:"Capabilities"`
 
 	// URL of the Intersight to which this Intersight Appliance is connected to.
-	//
 	// Read Only: true
 	CloudURL string `json:"CloudUrl,omitempty"`
 
 	// End date of the Intersight Appliance's initial setup.
-	//
 	// Read Only: true
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 	// Collection of completed initial wizard setup states. Some examples of the wizard states are 'user account creation', 'licence registration' etc.
-	//
 	SetupStates []string `json:"SetupStates"`
 
 	// Start date of the Intersight Appliance's initial setup.
-	//
 	// Read Only: true
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
@@ -123,7 +114,6 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -159,7 +149,6 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,27 +20,22 @@ type EquipmentDeviceSummary struct {
 	ViewsView
 
 	// The distinguished name for the Network Element.
-	//
 	// Read Only: true
 	Dn string `json:"Dn,omitempty"`
 
 	// The model information of the Network Element.
-	//
 	// Read Only: true
 	Model string `json:"Model,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// The serial number for the Network Element.
-	//
 	// Read Only: true
 	Serial string `json:"Serial,omitempty"`
 
 	// The source object type of this view MO.
-	//
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`
 }
@@ -93,7 +87,6 @@ func (m EquipmentDeviceSummary) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Dn string `json:"Dn,omitempty"`
 
@@ -121,7 +114,6 @@ func (m EquipmentDeviceSummary) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,13 +8,13 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // StoragePureHostLunList storage pure host lun list
+//
 // swagger:model storagePureHostLunList
 type StoragePureHostLunList struct {
 

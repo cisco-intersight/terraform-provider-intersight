@@ -6,76 +6,61 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // NiatelemetryNiaInventory Niatelemetry:Nia Inventory
+//
 // swagger:model niatelemetryNiaInventory
 type NiatelemetryNiaInventory struct {
 	MoBaseMo
 
 	// CPU usage of device being inventoried.
-	//
 	CPU float32 `json:"Cpu,omitempty"`
 
 	// Last crash reset reason of device being inventoried.
-	//
 	CrashResetLogs string `json:"CrashResetLogs,omitempty"`
 
 	// Name of device being inventoried.
-	//
 	DeviceName string `json:"DeviceName,omitempty"`
 
 	// Type of device being inventoried.
-	//
 	DeviceType string `json:"DeviceType,omitempty"`
 
 	// Disk Usage of device being inventoried.
-	//
 	Disk *NiatelemetryDiskinfo `json:"Disk,omitempty"`
 
 	// The license of this device.
-	//
 	LicenseState *NiatelemetryNiaLicenseStateRef `json:"LicenseState,omitempty"`
 
 	// Last log in time device being inventoried.
-	//
 	LogInTime string `json:"LogInTime,omitempty"`
 
 	// Last log out time of device being inventoried.
-	//
 	LogOutTime string `json:"LogOutTime,omitempty"`
 
 	// Memory usage of device being inventoried.
-	//
 	Memory int64 `json:"Memory,omitempty"`
 
 	// Type of record DCNM / APIC / SE.
-	//
 	RecordType string `json:"RecordType,omitempty"`
 
 	// Version of record being pushed.
-	//
 	RecordVersion string `json:"RecordVersion,omitempty"`
 
 	// Relationship to the Device Registration object for this setup.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Serial number of device being invetoried.
-	//
 	Serial string `json:"Serial,omitempty"`
 
 	// Last software downloaded of device being inventoried.
-	//
 	SoftwareDownload string `json:"SoftwareDownload,omitempty"`
 
 	// Software version of device being inventoried.
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -166,7 +151,6 @@ func (m NiatelemetryNiaInventory) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		CPU float32 `json:"Cpu,omitempty"`
 
@@ -234,7 +218,6 @@ func (m NiatelemetryNiaInventory) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

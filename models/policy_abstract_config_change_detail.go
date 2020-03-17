@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,28 +23,22 @@ type PolicyAbstractConfigChangeDetail struct {
 	MoBaseMo
 
 	// Type of the configuration change.
-	//
 	Changes []string `json:"Changes"`
 
 	// Context information on the change.
-	//
 	ConfigChangeContext *PolicyConfigResultContext `json:"ConfigChangeContext,omitempty"`
 
 	// Config change flag to differentiate Pending-changes and Config-drift.
-	//
 	// Enum: [Pending-changes Drift-changes]
 	ConfigChangeFlag *string `json:"ConfigChangeFlag,omitempty"`
 
 	// Possible disruptions the configuration change might cause.
-	//
 	Disruptions []string `json:"Disruptions"`
 
 	// Detailed description of the config change.
-	//
 	Message string `json:"Message,omitempty"`
 
 	// Modification status of the mo in this config change.
-	//
 	// Enum: [None Created Modified Deleted]
 	ModStatus *string `json:"ModStatus,omitempty"`
 }
@@ -101,7 +94,6 @@ func (m PolicyAbstractConfigChangeDetail) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Changes []string `json:"Changes"`
 
@@ -133,7 +125,6 @@ func (m PolicyAbstractConfigChangeDetail) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowCustomDataProperty) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,20 +99,18 @@ func (m *WorkflowCustomDataProperty) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowCustomDataPropertyAO1P1 workflow custom data property a o1 p1
+//
 // swagger:model WorkflowCustomDataPropertyAO1P1
 type WorkflowCustomDataPropertyAO1P1 struct {
 
 	// Specify the catalog moid that this custom data type belongs.
-	//
 	CatalogMoid string `json:"CatalogMoid,omitempty"`
 
 	// The resolved custom data type definition managed object.
-	//
 	// Read Only: true
 	CustomDataTypeID string `json:"CustomDataTypeId,omitempty"`
 
 	// Name of the custom data type for this input.
-	//
 	CustomDataTypeName string `json:"CustomDataTypeName,omitempty"`
 
 	// workflow custom data property a o1 p1
@@ -127,16 +123,13 @@ func (m *WorkflowCustomDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Specify the catalog moid that this custom data type belongs.
-		//
 		CatalogMoid string `json:"CatalogMoid,omitempty"`
 
 		// The resolved custom data type definition managed object.
-		//
 		// Read Only: true
 		CustomDataTypeID string `json:"CustomDataTypeId,omitempty"`
 
 		// Name of the custom data type for this input.
-		//
 		CustomDataTypeName string `json:"CustomDataTypeName,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -145,11 +138,8 @@ func (m *WorkflowCustomDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowCustomDataPropertyAO1P1
 
 	rcv.CatalogMoid = stage1.CatalogMoid
-
 	rcv.CustomDataTypeID = stage1.CustomDataTypeID
-
 	rcv.CustomDataTypeName = stage1.CustomDataTypeName
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -159,11 +149,8 @@ func (m *WorkflowCustomDataPropertyAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "CatalogMoid")
-
 	delete(stage2, "CustomDataTypeId")
-
 	delete(stage2, "CustomDataTypeName")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -185,23 +172,18 @@ func (m WorkflowCustomDataPropertyAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Specify the catalog moid that this custom data type belongs.
-		//
 		CatalogMoid string `json:"CatalogMoid,omitempty"`
 
 		// The resolved custom data type definition managed object.
-		//
 		// Read Only: true
 		CustomDataTypeID string `json:"CustomDataTypeId,omitempty"`
 
 		// Name of the custom data type for this input.
-		//
 		CustomDataTypeName string `json:"CustomDataTypeName,omitempty"`
 	}
 
 	stage1.CatalogMoid = m.CatalogMoid
-
 	stage1.CustomDataTypeID = m.CustomDataTypeID
-
 	stage1.CustomDataTypeName = m.CustomDataTypeName
 
 	// make JSON object for known properties

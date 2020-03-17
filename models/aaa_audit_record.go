@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -22,37 +21,33 @@ type AaaAuditRecord struct {
 	AaaAbstractAuditRecord
 
 	// The account of the user who performed the operation.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
-	// The email of the associated user that made the change.  This is needed in case that user is later deleted, we still have some reference to the information.
-	//
+	// The email of the associated user that made the change.  In case the user is later deleted, we still have some reference to the information.
 	Email string `json:"Email,omitempty"`
 
 	// The instance id of AuditRecordLocal, which is used to identify if the comming AuditRecordLocal was already processed before.
-	//
 	InstID string `json:"InstId,omitempty"`
 
 	// The sessions of the user who performed the operation.
-	//
 	// Read Only: true
 	Sessions *IamSessionRef `json:"Sessions,omitempty"`
 
 	// The source IP of the client.
-	//
 	SourceIP string `json:"SourceIp,omitempty"`
 
 	// The creation time of AuditRecordLocal, which is the time when the affected MO was created/modified/deleted.
-	//
 	// Read Only: true
 	// Format: date-time
 	Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 	// The user who performed the operation.
-	//
 	// Read Only: true
 	User *IamUserRef `json:"User,omitempty"`
+
+	// The userId or the email of the associated user that made the change. In case that user is later deleted, we still have some reference to the information.
+	UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -79,6 +74,8 @@ func (m *AaaAuditRecord) UnmarshalJSON(raw []byte) error {
 		Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 		User *IamUserRef `json:"User,omitempty"`
+
+		UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -98,6 +95,8 @@ func (m *AaaAuditRecord) UnmarshalJSON(raw []byte) error {
 
 	m.User = dataAO1.User
 
+	m.UserIDOrEmail = dataAO1.UserIDOrEmail
+
 	return nil
 }
 
@@ -110,7 +109,6 @@ func (m AaaAuditRecord) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -125,6 +123,8 @@ func (m AaaAuditRecord) MarshalJSON() ([]byte, error) {
 		Timestamp strfmt.DateTime `json:"Timestamp,omitempty"`
 
 		User *IamUserRef `json:"User,omitempty"`
+
+		UserIDOrEmail string `json:"UserIdOrEmail,omitempty"`
 	}
 
 	dataAO1.Account = m.Account
@@ -141,12 +141,13 @@ func (m AaaAuditRecord) MarshalJSON() ([]byte, error) {
 
 	dataAO1.User = m.User
 
+	dataAO1.UserIDOrEmail = m.UserIDOrEmail
+
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

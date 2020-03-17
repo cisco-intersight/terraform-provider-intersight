@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,34 +20,26 @@ type PciDevice struct {
 	EquipmentBase
 
 	// A collection of references to the [compute.Blade](mo://compute.Blade) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.Blade](mo://compute.Blade) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeBlade *ComputeBladeRef `json:"ComputeBlade,omitempty"`
 
 	// A collection of references to the [compute.RackUnit](mo://compute.RackUnit) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [compute.RackUnit](mo://compute.RackUnit) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ComputeRackUnit *ComputeRackUnitRef `json:"ComputeRackUnit,omitempty"`
 
 	// It shows the running firmware version.
-	//
 	FirmwareVersion string `json:"FirmwareVersion,omitempty"`
 
 	// It shows the product identifier.
-	//
 	Pid string `json:"Pid,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// It show PCI slot id of the device.
-	//
 	// Read Only: true
 	SlotID string `json:"SlotId,omitempty"`
 }
@@ -104,7 +95,6 @@ func (m PciDevice) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ComputeBlade *ComputeBladeRef `json:"ComputeBlade,omitempty"`
 
@@ -136,7 +126,6 @@ func (m PciDevice) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

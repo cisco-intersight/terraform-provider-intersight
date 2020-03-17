@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m FeedbackFeedbackData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,36 +100,30 @@ func (m *FeedbackFeedbackData) UnmarshalBinary(b []byte) error {
 }
 
 // FeedbackFeedbackDataAO1P1 feedback feedback data a o1 p1
+//
 // swagger:model FeedbackFeedbackDataAO1P1
 type FeedbackFeedbackDataAO1P1 struct {
 
 	// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
-	//
 	AccountName string `json:"AccountName,omitempty"`
 
 	// Text of the feedback as provided by the user, if it is a bug or a comment.
-	//
 	Comment string `json:"Comment,omitempty"`
 
 	// User's email address details.
-	//
 	Email string `json:"Email,omitempty"`
 
 	// Evalation rating as provided by the user to capture user sentiment regarding the issue.
-	//
 	// Enum: [Excellent Poor Fair Good]
 	Evaluation *string `json:"Evaluation,omitempty"`
 
 	// If a user is open for follow-up or not.
-	//
 	FollowUp *bool `json:"FollowUp,omitempty"`
 
 	// Bunch of last traceId for reproducing user last activity.
-	//
 	TraceIds interface{} `json:"TraceIds,omitempty"`
 
 	// Type of the feedback from user.
-	//
 	// Enum: [Evaluation Bug]
 	Type *string `json:"Type,omitempty"`
 
@@ -145,32 +137,25 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
-		//
 		AccountName string `json:"AccountName,omitempty"`
 
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
-		//
 		Comment string `json:"Comment,omitempty"`
 
 		// User's email address details.
-		//
 		Email string `json:"Email,omitempty"`
 
 		// Evalation rating as provided by the user to capture user sentiment regarding the issue.
-		//
 		// Enum: [Excellent Poor Fair Good]
 		Evaluation *string `json:"Evaluation,omitempty"`
 
 		// If a user is open for follow-up or not.
-		//
 		FollowUp *bool `json:"FollowUp,omitempty"`
 
 		// Bunch of last traceId for reproducing user last activity.
-		//
 		TraceIds interface{} `json:"TraceIds,omitempty"`
 
 		// Type of the feedback from user.
-		//
 		// Enum: [Evaluation Bug]
 		Type *string `json:"Type,omitempty"`
 	}
@@ -180,19 +165,12 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FeedbackFeedbackDataAO1P1
 
 	rcv.AccountName = stage1.AccountName
-
 	rcv.Comment = stage1.Comment
-
 	rcv.Email = stage1.Email
-
 	rcv.Evaluation = stage1.Evaluation
-
 	rcv.FollowUp = stage1.FollowUp
-
 	rcv.TraceIds = stage1.TraceIds
-
 	rcv.Type = stage1.Type
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -202,19 +180,12 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AccountName")
-
 	delete(stage2, "Comment")
-
 	delete(stage2, "Email")
-
 	delete(stage2, "Evaluation")
-
 	delete(stage2, "FollowUp")
-
 	delete(stage2, "TraceIds")
-
 	delete(stage2, "Type")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -236,48 +207,35 @@ func (m FeedbackFeedbackDataAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
-		//
 		AccountName string `json:"AccountName,omitempty"`
 
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
-		//
 		Comment string `json:"Comment,omitempty"`
 
 		// User's email address details.
-		//
 		Email string `json:"Email,omitempty"`
 
 		// Evalation rating as provided by the user to capture user sentiment regarding the issue.
-		//
 		// Enum: [Excellent Poor Fair Good]
 		Evaluation *string `json:"Evaluation,omitempty"`
 
 		// If a user is open for follow-up or not.
-		//
 		FollowUp *bool `json:"FollowUp,omitempty"`
 
 		// Bunch of last traceId for reproducing user last activity.
-		//
 		TraceIds interface{} `json:"TraceIds,omitempty"`
 
 		// Type of the feedback from user.
-		//
 		// Enum: [Evaluation Bug]
 		Type *string `json:"Type,omitempty"`
 	}
 
 	stage1.AccountName = m.AccountName
-
 	stage1.Comment = m.Comment
-
 	stage1.Email = m.Email
-
 	stage1.Evaluation = m.Evaluation
-
 	stage1.FollowUp = m.FollowUp
-
 	stage1.TraceIds = m.TraceIds
-
 	stage1.Type = m.Type
 
 	// make JSON object for known properties

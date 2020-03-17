@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,70 +24,55 @@ type MetaDefinition struct {
 	MoBaseMo
 
 	// The list of access privileges that are required to perform CRUD operations on this managed object. If no access privileges are specified, the object is not accessible.
-	//
 	// Read Only: true
 	AccessPrivileges []*MetaAccessPrivilege `json:"AccessPrivileges"`
 
 	// An array of parent metaclasses in the class inheritance hierarchy. The first element in the array is the parent class. The next element is the grand-parent, etc. The last element in the array is the mo.BaseMo class.
-	//
 	// Read Only: true
 	AncestorClasses []string `json:"AncestorClasses"`
 
 	// Boolean flag to specify whether the meta class is a concrete class or not.
-	//
 	// Read Only: true
 	IsConcrete *bool `json:"IsConcrete,omitempty"`
 
 	// Indicates whether the meta class is a complex type or managed object.
-	//
 	// Read Only: true
 	// Enum: [ManagedObject ComplexType]
 	MetaType string `json:"MetaType,omitempty"`
 
 	// The fully-qualified class name of the Managed Object or complex type. For example, "compute:Blade" where the Managed Object is "Blade" and the package is 'compute'.
-	//
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
 	// The namespace of the meta.
-	//
 	// Read Only: true
 	Namespace string `json:"Namespace,omitempty"`
 
 	// The fully-qualified name of the parent metaclass in the class inheritance hierarchy.
-	//
 	// Read Only: true
 	ParentClass string `json:"ParentClass,omitempty"`
 
 	// Boolean flag to specify whether instances of this class type can be specified in permissions for instance based access control. Permissions can be created for entire Intersight account or to a subset of resources (instance based access control). In the first release, permissions are supported for entire account or for a subset of organizations.
-	//
-	//
 	// Read Only: true
 	PermissionSupported *bool `json:"PermissionSupported,omitempty"`
 
 	// Meta definition for the properties in the meta class and from all classes in the inheritance hierarchy.
-	//
 	// Read Only: true
 	Properties []*MetaPropDefinition `json:"Properties"`
 
 	// Boolean flag to specify whether instances of this class type can be assigned to resource groups that are part of an organization for access control. Inventoried physical/logical objects which needs access control should have rbacResource=yes. These objects are not part of any organization by default like device registrations and should be assigned to organizations for access control. Profiles, policies, workflow definitions which are created by specifying organization need not have this flag set.
-	//
-	//
 	// Read Only: true
 	RbacResource *bool `json:"RbacResource,omitempty"`
 
 	// Meta definition for the relationship in the meta class.
-	//
 	// Read Only: true
 	Relationships []*MetaRelationshipDefinition `json:"Relationships"`
 
 	// Restful URL path for the meta.
-	//
 	// Read Only: true
 	RestPath string `json:"RestPath,omitempty"`
 
 	// The version of the service that defines the meta-data.
-	//
 	// Read Only: true
 	Version string `json:"Version,omitempty"`
 }
@@ -172,7 +156,6 @@ func (m MetaDefinition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccessPrivileges []*MetaAccessPrivilege `json:"AccessPrivileges"`
 
@@ -232,7 +215,6 @@ func (m MetaDefinition) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

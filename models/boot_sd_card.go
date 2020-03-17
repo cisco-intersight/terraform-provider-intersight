@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -24,11 +23,9 @@ type BootSdCard struct {
 	BootDeviceBase
 
 	// The Logical Unit Number (LUN) of the device.
-	//
 	Lun int64 `json:"Lun,omitempty"`
 
 	// The subtype for the selected device type.
-	//
 	// Enum: [None flex-util flex-flash SDCARD]
 	Subtype *string `json:"Subtype,omitempty"`
 }
@@ -68,7 +65,6 @@ func (m BootSdCard) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Lun int64 `json:"Lun,omitempty"`
 
@@ -84,7 +80,6 @@ func (m BootSdCard) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

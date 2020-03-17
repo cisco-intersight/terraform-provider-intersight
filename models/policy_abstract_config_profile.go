@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,11 +20,9 @@ type PolicyAbstractConfigProfile struct {
 	PolicyAbstractProfile
 
 	// User initiated action. Each profile type has its own supported actions. For HyperFlex cluster profile, the supported actions are -- Validate, Deploy, Continue, Retry, Abort, Unassign For server profile, the support actions are -- Deploy, Unassign.
-	//
 	Action *string `json:"Action,omitempty"`
 
 	// The configuration state and results of the last configuration operation.
-	//
 	ConfigContext *PolicyConfigContext `json:"ConfigContext,omitempty"`
 }
 
@@ -64,7 +61,6 @@ func (m PolicyAbstractConfigProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Action *string `json:"Action,omitempty"`
 
@@ -80,7 +76,6 @@ func (m PolicyAbstractConfigProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

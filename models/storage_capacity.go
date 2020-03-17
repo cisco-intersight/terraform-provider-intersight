@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m StorageCapacity) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,26 +99,23 @@ func (m *StorageCapacity) UnmarshalBinary(b []byte) error {
 }
 
 // StorageCapacityAO1P1 storage capacity a o1 p1
+//
 // swagger:model StorageCapacityAO1P1
 type StorageCapacityAO1P1 struct {
 
-	// Total consumable storage capacity represented in bytes. System may reserve some space for internal purpose which is excluded from total capacity.
-	//
+	// Total consumable storage capacity represented in bytes. System may reserve some space for internal purposes which is excluded from total capacity.
 	// Read Only: true
 	Available int64 `json:"Available,omitempty"`
 
-	// Unused space available for user to consume, represented in bytes.
-	//
+	// Unused space available for applications to consume, represented in bytes.
 	// Read Only: true
 	Free int64 `json:"Free,omitempty"`
 
-	// Total storage capacity, represented in bytes. It is set by the component manufacture.
-	//
+	// Total storage capacity, represented in bytes. It is set by the component manufacturer.
 	// Read Only: true
 	Total int64 `json:"Total,omitempty"`
 
 	// Used or consumed storage capacity, represented in bytes.
-	//
 	// Read Only: true
 	Used int64 `json:"Used,omitempty"`
 
@@ -133,23 +128,19 @@ func (m *StorageCapacityAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// Total consumable storage capacity represented in bytes. System may reserve some space for internal purpose which is excluded from total capacity.
-		//
+		// Total consumable storage capacity represented in bytes. System may reserve some space for internal purposes which is excluded from total capacity.
 		// Read Only: true
 		Available int64 `json:"Available,omitempty"`
 
-		// Unused space available for user to consume, represented in bytes.
-		//
+		// Unused space available for applications to consume, represented in bytes.
 		// Read Only: true
 		Free int64 `json:"Free,omitempty"`
 
-		// Total storage capacity, represented in bytes. It is set by the component manufacture.
-		//
+		// Total storage capacity, represented in bytes. It is set by the component manufacturer.
 		// Read Only: true
 		Total int64 `json:"Total,omitempty"`
 
 		// Used or consumed storage capacity, represented in bytes.
-		//
 		// Read Only: true
 		Used int64 `json:"Used,omitempty"`
 	}
@@ -159,13 +150,9 @@ func (m *StorageCapacityAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv StorageCapacityAO1P1
 
 	rcv.Available = stage1.Available
-
 	rcv.Free = stage1.Free
-
 	rcv.Total = stage1.Total
-
 	rcv.Used = stage1.Used
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -175,13 +162,9 @@ func (m *StorageCapacityAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Available")
-
 	delete(stage2, "Free")
-
 	delete(stage2, "Total")
-
 	delete(stage2, "Used")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -202,33 +185,26 @@ func (m *StorageCapacityAO1P1) UnmarshalJSON(data []byte) error {
 func (m StorageCapacityAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// Total consumable storage capacity represented in bytes. System may reserve some space for internal purpose which is excluded from total capacity.
-		//
+		// Total consumable storage capacity represented in bytes. System may reserve some space for internal purposes which is excluded from total capacity.
 		// Read Only: true
 		Available int64 `json:"Available,omitempty"`
 
-		// Unused space available for user to consume, represented in bytes.
-		//
+		// Unused space available for applications to consume, represented in bytes.
 		// Read Only: true
 		Free int64 `json:"Free,omitempty"`
 
-		// Total storage capacity, represented in bytes. It is set by the component manufacture.
-		//
+		// Total storage capacity, represented in bytes. It is set by the component manufacturer.
 		// Read Only: true
 		Total int64 `json:"Total,omitempty"`
 
 		// Used or consumed storage capacity, represented in bytes.
-		//
 		// Read Only: true
 		Used int64 `json:"Used,omitempty"`
 	}
 
 	stage1.Available = m.Available
-
 	stage1.Free = m.Free
-
 	stage1.Total = m.Total
-
 	stage1.Used = m.Used
 
 	// make JSON object for known properties

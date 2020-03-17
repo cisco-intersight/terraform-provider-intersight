@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,54 +20,42 @@ type StorageEnclosureDisk struct {
 	EquipmentBase
 
 	// The block size of the physical disk in bytes.
-	//
 	BlockSize string `json:"BlockSize,omitempty"`
 
 	// This field represents the disk Id in the storage enclosure.
-	//
 	DiskID string `json:"DiskId,omitempty"`
 
 	// This field identifies the current disk configuration applied in the physical disk.
-	//
 	DiskState string `json:"DiskState,omitempty"`
 
 	// health
 	Health string `json:"Health,omitempty"`
 
 	// The number of blocks present on the physical disk.
-	//
 	NumBlocks string `json:"NumBlocks,omitempty"`
 
 	// Physical Disk on a server.
-	//
 	PhysicalDisk *StoragePhysicalDiskRef `json:"PhysicalDisk,omitempty"`
 
 	// This field identifies the Product ID for physicalDisk.
-	//
 	// Read Only: true
 	Pid string `json:"Pid,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// This field identifies the SAS address assigned to the disk SAS port-1.
-	//
 	SasAddress1 string `json:"SasAddress1,omitempty"`
 
 	// This field identifies the SAS address assigned to the disk SAS port-2.
-	//
 	SasAddress2 string `json:"SasAddress2,omitempty"`
 
 	// The size of the physical disk in MB.
-	//
 	Size string `json:"Size,omitempty"`
 
 	// A collection of references to the [storage.Enclosure](mo://storage.Enclosure) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.Enclosure](mo://storage.Enclosure) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageEnclosure *StorageEnclosureRef `json:"StorageEnclosure,omitempty"`
 }
@@ -148,7 +135,6 @@ func (m StorageEnclosureDisk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BlockSize string `json:"BlockSize,omitempty"`
 
@@ -204,7 +190,6 @@ func (m StorageEnclosureDisk) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

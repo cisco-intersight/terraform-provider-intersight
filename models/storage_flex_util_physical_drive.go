@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -66,14 +65,11 @@ type StorageFlexUtilPhysicalDrive struct {
 	ReadErrorThreshold string `json:"ReadErrorThreshold,omitempty"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// A collection of references to the [storage.FlexUtilController](mo://storage.FlexUtilController) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [storage.FlexUtilController](mo://storage.FlexUtilController) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	StorageFlexUtilController *StorageFlexUtilControllerRef `json:"StorageFlexUtilController,omitempty"`
 
@@ -194,7 +190,6 @@ func (m StorageFlexUtilPhysicalDrive) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BlockSize string `json:"BlockSize,omitempty"`
 
@@ -282,7 +277,6 @@ func (m StorageFlexUtilPhysicalDrive) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,22 +20,18 @@ type StoragePureHostLun struct {
 	StorageHostLun
 
 	// Host group relationship object associated with LUN. It is empty, if volume has direct connection to host.
-	//
 	// Read Only: true
-	HostGroup *StorageHostRef `json:"HostGroup,omitempty"`
+	HostGroup *StoragePureHostGroupRef `json:"HostGroup,omitempty"`
 
 	// Name of the host group associated with LUN.
-	//
 	// Read Only: true
 	HostGroupName string `json:"HostGroupName,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Kind of volume connection to host. True if it is connected through host group. False in case of direct host connection.
-	//
 	// Read Only: true
 	Shared *bool `json:"Shared,omitempty"`
 }
@@ -52,7 +47,7 @@ func (m *StoragePureHostLun) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		HostGroup *StorageHostRef `json:"HostGroup,omitempty"`
+		HostGroup *StoragePureHostGroupRef `json:"HostGroup,omitempty"`
 
 		HostGroupName string `json:"HostGroupName,omitempty"`
 
@@ -84,9 +79,8 @@ func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
-		HostGroup *StorageHostRef `json:"HostGroup,omitempty"`
+		HostGroup *StoragePureHostGroupRef `json:"HostGroup,omitempty"`
 
 		HostGroupName string `json:"HostGroupName,omitempty"`
 
@@ -108,7 +102,6 @@ func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

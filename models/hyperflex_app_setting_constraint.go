@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m HyperflexAppSettingConstraint) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,25 +100,22 @@ func (m *HyperflexAppSettingConstraint) UnmarshalBinary(b []byte) error {
 }
 
 // HyperflexAppSettingConstraintAO1P1 hyperflex app setting constraint a o1 p1
+//
 // swagger:model HyperflexAppSettingConstraintAO1P1
 type HyperflexAppSettingConstraintAO1P1 struct {
 
 	// The supported HyperFlex Data Platform version in regex format.
-	//
 	HxdpVersion string `json:"HxdpVersion,omitempty"`
 
 	// The hypervisor type for the HyperFlex cluster.
-	//
-	// Enum: [Unknown Hyper-V ESXi]
+	// Enum: [ESXi]
 	HypervisorType *string `json:"HypervisorType,omitempty"`
 
 	// The supported management platform for the HyperFlex Cluster.
-	//
 	// Enum: [FI EDGE]
 	MgmtPlatform *string `json:"MgmtPlatform,omitempty"`
 
 	// The supported server models in regex format.
-	//
 	ServerModel string `json:"ServerModel,omitempty"`
 
 	// hyperflex app setting constraint a o1 p1
@@ -133,21 +128,17 @@ func (m *HyperflexAppSettingConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The supported HyperFlex Data Platform version in regex format.
-		//
 		HxdpVersion string `json:"HxdpVersion,omitempty"`
 
 		// The hypervisor type for the HyperFlex cluster.
-		//
-		// Enum: [Unknown Hyper-V ESXi]
+		// Enum: [ESXi]
 		HypervisorType *string `json:"HypervisorType,omitempty"`
 
 		// The supported management platform for the HyperFlex Cluster.
-		//
 		// Enum: [FI EDGE]
 		MgmtPlatform *string `json:"MgmtPlatform,omitempty"`
 
 		// The supported server models in regex format.
-		//
 		ServerModel string `json:"ServerModel,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -156,13 +147,9 @@ func (m *HyperflexAppSettingConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv HyperflexAppSettingConstraintAO1P1
 
 	rcv.HxdpVersion = stage1.HxdpVersion
-
 	rcv.HypervisorType = stage1.HypervisorType
-
 	rcv.MgmtPlatform = stage1.MgmtPlatform
-
 	rcv.ServerModel = stage1.ServerModel
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -172,13 +159,9 @@ func (m *HyperflexAppSettingConstraintAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "HxdpVersion")
-
 	delete(stage2, "HypervisorType")
-
 	delete(stage2, "MgmtPlatform")
-
 	delete(stage2, "ServerModel")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -200,30 +183,23 @@ func (m HyperflexAppSettingConstraintAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The supported HyperFlex Data Platform version in regex format.
-		//
 		HxdpVersion string `json:"HxdpVersion,omitempty"`
 
 		// The hypervisor type for the HyperFlex cluster.
-		//
-		// Enum: [Unknown Hyper-V ESXi]
+		// Enum: [ESXi]
 		HypervisorType *string `json:"HypervisorType,omitempty"`
 
 		// The supported management platform for the HyperFlex Cluster.
-		//
 		// Enum: [FI EDGE]
 		MgmtPlatform *string `json:"MgmtPlatform,omitempty"`
 
 		// The supported server models in regex format.
-		//
 		ServerModel string `json:"ServerModel,omitempty"`
 	}
 
 	stage1.HxdpVersion = m.HxdpVersion
-
 	stage1.HypervisorType = m.HypervisorType
-
 	stage1.MgmtPlatform = m.MgmtPlatform
-
 	stage1.ServerModel = m.ServerModel
 
 	// make JSON object for known properties
@@ -273,7 +249,7 @@ var hyperflexAppSettingConstraintAO1P1TypeHypervisorTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unknown","Hyper-V","ESXi"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ESXi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -282,12 +258,6 @@ func init() {
 }
 
 const (
-
-	// HyperflexAppSettingConstraintAO1P1HypervisorTypeUnknown captures enum value "Unknown"
-	HyperflexAppSettingConstraintAO1P1HypervisorTypeUnknown string = "Unknown"
-
-	// HyperflexAppSettingConstraintAO1P1HypervisorTypeHyperV captures enum value "Hyper-V"
-	HyperflexAppSettingConstraintAO1P1HypervisorTypeHyperV string = "Hyper-V"
 
 	// HyperflexAppSettingConstraintAO1P1HypervisorTypeESXi captures enum value "ESXi"
 	HyperflexAppSettingConstraintAO1P1HypervisorTypeESXi string = "ESXi"

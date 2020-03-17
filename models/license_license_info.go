@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -26,87 +25,64 @@ type LicenseLicenseInfo struct {
 	MoBaseMo
 
 	// A collection of references to the [license.AccountLicenseData](mo://license.AccountLicenseData) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [license.AccountLicenseData](mo://license.AccountLicenseData) MO unsets its reference to this deleted MO.
-	//
 	AccountLicenseData *LicenseAccountLicenseDataRef `json:"AccountLicenseData,omitempty"`
 
 	// The license administrative state.
-	//
 	// Set this property to 'true' to activate the license entitlements.
-	//
-	//
+	// Read Only: true
 	ActiveAdmin *bool `json:"ActiveAdmin,omitempty"`
 
 	// The number of days left for licenseState to stay in TrialPeriod or OutOfCompliance state.
-	//
 	// Read Only: true
 	DaysLeft int64 `json:"DaysLeft,omitempty"`
 
 	// The date and time when the trial period expires.
-	//
 	// The value of the 'endTime' property is set when the account enters the TrialPeriod or OutOfCompliance state.
-	//
-	//
 	// Read Only: true
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 	// The entitlement mode reported by Cisco Smart Software Manager.
-	//
 	// Read Only: true
 	EnforceMode string `json:"EnforceMode,omitempty"`
 
 	// The detailed error message when there is any error related to this licensing entitlement.
-	//
 	// Read Only: true
 	ErrorDesc string `json:"ErrorDesc,omitempty"`
 
 	// The default Trial or Grace period customer is entitled to.
-	//
 	EvaluationPeriod int64 `json:"EvaluationPeriod,omitempty"`
 
 	// The number of days the trial Trial or Grace period is extended.
-	//
 	// The trial or grace period can be extended once.
-	//
-	//
 	ExtraEvaluation int64 `json:"ExtraEvaluation,omitempty"`
 
 	// The total number of devices claimed in the Intersight account.
-	//
 	// Read Only: true
 	LicenseCount int64 `json:"LicenseCount,omitempty"`
 
 	// The license state defined by Intersight.
-	//
 	// The value may be one of NotLicensed, TrialPeriod, OutOfCompliance, Compliance, GraceExpired, or TrialExpired.
-	//
-	//
 	// Read Only: true
 	// Enum: [NotLicensed GraceExpired TrialPeriod OutOfCompliance Compliance TrialExpired]
 	LicenseState string `json:"LicenseState,omitempty"`
 
 	// The name of the Intersight license entitlement.
 	// For example, this property may be set to 'Essential'.
-	//
-	//
 	// Read Only: true
-	// Enum: [Base Essential Standard Advantage]
+	// Enum: [Base Essential Standard Advantage Premier]
 	LicenseType string `json:"LicenseType,omitempty"`
 
 	// The date and time when the licenseState entered the TrialPeriod or OutOfCompliance state.
-	//
 	// Read Only: true
 	// Format: date-time
 	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// The administrative state of the trial license.
-	//
 	// When the LicenseState is set to 'NotLicensed', 'trialAdmin' can be set to true to start the trial period,
 	// i.e. licenseState is set to be TrialPeriod.
-	//
-	//
+	// Read Only: true
 	TrialAdmin *bool `json:"TrialAdmin,omitempty"`
 }
 
@@ -189,7 +165,6 @@ func (m LicenseLicenseInfo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccountLicenseData *LicenseAccountLicenseDataRef `json:"AccountLicenseData,omitempty"`
 
@@ -249,7 +224,6 @@ func (m LicenseLicenseInfo) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -357,7 +331,7 @@ var licenseLicenseInfoTypeLicenseTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Base","Essential","Standard","Advantage","Premier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -6,20 +6,20 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// OsWriteBmcFileRef os write bmc file ref
-// swagger:model osWriteBmcFileRef
-type OsWriteBmcFileRef struct {
+// ConnectorStreamAcknowledgeRef connector stream acknowledge ref
+//
+// swagger:model connectorStreamAcknowledgeRef
+type ConnectorStreamAcknowledgeRef struct {
 	MoMoRef
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
-func (m *OsWriteBmcFileRef) UnmarshalJSON(raw []byte) error {
+func (m *ConnectorStreamAcknowledgeRef) UnmarshalJSON(raw []byte) error {
 	// AO0
 	var aO0 MoMoRef
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
@@ -31,7 +31,7 @@ func (m *OsWriteBmcFileRef) UnmarshalJSON(raw []byte) error {
 }
 
 // MarshalJSON marshals this object to a JSON structure
-func (m OsWriteBmcFileRef) MarshalJSON() ([]byte, error) {
+func (m ConnectorStreamAcknowledgeRef) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 1)
 
 	aO0, err := swag.WriteJSON(m.MoMoRef)
@@ -39,12 +39,11 @@ func (m OsWriteBmcFileRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
-// Validate validates this os write bmc file ref
-func (m *OsWriteBmcFileRef) Validate(formats strfmt.Registry) error {
+// Validate validates this connector stream acknowledge ref
+func (m *ConnectorStreamAcknowledgeRef) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// validation for a type composition with MoMoRef
@@ -59,7 +58,7 @@ func (m *OsWriteBmcFileRef) Validate(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *OsWriteBmcFileRef) MarshalBinary() ([]byte, error) {
+func (m *ConnectorStreamAcknowledgeRef) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -67,8 +66,8 @@ func (m *OsWriteBmcFileRef) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *OsWriteBmcFileRef) UnmarshalBinary(b []byte) error {
-	var res OsWriteBmcFileRef
+func (m *ConnectorStreamAcknowledgeRef) UnmarshalBinary(b []byte) error {
+	var res ConnectorStreamAcknowledgeRef
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

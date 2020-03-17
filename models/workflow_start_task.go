@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,7 +20,6 @@ type WorkflowStartTask struct {
 	WorkflowControlTask
 
 	// The name of the next task (Task names unique within workflow) to run.  In a graph model, denotes an edge to another Task Node.
-	//
 	NextTask string `json:"NextTask,omitempty"`
 }
 
@@ -56,7 +54,6 @@ func (m WorkflowStartTask) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		NextTask string `json:"NextTask,omitempty"`
 	}
@@ -68,7 +65,6 @@ func (m WorkflowStartTask) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

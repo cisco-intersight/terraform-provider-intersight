@@ -6,13 +6,13 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // VnicScpDeployTaskRef vnic scp deploy task ref
+//
 // swagger:model vnicScpDeployTaskRef
 type VnicScpDeployTaskRef struct {
 	MoMoRef
@@ -39,7 +39,6 @@ func (m VnicScpDeployTaskRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

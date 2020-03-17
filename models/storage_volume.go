@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,32 +20,26 @@ type StorageVolume struct {
 	MoBaseMo
 
 	// Short description about the volume.
-	//
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
 	// NAA id of volume. It is a significant number to identify corresponding lun path in hypervisor.
-	//
 	// Read Only: true
 	NaaID string `json:"NaaId,omitempty"`
 
-	// Named entitiy of the volume.
-	//
+	// Named entity of the volume.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
-	// User provisioned volume size. It is a size exposed to host.
-	//
+	// User provisioned volume size. It is the size exposed to host.
 	// Read Only: true
 	Size int64 `json:"Size,omitempty"`
 
 	// Storage array managed object.
-	//
 	// Read Only: true
 	StorageArray *StorageGenericArrayRef `json:"StorageArray,omitempty"`
 
 	// Storage utilization of volume entity in storage array.
-	//
 	// Read Only: true
 	StorageUtilization *StorageCapacity `json:"StorageUtilization,omitempty"`
 }
@@ -102,7 +95,6 @@ func (m StorageVolume) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Description string `json:"Description,omitempty"`
 
@@ -134,7 +126,6 @@ func (m StorageVolume) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

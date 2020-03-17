@@ -8,49 +8,47 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // ServerProfile Server Profile
 //
-// Server Profile enables server management using policies.
+// A profile specifying configuration settings for a physical server.
 //
 // swagger:model serverProfile
 type ServerProfile struct {
 	PolicyAbstractConfigProfile
 
 	// The assigned physical server to the profile. A physical server can be assigned to more than one server profiles as long as it is only associated with one.
-	//
 	AssignedServer *ComputeRackUnitRef `json:"AssignedServer,omitempty"`
 
 	// The associated physical server to the profile. A physical server can only be associated to one server profiles.
-	//
 	// Read Only: true
 	AssociatedServer *ComputeRackUnitRef `json:"AssociatedServer,omitempty"`
 
 	// The configuration change details are captured here.
-	//
 	// Read Only: true
 	ConfigChangeDetails []*ServerConfigChangeDetailRef `json:"ConfigChangeDetails"`
 
 	// Pending configuration changes at the summary level. Detail changes are saved in configChangeDetails as a separate object.
-	//
 	ConfigChanges *PolicyConfigChange `json:"ConfigChanges,omitempty"`
 
 	// The configuration results including deploy, undeploy and compliance-check results. The errors usually are detected and reported during the apply/deploy phases.
-	//
 	// Read Only: true
 	ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
+	// is pmc deployed secure passphrase set
+	IsPmcDeployedSecurePassphraseSet *bool `json:"IsPmcDeployedSecurePassphraseSet,omitempty"`
+
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
+	// Secure passphrase that is already deployed on all the Persistent Memory Modules on the server. This deployed passphrase is required during deploy of server profile if secure passphrase is changed or security is disabled in the attached persistent memory policy.
+	PmcDeployedSecurePassphrase string `json:"PmcDeployedSecurePassphrase,omitempty"`
+
 	// The WorkflowInfos in the workflow engine that are running for this server Profile.
-	//
 	// Read Only: true
 	RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 }
@@ -76,7 +74,11 @@ func (m *ServerProfile) UnmarshalJSON(raw []byte) error {
 
 		ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
+		IsPmcDeployedSecurePassphraseSet *bool `json:"IsPmcDeployedSecurePassphraseSet,omitempty"`
+
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
+
+		PmcDeployedSecurePassphrase string `json:"PmcDeployedSecurePassphrase,omitempty"`
 
 		RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 	}
@@ -94,7 +96,11 @@ func (m *ServerProfile) UnmarshalJSON(raw []byte) error {
 
 	m.ConfigResult = dataAO1.ConfigResult
 
+	m.IsPmcDeployedSecurePassphraseSet = dataAO1.IsPmcDeployedSecurePassphraseSet
+
 	m.Organization = dataAO1.Organization
+
+	m.PmcDeployedSecurePassphrase = dataAO1.PmcDeployedSecurePassphrase
 
 	m.RunningWorkflows = dataAO1.RunningWorkflows
 
@@ -110,7 +116,6 @@ func (m ServerProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AssignedServer *ComputeRackUnitRef `json:"AssignedServer,omitempty"`
 
@@ -122,7 +127,11 @@ func (m ServerProfile) MarshalJSON() ([]byte, error) {
 
 		ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
+		IsPmcDeployedSecurePassphraseSet *bool `json:"IsPmcDeployedSecurePassphraseSet,omitempty"`
+
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
+
+		PmcDeployedSecurePassphrase string `json:"PmcDeployedSecurePassphrase,omitempty"`
 
 		RunningWorkflows []*WorkflowWorkflowInfoRef `json:"RunningWorkflows"`
 	}
@@ -137,7 +146,11 @@ func (m ServerProfile) MarshalJSON() ([]byte, error) {
 
 	dataAO1.ConfigResult = m.ConfigResult
 
+	dataAO1.IsPmcDeployedSecurePassphraseSet = m.IsPmcDeployedSecurePassphraseSet
+
 	dataAO1.Organization = m.Organization
+
+	dataAO1.PmcDeployedSecurePassphrase = m.PmcDeployedSecurePassphrase
 
 	dataAO1.RunningWorkflows = m.RunningWorkflows
 
@@ -146,7 +159,6 @@ func (m ServerProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

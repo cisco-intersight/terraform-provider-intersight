@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -19,7 +18,6 @@ import (
 //
 // If the given API/device response is a collection of items, each item and
 // its properties can be modeled as a complex type.
-//
 // The types are uniquely named within the grammar and provides the list of
 // parameters to be extracted from each item. Name of the complex type can be
 // used as the type of parameter that represents the complex value.
@@ -65,7 +63,6 @@ func (m ContentComplexType) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -107,17 +104,14 @@ func (m *ContentComplexType) UnmarshalBinary(b []byte) error {
 }
 
 // ContentComplexTypeAO1P1 content complex type a o1 p1
+//
 // swagger:model ContentComplexTypeAO1P1
 type ContentComplexTypeAO1P1 struct {
 
 	// The unique name of this complex type within the grammar specification.
-	//
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The collection of parameters that are part of this complex type.
-	//
-	//
 	Parameters []*ContentBaseParameter `json:"Parameters"`
 
 	// content complex type a o1 p1
@@ -130,13 +124,9 @@ func (m *ContentComplexTypeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The unique name of this complex type within the grammar specification.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The collection of parameters that are part of this complex type.
-		//
-		//
 		Parameters []*ContentBaseParameter `json:"Parameters"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -145,9 +135,7 @@ func (m *ContentComplexTypeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv ContentComplexTypeAO1P1
 
 	rcv.Name = stage1.Name
-
 	rcv.Parameters = stage1.Parameters
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -157,9 +145,7 @@ func (m *ContentComplexTypeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Name")
-
 	delete(stage2, "Parameters")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -181,18 +167,13 @@ func (m ContentComplexTypeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The unique name of this complex type within the grammar specification.
-		//
-		//
 		Name string `json:"Name,omitempty"`
 
 		// The collection of parameters that are part of this complex type.
-		//
-		//
 		Parameters []*ContentBaseParameter `json:"Parameters"`
 	}
 
 	stage1.Name = m.Name
-
 	stage1.Parameters = m.Parameters
 
 	// make JSON object for known properties

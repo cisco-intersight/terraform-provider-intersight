@@ -11,11 +11,9 @@ Export Policy configuration is organized hierarchically as follows.
         Network
         Storage
      TechSupport
-
 When the DataExportPolicy for a category is enabled/disabled, all the sub-category configurations
 are enabled/disabled as well. For example, if you enable/disable Inventory, all its sub-category
 configurations (ie. Network and Storage) are also enabled/disabled.
-
 ---
 
 # Data Source: intersight_appliance_data_export_policy
@@ -27,14 +25,12 @@ Export Policy configuration is organized hierarchically as follows.
         Network
         Storage
      TechSupport
-
 When the DataExportPolicy for a category is enabled/disabled, all the sub-category configurations
 are enabled/disabled as well. For example, if you enable/disable Inventory, all its sub-category
 configurations (ie. Network and Storage) are also enabled/disabled.
-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `enable`:(bool)Status of the data collection mode. If the value is 'true', then data collection is enabled.
-* `moid`:(string)The unique identifier of this Managed Object instance.
-* `name`:(string)Name of the Data Export Policy.
-* `object_type`:(string)The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path.
+* `enable`:(bool)"Status of the data collection mode. If the value is 'true', then data collection is enabled."
+* `moid`:(string)"The unique identifier of this Managed Object instance."
+* `name`:(string)"Name of the Data Export Policy."
+* `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,27 +20,22 @@ type StorageStorageUtilization struct {
 	StorageCapacity
 
 	// Ratio of mapped sectors within a volume versus the amount of physical space the data occupies after data compression and deduplication. The data reduction ratio does not include thin provisioning savings. For example, a data reduction ratio of 5.0 means that for every 5 MB the host writes to the array, 1 MB is stored on the array's flash modules.
-	//
 	// Read Only: true
 	DataReduction float32 `json:"DataReduction,omitempty"`
 
 	// Physical space occupied by the snapshots, represented in bytes.
-	//
 	// Read Only: true
 	Snapshot int64 `json:"Snapshot,omitempty"`
 
 	// Percentage of volume sectors that do not contain host-written data because the hosts have not written data to them or the sectors have been explicitly trimmed.
-	//
 	// Read Only: true
 	ThinProvisioned float32 `json:"ThinProvisioned,omitempty"`
 
 	// Ratio of provisioned sectors within a volume versus the amount of physical space the data occupies after reduction via data compression and deduplication and with thin provisioning savings. Total reduction is data reduction with thin provisioning savings. For example, a total reduction ratio of 10.0 means that for every 10 MB of provisioned space, 1 MB is stored on the array's flash modules.
-	//
 	// Read Only: true
 	TotalReduction float32 `json:"TotalReduction,omitempty"`
 
 	// Physical space occupied by volume data, excluding shared, array metadata and snapshots. Size id represented in bytes.
-	//
 	// Read Only: true
 	Volume int64 `json:"Volume,omitempty"`
 }
@@ -93,7 +87,6 @@ func (m StorageStorageUtilization) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		DataReduction float32 `json:"DataReduction,omitempty"`
 
@@ -121,7 +114,6 @@ func (m StorageStorageUtilization) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

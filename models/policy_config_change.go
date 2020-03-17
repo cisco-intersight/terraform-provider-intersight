@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m PolicyConfigChange) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *PolicyConfigChange) UnmarshalBinary(b []byte) error {
 }
 
 // PolicyConfigChangeAO1P1 policy config change a o1 p1
+//
 // swagger:model PolicyConfigChangeAO1P1
 type PolicyConfigChangeAO1P1 struct {
 
 	// Configuration changes at summary level.
-	//
 	Changes []string `json:"Changes"`
 
 	// Configuration disruptions.
-	//
 	Disruptions []string `json:"Disruptions"`
 
 	// policy config change a o1 p1
@@ -122,11 +119,9 @@ func (m *PolicyConfigChangeAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Configuration changes at summary level.
-		//
 		Changes []string `json:"Changes"`
 
 		// Configuration disruptions.
-		//
 		Disruptions []string `json:"Disruptions"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *PolicyConfigChangeAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv PolicyConfigChangeAO1P1
 
 	rcv.Changes = stage1.Changes
-
 	rcv.Disruptions = stage1.Disruptions
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *PolicyConfigChangeAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Changes")
-
 	delete(stage2, "Disruptions")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m PolicyConfigChangeAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Configuration changes at summary level.
-		//
 		Changes []string `json:"Changes"`
 
 		// Configuration disruptions.
-		//
 		Disruptions []string `json:"Disruptions"`
 	}
 
 	stage1.Changes = m.Changes
-
 	stage1.Disruptions = m.Disruptions
 
 	// make JSON object for known properties

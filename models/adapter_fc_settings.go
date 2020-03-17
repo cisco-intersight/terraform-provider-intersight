@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m AdapterFcSettings) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,11 +99,11 @@ func (m *AdapterFcSettings) UnmarshalBinary(b []byte) error {
 }
 
 // AdapterFcSettingsAO1P1 adapter fc settings a o1 p1
+//
 // swagger:model AdapterFcSettingsAO1P1
 type AdapterFcSettingsAO1P1 struct {
 
 	// Status of FIP protocol on the adapter interfaces.
-	//
 	FipEnabled *bool `json:"FipEnabled,omitempty"`
 
 	// adapter fc settings a o1 p1
@@ -118,7 +116,6 @@ func (m *AdapterFcSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Status of FIP protocol on the adapter interfaces.
-		//
 		FipEnabled *bool `json:"FipEnabled,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -127,7 +124,6 @@ func (m *AdapterFcSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv AdapterFcSettingsAO1P1
 
 	rcv.FipEnabled = stage1.FipEnabled
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -137,7 +133,6 @@ func (m *AdapterFcSettingsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "FipEnabled")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -159,7 +154,6 @@ func (m AdapterFcSettingsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Status of FIP protocol on the adapter interfaces.
-		//
 		FipEnabled *bool `json:"FipEnabled,omitempty"`
 	}
 

@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -29,21 +28,16 @@ type SoftwarerepositoryNfsServer struct {
 	// * PORT=VALUE.
 	// * timeo=VALUE.
 	// * retry=VALUE.
-	//
-	//
 	// Read Only: true
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// Filename of the image in the NFS server. For example:ucs-c220m5-huu-3.1.2c.iso.
-	//
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// Hostname or IP Address of the NFS server.
-	//
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Remote directory where the image is present. For example:/share/subfolder.
-	//
 	RemoteShare string `json:"RemoteShare,omitempty"`
 }
 
@@ -90,7 +84,6 @@ func (m SoftwarerepositoryNfsServer) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		MountOptions string `json:"MountOptions,omitempty"`
 
@@ -114,7 +107,6 @@ func (m SoftwarerepositoryNfsServer) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

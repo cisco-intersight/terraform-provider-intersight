@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,32 +20,24 @@ type RecoveryBackupProfile struct {
 	PolicyAbstractConfigProfile
 
 	// A collection of references to the [recovery.BackupConfigPolicy](mo://recovery.BackupConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [recovery.BackupConfigPolicy](mo://recovery.BackupConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	BackupConfig *RecoveryBackupConfigPolicyRef `json:"BackupConfig,omitempty"`
 
 	// The profile configuration (deploy, validation) results with the overall state and detailed result messages.
-	//
 	// Read Only: true
 	ConfigResult *RecoveryConfigResultRef `json:"ConfigResult,omitempty"`
 
 	// Relationship to all the end devices associated to this backup profile.
-	//
 	DeviceID *AssetDeviceRegistrationRef `json:"DeviceId,omitempty"`
 
 	// Enables/Disables the schedule on the endpoint.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// A collection of references to the [recovery.ScheduleConfigPolicy](mo://recovery.ScheduleConfigPolicy) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [recovery.ScheduleConfigPolicy](mo://recovery.ScheduleConfigPolicy) MO unsets its reference to this deleted MO.
-	//
 	ScheduleConfig *RecoveryScheduleConfigPolicyRef `json:"ScheduleConfig,omitempty"`
 }
 
@@ -101,7 +92,6 @@ func (m RecoveryBackupProfile) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		BackupConfig *RecoveryBackupConfigPolicyRef `json:"BackupConfig,omitempty"`
 
@@ -133,7 +123,6 @@ func (m RecoveryBackupProfile) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

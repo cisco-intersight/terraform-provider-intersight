@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -18,10 +17,8 @@ import (
 // UpgradePolicy stores the Intersight Appliance's software upgrade policy. UpgradePolicy
 // is a sinlgeton managed object. A default upgrade policy is created during the Intersight
 // Appliance setup, and it is configured with an automatic upgrade policy.
-//
 // Automatic upgrade policy lets the system start software upgrade after a pre-defined
 // number of seconds set in the software manifest.
-//
 // Scheduled upgrade pilicy lets the user start software upgrade at a specified schedule.
 // However, scheduled time cannot be beyond the time limit enforced by the upgrade grace
 // period set in the software manifest.
@@ -31,29 +28,23 @@ type ApplianceUpgradePolicy struct {
 	MoBaseMo
 
 	// UpgradePolicy managed object to Account relationship.
-	//
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Indicates if the upgrade service is set to automatically start the software upgrade or not. If autoUpgrade is true, then the value of the schedule field is ignored.
-	//
 	AutoUpgrade *bool `json:"AutoUpgrade,omitempty"`
 
 	// If enabled, allows the user to define a blackout period during which the appliance will not be upgraded.
-	//
 	BlackoutDatesEnabled *bool `json:"BlackoutDatesEnabled,omitempty"`
 
 	// End date of the black out period.
-	//
 	// Format: date-time
 	BlackoutEndDate strfmt.DateTime `json:"BlackoutEndDate,omitempty"`
 
 	// Start date of the black out period. The appliance will not be upgraded during this period.
-	//
 	// Format: date-time
 	BlackoutStartDate strfmt.DateTime `json:"BlackoutStartDate,omitempty"`
 
 	// User defined schedule for upgrading the Intersight Appliance software.
-	//
 	Schedule *OnpremSchedule `json:"Schedule,omitempty"`
 }
 
@@ -108,7 +99,6 @@ func (m ApplianceUpgradePolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -140,7 +130,6 @@ func (m ApplianceUpgradePolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

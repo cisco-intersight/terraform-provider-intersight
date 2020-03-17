@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -60,7 +59,6 @@ func (m RecoveryBackupSchedule) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,21 +100,19 @@ func (m *RecoveryBackupSchedule) UnmarshalBinary(b []byte) error {
 }
 
 // RecoveryBackupScheduleAO1P1 recovery backup schedule a o1 p1
+//
 // swagger:model RecoveryBackupScheduleAO1P1
 type RecoveryBackupScheduleAO1P1 struct {
 
 	// The time at which the backup is to be run on a given day. This is used when the frequency unit is daily.
-	//
 	// Format: date-time
 	ExecutionTime strfmt.DateTime `json:"ExecutionTime,omitempty"`
 
 	// The frequency at which the backup schedule must run.
-	//
 	// Enum: [Daily Periodic]
 	FrequencyUnit *string `json:"FrequencyUnit,omitempty"`
 
 	// The frequency, in hours, at which the backup schedule runs.
-	//
 	// Enum: [8 4 12 16 20]
 	Hours *int64 `json:"Hours,omitempty"`
 
@@ -130,17 +126,14 @@ func (m *RecoveryBackupScheduleAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// The time at which the backup is to be run on a given day. This is used when the frequency unit is daily.
-		//
 		// Format: date-time
 		ExecutionTime strfmt.DateTime `json:"ExecutionTime,omitempty"`
 
 		// The frequency at which the backup schedule must run.
-		//
 		// Enum: [Daily Periodic]
 		FrequencyUnit *string `json:"FrequencyUnit,omitempty"`
 
 		// The frequency, in hours, at which the backup schedule runs.
-		//
 		// Enum: [8 4 12 16 20]
 		Hours *int64 `json:"Hours,omitempty"`
 	}
@@ -150,11 +143,8 @@ func (m *RecoveryBackupScheduleAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv RecoveryBackupScheduleAO1P1
 
 	rcv.ExecutionTime = stage1.ExecutionTime
-
 	rcv.FrequencyUnit = stage1.FrequencyUnit
-
 	rcv.Hours = stage1.Hours
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -164,11 +154,8 @@ func (m *RecoveryBackupScheduleAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "ExecutionTime")
-
 	delete(stage2, "FrequencyUnit")
-
 	delete(stage2, "Hours")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -190,25 +177,20 @@ func (m RecoveryBackupScheduleAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// The time at which the backup is to be run on a given day. This is used when the frequency unit is daily.
-		//
 		// Format: date-time
 		ExecutionTime strfmt.DateTime `json:"ExecutionTime,omitempty"`
 
 		// The frequency at which the backup schedule must run.
-		//
 		// Enum: [Daily Periodic]
 		FrequencyUnit *string `json:"FrequencyUnit,omitempty"`
 
 		// The frequency, in hours, at which the backup schedule runs.
-		//
 		// Enum: [8 4 12 16 20]
 		Hours *int64 `json:"Hours,omitempty"`
 	}
 
 	stage1.ExecutionTime = m.ExecutionTime
-
 	stage1.FrequencyUnit = m.FrequencyUnit
-
 	stage1.Hours = m.Hours
 
 	// make JSON object for known properties

@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,52 +24,40 @@ type SnmpPolicy struct {
 	PolicyAbstractPolicy
 
 	// The default SNMPv1, SNMPv2c community name or SNMPv3 username to include on any trap messages sent to the SNMP host. The name can be 18 characters long.
-	//
 	AccessCommunityString string `json:"AccessCommunityString,omitempty"`
 
 	// Controls access to the information in the inventory tables. Applicable only for SNMPv1 and SNMPv2c users.
-	//
 	// Enum: [Disabled Limited Full]
 	CommunityAccess *string `json:"CommunityAccess,omitempty"`
 
 	// State of the SNMP Policy on the endpoint. If enabled, the endpoint sends SNMP traps to the designated host.
-	//
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// User-defined unique identification of the static engine.
-	//
 	EngineID string `json:"EngineId,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// Relationship to the profile object.
-	//
 	Profiles []*PolicyAbstractConfigProfileRef `json:"Profiles"`
 
 	// Port on which Cisco IMC SNMP agent runs.
-	//
 	SnmpPort int64 `json:"SnmpPort,omitempty"`
 
 	// List of SNMP traps for the policy.
-	//
 	SnmpTraps []*SnmpTrap `json:"SnmpTraps"`
 
 	// List of SNMP users for the policy.
-	//
 	SnmpUsers []*SnmpUser `json:"SnmpUsers"`
 
 	// Contact person responsible for the SNMP implementation. Enter a string up to 64 characters, such as an email address or a name and telephone number.
-	//
 	SysContact string `json:"SysContact,omitempty"`
 
 	// Location of host on which the SNMP agent (server) runs.
-	//
 	SysLocation string `json:"SysLocation,omitempty"`
 
 	// SNMP community group used for sending SNMP trap to other devices. Valid only for SNMPv2c users.
-	//
 	TrapCommunity string `json:"TrapCommunity,omitempty"`
 }
 
@@ -149,7 +136,6 @@ func (m SnmpPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AccessCommunityString string `json:"AccessCommunityString,omitempty"`
 
@@ -205,7 +191,6 @@ func (m SnmpPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

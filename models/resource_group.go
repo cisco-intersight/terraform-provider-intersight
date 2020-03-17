@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -25,34 +24,25 @@ type ResourceGroup struct {
 	MoBaseMo
 
 	// The account to which this resource group belongs to.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The name of this resource group.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// A collection of references to the [organization.Organization](mo://organization.Organization) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [organization.Organization](mo://organization.Organization) MOs unset their reference to this deleted MO.
-	//
 	Organizations []*OrganizationOrganizationRef `json:"Organizations"`
 
 	// A single filter expression created by OR'ing the $filter criteria of the 'selectors' of a given object type. Used to efficiently maintain the membership of the group. This filter is maintained per object type in this type.
-	//
-	//
 	// Read Only: true
 	PerTypeCombinedSelector []*ResourcePerTypeCombinedSelector `json:"PerTypeCombinedSelector"`
 
 	// Qualifier shall be used to specify if we want to organize resources using multiple resource group or single For an account, resource groups can be of only one of the above types. (Both the types are mutually exclusive for an account.).
-	//
 	// Enum: [Allow-Selectors Allow-All]
 	Qualifier *string `json:"Qualifier,omitempty"`
 
 	// A list of ODATA filters to select resources. The group selectors may be include URLs of individual resources, or OData query with filters that match multiple queries. The URLs must be relative (i.e. do not include the host).
-	//
-	//
 	Selectors []*ResourceSelector `json:"Selectors"`
 }
 
@@ -107,7 +97,6 @@ func (m ResourceGroup) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -139,7 +128,6 @@ func (m ResourceGroup) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

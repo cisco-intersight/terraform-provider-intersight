@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,26 +22,20 @@ type HyperflexConfigResult struct {
 	PolicyAbstractConfigResult
 
 	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	ClusterProfile *HyperflexClusterProfileRef `json:"ClusterProfile,omitempty"`
 
 	// The progress percentage of the running configuration or workflow.
-	//
 	ConfigProgress string `json:"ConfigProgress,omitempty"`
 
 	// The duration of the running configuration or workflow.
-	//
 	Duration string `json:"Duration,omitempty"`
 
 	// Detailed result entries for both validation & configration. Each result entry can be error/warning/info messages and the context.
-	//
 	ResultEntries []*HyperflexConfigResultEntryRef `json:"ResultEntries"`
 
 	// The start time of the configuration or workflow.
-	//
 	StartTime string `json:"StartTime,omitempty"`
 }
 
@@ -93,7 +86,6 @@ func (m HyperflexConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ClusterProfile *HyperflexClusterProfileRef `json:"ClusterProfile,omitempty"`
 
@@ -121,7 +113,6 @@ func (m HyperflexConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

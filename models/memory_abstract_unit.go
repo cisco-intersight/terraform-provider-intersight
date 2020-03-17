@@ -6,107 +6,88 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryAbstractUnit Memory:Abstract Unit
 //
-// This represents the abstract class for all memory units.
+// Abstract class for all memory units.
 //
 // swagger:model memoryAbstractUnit
 type MemoryAbstractUnit struct {
 	EquipmentBase
 
 	// This represents the administrative state of the memory unit on a server.
-	//
 	// Read Only: true
 	AdminState string `json:"AdminState,omitempty"`
 
 	// This represents the memory array to which the memory unit belongs to.
-	//
 	// Read Only: true
 	ArrayID int64 `json:"ArrayId,omitempty"`
 
 	// This represents the memory bank of the memory unit on a server.
-	//
 	// Read Only: true
 	Bank int64 `json:"Bank,omitempty"`
 
 	// This represents the memory capacity in MiB of the memory unit on a server.
-	//
 	// Read Only: true
 	Capacity string `json:"Capacity,omitempty"`
 
 	// This represents the clock of the memory unit on a server.
-	//
 	// Read Only: true
 	Clock string `json:"Clock,omitempty"`
 
 	// This represents the form factor of the memory unit on a server.
-	//
 	// Read Only: true
 	FormFactor string `json:"FormFactor,omitempty"`
 
 	// This represents the latency of the memory unit on a server.
-	//
 	// Read Only: true
 	Latency string `json:"Latency,omitempty"`
 
 	// This represents the location of the memory unit on a server.
-	//
 	// Read Only: true
 	Location string `json:"Location,omitempty"`
 
 	// This represents the operational power state of the memory unit on a server.
-	//
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
 	// This represents the operational state of the memory unit on a server.
-	//
 	// Read Only: true
 	OperState string `json:"OperState,omitempty"`
 
 	// This represents the operability of the memory unit on a server.
-	//
 	// Read Only: true
 	Operability string `json:"Operability,omitempty"`
 
 	// This represents the presence state of the memory unit on a server.
-	//
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
 	// This represents the set of the memory unit on a server.
-	//
 	// Read Only: true
 	Set int64 `json:"Set,omitempty"`
 
 	// This represents the speed of the memory unit on a server.
-	//
 	// Read Only: true
 	Speed string `json:"Speed,omitempty"`
 
 	// This represents the thremal state of the memory unit on a server.
-	//
 	// Read Only: true
 	Thermal string `json:"Thermal,omitempty"`
 
 	// This represents the memory type of the memory unit on a server.
-	//
 	// Read Only: true
 	Type string `json:"Type,omitempty"`
 
 	// This represents the visibility of the memory unit on a server.
-	//
 	// Read Only: true
 	Visibility string `json:"Visibility,omitempty"`
 
 	// This represents the width of the memory unit on a server.
-	//
 	// Read Only: true
 	Width string `json:"Width,omitempty"`
 }
@@ -210,7 +191,6 @@ func (m MemoryAbstractUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminState string `json:"AdminState,omitempty"`
 
@@ -290,7 +270,6 @@ func (m MemoryAbstractUnit) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

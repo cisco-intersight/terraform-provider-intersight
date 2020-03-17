@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,20 +22,16 @@ type OrganizationOrganization struct {
 	MoBaseMo
 
 	// The account under which the organization is present.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The informative description about the usage of this organization.
-	//
 	Description string `json:"Description,omitempty"`
 
 	// The name of the organization. There can be multiple organizations under an account.
-	//
 	Name string `json:"Name,omitempty"`
 
 	// The resource groups associated with these organization.
-	//
 	ResourceGroups []*ResourceGroupRef `json:"ResourceGroups"`
 }
 
@@ -83,7 +78,6 @@ func (m OrganizationOrganization) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -107,7 +101,6 @@ func (m OrganizationOrganization) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

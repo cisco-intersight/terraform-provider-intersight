@@ -9,9 +9,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -60,7 +59,6 @@ func (m IamAccountPermissions) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -102,26 +100,23 @@ func (m *IamAccountPermissions) UnmarshalBinary(b []byte) error {
 }
 
 // IamAccountPermissionsAO1P1 iam account permissions a o1 p1
+//
 // swagger:model IamAccountPermissionsAO1P1
 type IamAccountPermissionsAO1P1 struct {
 
 	// MOID of the account which a user can select after authentication.
-	//
 	// Read Only: true
 	AccountIdentifier string `json:"AccountIdentifier,omitempty"`
 
 	// Name of the account which a user can select after authentication.
-	//
 	// Read Only: true
 	AccountName string `json:"AccountName,omitempty"`
 
 	// Status of the account. Account remains inactive until a device is claimed to the account.
-	//
 	// Read Only: true
 	AccountStatus string `json:"AccountStatus,omitempty"`
 
 	// Permissions within an account which a user can select after authentication.
-	//
 	// Read Only: true
 	Permissions []*IamPermissionReference `json:"Permissions"`
 
@@ -135,22 +130,18 @@ func (m *IamAccountPermissionsAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// MOID of the account which a user can select after authentication.
-		//
 		// Read Only: true
 		AccountIdentifier string `json:"AccountIdentifier,omitempty"`
 
 		// Name of the account which a user can select after authentication.
-		//
 		// Read Only: true
 		AccountName string `json:"AccountName,omitempty"`
 
 		// Status of the account. Account remains inactive until a device is claimed to the account.
-		//
 		// Read Only: true
 		AccountStatus string `json:"AccountStatus,omitempty"`
 
 		// Permissions within an account which a user can select after authentication.
-		//
 		// Read Only: true
 		Permissions []*IamPermissionReference `json:"Permissions"`
 	}
@@ -160,13 +151,9 @@ func (m *IamAccountPermissionsAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv IamAccountPermissionsAO1P1
 
 	rcv.AccountIdentifier = stage1.AccountIdentifier
-
 	rcv.AccountName = stage1.AccountName
-
 	rcv.AccountStatus = stage1.AccountStatus
-
 	rcv.Permissions = stage1.Permissions
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -176,13 +163,9 @@ func (m *IamAccountPermissionsAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AccountIdentifier")
-
 	delete(stage2, "AccountName")
-
 	delete(stage2, "AccountStatus")
-
 	delete(stage2, "Permissions")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -204,32 +187,25 @@ func (m IamAccountPermissionsAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// MOID of the account which a user can select after authentication.
-		//
 		// Read Only: true
 		AccountIdentifier string `json:"AccountIdentifier,omitempty"`
 
 		// Name of the account which a user can select after authentication.
-		//
 		// Read Only: true
 		AccountName string `json:"AccountName,omitempty"`
 
 		// Status of the account. Account remains inactive until a device is claimed to the account.
-		//
 		// Read Only: true
 		AccountStatus string `json:"AccountStatus,omitempty"`
 
 		// Permissions within an account which a user can select after authentication.
-		//
 		// Read Only: true
 		Permissions []*IamPermissionReference `json:"Permissions"`
 	}
 
 	stage1.AccountIdentifier = m.AccountIdentifier
-
 	stage1.AccountName = m.AccountName
-
 	stage1.AccountStatus = m.AccountStatus
-
 	stage1.Permissions = m.Permissions
 
 	// make JSON object for known properties

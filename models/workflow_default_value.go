@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -59,7 +58,6 @@ func (m WorkflowDefaultValue) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -101,15 +99,14 @@ func (m *WorkflowDefaultValue) UnmarshalBinary(b []byte) error {
 }
 
 // WorkflowDefaultValueAO1P1 workflow default value a o1 p1
+//
 // swagger:model WorkflowDefaultValueAO1P1
 type WorkflowDefaultValueAO1P1 struct {
 
 	// Override the default value provided for the data type. When true, allow the user to enter value for the data type.
-	//
 	Override *bool `json:"Override,omitempty"`
 
 	// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-	//
 	Value interface{} `json:"Value,omitempty"`
 
 	// workflow default value a o1 p1
@@ -122,11 +119,9 @@ func (m *WorkflowDefaultValueAO1P1) UnmarshalJSON(data []byte) error {
 	var stage1 struct {
 
 		// Override the default value provided for the data type. When true, allow the user to enter value for the data type.
-		//
 		Override *bool `json:"Override,omitempty"`
 
 		// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-		//
 		Value interface{} `json:"Value,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -135,9 +130,7 @@ func (m *WorkflowDefaultValueAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv WorkflowDefaultValueAO1P1
 
 	rcv.Override = stage1.Override
-
 	rcv.Value = stage1.Value
-
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -147,9 +140,7 @@ func (m *WorkflowDefaultValueAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "Override")
-
 	delete(stage2, "Value")
-
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -171,16 +162,13 @@ func (m WorkflowDefaultValueAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
 		// Override the default value provided for the data type. When true, allow the user to enter value for the data type.
-		//
 		Override *bool `json:"Override,omitempty"`
 
 		// Default value for the data type. If default value was provided and the input was required the default value will be used as the input.
-		//
 		Value interface{} `json:"Value,omitempty"`
 	}
 
 	stage1.Override = m.Override
-
 	stage1.Value = m.Value
 
 	// make JSON object for known properties

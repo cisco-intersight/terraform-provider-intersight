@@ -8,9 +8,8 @@ package models
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
@@ -20,7 +19,6 @@ import (
 // DeviceClaim managed object represents a user initiated claim request for claiming
 // an endpoint device. There can be many DeviceClaim managed object for a given endpoint
 // device when users claim and unclaim devices repeatedly.
-//
 // Claiming an endpoint device is a multi-step operation. The Intersight Appliance
 // starts a workflow with multiple tasks to process the device claim request. The status
 // of the device claim operation can be obtained from the claim workflow.
@@ -30,53 +28,43 @@ type ApplianceDeviceClaim struct {
 	MoBaseMo
 
 	// DeviceClaim managed object to Account relationship.
-	//
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Device identifier of the endpoint device.
-	//
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
 	// Hostname or IP address of the endpoint device the user wants to claim.
-	//
 	Hostname string `json:"Hostname,omitempty"`
 
 	// is password set
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Message set by the device claim process.
-	//
 	// Read Only: true
 	Message string `json:"Message,omitempty"`
 
 	// Password to be used to login to the endpoint device.
-	//
 	Password string `json:"Password,omitempty"`
 
 	// Platform type of the endpoint device.
-	//
-	// Enum: [ APIC DCNM UCSFI IMC IMCM4 IMCM5 HX HXTriton UCSD IntersightAppliance PureStorage VMware ServiceEngine]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// User defined claim request identifier set by the UI. The RequestId field is not a mandatory. The Intersight Appliance will assign a unique value automatically if the field is not set.
-	//
 	RequestID string `json:"RequestId,omitempty"`
 
 	// Device security token of the endpoint device.
-	//
 	// Read Only: true
 	SecurityToken string `json:"SecurityToken,omitempty"`
 
 	// Status of the device claim process.
-	//
 	// Read Only: true
 	// Enum: [started failed completed]
 	Status string `json:"Status,omitempty"`
 
 	// Username to log in to the endpoint device.
-	//
 	Username string `json:"Username,omitempty"`
 }
 
@@ -151,7 +139,6 @@ func (m ApplianceDeviceClaim) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
@@ -203,7 +190,6 @@ func (m ApplianceDeviceClaim) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
@@ -256,7 +242,7 @@ var applianceDeviceClaimTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","IMC","IMCM4","IMCM5","HX","HXTriton","UCSD","IntersightAppliance","PureStorage","VMware","ServiceEngine"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

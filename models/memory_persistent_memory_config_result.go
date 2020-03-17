@@ -8,54 +8,45 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // MemoryPersistentMemoryConfigResult Memory:Persistent Memory Config Result
 //
-// This represents the result of a previously applied Persistent Memory Configuration on a server.
+// Result of a previously applied Persistent Memory configuration on a server.
 //
 // swagger:model memoryPersistentMemoryConfigResult
 type MemoryPersistentMemoryConfigResult struct {
 	InventoryBase
 
-	// This describes the error in the result of a previously applied Persistent Memory Configuration on a server.
-	//
+	// Error in the result of a previously applied Persistent Memory configuration on a server.
 	// Read Only: true
 	ConfigErrorDesc string `json:"ConfigErrorDesc,omitempty"`
 
-	// This represents the result of a previously applied Persistent Memory Configuration on a server.
-	//
+	// Result of a previously applied Persistent Memory configuration on a server.
 	// Read Only: true
 	ConfigResult string `json:"ConfigResult,omitempty"`
 
-	// This represents the sequence number of a previously applied Persistent Memory Configuration on a server.
-	//
+	// Sequence number of a previously applied Persistent Memory configuration on a server.
 	// Read Only: true
 	ConfigSequenceNo int64 `json:"ConfigSequenceNo,omitempty"`
 
-	// This represents the state of a previously applied Persistent Memory Configuration on a server.
-	//
+	// State of a previously applied Persistent Memory configuration on a server.
 	// Read Only: true
 	ConfigState string `json:"ConfigState,omitempty"`
 
 	// A collection of references to the [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) Managed Object.
-	//
 	// When this managed object is deleted, the referenced [memory.PersistentMemoryConfiguration](mo://memory.PersistentMemoryConfiguration) MO unsets its reference to this deleted MO.
-	//
 	// Read Only: true
 	MemoryPersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"MemoryPersistentMemoryConfiguration,omitempty"`
 
-	// This represents the collection of all the results of the previously applied Persistent Memory Namespaces on a server.
-	//
+	// Collection of all the results of the previously applied Persistent Memory Namespaces on a server.
 	// Read Only: true
 	PersistentMemoryNamespaceConfigResults []*MemoryPersistentMemoryNamespaceConfigResultRef `json:"PersistentMemoryNamespaceConfigResults"`
 
 	// The Device to which this Managed Object is associated.
-	//
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
@@ -115,7 +106,6 @@ func (m MemoryPersistentMemoryConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		ConfigErrorDesc string `json:"ConfigErrorDesc,omitempty"`
 
@@ -151,7 +141,6 @@ func (m MemoryPersistentMemoryConfigResult) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

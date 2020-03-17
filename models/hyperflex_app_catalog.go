@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,35 +22,27 @@ type HyperflexAppCatalog struct {
 	MoBaseMo
 
 	// The HyperFlex feature limits that are available to end users.
-	//
 	FeatureLimitExternal *HyperflexFeatureLimitExternalRef `json:"FeatureLimitExternal,omitempty"`
 
 	// The HyperFlex feature limits for internal system use.
-	//
 	FeatureLimitInternal *HyperflexFeatureLimitInternalRef `json:"FeatureLimitInternal,omitempty"`
 
 	// The list of supported HyperFlex Data Platform versions.
-	//
 	HxdpVersions []*HyperflexHxdpVersionRef `json:"HxdpVersions"`
 
 	// Lists all supported HyperFlex feature capabilities and limitations.
-	//
 	HyperflexCapabilityInfos []*HyperflexCapabilityInfoRef `json:"HyperflexCapabilityInfos"`
 
 	// Lists software compatibility information between different HyperFlex component versions like HXDP, Hypervisor, Drive Firmware, etc.
-	//
 	HyperflexSoftwareCompatibilityInfos []*HclHyperflexSoftwareCompatibilityInfoRef `json:"HyperflexSoftwareCompatibilityInfos"`
 
 	// The supported server firmware bundle.
-	//
 	ServerFirmwareVersion *HyperflexServerFirmwareVersionRef `json:"ServerFirmwareVersion,omitempty"`
 
 	// The supported server models in regex format.
-	//
 	ServerModel *HyperflexServerModelRef `json:"ServerModel,omitempty"`
 
 	// The catalog version used in HyperFlex cluster configuration service.
-	//
 	Version string `json:"Version,omitempty"`
 }
 
@@ -114,7 +105,6 @@ func (m HyperflexAppCatalog) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		FeatureLimitExternal *HyperflexFeatureLimitExternalRef `json:"FeatureLimitExternal,omitempty"`
 
@@ -154,7 +144,6 @@ func (m HyperflexAppCatalog) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

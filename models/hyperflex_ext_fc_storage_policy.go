@@ -8,9 +8,8 @@ package models
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -23,27 +22,21 @@ type HyperflexExtFcStoragePolicy struct {
 	PolicyAbstractPolicy
 
 	// Enables or disables external FC storage configuration.
-	//
 	AdminState *bool `json:"AdminState,omitempty"`
 
 	// List of cluster profiles using this policy.
-	//
 	ClusterProfiles []*HyperflexClusterProfileRef `json:"ClusterProfiles"`
 
 	// VSAN for the primary Fabric Interconnect external FC storage traffic.
-	//
 	ExtaTraffic *HyperflexNamedVsan `json:"ExtaTraffic,omitempty"`
 
 	// VSAN for the secondary Fabric Interconnect external FC storage traffic.
-	//
 	ExtbTraffic *HyperflexNamedVsan `json:"ExtbTraffic,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The range of WWxN addresses to use for the FC storage configuration.
-	//
 	WwxnPrefixRange *HyperflexWwxnPrefixRange `json:"WwxnPrefixRange,omitempty"`
 }
 
@@ -98,7 +91,6 @@ func (m HyperflexExtFcStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		AdminState *bool `json:"AdminState,omitempty"`
 
@@ -130,7 +122,6 @@ func (m HyperflexExtFcStoragePolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 

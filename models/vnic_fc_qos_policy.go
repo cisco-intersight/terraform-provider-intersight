@@ -6,9 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -21,19 +20,15 @@ type VnicFcQosPolicy struct {
 	PolicyAbstractPolicy
 
 	// Class of Service to be associated to the traffic on the virtual interface.
-	//
 	Cos int64 `json:"Cos,omitempty"`
 
 	// The maximum size of the Fibre Channel frame payload bytes that the virtual interface supports.
-	//
 	MaxDataFieldSize int64 `json:"MaxDataFieldSize,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.
-	//
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// The value in Mbps to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off.
-	//
 	RateLimit int64 `json:"RateLimit,omitempty"`
 }
 
@@ -80,7 +75,6 @@ func (m VnicFcQosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
-
 	var dataAO1 struct {
 		Cos int64 `json:"Cos,omitempty"`
 
@@ -104,7 +98,6 @@ func (m VnicFcQosPolicy) MarshalJSON() ([]byte, error) {
 		return nil, errAO1
 	}
 	_parts = append(_parts, jsonDataAO1)
-
 	return swag.ConcatJSON(_parts...), nil
 }
 
