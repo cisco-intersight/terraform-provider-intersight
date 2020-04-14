@@ -57,6 +57,7 @@ func GetResourceMapping() map[string]*schema.Resource {
 		"intersight_iam_private_key_spec":                                resourceIamPrivateKeySpec(),
 		"intersight_iam_qualifier":                                       resourceIamQualifier(),
 		"intersight_iam_resource_roles":                                  resourceIamResourceRoles(),
+		"intersight_iam_session_limits":                                  resourceIamSessionLimits(),
 		"intersight_iam_trust_point":                                     resourceIamTrustPoint(),
 		"intersight_iam_user":                                            resourceIamUser(),
 		"intersight_iam_user_group":                                      resourceIamUserGroup(),

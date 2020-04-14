@@ -10,6 +10,7 @@ Result of a previously applied Persistent Memory configuration on a server.
 Result of a previously applied Persistent Memory configuration on a server.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_error_desc`:(string)"Error in the result of a previously applied Persistent Memory configuration on a server."
 * `config_result`:(string)"Result of a previously applied Persistent Memory configuration on a server."
 * `config_sequence_no`:(int)"Sequence number of a previously applied Persistent Memory configuration on a server."

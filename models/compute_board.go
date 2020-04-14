@@ -51,7 +51,7 @@ type ComputeBoard struct {
 	// Read Only: true
 	MemoryArrays []*MemoryArrayRef `json:"MemoryArrays"`
 
-	// oper power state
+	// Current power state of the mother board of the server.
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
@@ -67,7 +67,7 @@ type ComputeBoard struct {
 	// Read Only: true
 	PersistentMemoryConfiguration *MemoryPersistentMemoryConfigurationRef `json:"PersistentMemoryConfiguration,omitempty"`
 
-	// presence
+	// Identifies the presence of the mother board of the server.
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 

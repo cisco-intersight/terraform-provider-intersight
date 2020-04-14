@@ -11,6 +11,7 @@ Information of virtual drives as reported by a storage controller. In certain ca
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bootable`:(string)"It shows virtual drive is bootable."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `container_id`:(int)
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."

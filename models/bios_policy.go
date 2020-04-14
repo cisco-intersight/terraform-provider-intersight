@@ -351,6 +351,10 @@ type BiosPolicy struct {
 	// Enum: [platform-default enabled disabled]
 	IPPrefetch *string `json:"IpPrefetch,omitempty"`
 
+	// BIOS Token for setting IPv4 PXE Support configuration.
+	// Enum: [platform-default enabled disabled]
+	Ipv4pxe *string `json:"Ipv4pxe,omitempty"`
+
 	// BIOS Token for setting IPV6 PXE Support configuration.
 	// Enum: [platform-default enabled disabled]
 	Ipv6pxe *string `json:"Ipv6pxe,omitempty"`
@@ -403,9 +407,12 @@ type BiosPolicy struct {
 	// Enum: [platform-default 1 Way Node Interleave 2 Way Node Interleave 4 Way Node Interleave 8 Way Node Interleave disabled enabled]
 	MemoryInterLeave *string `json:"MemoryInterLeave,omitempty"`
 
-	// BIOS Token for setting Memory mapped IO above 4GB configuration.
+	// BIOS Token for setting Memory mapped IO above 4GiB configuration.
 	// Enum: [platform-default enabled disabled]
 	MemoryMappedIoAbove4gb *string `json:"MemoryMappedIoAbove4gb,omitempty"`
+
+	// BIOS Token for setting Memory Size Limit in GiB configuration (0-65535).
+	MemorySizeLimit string `json:"MemorySizeLimit,omitempty"`
 
 	// BIOS Token for setting Mirroring Mode configuration.
 	// Enum: [platform-default inter-socket intra-socket]
@@ -414,6 +421,10 @@ type BiosPolicy struct {
 	// BIOS Token for setting MMCFG BASE configuration.
 	// Enum: [platform-default 1 GB 2 GB 2.5 GB 3 GB Auto]
 	MmcfgBase *string `json:"MmcfgBase,omitempty"`
+
+	// BIOS Token for setting Network Stack configuration.
+	// Enum: [platform-default enabled disabled]
+	NetworkStack *string `json:"NetworkStack,omitempty"`
 
 	// BIOS Token for setting NUMA optimized configuration.
 	// Enum: [platform-default enabled disabled]
@@ -458,6 +469,25 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto C0 C1 State C0/C1 C2 C6 Non Retention C6 Retention No Limit]
 	PackageCstateLimit *string `json:"PackageCstateLimit,omitempty"`
 
+	// BIOS Token for setting Partial Memory Mirror Mode configuration.
+	// Enum: [platform-default disabled Percentage Value in GB]
+	PartialMirrorModeConfig *string `json:"PartialMirrorModeConfig,omitempty"`
+
+	// BIOS Token for setting Partial Mirror percentage configuration (0.00-50.00).
+	PartialMirrorPercent string `json:"PartialMirrorPercent,omitempty"`
+
+	// BIOS Token for setting Partial Mirror1 Size in GiB configuration (0-65535).
+	PartialMirrorValue1 string `json:"PartialMirrorValue1,omitempty"`
+
+	// BIOS Token for setting Partial Mirror2 Size in GiB configuration (0-65535).
+	PartialMirrorValue2 string `json:"PartialMirrorValue2,omitempty"`
+
+	// BIOS Token for setting Partial Mirror3 Size in GiB configuration (0-65535).
+	PartialMirrorValue3 string `json:"PartialMirrorValue3,omitempty"`
+
+	// BIOS Token for setting Partial Mirror4 Size in GiB configuration (0-65535).
+	PartialMirrorValue4 string `json:"PartialMirrorValue4,omitempty"`
+
 	// BIOS Token for setting Patrol Scrub configuration.
 	// Enum: [platform-default enabled disabled]
 	PatrolScrub *string `json:"PatrolScrub,omitempty"`
@@ -465,6 +495,10 @@ type BiosPolicy struct {
 	// BIOS Token for setting Patrol Scrub Interval configuration.
 	// Enum: [platform-default enabled disabled]
 	PatrolScrubDuration *string `json:"PatrolScrubDuration,omitempty"`
+
+	// BIOS Token for setting PCIe RAS Support configuration.
+	// Enum: [platform-default enabled disabled]
+	PcIeRasSupport *string `json:"PcIeRasSupport,omitempty"`
 
 	// BIOS Token for setting NVMe SSD Hot-Plug Support configuration.
 	// Enum: [platform-default enabled disabled]
@@ -546,8 +580,12 @@ type BiosPolicy struct {
 	SataModeSelect *string `json:"SataModeSelect,omitempty"`
 
 	// BIOS Token for setting SelectMemory RAS configuration configuration.
-	// Enum: [platform-default adddc-sparing lockstep maximum-performance mirror-mode-1lm mirroring sparing]
+	// Enum: [platform-default adddc-sparing lockstep maximum-performance mirror-mode-1lm mirroring partial-mirror-mode-1lm sparing]
 	SelectMemoryRasConfiguration *string `json:"SelectMemoryRasConfiguration,omitempty"`
+
+	// BIOS Token for setting Select PPR Type configuration.
+	// Enum: [platform-default disabled Hard PPR]
+	SelectPprType *string `json:"SelectPprType,omitempty"`
 
 	// BIOS Token for setting Serial A Enable configuration.
 	// Enum: [platform-default enabled disabled]
@@ -929,11 +967,11 @@ type BiosPolicy struct {
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotSasState *string `json:"SlotSasState,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:FrontPcie1 Link Speed configuration.
+	// BIOS Token for setting PCIe Slot:FrontSSD1 Link Speed configuration.
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotSsdSlot1linkSpeed *string `json:"SlotSsdSlot1linkSpeed,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:FrontPcie2 Link Speed configuration.
+	// BIOS Token for setting PCIe Slot:FrontSSD2 Link Speed configuration.
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotSsdSlot2linkSpeed *string `json:"SlotSsdSlot2linkSpeed,omitempty"`
 
@@ -1209,6 +1247,8 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 		IPPrefetch *string `json:"IpPrefetch,omitempty"`
 
+		Ipv4pxe *string `json:"Ipv4pxe,omitempty"`
+
 		Ipv6pxe *string `json:"Ipv6pxe,omitempty"`
 
 		KtiPrefetch *string `json:"KtiPrefetch,omitempty"`
@@ -1237,9 +1277,13 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 		MemoryMappedIoAbove4gb *string `json:"MemoryMappedIoAbove4gb,omitempty"`
 
+		MemorySizeLimit string `json:"MemorySizeLimit,omitempty"`
+
 		MirroringMode *string `json:"MirroringMode,omitempty"`
 
 		MmcfgBase *string `json:"MmcfgBase,omitempty"`
+
+		NetworkStack *string `json:"NetworkStack,omitempty"`
 
 		NumaOptimized *string `json:"NumaOptimized,omitempty"`
 
@@ -1263,9 +1307,23 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 		PackageCstateLimit *string `json:"PackageCstateLimit,omitempty"`
 
+		PartialMirrorModeConfig *string `json:"PartialMirrorModeConfig,omitempty"`
+
+		PartialMirrorPercent string `json:"PartialMirrorPercent,omitempty"`
+
+		PartialMirrorValue1 string `json:"PartialMirrorValue1,omitempty"`
+
+		PartialMirrorValue2 string `json:"PartialMirrorValue2,omitempty"`
+
+		PartialMirrorValue3 string `json:"PartialMirrorValue3,omitempty"`
+
+		PartialMirrorValue4 string `json:"PartialMirrorValue4,omitempty"`
+
 		PatrolScrub *string `json:"PatrolScrub,omitempty"`
 
 		PatrolScrubDuration *string `json:"PatrolScrubDuration,omitempty"`
+
+		PcIeRasSupport *string `json:"PcIeRasSupport,omitempty"`
 
 		PcIeSsdHotPlugSupport *string `json:"PcIeSsdHotPlugSupport,omitempty"`
 
@@ -1308,6 +1366,8 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 		SataModeSelect *string `json:"SataModeSelect,omitempty"`
 
 		SelectMemoryRasConfiguration *string `json:"SelectMemoryRasConfiguration,omitempty"`
+
+		SelectPprType *string `json:"SelectPprType,omitempty"`
 
 		SerialPortAenable *string `json:"SerialPortAenable,omitempty"`
 
@@ -1719,6 +1779,8 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 	m.IPPrefetch = dataAO1.IPPrefetch
 
+	m.Ipv4pxe = dataAO1.Ipv4pxe
+
 	m.Ipv6pxe = dataAO1.Ipv6pxe
 
 	m.KtiPrefetch = dataAO1.KtiPrefetch
@@ -1747,9 +1809,13 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 	m.MemoryMappedIoAbove4gb = dataAO1.MemoryMappedIoAbove4gb
 
+	m.MemorySizeLimit = dataAO1.MemorySizeLimit
+
 	m.MirroringMode = dataAO1.MirroringMode
 
 	m.MmcfgBase = dataAO1.MmcfgBase
+
+	m.NetworkStack = dataAO1.NetworkStack
 
 	m.NumaOptimized = dataAO1.NumaOptimized
 
@@ -1773,9 +1839,23 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 
 	m.PackageCstateLimit = dataAO1.PackageCstateLimit
 
+	m.PartialMirrorModeConfig = dataAO1.PartialMirrorModeConfig
+
+	m.PartialMirrorPercent = dataAO1.PartialMirrorPercent
+
+	m.PartialMirrorValue1 = dataAO1.PartialMirrorValue1
+
+	m.PartialMirrorValue2 = dataAO1.PartialMirrorValue2
+
+	m.PartialMirrorValue3 = dataAO1.PartialMirrorValue3
+
+	m.PartialMirrorValue4 = dataAO1.PartialMirrorValue4
+
 	m.PatrolScrub = dataAO1.PatrolScrub
 
 	m.PatrolScrubDuration = dataAO1.PatrolScrubDuration
+
+	m.PcIeRasSupport = dataAO1.PcIeRasSupport
 
 	m.PcIeSsdHotPlugSupport = dataAO1.PcIeSsdHotPlugSupport
 
@@ -1818,6 +1898,8 @@ func (m *BiosPolicy) UnmarshalJSON(raw []byte) error {
 	m.SataModeSelect = dataAO1.SataModeSelect
 
 	m.SelectMemoryRasConfiguration = dataAO1.SelectMemoryRasConfiguration
+
+	m.SelectPprType = dataAO1.SelectPprType
 
 	m.SerialPortAenable = dataAO1.SerialPortAenable
 
@@ -2238,6 +2320,8 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 		IPPrefetch *string `json:"IpPrefetch,omitempty"`
 
+		Ipv4pxe *string `json:"Ipv4pxe,omitempty"`
+
 		Ipv6pxe *string `json:"Ipv6pxe,omitempty"`
 
 		KtiPrefetch *string `json:"KtiPrefetch,omitempty"`
@@ -2266,9 +2350,13 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 		MemoryMappedIoAbove4gb *string `json:"MemoryMappedIoAbove4gb,omitempty"`
 
+		MemorySizeLimit string `json:"MemorySizeLimit,omitempty"`
+
 		MirroringMode *string `json:"MirroringMode,omitempty"`
 
 		MmcfgBase *string `json:"MmcfgBase,omitempty"`
+
+		NetworkStack *string `json:"NetworkStack,omitempty"`
 
 		NumaOptimized *string `json:"NumaOptimized,omitempty"`
 
@@ -2292,9 +2380,23 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 		PackageCstateLimit *string `json:"PackageCstateLimit,omitempty"`
 
+		PartialMirrorModeConfig *string `json:"PartialMirrorModeConfig,omitempty"`
+
+		PartialMirrorPercent string `json:"PartialMirrorPercent,omitempty"`
+
+		PartialMirrorValue1 string `json:"PartialMirrorValue1,omitempty"`
+
+		PartialMirrorValue2 string `json:"PartialMirrorValue2,omitempty"`
+
+		PartialMirrorValue3 string `json:"PartialMirrorValue3,omitempty"`
+
+		PartialMirrorValue4 string `json:"PartialMirrorValue4,omitempty"`
+
 		PatrolScrub *string `json:"PatrolScrub,omitempty"`
 
 		PatrolScrubDuration *string `json:"PatrolScrubDuration,omitempty"`
+
+		PcIeRasSupport *string `json:"PcIeRasSupport,omitempty"`
 
 		PcIeSsdHotPlugSupport *string `json:"PcIeSsdHotPlugSupport,omitempty"`
 
@@ -2337,6 +2439,8 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 		SataModeSelect *string `json:"SataModeSelect,omitempty"`
 
 		SelectMemoryRasConfiguration *string `json:"SelectMemoryRasConfiguration,omitempty"`
+
+		SelectPprType *string `json:"SelectPprType,omitempty"`
 
 		SerialPortAenable *string `json:"SerialPortAenable,omitempty"`
 
@@ -2745,6 +2849,8 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 	dataAO1.IPPrefetch = m.IPPrefetch
 
+	dataAO1.Ipv4pxe = m.Ipv4pxe
+
 	dataAO1.Ipv6pxe = m.Ipv6pxe
 
 	dataAO1.KtiPrefetch = m.KtiPrefetch
@@ -2773,9 +2879,13 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 	dataAO1.MemoryMappedIoAbove4gb = m.MemoryMappedIoAbove4gb
 
+	dataAO1.MemorySizeLimit = m.MemorySizeLimit
+
 	dataAO1.MirroringMode = m.MirroringMode
 
 	dataAO1.MmcfgBase = m.MmcfgBase
+
+	dataAO1.NetworkStack = m.NetworkStack
 
 	dataAO1.NumaOptimized = m.NumaOptimized
 
@@ -2799,9 +2909,23 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 
 	dataAO1.PackageCstateLimit = m.PackageCstateLimit
 
+	dataAO1.PartialMirrorModeConfig = m.PartialMirrorModeConfig
+
+	dataAO1.PartialMirrorPercent = m.PartialMirrorPercent
+
+	dataAO1.PartialMirrorValue1 = m.PartialMirrorValue1
+
+	dataAO1.PartialMirrorValue2 = m.PartialMirrorValue2
+
+	dataAO1.PartialMirrorValue3 = m.PartialMirrorValue3
+
+	dataAO1.PartialMirrorValue4 = m.PartialMirrorValue4
+
 	dataAO1.PatrolScrub = m.PatrolScrub
 
 	dataAO1.PatrolScrubDuration = m.PatrolScrubDuration
+
+	dataAO1.PcIeRasSupport = m.PcIeRasSupport
 
 	dataAO1.PcIeSsdHotPlugSupport = m.PcIeSsdHotPlugSupport
 
@@ -2844,6 +2968,8 @@ func (m BiosPolicy) MarshalJSON() ([]byte, error) {
 	dataAO1.SataModeSelect = m.SataModeSelect
 
 	dataAO1.SelectMemoryRasConfiguration = m.SelectMemoryRasConfiguration
+
+	dataAO1.SelectPprType = m.SelectPprType
 
 	dataAO1.SerialPortAenable = m.SerialPortAenable
 
@@ -3432,6 +3558,10 @@ func (m *BiosPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateIpv4pxe(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateIpv6pxe(formats); err != nil {
 		res = append(res, err)
 	}
@@ -3496,6 +3626,10 @@ func (m *BiosPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateNetworkStack(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateNumaOptimized(formats); err != nil {
 		res = append(res, err)
 	}
@@ -3540,11 +3674,19 @@ func (m *BiosPolicy) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePartialMirrorModeConfig(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validatePatrolScrub(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validatePatrolScrubDuration(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePcIeRasSupport(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -3629,6 +3771,10 @@ func (m *BiosPolicy) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateSelectMemoryRasConfiguration(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSelectPprType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -6910,6 +7056,40 @@ func (m *BiosPolicy) validateIPPrefetch(formats strfmt.Registry) error {
 	return nil
 }
 
+var biosPolicyTypeIpv4pxePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["platform-default","enabled","disabled"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		biosPolicyTypeIpv4pxePropEnum = append(biosPolicyTypeIpv4pxePropEnum, v)
+	}
+}
+
+// property enum
+func (m *BiosPolicy) validateIpv4pxeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, biosPolicyTypeIpv4pxePropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *BiosPolicy) validateIpv4pxe(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Ipv4pxe) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateIpv4pxeEnum("Ipv4pxe", "body", *m.Ipv4pxe); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 var biosPolicyTypeIpv6pxePropEnum []interface{}
 
 func init() {
@@ -7454,6 +7634,40 @@ func (m *BiosPolicy) validateMmcfgBase(formats strfmt.Registry) error {
 	return nil
 }
 
+var biosPolicyTypeNetworkStackPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["platform-default","enabled","disabled"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		biosPolicyTypeNetworkStackPropEnum = append(biosPolicyTypeNetworkStackPropEnum, v)
+	}
+}
+
+// property enum
+func (m *BiosPolicy) validateNetworkStackEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, biosPolicyTypeNetworkStackPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *BiosPolicy) validateNetworkStack(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.NetworkStack) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateNetworkStackEnum("NetworkStack", "body", *m.NetworkStack); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 var biosPolicyTypeNumaOptimizedPropEnum []interface{}
 
 func init() {
@@ -7812,6 +8026,40 @@ func (m *BiosPolicy) validatePackageCstateLimit(formats strfmt.Registry) error {
 	return nil
 }
 
+var biosPolicyTypePartialMirrorModeConfigPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["platform-default","disabled","Percentage","Value in GB"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		biosPolicyTypePartialMirrorModeConfigPropEnum = append(biosPolicyTypePartialMirrorModeConfigPropEnum, v)
+	}
+}
+
+// property enum
+func (m *BiosPolicy) validatePartialMirrorModeConfigEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, biosPolicyTypePartialMirrorModeConfigPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *BiosPolicy) validatePartialMirrorModeConfig(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PartialMirrorModeConfig) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validatePartialMirrorModeConfigEnum("PartialMirrorModeConfig", "body", *m.PartialMirrorModeConfig); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 var biosPolicyTypePatrolScrubPropEnum []interface{}
 
 func init() {
@@ -7874,6 +8122,40 @@ func (m *BiosPolicy) validatePatrolScrubDuration(formats strfmt.Registry) error 
 
 	// value enum
 	if err := m.validatePatrolScrubDurationEnum("PatrolScrubDuration", "body", *m.PatrolScrubDuration); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var biosPolicyTypePcIeRasSupportPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["platform-default","enabled","disabled"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		biosPolicyTypePcIeRasSupportPropEnum = append(biosPolicyTypePcIeRasSupportPropEnum, v)
+	}
+}
+
+// property enum
+func (m *BiosPolicy) validatePcIeRasSupportEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, biosPolicyTypePcIeRasSupportPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *BiosPolicy) validatePcIeRasSupport(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PcIeRasSupport) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validatePcIeRasSupportEnum("PcIeRasSupport", "body", *m.PcIeRasSupport); err != nil {
 		return err
 	}
 
@@ -8555,7 +8837,7 @@ var biosPolicyTypeSelectMemoryRasConfigurationPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["platform-default","adddc-sparing","lockstep","maximum-performance","mirror-mode-1lm","mirroring","sparing"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["platform-default","adddc-sparing","lockstep","maximum-performance","mirror-mode-1lm","mirroring","partial-mirror-mode-1lm","sparing"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -8579,6 +8861,40 @@ func (m *BiosPolicy) validateSelectMemoryRasConfiguration(formats strfmt.Registr
 
 	// value enum
 	if err := m.validateSelectMemoryRasConfigurationEnum("SelectMemoryRasConfiguration", "body", *m.SelectMemoryRasConfiguration); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var biosPolicyTypeSelectPprTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["platform-default","disabled","Hard PPR"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		biosPolicyTypeSelectPprTypePropEnum = append(biosPolicyTypeSelectPprTypePropEnum, v)
+	}
+}
+
+// property enum
+func (m *BiosPolicy) validateSelectPprTypeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, biosPolicyTypeSelectPprTypePropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *BiosPolicy) validateSelectPprType(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SelectPprType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateSelectPprTypeEnum("SelectPprType", "body", *m.SelectPprType); err != nil {
 		return err
 	}
 

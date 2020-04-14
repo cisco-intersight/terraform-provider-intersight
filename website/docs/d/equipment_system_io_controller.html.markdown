@@ -11,6 +11,7 @@ description: |-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `chassis_id`:(string)"The assigned identifier for a chassis."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `connection_path`:(string)"Connection Path identifies the data path available between IOModule and FI."
 * `connection_status`:(string)"Connection status identifies the status of data path."
 * `description`:(string)"This field gives a brief information on systemIOController."

@@ -115,10 +115,11 @@ type VmediaMappingAO1P1 struct {
 	// IP address or hostname of the remote server.
 	HostName string `json:"HostName,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
+	// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For CIFS version < 3.0, vers=VALUE is mandatory. e.g. vers=2.0\n For HTTP/HTTPS, the only supported option is noauto.
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// Protocol to use to communicate with the remote server.
@@ -131,7 +132,7 @@ type VmediaMappingAO1P1 struct {
 	// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
-	// URL path to the location of the image on the remote server. The preferred format is '/path/'.
+	// URL path to the location of the image on the remote server. The preferred format is '/path'.
 	RemotePath string `json:"RemotePath,omitempty"`
 
 	// Username to log in to the remote server.
@@ -160,10 +161,11 @@ func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 		// IP address or hostname of the remote server.
 		HostName string `json:"HostName,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
+		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For CIFS version < 3.0, vers=VALUE is mandatory. e.g. vers=2.0\n For HTTP/HTTPS, the only supported option is noauto.
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Protocol to use to communicate with the remote server.
@@ -176,7 +178,7 @@ func (m *VmediaMappingAO1P1) UnmarshalJSON(data []byte) error {
 		// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
-		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
+		// URL path to the location of the image on the remote server. The preferred format is '/path'.
 		RemotePath string `json:"RemotePath,omitempty"`
 
 		// Username to log in to the remote server.
@@ -251,10 +253,11 @@ func (m VmediaMappingAO1P1) MarshalJSON() ([]byte, error) {
 		// IP address or hostname of the remote server.
 		HostName string `json:"HostName,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For HTTP/HTTPS, the only supported option is noauto.
+		// Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\n For CIFS, supported options are soft, nounix, noserverino, guest.\n For CIFS version < 3.0, vers=VALUE is mandatory. e.g. vers=2.0\n For HTTP/HTTPS, the only supported option is noauto.
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		// Protocol to use to communicate with the remote server.
@@ -267,7 +270,7 @@ func (m VmediaMappingAO1P1) MarshalJSON() ([]byte, error) {
 		// Name of the remote file. It should be of .img format for HDD Virtual Media mapping and .iso format for CDD Virtual Media mapping.
 		RemoteFile string `json:"RemoteFile,omitempty"`
 
-		// URL path to the location of the image on the remote server. The preferred format is '/path/'.
+		// URL path to the location of the image on the remote server. The preferred format is '/path'.
 		RemotePath string `json:"RemotePath,omitempty"`
 
 		// Username to log in to the remote server.

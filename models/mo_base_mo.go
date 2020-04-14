@@ -29,6 +29,11 @@ type MoBaseMo struct {
 	// Read Only: true
 	Ancestors []*MoBaseMoRef `json:"Ancestors"`
 
+	// The concrete type of this complex type. Its value must be the same as the 'objectType' property.
+	// The OpenAPI document references this property as a discriminator value.
+	// Read Only: true
+	ClassID string `json:"ClassId,omitempty"`
+
 	// The time when this managed object was created.
 	// Read Only: true
 	// Format: date-time
@@ -90,6 +95,8 @@ func (m *MoBaseMo) UnmarshalJSON(raw []byte) error {
 
 		Ancestors []*MoBaseMoRef `json:"Ancestors"`
 
+		ClassID string `json:"ClassId,omitempty"`
+
 		CreateTime strfmt.DateTime `json:"CreateTime,omitempty"`
 
 		DomainGroupMoid string `json:"DomainGroupMoid,omitempty"`
@@ -119,6 +126,8 @@ func (m *MoBaseMo) UnmarshalJSON(raw []byte) error {
 	m.AccountMoid = dataAO0.AccountMoid
 
 	m.Ancestors = dataAO0.Ancestors
+
+	m.ClassID = dataAO0.ClassID
 
 	m.CreateTime = dataAO0.CreateTime
 
@@ -154,6 +163,8 @@ func (m MoBaseMo) MarshalJSON() ([]byte, error) {
 
 		Ancestors []*MoBaseMoRef `json:"Ancestors"`
 
+		ClassID string `json:"ClassId,omitempty"`
+
 		CreateTime strfmt.DateTime `json:"CreateTime,omitempty"`
 
 		DomainGroupMoid string `json:"DomainGroupMoid,omitempty"`
@@ -180,6 +191,8 @@ func (m MoBaseMo) MarshalJSON() ([]byte, error) {
 	dataAO0.AccountMoid = m.AccountMoid
 
 	dataAO0.Ancestors = m.Ancestors
+
+	dataAO0.ClassID = m.ClassID
 
 	dataAO0.CreateTime = m.CreateTime
 

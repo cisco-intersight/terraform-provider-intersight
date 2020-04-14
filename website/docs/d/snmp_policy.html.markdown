@@ -11,6 +11,7 @@ Policy to configure SNMP settings on endpoint.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `access_community_string`:(string)"The default SNMPv1, SNMPv2c community name or SNMPv3 username to include on any trap messages sent to the SNMP host. The name can be 18 characters long."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `community_access`:(string)"Controls access to the information in the inventory tables. Applicable only for SNMPv1 and SNMPv2c users."
 * `description`:(string)"Description of the policy."
 * `enabled`:(bool)"State of the SNMP Policy on the endpoint. If enabled, the endpoint sends SNMP traps to the designated host."

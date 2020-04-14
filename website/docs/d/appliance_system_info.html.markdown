@@ -14,6 +14,7 @@ created during the Intersight Appliance setup. The Intersight Appliance updates 
 SystemInfo managed object with up to date cluster status information periodically.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cloud_conn_status`:(string)"Connection state of the Intersight Appliance to the Intersight."
 * `deployment_size`:(string)"Current running deployment size for the Intersight Appliance cluster. Eg. small, medium, large etc."
 * `hostname`:(string)"Publicly accessible FQDN or IP address of the Intersight Appliance."

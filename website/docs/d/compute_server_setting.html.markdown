@@ -12,6 +12,7 @@ Models the configurable properties of a server in Intersight.
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_locator_led_state`:(string)"User configured state of the locator LED for the server."
 * `admin_power_state`:(string)"User configured power state of the server."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_state`:(string)"The configured state of these settings in the target server. The value is any one of Applied, Applying, Failed. Applied - This state denotes that the settings are applied successfully in the target server. Applying - This state denotes that the settings are being applied in the target server. Failed - This state denotes that the settings could not be applied in the target server."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."

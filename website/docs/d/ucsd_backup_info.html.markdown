@@ -14,6 +14,7 @@ The following arguments can be used to get data of already created objects in In
 * `backup_location`:(string)"Backup location that contains the backup images for end device which can be used for restore operation."
 * `backup_server_ip`:(string)"Backup server where backup images are maintained."
 * `backup_size`:(int)"Size of the backup image in bytes."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `duration`:(int)"Time taken for the backup to be completed."
 * `encryption_key`:(string)"The key used for encrypting the backup file."
 * `failure_reason`:(string)"Reason for backup failure."

@@ -10,6 +10,7 @@ The meta-data of managed objects and complex types.
 The meta-data of managed objects and complex types.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `is_concrete`:(bool)"Boolean flag to specify whether the meta class is a concrete class or not."
 * `meta_type`:(string)"Indicates whether the meta class is a complex type or managed object."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

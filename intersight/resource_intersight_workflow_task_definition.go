@@ -36,7 +36,7 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -45,6 +45,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"default_version": {
 				Description: "When true this will be the task version that is used when a specific task definition version is not specified. The very first task definition created with a name will be set as the default version, after that user can explicitly set any version of the task definition as the default version.",
@@ -75,7 +81,7 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -106,7 +112,7 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -136,6 +142,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"constraints": {
 							Description: "This field will hold any constraints a concrete task definition will specify in order to limit the environment where the task can execute.",
 							Type:        schema.TypeList,
@@ -148,6 +160,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 										Type:             schema.TypeString,
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"object_type": {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -238,7 +256,7 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -259,6 +277,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"external_meta": {
 							Description: "When set to false the task definition can only be used by internal system workflows. When set to true then the task can be included in user defined workflows.",
 							Type:        schema.TypeBool,
@@ -276,6 +300,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"default": {
 										Description: "Default value for the data type. If default value was provided and the input was required the default value will be used as the input.",
 										Type:        schema.TypeList,
@@ -287,6 +317,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"object_type": {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -359,6 +395,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"default": {
 										Description: "Default value for the data type. If default value was provided and the input was required the default value will be used as the input.",
 										Type:        schema.TypeList,
@@ -370,6 +412,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"object_type": {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -479,6 +527,12 @@ func resourceWorkflowTaskDefinition() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -541,6 +595,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 		}
 		x := p
 		o.Catalog = &x
+
+	}
+
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 
 	}
 
@@ -640,6 +700,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 					o.BaseTaskType = x
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["constraints"]; ok {
 				{
 					p := models.WorkflowTaskConstraints{}
@@ -654,6 +720,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 								if err == nil && x1 != nil {
 									o.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
 							}
 						}
 						if v, ok := l["object_type"]; ok {
@@ -779,6 +851,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["external_meta"]; ok {
 				{
 					x := (v.(bool))
@@ -804,6 +882,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 									}
 								}
 							}
+							if v, ok := l["class_id"]; ok {
+								{
+									x := (v.(string))
+									o.ClassID = x
+								}
+							}
 							if v, ok := l["default"]; ok {
 								{
 									p := models.WorkflowDefaultValue{}
@@ -818,6 +902,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 												if err == nil && x1 != nil {
 													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
 												}
+											}
+										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {
@@ -906,6 +996,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 									}
 								}
 							}
+							if v, ok := l["class_id"]; ok {
+								{
+									x := (v.(string))
+									o.ClassID = x
+								}
+							}
 							if v, ok := l["default"]; ok {
 								{
 									p := models.WorkflowDefaultValue{}
@@ -920,6 +1016,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 												if err == nil && x1 != nil {
 													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
 												}
+											}
+										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {
@@ -1050,6 +1152,12 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1122,6 +1230,10 @@ func resourceWorkflowTaskDefinitionRead(d *schema.ResourceData, meta interface{}
 	}
 
 	if err := d.Set("catalog", flattenMapWorkflowCatalogRef(s.Catalog, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -1225,6 +1337,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 		o.Catalog = &x
 	}
 
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
+	}
+
 	if d.HasChange("default_version") {
 		v := d.Get("default_version")
 		x := (v.(bool))
@@ -1323,6 +1441,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 					o.BaseTaskType = x
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["constraints"]; ok {
 				{
 					p := models.WorkflowTaskConstraints{}
@@ -1337,6 +1461,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 								if err == nil && x1 != nil {
 									o.WorkflowTaskConstraintsAO1P1.WorkflowTaskConstraintsAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
 							}
 						}
 						if v, ok := l["object_type"]; ok {
@@ -1462,6 +1592,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["external_meta"]; ok {
 				{
 					x := (v.(bool))
@@ -1487,6 +1623,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 									}
 								}
 							}
+							if v, ok := l["class_id"]; ok {
+								{
+									x := (v.(string))
+									o.ClassID = x
+								}
+							}
 							if v, ok := l["default"]; ok {
 								{
 									p := models.WorkflowDefaultValue{}
@@ -1501,6 +1643,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 												if err == nil && x1 != nil {
 													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
 												}
+											}
+										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {
@@ -1589,6 +1737,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 									}
 								}
 							}
+							if v, ok := l["class_id"]; ok {
+								{
+									x := (v.(string))
+									o.ClassID = x
+								}
+							}
 							if v, ok := l["default"]; ok {
 								{
 									p := models.WorkflowDefaultValue{}
@@ -1603,6 +1757,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 												if err == nil && x1 != nil {
 													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
 												}
+											}
+										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {
@@ -1732,6 +1892,12 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {

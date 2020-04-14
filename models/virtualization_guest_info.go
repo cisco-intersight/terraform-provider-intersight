@@ -106,10 +106,10 @@ type VirtualizationGuestInfoAO1P1 struct {
 	// Name provided to the host OS (example, ubuntu6410, test-gateway, etc.).
 	Hostname string `json:"Hostname,omitempty"`
 
-	// Primary ip address of the guest os.
+	// Primary IP address of the guest os.
 	IPAddress string `json:"IpAddress,omitempty"`
 
-	// The name of the guest running on this VM. This may not be the same as the host name.
+	// The name of the guest running on this VM. This may not be the same as the hostname.
 	Name string `json:"Name,omitempty"`
 
 	// The name of the guest OS running on this VM (Cent OS 4/5/6/7).
@@ -127,10 +127,10 @@ func (m *VirtualizationGuestInfoAO1P1) UnmarshalJSON(data []byte) error {
 		// Name provided to the host OS (example, ubuntu6410, test-gateway, etc.).
 		Hostname string `json:"Hostname,omitempty"`
 
-		// Primary ip address of the guest os.
+		// Primary IP address of the guest os.
 		IPAddress string `json:"IpAddress,omitempty"`
 
-		// The name of the guest running on this VM. This may not be the same as the host name.
+		// The name of the guest running on this VM. This may not be the same as the hostname.
 		Name string `json:"Name,omitempty"`
 
 		// The name of the guest OS running on this VM (Cent OS 4/5/6/7).
@@ -180,10 +180,10 @@ func (m VirtualizationGuestInfoAO1P1) MarshalJSON() ([]byte, error) {
 		// Name provided to the host OS (example, ubuntu6410, test-gateway, etc.).
 		Hostname string `json:"Hostname,omitempty"`
 
-		// Primary ip address of the guest os.
+		// Primary IP address of the guest os.
 		IPAddress string `json:"IpAddress,omitempty"`
 
-		// The name of the guest running on this VM. This may not be the same as the host name.
+		// The name of the guest running on this VM. This may not be the same as the hostname.
 		Name string `json:"Name,omitempty"`
 
 		// The name of the guest OS running on this VM (Cent OS 4/5/6/7).

@@ -109,6 +109,9 @@ type IamEndPointPasswordPropertiesAO1P1 struct {
 	// Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).
 	EnforceStrongPassword *bool `json:"EnforceStrongPassword,omitempty"`
 
+	// User password will always be sent to endpoint device. If the option is not selected, then users password will be sent to endpoint device if password is changed for existing users and for new users.
+	ForceSendPassword *bool `json:"ForceSendPassword,omitempty"`
+
 	// Time period until when you can use the existing password, after it expires.
 	GracePeriod int64 `json:"GracePeriod,omitempty"`
 
@@ -136,6 +139,9 @@ func (m *IamEndPointPasswordPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 		// Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).
 		EnforceStrongPassword *bool `json:"EnforceStrongPassword,omitempty"`
 
+		// User password will always be sent to endpoint device. If the option is not selected, then users password will be sent to endpoint device if password is changed for existing users and for new users.
+		ForceSendPassword *bool `json:"ForceSendPassword,omitempty"`
+
 		// Time period until when you can use the existing password, after it expires.
 		GracePeriod int64 `json:"GracePeriod,omitempty"`
 
@@ -155,6 +161,7 @@ func (m *IamEndPointPasswordPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 
 	rcv.EnablePasswordExpiry = stage1.EnablePasswordExpiry
 	rcv.EnforceStrongPassword = stage1.EnforceStrongPassword
+	rcv.ForceSendPassword = stage1.ForceSendPassword
 	rcv.GracePeriod = stage1.GracePeriod
 	rcv.NotificationPeriod = stage1.NotificationPeriod
 	rcv.PasswordExpiryDuration = stage1.PasswordExpiryDuration
@@ -169,6 +176,7 @@ func (m *IamEndPointPasswordPropertiesAO1P1) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "EnablePasswordExpiry")
 	delete(stage2, "EnforceStrongPassword")
+	delete(stage2, "ForceSendPassword")
 	delete(stage2, "GracePeriod")
 	delete(stage2, "NotificationPeriod")
 	delete(stage2, "PasswordExpiryDuration")
@@ -199,6 +207,9 @@ func (m IamEndPointPasswordPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 		// Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).
 		EnforceStrongPassword *bool `json:"EnforceStrongPassword,omitempty"`
 
+		// User password will always be sent to endpoint device. If the option is not selected, then users password will be sent to endpoint device if password is changed for existing users and for new users.
+		ForceSendPassword *bool `json:"ForceSendPassword,omitempty"`
+
 		// Time period until when you can use the existing password, after it expires.
 		GracePeriod int64 `json:"GracePeriod,omitempty"`
 
@@ -214,6 +225,7 @@ func (m IamEndPointPasswordPropertiesAO1P1) MarshalJSON() ([]byte, error) {
 
 	stage1.EnablePasswordExpiry = m.EnablePasswordExpiry
 	stage1.EnforceStrongPassword = m.EnforceStrongPassword
+	stage1.ForceSendPassword = m.ForceSendPassword
 	stage1.GracePeriod = m.GracePeriod
 	stage1.NotificationPeriod = m.NotificationPeriod
 	stage1.PasswordExpiryDuration = m.PasswordExpiryDuration

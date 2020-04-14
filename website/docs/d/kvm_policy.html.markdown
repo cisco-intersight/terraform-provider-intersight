@@ -10,6 +10,7 @@ Policy to configure KVM Launch settings.
 Policy to configure KVM Launch settings.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"Description of the policy."
 * `enable_local_server_video`:(bool)"If enabled, displays KVM session on any monitor attached to the server."
 * `enable_video_encryption`:(bool)"If enabled, encrypts all video information sent through KVM."

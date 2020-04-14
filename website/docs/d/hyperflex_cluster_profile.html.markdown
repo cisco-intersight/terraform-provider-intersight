@@ -11,6 +11,7 @@ A profile specifying configuration settings for a HyperFlex cluster.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action`:(string)"User initiated action. Each profile type has its own supported actions. For HyperFlex cluster profile, the supported actions are -- Validate, Deploy, Continue, Retry, Abort, Unassign For server profile, the support actions are -- Deploy, Unassign."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `data_ip_address`:(string)"The storage data IP address for the HyperFlex cluster."
 * `description`:(string)"Description of the profile."
 * `hypervisor_type`:(string)"The hypervisor type for the HyperFlex cluster."

@@ -27,6 +27,7 @@ to the 'current' bundle after the software upgrade is successful.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `auto_upgrade`:(bool)"Indicates that the software upgrade was automatically initiated by the Intersight Appliance."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"Short description of the software upgrade bundle."
 * `fingerprint`:(string)"Fingerprint of the software manifest from which this bundle is created. Fingerprint is calculated using the SHA256 algorithm."
 * `has_error`:(bool)"Indicates that the ImageBundle has errors. The upgrade service sets this field when it encounters errors during the manifest processing."

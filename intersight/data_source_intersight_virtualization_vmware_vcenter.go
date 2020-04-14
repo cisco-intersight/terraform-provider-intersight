@@ -14,8 +14,14 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceVirtualizationVmwareVcenterRead,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"identity": {
-				Description: "Identity of the hypervisor (not manipulated by user). It could be a UUID too. Example - c917093f-5443-4748-bc09-eec72ded7608.",
+				Description: "Identity of the hypervisor (not manipulated by user). It could be a UUID too. For example, c917093f-5443-4748-bc09-eec72ded7608.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -27,7 +33,7 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "The user provided name for the hypervisor manager (for example, vCenterIreland). Usually, this name is subject to manipulations by user. It is not the identity of the hypervisor.",
+				Description: "The user provided name for the hypervisor manager. For example, vCenterIreland. Usually, this name is subject to manipulation by the user. It is not the identity of the hypervisor.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -57,7 +63,7 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -66,7 +72,7 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.",
+				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -85,7 +91,7 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -104,6 +110,12 @@ func dataSourceVirtualizationVmwareVcenter() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -141,6 +153,10 @@ func dataSourceVirtualizationVmwareVcenterRead(d *schema.ResourceData, meta inte
 
 	url := "virtualization/VmwareVcenters"
 	var o models.VirtualizationVmwareVcenter
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+	}
 	if v, ok := d.GetOk("identity"); ok {
 		x := (v.(string))
 		o.Identity = x
@@ -182,6 +198,9 @@ func dataSourceVirtualizationVmwareVcenterRead(d *schema.ResourceData, meta inte
 			var s models.VirtualizationVmwareVcenter
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = s.UnmarshalJSON(oo); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 			if err := d.Set("identity", (s.Identity)); err != nil {

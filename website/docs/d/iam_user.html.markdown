@@ -10,6 +10,7 @@ The Intersight account user.
 The Intersight account user.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `client_ip_address`:(string)"IP address from which the user last logged in to Intersight."
 * `email`:(string)"Email of the user. Users are added to Intersight using the email configured in the IdP."
 * `first_name`:(string)"First name of the user. This field is populated from the IdP attributes received after authentication."

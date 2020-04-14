@@ -15,7 +15,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 		Read: dataSourceVirtualizationVmwareDatastoreRead,
 		Schema: map[string]*schema.Schema{
 			"accessible": {
-				Description: "Indicates if this datastore is accessible.",
+				Description: "Shows if this datastore is accessible.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -35,6 +35,12 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Description: "The total capacity of the entity (bytes).",
 							Type:        schema.TypeInt,
 							Optional:    true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"free": {
 							Description: "Free storage space remaining in the entity (bytes) as a point-in-time snapshot. The available space is reported for an entity (such as Host or Cluster) when inventory data is collected for that entity. As part of the inventory data, a snapshot of the free and used storage capacity is also reported.",
@@ -56,8 +62,14 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"cluster": {
-				Description: "Specifies cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist.",
+				Description: "Identifies the cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist for all datastores.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -76,7 +88,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -106,7 +118,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -139,7 +151,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -153,7 +165,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Optional:    true,
 			},
 			"maintenance_mode": {
-				Description: "Is the datastore in maintenance mode. Will be set to true when in maintenance mode.",
+				Description: "Indicates if the datastore is in maintenance mode. Will be set to True, when in maintenance mode.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -164,7 +176,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Computed:    true,
 			},
 			"multiple_host_access": {
-				Description: "Is this datastore connected to multiple hosts.",
+				Description: "Indicates if this datastore is connected to multiple hosts.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -199,7 +211,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -208,7 +220,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.",
+				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -227,7 +239,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -252,6 +264,12 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -273,7 +291,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Computed: true,
 			},
 			"thin_provisioning_supported": {
-				Description: "Does this datastore support thin provisioning for files.",
+				Description: "Indicates if this datastore supports thin provisioning for files.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -310,6 +328,10 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 	if v, ok := d.GetOk("accessible"); ok {
 		x := (v.(bool))
 		o.Accessible = &x
+	}
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 	}
 	if v, ok := d.GetOk("host_count"); ok {
 		x := int64(v.(int))
@@ -391,6 +413,9 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 			}
 
 			if err := d.Set("capacity", flattenMapVirtualizationStorageCapacity(s.Capacity, d)); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 

@@ -31,7 +31,8 @@ type ApplianceBackupPolicy struct {
 	// Format: date-time
 	BackupTime strfmt.DateTime `json:"BackupTime,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Backup mode of the appliance. Automatic backups of the appliance are not initiated if this property is set to 'true' and the backup schedule field is ignored.

@@ -34,6 +34,7 @@ To register an OAuth2 application, the following information must be provided.
 When an AppRegistration is created, a unique OAuth2 clientId is generated and returned in the HTTP response.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `client_id`:(string)"A unique identifier for the OAuth2 client application.\nThe client ID is auto-generated when the AppRegistration object is created."
 * `client_name`:(string)"App Registration name specified by user."
 * `client_secret`:(string)"The OAuth2 client secret.\nThe value of this property is generated when grantType includes 'client-credentials'.\nOtherwise, no client-secret is generated."

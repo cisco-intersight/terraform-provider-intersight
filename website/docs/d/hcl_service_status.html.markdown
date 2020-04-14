@@ -10,6 +10,7 @@ Status of the service indicatating if the service is up or under maintenance due
 Status of the service indicatating if the service is up or under maintenance due to data update. Service will not be able serve any requests when the data is being updated. Collection will have only one document.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `exemption_file_version`:(string)"Version of the last modified exemption file."
 * `identity`:(string)"A field to uniquely identify the document with the status."
 * `last_hcl_data_modified_time`:(string)"The timestamp of the last modified record in the HCL tool database. Used to query and get updated records."

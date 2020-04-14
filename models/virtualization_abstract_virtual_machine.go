@@ -31,10 +31,10 @@ type VirtualizationAbstractVirtualMachine struct {
 	// Type of hypervisor where the virtual machine is hosted, for example VMware ESXi.
 	HypervisorType string `json:"HypervisorType,omitempty"`
 
-	// The internally generated identity of this vm. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference).
+	// The internally generated identity of this VM. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference).
 	Identity string `json:"Identity,omitempty"`
 
-	// The ip address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types.
+	// The IP address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types.
 	IPAddress []string `json:"IpAddress"`
 
 	// The capacity and usage information for memory on this virtual machine.

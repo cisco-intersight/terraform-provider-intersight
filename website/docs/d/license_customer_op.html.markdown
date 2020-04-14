@@ -11,6 +11,7 @@ Customer operation object to refresh the registration or re-authenticate, pre-cr
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `active_admin`:(bool)"The license administrative state.\nSet this property to 'true' to activate the license entitlements."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `deregister_device`:(bool)"Trigger de-registration/disable."
 * `enable_trial`:(bool)"Enable trial for Intersight licensing."
 * `evaluation_period`:(int)"The default Trial or Grace period customer is entitled to."

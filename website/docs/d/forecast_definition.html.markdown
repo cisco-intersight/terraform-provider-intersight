@@ -11,6 +11,7 @@ Definition for forecast metric settings.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `alert_threshold_in_percentage`:(int)"Threshold above which user needs to be indicated through alarm/alert."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `data_source`:(string)"Data source from where we get the data for the metrics to compute regression model. For example Druid."
 * `metric_name`:(string)"Metric for which forecast prediction is done. Metrics are defined in the catalog file. Currently its only HyperFlex cluster storage capacity usage."
 * `min_num_of_days_of_data`:(int)"Minimum number of days of data required for computing forecast model."

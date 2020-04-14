@@ -106,10 +106,32 @@ func (m *OnpremUpgradePhase) UnmarshalBinary(b []byte) error {
 // swagger:model OnpremUpgradePhaseAO1P1
 type OnpremUpgradePhaseAO1P1 struct {
 
+	// Elapsed time in seconds to complete the current upgrade phase.
+	// Read Only: true
+	ElapsedTime int64 `json:"ElapsedTime,omitempty"`
+
+	// End date of the software upgrade phase.
+	// Read Only: true
+	// Format: date-time
+	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
+
+	// Indicates if the upgrade phase has failed or not.
+	// Read Only: true
+	Failed *bool `json:"Failed,omitempty"`
+
+	// Status message set during the upgrade phase.
+	// Read Only: true
+	Message string `json:"Message,omitempty"`
+
 	// Name of the upgrade phase.
 	// Read Only: true
 	// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 	Name string `json:"Name,omitempty"`
+
+	// Start date of the software upgrade phase.
+	// Read Only: true
+	// Format: date-time
+	StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 
 	// onprem upgrade phase a o1 p1
 	OnpremUpgradePhaseAO1P1 map[string]interface{} `json:"-"`
@@ -120,17 +142,44 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
+		// Elapsed time in seconds to complete the current upgrade phase.
+		// Read Only: true
+		ElapsedTime int64 `json:"ElapsedTime,omitempty"`
+
+		// End date of the software upgrade phase.
+		// Read Only: true
+		// Format: date-time
+		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
+
+		// Indicates if the upgrade phase has failed or not.
+		// Read Only: true
+		Failed *bool `json:"Failed,omitempty"`
+
+		// Status message set during the upgrade phase.
+		// Read Only: true
+		Message string `json:"Message,omitempty"`
+
 		// Name of the upgrade phase.
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`
+
+		// Start date of the software upgrade phase.
+		// Read Only: true
+		// Format: date-time
+		StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
 		return err
 	}
 	var rcv OnpremUpgradePhaseAO1P1
 
+	rcv.ElapsedTime = stage1.ElapsedTime
+	rcv.EndTime = stage1.EndTime
+	rcv.Failed = stage1.Failed
+	rcv.Message = stage1.Message
 	rcv.Name = stage1.Name
+	rcv.StartTime = stage1.StartTime
 	*m = rcv
 
 	// stage 2, remove properties and add to map
@@ -139,7 +188,12 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	delete(stage2, "ElapsedTime")
+	delete(stage2, "EndTime")
+	delete(stage2, "Failed")
+	delete(stage2, "Message")
 	delete(stage2, "Name")
+	delete(stage2, "StartTime")
 	// stage 3, add additional properties values
 	if len(stage2) > 0 {
 		result := make(map[string]interface{})
@@ -160,13 +214,40 @@ func (m *OnpremUpgradePhaseAO1P1) UnmarshalJSON(data []byte) error {
 func (m OnpremUpgradePhaseAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
+		// Elapsed time in seconds to complete the current upgrade phase.
+		// Read Only: true
+		ElapsedTime int64 `json:"ElapsedTime,omitempty"`
+
+		// End date of the software upgrade phase.
+		// Read Only: true
+		// Format: date-time
+		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
+
+		// Indicates if the upgrade phase has failed or not.
+		// Read Only: true
+		Failed *bool `json:"Failed,omitempty"`
+
+		// Status message set during the upgrade phase.
+		// Read Only: true
+		Message string `json:"Message,omitempty"`
+
 		// Name of the upgrade phase.
 		// Read Only: true
 		// Enum: [init Prepare ServiceLoad UiLoad GenerateConfig DeployService Success Fail Cancel Telemetry]
 		Name string `json:"Name,omitempty"`
+
+		// Start date of the software upgrade phase.
+		// Read Only: true
+		// Format: date-time
+		StartTime strfmt.DateTime `json:"StartTime,omitempty"`
 	}
 
+	stage1.ElapsedTime = m.ElapsedTime
+	stage1.EndTime = m.EndTime
+	stage1.Failed = m.Failed
+	stage1.Message = m.Message
 	stage1.Name = m.Name
+	stage1.StartTime = m.StartTime
 
 	// make JSON object for known properties
 	props, err := json.Marshal(stage1)
@@ -197,13 +278,34 @@ func (m OnpremUpgradePhaseAO1P1) MarshalJSON() ([]byte, error) {
 func (m *OnpremUpgradePhaseAO1P1) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateEndTime(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStartTime(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *OnpremUpgradePhaseAO1P1) validateEndTime(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.EndTime) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("EndTime", "body", "date-time", m.EndTime.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -268,6 +370,19 @@ func (m *OnpremUpgradePhaseAO1P1) validateName(formats strfmt.Registry) error {
 
 	// value enum
 	if err := m.validateNameEnum("Name", "body", m.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *OnpremUpgradePhaseAO1P1) validateStartTime(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.StartTime) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("StartTime", "body", "date-time", m.StartTime.String(), formats); err != nil {
 		return err
 	}
 

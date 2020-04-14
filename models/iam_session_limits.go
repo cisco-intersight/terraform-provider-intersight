@@ -24,8 +24,7 @@ type IamSessionLimits struct {
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
-	// The idle timeout interval for the web session in seconds. The default value is 1800 seconds. When a session is not refreshed for this duration, backend will mark the session as idle and remove the session.
-	// Read Only: true
+	// The idle timeout interval for the web session in seconds. When a session is not refreshed for this duration, the session is marked as idle and removed.
 	IdleTimeOut int64 `json:"IdleTimeOut,omitempty"`
 
 	// The maximum number of sessions allowed in an account. The default value is 128.
@@ -36,8 +35,11 @@ type IamSessionLimits struct {
 	// Read Only: true
 	PerUserLimit int64 `json:"PerUserLimit,omitempty"`
 
-	// The session expiry duration in seconds. The default value is 57600 seconds or 16 hours.
-	// Read Only: true
+	// A collection of references to the [iam.Permission](mo://iam.Permission) Managed Object.
+	// When this managed object is deleted, the referenced [iam.Permission](mo://iam.Permission) MO unsets its reference to this deleted MO.
+	Permission *IamPermissionRef `json:"Permission,omitempty"`
+
+	// The session expiry duration in seconds.
 	SessionTimeOut int64 `json:"SessionTimeOut,omitempty"`
 }
 
@@ -60,6 +62,8 @@ func (m *IamSessionLimits) UnmarshalJSON(raw []byte) error {
 
 		PerUserLimit int64 `json:"PerUserLimit,omitempty"`
 
+		Permission *IamPermissionRef `json:"Permission,omitempty"`
+
 		SessionTimeOut int64 `json:"SessionTimeOut,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -73,6 +77,8 @@ func (m *IamSessionLimits) UnmarshalJSON(raw []byte) error {
 	m.MaximumLimit = dataAO1.MaximumLimit
 
 	m.PerUserLimit = dataAO1.PerUserLimit
+
+	m.Permission = dataAO1.Permission
 
 	m.SessionTimeOut = dataAO1.SessionTimeOut
 
@@ -97,6 +103,8 @@ func (m IamSessionLimits) MarshalJSON() ([]byte, error) {
 
 		PerUserLimit int64 `json:"PerUserLimit,omitempty"`
 
+		Permission *IamPermissionRef `json:"Permission,omitempty"`
+
 		SessionTimeOut int64 `json:"SessionTimeOut,omitempty"`
 	}
 
@@ -107,6 +115,8 @@ func (m IamSessionLimits) MarshalJSON() ([]byte, error) {
 	dataAO1.MaximumLimit = m.MaximumLimit
 
 	dataAO1.PerUserLimit = m.PerUserLimit
+
+	dataAO1.Permission = m.Permission
 
 	dataAO1.SessionTimeOut = m.SessionTimeOut
 
@@ -131,6 +141,10 @@ func (m *IamSessionLimits) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePermission(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -147,6 +161,24 @@ func (m *IamSessionLimits) validateAccount(formats strfmt.Registry) error {
 		if err := m.Account.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("Account")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IamSessionLimits) validatePermission(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Permission) { // not required
+		return nil
+	}
+
+	if m.Permission != nil {
+		if err := m.Permission.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Permission")
 			}
 			return err
 		}

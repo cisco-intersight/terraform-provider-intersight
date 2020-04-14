@@ -103,7 +103,8 @@ func (m *StorageRemoteKeySetting) UnmarshalBinary(b []byte) error {
 // swagger:model StorageRemoteKeySettingAO1P1
 type StorageRemoteKeySettingAO1P1 struct {
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// The password for the KMIP server login.
@@ -133,7 +134,8 @@ func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// The password for the KMIP server login.
@@ -201,7 +203,8 @@ func (m *StorageRemoteKeySettingAO1P1) UnmarshalJSON(data []byte) error {
 func (m StorageRemoteKeySettingAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// The password for the KMIP server login.

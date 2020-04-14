@@ -16,6 +16,7 @@ The following arguments can be used to get data of already created objects in In
 * `auth_initial_time`:(string)"Intial authorization time."
 * `auth_next_time`:(string)"Next time for the authorization."
 * `category`:(string)"Account license data category name."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `default_license_type`:(string)"Default license tier set by user."
 * `error_desc`:(string)"The detailed error message when there is any error related to license sync of this account."
 * `group`:(string)"Account license data group name."

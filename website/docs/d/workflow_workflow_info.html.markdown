@@ -11,6 +11,7 @@ Contains information for a workflow execution which is a runtime instance of wor
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action`:(string)"The action of the workflow such as start, cancel, retry, pause."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cleanup_time`:(string)"The time when the workflow info will be removed from database."
 * `end_time`:(string)"The time when the workflow reached a final state."
 * `failed_workflow_cleanup_duration`:(int)"The duration in hours after which the workflow info for failed, terminated or timed out workflow will be removed from database."

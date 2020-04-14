@@ -13,6 +13,7 @@ The following arguments can be used to get data of already created objects in In
 * `assign_state`:(string)"Assignment state of the service profile."
 * `assoc_state`:(string)"Association state of the service profile."
 * `associated_server`:(string)"Server to which the UCS Manager service profile is associated to."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_state`:(string)"Configuration state of the service profile."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."

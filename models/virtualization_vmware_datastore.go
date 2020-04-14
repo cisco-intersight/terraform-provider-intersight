@@ -17,16 +17,16 @@ import (
 
 // VirtualizationVmwareDatastore Virtualization:Vmware Datastore
 //
-// The VMware Datastore entity with its attributes. Every Datastore belongs to a Datacenter and maybe attached to VMs.
+// The VMware Datastore entity with its attributes. Each Datastore belongs to a Datacenter and maybe attached to VMs.
 //
 // swagger:model virtualizationVmwareDatastore
 type VirtualizationVmwareDatastore struct {
 	VirtualizationDatastore
 
-	// Indicates if this datastore is accessible.
+	// Shows if this datastore is accessible.
 	Accessible *bool `json:"Accessible,omitempty"`
 
-	// Specifies cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist.
+	// Identifies the cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist for all datastores.
 	Cluster *VirtualizationVmwareClusterRef `json:"Cluster,omitempty"`
 
 	// Every entity is grouped under the datacenter object and managed as a group.
@@ -37,17 +37,17 @@ type VirtualizationVmwareDatastore struct {
 	// Read Only: true
 	Hosts []*VirtualizationVmwareHostRef `json:"Hosts"`
 
-	// Is the datastore in maintenance mode. Will be set to true when in maintenance mode.
+	// Indicates if the datastore is in maintenance mode. Will be set to True, when in maintenance mode.
 	MaintenanceMode *bool `json:"MaintenanceMode,omitempty"`
 
-	// Is this datastore connected to multiple hosts.
+	// Indicates if this datastore is connected to multiple hosts.
 	MultipleHostAccess *bool `json:"MultipleHostAccess,omitempty"`
 
 	// Datastore health status, as reported by the hypervisor platform.
 	// Enum: [Unknown Degraded Critical Ok]
 	Status *string `json:"Status,omitempty"`
 
-	// Does this datastore support thin provisioning for files.
+	// Indicates if this datastore supports thin provisioning for files.
 	ThinProvisioningSupported *bool `json:"ThinProvisioningSupported,omitempty"`
 
 	// Space uncommitted in this datastore in bytes.

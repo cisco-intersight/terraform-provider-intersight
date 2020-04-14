@@ -11,6 +11,7 @@ Information of disks as reported by controller. In certain cases like S-series s
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bootable`:(string)"It shows whether disk is bootable or not."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `disk_dn`:(string)"It shows the Physical drive Dn."
 * `disk_id`:(int)"It shows storage Enclosure slotId."

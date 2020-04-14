@@ -18,6 +18,11 @@ import (
 // swagger:model moBaseComplexType
 type MoBaseComplexType struct {
 
+	// The concrete type of this complex type. Its value must be the same as the 'objectType' property.
+	// The OpenAPI document references this property as a discriminator value.
+	// Read Only: true
+	ClassID string `json:"ClassId,omitempty"`
+
 	// The concrete type of this complex type.
 	// The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the
 	// ObjectType is optional.
@@ -30,11 +35,15 @@ type MoBaseComplexType struct {
 func (m *MoBaseComplexType) UnmarshalJSON(raw []byte) error {
 	// AO0
 	var dataAO0 struct {
+		ClassID string `json:"ClassId,omitempty"`
+
 		ObjectType string `json:"ObjectType,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO0); err != nil {
 		return err
 	}
+
+	m.ClassID = dataAO0.ClassID
 
 	m.ObjectType = dataAO0.ObjectType
 
@@ -46,8 +55,12 @@ func (m MoBaseComplexType) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 1)
 
 	var dataAO0 struct {
+		ClassID string `json:"ClassId,omitempty"`
+
 		ObjectType string `json:"ObjectType,omitempty"`
 	}
+
+	dataAO0.ClassID = m.ClassID
 
 	dataAO0.ObjectType = m.ObjectType
 

@@ -28,5 +28,6 @@ The following arguments can be used to get data of already created objects in In
 * `blackout_dates_enabled`:(bool)"If enabled, allows the user to define a blackout period during which the appliance will not be upgraded."
 * `blackout_end_date`:(string)"End date of the black out period."
 * `blackout_start_date`:(string)"Start date of the black out period. The appliance will not be upgraded during this period."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."

@@ -19,7 +19,11 @@ import (
 type SoftwarerepositoryCifsServer struct {
 	SoftwarerepositoryFileServer
 
-	// is password set
+	// The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile.
+	FileLocation string `json:"FileLocation,omitempty"`
+
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// For CIFS, leave the field blank or enter one or more comma seperated options from the following. For Example, " " , " soft " , " soft , nounix " .
@@ -36,12 +40,15 @@ type SoftwarerepositoryCifsServer struct {
 	Password string `json:"Password,omitempty"`
 
 	// Filename of the image in the CIFS server. For example:ucs-c220m5-huu-3.1.2c.iso.
+	// Read Only: true
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// Hostname or IP Address of the CIFS server.
+	// Read Only: true
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Remote directory where the image is present. For example:/share/subfolder.
+	// Read Only: true
 	RemoteShare string `json:"RemoteShare,omitempty"`
 
 	// Username configured on the CIFS server.
@@ -59,6 +66,8 @@ func (m *SoftwarerepositoryCifsServer) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		FileLocation string `json:"FileLocation,omitempty"`
+
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		MountOption string `json:"MountOption,omitempty"`
@@ -76,6 +85,8 @@ func (m *SoftwarerepositoryCifsServer) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.FileLocation = dataAO1.FileLocation
 
 	m.IsPasswordSet = dataAO1.IsPasswordSet
 
@@ -104,6 +115,8 @@ func (m SoftwarerepositoryCifsServer) MarshalJSON() ([]byte, error) {
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		FileLocation string `json:"FileLocation,omitempty"`
+
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		MountOption string `json:"MountOption,omitempty"`
@@ -118,6 +131,8 @@ func (m SoftwarerepositoryCifsServer) MarshalJSON() ([]byte, error) {
 
 		Username string `json:"Username,omitempty"`
 	}
+
+	dataAO1.FileLocation = m.FileLocation
 
 	dataAO1.IsPasswordSet = m.IsPasswordSet
 

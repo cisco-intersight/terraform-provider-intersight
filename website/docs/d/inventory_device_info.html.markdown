@@ -10,6 +10,7 @@ Information pertaining to a Registered Device in starship which is pertinent to 
 Information pertaining to a Registered Device in starship which is pertinent to Inventory Microservice.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_state`:(string)"Configuration state of server profile config context."
 * `control_action`:(string)"Control action of server profile config context."
 * `error_state`:(string)"Error state of server profile config context."

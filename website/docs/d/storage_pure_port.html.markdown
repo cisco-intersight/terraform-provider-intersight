@@ -10,6 +10,7 @@ Port entity in Pure FlashArray.
 Port entity in Pure FlashArray.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `failover`:(string)"Name of the port to which this port has failed over."
 * `iqn`:(string)"ISCSI qualified name applicable for ethernet port. Example - 'iqn.2008-05.com.storage:fnm00151300643-514f0c50141faf05'."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

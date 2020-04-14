@@ -38,7 +38,8 @@ type IamEndPointUserRole struct {
 	// When this managed object is deleted, the referenced [iam.EndPointUserPolicy](mo://iam.EndPointUserPolicy) MO unsets its reference to this deleted MO.
 	EndPointUserPolicy *IamEndPointUserPolicyRef `json:"EndPointUserPolicy,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Valid login password of the user.

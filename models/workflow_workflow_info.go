@@ -146,15 +146,15 @@ type WorkflowWorkflowInfo struct {
 	// Read Only: true
 	WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
-	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
-	// Read Only: true
-	Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
-
 	// A collection of references to the [server.Profile](mo://server.Profile) Managed Object.
 	// When this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.
 	// Read Only: true
-	Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
+	Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
+
+	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
+	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
+	// Read Only: true
+	Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -234,9 +234,9 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
+		Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
 
-		Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
+		Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -308,9 +308,9 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	m.WorkflowTaskCount = dataAO1.WorkflowTaskCount
 
-	m.Nr0ClusterProfile = dataAO1.Nr0ClusterProfile
+	m.Nr0Profile = dataAO1.Nr0Profile
 
-	m.Nr1Profile = dataAO1.Nr1Profile
+	m.Nr1ClusterProfile = dataAO1.Nr1ClusterProfile
 
 	return nil
 }
@@ -391,9 +391,9 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
+		Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
 
-		Nr1Profile *ServerProfileRef `json:"_1_Profile,omitempty"`
+		Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
 	}
 
 	dataAO1.Account = m.Account
@@ -462,9 +462,9 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 	dataAO1.WorkflowTaskCount = m.WorkflowTaskCount
 
-	dataAO1.Nr0ClusterProfile = m.Nr0ClusterProfile
+	dataAO1.Nr0Profile = m.Nr0Profile
 
-	dataAO1.Nr1Profile = m.Nr1Profile
+	dataAO1.Nr1ClusterProfile = m.Nr1ClusterProfile
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -547,11 +547,11 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateNr0ClusterProfile(formats); err != nil {
+	if err := m.validateNr0Profile(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateNr1Profile(formats); err != nil {
+	if err := m.validateNr1ClusterProfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -912,16 +912,16 @@ func (m *WorkflowWorkflowInfo) validateWorkflowMetaType(formats strfmt.Registry)
 	return nil
 }
 
-func (m *WorkflowWorkflowInfo) validateNr0ClusterProfile(formats strfmt.Registry) error {
+func (m *WorkflowWorkflowInfo) validateNr0Profile(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Nr0ClusterProfile) { // not required
+	if swag.IsZero(m.Nr0Profile) { // not required
 		return nil
 	}
 
-	if m.Nr0ClusterProfile != nil {
-		if err := m.Nr0ClusterProfile.Validate(formats); err != nil {
+	if m.Nr0Profile != nil {
+		if err := m.Nr0Profile.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_0_ClusterProfile")
+				return ve.ValidateName("_0_Profile")
 			}
 			return err
 		}
@@ -930,16 +930,16 @@ func (m *WorkflowWorkflowInfo) validateNr0ClusterProfile(formats strfmt.Registry
 	return nil
 }
 
-func (m *WorkflowWorkflowInfo) validateNr1Profile(formats strfmt.Registry) error {
+func (m *WorkflowWorkflowInfo) validateNr1ClusterProfile(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Nr1Profile) { // not required
+	if swag.IsZero(m.Nr1ClusterProfile) { // not required
 		return nil
 	}
 
-	if m.Nr1Profile != nil {
-		if err := m.Nr1Profile.Validate(formats); err != nil {
+	if m.Nr1ClusterProfile != nil {
+		if err := m.Nr1ClusterProfile.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_1_Profile")
+				return ve.ValidateName("_1_ClusterProfile")
 			}
 			return err
 		}

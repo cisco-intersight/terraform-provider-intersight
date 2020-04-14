@@ -19,7 +19,7 @@ import (
 type MemoryPersistentMemoryUnit struct {
 	MemoryAbstractUnit
 
-	// AppDirect capacity in GB of the Persistent Memory Module on a server.
+	// AppDirect capacity in GiB of the Persistent Memory Module on a server.
 	// Read Only: true
 	AppDirectCapacity string `json:"AppDirectCapacity,omitempty"`
 
@@ -48,7 +48,7 @@ type MemoryPersistentMemoryUnit struct {
 	// Read Only: true
 	MemoryArray *MemoryArrayRef `json:"MemoryArray,omitempty"`
 
-	// Memory capacity in GB of the Persistent Memory Module on a server.
+	// Memory capacity in GiB of the Persistent Memory Module on a server.
 	// Read Only: true
 	MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
@@ -56,7 +56,7 @@ type MemoryPersistentMemoryUnit struct {
 	// Read Only: true
 	MemoryID int64 `json:"MemoryId,omitempty"`
 
-	// Persistent Memory capacity in GB of the Persistent Memory Module on a server.
+	// Persistent Memory capacity in GiB of the Persistent Memory Module on a server.
 	// Read Only: true
 	PersistentMemoryCapacity string `json:"PersistentMemoryCapacity,omitempty"`
 
@@ -64,7 +64,7 @@ type MemoryPersistentMemoryUnit struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// Reserved capacity in GB of the Persistent Memory Module on a server.
+	// Reserved capacity in GiB of the Persistent Memory Module on a server.
 	// Read Only: true
 	ReservedCapacity string `json:"ReservedCapacity,omitempty"`
 
@@ -80,7 +80,7 @@ type MemoryPersistentMemoryUnit struct {
 	// Read Only: true
 	SocketMemoryID string `json:"SocketMemoryId,omitempty"`
 
-	// Total capacity in GB of the Persistent Memory Module on a server.
+	// Total capacity in GiB of the Persistent Memory Module on a server.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 

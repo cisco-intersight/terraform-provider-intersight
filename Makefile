@@ -20,8 +20,8 @@ default: install
 build: vet
 	@echo "building terraform-provider-intersight"
 	GOOS=linux GOARCH=amd64 $(GO_BUILD) -o .build/linux_amd64/terraform-provider-intersight_v$(VERSION)
-	GOOS=windows GOARCH=amd64 $(GO_BUILD) -o .build/windows/terraform-provider-intersight_v($VERSION).exe
-	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -o .build/darwin/terraform-provider-intersight_v($VERSION)
+	GOOS=windows GOARCH=amd64 $(GO_BUILD) -o .build/windows/terraform-provider-intersight_v$(VERSION).exe
+	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -o .build/darwin/terraform-provider-intersight_v$(VERSION)
 
 install: vet build
 	@echo "installing terraform-provider-intersight"

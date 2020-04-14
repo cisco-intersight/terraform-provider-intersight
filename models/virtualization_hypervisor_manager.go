@@ -19,14 +19,14 @@ import (
 type VirtualizationHypervisorManager struct {
 	MoBaseMo
 
-	// Identity of the hypervisor (not manipulated by user). It could be a UUID too. Example - c917093f-5443-4748-bc09-eec72ded7608.
+	// Identity of the hypervisor (not manipulated by user). It could be a UUID too. For example, c917093f-5443-4748-bc09-eec72ded7608.
 	// Read Only: true
 	Identity string `json:"Identity,omitempty"`
 
-	// The user provided name for the hypervisor manager (for example, vCenterIreland). Usually, this name is subject to manipulations by user. It is not the identity of the hypervisor.
+	// The user provided name for the hypervisor manager. For example, vCenterIreland. Usually, this name is subject to manipulation by the user. It is not the identity of the hypervisor.
 	Name string `json:"Name,omitempty"`
 
-	// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.
+	// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 	// Release version of the Hypervisor Manger (VMware vCenter Server 6.0.0 build-4541947).

@@ -107,6 +107,9 @@ type FeedbackFeedbackDataAO1P1 struct {
 	// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
 	AccountName string `json:"AccountName,omitempty"`
 
+	// User's alternative email addresses for follow-up.
+	AlternativeFollowUpEmails []string `json:"AlternativeFollowUpEmails"`
+
 	// Text of the feedback as provided by the user, if it is a bug or a comment.
 	Comment string `json:"Comment,omitempty"`
 
@@ -139,6 +142,9 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
 		AccountName string `json:"AccountName,omitempty"`
 
+		// User's alternative email addresses for follow-up.
+		AlternativeFollowUpEmails []string `json:"AlternativeFollowUpEmails"`
+
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
 		Comment string `json:"Comment,omitempty"`
 
@@ -165,6 +171,7 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	var rcv FeedbackFeedbackDataAO1P1
 
 	rcv.AccountName = stage1.AccountName
+	rcv.AlternativeFollowUpEmails = stage1.AlternativeFollowUpEmails
 	rcv.Comment = stage1.Comment
 	rcv.Email = stage1.Email
 	rcv.Evaluation = stage1.Evaluation
@@ -180,6 +187,7 @@ func (m *FeedbackFeedbackDataAO1P1) UnmarshalJSON(data []byte) error {
 	}
 
 	delete(stage2, "AccountName")
+	delete(stage2, "AlternativeFollowUpEmails")
 	delete(stage2, "Comment")
 	delete(stage2, "Email")
 	delete(stage2, "Evaluation")
@@ -209,6 +217,9 @@ func (m FeedbackFeedbackDataAO1P1) MarshalJSON() ([]byte, error) {
 		// Account name of the feedback sender. Copied in order to be persisted in case of account removal.
 		AccountName string `json:"AccountName,omitempty"`
 
+		// User's alternative email addresses for follow-up.
+		AlternativeFollowUpEmails []string `json:"AlternativeFollowUpEmails"`
+
 		// Text of the feedback as provided by the user, if it is a bug or a comment.
 		Comment string `json:"Comment,omitempty"`
 
@@ -231,6 +242,7 @@ func (m FeedbackFeedbackDataAO1P1) MarshalJSON() ([]byte, error) {
 	}
 
 	stage1.AccountName = m.AccountName
+	stage1.AlternativeFollowUpEmails = m.AlternativeFollowUpEmails
 	stage1.Comment = m.Comment
 	stage1.Email = m.Email
 	stage1.Evaluation = m.Evaluation

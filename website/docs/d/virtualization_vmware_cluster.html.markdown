@@ -10,6 +10,7 @@ A real cluster of resources within a data center in VMware. A cluster is a conve
 A real cluster of resources within a data center in VMware. A cluster is a convenient grouping of resources such as Host, Datastore, etc.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `datastore_count`:(int)"Count of all datastores associated with this cluster."
 * `hypervisor_type`:(string)"Identifies the broad type of the underlying hypervisor."
 * `identity`:(string)"The internally generated identity of this cluster. This entity is not manipulated by users. It aids in uniquely identifying the cluster object. In case of VMware, this is a MOR (managed object reference)."

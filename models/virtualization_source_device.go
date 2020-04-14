@@ -13,13 +13,13 @@ import (
 
 // VirtualizationSourceDevice Virtualization:Source Device
 //
-// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.
+// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.
 //
 // swagger:model virtualizationSourceDevice
 type VirtualizationSourceDevice struct {
 	MoBaseMo
 
-	// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.
+	// Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 }
 

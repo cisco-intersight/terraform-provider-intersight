@@ -27,6 +27,7 @@ when the user uses the Intersight Appliance next time.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `build_type`:(string)"Build type of the Intersight Appliance setup (e.g. release or debug)."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cloud_url`:(string)"URL of the Intersight to which this Intersight Appliance is connected to."
 * `end_time`:(string)"End date of the Intersight Appliance's initial setup."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

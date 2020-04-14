@@ -36,8 +36,7 @@ type BootPxe struct {
 	// The MAC Address of the underlying virtual ethernet interface used by the PXE boot device.
 	MacAddress string `json:"MacAddress,omitempty"`
 
-	// The logical port id of the ethernet interface used by the PXE device. Port is a deprecated property. Default value is changed to '-1' as this is invalid port. New or modified pxe device has the port value always set to '-1'.
-	// Read Only: true
+	// The Port ID of the adapter on which the underlying virtual ethernet interface is present. If no port is specified, the default value is -1. Supported values are -1 to 255.
 	Port int64 `json:"Port,omitempty"`
 
 	// The slot ID of the adapter on which the underlying virtual ethernet interface is present. Supported values are ( 1 - 255, "MLOM", "L", "L1", "L2", "OCP").

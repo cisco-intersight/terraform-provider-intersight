@@ -10,6 +10,7 @@ I/O Controller present inside SIOC to provide data path from S-series server to 
 I/O Controller present inside SIOC to provide data path from S-series server to FI.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_state`:(string)"This field identifies the configuration state for this SIOM Unit."
 * `device_mo_id`:(string)
 * `discovery`:(string)"This field identifies the discovery state of SIOM."

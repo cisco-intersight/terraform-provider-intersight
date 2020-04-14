@@ -11,10 +11,11 @@ Persistent Memory Module on a server.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `admin_state`:(string)"This represents the administrative state of the memory unit on a server."
-* `app_direct_capacity`:(string)"AppDirect capacity in GB of the Persistent Memory Module on a server."
+* `app_direct_capacity`:(string)"AppDirect capacity in GiB of the Persistent Memory Module on a server."
 * `array_id`:(int)"This represents the memory array to which the memory unit belongs to."
 * `bank`:(int)"This represents the memory bank of the memory unit on a server."
 * `capacity`:(string)"This represents the memory capacity in MiB of the memory unit on a server."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `clock`:(string)"This represents the clock of the memory unit on a server."
 * `count_status`:(string)"Count status of the Persistent Memory Module on a server."
 * `device_mo_id`:(string)
@@ -26,7 +27,7 @@ The following arguments can be used to get data of already created objects in In
 * `latency`:(string)"This represents the latency of the memory unit on a server."
 * `location`:(string)"This represents the location of the memory unit on a server."
 * `lock_status`:(string)"Lock status of the Persistent Memory Module on a server."
-* `memory_capacity`:(string)"Memory capacity in GB of the Persistent Memory Module on a server."
+* `memory_capacity`:(string)"Memory capacity in GiB of the Persistent Memory Module on a server."
 * `memory_id`:(int)"ID of the Persistent Memory Module on a server."
 * `model`:(string)"This field identifies the model of the given component."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
@@ -34,9 +35,9 @@ The following arguments can be used to get data of already created objects in In
 * `oper_power_state`:(string)"This represents the operational power state of the memory unit on a server."
 * `oper_state`:(string)"This represents the operational state of the memory unit on a server."
 * `operability`:(string)"This represents the operability of the memory unit on a server."
-* `persistent_memory_capacity`:(string)"Persistent Memory capacity in GB of the Persistent Memory Module on a server."
+* `persistent_memory_capacity`:(string)"Persistent Memory capacity in GiB of the Persistent Memory Module on a server."
 * `presence`:(string)"This represents the presence state of the memory unit on a server."
-* `reserved_capacity`:(string)"Reserved capacity in GB of the Persistent Memory Module on a server."
+* `reserved_capacity`:(string)"Reserved capacity in GiB of the Persistent Memory Module on a server."
 * `revision`:(string)
 * `rn`:(string)"The Relative Name uniquely identifies an object within a given context."
 * `security_status`:(string)"Security status of the Persistent Memory Module on a server."
@@ -46,7 +47,7 @@ The following arguments can be used to get data of already created objects in In
 * `socket_memory_id`:(string)"Socket Memory ID of the Persistent Memory Module on a server."
 * `speed`:(string)"This represents the speed of the memory unit on a server."
 * `thermal`:(string)"This represents the thremal state of the memory unit on a server."
-* `total_capacity`:(string)"Total capacity in GB of the Persistent Memory Module on a server."
+* `total_capacity`:(string)"Total capacity in GiB of the Persistent Memory Module on a server."
 * `type`:(string)"This represents the memory type of the memory unit on a server."
 * `uid`:(string)"UID of the Persistent Memory Module on a server."
 * `vendor`:(string)"This field identifies the vendor of the given component."

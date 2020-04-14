@@ -103,10 +103,10 @@ func (m *VirtualizationVMCPUSocketInfo) UnmarshalBinary(b []byte) error {
 // swagger:model VirtualizationVMCPUSocketInfoAO1P1
 type VirtualizationVMCPUSocketInfoAO1P1 struct {
 
-	// Need to say more? This value may be empty.
+	// The number of core per CPU socket (value may be empty).
 	CoresPerSocket int64 `json:"CoresPerSocket,omitempty"`
 
-	// Number of CPUs allocated to this vm.
+	// Number of CPUs allocated to this VM.
 	NumCpus int64 `json:"NumCpus,omitempty"`
 
 	// The number of CPU sockets allocated.
@@ -121,10 +121,10 @@ func (m *VirtualizationVMCPUSocketInfoAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// Need to say more? This value may be empty.
+		// The number of core per CPU socket (value may be empty).
 		CoresPerSocket int64 `json:"CoresPerSocket,omitempty"`
 
-		// Number of CPUs allocated to this vm.
+		// Number of CPUs allocated to this VM.
 		NumCpus int64 `json:"NumCpus,omitempty"`
 
 		// The number of CPU sockets allocated.
@@ -169,10 +169,10 @@ func (m *VirtualizationVMCPUSocketInfoAO1P1) UnmarshalJSON(data []byte) error {
 func (m VirtualizationVMCPUSocketInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// Need to say more? This value may be empty.
+		// The number of core per CPU socket (value may be empty).
 		CoresPerSocket int64 `json:"CoresPerSocket,omitempty"`
 
-		// Number of CPUs allocated to this vm.
+		// Number of CPUs allocated to this VM.
 		NumCpus int64 `json:"NumCpus,omitempty"`
 
 		// The number of CPU sockets allocated.

@@ -10,6 +10,7 @@ Task instance which represents the run time instance of a task within a workflow
 Task instance which represents the run time instance of a task within a workflow.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"The task description and this is the description that was added when the task was included into the workflow."
 * `end_time`:(string)"The time stamp when the task reached a final state."
 * `failure_reason`:(string)"Description of the reason why the task failed."

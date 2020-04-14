@@ -132,7 +132,7 @@ type IamLdapBasePropertiesAO1P1 struct {
 	// Groups to which an LDAP entry belongs.
 	GroupAttribute string `json:"GroupAttribute,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
 	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
@@ -182,7 +182,7 @@ func (m *IamLdapBasePropertiesAO1P1) UnmarshalJSON(data []byte) error {
 		// Groups to which an LDAP entry belongs.
 		GroupAttribute string `json:"GroupAttribute,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
 		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
@@ -282,7 +282,7 @@ func (m IamLdapBasePropertiesAO1P1) MarshalJSON() ([]byte, error) {
 		// Groups to which an LDAP entry belongs.
 		GroupAttribute string `json:"GroupAttribute,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
 		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 

@@ -10,6 +10,7 @@ A host LUN entity in Pure storage array. It exists only if the volume has a conn
 A host LUN entity in Pure storage array. It exists only if the volume has a connection to host or host group. For host group mapping, it provides public connection to all hosts associated within host group. A volume can have private connection to host as well. It cannot have public and private connection. Pure assign same HLU for all the host in case if it is connected through host group.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `hlu`:(int)"Logical unit number (LUN) by which hosts address specified volume. Hlu is a decimal representation of the LUN from the endpoint."
 * `host_group_name`:(string)"Name of the host group associated with LUN."
 * `host_name`:(string)"Name of the host associated with LUN."

@@ -16,6 +16,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 		Update: resourceHyperflexClusterNetworkPolicyUpdate,
 		Delete: resourceHyperflexClusterNetworkPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"cluster_profiles": {
 				Description: "List of cluster profiles using this policy.",
 				Type:        schema.TypeList,
@@ -35,7 +41,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -66,6 +72,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"end_addr": {
 							Description: "The end IPv4 address of the range.",
@@ -110,6 +122,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"end_addr": {
 							Description: "The end MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.",
 							Type:        schema.TypeString,
@@ -142,6 +160,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": {
 							Description: "The name of the VLAN.\nThe name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.",
@@ -202,7 +226,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -233,7 +257,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -252,6 +276,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -292,6 +322,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"name": {
 							Description: "The name of the VLAN.\nThe name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.",
 							Type:        schema.TypeString,
@@ -324,6 +360,12 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"name": {
 							Description: "The name of the VLAN.\nThe name can be from 1 to 32 characters long and can contain a combination of alphanumeric characters, underscores, and hyphens.",
 							Type:        schema.TypeString,
@@ -353,6 +395,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.HyperflexClusterNetworkPolicy
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+
+	}
+
 	if v, ok := d.GetOk("cluster_profiles"); ok {
 		x := make([]*models.HyperflexClusterProfileRef, 0)
 		switch reflect.TypeOf(v).Kind() {
@@ -412,6 +460,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
@@ -465,6 +519,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
@@ -504,6 +564,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 					if err == nil && x1 != nil {
 						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -632,6 +698,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -678,6 +750,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["name"]; ok {
 				{
 					x := (v.(string))
@@ -720,6 +798,12 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 						if err == nil && x1 != nil {
 							o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["name"]; ok {
@@ -784,6 +868,10 @@ func resourceHyperflexClusterNetworkPolicyRead(d *schema.ResourceData, meta inte
 	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -856,6 +944,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.HyperflexClusterNetworkPolicy
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
+	}
+
 	if d.HasChange("cluster_profiles") {
 		v := d.Get("cluster_profiles")
 		x := make([]*models.HyperflexClusterProfileRef, 0)
@@ -917,6 +1011,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
@@ -970,6 +1070,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
@@ -1009,6 +1115,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 					if err == nil && x1 != nil {
 						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -1137,6 +1249,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1183,6 +1301,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["name"]; ok {
 				{
 					x := (v.(string))
@@ -1225,6 +1349,12 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 						if err == nil && x1 != nil {
 							o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["name"]; ok {

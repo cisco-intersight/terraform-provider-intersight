@@ -39,7 +39,8 @@ type ServerProfile struct {
 	// Read Only: true
 	ConfigResult *ServerConfigResultRef `json:"ConfigResult,omitempty"`
 
-	// is pmc deployed secure passphrase set
+	// Indicates whether the value of the 'pmcDeployedSecurePassphrase' property has been set.
+	// Read Only: true
 	IsPmcDeployedSecurePassphraseSet *bool `json:"IsPmcDeployedSecurePassphraseSet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.

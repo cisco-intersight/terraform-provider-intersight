@@ -34,7 +34,7 @@ type MemoryArray struct {
 	// Read Only: true
 	CPUID int64 `json:"CpuId,omitempty"`
 
-	// current capacity
+	// Current capacity of all the memory units on a server.
 	// Read Only: true
 	CurrentCapacity string `json:"CurrentCapacity,omitempty"`
 
@@ -42,7 +42,7 @@ type MemoryArray struct {
 	// Read Only: true
 	ErrorCorrection string `json:"ErrorCorrection,omitempty"`
 
-	// max capacity
+	// Maximum capacity of all the memory units on a server.
 	// Read Only: true
 	MaxCapacity string `json:"MaxCapacity,omitempty"`
 

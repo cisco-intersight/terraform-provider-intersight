@@ -109,7 +109,8 @@ type ComputePersistentMemoryOperationAO1P1 struct {
 	// Enum: [None SecureErase Unlock]
 	AdminAction *string `json:"AdminAction,omitempty"`
 
-	// is secure passphrase set
+	// Indicates whether the value of the 'securePassphrase' property has been set.
+	// Read Only: true
 	IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 	// Selected Persistent Memory Modules on the server.
@@ -131,7 +132,8 @@ func (m *ComputePersistentMemoryOperationAO1P1) UnmarshalJSON(data []byte) error
 		// Enum: [None SecureErase Unlock]
 		AdminAction *string `json:"AdminAction,omitempty"`
 
-		// is secure passphrase set
+		// Indicates whether the value of the 'securePassphrase' property has been set.
+		// Read Only: true
 		IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 		// Selected Persistent Memory Modules on the server.
@@ -185,7 +187,8 @@ func (m ComputePersistentMemoryOperationAO1P1) MarshalJSON() ([]byte, error) {
 		// Enum: [None SecureErase Unlock]
 		AdminAction *string `json:"AdminAction,omitempty"`
 
-		// is secure passphrase set
+		// Indicates whether the value of the 'securePassphrase' property has been set.
+		// Read Only: true
 		IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 		// Selected Persistent Memory Modules on the server.

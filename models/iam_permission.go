@@ -42,6 +42,9 @@ type IamPermission struct {
 	// The roles assigned to this permission. Role is a collection of privilege sets. Roles are assigned to a user using the permission object.
 	Roles []*IamRoleRef `json:"Roles"`
 
+	// Session related configuration limits.
+	SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
+
 	// A collection of references to the [iam.UserGroup](mo://iam.UserGroup) Managed Object.
 	// When this managed object is deleted, the referenced [iam.UserGroup](mo://iam.UserGroup) MOs unset their reference to this deleted MO.
 	UserGroups []*IamUserGroupRef `json:"UserGroups"`
@@ -74,6 +77,8 @@ func (m *IamPermission) UnmarshalJSON(raw []byte) error {
 
 		Roles []*IamRoleRef `json:"Roles"`
 
+		SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
+
 		UserGroups []*IamUserGroupRef `json:"UserGroups"`
 
 		Users []*IamUserRef `json:"Users"`
@@ -93,6 +98,8 @@ func (m *IamPermission) UnmarshalJSON(raw []byte) error {
 	m.ResourceRoles = dataAO1.ResourceRoles
 
 	m.Roles = dataAO1.Roles
+
+	m.SessionLimits = dataAO1.SessionLimits
 
 	m.UserGroups = dataAO1.UserGroups
 
@@ -123,6 +130,8 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 
 		Roles []*IamRoleRef `json:"Roles"`
 
+		SessionLimits *IamSessionLimitsRef `json:"SessionLimits,omitempty"`
+
 		UserGroups []*IamUserGroupRef `json:"UserGroups"`
 
 		Users []*IamUserRef `json:"Users"`
@@ -139,6 +148,8 @@ func (m IamPermission) MarshalJSON() ([]byte, error) {
 	dataAO1.ResourceRoles = m.ResourceRoles
 
 	dataAO1.Roles = m.Roles
+
+	dataAO1.SessionLimits = m.SessionLimits
 
 	dataAO1.UserGroups = m.UserGroups
 
@@ -174,6 +185,10 @@ func (m *IamPermission) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRoles(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSessionLimits(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -279,6 +294,24 @@ func (m *IamPermission) validateRoles(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *IamPermission) validateSessionLimits(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SessionLimits) { // not required
+		return nil
+	}
+
+	if m.SessionLimits != nil {
+		if err := m.SessionLimits.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("SessionLimits")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -10,6 +10,7 @@ Aggregation of properties pertaining to different inventory MOs.
 Aggregation of properties pertaining to different inventory MOs.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `dn`:(string)"The distinguished name for the Network Element."
 * `model`:(string)"The model information of the Network Element."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

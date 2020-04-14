@@ -133,7 +133,8 @@ type OsAnswersAO1P1 struct {
 	// Enable to indicate Root Password provided is encrypted.
 	IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
-	// is root password set
+	// Indicates whether the value of the 'rootPassword' property has been set.
+	// Read Only: true
 	IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 	// IP address of the name server to be configured in the OS.
@@ -192,7 +193,8 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 		// Enable to indicate Root Password provided is encrypted.
 		IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
-		// is root password set
+		// Indicates whether the value of the 'rootPassword' property has been set.
+		// Read Only: true
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 		// IP address of the name server to be configured in the OS.
@@ -297,7 +299,8 @@ func (m OsAnswersAO1P1) MarshalJSON() ([]byte, error) {
 		// Enable to indicate Root Password provided is encrypted.
 		IsRootPasswordCrypted *bool `json:"IsRootPasswordCrypted,omitempty"`
 
-		// is root password set
+		// Indicates whether the value of the 'rootPassword' property has been set.
+		// Read Only: true
 		IsRootPasswordSet *bool `json:"IsRootPasswordSet,omitempty"`
 
 		// IP address of the name server to be configured in the OS.

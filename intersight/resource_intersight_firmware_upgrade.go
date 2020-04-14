@@ -15,6 +15,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 		Read:   resourceFirmwareUpgradeRead,
 		Delete: resourceFirmwareUpgradeDelete,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+				ForceNew:    true,
+			},
 			"device": {
 				Description: "The device onto which the upgrade is peformed.",
 				Type:        schema.TypeList,
@@ -38,7 +45,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -62,6 +69,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"http_server": {
 							Description: "HTTP Server option when the image source is a local https server.",
 							Type:        schema.TypeList,
@@ -74,6 +88,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
 									},
 									"location_link": {
 										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.",
@@ -108,9 +129,11 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"is_password_set": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							ForceNew: true,
+							Description: "Indicates whether the value of the 'password' property has been set.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -166,7 +189,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -211,6 +234,19 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
+									},
+									"file_location": {
+										Description: "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+									},
 									"mount_options": {
 										Description: "Mount option (Authentication Protocol) as configured on the CIFS Server. Example:ntlmv2.",
 										Type:        schema.TypeString,
@@ -229,18 +265,21 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										Description: "Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_ip": {
 										Description: "CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_share": {
 										Description: "Directory where the image is stored. Example:share/subfolder.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 								},
@@ -248,6 +287,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ConfigMode: schema.SchemaConfigModeAttr,
 							Computed:   true,
 							ForceNew:   true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"http_server": {
 							Description: "HTTP (for WWW) file server option for network share upgrade.",
@@ -261,6 +307,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
 									},
 									"location_link": {
 										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.",
@@ -288,9 +341,11 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:   true,
 						},
 						"is_password_set": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							ForceNew: true,
+							Description: "Indicates whether the value of the 'password' property has been set.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"map_type": {
 							Description: "File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.",
@@ -312,6 +367,19 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
+									},
+									"file_location": {
+										Description: "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+									},
 									"mount_options": {
 										Description: "Mount option as configured on the NFS Server. Example:nolock.",
 										Type:        schema.TypeString,
@@ -329,18 +397,21 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										Description: "Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_ip": {
 										Description: "NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_share": {
 										Description: "Directory where the image is stored. Example:/share/subfolder.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 								},
@@ -410,7 +481,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -443,7 +514,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -466,6 +537,13 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -515,7 +593,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -541,6 +619,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.FirmwareUpgrade
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+
+	}
+
 	if v, ok := d.GetOk("device"); ok {
 		p := models.AssetDeviceRegistrationRef{}
 		if len(v.([]interface{})) > 0 {
@@ -587,6 +671,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["http_server"]; ok {
 				{
 					p := models.FirmwareHTTPServer{}
@@ -601,6 +691,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 								if err == nil && x1 != nil {
 									o.FirmwareHTTPServerAO1P1.FirmwareHTTPServerAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
 							}
 						}
 						if v, ok := l["location_link"]; ok {
@@ -740,6 +836,18 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 								}
 							}
 						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
+							}
+						}
+						if v, ok := l["file_location"]; ok {
+							{
+								x := (v.(string))
+								o.FileLocation = x
+							}
+						}
 						if v, ok := l["mount_options"]; ok {
 							{
 								x := (v.(string))
@@ -777,6 +885,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 					o.CifsServer = &x
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["http_server"]; ok {
 				{
 					p := models.FirmwareHTTPServer{}
@@ -791,6 +905,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 								if err == nil && x1 != nil {
 									o.FirmwareHTTPServerAO1P1.FirmwareHTTPServerAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
 							}
 						}
 						if v, ok := l["location_link"]; ok {
@@ -844,6 +964,18 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 								if err == nil && x1 != nil {
 									o.FirmwareNfsServerAO1P1.FirmwareNfsServerAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
+							}
+						}
+						if v, ok := l["file_location"]; ok {
+							{
+								x := (v.(string))
+								o.FileLocation = x
 							}
 						}
 						if v, ok := l["mount_options"]; ok {
@@ -1003,6 +1135,12 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1102,6 +1240,10 @@ func resourceFirmwareUpgradeRead(d *schema.ResourceData, meta interface{}) error
 	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 

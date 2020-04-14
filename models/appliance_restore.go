@@ -36,7 +36,8 @@ type ApplianceRestore struct {
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Messages generated during the restore process.

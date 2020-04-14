@@ -12,6 +12,7 @@ The physical adapter present on a server.
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `adapter_id`:(string)"Unique Identifier of an adapter Unit within a Rack Interface."
 * `base_mac_address`:(string)
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
 * `integrated`:(string)

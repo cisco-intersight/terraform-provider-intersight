@@ -19,7 +19,7 @@ import (
 type MemoryPersistentMemoryNamespace struct {
 	InventoryBase
 
-	// Capacity in GB of the Persistent Memory Namespace.
+	// Capacity in GiB of the Persistent Memory Namespace.
 	// Read Only: true
 	Capacity string `json:"Capacity,omitempty"`
 

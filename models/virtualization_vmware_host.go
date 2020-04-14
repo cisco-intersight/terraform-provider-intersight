@@ -17,20 +17,20 @@ import (
 
 // VirtualizationVmwareHost Virtualization:Vmware Host
 //
-// The VMware Host entity with its attributes. Every Host belongs to a Datacenter and probably runs VMs.
+// The VMware Host entity with its attributes. Every Host belongs to a Datacenter and may run VMs.
 //
 // swagger:model virtualizationVmwareHost
 type VirtualizationVmwareHost struct {
 	VirtualizationHost
 
-	// It is the time when this host booted up.
+	// The time when this host booted up.
 	// Format: date-time
 	BootTime strfmt.DateTime `json:"BootTime,omitempty"`
 
-	// Specifies associated cluster with the host entity. It is optional and upto platform to decide.
+	// Identifies the cluster associated with the host entity. It is optional and depends on the platform.
 	Cluster *VirtualizationVmwareClusterRef `json:"Cluster,omitempty"`
 
-	// Is host connected to vCenter. Values are connected, notconnected.
+	// Indicates if the host is connected to the vCenter. Values are connected, not connected.
 	ConnectionState string `json:"ConnectionState,omitempty"`
 
 	// Every entity is grouped under the datacenter object and managed as a group.
@@ -42,17 +42,17 @@ type VirtualizationVmwareHost struct {
 	// Read Only: true
 	Datastores []*VirtualizationVmwareDatastoreRef `json:"Datastores"`
 
-	// Is the host powered-up or powered-down.
+	// Is the host Powered-up or Powered-down.
 	// Enum: [Unknown PoweredOn PoweredOff StandBy Paused]
 	HwPowerState *string `json:"HwPowerState,omitempty"`
 
-	// It is the count of all network adapters attached to this host.
+	// The count of all network adapters attached to this host.
 	NetworkAdapterCount int64 `json:"NetworkAdapterCount,omitempty"`
 
 	// Snapshot of resources (CPU, memory, etc.) consumed by this host.
 	ResourceConsumed *VirtualizationResourceConsumption `json:"ResourceConsumed,omitempty"`
 
-	// It is the count of all storage adapters attached to this host.
+	// The count of all storage adapters attached to this host.
 	StorageAdapterCount int64 `json:"StorageAdapterCount,omitempty"`
 
 	// The identity of this host within vCenter (optional).

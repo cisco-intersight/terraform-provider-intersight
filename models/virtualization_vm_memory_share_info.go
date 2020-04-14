@@ -15,7 +15,7 @@ import (
 
 // VirtualizationVMMemoryShareInfo Virtualization:Vm Memory Share Info
 //
-// Information about the virtual machine's memory sharing and limits (details in VMware docs).
+// Information about the virtual machine's memory sharing and limits. For more information, see VMware documentation.
 //
 // swagger:model virtualizationVmMemoryShareInfo
 type VirtualizationVMMemoryShareInfo struct {
@@ -112,7 +112,7 @@ type VirtualizationVMMemoryShareInfoAO1P1 struct {
 	// Similar to CPU reservations (Mbytes).
 	MemReservation int64 `json:"MemReservation,omitempty"`
 
-	// Similar to cpuShares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+	// Similar to CPU Shares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
 	MemShares int64 `json:"MemShares,omitempty"`
 
 	// virtualization VM memory share info a o1 p1
@@ -133,7 +133,7 @@ func (m *VirtualizationVMMemoryShareInfoAO1P1) UnmarshalJSON(data []byte) error 
 		// Similar to CPU reservations (Mbytes).
 		MemReservation int64 `json:"MemReservation,omitempty"`
 
-		// Similar to cpuShares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+		// Similar to CPU Shares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
 		MemShares int64 `json:"MemShares,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -186,7 +186,7 @@ func (m VirtualizationVMMemoryShareInfoAO1P1) MarshalJSON() ([]byte, error) {
 		// Similar to CPU reservations (Mbytes).
 		MemReservation int64 `json:"MemReservation,omitempty"`
 
-		// Similar to cpuShares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+		// Similar to CPU Shares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
 		MemShares int64 `json:"MemShares,omitempty"`
 	}
 
