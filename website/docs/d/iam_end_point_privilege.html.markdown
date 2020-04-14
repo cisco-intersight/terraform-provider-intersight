@@ -10,6 +10,7 @@ The privilege defined at the end point which can be assigned to a user.
 The privilege defined at the end point which can be assigned to a user.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"The functionality of this privilege."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"The name of the end point privilege."

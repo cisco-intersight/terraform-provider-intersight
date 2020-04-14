@@ -11,6 +11,7 @@ description: |-
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `cpu`:(float)"CPU usage of device being inventoried."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `crash_reset_logs`:(string)"Last crash reset reason of device being inventoried."
 * `device_name`:(string)"Name of device being inventoried."
 * `device_type`:(string)"Type of device being inventoried."

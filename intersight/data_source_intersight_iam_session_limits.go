@@ -35,7 +35,7 @@ func dataSourceIamSessionLimits() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -43,11 +43,16 @@ func dataSourceIamSessionLimits() *schema.Resource {
 					},
 				},
 			},
-			"idle_time_out": {
-				Description: "The idle timeout interval for the web session in seconds. The default value is 1800 seconds. When a session is not refreshed for this duration, backend will mark the session as idle and remove the session.",
-				Type:        schema.TypeInt,
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"idle_time_out": {
+				Description: "The idle timeout interval for the web session in seconds. When a session is not refreshed for this duration, the session is marked as idle and removed.",
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"maximum_limit": {
 				Description: "The maximum number of sessions allowed in an account. The default value is 128.",
@@ -73,6 +78,35 @@ func dataSourceIamSessionLimits() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"permission": {
+				Description: "A collection of references to the [iam.Permission](mo://iam.Permission) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Permission](mo://iam.Permission) MO unsets its reference to this deleted MO.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"permission_resources": {
 				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
@@ -93,7 +127,7 @@ func dataSourceIamSessionLimits() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -102,10 +136,9 @@ func dataSourceIamSessionLimits() *schema.Resource {
 				},
 			},
 			"session_time_out": {
-				Description: "The session expiry duration in seconds. The default value is 57600 seconds or 16 hours.",
+				Description: "The session expiry duration in seconds.",
 				Type:        schema.TypeInt,
 				Optional:    true,
-				Computed:    true,
 			},
 			"tags": {
 				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
@@ -117,6 +150,12 @@ func dataSourceIamSessionLimits() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -148,6 +187,10 @@ func dataSourceIamSessionLimitsRead(d *schema.ResourceData, meta interface{}) er
 
 	url := "iam/SessionLimits"
 	var o models.IamSessionLimits
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+	}
 	if v, ok := d.GetOk("idle_time_out"); ok {
 		x := int64(v.(int))
 		o.IdleTimeOut = x
@@ -199,6 +242,9 @@ func dataSourceIamSessionLimitsRead(d *schema.ResourceData, meta interface{}) er
 			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
 				return err
 			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
+				return err
+			}
 			if err := d.Set("idle_time_out", (s.IdleTimeOut)); err != nil {
 				return err
 			}
@@ -212,6 +258,10 @@ func dataSourceIamSessionLimitsRead(d *schema.ResourceData, meta interface{}) er
 				return err
 			}
 			if err := d.Set("per_user_limit", (s.PerUserLimit)); err != nil {
+				return err
+			}
+
+			if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
 				return err
 			}
 

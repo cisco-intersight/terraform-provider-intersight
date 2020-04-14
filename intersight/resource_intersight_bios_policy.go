@@ -310,6 +310,12 @@ func resourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 				Default:     "platform-default",
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"closed_loop_therm_throtl": {
 				Description: "BIOS Token for setting Closed Loop Therm Throt configuration.",
 				Type:        schema.TypeString,
@@ -513,6 +519,12 @@ func resourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 				Default:     "platform-default",
 			},
+			"ipv4pxe": {
+				Description: "BIOS Token for setting IPv4 PXE Support configuration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "platform-default",
+			},
 			"ipv6pxe": {
 				Description: "BIOS Token for setting IPV6 PXE Support configuration.",
 				Type:        schema.TypeString,
@@ -592,10 +604,15 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"memory_mapped_io_above4gb": {
-				Description: "BIOS Token for setting Memory mapped IO above 4GB configuration.",
+				Description: "BIOS Token for setting Memory mapped IO above 4GiB configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
+			},
+			"memory_size_limit": {
+				Description: "BIOS Token for setting Memory Size Limit in GiB configuration (0-65535).",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"mirroring_mode": {
 				Description: "BIOS Token for setting Mirroring Mode configuration.",
@@ -620,6 +637,12 @@ func resourceBiosPolicy() *schema.Resource {
 				Description: "Name of the concrete policy.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"network_stack": {
+				Description: "BIOS Token for setting Network Stack configuration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "platform-default",
 			},
 			"numa_optimized": {
 				Description: "BIOS Token for setting NUMA optimized configuration.",
@@ -677,7 +700,7 @@ func resourceBiosPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -718,6 +741,37 @@ func resourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 				Default:     "platform-default",
 			},
+			"partial_mirror_mode_config": {
+				Description: "BIOS Token for setting Partial Memory Mirror Mode configuration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "platform-default",
+			},
+			"partial_mirror_percent": {
+				Description: "BIOS Token for setting Partial Mirror percentage configuration (0.00-50.00).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partial_mirror_value1": {
+				Description: "BIOS Token for setting Partial Mirror1 Size in GiB configuration (0-65535).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partial_mirror_value2": {
+				Description: "BIOS Token for setting Partial Mirror2 Size in GiB configuration (0-65535).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partial_mirror_value3": {
+				Description: "BIOS Token for setting Partial Mirror3 Size in GiB configuration (0-65535).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partial_mirror_value4": {
+				Description: "BIOS Token for setting Partial Mirror4 Size in GiB configuration (0-65535).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"patrol_scrub": {
 				Description: "BIOS Token for setting Patrol Scrub configuration.",
 				Type:        schema.TypeString,
@@ -726,6 +780,12 @@ func resourceBiosPolicy() *schema.Resource {
 			},
 			"patrol_scrub_duration": {
 				Description: "BIOS Token for setting Patrol Scrub Interval configuration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "platform-default",
+			},
+			"pc_ie_ras_support": {
+				Description: "BIOS Token for setting PCIe RAS Support configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -774,7 +834,7 @@ func resourceBiosPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -838,7 +898,7 @@ func resourceBiosPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -904,6 +964,12 @@ func resourceBiosPolicy() *schema.Resource {
 			},
 			"select_memory_ras_configuration": {
 				Description: "BIOS Token for setting SelectMemory RAS configuration configuration.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "platform-default",
+			},
+			"select_ppr_type": {
+				Description: "BIOS Token for setting Select PPR Type configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1479,13 +1545,13 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot_ssd_slot1link_speed": {
-				Description: "BIOS Token for setting PCIe Slot:FrontPcie1 Link Speed configuration.",
+				Description: "BIOS Token for setting PCIe Slot:FrontSSD1 Link Speed configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_ssd_slot2link_speed": {
-				Description: "BIOS Token for setting PCIe Slot:FrontPcie2 Link Speed configuration.",
+				Description: "BIOS Token for setting PCIe Slot:FrontSSD2 Link Speed configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1542,6 +1608,12 @@ func resourceBiosPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -1968,6 +2040,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+
+	}
+
 	if v, ok := d.GetOk("closed_loop_therm_throtl"); ok {
 		x := (v.(string))
 		o.ClosedLoopThermThrotl = &x
@@ -2172,6 +2250,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
+	if v, ok := d.GetOk("ipv4pxe"); ok {
+		x := (v.(string))
+		o.Ipv4pxe = &x
+
+	}
+
 	if v, ok := d.GetOk("ipv6pxe"); ok {
 		x := (v.(string))
 		o.Ipv6pxe = &x
@@ -2256,6 +2340,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
+	if v, ok := d.GetOk("memory_size_limit"); ok {
+		x := (v.(string))
+		o.MemorySizeLimit = x
+
+	}
+
 	if v, ok := d.GetOk("mirroring_mode"); ok {
 		x := (v.(string))
 		o.MirroringMode = &x
@@ -2277,6 +2367,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
 		o.Name = x
+
+	}
+
+	if v, ok := d.GetOk("network_stack"); ok {
+		x := (v.(string))
+		o.NetworkStack = &x
 
 	}
 
@@ -2377,6 +2473,42 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
+	if v, ok := d.GetOk("partial_mirror_mode_config"); ok {
+		x := (v.(string))
+		o.PartialMirrorModeConfig = &x
+
+	}
+
+	if v, ok := d.GetOk("partial_mirror_percent"); ok {
+		x := (v.(string))
+		o.PartialMirrorPercent = x
+
+	}
+
+	if v, ok := d.GetOk("partial_mirror_value1"); ok {
+		x := (v.(string))
+		o.PartialMirrorValue1 = x
+
+	}
+
+	if v, ok := d.GetOk("partial_mirror_value2"); ok {
+		x := (v.(string))
+		o.PartialMirrorValue2 = x
+
+	}
+
+	if v, ok := d.GetOk("partial_mirror_value3"); ok {
+		x := (v.(string))
+		o.PartialMirrorValue3 = x
+
+	}
+
+	if v, ok := d.GetOk("partial_mirror_value4"); ok {
+		x := (v.(string))
+		o.PartialMirrorValue4 = x
+
+	}
+
 	if v, ok := d.GetOk("patrol_scrub"); ok {
 		x := (v.(string))
 		o.PatrolScrub = &x
@@ -2386,6 +2518,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("patrol_scrub_duration"); ok {
 		x := (v.(string))
 		o.PatrolScrubDuration = &x
+
+	}
+
+	if v, ok := d.GetOk("pc_ie_ras_support"); ok {
+		x := (v.(string))
+		o.PcIeRasSupport = &x
 
 	}
 
@@ -2572,6 +2710,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("select_memory_ras_configuration"); ok {
 		x := (v.(string))
 		o.SelectMemoryRasConfiguration = &x
+
+	}
+
+	if v, ok := d.GetOk("select_ppr_type"); ok {
+		x := (v.(string))
+		o.SelectPprType = &x
 
 	}
 
@@ -3217,6 +3361,12 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -3608,6 +3758,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
+		return err
+	}
+
 	if err := d.Set("closed_loop_therm_throtl", (s.ClosedLoopThermThrotl)); err != nil {
 		return err
 	}
@@ -3744,6 +3898,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
+	if err := d.Set("ipv4pxe", (s.Ipv4pxe)); err != nil {
+		return err
+	}
+
 	if err := d.Set("ipv6pxe", (s.Ipv6pxe)); err != nil {
 		return err
 	}
@@ -3800,6 +3958,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
+	if err := d.Set("memory_size_limit", (s.MemorySizeLimit)); err != nil {
+		return err
+	}
+
 	if err := d.Set("mirroring_mode", (s.MirroringMode)); err != nil {
 		return err
 	}
@@ -3813,6 +3975,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
+		return err
+	}
+
+	if err := d.Set("network_stack", (s.NetworkStack)); err != nil {
 		return err
 	}
 
@@ -3864,11 +4030,39 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
+	if err := d.Set("partial_mirror_mode_config", (s.PartialMirrorModeConfig)); err != nil {
+		return err
+	}
+
+	if err := d.Set("partial_mirror_percent", (s.PartialMirrorPercent)); err != nil {
+		return err
+	}
+
+	if err := d.Set("partial_mirror_value1", (s.PartialMirrorValue1)); err != nil {
+		return err
+	}
+
+	if err := d.Set("partial_mirror_value2", (s.PartialMirrorValue2)); err != nil {
+		return err
+	}
+
+	if err := d.Set("partial_mirror_value3", (s.PartialMirrorValue3)); err != nil {
+		return err
+	}
+
+	if err := d.Set("partial_mirror_value4", (s.PartialMirrorValue4)); err != nil {
+		return err
+	}
+
 	if err := d.Set("patrol_scrub", (s.PatrolScrub)); err != nil {
 		return err
 	}
 
 	if err := d.Set("patrol_scrub_duration", (s.PatrolScrubDuration)); err != nil {
+		return err
+	}
+
+	if err := d.Set("pc_ie_ras_support", (s.PcIeRasSupport)); err != nil {
 		return err
 	}
 
@@ -3957,6 +4151,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err := d.Set("select_memory_ras_configuration", (s.SelectMemoryRasConfiguration)); err != nil {
+		return err
+	}
+
+	if err := d.Set("select_ppr_type", (s.SelectPprType)); err != nil {
 		return err
 	}
 
@@ -4751,6 +4949,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.CkeLowPolicy = &x
 	}
 
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
+	}
+
 	if d.HasChange("closed_loop_therm_throtl") {
 		v := d.Get("closed_loop_therm_throtl")
 		x := (v.(string))
@@ -4955,6 +5159,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.IohResource = &x
 	}
 
+	if d.HasChange("ipv4pxe") {
+		v := d.Get("ipv4pxe")
+		x := (v.(string))
+		o.Ipv4pxe = &x
+	}
+
 	if d.HasChange("ipv6pxe") {
 		v := d.Get("ipv6pxe")
 		x := (v.(string))
@@ -5039,6 +5249,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.MemoryMappedIoAbove4gb = &x
 	}
 
+	if d.HasChange("memory_size_limit") {
+		v := d.Get("memory_size_limit")
+		x := (v.(string))
+		o.MemorySizeLimit = x
+	}
+
 	if d.HasChange("mirroring_mode") {
 		v := d.Get("mirroring_mode")
 		x := (v.(string))
@@ -5061,6 +5277,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		v := d.Get("name")
 		x := (v.(string))
 		o.Name = x
+	}
+
+	if d.HasChange("network_stack") {
+		v := d.Get("network_stack")
+		x := (v.(string))
+		o.NetworkStack = &x
 	}
 
 	if d.HasChange("numa_optimized") {
@@ -5160,6 +5382,42 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.PackageCstateLimit = &x
 	}
 
+	if d.HasChange("partial_mirror_mode_config") {
+		v := d.Get("partial_mirror_mode_config")
+		x := (v.(string))
+		o.PartialMirrorModeConfig = &x
+	}
+
+	if d.HasChange("partial_mirror_percent") {
+		v := d.Get("partial_mirror_percent")
+		x := (v.(string))
+		o.PartialMirrorPercent = x
+	}
+
+	if d.HasChange("partial_mirror_value1") {
+		v := d.Get("partial_mirror_value1")
+		x := (v.(string))
+		o.PartialMirrorValue1 = x
+	}
+
+	if d.HasChange("partial_mirror_value2") {
+		v := d.Get("partial_mirror_value2")
+		x := (v.(string))
+		o.PartialMirrorValue2 = x
+	}
+
+	if d.HasChange("partial_mirror_value3") {
+		v := d.Get("partial_mirror_value3")
+		x := (v.(string))
+		o.PartialMirrorValue3 = x
+	}
+
+	if d.HasChange("partial_mirror_value4") {
+		v := d.Get("partial_mirror_value4")
+		x := (v.(string))
+		o.PartialMirrorValue4 = x
+	}
+
 	if d.HasChange("patrol_scrub") {
 		v := d.Get("patrol_scrub")
 		x := (v.(string))
@@ -5170,6 +5428,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		v := d.Get("patrol_scrub_duration")
 		x := (v.(string))
 		o.PatrolScrubDuration = &x
+	}
+
+	if d.HasChange("pc_ie_ras_support") {
+		v := d.Get("pc_ie_ras_support")
+		x := (v.(string))
+		o.PcIeRasSupport = &x
 	}
 
 	if d.HasChange("pc_ie_ssd_hot_plug_support") {
@@ -5356,6 +5620,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		v := d.Get("select_memory_ras_configuration")
 		x := (v.(string))
 		o.SelectMemoryRasConfiguration = &x
+	}
+
+	if d.HasChange("select_ppr_type") {
+		v := d.Get("select_ppr_type")
+		x := (v.(string))
+		o.SelectPprType = &x
 	}
 
 	if d.HasChange("serial_port_aenable") {
@@ -5999,6 +6269,12 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {

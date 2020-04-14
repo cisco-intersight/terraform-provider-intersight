@@ -12,6 +12,7 @@ Intersight representation of a Cisco PSIRT (https://tools.cisco.com/security/cen
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `advisory_id`:(string)"Cisco generated identifier for the published security advisory."
 * `base_score`:(float)"CVSS version 3 base score for the security Advisory."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `date_published`:(string)"Date when the security advisory was first published by Cisco."
 * `date_updated`:(string)"Date when the security advisory was last updated by Cisco."
 * `description`:(string)"Brief description of the advisory details."

@@ -16,22 +16,22 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 		Read: dataSourceVirtualizationVmwareVirtualMachineRead,
 		Schema: map[string]*schema.Schema{
 			"annotation": {
-				Description: "List of annotations provided to this VM by user; Can be long.",
+				Description: "List of annotations provided to this VM by user. Can be long.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"boot_time": {
-				Description: "Time when this vm booted up.",
+				Description: "Time when this VM booted up.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"cpu_hot_add_enabled": {
-				Description: "Is the capability to add CPUs to a running VM enabled.",
+				Description: "Indicates if the capability to add CPUs to a running VM is enabled.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
 			"cpu_shares": {
-				Description: "Basically, indicates the relative importance of a vm and its CPU limits.",
+				Description: "Shows the relative importance of a VM and its CPU limits.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -58,9 +58,15 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:    true,
 						},
 						"cpu_shares": {
-							Description: "Good description found in VMware docs. Basically, indicates the relative importance of a vm. There is no unit for this value. It is a relative measure based on the settings for other resource pools.",
+							Description: "Shows the relative importance of a VM. There is no unit for this value. It is a relative measure based on the settings for other resource pools. For more information, see VMware documentation.",
 							Type:        schema.TypeInt,
 							Optional:    true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -73,7 +79,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Computed: true,
 			},
 			"cpu_socket_info": {
-				Description: "Details of CPUs/sockets of this vm.",
+				Description: "Details of CPUs/sockets of this VM.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -84,13 +90,19 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"cores_per_socket": {
-							Description: "Need to say more? This value may be empty.",
+							Description: "The number of core per CPU socket (value may be empty).",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"num_cpus": {
-							Description: "Number of CPUs allocated to this vm.",
+							Description: "Number of CPUs allocated to this VM.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -122,14 +134,20 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"cpu_cores": {
-							Description: "The number of cpu cores on this hardware platform.",
+							Description: "The number of CPU cores on this hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"cpu_speed": {
-							Description: "Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.",
+							Description: "Speed of CPU in MHz, as reported by the hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"memory_size": {
 							Description: "The amount of memory allocated (bytes) to this hardware platform.",
@@ -145,6 +163,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 					},
 				},
 				Computed: true,
+			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"cluster": {
 				Description: "If the virtual machine is running on a cluster, it provides associated cluster information.",
@@ -167,7 +191,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -176,17 +200,17 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				},
 			},
 			"config_name": {
-				Description: "The named config for this vm, might be the same as guestHostname.",
+				Description: "The configuration name for this VM. This maybe the same as the guest hostname.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"connection_state": {
-				Description: "Is virtual machine connected to vCenter. Values are connected, disconnected, orphaned, inaccessible, invalid.",
+				Description: "Shows if virtual machine is connected to vCenter. Values are Connected, Disconnected, Orphaned, Inaccessible, and Invalid.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"custom_attributes": {
-				Description: "User provided meta information associated with VMs. Can be long.",
+				Description: "User provided meta information associated with the VMs. Can be long.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Schema{
@@ -198,7 +222,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"dns_suffix_list": {
-				Description: "List of dnssuffixes given to this VM.",
+				Description: "List of DNS suffixes given to this VM.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Schema{
@@ -224,7 +248,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -252,7 +276,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -261,12 +285,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				},
 			},
 			"default_power_off_type": {
-				Description: "Indication of how the VM will be powered off (soft, hard, etc).",
+				Description: "Indicates how the VM will be powered off (soft, hard etc.).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"dhcp_enabled": {
-				Description: "Is Dhcp used for IP/DNS on this vm.",
+				Description: "Shows if DHCP is used for IP/DNS on this VM.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -282,6 +306,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"committed_disk": {
 							Description: "Disk committed in bytes on this virtual machine (disk space used up).",
 							Type:        schema.TypeInt,
@@ -294,7 +324,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"un_committed_disk": {
-							Description: "Total uncommited disk space that is available for use (in bytes).",
+							Description: "Total uncommitted disk space that is available for use (in bytes).",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -324,18 +354,24 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"hostname": {
 							Description: "Name provided to the host OS (example, ubuntu6410, test-gateway, etc.).",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"ip_address": {
-							Description: "Primary ip address of the guest os.",
+							Description: "Primary IP address of the guest os.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"name": {
-							Description: "The name of the guest running on this VM. This may not be the same as the host name.",
+							Description: "The name of the guest running on this VM. This may not be the same as the hostname.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -355,7 +391,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Computed: true,
 			},
 			"guest_state": {
-				Description: "State of the guest OS on this VM. Is it running, notRunning, etc.",
+				Description: "The state of the guest OS running on this VM. Could be running, not running etc.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -380,7 +416,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -394,13 +430,13 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Optional:    true,
 			},
 			"ip_address": {
-				Description: "The ip address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types.",
+				Description: "The IP address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"identity": {
-				Description: "The internally generated identity of this vm. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference).",
+				Description: "The internally generated identity of this VM. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -421,7 +457,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"mem_shares": {
-				Description: "Similar to cpuShares but applicable to memory.",
+				Description: "Similar to CPU Shares but applicable to memory.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -431,6 +467,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"mem_limit": {
 							Description: "Limit on the memory sharing imposed (in Mbytes).",
@@ -448,7 +490,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:    true,
 						},
 						"mem_shares": {
-							Description: "Similar to cpuShares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.",
+							Description: "Similar to CPU Shares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -478,6 +520,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Description: "The total memory capacity of the entity in bytes.",
 							Type:        schema.TypeInt,
 							Optional:    true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"free": {
 							Description: "Free memory (bytes) that is unused and available for allocation, as a point-in-time snapshot. The available memory capacity is reported for an entity (such as Host or Cluster) when inventory data is collected for that entity. As part of the inventory data, a snapshot of the free and used memory capacity is also reported.",
@@ -516,7 +564,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Optional:    true,
 			},
 			"network_count": {
-				Description: "How many networks are used by this VM.",
+				Description: "Indicates how many networks are used by this VM.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
@@ -546,7 +594,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -555,7 +603,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				},
 			},
 			"port_groups": {
-				Description: "List of portgroup names allocated to this vm.",
+				Description: "List of portgroup names allocated to this VM.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Schema{
@@ -582,6 +630,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"free": {
 							Description: "Free CPU capacity in MHz, as a point-in-time snapshot. The available CPU capacity is reported for an entity (such as Host or Cluster) when inventory data is collected for that entity. As part of the inventory data, a snapshot of the free and used CPU capacity is also reported.",
 							Type:        schema.TypeInt,
@@ -603,12 +657,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Computed: true,
 			},
 			"protected_vm": {
-				Description: "Is this a protected VM. VMs can be in protection groups.",
+				Description: "Shows if this is a protected VM. VMs can be in protection groups.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
 			"registered_device": {
-				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.",
+				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -627,7 +681,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -647,6 +701,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -674,12 +734,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Computed: true,
 			},
 			"remote_display_vnc_enabled": {
-				Description: "Is support for a remote VNC access enabled.",
+				Description: "Shows if support for a remote VNC access is enabled.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
 			"resource_pool": {
-				Description: "Name of the resource pool to which this vm belongs (optional).",
+				Description: "Name of the resource pool to which this VM belongs (optional).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -704,6 +764,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -725,7 +791,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Computed: true,
 			},
 			"tool_running_status": {
-				Description: "Are guest tools running on this vm. Set to (guestToolNotRunning,  guestToolsRunning).",
+				Description: "Indicates if guest tools are running on this VM. Could be set to guestToolNotRunning or guestToolsRunning.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -740,12 +806,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Optional:    true,
 			},
 			"vm_disk_count": {
-				Description: "How many disks are assigned to this VM.",
+				Description: "Shows the number of disks assigned to this VM.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"vm_overall_status": {
-				Description: "The operational state (there are many possible states, Available, Provisioned, Maintenance mode, Deleting, etc.) of this vm.",
+				Description: "The operational state of the VM. Could be Available, Provisioned, Maintenance mode, Deleting, etc.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -765,7 +831,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				Optional:    true,
 			},
 			"vnic_device_config_id": {
-				Description: "Information related to the guest info's vnic virtual device (this is a comma separated list).",
+				Description: "Information related to the guest info's VNIC virtual device. It is a comma-separated list.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -790,6 +856,10 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 	if v, ok := d.GetOk("cpu_hot_add_enabled"); ok {
 		x := (v.(bool))
 		o.CPUHotAddEnabled = &x
+	}
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 	}
 	if v, ok := d.GetOk("config_name"); ok {
 		x := (v.(string))
@@ -954,6 +1024,9 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 			}
 
 			if err := d.Set("capacity", flattenMapInfraHardwareInfo(s.Capacity, d)); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 

@@ -14,6 +14,12 @@ func dataSourceIamApiKey() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceIamApiKeyRead,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"hash_algorithm": {
 				Description: "The cryptographic hash algorithm to calculate the message digest.",
 				Type:        schema.TypeString,
@@ -30,6 +36,12 @@ func dataSourceIamApiKey() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": {
 							Description: "Name of the key generation algorithm.",
@@ -80,7 +92,7 @@ func dataSourceIamApiKey() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -108,7 +120,7 @@ func dataSourceIamApiKey() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -127,7 +139,7 @@ func dataSourceIamApiKey() *schema.Resource {
 				Optional:    true,
 			},
 			"signing_algorithm": {
-				Description: "The signing algorithm used by the client to authenticate API requests to Intersight.\nThe following key generation schemes are supported:\n1. RSASSA-PSS, as defined in RFC 8017 [RFC8017], Section 8.1,\n2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,\n3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.\nThe signing algorithm must be compatible with the key generation specification.",
+				Description: "The signing algorithm used by the client to authenticate API requests to Intersight.\nThe signing algorithm must be compatible with the key generation specification.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -141,6 +153,12 @@ func dataSourceIamApiKey() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -183,7 +201,7 @@ func dataSourceIamApiKey() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -201,6 +219,10 @@ func dataSourceIamApiKeyRead(d *schema.ResourceData, meta interface{}) error {
 
 	url := "iam/ApiKeys"
 	var o models.IamAPIKey
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+	}
 	if v, ok := d.GetOk("hash_algorithm"); ok {
 		x := (v.(string))
 		o.HashAlgorithm = &x
@@ -246,6 +268,9 @@ func dataSourceIamApiKeyRead(d *schema.ResourceData, meta interface{}) error {
 			var s models.IamAPIKey
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = s.UnmarshalJSON(oo); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 			if err := d.Set("hash_algorithm", (s.HashAlgorithm)); err != nil {

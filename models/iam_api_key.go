@@ -40,10 +40,6 @@ type IamAPIKey struct {
 	Purpose string `json:"Purpose,omitempty"`
 
 	// The signing algorithm used by the client to authenticate API requests to Intersight.
-	// The following key generation schemes are supported:
-	// 1. RSASSA-PSS, as defined in RFC 8017 [RFC8017], Section 8.1,
-	// 2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,
-	// 3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.
 	// The signing algorithm must be compatible with the key generation specification.
 	// Enum: [RSASSA-PKCS1-v1_5 RSASSA-PSS Ed25519 Ecdsa]
 	SigningAlgorithm *string `json:"SigningAlgorithm,omitempty"`

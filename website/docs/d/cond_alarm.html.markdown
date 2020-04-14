@@ -15,6 +15,7 @@ The following arguments can be used to get data of already created objects in In
 * `affected_object`:(string)"A unique key for an alarm instance, consists of a combination of a unique system name and msAffectedObject."
 * `ancestor_mo_id`:(string)"Parent MoId of the fault from managed system. For example, Blade moid for adaptor fault."
 * `ancestor_mo_type`:(string)"Parent MO type of the fault from managed system. For example, Blade for adaptor fault."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `code`:(string)"A unique alarm code. For alarms mapped from UCS faults, this will be the same as the UCS fault code."
 * `creation_time`:(string)"The time the alarm was created."
 * `description`:(string)"A longer description of the alarm than the name. The description contains details of the component reporting the issue."

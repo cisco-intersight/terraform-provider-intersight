@@ -106,7 +106,8 @@ type MemoryPersistentMemoryLocalSecurityAO1P1 struct {
 	// Persistent Memory Security state.
 	Enabled *bool `json:"Enabled,omitempty"`
 
-	// is secure passphrase set
+	// Indicates whether the value of the 'securePassphrase' property has been set.
+	// Read Only: true
 	IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 	// Secure passphrase to be applied on the Persistent Memory Modules on the server. The allowed characters are a-z, A to Z, 0-9, and special characters =, \u0021, &, \#, $, %, +, ^, @, _, *, -.
@@ -124,7 +125,8 @@ func (m *MemoryPersistentMemoryLocalSecurityAO1P1) UnmarshalJSON(data []byte) er
 		// Persistent Memory Security state.
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		// is secure passphrase set
+		// Indicates whether the value of the 'securePassphrase' property has been set.
+		// Read Only: true
 		IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 		// Secure passphrase to be applied on the Persistent Memory Modules on the server. The allowed characters are a-z, A to Z, 0-9, and special characters =, \u0021, &, \#, $, %, +, ^, @, _, *, -.
@@ -172,7 +174,8 @@ func (m MemoryPersistentMemoryLocalSecurityAO1P1) MarshalJSON() ([]byte, error) 
 		// Persistent Memory Security state.
 		Enabled *bool `json:"Enabled,omitempty"`
 
-		// is secure passphrase set
+		// Indicates whether the value of the 'securePassphrase' property has been set.
+		// Read Only: true
 		IsSecurePassphraseSet *bool `json:"IsSecurePassphraseSet,omitempty"`
 
 		// Secure passphrase to be applied on the Persistent Memory Modules on the server. The allowed characters are a-z, A to Z, 0-9, and special characters =, \u0021, &, \#, $, %, +, ^, @, _, *, -.

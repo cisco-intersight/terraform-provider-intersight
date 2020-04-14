@@ -11,6 +11,7 @@ The field notice reporting bug and related software or hardware for APIC.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `bugid`:(string)"Bug Id associated with this notice."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `field_notice_desc`:(string)"Field notice Description."
 * `field_notice_id`:(string)"Fieldnotice Id of this notice."
 * `field_notice_url`:(string)"Field notice URL link to the notice webpage."

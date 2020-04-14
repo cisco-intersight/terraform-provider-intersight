@@ -26,7 +26,7 @@ type MemoryPersistentMemoryConfiguration struct {
 	// Read Only: true
 	ComputeBoard *ComputeBoardRef `json:"ComputeBoard,omitempty"`
 
-	// Memory capacity in GB of a Persistent Memory configuration on a server.
+	// Memory capacity in GiB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	MemoryCapacity string `json:"MemoryCapacity,omitempty"`
 
@@ -38,7 +38,7 @@ type MemoryPersistentMemoryConfiguration struct {
 	// Read Only: true
 	NumOfRegions string `json:"NumOfRegions,omitempty"`
 
-	// Persistent memory capacity in GB of a Persistent Memory configuration on a server.
+	// Persistent memory capacity in GiB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	PersistentMemoryCapacity string `json:"PersistentMemoryCapacity,omitempty"`
 
@@ -54,7 +54,7 @@ type MemoryPersistentMemoryConfiguration struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// Reserved capacity in GB of a Persistent Memory configuration on a server.
+	// Reserved capacity in GiB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	ReservedCapacity string `json:"ReservedCapacity,omitempty"`
 
@@ -62,7 +62,7 @@ type MemoryPersistentMemoryConfiguration struct {
 	// Read Only: true
 	SecurityState string `json:"SecurityState,omitempty"`
 
-	// Total capacity in GB of a Persistent Memory configuration on a server.
+	// Total capacity in GiB of a Persistent Memory configuration on a server.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 }

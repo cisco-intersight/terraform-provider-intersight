@@ -103,7 +103,8 @@ func (m *CommCredential) UnmarshalBinary(b []byte) error {
 // swagger:model CommCredentialAO1P1
 type CommCredentialAO1P1 struct {
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Password for the Managed Device.
@@ -121,7 +122,8 @@ func (m *CommCredentialAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password for the Managed Device.
@@ -169,7 +171,8 @@ func (m *CommCredentialAO1P1) UnmarshalJSON(data []byte) error {
 func (m CommCredentialAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password for the Managed Device.

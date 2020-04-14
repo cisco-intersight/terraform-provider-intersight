@@ -30,6 +30,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"content_type": {
 							Description: "Intersight Orchestrator, with the support of response parser specification,\ncan extract the values from API responses and map them to task output parameters.\nThe value extraction is supported for response content types XML and JSON.\nThe type of the content that gets passed as payload and response in this\nAPI.",
 							Type:        schema.TypeString,
@@ -58,6 +64,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"error_parameters": {
 										Description: "The list of parameter definitions, if found in a given API/device response,\nmakes the content handlers to treat the response as error response.\nThis is optional parameter.",
 										Type:        schema.TypeList,
@@ -73,6 +85,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"complex_type": {
 													Description: "The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property.",
@@ -131,6 +149,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
 												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
+												},
 												"complex_type": {
 													Description: "The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property.",
 													Type:        schema.TypeString,
@@ -177,6 +201,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
 												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
+												},
 												"name": {
 													Description: "The unique name of this complex type within the grammar specification.",
 													Type:        schema.TypeString,
@@ -203,6 +233,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 																Type:             schema.TypeString,
 																Optional:         true,
 																DiffSuppressFunc: SuppressDiffAdditionProps,
+															},
+															"class_id": {
+																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 															"complex_type": {
 																Description: "The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property.",
@@ -261,6 +297,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"constraints": {
 				Description: "Enter the constraints on when this task should match against the task definition.",
 				Type:        schema.TypeList,
@@ -272,6 +314,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -325,7 +373,7 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -348,6 +396,12 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -389,7 +443,7 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -408,6 +462,10 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 
 	url := "workflow/BatchApiExecutors"
 	var o models.WorkflowBatchAPIExecutor
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
 		o.Description = x
@@ -453,6 +511,9 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 			}
 
 			if err := d.Set("batch", flattenListWorkflowAPI(s.Batch, d)); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 

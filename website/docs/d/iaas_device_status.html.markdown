@@ -13,6 +13,7 @@ The following arguments can be used to get data of already created objects in In
 * `account_name`:(string)"The UCSD infra account name. Account Name is created when UCSD admin adds any new infra account (Physical/Virtual/Compute/Network) to be managed by UCSD."
 * `account_type`:(string)"The UCSD Infra Account type."
 * `claim_status`:(string)"Describes if the device is claimed in Intersight or not."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `connection_status`:(string)"Describes about the connection status between the UCSD and the actual end device."
 * `device_model`:(string)"Describes about the device model."
 * `device_vendor`:(string)"Describes about the device vendor/manufacturer of the device."

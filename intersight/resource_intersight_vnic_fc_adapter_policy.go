@@ -16,6 +16,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 		Update: resourceVnicFcAdapterPolicyUpdate,
 		Delete: resourceVnicFcAdapterPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"description": {
 				Description: "Description of the policy.",
 				Type:        schema.TypeString,
@@ -37,6 +43,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"enabled": {
 							Description: "Enables Fibre Channel Error recovery.",
@@ -86,6 +98,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
@@ -118,6 +136,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"mode": {
 							Description: "The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.",
@@ -189,7 +213,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -220,7 +244,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -240,6 +264,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -279,6 +309,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
@@ -313,6 +349,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"count": {
 							Description: "The number of SCSI I/O queue resources the system should allocate.",
 							Type:        schema.TypeInt,
@@ -344,6 +386,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -378,6 +426,12 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
@@ -408,6 +462,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.VnicFcAdapterPolicy
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+
+	}
+
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
 		o.Description = x
@@ -433,6 +493,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["enabled"]; ok {
@@ -494,6 +560,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -533,6 +605,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["mode"]; ok {
@@ -670,6 +748,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -717,6 +801,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
@@ -756,6 +846,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["count"]; ok {
@@ -802,6 +898,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -840,6 +942,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["count"]; ok {
@@ -905,6 +1013,10 @@ func resourceVnicFcAdapterPolicyRead(d *schema.ResourceData, meta interface{}) e
 	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -993,6 +1105,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.VnicFcAdapterPolicy
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
+	}
+
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
@@ -1019,6 +1137,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcErrorRecoverySettingsAO1P1.VnicFcErrorRecoverySettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["enabled"]; ok {
@@ -1080,6 +1204,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -1119,6 +1249,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcInterruptSettingsAO1P1.VnicFcInterruptSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["mode"]; ok {
@@ -1256,6 +1392,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -1303,6 +1445,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
@@ -1342,6 +1490,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicScsiQueueSettingsAO1P1.VnicScsiQueueSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["count"]; ok {
@@ -1388,6 +1542,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1426,6 +1586,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					if err == nil && x1 != nil {
 						o.VnicFcQueueSettingsAO1P1.VnicFcQueueSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["count"]; ok {

@@ -3,12 +3,10 @@ package intersight
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"reflect"
-
 	"github.com/cisco-intersight/terraform-provider-intersight/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"log"
 )
 
 func dataSourceAssetDeviceRegistration() *schema.Resource {
@@ -47,7 +45,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -82,7 +80,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -98,6 +96,12 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 			},
 			"claimed_time": {
 				Description: "The date and time at which the device was claimed to this account.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -122,7 +126,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -181,7 +185,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -210,7 +214,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -259,7 +263,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -305,7 +309,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -324,6 +328,12 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"device_id": {
 							Description: "The moid of the parent device registration.",
@@ -370,7 +380,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -429,7 +439,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -454,6 +464,12 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -510,6 +526,10 @@ func dataSourceAssetDeviceRegistrationRead(d *schema.ResourceData, meta interfac
 	if v, ok := d.GetOk("claimed_time"); ok {
 		x, _ := strfmt.ParseDateTime(v.(string))
 		o.ClaimedTime = x
+	}
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 	}
 	if v, ok := d.GetOk("connection_id"); ok {
 		x := (v.(string))
@@ -577,136 +597,138 @@ func dataSourceAssetDeviceRegistrationRead(d *schema.ResourceData, meta interfac
 	if err = json.Unmarshal(body, &x); err != nil {
 		return err
 	}
-	result := x["Results"]
-	if result == nil {
+	results := x["Results"]
+	if results == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
-	switch reflect.TypeOf(result).Kind() {
-	case reflect.Slice:
-		r := reflect.ValueOf(result)
-		for i := 0; i < r.Len(); i++ {
-			var s models.AssetDeviceRegistration
-			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
-			}
-			if err := d.Set("api_version", (s.APIVersion)); err != nil {
-				return err
-			}
-			if err := d.Set("access_key_id", (s.AccessKeyID)); err != nil {
-				return err
-			}
-
-			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-				return err
-			}
-			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
-				return err
-			}
-
-			if err := d.Set("claimed_by_user", flattenMapIamUserRef(s.ClaimedByUser, d)); err != nil {
-				return err
-			}
-			if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
-				return err
-			}
-
-			if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
-				return err
-			}
-
-			if err := d.Set("cluster_members", flattenListAssetClusterMemberRef(s.ClusterMembers, d)); err != nil {
-				return err
-			}
-			if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
-				return err
-			}
-			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
-				return err
-			}
-			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-				return err
-			}
-
-			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
-				return err
-			}
-			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
-				return err
-			}
-
-			if err := d.Set("device_claim", flattenMapAssetDeviceClaimRef(s.DeviceClaim, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRef(s.DeviceConfiguration, d)); err != nil {
-				return err
-			}
-			if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
-				return err
-			}
-			if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
-				return err
-			}
-			if err := d.Set("device_ip_address", (s.DeviceIPAddress)); err != nil {
-				return err
-			}
-
-			if err := d.Set("domain_group", flattenMapIamDomainGroupRef(s.DomainGroup, d)); err != nil {
-				return err
-			}
-			if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-
-			if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRef(s.ParentConnection, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
-			}
-			if err := d.Set("pid", (s.Pid)); err != nil {
-				return err
-			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-				return err
-			}
-			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
-				return err
-			}
-			if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
-				return err
-			}
-			if err := d.Set("read_only", (s.ReadOnly)); err != nil {
-				return err
-			}
-
-			if err := d.Set("security_token", flattenMapAssetSecurityTokenRef(s.SecurityToken, d)); err != nil {
-				return err
-			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
-			}
-
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
-			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
-			}
-			d.SetId(s.Moid)
-		}
+	result := results.([]interface{})
+	if len(result) > 1{
+		return fmt.Errorf("your query returned multiple results. Please change your search criteria and try again")
 	}
+	var s models.AssetDeviceRegistration
+	oo, _ := json.Marshal(result[0])
+	// interface {} is map[string]interface {}, not []uint8
+	if err = s.UnmarshalJSON(oo); err != nil {
+		return err
+	}
+	if err := d.Set("api_version", (s.APIVersion)); err != nil {
+		return err
+	}
+	if err := d.Set("access_key_id", (s.AccessKeyID)); err != nil {
+		return err
+	}
+
+	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+		return err
+	}
+	if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
+		return err
+	}
+
+	if err := d.Set("claimed_by_user", flattenMapIamUserRef(s.ClaimedByUser, d)); err != nil {
+		return err
+	}
+	if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
+		return err
+	}
+
+	if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
+		return err
+	}
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
+		return err
+	}
+
+	if err := d.Set("cluster_members", flattenListAssetClusterMemberRef(s.ClusterMembers, d)); err != nil {
+		return err
+	}
+	if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
+		return err
+	}
+	if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
+		return err
+	}
+	if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+		return err
+	}
+
+	if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
+		return err
+	}
+	if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
+		return err
+	}
+
+	if err := d.Set("device_claim", flattenMapAssetDeviceClaimRef(s.DeviceClaim, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRef(s.DeviceConfiguration, d)); err != nil {
+		return err
+	}
+	if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
+		return err
+	}
+	if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
+		return err
+	}
+	if err := d.Set("device_ip_address", (s.DeviceIPAddress)); err != nil {
+		return err
+	}
+
+	if err := d.Set("domain_group", flattenMapIamDomainGroupRef(s.DomainGroup, d)); err != nil {
+		return err
+	}
+	if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
+		return err
+	}
+	if err := d.Set("moid", (s.Moid)); err != nil {
+		return err
+	}
+	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+		return err
+	}
+
+	if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRef(s.ParentConnection, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+		return err
+	}
+	if err := d.Set("pid", (s.Pid)); err != nil {
+		return err
+	}
+	if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+		return err
+	}
+	if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
+		return err
+	}
+	if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
+		return err
+	}
+	if err := d.Set("read_only", (s.ReadOnly)); err != nil {
+		return err
+	}
+
+	if err := d.Set("security_token", flattenMapAssetSecurityTokenRef(s.SecurityToken, d)); err != nil {
+		return err
+	}
+	if err := d.Set("serial", (s.Serial)); err != nil {
+		return err
+	}
+
+	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+		return err
+	}
+	if err := d.Set("vendor", (s.Vendor)); err != nil {
+		return err
+	}
+	d.SetId(s.Moid)
 	return nil
 }

@@ -30,6 +30,7 @@ are enabled/disabled as well. For example, if you enable/disable Inventory, all 
 configurations (ie. Network and Storage) are also enabled/disabled.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `enable`:(bool)"Status of the data collection mode. If the value is 'true', then data collection is enabled."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"Name of the Data Export Policy."

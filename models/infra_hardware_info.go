@@ -15,7 +15,7 @@ import (
 
 // InfraHardwareInfo Infra:Hardware Info
 //
-// Information about the hardware platform (cpu, memory).
+// Information about the hardware platform. For example, cpu, memory, etc.
 //
 // swagger:model infraHardwareInfo
 type InfraHardwareInfo struct {
@@ -103,10 +103,10 @@ func (m *InfraHardwareInfo) UnmarshalBinary(b []byte) error {
 // swagger:model InfraHardwareInfoAO1P1
 type InfraHardwareInfoAO1P1 struct {
 
-	// The number of cpu cores on this hardware platform.
+	// The number of CPU cores on this hardware platform.
 	CPUCores int64 `json:"CpuCores,omitempty"`
 
-	// Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.
+	// Speed of CPU in MHz, as reported by the hardware platform.
 	CPUSpeed int64 `json:"CpuSpeed,omitempty"`
 
 	// The amount of memory allocated (bytes) to this hardware platform.
@@ -121,10 +121,10 @@ func (m *InfraHardwareInfoAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// The number of cpu cores on this hardware platform.
+		// The number of CPU cores on this hardware platform.
 		CPUCores int64 `json:"CpuCores,omitempty"`
 
-		// Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.
+		// Speed of CPU in MHz, as reported by the hardware platform.
 		CPUSpeed int64 `json:"CpuSpeed,omitempty"`
 
 		// The amount of memory allocated (bytes) to this hardware platform.
@@ -169,10 +169,10 @@ func (m *InfraHardwareInfoAO1P1) UnmarshalJSON(data []byte) error {
 func (m InfraHardwareInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// The number of cpu cores on this hardware platform.
+		// The number of CPU cores on this hardware platform.
 		CPUCores int64 `json:"CpuCores,omitempty"`
 
-		// Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.
+		// Speed of CPU in MHz, as reported by the hardware platform.
 		CPUSpeed int64 `json:"CpuSpeed,omitempty"`
 
 		// The amount of memory allocated (bytes) to this hardware platform.

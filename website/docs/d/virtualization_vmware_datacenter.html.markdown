@@ -10,6 +10,7 @@ Datacenter object in VMware inventory. It is the logical container for all other
 Datacenter object in VMware inventory. It is the logical container for all other objects like Datastore, Host, VirtualMachine, etc.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cluster_count`:(int)"Count of all clusters associated with this DC."
 * `datastore_count`:(int)"Count of all datastores associated with this DC."
 * `host_count`:(int)"Count of all hosts associated with this DC."

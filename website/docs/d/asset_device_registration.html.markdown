@@ -15,6 +15,7 @@ The following arguments can be used to get data of already created objects in In
 * `app_partition_number`:(int)"The partition number corresponding to the instance of the Proxy App which is managing the web-socket to the device connector."
 * `claimed_by_user_name`:(string)"The name of the user who claimed the device for the account."
 * `claimed_time`:(string)"The date and time at which the device was claimed to this account."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `connection_id`:(string)"The unique identifier for the current connection. The identifier persists across network connectivity loss and is reset on device connector process restart or platform administrator toggle of the Intersight connectivity. The connectionId can be used by services that need to interact with stateful plugins running in the device connector process. For example if a service schedules an inventory in a devices job scheduler plugin at registration it is not necessary to reschedule the job if the device loses network connectivity due to an Intersight service upgrade or intermittent network issues in the devices datacenter."
 * `connection_reason`:(string)"If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud."
 * `connection_status`:(string)"The status of the persistent connection between the device connector and Intersight."

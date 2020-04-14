@@ -10,9 +10,10 @@ Persistent Memory Region configured on the Persistent Memory Modules on a server
 Persistent Memory Region configured on the Persistent Memory Modules on a server.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
-* `free_capacity`:(string)"Free capacity in GB of the Persistent Memory Region."
+* `free_capacity`:(string)"Free capacity in GiB of the Persistent Memory Region."
 * `health_state`:(string)"Health state of the Persistent Memory Region."
 * `interleaved_set_id`:(string)"ID of the Interleaved Set formed for this Persistent Memory Region."
 * `locater_ids`:(string)"Set of locator IDs that are included in the Persistent Memory Region."
@@ -23,4 +24,4 @@ The following arguments can be used to get data of already created objects in In
 * `rn`:(string)"The Relative Name uniquely identifies an object within a given context."
 * `socket_id`:(string)"Socket ID of the Persistent Memory Region."
 * `socket_memory_id`:(string)"Socket Memory ID of the Persistent Memory Region."
-* `total_capacity`:(string)"Total capacity in GB of the Persistent Memory Region."
+* `total_capacity`:(string)"Total capacity in GiB of the Persistent Memory Region."

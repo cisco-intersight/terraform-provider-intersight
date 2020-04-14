@@ -15,6 +15,7 @@ and deleted upon logout, expiration timeout or manual deletion.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `access_expiration_time`:(string)"Expiration time for the JWT token to which it can be used for api calls."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `client_id`:(string)"The identifier of the registered application to which the token belongs."
 * `client_ip_address`:(string)"The user agent IP address from which the auth token is launched."
 * `client_name`:(string)"The name of the registered application to which the token belongs."

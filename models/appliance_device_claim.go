@@ -38,7 +38,8 @@ type ApplianceDeviceClaim struct {
 	// Hostname or IP address of the endpoint device the user wants to claim.
 	Hostname string `json:"Hostname,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Message set by the device claim process.
@@ -49,7 +50,7 @@ type ApplianceDeviceClaim struct {
 	Password string `json:"Password,omitempty"`
 
 	// Platform type of the endpoint device.
-	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// User defined claim request identifier set by the UI. The RequestId field is not a mandatory. The Intersight Appliance will assign a unique value automatically if the field is not set.
@@ -242,7 +243,7 @@ var applianceDeviceClaimTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

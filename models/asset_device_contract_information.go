@@ -70,7 +70,7 @@ type AssetDeviceContractInformation struct {
 
 	// The platform type of the Cisco device.
 	// Read Only: true
-	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HXTriton UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// Product information of the offering under a contract.
@@ -554,7 +554,7 @@ var assetDeviceContractInformationTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HXTriton","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

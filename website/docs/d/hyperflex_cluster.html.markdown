@@ -13,6 +13,7 @@ of the cluster.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `capacity_runway`:(int)"The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.\nDefault value is math.MaxInt32 to indicate that the capacity runway is \"Unknown\" for a cluster that is not connected or with not sufficient data."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cluster_name`:(string)"The name of this HyperFlex cluster."
 * `cluster_type`:(int)"The storage type of this cluster (All Flash or Hybrid)."
 * `cluster_uuid`:(string)"The unique identifier for this HyperFlex cluster."

@@ -19,7 +19,8 @@ import (
 type SoftwarerepositoryHTTPServer struct {
 	SoftwarerepositoryFileServer
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// HTTP/HTTPS link to the image. Accepted formats are HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.

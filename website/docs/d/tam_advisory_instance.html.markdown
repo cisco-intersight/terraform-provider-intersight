@@ -12,6 +12,7 @@ Instance of an Intersight advisory applicable for an Intersight managed object. 
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `affected_object_moid`:(string)"Moid of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases."
 * `affected_object_type`:(string)"Object type of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `last_state_change_time`:(string)"Timestamp when a state change was observed on this advisory instnace."
 * `last_verified_time`:(string)"Timestamp when this advisory was last evaluated."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

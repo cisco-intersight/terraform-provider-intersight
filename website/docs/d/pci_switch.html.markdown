@@ -10,6 +10,7 @@ PCI Switch present in a server connected to two GPUs and one PCIe adapter.
 PCI Switch present in a server connected to two GPUs and one PCIe adapter.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_id`:(string)"It shows the device id of the switch."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."

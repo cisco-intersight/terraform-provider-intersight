@@ -36,7 +36,7 @@ func resourceHyperflexCapabilityInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -56,6 +56,12 @@ func resourceHyperflexCapabilityInfo() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"constraint_name": {
 							Description: "Name or key of the applicable compatibility constraint.",
@@ -77,6 +83,12 @@ func resourceHyperflexCapabilityInfo() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -116,7 +128,7 @@ func resourceHyperflexCapabilityInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -135,6 +147,12 @@ func resourceHyperflexCapabilityInfo() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -220,6 +238,12 @@ func resourceHyperflexCapabilityInfoCreate(d *schema.ResourceData, meta interfac
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["constraint_name"]; ok {
 					{
 						x := (v.(string))
@@ -242,6 +266,12 @@ func resourceHyperflexCapabilityInfoCreate(d *schema.ResourceData, meta interfac
 			}
 		}
 		o.CapabilityConstraints = x
+
+	}
+
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 
 	}
 
@@ -312,6 +342,12 @@ func resourceHyperflexCapabilityInfoCreate(d *schema.ResourceData, meta interfac
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {
@@ -390,6 +426,10 @@ func resourceHyperflexCapabilityInfoRead(d *schema.ResourceData, meta interface{
 	}
 
 	if err := d.Set("capability_constraints", flattenListHclConstraint(s.CapabilityConstraints, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -476,6 +516,12 @@ func resourceHyperflexCapabilityInfoUpdate(d *schema.ResourceData, meta interfac
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["constraint_name"]; ok {
 					{
 						x := (v.(string))
@@ -498,6 +544,12 @@ func resourceHyperflexCapabilityInfoUpdate(d *schema.ResourceData, meta interfac
 			}
 		}
 		o.CapabilityConstraints = x
+	}
+
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
 	}
 
 	if d.HasChange("moid") {
@@ -568,6 +620,12 @@ func resourceHyperflexCapabilityInfoUpdate(d *schema.ResourceData, meta interfac
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {

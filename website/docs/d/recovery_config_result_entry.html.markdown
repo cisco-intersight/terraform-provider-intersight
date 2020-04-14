@@ -10,6 +10,7 @@ An entry that describes the result of a Backup Profile state on the end device.
 An entry that describes the result of a Backup Profile state on the end device.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `completed_time`:(string)"The completed time of the task in installer."
 * `message`:(string)"Localized message based on the locale setting of the user's context."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

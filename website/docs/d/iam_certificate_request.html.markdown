@@ -12,6 +12,7 @@ The information required to generate a certificate signing request (CSR),
 which is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `email_address`:(string)"User input email address, an optional part of the subject of the certificate request."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"Name of the certificate request."

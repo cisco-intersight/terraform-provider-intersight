@@ -19,7 +19,7 @@ import (
 type StorageGenericArray struct {
 	EquipmentAbstractDevice
 
-	// Storage utilization of an array, it contains total capacity, available capacity, used capacity and free capacity.
+	// Storage utilization of an array. It contains total capacity, available capacity, and used capacity.
 	// Read Only: true
 	StorageUtilization *StorageCapacity `json:"StorageUtilization,omitempty"`
 }

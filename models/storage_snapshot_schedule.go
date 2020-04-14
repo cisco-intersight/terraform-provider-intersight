@@ -35,7 +35,7 @@ type StorageSnapshotSchedule struct {
 	ProtectionGroup *StorageProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 	// Duration to keep the snapshots on the source array.
-	// Once this period expires, system deletes the snapshot automatically from source array.
+	// Once this period expires, system deletes the snapshot automatically from the source array.
 	// Examples:
 	// P200D,  200 days.
 	// PT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.

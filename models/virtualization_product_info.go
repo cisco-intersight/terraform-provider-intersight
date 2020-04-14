@@ -103,13 +103,13 @@ func (m *VirtualizationProductInfo) UnmarshalBinary(b []byte) error {
 // swagger:model VirtualizationProductInfoAO1P1
 type VirtualizationProductInfoAO1P1 struct {
 
-	// Commercial product name, example, VMware ESXi.
+	// Commercial product name. For example, VMware ESXi.
 	ProductName string `json:"ProductName,omitempty"`
 
-	// Indication of product type by the vendor, example, embeddedEsx.
+	// Product name provided by the vendor. For example, embeddedEsx.
 	ProductType string `json:"ProductType,omitempty"`
 
-	// Commercial vendor name, example, VMware, Inc'.
+	// Commercial vendor name. For example, VMware Inc.
 	ProductVendor string `json:"ProductVendor,omitempty"`
 
 	// Hypervisor version running on the system.
@@ -124,13 +124,13 @@ func (m *VirtualizationProductInfoAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// Commercial product name, example, VMware ESXi.
+		// Commercial product name. For example, VMware ESXi.
 		ProductName string `json:"ProductName,omitempty"`
 
-		// Indication of product type by the vendor, example, embeddedEsx.
+		// Product name provided by the vendor. For example, embeddedEsx.
 		ProductType string `json:"ProductType,omitempty"`
 
-		// Commercial vendor name, example, VMware, Inc'.
+		// Commercial vendor name. For example, VMware Inc.
 		ProductVendor string `json:"ProductVendor,omitempty"`
 
 		// Hypervisor version running on the system.
@@ -177,13 +177,13 @@ func (m *VirtualizationProductInfoAO1P1) UnmarshalJSON(data []byte) error {
 func (m VirtualizationProductInfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// Commercial product name, example, VMware ESXi.
+		// Commercial product name. For example, VMware ESXi.
 		ProductName string `json:"ProductName,omitempty"`
 
-		// Indication of product type by the vendor, example, embeddedEsx.
+		// Product name provided by the vendor. For example, embeddedEsx.
 		ProductType string `json:"ProductType,omitempty"`
 
-		// Commercial vendor name, example, VMware, Inc'.
+		// Commercial vendor name. For example, VMware Inc.
 		ProductVendor string `json:"ProductVendor,omitempty"`
 
 		// Hypervisor version running on the system.

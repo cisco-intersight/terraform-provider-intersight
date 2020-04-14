@@ -115,7 +115,7 @@ type SnmpUserAO1P1 struct {
 	// Read Only: true
 	IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
-	// is privacy password set
+	// Indicates whether the value of the 'privacyPassword' property has been set.
 	// Read Only: true
 	IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 
@@ -153,7 +153,7 @@ func (m *SnmpUserAO1P1) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
-		// is privacy password set
+		// Indicates whether the value of the 'privacyPassword' property has been set.
 		// Read Only: true
 		IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 
@@ -231,7 +231,7 @@ func (m SnmpUserAO1P1) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		IsAuthPasswordSet *bool `json:"IsAuthPasswordSet,omitempty"`
 
-		// is privacy password set
+		// Indicates whether the value of the 'privacyPassword' property has been set.
 		// Read Only: true
 		IsPrivacyPasswordSet *bool `json:"IsPrivacyPasswordSet,omitempty"`
 

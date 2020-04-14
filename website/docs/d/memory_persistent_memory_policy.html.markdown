@@ -10,6 +10,7 @@ The Persistent Memory policy defines the reusable Persistent Memory related conf
 The Persistent Memory policy defines the reusable Persistent Memory related configuration that can be applied on many servers. This policy allows the application of Persistent Memory Goals and creation of Persistent Memory Regions and Namespaces. The encryption of the Persistent Memory Modules can be enabled through this policy by providing a passphrase.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"Description of the policy."
 * `management_mode`:(string)"Management Mode of the policy. This can be either Configured from Intersight or Configured from Operating System."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

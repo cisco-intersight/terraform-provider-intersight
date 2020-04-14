@@ -10,6 +10,7 @@ Physical Disk slots on the enclosure.
 Physical Disk slots on the enclosure.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
 * `drive_path`:(string)"This field identifies the zoning configuration applied to  this enclosure slot."

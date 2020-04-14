@@ -15,7 +15,7 @@ import (
 
 // StorageReplicationBlackout Storage:Replication Blackout
 //
-// Range of time during which to suspend replication. System disables replication during this interval.
+// The range of time during which replication will be suspended. System disables replication during this interval.
 //
 // swagger:model storageReplicationBlackout
 type StorageReplicationBlackout struct {

@@ -28,6 +28,12 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
@@ -50,6 +56,12 @@ func resourceVnicEthIf() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"eth_adapter_policy": {
 				Description: "Relationship to the the Ethernet Adapter Policy.",
 				Type:        schema.TypeList,
@@ -70,7 +82,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -100,7 +112,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -130,7 +142,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -160,7 +172,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -213,7 +225,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -244,7 +256,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -264,6 +276,12 @@ func resourceVnicEthIf() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": {
 							Description: "PCIe Slot where the VIC adapter is installed. Supported values are (1-15) and MLOM.",
@@ -302,6 +320,12 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -334,6 +358,12 @@ func resourceVnicEthIf() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"cos": {
 							Description: "Class of Service to be used for traffic on the usNIC.",
@@ -372,6 +402,12 @@ func resourceVnicEthIf() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"enabled": {
 							Description: "Enables VMQ feature on the virtual interface.",
@@ -412,6 +448,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -435,6 +477,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 		x := p
 		o.Cdn = &x
+
+	}
+
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 
 	}
 
@@ -665,6 +713,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["id"]; ok {
 				{
 					x := (v.(string))
@@ -715,6 +769,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -753,6 +813,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					if err == nil && x1 != nil {
 						o.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["cos"]; ok {
@@ -800,6 +866,12 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					if err == nil && x1 != nil {
 						o.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["enabled"]; ok {
@@ -863,6 +935,10 @@ func resourceVnicEthIfRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err := d.Set("cdn", flattenMapVnicCdn(s.Cdn, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -947,6 +1023,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -970,6 +1052,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 		}
 		x := p
 		o.Cdn = &x
+	}
+
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
 	}
 
 	if d.HasChange("eth_adapter_policy") {
@@ -1200,6 +1288,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["id"]; ok {
 				{
 					x := (v.(string))
@@ -1250,6 +1344,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1288,6 +1388,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					if err == nil && x1 != nil {
 						o.VnicUsnicSettingsAO1P1.VnicUsnicSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["cos"]; ok {
@@ -1335,6 +1441,12 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					if err == nil && x1 != nil {
 						o.VnicVmqSettingsAO1P1.VnicVmqSettingsAO1P1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["enabled"]; ok {

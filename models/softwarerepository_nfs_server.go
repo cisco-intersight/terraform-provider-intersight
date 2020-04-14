@@ -19,6 +19,9 @@ import (
 type SoftwarerepositoryNfsServer struct {
 	SoftwarerepositoryFileServer
 
+	// The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile.
+	FileLocation string `json:"FileLocation,omitempty"`
+
 	// For NFS, leave the field blank or enter one or more comma seperated options from the following.For Example, " " , " ro " , " ro , rw " .
 	// * ro.
 	// * rw.
@@ -32,12 +35,15 @@ type SoftwarerepositoryNfsServer struct {
 	MountOptions string `json:"MountOptions,omitempty"`
 
 	// Filename of the image in the NFS server. For example:ucs-c220m5-huu-3.1.2c.iso.
+	// Read Only: true
 	RemoteFile string `json:"RemoteFile,omitempty"`
 
 	// Hostname or IP Address of the NFS server.
+	// Read Only: true
 	RemoteIP string `json:"RemoteIp,omitempty"`
 
 	// Remote directory where the image is present. For example:/share/subfolder.
+	// Read Only: true
 	RemoteShare string `json:"RemoteShare,omitempty"`
 }
 
@@ -52,6 +58,8 @@ func (m *SoftwarerepositoryNfsServer) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		FileLocation string `json:"FileLocation,omitempty"`
+
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		RemoteFile string `json:"RemoteFile,omitempty"`
@@ -63,6 +71,8 @@ func (m *SoftwarerepositoryNfsServer) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.FileLocation = dataAO1.FileLocation
 
 	m.MountOptions = dataAO1.MountOptions
 
@@ -85,6 +95,8 @@ func (m SoftwarerepositoryNfsServer) MarshalJSON() ([]byte, error) {
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		FileLocation string `json:"FileLocation,omitempty"`
+
 		MountOptions string `json:"MountOptions,omitempty"`
 
 		RemoteFile string `json:"RemoteFile,omitempty"`
@@ -93,6 +105,8 @@ func (m SoftwarerepositoryNfsServer) MarshalJSON() ([]byte, error) {
 
 		RemoteShare string `json:"RemoteShare,omitempty"`
 	}
+
+	dataAO1.FileLocation = m.FileLocation
 
 	dataAO1.MountOptions = m.MountOptions
 

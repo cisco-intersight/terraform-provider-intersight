@@ -27,7 +27,8 @@ type ApplianceDiagSetting struct {
 	// DiagSetting managed object to Account relationship.
 	Account *IamAccountRef `json:"Account,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Status message of the password change operation.

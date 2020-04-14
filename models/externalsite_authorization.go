@@ -26,10 +26,12 @@ type ExternalsiteAuthorization struct {
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// is user Id set
+	// Indicates whether the value of the 'userId' property has been set.
+	// Read Only: true
 	IsUserIDSet *bool `json:"IsUserIdSet,omitempty"`
 
 	// The password of the given username to download the image from external repository like cisco.com.

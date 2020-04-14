@@ -23,6 +23,7 @@ This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `body`:(string)"The optional request body that is sent as part of this API request.\nThe request body can contain a golang template that can be populated with task input\nparameters and previous API output parameters."
+  + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
   + `content_type`:(string)"Intersight Orchestrator, with the support of response parser specification,\ncan extract the values from API responses and map them to task output parameters.\nThe value extraction is supported for response content types XML and JSON.\nThe type of the content that gets passed as payload and response in this\nAPI."
   + `name`:(string)"A reference name for this API request within the batch API request.\nThis name shall be used to map the API output parameters to subsequent\nAPI input parameters within a batch API task."
   + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
@@ -31,11 +32,13 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
     + `error_parameters`:(Array)"The list of parameter definitions, if found in a given API/device response,\nmakes the content handlers to treat the response as error response.\nThis is optional parameter."
 This complex property has following sub-properties:
     + `accept_single_value`:(bool)"The flag that allows single values in content to be extracted as a\nsingle element collection in case the parameter is of Collection type.\nThis flag is applicable for parameters of type Collection only."
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
     + `complex_type`:(string)"The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property."
     + `item_type`:(string)"The type of the collection item in case this is a collection parameter."
     + `name`:(string)"The name of the parameter."
@@ -48,6 +51,7 @@ This complex property has following sub-properties:
     + `accept_single_value`:(bool)"The flag that allows single values in content to be extracted as a\nsingle element collection in case the parameter is of Collection type.\nThis flag is applicable for parameters of type Collection only."
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
     + `complex_type`:(string)"The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property."
     + `item_type`:(string)"The type of the collection item in case this is a collection parameter."
     + `name`:(string)"The name of the parameter."
@@ -58,6 +62,7 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
     + `name`:(string)"The unique name of this complex type within the grammar specification."
     + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
     + `parameters`:(Array)"The collection of parameters that are part of this complex type."
@@ -65,6 +70,7 @@ This complex property has following sub-properties:
     + `accept_single_value`:(bool)"The flag that allows single values in content to be extracted as a\nsingle element collection in case the parameter is of Collection type.\nThis flag is applicable for parameters of type Collection only."
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+    + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
     + `complex_type`:(string)"The name of the complex type definition in case this is a complex\nparameter. The content.Grammar object must have a complex type, content.ComplexType,\ndefined with the specified name in types collection property."
     + `item_type`:(string)"The type of the collection item in case this is a collection parameter."
     + `name`:(string)"The name of the parameter."
@@ -73,10 +79,12 @@ This complex property has following sub-properties:
     + `type`:(string)"The type of the parameter. Accepted values are simple, complex,\ncollection."
   + `skip_on_condition`:(string)"The skip expression, if provided, allows the batch API executor to skip the\napi execution when the given expression evaluates to true.\nThe expression is given as such a golang template that has to be\nevaluated to a final content true/false. The expression is an optional and in\ncase not provided, the API will always be executed."
   + `timeout`:(int)"The duration in seconds by which the API response is expected from the API target.\nIf the end point does not respond for the API request within this timeout\nduration, the task will be marked as failed."
+* `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `constraints`:(Array with Maximum of one item) -"Enter the constraints on when this task should match against the task definition."
 This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
   + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
   + `target_data_type`:"List of property constraints that helps to narrow down task implementations based on target device input."
 * `description`:(string)"A detailed description about the batch APIs."
@@ -89,12 +97,13 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
-  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
+  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
 * `skip_on_condition`:(string)"The skip expression, if provided, allows the batch API executor to skip the\ntask execution when the given expression evaluates to true.\nThe expression is given as such a golang template that has to be\nevaluated to a final content true/false. The expression is an optional and in\ncase not provided, the API will always be executed."
 * `tags`:(Array)"The array of tags, which allow to add key, value meta-data to managed objects."
 This complex property has following sub-properties:
   + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
+  + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
   + `key`:(string)"The string representation of a tag key."
   + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
   + `value`:(string)"The string representation of a tag value."
@@ -102,4 +111,4 @@ This complex property has following sub-properties:
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
-  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
+  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."

@@ -15,6 +15,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceAssetDeviceContractInformationRead,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"contract": {
 				Description: "Contract information for the Cisco support contract purchased for the Cisco device.",
 				Type:        schema.TypeList,
@@ -55,6 +61,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 									},
 									"city": {
 										Description: "City in which the address resides. example \"San Jose\".",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
@@ -111,6 +123,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"id": {
 										Description: "ID of the user in BillToGlobal.",
 										Type:        schema.TypeString,
@@ -131,6 +149,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 									},
 								},
 							},
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"contract_number": {
 							Description: "Contract number for the Cisco support contract purchased for the Cisco device.",
@@ -221,6 +245,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 										Optional:    true,
 										Computed:    true,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"country": {
 										Description: "Country in which the address resides. example \"US\".",
 										Type:        schema.TypeString,
@@ -260,6 +290,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 								},
 							},
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"id": {
 							Description: "Unique identifier for an end customer. This identifier is allocated by Cisco.",
 							Type:        schema.TypeString,
@@ -293,6 +329,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": {
 							Description: "ID of the user in BillToGlobal.",
@@ -371,7 +413,7 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -429,6 +471,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 										Optional:    true,
 										Computed:    true,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
 									"country": {
 										Description: "Country in which the address resides. example \"US\".",
 										Type:        schema.TypeString,
@@ -467,6 +515,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 									},
 								},
 							},
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": {
 							Description: "Short description of the Cisco product that helps identify the product easily. example \"DISTI:UCS 6248UP 1RU Fabric Int/No PSU/32 UP/ 12p LIC\".",
@@ -525,6 +579,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 									},
 									"city": {
 										Description: "City in which the address resides. example \"San Jose\".",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
@@ -604,7 +664,7 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -624,6 +684,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": {
 							Description: "ID of the user in BillToGlobal.",
@@ -698,6 +764,12 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -740,6 +812,10 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 
 	url := "asset/DeviceContractInformations"
 	var o models.AssetDeviceContractInformation
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+	}
 	if v, ok := d.GetOk("contract_status"); ok {
 		x := (v.(string))
 		o.ContractStatus = x
@@ -845,6 +921,9 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 			var s models.AssetDeviceContractInformation
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = s.UnmarshalJSON(oo); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
 

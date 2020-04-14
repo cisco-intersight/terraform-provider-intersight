@@ -10,6 +10,7 @@ A policy capturing software versions for different HyperFlex Cluster compatible 
 A policy capturing software versions for different HyperFlex Cluster compatible components ( like HyperFlex Data Platform, Hypervisor, etc. ), that the user wishes to apply on the HyperFlex cluster.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"Description of the policy."
 * `hxdp_version`:(string)"Desired HyperFlex Data Platform software version to apply on the HyperFlex cluster."
 * `hypervisor_version`:(string)"Desired  hypervisor version to apply for all the nodes on the HyperFlex cluster."

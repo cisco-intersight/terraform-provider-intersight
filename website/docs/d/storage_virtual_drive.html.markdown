@@ -15,6 +15,7 @@ The following arguments can be used to get data of already created objects in In
 * `available_size`:(string)
 * `block_size`:(string)
 * `bootable`:(string)
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `config_state`:(string)
 * `configured_write_cache_policy`:(string)
 * `connection_protocol`:(string)

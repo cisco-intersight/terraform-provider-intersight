@@ -112,7 +112,7 @@ type VirtualizationVMCPUShareInfoAO1P1 struct {
 	// Guaranteed minimum allocation of CPU resource (MHz).
 	CPUReservation int64 `json:"CpuReservation,omitempty"`
 
-	// Good description found in VMware docs. Basically, indicates the relative importance of a vm. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+	// Shows the relative importance of a VM. There is no unit for this value. It is a relative measure based on the settings for other resource pools. For more information, see VMware documentation.
 	CPUShares int64 `json:"CpuShares,omitempty"`
 
 	// virtualization VM CPU share info a o1 p1
@@ -133,7 +133,7 @@ func (m *VirtualizationVMCPUShareInfoAO1P1) UnmarshalJSON(data []byte) error {
 		// Guaranteed minimum allocation of CPU resource (MHz).
 		CPUReservation int64 `json:"CpuReservation,omitempty"`
 
-		// Good description found in VMware docs. Basically, indicates the relative importance of a vm. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+		// Shows the relative importance of a VM. There is no unit for this value. It is a relative measure based on the settings for other resource pools. For more information, see VMware documentation.
 		CPUShares int64 `json:"CpuShares,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -186,7 +186,7 @@ func (m VirtualizationVMCPUShareInfoAO1P1) MarshalJSON() ([]byte, error) {
 		// Guaranteed minimum allocation of CPU resource (MHz).
 		CPUReservation int64 `json:"CpuReservation,omitempty"`
 
-		// Good description found in VMware docs. Basically, indicates the relative importance of a vm. There is no unit for this value. It is a relative measure based on the settings for other resource pools.
+		// Shows the relative importance of a VM. There is no unit for this value. It is a relative measure based on the settings for other resource pools. For more information, see VMware documentation.
 		CPUShares int64 `json:"CpuShares,omitempty"`
 	}
 

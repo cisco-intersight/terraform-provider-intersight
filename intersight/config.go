@@ -307,6 +307,8 @@ func sanitizeJson(in []byte) ([]byte, error) {
 
 	readOnlyProps := []string{
 		"Ancestors",
+		"ClaimedTime",
+		"ConnectionStatusLastChangeTime",
 		"CreateTime",
 		"ModTime",
 		"ReleaseTime",

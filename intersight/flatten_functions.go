@@ -25,6 +25,7 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		adapteradapterconfig["class_id"] = item.ClassID
 		adapteradapterconfig["dce_interface_settings"] = (func(p []*models.AdapterDceInterfaceSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterdceinterfacesettingss []map[string]interface{}
 			if p == nil {
@@ -42,6 +43,7 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				adapterdceinterfacesettings["class_id"] = item.ClassID
 				adapterdceinterfacesettings["fec_mode"] = item.FecMode
 				adapterdceinterfacesettings["interface_id"] = item.InterfaceID
 				adapterdceinterfacesettings["object_type"] = item.ObjectType
@@ -65,6 +67,7 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			adapterethsettings["class_id"] = item.ClassID
 			adapterethsettings["lldp_enabled"] = item.LldpEnabled
 			adapterethsettings["object_type"] = item.ObjectType
 
@@ -87,6 +90,7 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			adapterfcsettings["class_id"] = item.ClassID
 			adapterfcsettings["fip_enabled"] = item.FipEnabled
 			adapterfcsettings["object_type"] = item.ObjectType
 
@@ -110,6 +114,7 @@ func flattenListAdapterAdapterConfig(p []*models.AdapterAdapterConfig, d *schema
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			adapterportchannelsettings["class_id"] = item.ClassID
 			adapterportchannelsettings["enabled"] = item.Enabled
 			adapterportchannelsettings["object_type"] = item.ObjectType
 
@@ -228,6 +233,7 @@ func flattenListApplianceKeyValuePair(p []*models.ApplianceKeyValuePair, d *sche
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		appliancekeyvaluepair["class_id"] = item.ClassID
 		appliancekeyvaluepair["key"] = item.Key
 		appliancekeyvaluepair["object_type"] = item.ObjectType
 		appliancekeyvaluepair["value"] = item.Value
@@ -282,6 +288,7 @@ func flattenListBootDeviceBase(p []*models.BootDeviceBase, d *schema.ResourceDat
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		bootdevicebase["class_id"] = item.ClassID
 		bootdevicebase["enabled"] = item.Enabled
 		bootdevicebase["name"] = item.Name
 		bootdevicebase["object_type"] = item.ObjectType
@@ -323,6 +330,7 @@ func flattenListComputeIPAddress(p []*models.ComputeIPAddress, d *schema.Resourc
 		}
 		computeipaddress["address"] = item.Address
 		computeipaddress["category"] = item.Category
+		computeipaddress["class_id"] = item.ClassID
 		computeipaddress["default_gateway"] = item.DefaultGateway
 		computeipaddress["dn"] = item.Dn
 		computeipaddress["http_port"] = item.HTTPPort
@@ -608,6 +616,7 @@ func flattenListHclConstraint(p []*models.HclConstraint, d *schema.ResourceData)
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hclconstraint["class_id"] = item.ClassID
 		hclconstraint["constraint_name"] = item.ConstraintName
 		hclconstraint["constraint_value"] = item.ConstraintValue
 		hclconstraint["object_type"] = item.ObjectType
@@ -722,6 +731,7 @@ func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntr
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexfeaturelimitentry["class_id"] = item.ClassID
 		hyperflexfeaturelimitentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
 			if p == nil {
@@ -738,6 +748,7 @@ func flattenListHyperflexFeatureLimitEntry(p []*models.HyperflexFeatureLimitEntr
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			hyperflexappsettingconstraint["class_id"] = item.ClassID
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
 			hyperflexappsettingconstraint["mgmt_platform"] = item.MgmtPlatform
@@ -771,6 +782,7 @@ func flattenListHyperflexHxZoneResiliencyInfoDt(p []*models.HyperflexHxZoneResil
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexhxzoneresiliencyinfodt["class_id"] = item.ClassID
 		hyperflexhxzoneresiliencyinfodt["name"] = item.Name
 		hyperflexhxzoneresiliencyinfodt["object_type"] = item.ObjectType
 		hyperflexhxzoneresiliencyinfodt["resiliency_info"] = (func(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
@@ -789,6 +801,7 @@ func flattenListHyperflexHxZoneResiliencyInfoDt(p []*models.HyperflexHxZoneResil
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			hyperflexhxresiliencyinfodt["class_id"] = item.ClassID
 			hyperflexhxresiliencyinfodt["data_replication_factor"] = item.DataReplicationFactor
 			hyperflexhxresiliencyinfodt["hdd_failures_tolerable"] = item.HddFailuresTolerable
 			hyperflexhxresiliencyinfodt["messages"] = item.Messages
@@ -837,6 +850,7 @@ func flattenListHyperflexNamedVlan(p []*models.HyperflexNamedVlan, d *schema.Res
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexnamedvlan["class_id"] = item.ClassID
 		hyperflexnamedvlan["name"] = item.Name
 		hyperflexnamedvlan["object_type"] = item.ObjectType
 		hyperflexnamedvlan["vlan_id"] = item.VlanID
@@ -891,6 +905,7 @@ func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerF
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexserverfirmwareversionentry["class_id"] = item.ClassID
 		hyperflexserverfirmwareversionentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
 			if p == nil {
@@ -907,6 +922,7 @@ func flattenListHyperflexServerFirmwareVersionEntry(p []*models.HyperflexServerF
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			hyperflexappsettingconstraint["class_id"] = item.ClassID
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
 			hyperflexappsettingconstraint["mgmt_platform"] = item.MgmtPlatform
@@ -941,6 +957,7 @@ func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry,
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexservermodelentry["class_id"] = item.ClassID
 		hyperflexservermodelentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
 			if p == nil {
@@ -957,6 +974,7 @@ func flattenListHyperflexServerModelEntry(p []*models.HyperflexServerModelEntry,
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			hyperflexappsettingconstraint["class_id"] = item.ClassID
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
 			hyperflexappsettingconstraint["mgmt_platform"] = item.MgmtPlatform
@@ -1020,6 +1038,7 @@ func flattenListIaasLicenseKeysInfo(p []*models.IaasLicenseKeysInfo, d *schema.R
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		iaaslicensekeysinfo["class_id"] = item.ClassID
 		iaaslicensekeysinfo["count"] = item.Count
 		iaaslicensekeysinfo["expiration_date"] = item.ExpirationDate
 		iaaslicensekeysinfo["license_id"] = item.LicenseID
@@ -1047,6 +1066,7 @@ func flattenListIaasLicenseUtilizationInfo(p []*models.IaasLicenseUtilizationInf
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		iaaslicenseutilizationinfo["class_id"] = item.ClassID
 		iaaslicenseutilizationinfo["label"] = item.Label
 		iaaslicenseutilizationinfo["licensed_limit"] = item.LicensedLimit
 		iaaslicenseutilizationinfo["object_type"] = item.ObjectType
@@ -1090,6 +1110,7 @@ func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *sche
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		iamaccountpermissions["class_id"] = item.ClassID
 		iamaccountpermissions["object_type"] = item.ObjectType
 		iamaccountpermissions["permissions"] = (func(p []*models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
 			var iampermissionreferences []map[string]interface{}
@@ -1108,6 +1129,7 @@ func flattenListIamAccountPermissions(p []*models.IamAccountPermissions, d *sche
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				iampermissionreference["class_id"] = item.ClassID
 				iampermissionreference["object_type"] = item.ObjectType
 				iampermissionreference["permission_identifier"] = item.PermissionIdentifier
 				iampermissionreference["permission_name"] = item.PermissionName
@@ -1226,6 +1248,7 @@ func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles,
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		iamgrouppermissiontoroles["class_id"] = item.ClassID
 		iamgrouppermissiontoroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
 			if p == nil {
@@ -1242,6 +1265,7 @@ func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles,
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			cmrfcmrf["class_id"] = item.ClassID
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
 
@@ -1266,6 +1290,7 @@ func flattenListIamGroupPermissionToRoles(p []*models.IamGroupPermissionToRoles,
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				cmrfcmrf["class_id"] = item.ClassID
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
@@ -1383,6 +1408,7 @@ func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		iampermissiontoroles["class_id"] = item.ClassID
 		iampermissiontoroles["object_type"] = item.ObjectType
 		iampermissiontoroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
@@ -1400,6 +1426,7 @@ func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			cmrfcmrf["class_id"] = item.ClassID
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
 
@@ -1423,6 +1450,7 @@ func flattenListIamPermissionToRoles(p []*models.IamPermissionToRoles, d *schema
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				cmrfcmrf["class_id"] = item.ClassID
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
@@ -1675,6 +1703,7 @@ func flattenListMemoryPersistentMemoryGoal(p []*models.MemoryPersistentMemoryGoa
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		memorypersistentmemorygoal["class_id"] = item.ClassID
 		memorypersistentmemorygoal["memory_mode_percentage"] = item.MemoryModePercentage
 		memorypersistentmemorygoal["object_type"] = item.ObjectType
 		memorypersistentmemorygoal["persistent_memory_type"] = item.PersistentMemoryType
@@ -1701,6 +1730,7 @@ func flattenListMemoryPersistentMemoryLogicalNamespace(p []*models.MemoryPersist
 			}
 		}
 		memorypersistentmemorylogicalnamespace["capacity"] = item.Capacity
+		memorypersistentmemorylogicalnamespace["class_id"] = item.ClassID
 		memorypersistentmemorylogicalnamespace["mode"] = item.Mode
 		memorypersistentmemorylogicalnamespace["name"] = item.Name
 		memorypersistentmemorylogicalnamespace["object_type"] = item.ObjectType
@@ -1802,6 +1832,7 @@ func flattenListMetaAccessPrivilege(p []*models.MetaAccessPrivilege, d *schema.R
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		metaaccessprivilege["class_id"] = item.ClassID
 		metaaccessprivilege["method"] = item.Method
 		metaaccessprivilege["object_type"] = item.ObjectType
 		metaaccessprivilege["privilege"] = item.Privilege
@@ -1827,6 +1858,7 @@ func flattenListMetaPropDefinition(p []*models.MetaPropDefinition, d *schema.Res
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		metapropdefinition["class_id"] = item.ClassID
 		metapropdefinition["name"] = item.Name
 		metapropdefinition["object_type"] = item.ObjectType
 		metapropdefinition["op_security"] = item.OpSecurity
@@ -1853,6 +1885,7 @@ func flattenListMetaRelationshipDefinition(p []*models.MetaRelationshipDefinitio
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		metarelationshipdefinition["class_id"] = item.ClassID
 		metarelationshipdefinition["collection"] = item.Collection
 		metarelationshipdefinition["name"] = item.Name
 		metarelationshipdefinition["object_type"] = item.ObjectType
@@ -1893,6 +1926,7 @@ func flattenListMoTag(p []*models.MoTag, d *schema.ResourceData) []map[string]in
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		motag["class_id"] = item.ClassID
 		motag["key"] = item.Key
 		motag["object_type"] = item.ObjectType
 		motag["value"] = item.Value
@@ -1933,6 +1967,7 @@ func flattenListNiaapiDetail(p []*models.NiaapiDetail, d *schema.ResourceData) [
 			}
 		}
 		niaapidetail["chksum"] = item.Chksum
+		niaapidetail["class_id"] = item.ClassID
 		niaapidetail["filename"] = item.Filename
 		niaapidetail["name"] = item.Name
 		niaapidetail["object_type"] = item.ObjectType
@@ -1957,6 +1992,7 @@ func flattenListNiaapiRevisionInfo(p []*models.NiaapiRevisionInfo, d *schema.Res
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		niaapirevisioninfo["class_id"] = item.ClassID
 		niaapirevisioninfo["date_published"] = item.DatePublished
 		niaapirevisioninfo["object_type"] = item.ObjectType
 		niaapirevisioninfo["revision_comment"] = item.RevisionComment
@@ -1982,6 +2018,7 @@ func flattenListOnpremImagePackage(p []*models.OnpremImagePackage, d *schema.Res
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		onpremimagepackage["class_id"] = item.ClassID
 		onpremimagepackage["file_path"] = item.FilePath
 		onpremimagepackage["file_sha"] = item.FileSha
 		onpremimagepackage["file_size"] = item.FileSize
@@ -2012,6 +2049,7 @@ func flattenListOnpremUpgradeNote(p []*models.OnpremUpgradeNote, d *schema.Resou
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		onpremupgradenote["class_id"] = item.ClassID
 		onpremupgradenote["message"] = item.Message
 		onpremupgradenote["object_type"] = item.ObjectType
 		onpremupgradenotes = append(onpremupgradenotes, onpremupgradenote)
@@ -2035,8 +2073,14 @@ func flattenListOnpremUpgradePhase(p []*models.OnpremUpgradePhase, d *schema.Res
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		onpremupgradephase["class_id"] = item.ClassID
+		onpremupgradephase["elapsed_time"] = item.ElapsedTime
+		onpremupgradephase["end_time"] = item.EndTime
+		onpremupgradephase["failed"] = item.Failed
+		onpremupgradephase["message"] = item.Message
 		onpremupgradephase["name"] = item.Name
 		onpremupgradephase["object_type"] = item.ObjectType
+		onpremupgradephase["start_time"] = item.StartTime
 		onpremupgradephases = append(onpremupgradephases, onpremupgradephase)
 	}
 	return onpremupgradephases
@@ -2088,6 +2132,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		osplaceholder["class_id"] = item.ClassID
 		osplaceholder["is_value_set"] = item.IsValueSet
 		osplaceholder["object_type"] = item.ObjectType
 		osplaceholder["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
@@ -2106,6 +2151,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			workflowprimitivedatatype["class_id"] = item.ClassID
 			workflowprimitivedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
 				if p == nil {
@@ -2122,6 +2168,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				workflowdefaultvalue["class_id"] = item.ClassID
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
 				workflowdefaultvalue["value"] = item.Value
@@ -2149,6 +2196,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				workflowprimitivedataproperty["class_id"] = item.ClassID
 				workflowprimitivedataproperty["constraints"] = (func(p *models.WorkflowConstraints, d *schema.ResourceData) []map[string]interface{} {
 					var workflowconstraintss []map[string]interface{}
 					if p == nil {
@@ -2165,6 +2213,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 							log.Printf("Error occured while flattening and json parsing: %s", err)
 						}
 					}
+					workflowconstraints["class_id"] = item.ClassID
 					workflowconstraints["enum_list"] = (func(p []*models.WorkflowEnumEntry, d *schema.ResourceData) []map[string]interface{} {
 						var workflowenumentrys []map[string]interface{}
 						if p == nil {
@@ -2182,6 +2231,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 									log.Printf("Error occured while flattening and json parsing: %s", err)
 								}
 							}
+							workflowenumentry["class_id"] = item.ClassID
 							workflowenumentry["label"] = item.Label
 							workflowenumentry["object_type"] = item.ObjectType
 							workflowenumentry["value"] = item.Value
@@ -2214,6 +2264,7 @@ func flattenListOsPlaceHolder(p []*models.OsPlaceHolder, d *schema.ResourceData)
 								log.Printf("Error occured while flattening and json parsing: %s", err)
 							}
 						}
+						workflowmoreferenceproperty["class_id"] = item.ClassID
 						workflowmoreferenceproperty["display_attributes"] = item.DisplayAttributes
 						workflowmoreferenceproperty["object_type"] = item.ObjectType
 						workflowmoreferenceproperty["selector"] = item.Selector
@@ -2346,6 +2397,7 @@ func flattenListPolicyinventoryJobInfo(p []*models.PolicyinventoryJobInfo, d *sc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		policyinventoryjobinfo["class_id"] = item.ClassID
 		policyinventoryjobinfo["execution_status"] = item.ExecutionStatus
 		policyinventoryjobinfo["last_scheduled_time"] = item.LastScheduledTime
 		policyinventoryjobinfo["object_type"] = item.ObjectType
@@ -2477,6 +2529,7 @@ func flattenListResourcePerTypeCombinedSelector(p []*models.ResourcePerTypeCombi
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		resourcepertypecombinedselector["class_id"] = item.ClassID
 		resourcepertypecombinedselector["combined_selector"] = item.CombinedSelector
 		resourcepertypecombinedselector["empty_filter"] = item.EmptyFilter
 		resourcepertypecombinedselector["object_type"] = item.ObjectType
@@ -2502,6 +2555,7 @@ func flattenListResourceSelector(p []*models.ResourceSelector, d *schema.Resourc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		resourceselector["class_id"] = item.ClassID
 		resourceselector["object_type"] = item.ObjectType
 		resourceselector["selector"] = item.Selector
 		resourceselectors = append(resourceselectors, resourceselector)
@@ -2525,6 +2579,7 @@ func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceD
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		sdcardpartition["class_id"] = item.ClassID
 		sdcardpartition["object_type"] = item.ObjectType
 		sdcardpartition["type"] = item.Type
 		sdcardpartition["virtual_drives"] = (func(p []*models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
@@ -2544,6 +2599,7 @@ func flattenListSdcardPartition(p []*models.SdcardPartition, d *schema.ResourceD
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				sdcardvirtualdrive["class_id"] = item.ClassID
 				sdcardvirtualdrive["enable"] = item.Enable
 				sdcardvirtualdrive["object_type"] = item.ObjectType
 				sdcardvirtualdrives = append(sdcardvirtualdrives, sdcardvirtualdrive)
@@ -2571,6 +2627,7 @@ func flattenListSdwanNetworkConfigurationType(p []*models.SdwanNetworkConfigurat
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		sdwannetworkconfigurationtype["class_id"] = item.ClassID
 		sdwannetworkconfigurationtype["network_type"] = item.NetworkType
 		sdwannetworkconfigurationtype["object_type"] = item.ObjectType
 		sdwannetworkconfigurationtype["port_group"] = item.PortGroup
@@ -2626,6 +2683,7 @@ func flattenListSdwanTemplateInputsType(p []*models.SdwanTemplateInputsType, d *
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		sdwantemplateinputstype["class_id"] = item.ClassID
 		sdwantemplateinputstype["editable"] = item.Editable
 		sdwantemplateinputstype["key"] = item.Key
 		sdwantemplateinputstype["object_type"] = item.ObjectType
@@ -2700,6 +2758,7 @@ func flattenListSnmpTrap(p []*models.SnmpTrap, d *schema.ResourceData) []map[str
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		snmptrap["class_id"] = item.ClassID
 		snmptrap["destination"] = item.Destination
 		snmptrap["enabled"] = item.Enabled
 		snmptrap["object_type"] = item.ObjectType
@@ -2732,6 +2791,7 @@ func flattenListSnmpUser(p []*models.SnmpUser, d *schema.ResourceData) []map[str
 		auth_password_y := auth_password_x[0].(map[string]interface{})
 		snmpuser["auth_password"] = auth_password_y["auth_password"]
 		snmpuser["auth_type"] = item.AuthType
+		snmpuser["class_id"] = item.ClassID
 		snmpuser["is_auth_password_set"] = item.IsAuthPasswordSet
 		snmpuser["is_privacy_password_set"] = item.IsPrivacyPasswordSet
 		snmpuser["name"] = item.Name
@@ -2942,6 +3002,7 @@ func flattenListStorageInitiator(p []*models.StorageInitiator, d *schema.Resourc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		storageinitiator["class_id"] = item.ClassID
 		storageinitiator["iqn"] = item.Iqn
 		storageinitiator["name"] = item.Name
 		storageinitiator["object_type"] = item.ObjectType
@@ -2968,6 +3029,7 @@ func flattenListStorageLocalDisk(p []*models.StorageLocalDisk, d *schema.Resourc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		storagelocaldisk["class_id"] = item.ClassID
 		storagelocaldisk["object_type"] = item.ObjectType
 		storagelocaldisk["slot_number"] = item.SlotNumber
 		storagelocaldisks = append(storagelocaldisks, storagelocaldisk)
@@ -3066,6 +3128,7 @@ func flattenListStoragePureReplicationBlackout(p []*models.StoragePureReplicatio
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		storagepurereplicationblackout["class_id"] = item.ClassID
 		storagepurereplicationblackout["object_type"] = item.ObjectType
 		storagepurereplicationblackouts = append(storagepurereplicationblackouts, storagepurereplicationblackout)
 	}
@@ -3133,6 +3196,7 @@ func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.Resourc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		storagespangroup["class_id"] = item.ClassID
 		storagespangroup["disks"] = (func(p []*models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
 			var storagelocaldisks []map[string]interface{}
 			if p == nil {
@@ -3150,6 +3214,7 @@ func flattenListStorageSpanGroup(p []*models.StorageSpanGroup, d *schema.Resourc
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				storagelocaldisk["class_id"] = item.ClassID
 				storagelocaldisk["object_type"] = item.ObjectType
 				storagelocaldisk["slot_number"] = item.SlotNumber
 				storagelocaldisks = append(storagelocaldisks, storagelocaldisk)
@@ -3210,6 +3275,7 @@ func flattenListStorageVirtualDriveConfig(p []*models.StorageVirtualDriveConfig,
 			}
 		}
 		storagevirtualdriveconfig["boot_drive"] = item.BootDrive
+		storagevirtualdriveconfig["class_id"] = item.ClassID
 		storagevirtualdriveconfig["disk_group_name"] = item.DiskGroupName
 		storagevirtualdriveconfig["disk_group_policy"] = item.DiskGroupPolicy
 		storagevirtualdriveconfig["drive_cache"] = item.DriveCache
@@ -3271,6 +3337,7 @@ func flattenListSyslogLocalClientBase(p []*models.SyslogLocalClientBase, d *sche
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		sysloglocalclientbase["class_id"] = item.ClassID
 		sysloglocalclientbase["min_severity"] = item.MinSeverity
 		sysloglocalclientbase["object_type"] = item.ObjectType
 		sysloglocalclientbases = append(sysloglocalclientbases, sysloglocalclientbase)
@@ -3294,6 +3361,7 @@ func flattenListSyslogRemoteClientBase(p []*models.SyslogRemoteClientBase, d *sc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		syslogremoteclientbase["class_id"] = item.ClassID
 		syslogremoteclientbase["enabled"] = item.Enabled
 		syslogremoteclientbase["hostname"] = item.Hostname
 		syslogremoteclientbase["min_severity"] = item.MinSeverity
@@ -3323,6 +3391,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 		}
 		tamaction["affected_object_type"] = item.AffectedObjectType
 		tamaction["alert_type"] = item.AlertType
+		tamaction["class_id"] = item.ClassID
 		tamaction["identifiers"] = (func(p []*models.TamIdentifiers, d *schema.ResourceData) []map[string]interface{} {
 			var tamidentifierss []map[string]interface{}
 			if p == nil {
@@ -3340,6 +3409,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				tamidentifiers["class_id"] = item.ClassID
 				tamidentifiers["name"] = item.Name
 				tamidentifiers["object_type"] = item.ObjectType
 				tamidentifiers["value"] = item.Value
@@ -3367,6 +3437,7 @@ func flattenListTamAction(p []*models.TamAction, d *schema.ResourceData) []map[s
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				tamqueryentry["class_id"] = item.ClassID
 				tamqueryentry["name"] = item.Name
 				tamqueryentry["object_type"] = item.ObjectType
 				tamqueryentry["priority"] = item.Priority
@@ -3397,6 +3468,7 @@ func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.Resourc
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		tamapidatasource["class_id"] = item.ClassID
 		tamapidatasource["mo_type"] = item.MoType
 		tamapidatasource["name"] = item.Name
 		tamapidatasource["object_type"] = item.ObjectType
@@ -3417,6 +3489,7 @@ func flattenListTamAPIDataSource(p []*models.TamAPIDataSource, d *schema.Resourc
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				tamqueryentry["class_id"] = item.ClassID
 				tamqueryentry["name"] = item.Name
 				tamqueryentry["object_type"] = item.ObjectType
 				tamqueryentry["priority"] = item.Priority
@@ -3447,6 +3520,7 @@ func flattenListUcsdConnectorPack(p []*models.UcsdConnectorPack, d *schema.Resou
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		ucsdconnectorpack["class_id"] = item.ClassID
 		ucsdconnectorpack["connector_feature"] = item.ConnectorFeature
 		ucsdconnectorpack["dependency_names"] = item.DependencyNames
 		ucsdconnectorpack["downloaded_version"] = item.DownloadedVersion
@@ -3507,6 +3581,7 @@ func flattenListVmediaMapping(p []*models.VmediaMapping, d *schema.ResourceData)
 			}
 		}
 		vmediamapping["authentication_protocol"] = item.AuthenticationProtocol
+		vmediamapping["class_id"] = item.ClassID
 		vmediamapping["device_type"] = item.DeviceType
 		vmediamapping["host_name"] = item.HostName
 		vmediamapping["is_password_set"] = item.IsPasswordSet
@@ -3570,6 +3645,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 			}
 		}
 		workflowapi["body"] = item.Body
+		workflowapi["class_id"] = item.ClassID
 		workflowapi["content_type"] = item.ContentType
 		workflowapi["name"] = item.Name
 		workflowapi["object_type"] = item.ObjectType
@@ -3590,6 +3666,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			contentgrammar["class_id"] = item.ClassID
 			contentgrammar["error_parameters"] = (func(p []*models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
 				var contentbaseparameters []map[string]interface{}
 				if p == nil {
@@ -3608,6 +3685,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 							log.Printf("Error occured while flattening and json parsing: %s", err)
 						}
 					}
+					contentbaseparameter["class_id"] = item.ClassID
 					contentbaseparameter["complex_type"] = item.ComplexType
 					contentbaseparameter["item_type"] = item.ItemType
 					contentbaseparameter["name"] = item.Name
@@ -3637,6 +3715,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 							log.Printf("Error occured while flattening and json parsing: %s", err)
 						}
 					}
+					contentbaseparameter["class_id"] = item.ClassID
 					contentbaseparameter["complex_type"] = item.ComplexType
 					contentbaseparameter["item_type"] = item.ItemType
 					contentbaseparameter["name"] = item.Name
@@ -3664,6 +3743,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 							log.Printf("Error occured while flattening and json parsing: %s", err)
 						}
 					}
+					contentcomplextype["class_id"] = item.ClassID
 					contentcomplextype["name"] = item.Name
 					contentcomplextype["object_type"] = item.ObjectType
 					contentcomplextype["parameters"] = (func(p []*models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
@@ -3684,6 +3764,7 @@ func flattenListWorkflowAPI(p []*models.WorkflowAPI, d *schema.ResourceData) []m
 									log.Printf("Error occured while flattening and json parsing: %s", err)
 								}
 							}
+							contentbaseparameter["class_id"] = item.ClassID
 							contentbaseparameter["complex_type"] = item.ComplexType
 							contentbaseparameter["item_type"] = item.ItemType
 							contentbaseparameter["name"] = item.Name
@@ -3725,6 +3806,7 @@ func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowbasedatatype["class_id"] = item.ClassID
 		workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 			var workflowdefaultvalues []map[string]interface{}
 			if p == nil {
@@ -3741,6 +3823,7 @@ func flattenListWorkflowBaseDataType(p []*models.WorkflowBaseDataType, d *schema
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			workflowdefaultvalue["class_id"] = item.ClassID
 			workflowdefaultvalue["object_type"] = item.ObjectType
 			workflowdefaultvalue["override"] = item.Override
 			workflowdefaultvalue["value"] = item.Value
@@ -3775,6 +3858,7 @@ func flattenListWorkflowDynamicWorkflowActionTaskList(p []*models.WorkflowDynami
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowdynamicworkflowactiontasklist["class_id"] = item.ClassID
 		workflowdynamicworkflowactiontasklist["object_type"] = item.ObjectType
 		workflowdynamicworkflowactiontasklist["tasks"] = item.Tasks
 		workflowdynamicworkflowactiontasklists = append(workflowdynamicworkflowactiontasklists, workflowdynamicworkflowactiontasklist)
@@ -3798,6 +3882,7 @@ func flattenListWorkflowMessage(p []*models.WorkflowMessage, d *schema.ResourceD
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowmessage["class_id"] = item.ClassID
 		workflowmessage["message"] = item.Message
 		workflowmessage["object_type"] = item.ObjectType
 		workflowmessage["severity"] = item.Severity
@@ -3852,6 +3937,7 @@ func flattenListWorkflowTaskRetryInfo(p []*models.WorkflowTaskRetryInfo, d *sche
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowtaskretryinfo["class_id"] = item.ClassID
 		workflowtaskretryinfo["object_type"] = item.ObjectType
 		workflowtaskretryinfo["status"] = item.Status
 		workflowtaskretryinfo["task_inst_id"] = item.TaskInstID
@@ -3891,6 +3977,7 @@ func flattenListWorkflowWorkflowTask(p []*models.WorkflowWorkflowTask, d *schema
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowworkflowtask["class_id"] = item.ClassID
 		workflowworkflowtask["description"] = item.Description
 		workflowworkflowtask["label"] = item.Label
 		workflowworkflowtask["name"] = item.Name
@@ -3916,6 +4003,7 @@ func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceD
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		x509certificate["class_id"] = item.ClassID
 		x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
 			if p == nil {
@@ -3932,6 +4020,7 @@ func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceD
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			pkixdistinguishedname["class_id"] = item.ClassID
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
 			pkixdistinguishedname["locality"] = item.Locality
@@ -3963,6 +4052,7 @@ func flattenListX509Certificate(p []*models.X509Certificate, d *schema.ResourceD
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			pkixdistinguishedname["class_id"] = item.ClassID
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
 			pkixdistinguishedname["locality"] = item.Locality
@@ -4069,6 +4159,7 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
+		assetaddressinformation["class_id"] = item.ClassID
 		assetaddressinformation["country"] = item.Country
 		assetaddressinformation["location"] = item.Location
 		assetaddressinformation["name"] = item.Name
@@ -4095,6 +4186,7 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		assetglobalultimate["class_id"] = item.ClassID
 		assetglobalultimate["id"] = item.ID
 		assetglobalultimate["name"] = item.Name
 		assetglobalultimate["object_type"] = item.ObjectType
@@ -4102,6 +4194,7 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 		assetglobalultimates = append(assetglobalultimates, assetglobalultimate)
 		return assetglobalultimates
 	})(item.BillToGlobalUltimate, d)
+	assetcontractinformation["class_id"] = item.ClassID
 	assetcontractinformation["contract_number"] = item.ContractNumber
 	assetcontractinformation["line_status"] = item.LineStatus
 	assetcontractinformation["object_type"] = item.ObjectType
@@ -4144,6 +4237,7 @@ func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *s
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
+		assetaddressinformation["class_id"] = item.ClassID
 		assetaddressinformation["country"] = item.Country
 		assetaddressinformation["location"] = item.Location
 		assetaddressinformation["name"] = item.Name
@@ -4154,6 +4248,7 @@ func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *s
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
 	})(item.Address, d)
+	assetcustomerinformation["class_id"] = item.ClassID
 	assetcustomerinformation["id"] = item.ID
 	assetcustomerinformation["name"] = item.Name
 	assetcustomerinformation["object_type"] = item.ObjectType
@@ -4233,6 +4328,7 @@ func flattenMapAssetGlobalUltimate(p *models.AssetGlobalUltimate, d *schema.Reso
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	assetglobalultimate["class_id"] = item.ClassID
 	assetglobalultimate["id"] = item.ID
 	assetglobalultimate["name"] = item.Name
 	assetglobalultimate["object_type"] = item.ObjectType
@@ -4256,6 +4352,7 @@ func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *s
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	assetmanageddevicestatus["class_id"] = item.ClassID
 	assetmanageddevicestatus["cloud_port"] = item.CloudPort
 	assetmanageddevicestatus["connection_failure_reason"] = item.ConnectionFailureReason
 	assetmanageddevicestatus["connection_status"] = item.ConnectionStatus
@@ -4285,10 +4382,11 @@ func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSig
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	assetparentconnectionsignature["class_id"] = item.ClassID
 	assetparentconnectionsignature["device_id"] = item.DeviceID
 	assetparentconnectionsignature["node_id"] = item.NodeID
 	assetparentconnectionsignature["object_type"] = item.ObjectType
-	assetparentconnectionsignature["signature"] = item.Signature
+	assetparentconnectionsignature["signature"] = string(item.Signature)
 
 	assetparentconnectionsignatures = append(assetparentconnectionsignatures, assetparentconnectionsignature)
 	return assetparentconnectionsignatures
@@ -4328,6 +4426,7 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
+		assetaddressinformation["class_id"] = item.ClassID
 		assetaddressinformation["country"] = item.Country
 		assetaddressinformation["location"] = item.Location
 		assetaddressinformation["name"] = item.Name
@@ -4338,6 +4437,7 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
 	})(item.BillTo, d)
+	assetproductinformation["class_id"] = item.ClassID
 	assetproductinformation["description"] = item.Description
 	assetproductinformation["family"] = item.Family
 	assetproductinformation["group"] = item.Group
@@ -4362,6 +4462,7 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
+		assetaddressinformation["class_id"] = item.ClassID
 		assetaddressinformation["country"] = item.Country
 		assetaddressinformation["location"] = item.Location
 		assetaddressinformation["name"] = item.Name
@@ -4407,6 +4508,7 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	assetsudiinfo["class_id"] = item.ClassID
 	assetsudiinfo["object_type"] = item.ObjectType
 	assetsudiinfo["pid"] = item.Pid
 	assetsudiinfo["serial_number"] = item.SerialNumber
@@ -4428,6 +4530,7 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		x509certificate["class_id"] = item.ClassID
 		x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
 			if p == nil {
@@ -4444,6 +4547,7 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			pkixdistinguishedname["class_id"] = item.ClassID
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
 			pkixdistinguishedname["locality"] = item.Locality
@@ -4475,6 +4579,7 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			pkixdistinguishedname["class_id"] = item.ClassID
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
 			pkixdistinguishedname["locality"] = item.Locality
@@ -4552,6 +4657,7 @@ func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) 
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	commcredential["class_id"] = item.ClassID
 	commcredential["is_password_set"] = item.IsPasswordSet
 	commcredential["object_type"] = item.ObjectType
 	commcredential["password"] = item.Password
@@ -4576,6 +4682,7 @@ func flattenMapCommIPV4Interface(p *models.CommIPV4Interface, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	commipv4interface["class_id"] = item.ClassID
 	commipv4interface["gateway"] = item.Gateway
 	commipv4interface["ip_address"] = item.IPAddress
 	commipv4interface["netmask"] = item.Netmask
@@ -4629,6 +4736,7 @@ func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemor
 		}
 	}
 	computepersistentmemoryoperation["admin_action"] = item.AdminAction
+	computepersistentmemoryoperation["class_id"] = item.ClassID
 	computepersistentmemoryoperation["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
 	computepersistentmemoryoperation["modules"] = (func(p []*models.ComputePersistentMemoryModule, d *schema.ResourceData) []map[string]interface{} {
 		var computepersistentmemorymodules []map[string]interface{}
@@ -4647,6 +4755,7 @@ func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemor
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			computepersistentmemorymodule["class_id"] = item.ClassID
 			computepersistentmemorymodule["object_type"] = item.ObjectType
 			computepersistentmemorymodule["socket_id"] = item.SocketID
 			computepersistentmemorymodule["socket_memory_id"] = item.SocketMemoryID
@@ -4705,6 +4814,7 @@ func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.Reso
 		}
 	}
 	computeserverconfig["asset_tag"] = item.AssetTag
+	computeserverconfig["class_id"] = item.ClassID
 	computeserverconfig["object_type"] = item.ObjectType
 	computeserverconfig["user_label"] = item.UserLabel
 
@@ -4881,6 +4991,7 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	firmwaredirectdownload["class_id"] = item.ClassID
 	firmwaredirectdownload["http_server"] = (func(p *models.FirmwareHTTPServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarehttpservers []map[string]interface{}
 		if p == nil {
@@ -4897,6 +5008,7 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		firmwarehttpserver["class_id"] = item.ClassID
 		firmwarehttpserver["location_link"] = item.LocationLink
 		firmwarehttpserver["mount_options"] = item.MountOptions
 		firmwarehttpserver["object_type"] = item.ObjectType
@@ -4960,6 +5072,8 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		firmwarecifsserver["class_id"] = item.ClassID
+		firmwarecifsserver["file_location"] = item.FileLocation
 		firmwarecifsserver["mount_options"] = item.MountOptions
 		firmwarecifsserver["object_type"] = item.ObjectType
 		firmwarecifsserver["remote_file"] = item.RemoteFile
@@ -4969,6 +5083,7 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 		firmwarecifsservers = append(firmwarecifsservers, firmwarecifsserver)
 		return firmwarecifsservers
 	})(item.CifsServer, d)
+	firmwarenetworkshare["class_id"] = item.ClassID
 	firmwarenetworkshare["http_server"] = (func(p *models.FirmwareHTTPServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarehttpservers []map[string]interface{}
 		if p == nil {
@@ -4985,6 +5100,7 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		firmwarehttpserver["class_id"] = item.ClassID
 		firmwarehttpserver["location_link"] = item.LocationLink
 		firmwarehttpserver["mount_options"] = item.MountOptions
 		firmwarehttpserver["object_type"] = item.ObjectType
@@ -5010,6 +5126,8 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		firmwarenfsserver["class_id"] = item.ClassID
+		firmwarenfsserver["file_location"] = item.FileLocation
 		firmwarenfsserver["mount_options"] = item.MountOptions
 		firmwarenfsserver["object_type"] = item.ObjectType
 		firmwarenfsserver["remote_file"] = item.RemoteFile
@@ -5128,6 +5246,7 @@ func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	forecastmodel["class_id"] = item.ClassID
 	forecastmodel["model_data"] = item.ModelData
 	forecastmodel["model_type"] = item.ModelType
 	forecastmodel["object_type"] = item.ObjectType
@@ -5348,6 +5467,7 @@ func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt
 		}
 	}
 	hyperflexhxnetworkaddressdt["address"] = item.Address
+	hyperflexhxnetworkaddressdt["class_id"] = item.ClassID
 	hyperflexhxnetworkaddressdt["fqdn"] = item.Fqdn
 	hyperflexhxnetworkaddressdt["ip"] = item.IP
 	hyperflexhxnetworkaddressdt["object_type"] = item.ObjectType
@@ -5371,6 +5491,7 @@ func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexhxresiliencyinfodt["class_id"] = item.ClassID
 	hyperflexhxresiliencyinfodt["data_replication_factor"] = item.DataReplicationFactor
 	hyperflexhxresiliencyinfodt["hdd_failures_tolerable"] = item.HddFailuresTolerable
 	hyperflexhxresiliencyinfodt["messages"] = item.Messages
@@ -5399,6 +5520,7 @@ func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexhxuuiddt["class_id"] = item.ClassID
 	hyperflexhxuuiddt["links"] = (func(p []*models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
 		var hyperflexhxlinkdts []map[string]interface{}
 		if p == nil {
@@ -5416,6 +5538,7 @@ func flattenMapHyperflexHxUuIDDt(p *models.HyperflexHxUuIDDt, d *schema.Resource
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			hyperflexhxlinkdt["class_id"] = item.ClassID
 			hyperflexhxlinkdt["comments"] = item.Comments
 			hyperflexhxlinkdt["href"] = item.Href
 			hyperflexhxlinkdt["method"] = item.Method
@@ -5461,6 +5584,7 @@ func flattenMapHyperflexIPAddrRange(p *models.HyperflexIPAddrRange, d *schema.Re
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexipaddrrange["class_id"] = item.ClassID
 	hyperflexipaddrrange["end_addr"] = item.EndAddr
 	hyperflexipaddrrange["gateway"] = item.Gateway
 	hyperflexipaddrrange["netmask"] = item.Netmask
@@ -5501,6 +5625,7 @@ func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvaila
 		}
 	}
 	hyperflexlogicalavailabilityzone["auto_config"] = item.AutoConfig
+	hyperflexlogicalavailabilityzone["class_id"] = item.ClassID
 	hyperflexlogicalavailabilityzone["object_type"] = item.ObjectType
 
 	hyperflexlogicalavailabilityzones = append(hyperflexlogicalavailabilityzones, hyperflexlogicalavailabilityzone)
@@ -5522,6 +5647,7 @@ func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexmacaddrprefixrange["class_id"] = item.ClassID
 	hyperflexmacaddrprefixrange["end_addr"] = item.EndAddr
 	hyperflexmacaddrprefixrange["object_type"] = item.ObjectType
 	hyperflexmacaddrprefixrange["start_addr"] = item.StartAddr
@@ -5545,6 +5671,7 @@ func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.Resour
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexnamedvlan["class_id"] = item.ClassID
 	hyperflexnamedvlan["name"] = item.Name
 	hyperflexnamedvlan["object_type"] = item.ObjectType
 	hyperflexnamedvlan["vlan_id"] = item.VlanID
@@ -5568,6 +5695,7 @@ func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.Resour
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexnamedvsan["class_id"] = item.ClassID
 	hyperflexnamedvsan["name"] = item.Name
 	hyperflexnamedvsan["object_type"] = item.ObjectType
 	hyperflexnamedvsan["vsan_id"] = item.VsanID
@@ -5664,6 +5792,7 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 	}
 	hyperflexsummary["address"] = item.Address
 	hyperflexsummary["boottime"] = item.Boottime
+	hyperflexsummary["class_id"] = item.ClassID
 	hyperflexsummary["cluster_access_policy"] = item.ClusterAccessPolicy
 	hyperflexsummary["compression_savings"] = item.CompressionSavings
 	hyperflexsummary["data_replication_compliance"] = item.DataReplicationCompliance
@@ -5687,6 +5816,7 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexstplatformclusterhealinginfo["class_id"] = item.ClassID
 		hyperflexstplatformclusterhealinginfo["estimated_completion_time_in_seconds"] = item.EstimatedCompletionTimeInSeconds
 		hyperflexstplatformclusterhealinginfo["in_progress"] = item.InProgress
 		hyperflexstplatformclusterhealinginfo["messages"] = item.Messages
@@ -5718,6 +5848,7 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		hyperflexstplatformclusterresiliencyinfo["class_id"] = item.ClassID
 		hyperflexstplatformclusterresiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
 		hyperflexstplatformclusterresiliencyinfo["messages"] = item.Messages
 		hyperflexstplatformclusterresiliencyinfo["messages_iterator"] = item.MessagesIterator
@@ -5798,6 +5929,7 @@ func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *s
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	hyperflexwwxnprefixrange["class_id"] = item.ClassID
 	hyperflexwwxnprefixrange["end_addr"] = item.EndAddr
 	hyperflexwwxnprefixrange["object_type"] = item.ObjectType
 	hyperflexwwxnprefixrange["start_addr"] = item.StartAddr
@@ -5919,6 +6051,7 @@ func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	iamclientmeta["class_id"] = item.ClassID
 	iamclientmeta["device_model"] = item.DeviceModel
 	iamclientmeta["object_type"] = item.ObjectType
 	iamclientmeta["user_agent"] = item.UserAgent
@@ -5956,8 +6089,10 @@ func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProper
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	iamendpointpasswordproperties["class_id"] = item.ClassID
 	iamendpointpasswordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
 	iamendpointpasswordproperties["enforce_strong_password"] = item.EnforceStrongPassword
+	iamendpointpasswordproperties["force_send_password"] = item.ForceSendPassword
 	iamendpointpasswordproperties["grace_period"] = item.GracePeriod
 	iamendpointpasswordproperties["notification_period"] = item.NotificationPeriod
 	iamendpointpasswordproperties["object_type"] = item.ObjectType
@@ -6043,6 +6178,7 @@ func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.
 	iamldapbaseproperties["base_dn"] = item.BaseDn
 	iamldapbaseproperties["bind_dn"] = item.BindDn
 	iamldapbaseproperties["bind_method"] = item.BindMethod
+	iamldapbaseproperties["class_id"] = item.ClassID
 	iamldapbaseproperties["domain"] = item.Domain
 	iamldapbaseproperties["enable_encryption"] = item.EnableEncryption
 	iamldapbaseproperties["enable_group_authorization"] = item.EnableGroupAuthorization
@@ -6075,6 +6211,7 @@ func flattenMapIamLdapDNSParameters(p *models.IamLdapDNSParameters, d *schema.Re
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	iamldapdnsparameters["class_id"] = item.ClassID
 	iamldapdnsparameters["object_type"] = item.ObjectType
 	iamldapdnsparameters["search_domain"] = item.SearchDomain
 	iamldapdnsparameters["search_forest"] = item.SearchForest
@@ -6283,6 +6420,7 @@ func flattenMapInfraHardwareInfo(p *models.InfraHardwareInfo, d *schema.Resource
 	}
 	infrahardwareinfo["cpu_cores"] = item.CPUCores
 	infrahardwareinfo["cpu_speed"] = item.CPUSpeed
+	infrahardwareinfo["class_id"] = item.ClassID
 	infrahardwareinfo["memory_size"] = item.MemorySize
 	infrahardwareinfo["object_type"] = item.ObjectType
 
@@ -6445,6 +6583,7 @@ func flattenMapMemoryPersistentMemoryLocalSecurity(p *models.MemoryPersistentMem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	memorypersistentmemorylocalsecurity["class_id"] = item.ClassID
 	memorypersistentmemorylocalsecurity["enabled"] = item.Enabled
 	memorypersistentmemorylocalsecurity["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
 	memorypersistentmemorylocalsecurity["object_type"] = item.ObjectType
@@ -6511,6 +6650,7 @@ func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	niaapinewreleasedetail["class_id"] = item.ClassID
 	niaapinewreleasedetail["description"] = item.Description
 	niaapinewreleasedetail["link"] = item.Link
 	niaapinewreleasedetail["object_type"] = item.ObjectType
@@ -6541,6 +6681,7 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 		}
 	}
 	niaapiversionregexplatform["anyllregex"] = item.Anyllregex
+	niaapiversionregexplatform["class_id"] = item.ClassID
 	niaapiversionregexplatform["currentlltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 		var niaapisoftwareregexs []map[string]interface{}
 		if p == nil {
@@ -6557,6 +6698,7 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		niaapisoftwareregex["class_id"] = item.ClassID
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
 		niaapisoftwareregex["software_version"] = item.SoftwareVersion
@@ -6580,6 +6722,7 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		niaapisoftwareregex["class_id"] = item.ClassID
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
 		niaapisoftwareregex["software_version"] = item.SoftwareVersion
@@ -6605,6 +6748,7 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			niaapisoftwareregex["class_id"] = item.ClassID
 			niaapisoftwareregex["object_type"] = item.ObjectType
 			niaapisoftwareregex["regex"] = item.Regex
 			niaapisoftwareregex["software_version"] = item.SoftwareVersion
@@ -6628,6 +6772,7 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		niaapisoftwareregex["class_id"] = item.ClassID
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
 		niaapisoftwareregex["software_version"] = item.SoftwareVersion
@@ -6655,6 +6800,7 @@ func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.Re
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	niatelemetrydiskinfo["class_id"] = item.ClassID
 	niatelemetrydiskinfo["free"] = item.Free
 	niatelemetrydiskinfo["name"] = item.Name
 	niatelemetrydiskinfo["object_type"] = item.ObjectType
@@ -6708,6 +6854,7 @@ func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) 
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	onpremschedule["class_id"] = item.ClassID
 	onpremschedule["day_of_month"] = item.DayOfMonth
 	onpremschedule["day_of_week"] = item.DayOfWeek
 	onpremschedule["month_of_year"] = item.MonthOfYear
@@ -6736,8 +6883,14 @@ func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.Resour
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	onpremupgradephase["class_id"] = item.ClassID
+	onpremupgradephase["elapsed_time"] = item.ElapsedTime
+	onpremupgradephase["end_time"] = item.EndTime
+	onpremupgradephase["failed"] = item.Failed
+	onpremupgradephase["message"] = item.Message
 	onpremupgradephase["name"] = item.Name
 	onpremupgradephase["object_type"] = item.ObjectType
+	onpremupgradephase["start_time"] = item.StartTime
 
 	onpremupgradephases = append(onpremupgradephases, onpremupgradephase)
 	return onpremupgradephases
@@ -6773,6 +6926,7 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 		}
 	}
 	osanswers["answer_file"] = item.AnswerFile
+	osanswers["class_id"] = item.ClassID
 	osanswers["hostname"] = item.Hostname
 	osanswers["ip_config_type"] = item.IPConfigType
 	osanswers["ipv4_config"] = (func(p *models.CommIPV4Interface, d *schema.ResourceData) []map[string]interface{} {
@@ -6791,6 +6945,7 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		commipv4interface["class_id"] = item.ClassID
 		commipv4interface["gateway"] = item.Gateway
 		commipv4interface["ip_address"] = item.IPAddress
 		commipv4interface["netmask"] = item.Netmask
@@ -6855,6 +7010,7 @@ func flattenMapOsOperatingSystemParameters(p *models.OsOperatingSystemParameters
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	osoperatingsystemparameters["class_id"] = item.ClassID
 	osoperatingsystemparameters["object_type"] = item.ObjectType
 
 	osoperatingsystemparameterss = append(osoperatingsystemparameterss, osoperatingsystemparameters)
@@ -6890,6 +7046,7 @@ func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	pkixdistinguishedname["class_id"] = item.ClassID
 	pkixdistinguishedname["common_name"] = item.CommonName
 	pkixdistinguishedname["country"] = item.Country
 	pkixdistinguishedname["locality"] = item.Locality
@@ -6917,6 +7074,7 @@ func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	pkixkeygenerationspec["class_id"] = item.ClassID
 	pkixkeygenerationspec["name"] = item.Name
 	pkixkeygenerationspec["object_type"] = item.ObjectType
 
@@ -6939,6 +7097,7 @@ func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *s
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	pkixsubjectalternatename["class_id"] = item.ClassID
 	pkixsubjectalternatename["dns_name"] = item.DNSName
 	pkixsubjectalternatename["email_address"] = item.EmailAddress
 	pkixsubjectalternatename["ip_address"] = item.IPAddress
@@ -6979,6 +7138,7 @@ func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.Resour
 		}
 	}
 	policyconfigchange["changes"] = item.Changes
+	policyconfigchange["class_id"] = item.ClassID
 	policyconfigchange["disruptions"] = item.Disruptions
 	policyconfigchange["object_type"] = item.ObjectType
 
@@ -7001,6 +7161,7 @@ func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.Reso
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	policyconfigcontext["class_id"] = item.ClassID
 	policyconfigcontext["config_state"] = item.ConfigState
 	policyconfigcontext["control_action"] = item.ControlAction
 	policyconfigcontext["error_state"] = item.ErrorState
@@ -7026,6 +7187,7 @@ func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d 
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	policyconfigresultcontext["class_id"] = item.ClassID
 	policyconfigresultcontext["entity_data"] = item.EntityData
 	policyconfigresultcontext["entity_moid"] = item.EntityMoid
 	policyconfigresultcontext["entity_name"] = item.EntityName
@@ -7135,6 +7297,7 @@ func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	recoverybackupschedule["class_id"] = item.ClassID
 	recoverybackupschedule["execution_time"] = item.ExecutionTime
 	recoverybackupschedule["frequency_unit"] = item.FrequencyUnit
 	recoverybackupschedule["hours"] = item.Hours
@@ -7159,6 +7322,7 @@ func flattenMapRecoveryConfigParams(p *models.RecoveryConfigParams, d *schema.Re
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	recoveryconfigparams["class_id"] = item.ClassID
 	recoveryconfigparams["object_type"] = item.ObjectType
 
 	recoveryconfigparamss = append(recoveryconfigparamss, recoveryconfigparams)
@@ -7362,6 +7526,7 @@ func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServ
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	softwarerepositoryfileserver["class_id"] = item.ClassID
 	softwarerepositoryfileserver["object_type"] = item.ObjectType
 
 	softwarerepositoryfileservers = append(softwarerepositoryfileservers, softwarerepositoryfileserver)
@@ -7412,6 +7577,7 @@ func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData
 		}
 	}
 	storagecapacity["available"] = item.Available
+	storagecapacity["class_id"] = item.ClassID
 	storagecapacity["free"] = item.Free
 	storagecapacity["object_type"] = item.ObjectType
 	storagecapacity["total"] = item.Total
@@ -7521,6 +7687,7 @@ func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schem
 		}
 	}
 	storagehostutilization["available"] = item.Available
+	storagehostutilization["class_id"] = item.ClassID
 	storagehostutilization["data_reduction"] = item.DataReduction
 	storagehostutilization["free"] = item.Free
 	storagehostutilization["object_type"] = item.ObjectType
@@ -7690,6 +7857,7 @@ func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	tamseverity["class_id"] = item.ClassID
 	tamseverity["object_type"] = item.ObjectType
 
 	tamseveritys = append(tamseveritys, tamseverity)
@@ -7726,6 +7894,7 @@ func flattenMapVirtualizationComputeCapacity(p *models.VirtualizationComputeCapa
 		}
 	}
 	virtualizationcomputecapacity["capacity"] = item.Capacity
+	virtualizationcomputecapacity["class_id"] = item.ClassID
 	virtualizationcomputecapacity["free"] = item.Free
 	virtualizationcomputecapacity["object_type"] = item.ObjectType
 	virtualizationcomputecapacity["used"] = item.Used
@@ -7749,6 +7918,7 @@ func flattenMapVirtualizationCPUInfo(p *models.VirtualizationCPUInfo, d *schema.
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationcpuinfo["class_id"] = item.ClassID
 	virtualizationcpuinfo["cores"] = item.Cores
 	virtualizationcpuinfo["description"] = item.Description
 	virtualizationcpuinfo["object_type"] = item.ObjectType
@@ -7775,6 +7945,7 @@ func flattenMapVirtualizationGuestInfo(p *models.VirtualizationGuestInfo, d *sch
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationguestinfo["class_id"] = item.ClassID
 	virtualizationguestinfo["hostname"] = item.Hostname
 	virtualizationguestinfo["ip_address"] = item.IPAddress
 	virtualizationguestinfo["name"] = item.Name
@@ -7801,6 +7972,7 @@ func flattenMapVirtualizationMemoryCapacity(p *models.VirtualizationMemoryCapaci
 		}
 	}
 	virtualizationmemorycapacity["capacity"] = item.Capacity
+	virtualizationmemorycapacity["class_id"] = item.ClassID
 	virtualizationmemorycapacity["free"] = item.Free
 	virtualizationmemorycapacity["object_type"] = item.ObjectType
 	virtualizationmemorycapacity["used"] = item.Used
@@ -7824,6 +7996,7 @@ func flattenMapVirtualizationProductInfo(p *models.VirtualizationProductInfo, d 
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationproductinfo["class_id"] = item.ClassID
 	virtualizationproductinfo["object_type"] = item.ObjectType
 	virtualizationproductinfo["product_name"] = item.ProductName
 	virtualizationproductinfo["product_type"] = item.ProductType
@@ -7849,6 +8022,7 @@ func flattenMapVirtualizationRemoteDisplayInfo(p *models.VirtualizationRemoteDis
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationremotedisplayinfo["class_id"] = item.ClassID
 	virtualizationremotedisplayinfo["object_type"] = item.ObjectType
 	virtualizationremotedisplayinfo["remote_display_password"] = item.RemoteDisplayPassword
 	virtualizationremotedisplayinfo["remote_display_vnc_key"] = item.RemoteDisplayVncKey
@@ -7874,6 +8048,7 @@ func flattenMapVirtualizationResourceConsumption(p *models.VirtualizationResourc
 		}
 	}
 	virtualizationresourceconsumption["cpu_consumed"] = item.CPUConsumed
+	virtualizationresourceconsumption["class_id"] = item.ClassID
 	virtualizationresourceconsumption["memory_consumed"] = item.MemoryConsumed
 	virtualizationresourceconsumption["object_type"] = item.ObjectType
 
@@ -7897,6 +8072,7 @@ func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapa
 		}
 	}
 	virtualizationstoragecapacity["capacity"] = item.Capacity
+	virtualizationstoragecapacity["class_id"] = item.ClassID
 	virtualizationstoragecapacity["free"] = item.Free
 	virtualizationstoragecapacity["object_type"] = item.ObjectType
 	virtualizationstoragecapacity["used"] = item.Used
@@ -7924,6 +8100,7 @@ func flattenMapVirtualizationVMCPUShareInfo(p *models.VirtualizationVMCPUShareIn
 	virtualizationvmcpushareinfo["cpu_overhead_limit"] = item.CPUOverheadLimit
 	virtualizationvmcpushareinfo["cpu_reservation"] = item.CPUReservation
 	virtualizationvmcpushareinfo["cpu_shares"] = item.CPUShares
+	virtualizationvmcpushareinfo["class_id"] = item.ClassID
 	virtualizationvmcpushareinfo["object_type"] = item.ObjectType
 
 	virtualizationvmcpushareinfos = append(virtualizationvmcpushareinfos, virtualizationvmcpushareinfo)
@@ -7945,6 +8122,7 @@ func flattenMapVirtualizationVMCPUSocketInfo(p *models.VirtualizationVMCPUSocket
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationvmcpusocketinfo["class_id"] = item.ClassID
 	virtualizationvmcpusocketinfo["cores_per_socket"] = item.CoresPerSocket
 	virtualizationvmcpusocketinfo["num_cpus"] = item.NumCpus
 	virtualizationvmcpusocketinfo["num_sockets"] = item.NumSockets
@@ -7969,6 +8147,7 @@ func flattenMapVirtualizationVMDiskCommitInfo(p *models.VirtualizationVMDiskComm
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationvmdiskcommitinfo["class_id"] = item.ClassID
 	virtualizationvmdiskcommitinfo["committed_disk"] = item.CommittedDisk
 	virtualizationvmdiskcommitinfo["object_type"] = item.ObjectType
 	virtualizationvmdiskcommitinfo["un_committed_disk"] = item.UnCommittedDisk
@@ -7993,6 +8172,7 @@ func flattenMapVirtualizationVMMemoryShareInfo(p *models.VirtualizationVMMemoryS
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	virtualizationvmmemoryshareinfo["class_id"] = item.ClassID
 	virtualizationvmmemoryshareinfo["mem_limit"] = item.MemLimit
 	virtualizationvmmemoryshareinfo["mem_overhead_limit"] = item.MemOverheadLimit
 	virtualizationvmmemoryshareinfo["mem_reservation"] = item.MemReservation
@@ -8074,6 +8254,7 @@ func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceDa
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicarfssettings["class_id"] = item.ClassID
 	vnicarfssettings["enabled"] = item.Enabled
 	vnicarfssettings["object_type"] = item.ObjectType
 
@@ -8096,6 +8277,7 @@ func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]i
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vniccdn["class_id"] = item.ClassID
 	vniccdn["object_type"] = item.ObjectType
 	vniccdn["source"] = item.Source
 	vniccdn["value"] = item.Value
@@ -8119,6 +8301,7 @@ func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vniccompletionqueuesettings["class_id"] = item.ClassID
 	vniccompletionqueuesettings["count"] = item.Count
 	vniccompletionqueuesettings["object_type"] = item.ObjectType
 	vniccompletionqueuesettings["ring_size"] = item.RingSize
@@ -8156,6 +8339,7 @@ func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *s
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicethinterruptsettings["class_id"] = item.ClassID
 	vnicethinterruptsettings["coalescing_time"] = item.CoalescingTime
 	vnicethinterruptsettings["coalescing_type"] = item.CoalescingType
 	vnicethinterruptsettings["count"] = item.Count
@@ -8209,6 +8393,7 @@ func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicethrxqueuesettings["class_id"] = item.ClassID
 	vnicethrxqueuesettings["count"] = item.Count
 	vnicethrxqueuesettings["object_type"] = item.ObjectType
 	vnicethrxqueuesettings["ring_size"] = item.RingSize
@@ -8232,6 +8417,7 @@ func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicethtxqueuesettings["class_id"] = item.ClassID
 	vnicethtxqueuesettings["count"] = item.Count
 	vnicethtxqueuesettings["object_type"] = item.ObjectType
 	vnicethtxqueuesettings["ring_size"] = item.RingSize
@@ -8269,6 +8455,7 @@ func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicfcerrorrecoverysettings["class_id"] = item.ClassID
 	vnicfcerrorrecoverysettings["enabled"] = item.Enabled
 	vnicfcerrorrecoverysettings["io_retry_count"] = item.IoRetryCount
 	vnicfcerrorrecoverysettings["io_retry_timeout"] = item.IoRetryTimeout
@@ -8295,6 +8482,7 @@ func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *sch
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicfcinterruptsettings["class_id"] = item.ClassID
 	vnicfcinterruptsettings["mode"] = item.Mode
 	vnicfcinterruptsettings["object_type"] = item.ObjectType
 
@@ -8345,6 +8533,7 @@ func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.Reso
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicfcqueuesettings["class_id"] = item.ClassID
 	vnicfcqueuesettings["count"] = item.Count
 	vnicfcqueuesettings["object_type"] = item.ObjectType
 	vnicfcqueuesettings["ring_size"] = item.RingSize
@@ -8368,6 +8557,7 @@ func flattenMapVnicFlogiSettings(p *models.VnicFlogiSettings, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicflogisettings["class_id"] = item.ClassID
 	vnicflogisettings["object_type"] = item.ObjectType
 	vnicflogisettings["retries"] = item.Retries
 	vnicflogisettings["timeout"] = item.Timeout
@@ -8405,6 +8595,7 @@ func flattenMapVnicNvgreSettings(p *models.VnicNvgreSettings, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicnvgresettings["class_id"] = item.ClassID
 	vnicnvgresettings["enabled"] = item.Enabled
 	vnicnvgresettings["object_type"] = item.ObjectType
 
@@ -8427,6 +8618,7 @@ func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicplacementsettings["class_id"] = item.ClassID
 	vnicplacementsettings["id"] = item.ID
 	vnicplacementsettings["object_type"] = item.ObjectType
 	vnicplacementsettings["pci_link"] = item.PciLink
@@ -8451,6 +8643,7 @@ func flattenMapVnicPlogiSettings(p *models.VnicPlogiSettings, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicplogisettings["class_id"] = item.ClassID
 	vnicplogisettings["object_type"] = item.ObjectType
 	vnicplogisettings["retries"] = item.Retries
 	vnicplogisettings["timeout"] = item.Timeout
@@ -8474,6 +8667,7 @@ func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceDa
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicrocesettings["class_id"] = item.ClassID
 	vnicrocesettings["enabled"] = item.Enabled
 	vnicrocesettings["memory_regions"] = item.MemoryRegions
 	vnicrocesettings["object_type"] = item.ObjectType
@@ -8513,6 +8707,7 @@ func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicscsiqueuesettings["class_id"] = item.ClassID
 	vnicscsiqueuesettings["count"] = item.Count
 	vnicscsiqueuesettings["object_type"] = item.ObjectType
 	vnicscsiqueuesettings["ring_size"] = item.RingSize
@@ -8536,6 +8731,7 @@ func flattenMapVnicTCPOffloadSettings(p *models.VnicTCPOffloadSettings, d *schem
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnictcpoffloadsettings["class_id"] = item.ClassID
 	vnictcpoffloadsettings["large_receive"] = item.LargeReceive
 	vnictcpoffloadsettings["large_send"] = item.LargeSend
 	vnictcpoffloadsettings["object_type"] = item.ObjectType
@@ -8561,6 +8757,7 @@ func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicusnicsettings["class_id"] = item.ClassID
 	vnicusnicsettings["cos"] = item.Cos
 	vnicusnicsettings["count"] = item.Count
 	vnicusnicsettings["object_type"] = item.ObjectType
@@ -8585,6 +8782,7 @@ func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceDa
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicvlansettings["class_id"] = item.ClassID
 	vnicvlansettings["default_vlan"] = item.DefaultVlan
 	vnicvlansettings["mode"] = item.Mode
 	vnicvlansettings["object_type"] = item.ObjectType
@@ -8608,6 +8806,7 @@ func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicvmqsettings["class_id"] = item.ClassID
 	vnicvmqsettings["enabled"] = item.Enabled
 	vnicvmqsettings["object_type"] = item.ObjectType
 
@@ -8630,6 +8829,7 @@ func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceDa
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicvsansettings["class_id"] = item.ClassID
 	vnicvsansettings["id"] = item.ID
 	vnicvsansettings["object_type"] = item.ObjectType
 
@@ -8652,6 +8852,7 @@ func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.Resource
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	vnicvxlansettings["class_id"] = item.ClassID
 	vnicvxlansettings["enabled"] = item.Enabled
 	vnicvxlansettings["object_type"] = item.ObjectType
 
@@ -8689,6 +8890,7 @@ func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, 
 		}
 	}
 	workflowinternalproperties["base_task_type"] = item.BaseTaskType
+	workflowinternalproperties["class_id"] = item.ClassID
 	workflowinternalproperties["constraints"] = (func(p *models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
 		var workflowtaskconstraintss []map[string]interface{}
 		if p == nil {
@@ -8705,6 +8907,7 @@ func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, 
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		workflowtaskconstraints["class_id"] = item.ClassID
 		workflowtaskconstraints["object_type"] = item.ObjectType
 		workflowtaskconstraints["target_data_type"] = item.TargetDataType
 
@@ -8748,6 +8951,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowproperties["class_id"] = item.ClassID
 	workflowproperties["external_meta"] = item.ExternalMeta
 	workflowproperties["input_definition"] = (func(p []*models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
 		var workflowbasedatatypes []map[string]interface{}
@@ -8766,6 +8970,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			workflowbasedatatype["class_id"] = item.ClassID
 			workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
 				if p == nil {
@@ -8782,6 +8987,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				workflowdefaultvalue["class_id"] = item.ClassID
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
 				workflowdefaultvalue["value"] = item.Value
@@ -8816,6 +9022,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			workflowbasedatatype["class_id"] = item.ClassID
 			workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
 				if p == nil {
@@ -8832,6 +9039,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 						log.Printf("Error occured while flattening and json parsing: %s", err)
 					}
 				}
+				workflowdefaultvalue["class_id"] = item.ClassID
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
 				workflowdefaultvalue["value"] = item.Value
@@ -8874,6 +9082,7 @@ func flattenMapWorkflowTaskConstraints(p *models.WorkflowTaskConstraints, d *sch
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowtaskconstraints["class_id"] = item.ClassID
 	workflowtaskconstraints["object_type"] = item.ObjectType
 	workflowtaskconstraints["target_data_type"] = item.TargetDataType
 
@@ -8924,6 +9133,7 @@ func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInforma
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowvalidationinformation["class_id"] = item.ClassID
 	workflowvalidationinformation["object_type"] = item.ObjectType
 	workflowvalidationinformation["state"] = item.State
 	workflowvalidationinformation["validation_error"] = (func(p []*models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
@@ -8943,6 +9153,7 @@ func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInforma
 					log.Printf("Error occured while flattening and json parsing: %s", err)
 				}
 			}
+			workflowvalidationerror["class_id"] = item.ClassID
 			workflowvalidationerror["error_log"] = item.ErrorLog
 			workflowvalidationerror["field"] = item.Field
 			workflowvalidationerror["object_type"] = item.ObjectType
@@ -8986,6 +9197,7 @@ func flattenMapWorkflowWorkflowInfoProperties(p *models.WorkflowWorkflowInfoProp
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowworkflowinfoproperties["class_id"] = item.ClassID
 	workflowworkflowinfoproperties["object_type"] = item.ObjectType
 	workflowworkflowinfoproperties["retryable"] = item.Retryable
 
@@ -9022,6 +9234,7 @@ func flattenMapWorkflowWorkflowProperties(p *models.WorkflowWorkflowProperties, 
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	workflowworkflowproperties["class_id"] = item.ClassID
 	workflowworkflowproperties["external_meta"] = item.ExternalMeta
 	workflowworkflowproperties["object_type"] = item.ObjectType
 	workflowworkflowproperties["retryable"] = item.Retryable
@@ -9046,6 +9259,7 @@ func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData
 			log.Printf("Error occured while flattening and json parsing: %s", err)
 		}
 	}
+	x509certificate["class_id"] = item.ClassID
 	x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 		var pkixdistinguishednames []map[string]interface{}
 		if p == nil {
@@ -9062,6 +9276,7 @@ func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		pkixdistinguishedname["class_id"] = item.ClassID
 		pkixdistinguishedname["common_name"] = item.CommonName
 		pkixdistinguishedname["country"] = item.Country
 		pkixdistinguishedname["locality"] = item.Locality
@@ -9093,6 +9308,7 @@ func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData
 				log.Printf("Error occured while flattening and json parsing: %s", err)
 			}
 		}
+		pkixdistinguishedname["class_id"] = item.ClassID
 		pkixdistinguishedname["common_name"] = item.CommonName
 		pkixdistinguishedname["country"] = item.Country
 		pkixdistinguishedname["locality"] = item.Locality

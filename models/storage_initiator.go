@@ -108,7 +108,7 @@ type StorageInitiatorAO1P1 struct {
 	// Read Only: true
 	Iqn string `json:"Iqn,omitempty"`
 
-	// Name of the initiator represented in storage array.
+	// Name of the initiator represented in the storage array.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
 
@@ -117,7 +117,7 @@ type StorageInitiatorAO1P1 struct {
 	// Enum: [FC iSCSI]
 	Type string `json:"Type,omitempty"`
 
-	// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
+	// World wide name, 128 bit address represented in hexadecimal notation. For example, 51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01.
 	// Read Only: true
 	Wwn string `json:"Wwn,omitempty"`
 
@@ -134,7 +134,7 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		Iqn string `json:"Iqn,omitempty"`
 
-		// Name of the initiator represented in storage array.
+		// Name of the initiator represented in the storage array.
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
@@ -143,7 +143,7 @@ func (m *StorageInitiatorAO1P1) UnmarshalJSON(data []byte) error {
 		// Enum: [FC iSCSI]
 		Type string `json:"Type,omitempty"`
 
-		// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
+		// World wide name, 128 bit address represented in hexadecimal notation. For example, 51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01.
 		// Read Only: true
 		Wwn string `json:"Wwn,omitempty"`
 	}
@@ -192,7 +192,7 @@ func (m StorageInitiatorAO1P1) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		Iqn string `json:"Iqn,omitempty"`
 
-		// Name of the initiator represented in storage array.
+		// Name of the initiator represented in the storage array.
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
 
@@ -201,7 +201,7 @@ func (m StorageInitiatorAO1P1) MarshalJSON() ([]byte, error) {
 		// Enum: [FC iSCSI]
 		Type string `json:"Type,omitempty"`
 
-		// World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01).
+		// World wide name, 128 bit address represented in hexadecimal notation. For example, 51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01.
 		// Read Only: true
 		Wwn string `json:"Wwn,omitempty"`
 	}

@@ -11,6 +11,7 @@ PCI Switch Link connected to PCIe Switch.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `adapter`:(string)"It shows the name of the pci device."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
 * `link_speed`:(string)"It shows the upstream link speed for device."

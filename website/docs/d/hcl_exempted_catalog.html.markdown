@@ -10,6 +10,7 @@ Collection used to store exempted products (ie. adapters, storage controllers, e
 Collection used to store exempted products (ie. adapters, storage controllers, etc). These products should be ignored for HCL validation purposes.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `comments`:(string)"Reason for the exemption."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"A unique descriptive name of the exemption."

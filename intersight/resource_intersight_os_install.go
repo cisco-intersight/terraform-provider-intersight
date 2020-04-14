@@ -27,6 +27,13 @@ func resourceOsInstall() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"is_value_set": {
 							Description: "Flag to indicate if value is set. Value will be used to check if any edit.",
 							Type:        schema.TypeBool,
@@ -53,6 +60,13 @@ func resourceOsInstall() *schema.Resource {
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
 									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
+									},
 									"default": {
 										Description: "Default value for the data type. If default value was provided and the input was required the default value will be used as the input.",
 										Type:        schema.TypeList,
@@ -65,6 +79,13 @@ func resourceOsInstall() *schema.Resource {
 													Optional:         true,
 													DiffSuppressFunc: SuppressDiffAdditionProps,
 													ForceNew:         true,
+												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
+													ForceNew:    true,
 												},
 												"object_type": {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -131,6 +152,13 @@ func resourceOsInstall() *schema.Resource {
 													DiffSuppressFunc: SuppressDiffAdditionProps,
 													ForceNew:         true,
 												},
+												"class_id": {
+													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
+													ForceNew:    true,
+												},
 												"constraints": {
 													Description: "Constraints that must be applied to the parameter value supplied for this data type.",
 													Type:        schema.TypeList,
@@ -144,6 +172,13 @@ func resourceOsInstall() *schema.Resource {
 																DiffSuppressFunc: SuppressDiffAdditionProps,
 																ForceNew:         true,
 															},
+															"class_id": {
+																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+																ForceNew:    true,
+															},
 															"enum_list": {
 																Description: "When the parameter is a enum then this list of enum entry is used to validate the input belongs to one of items in the list.",
 																Type:        schema.TypeList,
@@ -155,6 +190,13 @@ func resourceOsInstall() *schema.Resource {
 																			Optional:         true,
 																			DiffSuppressFunc: SuppressDiffAdditionProps,
 																			ForceNew:         true,
+																		},
+																		"class_id": {
+																			Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			Computed:    true,
+																			ForceNew:    true,
 																		},
 																		"label": {
 																			Description: "Label for the enum value. A user friendly short string to identify the enum value.",
@@ -223,6 +265,13 @@ func resourceOsInstall() *schema.Resource {
 																Optional:         true,
 																DiffSuppressFunc: SuppressDiffAdditionProps,
 																ForceNew:         true,
+															},
+															"class_id": {
+																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+																ForceNew:    true,
 															},
 															"display_attributes": {
 																Description: "List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.",
@@ -327,6 +376,13 @@ func resourceOsInstall() *schema.Resource {
 							Optional:    true,
 							ForceNew:    true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"hostname": {
 							Description: "Hostname to be configured for the server in the OS.",
 							Type:        schema.TypeString,
@@ -352,6 +408,13 @@ func resourceOsInstall() *schema.Resource {
 										Optional:         true,
 										DiffSuppressFunc: SuppressDiffAdditionProps,
 										ForceNew:         true,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+										ForceNew:    true,
 									},
 									"gateway": {
 										Description: "The IPv4 address of the default gateway.",
@@ -398,9 +461,11 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"is_root_password_set": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							ForceNew: true,
+							Description: "Indicates whether the value of the 'rootPassword' property has been set.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"nameserver": {
 							Description: "IP address of the name server to be configured in the OS.",
@@ -440,6 +505,13 @@ func resourceOsInstall() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+				ForceNew:    true,
+			},
 			"configuration_file": {
 				Description: "If the answers source is selected as 'Template' in 'Answers' property, this relation provides the os.ConfigurationFile instance to be used for this OS install.",
 				Type:        schema.TypeList,
@@ -462,7 +534,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -502,7 +574,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -554,6 +626,13 @@ func resourceOsInstall() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
@@ -589,7 +668,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -623,7 +702,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -657,7 +736,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -689,7 +768,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -723,7 +802,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -746,6 +825,13 @@ func resourceOsInstall() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -794,7 +880,7 @@ func resourceOsInstall() *schema.Resource {
 							ForceNew:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -832,6 +918,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["is_value_set"]; ok {
 					{
 						x := (v.(bool))
@@ -860,6 +952,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 									}
 								}
 							}
+							if v, ok := l["class_id"]; ok {
+								{
+									x := (v.(string))
+									o.ClassID = x
+								}
+							}
 							if v, ok := l["default"]; ok {
 								{
 									p := models.WorkflowDefaultValue{}
@@ -874,6 +972,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 												if err == nil && x1 != nil {
 													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
 												}
+											}
+										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
 											}
 										}
 										if v, ok := l["object_type"]; ok {
@@ -941,6 +1045,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 												}
 											}
 										}
+										if v, ok := l["class_id"]; ok {
+											{
+												x := (v.(string))
+												o.ClassID = x
+											}
+										}
 										if v, ok := l["constraints"]; ok {
 											{
 												p := models.WorkflowConstraints{}
@@ -955,6 +1065,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 															if err == nil && x1 != nil {
 																o.WorkflowConstraintsAO1P1.WorkflowConstraintsAO1P1 = x1.(map[string]interface{})
 															}
+														}
+													}
+													if v, ok := l["class_id"]; ok {
+														{
+															x := (v.(string))
+															o.ClassID = x
 														}
 													}
 													if v, ok := l["enum_list"]; ok {
@@ -974,6 +1090,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 																			if err == nil && x1 != nil {
 																				o.WorkflowEnumEntryAO1P1.WorkflowEnumEntryAO1P1 = x1.(map[string]interface{})
 																			}
+																		}
+																	}
+																	if v, ok := l["class_id"]; ok {
+																		{
+																			x := (v.(string))
+																			o.ClassID = x
 																		}
 																	}
 																	if v, ok := l["label"]; ok {
@@ -1048,6 +1170,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 																if err == nil && x1 != nil {
 																	o.WorkflowMoReferencePropertyAO1P1.WorkflowMoReferencePropertyAO1P1 = x1.(map[string]interface{})
 																}
+															}
+														}
+														if v, ok := l["class_id"]; ok {
+															{
+																x := (v.(string))
+																o.ClassID = x
 															}
 														}
 														if v, ok := l["display_attributes"]; ok {
@@ -1156,6 +1284,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 					o.AnswerFile = x
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["hostname"]; ok {
 				{
 					x := (v.(string))
@@ -1182,6 +1316,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 								if err == nil && x1 != nil {
 									o.CommIPV4InterfaceAO1P1.CommIPV4InterfaceAO1P1 = x1.(map[string]interface{})
 								}
+							}
+						}
+						if v, ok := l["class_id"]; ok {
+							{
+								x := (v.(string))
+								o.ClassID = x
 							}
 						}
 						if v, ok := l["gateway"]; ok {
@@ -1268,6 +1408,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 		x := p
 		o.Answers = &x
+
+	}
+
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 
 	}
 
@@ -1376,6 +1522,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 					if err == nil && x1 != nil {
 						o.AO1 = x1.(map[string]interface{})
 					}
+				}
+			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
 				}
 			}
 			if v, ok := l["object_type"]; ok {
@@ -1569,6 +1721,12 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -1670,6 +1828,10 @@ func resourceOsInstallRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err := d.Set("answers", flattenMapOsAnswers(s.Answers, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 

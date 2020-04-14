@@ -14,6 +14,7 @@ The following arguments can be used to get data of already created objects in In
 * `announcement_date`:(string)"When this notice is announced."
 * `announcement_date_epoch`:(int)"Epoch time of Announcement Date."
 * `bulletin_no`:(string)"The bulletinno of this hardware end of life notice."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"The description of this hardware end of life notice."
 * `endof_new_service_attachment_date`:(string)"Date time of end of new services attachment  ."
 * `endof_new_service_attachment_date_epoch`:(int)"Epoch time of New service attachment Date ."

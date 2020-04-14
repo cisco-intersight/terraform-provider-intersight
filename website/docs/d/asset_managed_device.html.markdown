@@ -10,6 +10,7 @@ Attributes for Managed Device in Intersight and it maintains the relationship to
 Attributes for Managed Device in Intersight and it maintains the relationship to the Intersight Assist Device. Once added, Device Connector for the Managed Device type is started on the Intersight Assist and status related to it is maintained.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_type`:(string)"Type of the Device such as VMware, Pure Storage supported by Intersight Assist."
 * `ignore_cert`:(bool)"Ignore Certificates with protocol https for connecting to the Managed Device. It is not used for other protocols."
 * `is_enabled`:(bool)"Device is Enabled/Disabled."

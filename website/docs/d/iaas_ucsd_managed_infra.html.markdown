@@ -12,6 +12,7 @@ Describes about UCSD Managed infrastructure statistics.
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `advanced_catalog_count`:(int)"Total advanced catalogs in UCSD."
 * `bm_catalog_count`:(int)"Total bare metal catalogs in UCSD."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `container_catalog_count`:(int)"Total service container catalogs in UCSD."
 * `esxi_host_count`:(int)"Total ESXi hosts in UCSD."
 * `external_group_count`:(int)"Total external (Ldap) groups in UCSD."

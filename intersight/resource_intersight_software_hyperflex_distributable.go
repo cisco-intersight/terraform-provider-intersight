@@ -42,7 +42,7 @@ func resourceSoftwareHyperflexDistributable() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -52,6 +52,12 @@ func resourceSoftwareHyperflexDistributable() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
+			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"description": {
 				Description: "User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.",
@@ -137,7 +143,7 @@ func resourceSoftwareHyperflexDistributable() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -196,6 +202,12 @@ func resourceSoftwareHyperflexDistributable() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
@@ -223,6 +235,12 @@ func resourceSoftwareHyperflexDistributable() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -298,6 +316,12 @@ func resourceSoftwareHyperflexDistributableCreate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.Catalog = &x
+
+	}
+
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
 
 	}
 
@@ -457,6 +481,12 @@ func resourceSoftwareHyperflexDistributableCreate(d *schema.ResourceData, meta i
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -497,6 +527,12 @@ func resourceSoftwareHyperflexDistributableCreate(d *schema.ResourceData, meta i
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {
@@ -581,6 +617,10 @@ func resourceSoftwareHyperflexDistributableRead(d *schema.ResourceData, meta int
 	}
 
 	if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRef(s.Catalog, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
 
@@ -724,6 +764,12 @@ func resourceSoftwareHyperflexDistributableUpdate(d *schema.ResourceData, meta i
 		}
 		x := p
 		o.Catalog = &x
+	}
+
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
 	}
 
 	if d.HasChange("description") {
@@ -883,6 +929,12 @@ func resourceSoftwareHyperflexDistributableUpdate(d *schema.ResourceData, meta i
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
@@ -923,6 +975,12 @@ func resourceSoftwareHyperflexDistributableUpdate(d *schema.ResourceData, meta i
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {

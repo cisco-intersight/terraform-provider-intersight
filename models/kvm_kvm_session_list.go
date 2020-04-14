@@ -13,20 +13,20 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// TelemetryTimeSeriesList telemetry time series list
+// KvmKvmSessionList kvm kvm session list
 //
-// swagger:model telemetryTimeSeriesList
-type TelemetryTimeSeriesList struct {
+// swagger:model kvmKvmSessionList
+type KvmKvmSessionList struct {
 
-	// The number of telemetryTimeSeries matching your request in total for all pages.
+	// The number of kvmKvmSessions matching your request in total for all pages.
 	Count int32 `json:"Count,omitempty"`
 
-	// The array of telemetryTimeSeries matching your request.
-	Results []*TelemetryTimeSeries `json:"Results"`
+	// The array of kvmKvmSessions matching your request.
+	Results []*KvmKvmSession `json:"Results"`
 }
 
-// Validate validates this telemetry time series list
-func (m *TelemetryTimeSeriesList) Validate(formats strfmt.Registry) error {
+// Validate validates this kvm kvm session list
+func (m *KvmKvmSessionList) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateResults(formats); err != nil {
@@ -39,7 +39,7 @@ func (m *TelemetryTimeSeriesList) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *TelemetryTimeSeriesList) validateResults(formats strfmt.Registry) error {
+func (m *KvmKvmSessionList) validateResults(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Results) { // not required
 		return nil
@@ -65,7 +65,7 @@ func (m *TelemetryTimeSeriesList) validateResults(formats strfmt.Registry) error
 }
 
 // MarshalBinary interface implementation
-func (m *TelemetryTimeSeriesList) MarshalBinary() ([]byte, error) {
+func (m *KvmKvmSessionList) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -73,8 +73,8 @@ func (m *TelemetryTimeSeriesList) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *TelemetryTimeSeriesList) UnmarshalBinary(b []byte) error {
-	var res TelemetryTimeSeriesList
+func (m *KvmKvmSessionList) UnmarshalBinary(b []byte) error {
+	var res KvmKvmSessionList
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

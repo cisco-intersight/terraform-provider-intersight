@@ -21,7 +21,7 @@ import (
 type MemoryPersistentMemoryRegion struct {
 	InventoryBase
 
-	// Free capacity in GB of the Persistent Memory Region.
+	// Free capacity in GiB of the Persistent Memory Region.
 	// Read Only: true
 	FreeCapacity string `json:"FreeCapacity,omitempty"`
 
@@ -66,7 +66,7 @@ type MemoryPersistentMemoryRegion struct {
 	// Read Only: true
 	SocketMemoryID string `json:"SocketMemoryId,omitempty"`
 
-	// Total capacity in GB of the Persistent Memory Region.
+	// Total capacity in GiB of the Persistent Memory Region.
 	// Read Only: true
 	TotalCapacity string `json:"TotalCapacity,omitempty"`
 }

@@ -10,6 +10,7 @@ Volume snapshot entity in Pure protection group. Volume snapshots are created ei
 Volume snapshot entity in Pure protection group. Volume snapshots are created either on-demand or using scheduler. Snapshots are immutable and it cannot be connected to hosts or host groups, and therefore the data it contains cannot be read or written.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `created_time`:(string)"Exact date and time at which snapshot was created."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"Name of the snapshot which represents point-in-time copy of volume."

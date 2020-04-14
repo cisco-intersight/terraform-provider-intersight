@@ -11,6 +11,7 @@ Physical Disk on the enclosure.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `block_size`:(string)"The block size of the physical disk in bytes."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `disk_id`:(string)"This field represents the disk Id in the storage enclosure."
 * `disk_state`:(string)"This field identifies the current disk configuration applied in the physical disk."

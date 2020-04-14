@@ -10,6 +10,7 @@ Status of the upgrade operation includes the status of download and upgrade stag
 Status of the upgrade operation includes the status of download and upgrade stages.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `download_error`:(string)"The error message from the endpoint during the download."
 * `download_percentage`:(int)"The percentage of the image downloaded in the endpoint."
 * `download_stage`:(string)"The image download stages. Example:downloading, flashing."

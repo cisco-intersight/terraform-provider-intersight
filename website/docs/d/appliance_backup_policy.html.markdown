@@ -17,8 +17,9 @@ in the manual backup mode.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `backup_time`:(string)"The next backup time set by the backup scheduler. Backup scheduler calculates the next backup time with the user-defined schedule set in the Schedule field."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `filename`:(string)"Backup filename to backup or restore."
-* `is_password_set`:(bool)
+* `is_password_set`:(bool)"Indicates whether the value of the 'password' property has been set."
 * `manual_backup`:(bool)"Backup mode of the appliance. Automatic backups of the appliance are not initiated if this property is set to 'true' and the backup schedule field is ignored."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."

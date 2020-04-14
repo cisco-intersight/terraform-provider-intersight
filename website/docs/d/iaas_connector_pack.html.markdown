@@ -10,6 +10,7 @@ Describes about all the connector pack versions running currently in UCSD.
 Describes about all the connector pack versions running currently in UCSD.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `complete_version`:(string)"Complete version of the connector pack including build number."
 * `downloaded_version`:(string)"Version of the connector pack that is last downloaded successfully to UCSD."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

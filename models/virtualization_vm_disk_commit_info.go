@@ -15,7 +15,7 @@ import (
 
 // VirtualizationVMDiskCommitInfo Virtualization:Vm Disk Commit Info
 //
-// Information about the virtual machine's disk commits, sharing and limits (details in VMware docs).
+// Information about the virtual machine's disk commits, sharing and limits. For more information, see VMware documentation.
 //
 // swagger:model virtualizationVmDiskCommitInfo
 type VirtualizationVMDiskCommitInfo struct {
@@ -106,7 +106,7 @@ type VirtualizationVMDiskCommitInfoAO1P1 struct {
 	// Disk committed in bytes on this virtual machine (disk space used up).
 	CommittedDisk int64 `json:"CommittedDisk,omitempty"`
 
-	// Total uncommited disk space that is available for use (in bytes).
+	// Total uncommitted disk space that is available for use (in bytes).
 	UnCommittedDisk int64 `json:"UnCommittedDisk,omitempty"`
 
 	// Total unshared disk space (in bytes).
@@ -124,7 +124,7 @@ func (m *VirtualizationVMDiskCommitInfoAO1P1) UnmarshalJSON(data []byte) error {
 		// Disk committed in bytes on this virtual machine (disk space used up).
 		CommittedDisk int64 `json:"CommittedDisk,omitempty"`
 
-		// Total uncommited disk space that is available for use (in bytes).
+		// Total uncommitted disk space that is available for use (in bytes).
 		UnCommittedDisk int64 `json:"UnCommittedDisk,omitempty"`
 
 		// Total unshared disk space (in bytes).
@@ -172,7 +172,7 @@ func (m VirtualizationVMDiskCommitInfoAO1P1) MarshalJSON() ([]byte, error) {
 		// Disk committed in bytes on this virtual machine (disk space used up).
 		CommittedDisk int64 `json:"CommittedDisk,omitempty"`
 
-		// Total uncommited disk space that is available for use (in bytes).
+		// Total uncommitted disk space that is available for use (in bytes).
 		UnCommittedDisk int64 `json:"UnCommittedDisk,omitempty"`
 
 		// Total unshared disk space (in bytes).

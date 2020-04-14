@@ -10,6 +10,7 @@ AuditRecord presents the configuration changes made by the user per transaction.
 AuditRecord presents the configuration changes made by the user per transaction.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `email`:(string)"The email of the associated user that made the change.  In case the user is later deleted, we still have some reference to the information."
 * `event`:(string)"The operation that was performed on this Managed Object.\nThe event is a compound string that includes the CRUD operation such as Create, Modify, Delete, and a string representing the Managed Object type."
 * `inst_id`:(string)"The instance id of AuditRecordLocal, which is used to identify if the comming AuditRecordLocal was already processed before."

@@ -16,6 +16,12 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 		Update: resourceIamEndPointUserPolicyUpdate,
 		Delete: resourceIamEndPointUserPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"description": {
 				Description: "Description of the policy.",
 				Type:        schema.TypeString,
@@ -40,7 +46,7 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -88,7 +94,7 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -111,6 +117,12 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"enable_password_expiry": {
 							Description: "Enables password expiry on the endpoint.",
 							Type:        schema.TypeBool,
@@ -118,6 +130,11 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 						},
 						"enforce_strong_password": {
 							Description: "Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"force_send_password": {
+							Description: "User password will always be sent to endpoint device. If the option is not selected, then users password will be sent to endpoint device if password is changed for existing users and for new users.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
@@ -172,7 +189,7 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -200,7 +217,7 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -220,6 +237,12 @@ func resourceIamEndPointUserPolicy() *schema.Resource {
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"key": {
 							Description: "The string representation of a tag key.",
@@ -250,6 +273,12 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.IamEndPointUserPolicy
+	if v, ok := d.GetOk("class_id"); ok {
+		x := (v.(string))
+		o.ClassID = x
+
+	}
+
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
 		o.Description = x
@@ -353,6 +382,12 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["enable_password_expiry"]; ok {
 				{
 					x := (v.(bool))
@@ -363,6 +398,12 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 				{
 					x := (v.(bool))
 					o.EnforceStrongPassword = &x
+				}
+			}
+			if v, ok := l["force_send_password"]; ok {
+				{
+					x := (v.(bool))
+					o.ForceSendPassword = &x
 				}
 			}
 			if v, ok := l["grace_period"]; ok {
@@ -487,6 +528,12 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 						}
 					}
 				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
+					}
+				}
 				if v, ok := l["key"]; ok {
 					{
 						x := (v.(string))
@@ -580,6 +627,10 @@ func resourceIamEndPointUserPolicyRead(d *schema.ResourceData, meta interface{})
 		return err
 	}
 
+	if err := d.Set("class_id", (s.ClassID)); err != nil {
+		return err
+	}
+
 	if err := d.Set("description", (s.Description)); err != nil {
 		return err
 	}
@@ -629,6 +680,12 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o models.IamEndPointUserPolicy
+	if d.HasChange("class_id") {
+		v := d.Get("class_id")
+		x := (v.(string))
+		o.ClassID = x
+	}
+
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
@@ -733,6 +790,12 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 					}
 				}
 			}
+			if v, ok := l["class_id"]; ok {
+				{
+					x := (v.(string))
+					o.ClassID = x
+				}
+			}
 			if v, ok := l["enable_password_expiry"]; ok {
 				{
 					x := (v.(bool))
@@ -743,6 +806,12 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 				{
 					x := (v.(bool))
 					o.EnforceStrongPassword = &x
+				}
+			}
+			if v, ok := l["force_send_password"]; ok {
+				{
+					x := (v.(bool))
+					o.ForceSendPassword = &x
 				}
 			}
 			if v, ok := l["grace_period"]; ok {
@@ -865,6 +934,12 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 						if err == nil && x1 != nil {
 							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
 						}
+					}
+				}
+				if v, ok := l["class_id"]; ok {
+					{
+						x := (v.(string))
+						o.ClassID = x
 					}
 				}
 				if v, ok := l["key"]; ok {

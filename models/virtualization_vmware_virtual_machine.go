@@ -23,10 +23,10 @@ import (
 type VirtualizationVmwareVirtualMachine struct {
 	VirtualizationAbstractVirtualMachine
 
-	// List of annotations provided to this VM by user; Can be long.
+	// List of annotations provided to this VM by user. Can be long.
 	Annotation string `json:"Annotation,omitempty"`
 
-	// Time when this vm booted up.
+	// Time when this VM booted up.
 	// Format: date-time
 	BootTime strfmt.DateTime `json:"BootTime,omitempty"`
 
@@ -34,22 +34,22 @@ type VirtualizationVmwareVirtualMachine struct {
 	// Read Only: true
 	Cluster *VirtualizationVmwareClusterRef `json:"Cluster,omitempty"`
 
-	// The named config for this vm, might be the same as guestHostname.
+	// The configuration name for this VM. This maybe the same as the guest hostname.
 	ConfigName string `json:"ConfigName,omitempty"`
 
-	// Is virtual machine connected to vCenter. Values are connected, disconnected, orphaned, inaccessible, invalid.
+	// Shows if virtual machine is connected to vCenter. Values are Connected, Disconnected, Orphaned, Inaccessible, and Invalid.
 	ConnectionState string `json:"ConnectionState,omitempty"`
 
-	// Is the capability to add CPUs to a running VM enabled.
+	// Indicates if the capability to add CPUs to a running VM is enabled.
 	CPUHotAddEnabled *bool `json:"CpuHotAddEnabled,omitempty"`
 
-	// Basically, indicates the relative importance of a vm and its CPU limits.
+	// Shows the relative importance of a VM and its CPU limits.
 	CPUShares *VirtualizationVMCPUShareInfo `json:"CpuShares,omitempty"`
 
-	// Details of CPUs/sockets of this vm.
+	// Details of CPUs/sockets of this VM.
 	CPUSocketInfo *VirtualizationVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
 
-	// User provided meta information associated with VMs. Can be long.
+	// User provided meta information associated with the VMs. Can be long.
 	CustomAttributes []string `json:"CustomAttributes"`
 
 	// Every entity is grouped under the datacenter object and managed as a group.
@@ -60,10 +60,10 @@ type VirtualizationVmwareVirtualMachine struct {
 	// Read Only: true
 	Datastores []*VirtualizationVmwareDatastoreRef `json:"Datastores"`
 
-	// Indication of how the VM will be powered off (soft, hard, etc).
+	// Indicates how the VM will be powered off (soft, hard etc.).
 	DefaultPowerOffType string `json:"DefaultPowerOffType,omitempty"`
 
-	// Is Dhcp used for IP/DNS on this vm.
+	// Shows if DHCP is used for IP/DNS on this VM.
 	DhcpEnabled *bool `json:"DhcpEnabled,omitempty"`
 
 	// Information about the virtual machine's disk commits, sharing and limits.
@@ -72,13 +72,13 @@ type VirtualizationVmwareVirtualMachine struct {
 	// List of DNS server IPs assigned to this VM.
 	DNSServerList []string `json:"DnsServerList"`
 
-	// List of dnssuffixes given to this VM.
+	// List of DNS suffixes given to this VM.
 	DNSSuffixList []string `json:"DnsSuffixList"`
 
 	// The folder name associated with this VM.
 	Folder string `json:"Folder,omitempty"`
 
-	// State of the guest OS on this VM. Is it running, notRunning, etc.
+	// The state of the guest OS running on this VM. Could be running, not running etc.
 	// Enum: [Unknown NotRunning Resetting Running ShuttingDown Standby]
 	GuestState *string `json:"GuestState,omitempty"`
 
@@ -95,28 +95,28 @@ type VirtualizationVmwareVirtualMachine struct {
 	// Standard MAC address assigned to this VM.
 	MacAddress []string `json:"MacAddress"`
 
-	// Similar to cpuShares but applicable to memory.
+	// Similar to CPU Shares but applicable to memory.
 	MemShares *VirtualizationVMMemoryShareInfo `json:"MemShares,omitempty"`
 
 	// Adding memory to a running VM.
 	MemoryHotAddEnabled *bool `json:"MemoryHotAddEnabled,omitempty"`
 
-	// How many networks are used by this VM.
+	// Indicates how many networks are used by this VM.
 	NetworkCount int64 `json:"NetworkCount,omitempty"`
 
-	// List of portgroup names allocated to this vm.
+	// List of portgroup names allocated to this VM.
 	PortGroups []string `json:"PortGroups"`
 
-	// Is this a protected VM. VMs can be in protection groups.
+	// Shows if this is a protected VM. VMs can be in protection groups.
 	ProtectedVM *bool `json:"ProtectedVm,omitempty"`
 
 	// Applies only when remoteDisplayvnc is enabled.
 	RemoteDisplayInfo *VirtualizationRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
 
-	// Is support for a remote VNC access enabled.
+	// Shows if support for a remote VNC access is enabled.
 	RemoteDisplayVncEnabled *bool `json:"RemoteDisplayVncEnabled,omitempty"`
 
-	// Name of the resource pool to which this vm belongs (optional).
+	// Name of the resource pool to which this VM belongs (optional).
 	ResourcePool string `json:"ResourcePool,omitempty"`
 
 	// Who owns the resource pool.
@@ -125,16 +125,16 @@ type VirtualizationVmwareVirtualMachine struct {
 	// The parent of the current resource pool to which this VM belongs.
 	ResourcePoolParent string `json:"ResourcePoolParent,omitempty"`
 
-	// Are guest tools running on this vm. Set to (guestToolNotRunning,  guestToolsRunning).
+	// Indicates if guest tools are running on this VM. Could be set to guestToolNotRunning or guestToolsRunning.
 	ToolRunningStatus string `json:"ToolRunningStatus,omitempty"`
 
 	// The version of the guest tools, usually not specified.
 	ToolsVersion string `json:"ToolsVersion,omitempty"`
 
-	// How many disks are assigned to this VM.
+	// Shows the number of disks assigned to this VM.
 	VMDiskCount int64 `json:"VmDiskCount,omitempty"`
 
-	// The operational state (there are many possible states, Available, Provisioned, Maintenance mode, Deleting, etc.) of this vm.
+	// The operational state of the VM. Could be Available, Provisioned, Maintenance mode, Deleting, etc.
 	VMOverallStatus string `json:"VmOverallStatus,omitempty"`
 
 	// Example - [datastore3] VCSA-134/VCSA-134.vmx.
@@ -146,7 +146,7 @@ type VirtualizationVmwareVirtualMachine struct {
 	// How many vnics are present.
 	VMVnicCount int64 `json:"VmVnicCount,omitempty"`
 
-	// Information related to the guest info's vnic virtual device (this is a comma separated list).
+	// Information related to the guest info's VNIC virtual device. It is a comma-separated list.
 	VnicDeviceConfigID string `json:"VnicDeviceConfigId,omitempty"`
 }
 

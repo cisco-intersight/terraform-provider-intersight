@@ -26,10 +26,12 @@ type SoftwarerepositoryAuthorization struct {
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
-	// is user Id set
+	// Indicates whether the value of the 'userId' property has been set.
+	// Read Only: true
 	IsUserIDSet *bool `json:"IsUserIdSet,omitempty"`
 
 	// The password that will be used by Intersight to create OAuth2 tokens for interacting with the external repository, on the user account's behalf.

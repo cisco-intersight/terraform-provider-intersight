@@ -76,13 +76,13 @@ type IamAccount struct {
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 
-	// A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.
-	// When this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.
-	Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
-
 	// A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.
 	// When this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.
-	Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
+	Nr0Decrypt *CryptDecryptRef `json:"_0_Decrypt,omitempty"`
+
+	// A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.
+	// When this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.
+	Nr1Encrypt *CryptEncryptRef `json:"_1_Encrypt,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -124,9 +124,9 @@ func (m *IamAccount) UnmarshalJSON(raw []byte) error {
 
 		Status string `json:"Status,omitempty"`
 
-		Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
+		Nr0Decrypt *CryptDecryptRef `json:"_0_Decrypt,omitempty"`
 
-		Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
+		Nr1Encrypt *CryptEncryptRef `json:"_1_Encrypt,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -160,9 +160,9 @@ func (m *IamAccount) UnmarshalJSON(raw []byte) error {
 
 	m.Status = dataAO1.Status
 
-	m.Nr0Encrypt = dataAO1.Nr0Encrypt
+	m.Nr0Decrypt = dataAO1.Nr0Decrypt
 
-	m.Nr1Decrypt = dataAO1.Nr1Decrypt
+	m.Nr1Encrypt = dataAO1.Nr1Encrypt
 
 	return nil
 }
@@ -205,9 +205,9 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 
 		Status string `json:"Status,omitempty"`
 
-		Nr0Encrypt *CryptEncryptRef `json:"_0_Encrypt,omitempty"`
+		Nr0Decrypt *CryptDecryptRef `json:"_0_Decrypt,omitempty"`
 
-		Nr1Decrypt *CryptDecryptRef `json:"_1_Decrypt,omitempty"`
+		Nr1Encrypt *CryptEncryptRef `json:"_1_Encrypt,omitempty"`
 	}
 
 	dataAO1.AppRegistrations = m.AppRegistrations
@@ -238,9 +238,9 @@ func (m IamAccount) MarshalJSON() ([]byte, error) {
 
 	dataAO1.Status = m.Status
 
-	dataAO1.Nr0Encrypt = m.Nr0Encrypt
+	dataAO1.Nr0Decrypt = m.Nr0Decrypt
 
-	dataAO1.Nr1Decrypt = m.Nr1Decrypt
+	dataAO1.Nr1Encrypt = m.Nr1Encrypt
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -307,11 +307,11 @@ func (m *IamAccount) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateNr0Encrypt(formats); err != nil {
+	if err := m.validateNr0Decrypt(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateNr1Decrypt(formats); err != nil {
+	if err := m.validateNr1Encrypt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -600,16 +600,16 @@ func (m *IamAccount) validateSessionLimits(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *IamAccount) validateNr0Encrypt(formats strfmt.Registry) error {
+func (m *IamAccount) validateNr0Decrypt(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Nr0Encrypt) { // not required
+	if swag.IsZero(m.Nr0Decrypt) { // not required
 		return nil
 	}
 
-	if m.Nr0Encrypt != nil {
-		if err := m.Nr0Encrypt.Validate(formats); err != nil {
+	if m.Nr0Decrypt != nil {
+		if err := m.Nr0Decrypt.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_0_Encrypt")
+				return ve.ValidateName("_0_Decrypt")
 			}
 			return err
 		}
@@ -618,16 +618,16 @@ func (m *IamAccount) validateNr0Encrypt(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *IamAccount) validateNr1Decrypt(formats strfmt.Registry) error {
+func (m *IamAccount) validateNr1Encrypt(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Nr1Decrypt) { // not required
+	if swag.IsZero(m.Nr1Encrypt) { // not required
 		return nil
 	}
 
-	if m.Nr1Decrypt != nil {
-		if err := m.Nr1Decrypt.Validate(formats); err != nil {
+	if m.Nr1Encrypt != nil {
+		if err := m.Nr1Encrypt.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_1_Decrypt")
+				return ve.ValidateName("_1_Encrypt")
 			}
 			return err
 		}

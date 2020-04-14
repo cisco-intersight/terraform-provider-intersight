@@ -106,16 +106,16 @@ type VirtualizationCPUInfoAO1P1 struct {
 	// Number of cores per CPU, as reported by the manufacturer.
 	Cores int64 `json:"Cores,omitempty"`
 
-	// The vendor provided description of the CPU (example:Intel Xeon E5-2640 v3 @ 2.60GHz).
+	// The vendor provided description of the CPU. For example, Intel Xeon E5-2640 v3 @ 2.60GHz.
 	Description string `json:"Description,omitempty"`
 
 	// Number of CPU sockets available.
 	Sockets int64 `json:"Sockets,omitempty"`
 
-	// Speed of the CPUs in Hertz (Hz, example 2593749663).
+	// Speed of the CPUs in Hertz. For example, 2593749663.
 	Speed int64 `json:"Speed,omitempty"`
 
-	// Manufacturer of the CPU (example, Intel).
+	// Manufacturer of the CPU . For example, Intel.
 	Vendor string `json:"Vendor,omitempty"`
 
 	// virtualization CPU info a o1 p1
@@ -130,16 +130,16 @@ func (m *VirtualizationCPUInfoAO1P1) UnmarshalJSON(data []byte) error {
 		// Number of cores per CPU, as reported by the manufacturer.
 		Cores int64 `json:"Cores,omitempty"`
 
-		// The vendor provided description of the CPU (example:Intel Xeon E5-2640 v3 @ 2.60GHz).
+		// The vendor provided description of the CPU. For example, Intel Xeon E5-2640 v3 @ 2.60GHz.
 		Description string `json:"Description,omitempty"`
 
 		// Number of CPU sockets available.
 		Sockets int64 `json:"Sockets,omitempty"`
 
-		// Speed of the CPUs in Hertz (Hz, example 2593749663).
+		// Speed of the CPUs in Hertz. For example, 2593749663.
 		Speed int64 `json:"Speed,omitempty"`
 
-		// Manufacturer of the CPU (example, Intel).
+		// Manufacturer of the CPU . For example, Intel.
 		Vendor string `json:"Vendor,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -188,16 +188,16 @@ func (m VirtualizationCPUInfoAO1P1) MarshalJSON() ([]byte, error) {
 		// Number of cores per CPU, as reported by the manufacturer.
 		Cores int64 `json:"Cores,omitempty"`
 
-		// The vendor provided description of the CPU (example:Intel Xeon E5-2640 v3 @ 2.60GHz).
+		// The vendor provided description of the CPU. For example, Intel Xeon E5-2640 v3 @ 2.60GHz.
 		Description string `json:"Description,omitempty"`
 
 		// Number of CPU sockets available.
 		Sockets int64 `json:"Sockets,omitempty"`
 
-		// Speed of the CPUs in Hertz (Hz, example 2593749663).
+		// Speed of the CPUs in Hertz. For example, 2593749663.
 		Speed int64 `json:"Speed,omitempty"`
 
-		// Manufacturer of the CPU (example, Intel).
+		// Manufacturer of the CPU . For example, Intel.
 		Vendor string `json:"Vendor,omitempty"`
 	}
 

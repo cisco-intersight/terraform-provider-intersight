@@ -14,6 +14,7 @@ The following arguments can be used to get data of already created objects in In
 * `array_id`:(int)"This represents the memory array to which the memory unit belongs to."
 * `bank`:(int)"This represents the memory bank of the memory unit on a server."
 * `capacity`:(string)"This represents the memory capacity in MiB of the memory unit on a server."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `clock`:(string)"This represents the clock of the memory unit on a server."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."

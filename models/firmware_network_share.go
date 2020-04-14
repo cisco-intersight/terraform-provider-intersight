@@ -110,7 +110,8 @@ type FirmwareNetworkShareAO1P1 struct {
 	// HTTP (for WWW) file server option for network share upgrade.
 	HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.
@@ -145,7 +146,8 @@ func (m *FirmwareNetworkShareAO1P1) UnmarshalJSON(data []byte) error {
 		// HTTP (for WWW) file server option for network share upgrade.
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.
@@ -220,7 +222,8 @@ func (m FirmwareNetworkShareAO1P1) MarshalJSON() ([]byte, error) {
 		// HTTP (for WWW) file server option for network share upgrade.
 		HTTPServer *FirmwareHTTPServer `json:"HttpServer,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.

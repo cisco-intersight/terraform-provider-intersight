@@ -13,13 +13,14 @@ import (
 
 // UcsdUcsdRestoreParameters Ucsd:Ucsd Restore Parameters
 //
-// Restore Configuration Parameters for UCS Director restore workflow
+// Restore Configuration Parameters for UCS Director restore workflow.
 //
 // swagger:model ucsdUcsdRestoreParameters
 type UcsdUcsdRestoreParameters struct {
 	RecoveryConfigParams
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// The complete location of the path on the server. The location should be specified in the following format- hostname-or-ipv4address<:port>/absolute-file-path.

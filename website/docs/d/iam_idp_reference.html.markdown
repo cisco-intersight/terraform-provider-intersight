@@ -10,6 +10,7 @@ Default Cisco IdP for authentication.
 Default Cisco IdP for authentication.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `domain_name`:(string)"The email domain name for this IdP of the user. When a user enters an email during login in the Intersight home page, the IdP is picked by matching this domain name with the email domain name for authentication."
 * `idp_entity_id`:(string)"Entity ID of the IdP. In SAML, the entity ID uniquely identifies the IdP/Service Provider."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

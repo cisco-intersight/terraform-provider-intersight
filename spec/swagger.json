@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "The Cisco Intersight OpenAPI specification.",
-    "version": "1.0.9-1503",
+    "version": "1.0.9-1596",
     "title": "Cisco Intersight OpenAPI specification."
   },
   "host": "intersight.com",
@@ -27831,6 +27831,34 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "iamSessionLimits"
+        ],
+        "summary": "Create a 'iam.SessionLimits' resource.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "iamSessionLimits to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamSessionLimits"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/iam/SessionLimits/{Moid}": {
@@ -27854,6 +27882,105 @@
             "schema": {
               "$ref": "#/definitions/iamSessionLimits"
             }
+          },
+          "404": {
+            "description": "Instance not found."
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "iamSessionLimits"
+        ],
+        "summary": "Update a 'iam.SessionLimits' resource.",
+        "parameters": [
+          {
+            "name": "Moid",
+            "in": "path",
+            "required": true,
+            "description": "The Moid of the iamSessionLimits instance.",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "iamSessionLimits to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamSessionLimits"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "iamSessionLimits"
+        ],
+        "summary": "Update a 'iam.SessionLimits' resource.",
+        "parameters": [
+          {
+            "name": "Moid",
+            "in": "path",
+            "required": true,
+            "description": "The Moid of the iamSessionLimits instance.",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "iamSessionLimits to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamSessionLimits"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "iamSessionLimits"
+        ],
+        "summary": "Delete a 'iam.SessionLimits' resource.",
+        "parameters": [
+          {
+            "name": "Moid",
+            "in": "path",
+            "required": true,
+            "description": "The Moid of the iamSessionLimits instance.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete successful."
           },
           "404": {
             "description": "Instance not found."
@@ -29825,6 +29952,136 @@
         "responses": {
           "200": {
             "description": "Delete successful."
+          },
+          "404": {
+            "description": "Instance not found."
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/kvm/KvmSessions": {
+      "get": {
+        "tags": [
+          "kvmKvmSession"
+        ],
+        "summary": "Read a 'kvm.KvmSession' resource.",
+        "parameters": [
+          {
+            "name": "$count",
+            "in": "query",
+            "description": "The\u00a0$count query option allows clients to request a count of the matching resources.",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "$inlinecount",
+            "in": "query",
+            "description": "The\u00a0$inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "The max number of documents to return.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "The number of documents to skip.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Filter criteria for documents to return. A URI with a $filter System Query Option identifies a\nsubset of the Entries from the Collection of Entries identified by the Resource Path section\nof the URI. The subset is determined by selecting only the Entries that satisfy the predicate\nexpression specified by the query option.\nThe expression language that is used in $filter operators supports references to properties and\nliterals. The literal values can be strings enclosed in single quotes, numbers and boolean values\n(true or false) or any of the additional literal representations shown in the Abstract\nType System section.\nQuery examples:\n$filter=Name eq 'Bob'\n$filter=Tags/any(t: t/Key eq 'Site')\n$filter=Tags/any(t: t/Key eq 'Site' and t/Value eq 'London')",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "Specifies a subset of properties to return.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Determines what values are used to order a collection of documents.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$expand",
+            "in": "query",
+            "description": "Specify additional attributes or related documents to return. Supports only 'DisplayNames' attribute now.\nQuery examples:\n$expand=DisplayNames",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$apply",
+            "in": "query",
+            "description": "Specify one or more transformation operations to perform aggregation on documents. The transformations\nare processed in order with the output from a transformation being used as input for the subsequent\ntransformation.\nQuery examples:\n$apply=groupby((Model), aggregate($count as Total))\n$apply=groupby((Model), aggregate(AvailableMemory with average as AverageAvailableMemory))",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "at",
+            "in": "query",
+            "description": "Similar to \"$filter\", but \"at\" is specifically used to filter versioning information properties for documents to return.\nA URI with an \"at\" Query Option identifies a subset of the Entries from the Collection of Entries identified by the\nResource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate\nexpression specified by the query option.\nThe expression language that is used in at operators supports references to properties and\nliterals. The literal values can be strings enclosed in single quotes, numbers and boolean values\n(true or false) or any of the additional literal representations shown in the Abstract\nType System section.\nQuery examples:\nat=VersionType eq 'Configured'\nat=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of kvmKvmSessions for the given filter criteria",
+            "schema": {
+              "$ref": "#/definitions/kvmKvmSessionList"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/kvm/KvmSessions/{Moid}": {
+      "get": {
+        "tags": [
+          "kvmKvmSession"
+        ],
+        "summary": "Read a 'kvm.KvmSession' resource.",
+        "parameters": [
+          {
+            "name": "Moid",
+            "in": "path",
+            "required": true,
+            "description": "The Moid of the kvmKvmSession instance.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An instance of kvmKvmSession",
+            "schema": {
+              "$ref": "#/definitions/kvmKvmSession"
+            }
           },
           "404": {
             "description": "Instance not found."
@@ -53550,164 +53807,6 @@
         }
       }
     },
-    "/telemetry/TimeSeries": {
-      "post": {
-        "tags": [
-          "telemetryTimeSeries"
-        ],
-        "summary": "Create a 'telemetry.TimeSeries' resource.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "telemetryTimeSeries to add",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/telemetryTimeSeries"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Null response"
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "telemetryTimeSeries"
-        ],
-        "summary": "Read a 'telemetry.TimeSeries' resource.",
-        "parameters": [
-          {
-            "name": "$count",
-            "in": "query",
-            "description": "The\u00a0$count query option allows clients to request a count of the matching resources.",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "$inlinecount",
-            "in": "query",
-            "description": "The\u00a0$inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "$top",
-            "in": "query",
-            "description": "The max number of documents to return.",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "$skip",
-            "in": "query",
-            "description": "The number of documents to skip.",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "$filter",
-            "in": "query",
-            "description": "Filter criteria for documents to return. A URI with a $filter System Query Option identifies a\nsubset of the Entries from the Collection of Entries identified by the Resource Path section\nof the URI. The subset is determined by selecting only the Entries that satisfy the predicate\nexpression specified by the query option.\nThe expression language that is used in $filter operators supports references to properties and\nliterals. The literal values can be strings enclosed in single quotes, numbers and boolean values\n(true or false) or any of the additional literal representations shown in the Abstract\nType System section.\nQuery examples:\n$filter=Name eq 'Bob'\n$filter=Tags/any(t: t/Key eq 'Site')\n$filter=Tags/any(t: t/Key eq 'Site' and t/Value eq 'London')",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "$select",
-            "in": "query",
-            "description": "Specifies a subset of properties to return.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "$orderby",
-            "in": "query",
-            "description": "Determines what values are used to order a collection of documents.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "$expand",
-            "in": "query",
-            "description": "Specify additional attributes or related documents to return. Supports only 'DisplayNames' attribute now.\nQuery examples:\n$expand=DisplayNames",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "$apply",
-            "in": "query",
-            "description": "Specify one or more transformation operations to perform aggregation on documents. The transformations\nare processed in order with the output from a transformation being used as input for the subsequent\ntransformation.\nQuery examples:\n$apply=groupby((Model), aggregate($count as Total))\n$apply=groupby((Model), aggregate(AvailableMemory with average as AverageAvailableMemory))",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "at",
-            "in": "query",
-            "description": "Similar to \"$filter\", but \"at\" is specifically used to filter versioning information properties for documents to return.\nA URI with an \"at\" Query Option identifies a subset of the Entries from the Collection of Entries identified by the\nResource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate\nexpression specified by the query option.\nThe expression language that is used in at operators supports references to properties and\nliterals. The literal values can be strings enclosed in single quotes, numbers and boolean values\n(true or false) or any of the additional literal representations shown in the Abstract\nType System section.\nQuery examples:\nat=VersionType eq 'Configured'\nat=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of telemetryTimeSeries for the given filter criteria",
-            "schema": {
-              "$ref": "#/definitions/telemetryTimeSeriesList"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/telemetry/TimeSeries/{Moid}": {
-      "get": {
-        "tags": [
-          "telemetryTimeSeries"
-        ],
-        "summary": "Read a 'telemetry.TimeSeries' resource.",
-        "parameters": [
-          {
-            "name": "Moid",
-            "in": "path",
-            "required": true,
-            "description": "The Moid of the telemetryTimeSeries instance.",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An instance of telemetryTimeSeries",
-            "schema": {
-              "$ref": "#/definitions/telemetryTimeSeries"
-            }
-          },
-          "404": {
-            "description": "Instance not found."
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/terminal/AuditLogs": {
       "get": {
         "tags": [
@@ -61332,7 +61431,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Messages": {
               "type": "array",
@@ -61465,7 +61565,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "ManualBackup": {
               "type": "boolean",
@@ -61699,7 +61800,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Message": {
               "type": "string",
@@ -61723,7 +61825,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -61839,7 +61941,8 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Message": {
               "type": "string",
@@ -62337,7 +62440,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Messages": {
               "type": "array",
@@ -63679,7 +63783,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -63870,7 +63974,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -64036,7 +64140,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -65386,6 +65490,16 @@
               "default": "platform-default",
               "description": "BIOS Token for setting DCU IP Prefetcher configuration."
             },
+            "Ipv4pxe": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "enabled",
+                "disabled"
+              ],
+              "default": "platform-default",
+              "description": "BIOS Token for setting IPv4 PXE Support configuration."
+            },
             "Ipv6pxe": {
               "type": "string",
               "enum": [
@@ -65538,7 +65652,11 @@
                 "disabled"
               ],
               "default": "platform-default",
-              "description": "BIOS Token for setting Memory mapped IO above 4GB configuration."
+              "description": "BIOS Token for setting Memory mapped IO above 4GiB configuration."
+            },
+            "MemorySizeLimit": {
+              "type": "string",
+              "description": "BIOS Token for setting Memory Size Limit in GiB configuration (0-65535)."
             },
             "MirroringMode": {
               "type": "string",
@@ -65562,6 +65680,16 @@
               ],
               "default": "platform-default",
               "description": "BIOS Token for setting MMCFG BASE configuration."
+            },
+            "NetworkStack": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "enabled",
+                "disabled"
+              ],
+              "default": "platform-default",
+              "description": "BIOS Token for setting Network Stack configuration."
             },
             "NumaOptimized": {
               "type": "string",
@@ -65671,6 +65799,37 @@
               "default": "platform-default",
               "description": "BIOS Token for setting Package C State Limit configuration."
             },
+            "PartialMirrorModeConfig": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "disabled",
+                "Percentage",
+                "Value in GB"
+              ],
+              "default": "platform-default",
+              "description": "BIOS Token for setting Partial Memory Mirror Mode configuration."
+            },
+            "PartialMirrorPercent": {
+              "type": "string",
+              "description": "BIOS Token for setting Partial Mirror percentage configuration (0.00-50.00)."
+            },
+            "PartialMirrorValue1": {
+              "type": "string",
+              "description": "BIOS Token for setting Partial Mirror1 Size in GiB configuration (0-65535)."
+            },
+            "PartialMirrorValue2": {
+              "type": "string",
+              "description": "BIOS Token for setting Partial Mirror2 Size in GiB configuration (0-65535)."
+            },
+            "PartialMirrorValue3": {
+              "type": "string",
+              "description": "BIOS Token for setting Partial Mirror3 Size in GiB configuration (0-65535)."
+            },
+            "PartialMirrorValue4": {
+              "type": "string",
+              "description": "BIOS Token for setting Partial Mirror4 Size in GiB configuration (0-65535)."
+            },
             "PatrolScrub": {
               "type": "string",
               "enum": [
@@ -65690,6 +65849,16 @@
               ],
               "default": "platform-default",
               "description": "BIOS Token for setting Patrol Scrub Interval configuration."
+            },
+            "PcIeRasSupport": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "enabled",
+                "disabled"
+              ],
+              "default": "platform-default",
+              "description": "BIOS Token for setting PCIe RAS Support configuration."
             },
             "PcIeSsdHotPlugSupport": {
               "type": "string",
@@ -65909,10 +66078,21 @@
                 "maximum-performance",
                 "mirror-mode-1lm",
                 "mirroring",
+                "partial-mirror-mode-1lm",
                 "sparing"
               ],
               "default": "platform-default",
               "description": "BIOS Token for setting SelectMemory RAS configuration configuration."
+            },
+            "SelectPprType": {
+              "type": "string",
+              "enum": [
+                "platform-default",
+                "disabled",
+                "Hard PPR"
+              ],
+              "default": "platform-default",
+              "description": "BIOS Token for setting Select PPR Type configuration."
             },
             "SerialPortAenable": {
               "type": "string",
@@ -67000,7 +67180,7 @@
                 "GEN3"
               ],
               "default": "platform-default",
-              "description": "BIOS Token for setting PCIe Slot:FrontPcie1 Link Speed configuration."
+              "description": "BIOS Token for setting PCIe Slot:FrontSSD1 Link Speed configuration."
             },
             "SlotSsdSlot2linkSpeed": {
               "type": "string",
@@ -67013,7 +67193,7 @@
                 "GEN3"
               ],
               "default": "platform-default",
-              "description": "BIOS Token for setting PCIe Slot:FrontPcie2 Link Speed configuration."
+              "description": "BIOS Token for setting PCIe Slot:FrontSSD2 Link Speed configuration."
             },
             "Smee": {
               "type": "string",
@@ -67742,8 +67922,7 @@
             "Port": {
               "type": "integer",
               "format": "int64",
-              "readOnly": true,
-              "description": "The logical port id of the ethernet interface used by the PXE device. Port is a deprecated property. Default value is changed to '-1' as this is invalid port. New or modified pxe device has the port value always set to '-1'."
+              "description": "The Port ID of the adapter on which the underlying virtual ethernet interface is present. If no port is specified, the default value is -1. Supported values are -1 to 255."
             },
             "Slot": {
               "type": "string",
@@ -68017,7 +68196,8 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -68249,11 +68429,13 @@
             },
             "OperPowerState": {
               "type": "string",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Current power state of the mother board of the server."
             },
             "Presence": {
               "type": "string",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Identifies the presence of the mother board of the server."
             },
             "ComputeBlade": {
               "$ref": "#/definitions/computeBladeRef",
@@ -68543,7 +68725,8 @@
             },
             "IsSecurePassphraseSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'securePassphrase' property has been set."
             },
             "Modules": {
               "type": "array",
@@ -72260,11 +72443,13 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "IsUserIdSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'userId' property has been set."
             },
             "Password": {
               "type": "string",
@@ -72511,6 +72696,13 @@
               "type": "string",
               "description": "Account name of the feedback sender. Copied in order to be persisted in case of account removal."
             },
+            "AlternativeFollowUpEmails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "User's alternative email addresses for follow-up."
+            },
             "Comment": {
               "type": "string",
               "description": "Text of the feedback as provided by the user, if it is a bug or a comment."
@@ -72693,6 +72885,10 @@
         {
           "type": "object",
           "properties": {
+            "FileLocation": {
+              "type": "string",
+              "description": "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile."
+            },
             "MountOptions": {
               "type": "string",
               "enum": [
@@ -72709,14 +72905,17 @@
             },
             "RemoteFile": {
               "type": "string",
+              "readOnly": true,
               "description": "Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso."
             },
             "RemoteIp": {
               "type": "string",
+              "readOnly": true,
               "description": "CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7."
             },
             "RemoteShare": {
               "type": "string",
+              "readOnly": true,
               "description": "Directory where the image is stored. Example:share/subfolder."
             }
           },
@@ -72758,7 +72957,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -72981,7 +73181,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "MapType": {
               "type": "string",
@@ -73038,20 +73239,27 @@
         {
           "type": "object",
           "properties": {
+            "FileLocation": {
+              "type": "string",
+              "description": "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile."
+            },
             "MountOptions": {
               "type": "string",
               "description": "Mount option as configured on the NFS Server. Example:nolock."
             },
             "RemoteFile": {
               "type": "string",
+              "readOnly": true,
               "description": "Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso."
             },
             "RemoteIp": {
               "type": "string",
+              "readOnly": true,
               "description": "NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7."
             },
             "RemoteShare": {
               "type": "string",
+              "readOnly": true,
               "description": "Directory where the image is stored. Example:/share/subfolder."
             }
           },
@@ -75520,6 +75728,13 @@
         }
       ]
     },
+    "hyperflexCollectTechSupportTaskRef": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/moMoRef"
+        }
+      ]
+    },
     "hyperflexConfigResultRef": {
       "allOf": [
         {
@@ -76467,11 +76682,6 @@
               "description": "Indicates if Hypervisor password is the factory set default password. For HyperFlex Data Platform versions 3.0 or higher, enable this if the default password was not changed on the Hypervisor. It is required to supply a new custom Hypervisor password that will be applied to the Hypervisor during deployment. For HyperFlex Data Platform versions prior to 3.0 release, this setting has no effect and the default password will be used for initial install. The Hypervisor password should be changed after deployment.",
               "x-nullable": true
             },
-            "IsHxdpRootPwdSet": {
-              "type": "boolean",
-              "readOnly": true,
-              "description": "Indicates whether the value of the 'hxdpRootPwd' property has been set."
-            },
             "HxdpRootPwd": {
               "type": "string",
               "description": "HyperFlex storage controller VM password must contain a minimum of 10 characters, with at least 1 lowercase, 1 uppercase, 1 numeric, and 1 of these -_@#$%^&*! special characters."
@@ -76480,14 +76690,19 @@
               "type": "string",
               "description": "Hypervisor administrator username must contain only alphanumeric characters. Use the root account for ESXi deployments."
             },
+            "HypervisorAdminPwd": {
+              "type": "string",
+              "description": "The ESXi root password. For HyperFlex Data Platform 3.0 or later, if the factory default password was not manually changed, you must set a new custom password. If the password was manually changed, you must not enable the factory default password property and provide the current hypervisor password. Note - All HyperFlex nodes require the same hypervisor password for installation. For HyperFlex Data Platform prior to 3.0, use the default password \"Cisco123\" for newly manufactured HyperFlex servers. A custom password should only be entered if hypervisor credentials were manually changed prior to deployment."
+            },
+            "IsHxdpRootPwdSet": {
+              "type": "boolean",
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'hxdpRootPwd' property has been set."
+            },
             "IsHypervisorAdminPwdSet": {
               "type": "boolean",
               "readOnly": true,
               "description": "Indicates whether the value of the 'hypervisorAdminPwd' property has been set."
-            },
-            "HypervisorAdminPwd": {
-              "type": "string",
-              "description": "The ESXi root password. For HyperFlex Data Platform 3.0 or later, if the factory default password was not manually changed, you must set a new custom password. If the password was manually changed, you must not enable the factory default password property and provide the current hypervisor password. Note - All HyperFlex nodes require the same hypervisor password for installation. For HyperFlex Data Platform prior to 3.0, use the default password \"Cisco123\" for newly manufactured HyperFlex servers. A custom password should only be entered if hypervisor credentials were manually changed prior to deployment."
             },
             "ClusterProfiles": {
               "type": "array",
@@ -76994,7 +77209,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -77913,6 +78129,13 @@
         }
       }
     },
+    "hyperflexUploadTechSupportBundleTaskRef": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/moMoRef"
+        }
+      ]
+    },
     "hyperflexVcenterConfigPolicyRef": {
       "allOf": [
         {
@@ -77940,7 +78163,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -78762,13 +78986,13 @@
               "readOnly": true,
               "description": "Status of the account. To activate the Intersight account, claim a device to the account."
             },
-            "_0_Encrypt": {
-              "$ref": "#/definitions/cryptEncryptRef",
-              "description": "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO."
-            },
-            "_1_Decrypt": {
+            "_0_Decrypt": {
               "$ref": "#/definitions/cryptDecryptRef",
               "description": "A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO."
+            },
+            "_1_Encrypt": {
+              "$ref": "#/definitions/cryptEncryptRef",
+              "description": "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO."
             },
             "AppRegistrations": {
               "type": "array",
@@ -78977,7 +79201,7 @@
               ],
               "default": "RSASSA-PKCS1-v1_5",
               "x-createOnly": true,
-              "description": "The signing algorithm used by the client to authenticate API requests to Intersight.\nThe following key generation schemes are supported:\n1. RSASSA-PSS, as defined in RFC 8017 [RFC8017], Section 8.1,\n2. ECDSA P-256, as defined in ANSI X9.62-2005 ECDSA and FIPS 186-4,\n3. Ed25519ph, Ed25519ctx, and Ed25519, as defined in RFC 8032 [RFC8032], Section 5.1.\nThe signing algorithm must be compatible with the key generation specification."
+              "description": "The signing algorithm used by the client to authenticate API requests to Intersight.\nThe signing algorithm must be compatible with the key generation specification."
             },
             "Permission": {
               "$ref": "#/definitions/iamPermissionRef",
@@ -79434,6 +79658,11 @@
               "description": "Enables a strong password policy Strong password requirements: A. The password must have a minimum of 8 and a maximum of 20 characters. B. The password must not contain the User's Name. C. The password must contain characters from three of the following four categories. 1) English uppercase characters (A through Z). 2) English lowercase characters (a through z). 3) Base 10 digits (0 through 9). 4) Non-alphabetic characters (! , @, #, $, %, ^, &, *, -, _, +, =).",
               "x-nullable": true
             },
+            "ForceSendPassword": {
+              "type": "boolean",
+              "description": "User password will always be sent to endpoint device. If the option is not selected, then users password will be sent to endpoint device if password is changed for existing users and for new users.",
+              "x-nullable": true
+            },
             "GracePeriod": {
               "type": "integer",
               "format": "int64",
@@ -79501,7 +79730,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -79578,7 +79807,7 @@
                 "IMCM5",
                 "UCSIOM",
                 "HX",
-                "HXTriton",
+                "HyperFlexAP",
                 "UCSD",
                 "IntersightAppliance",
                 "PureStorageFlashArray",
@@ -79777,7 +80006,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -80138,7 +80368,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "NestedGroupSearchDepth": {
               "type": "integer",
@@ -80625,6 +80856,10 @@
                 "$ref": "#/definitions/iamRoleRef"
               },
               "description": "The roles assigned to this permission. Role is a collection of privilege sets. Roles are assigned to a user using the permission object."
+            },
+            "SessionLimits": {
+              "$ref": "#/definitions/iamSessionLimitsRef",
+              "description": "Session related configuration limits."
             },
             "UserGroups": {
               "type": "array",
@@ -81435,8 +81670,7 @@
             "IdleTimeOut": {
               "type": "integer",
               "format": "int64",
-              "readOnly": true,
-              "description": "The idle timeout interval for the web session in seconds. The default value is 1800 seconds. When a session is not refreshed for this duration, backend will mark the session as idle and remove the session."
+              "description": "The idle timeout interval for the web session in seconds. When a session is not refreshed for this duration, the session is marked as idle and removed."
             },
             "MaximumLimit": {
               "type": "integer",
@@ -81453,13 +81687,16 @@
             "SessionTimeOut": {
               "type": "integer",
               "format": "int64",
-              "readOnly": true,
-              "description": "The session expiry duration in seconds. The default value is 57600 seconds or 16 hours."
+              "description": "The session expiry duration in seconds."
             },
             "Account": {
               "$ref": "#/definitions/iamAccountRef",
               "description": "A collection of references to the [iam.Account](mo://iam.Account) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.",
               "readOnly": true
+            },
+            "Permission": {
+              "$ref": "#/definitions/iamPermissionRef",
+              "description": "A collection of references to the [iam.Permission](mo://iam.Permission) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Permission](mo://iam.Permission) MO unsets its reference to this deleted MO."
             }
           }
         }
@@ -81940,6 +82177,13 @@
         }
       ]
     },
+    "imcconnectorKvmRelayMessageRef": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/moMoRef"
+        }
+      ]
+    },
     "imcconnectorOemUcsUpdateImageSpecRef": {
       "allOf": [
         {
@@ -81977,7 +82221,7 @@
     },
     "infraHardwareInfo": {
       "title": "Infra:Hardware Info",
-      "description": "Information about the hardware platform (cpu, memory).",
+      "description": "Information about the hardware platform. For example, cpu, memory, etc.",
       "allOf": [
         {
           "$ref": "#/definitions/moBaseComplexType"
@@ -81988,12 +82232,12 @@
             "CpuCores": {
               "type": "integer",
               "format": "int64",
-              "description": "The number of cpu cores on this hardware platform."
+              "description": "The number of CPU cores on this hardware platform."
             },
             "CpuSpeed": {
               "type": "integer",
               "format": "int64",
-              "description": "Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise."
+              "description": "Speed of CPU in MHz, as reported by the hardware platform."
             },
             "MemorySize": {
               "type": "integer",
@@ -82381,15 +82625,15 @@
               "description": "State of the IPMI Over LAN service on the endpoint.",
               "x-nullable": true
             },
-            "IsEncryptionKeySet": {
-              "type": "boolean",
-              "readOnly": true,
-              "description": "Indicates whether the value of the 'encryptionKey' property has been set."
-            },
             "EncryptionKey": {
               "type": "string",
               "description": "The encryption key to use for IPMI communication. It should have an even number of hexadecimal characters and not exceed 40 characters.",
               "x-writeOnly": true
+            },
+            "IsEncryptionKeySet": {
+              "type": "boolean",
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'encryptionKey' property has been set."
             },
             "Privilege": {
               "type": "string",
@@ -82446,6 +82690,57 @@
           "$ref": "#/definitions/moMoRef"
         }
       ]
+    },
+    "kvmKvmSessionRef": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/moMoRef"
+        }
+      ]
+    },
+    "kvmKvmSession": {
+      "title": "Kvm:Kvm Session",
+      "description": "API to launch the KVM Session.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/moBaseMo"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "KvmMuxUrl": {
+              "type": "string",
+              "readOnly": true,
+              "description": "The URL of the KVM MUX to connect to."
+            },
+            "Device": {
+              "$ref": "#/definitions/assetDeviceRegistrationRef",
+              "description": "The device onto which the KVM connection is initiated.",
+              "readOnly": true
+            },
+            "Server": {
+              "$ref": "#/definitions/computeRackUnitRef",
+              "description": "The server onto which the KVM connection is initiated."
+            }
+          }
+        }
+      ]
+    },
+    "kvmKvmSessionList": {
+      "properties": {
+        "Count": {
+          "description": "The number of kvmKvmSessions matching your request in total for all pages.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "Results": {
+          "description": "The array of kvmKvmSessions matching your request.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/kvmKvmSession"
+          }
+        }
+      }
     },
     "kvmPolicyRef": {
       "allOf": [
@@ -83471,7 +83766,8 @@
             },
             "CurrentCapacity": {
               "type": "string",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Current capacity of all the memory units on a server."
             },
             "ErrorCorrection": {
               "type": "string",
@@ -83479,7 +83775,8 @@
             },
             "MaxCapacity": {
               "type": "string",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Maximum capacity of all the memory units on a server."
             },
             "MaxDevices": {
               "type": "string",
@@ -83649,7 +83946,7 @@
             "MemoryCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Memory capacity in GB of a Persistent Memory configuration on a server."
+              "description": "Memory capacity in GiB of a Persistent Memory configuration on a server."
             },
             "NumOfModules": {
               "type": "string",
@@ -83664,12 +83961,12 @@
             "PersistentMemoryCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Persistent memory capacity in GB of a Persistent Memory configuration on a server."
+              "description": "Persistent memory capacity in GiB of a Persistent Memory configuration on a server."
             },
             "ReservedCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Reserved capacity in GB of a Persistent Memory configuration on a server."
+              "description": "Reserved capacity in GiB of a Persistent Memory configuration on a server."
             },
             "SecurityState": {
               "type": "string",
@@ -83679,7 +83976,7 @@
             "TotalCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Total capacity in GB of a Persistent Memory configuration on a server."
+              "description": "Total capacity in GiB of a Persistent Memory configuration on a server."
             },
             "ComputeBoard": {
               "$ref": "#/definitions/computeBoardRef",
@@ -83801,7 +84098,8 @@
             },
             "IsSecurePassphraseSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'securePassphrase' property has been set."
             },
             "SecurePassphrase": {
               "type": "string",
@@ -83901,7 +84199,7 @@
             "Capacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Capacity in GB of the Persistent Memory Namespace."
+              "description": "Capacity in GiB of the Persistent Memory Namespace."
             },
             "HealthState": {
               "type": "string",
@@ -84126,7 +84424,7 @@
             "FreeCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Free capacity in GB of the Persistent Memory Region."
+              "description": "Free capacity in GiB of the Persistent Memory Region."
             },
             "HealthState": {
               "type": "string",
@@ -84166,7 +84464,7 @@
             "TotalCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Total capacity in GB of the Persistent Memory Region."
+              "description": "Total capacity in GiB of the Persistent Memory Region."
             },
             "MemoryPersistentMemoryConfiguration": {
               "$ref": "#/definitions/memoryPersistentMemoryConfigurationRef",
@@ -84226,7 +84524,7 @@
             "AppDirectCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "AppDirect capacity in GB of the Persistent Memory Module on a server."
+              "description": "AppDirect capacity in GiB of the Persistent Memory Module on a server."
             },
             "CountStatus": {
               "type": "string",
@@ -84256,7 +84554,7 @@
             "MemoryCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Memory capacity in GB of the Persistent Memory Module on a server."
+              "description": "Memory capacity in GiB of the Persistent Memory Module on a server."
             },
             "MemoryId": {
               "type": "integer",
@@ -84267,12 +84565,12 @@
             "PersistentMemoryCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Persistent Memory capacity in GB of the Persistent Memory Module on a server."
+              "description": "Persistent Memory capacity in GiB of the Persistent Memory Module on a server."
             },
             "ReservedCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Reserved capacity in GB of the Persistent Memory Module on a server."
+              "description": "Reserved capacity in GiB of the Persistent Memory Module on a server."
             },
             "SecurityStatus": {
               "type": "string",
@@ -84292,7 +84590,7 @@
             "TotalCapacity": {
               "type": "string",
               "readOnly": true,
-              "description": "Total capacity in GB of the Persistent Memory Module on a server."
+              "description": "Total capacity in GiB of the Persistent Memory Module on a server."
             },
             "Uid": {
               "type": "string",
@@ -84685,6 +84983,11 @@
         {
           "type": "object",
           "properties": {
+            "ClassId": {
+              "type": "string",
+              "readOnly": true,
+              "description": "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
+            },
             "ObjectType": {
               "type": "string",
               "description": "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
@@ -84711,6 +85014,11 @@
               "type": "string",
               "readOnly": true,
               "description": "The Account ID for this managed object."
+            },
+            "ClassId": {
+              "type": "string",
+              "readOnly": true,
+              "description": "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
             },
             "CreateTime": {
               "type": "string",
@@ -84823,7 +85131,7 @@
             "Selector": {
               "type": "string",
               "readOnly": true,
-              "description": "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients. If 'moid' is set this field is ignored. If 'selector'\nis set and 'moid' is empty/absent from the request, Intersight will determine the Moid of the\nresource matching the filter expression and populate it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request. An error is returned if the filter\nmatches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
+              "description": "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
             }
           }
         }
@@ -87403,6 +87711,28 @@
         {
           "type": "object",
           "properties": {
+            "ElapsedTime": {
+              "type": "integer",
+              "format": "int64",
+              "readOnly": true,
+              "description": "Elapsed time in seconds to complete the current upgrade phase."
+            },
+            "EndTime": {
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true,
+              "description": "End date of the software upgrade phase."
+            },
+            "Failed": {
+              "type": "boolean",
+              "readOnly": true,
+              "description": "Indicates if the upgrade phase has failed or not."
+            },
+            "Message": {
+              "type": "string",
+              "readOnly": true,
+              "description": "Status message set during the upgrade phase."
+            },
             "Name": {
               "type": "string",
               "enum": [
@@ -87420,6 +87750,12 @@
               "default": "init",
               "readOnly": true,
               "description": "Name of the upgrade phase."
+            },
+            "StartTime": {
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true,
+              "description": "Start date of the software upgrade phase."
             }
           },
           "additionalProperties": {
@@ -87509,11 +87845,6 @@
         {
           "type": "object",
           "properties": {
-            "IsAnswerFileSet": {
-              "type": "boolean",
-              "readOnly": true,
-              "description": "Indicates whether the value of the 'answerFile' property has been set."
-            },
             "AnswerFile": {
               "type": "string",
               "description": "If the source of the answers is a static file, the content of the file is stored as value\nin this property.\nThe value is mandatory only when the 'Source' property has been set to 'File'."
@@ -87535,6 +87866,11 @@
               "$ref": "#/definitions/commIpV4Interface",
               "description": "In case of static IP configuration, IP address, netmask and gateway details are\nprovided."
             },
+            "IsAnswerFileSet": {
+              "type": "boolean",
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'answerFile' property has been set."
+            },
             "IsRootPasswordCrypted": {
               "type": "boolean",
               "description": "Enable to indicate Root Password provided is encrypted.",
@@ -87542,7 +87878,8 @@
             },
             "IsRootPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'rootPassword' property has been set."
             },
             "Nameserver": {
               "type": "string",
@@ -89414,7 +89751,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "LocationType": {
               "type": "string",
@@ -89431,7 +89769,7 @@
             },
             "Path": {
               "type": "string",
-              "description": "The file system path where the backup images must be stored. Include the IP address/hostname of the network share location and the complete file system path. For example: 172.29.109.234/var/backups/"
+              "description": "The file system path where the backup images must be stored. Include the IP address/hostname of the network share location and the complete file system path. For example: 172.29.109.234/var/backups/."
             },
             "Protocol": {
               "type": "string",
@@ -90996,7 +91334,8 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -91480,7 +91819,8 @@
             },
             "IsPmcDeployedSecurePassphraseSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'pmcDeployedSecurePassphrase' property has been set."
             },
             "PmcDeployedSecurePassphrase": {
               "type": "string",
@@ -91842,11 +92182,6 @@
         {
           "type": "object",
           "properties": {
-            "IsAuthPasswordSet": {
-              "type": "boolean",
-              "readOnly": true,
-              "description": "Indicates whether the value of the 'authPassword' property has been set."
-            },
             "AuthPassword": {
               "type": "string",
               "description": "Authorization password for the user.",
@@ -91862,9 +92197,15 @@
               "default": "NA",
               "description": "Authorization protocol for authenticating the user."
             },
+            "IsAuthPasswordSet": {
+              "type": "boolean",
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'authPassword' property has been set."
+            },
             "IsPrivacyPasswordSet": {
               "type": "boolean",
-              "readOnly": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'privacyPassword' property has been set."
             },
             "Name": {
               "type": "string",
@@ -92081,11 +92422,13 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "IsUserIdSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'userId' property has been set."
             },
             "Password": {
               "type": "string",
@@ -92200,9 +92543,14 @@
         {
           "type": "object",
           "properties": {
+            "FileLocation": {
+              "type": "string",
+              "description": "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile."
+            },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "MountOption": {
               "type": "string",
@@ -92214,14 +92562,17 @@
             },
             "RemoteFile": {
               "type": "string",
+              "readOnly": true,
               "description": "Filename of the image in the CIFS server. For example:ucs-c220m5-huu-3.1.2c.iso."
             },
             "RemoteIp": {
               "type": "string",
+              "readOnly": true,
               "description": "Hostname or IP Address of the CIFS server."
             },
             "RemoteShare": {
               "type": "string",
+              "readOnly": true,
               "description": "Remote directory where the image is present. For example:/share/subfolder."
             },
             "Username": {
@@ -92399,7 +92750,8 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "LocationLink": {
               "type": "string",
@@ -92524,6 +92876,10 @@
         {
           "type": "object",
           "properties": {
+            "FileLocation": {
+              "type": "string",
+              "description": "The location to the image file. The accepted format is IP-or-hostname/folder1/folder2/.../imageFile."
+            },
             "MountOptions": {
               "type": "string",
               "readOnly": true,
@@ -92531,14 +92887,17 @@
             },
             "RemoteFile": {
               "type": "string",
+              "readOnly": true,
               "description": "Filename of the image in the NFS server. For example:ucs-c220m5-huu-3.1.2c.iso."
             },
             "RemoteIp": {
               "type": "string",
+              "readOnly": true,
               "description": "Hostname or IP Address of the NFS server."
             },
             "RemoteShare": {
               "type": "string",
+              "readOnly": true,
               "description": "Remote directory where the image is present. For example:/share/subfolder."
             }
           }
@@ -94072,7 +94431,7 @@
             "StorageUtilization": {
               "$ref": "#/definitions/storageCapacity",
               "readOnly": true,
-              "description": "Storage utilization of an array, it contains total capacity, available capacity, used capacity and free capacity."
+              "description": "Storage utilization of an array. It contains total capacity, available capacity, and used capacity."
             }
           }
         }
@@ -94273,7 +94632,7 @@
             "Name": {
               "type": "string",
               "readOnly": true,
-              "description": "Name of the initiator represented in storage array."
+              "description": "Name of the initiator represented in the storage array."
             },
             "Type": {
               "type": "string",
@@ -94288,7 +94647,7 @@
             "Wwn": {
               "type": "string",
               "readOnly": true,
-              "description": "World wide name, 128 bit address represented in hexa decimal notation. (51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01)."
+              "description": "World wide name, 128 bit address represented in hexadecimal notation. For example, 51:4f:0c:50:14:1f:af:01:51:4f:0c:51:14:1f:af:01."
             }
           },
           "additionalProperties": {
@@ -95592,7 +95951,8 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Password": {
               "type": "string",
@@ -95635,7 +95995,7 @@
     },
     "storageReplicationBlackout": {
       "title": "Storage:Replication Blackout",
-      "description": "Range of time during which to suspend replication. System disables replication during this interval.",
+      "description": "The range of time during which replication will be suspended. System disables replication during this interval.",
       "allOf": [
         {
           "$ref": "#/definitions/moBaseComplexType"
@@ -95955,7 +96315,7 @@
             "RetentionTime": {
               "type": "string",
               "readOnly": true,
-              "description": "Duration to keep the snapshots on the source array.\nOnce this period expires, system deletes the snapshot automatically from source array.\nExamples:\nP200D,  200 days.\nPT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds."
+              "description": "Duration to keep the snapshots on the source array.\nOnce this period expires, system deletes the snapshot automatically from the source array.\nExamples:\nP200D,  200 days.\nPT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds."
             },
             "SnapshotTime": {
               "type": "string",
@@ -97725,34 +98085,6 @@
         }
       ]
     },
-    "telemetryTimeSeries": {
-      "title": "Telemetry:Time Series",
-      "description": "Exposes a REST endpoint for performing queries against Druid time series data.\nView Telemetry allows [POST of a Druid query](http://druid.io/docs/latest/querying/querying).\nManage Telemetry allows [READ of broker status](http://druid.io/docs/latest/operations/api-reference.html#broker).",
-      "allOf": [
-        {
-          "$ref": "#/definitions/moBaseMo"
-        },
-        {
-          "type": "object"
-        }
-      ]
-    },
-    "telemetryTimeSeriesList": {
-      "properties": {
-        "Count": {
-          "description": "The number of telemetryTimeSeries matching your request in total for all pages.",
-          "type": "integer",
-          "format": "int32"
-        },
-        "Results": {
-          "description": "The array of telemetryTimeSeries matching your request.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/telemetryTimeSeries"
-          }
-        }
-      }
-    },
     "telemetryWaitForDataCollectionRef": {
       "allOf": [
         {
@@ -98117,7 +98449,7 @@
     },
     "ucsdUcsdRestoreParameters": {
       "title": "Ucsd:Ucsd Restore Parameters",
-      "description": "Restore Configuration Parameters for UCS Director restore workflow",
+      "description": "Restore Configuration Parameters for UCS Director restore workflow.",
       "allOf": [
         {
           "$ref": "#/definitions/recoveryConfigParams"
@@ -98127,7 +98459,8 @@
           "properties": {
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "Location": {
               "type": "string",
@@ -98300,14 +98633,14 @@
             },
             "Identity": {
               "type": "string",
-              "description": "The internally generated identity of this vm. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference)."
+              "description": "The internally generated identity of this VM. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference)."
             },
             "IpAddress": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "The ip address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types."
+              "description": "The IP address of the virtual machine. There could be multiple addresses of IPv4 and IPv6 types."
             },
             "MemoryCapacity": {
               "$ref": "#/definitions/virtualizationMemoryCapacity",
@@ -98469,7 +98802,7 @@
             },
             "Description": {
               "type": "string",
-              "description": "The vendor provided description of the CPU (example:Intel Xeon E5-2640 v3 @ 2.60GHz)."
+              "description": "The vendor provided description of the CPU. For example, Intel Xeon E5-2640 v3 @ 2.60GHz."
             },
             "Sockets": {
               "type": "integer",
@@ -98479,11 +98812,11 @@
             "Speed": {
               "type": "integer",
               "format": "int64",
-              "description": "Speed of the CPUs in Hertz (Hz, example 2593749663)."
+              "description": "Speed of the CPUs in Hertz. For example, 2593749663."
             },
             "Vendor": {
               "type": "string",
-              "description": "Manufacturer of the CPU (example, Intel)."
+              "description": "Manufacturer of the CPU . For example, Intel."
             }
           },
           "additionalProperties": {
@@ -98600,11 +98933,11 @@
             },
             "IpAddress": {
               "type": "string",
-              "description": "Primary ip address of the guest os."
+              "description": "Primary IP address of the guest os."
             },
             "Name": {
               "type": "string",
-              "description": "The name of the guest running on this VM. This may not be the same as the host name."
+              "description": "The name of the guest running on this VM. This may not be the same as the hostname."
             },
             "OperatingSystem": {
               "type": "string",
@@ -98731,11 +99064,11 @@
             "Identity": {
               "type": "string",
               "readOnly": true,
-              "description": "Identity of the hypervisor (not manipulated by user). It could be a UUID too. Example - c917093f-5443-4748-bc09-eec72ded7608."
+              "description": "Identity of the hypervisor (not manipulated by user). It could be a UUID too. For example, c917093f-5443-4748-bc09-eec72ded7608."
             },
             "Name": {
               "type": "string",
-              "description": "The user provided name for the hypervisor manager (for example, vCenterIreland). Usually, this name is subject to manipulations by user. It is not the identity of the hypervisor."
+              "description": "The user provided name for the hypervisor manager. For example, vCenterIreland. Usually, this name is subject to manipulation by the user. It is not the identity of the hypervisor."
             },
             "Version": {
               "type": "string",
@@ -98744,7 +99077,7 @@
             },
             "RegisteredDevice": {
               "$ref": "#/definitions/assetDeviceRegistrationRef",
-              "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object."
+              "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it."
             }
           }
         }
@@ -98808,15 +99141,15 @@
           "properties": {
             "ProductName": {
               "type": "string",
-              "description": "Commercial product name, example, VMware ESXi."
+              "description": "Commercial product name. For example, VMware ESXi."
             },
             "ProductType": {
               "type": "string",
-              "description": "Indication of product type by the vendor, example, embeddedEsx."
+              "description": "Product name provided by the vendor. For example, embeddedEsx."
             },
             "ProductVendor": {
               "type": "string",
-              "description": "Commercial vendor name, example, VMware, Inc'."
+              "description": "Commercial vendor name. For example, VMware Inc."
             },
             "Version": {
               "type": "string",
@@ -98909,7 +99242,7 @@
     },
     "virtualizationSourceDevice": {
       "title": "Virtualization:Source Device",
-      "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object.",
+      "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
       "allOf": [
         {
           "$ref": "#/definitions/moBaseMo"
@@ -98919,7 +99252,7 @@
           "properties": {
             "RegisteredDevice": {
               "$ref": "#/definitions/assetDeviceRegistrationRef",
-              "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can just get to it via the inventory object."
+              "description": "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it."
             }
           }
         }
@@ -98999,7 +99332,7 @@
             "CpuShares": {
               "type": "integer",
               "format": "int64",
-              "description": "Good description found in VMware docs. Basically, indicates the relative importance of a vm. There is no unit for this value. It is a relative measure based on the settings for other resource pools."
+              "description": "Shows the relative importance of a VM. There is no unit for this value. It is a relative measure based on the settings for other resource pools. For more information, see VMware documentation."
             }
           },
           "additionalProperties": {
@@ -99028,12 +99361,12 @@
             "CoresPerSocket": {
               "type": "integer",
               "format": "int64",
-              "description": "Need to say more? This value may be empty."
+              "description": "The number of core per CPU socket (value may be empty)."
             },
             "NumCpus": {
               "type": "integer",
               "format": "int64",
-              "description": "Number of CPUs allocated to this vm."
+              "description": "Number of CPUs allocated to this VM."
             },
             "NumSockets": {
               "type": "integer",
@@ -99056,7 +99389,7 @@
     },
     "virtualizationVmDiskCommitInfo": {
       "title": "Virtualization:Vm Disk Commit Info",
-      "description": "Information about the virtual machine's disk commits, sharing and limits (details in VMware docs).",
+      "description": "Information about the virtual machine's disk commits, sharing and limits. For more information, see VMware documentation.",
       "allOf": [
         {
           "$ref": "#/definitions/moBaseComplexType"
@@ -99072,7 +99405,7 @@
             "UnCommittedDisk": {
               "type": "integer",
               "format": "int64",
-              "description": "Total uncommited disk space that is available for use (in bytes)."
+              "description": "Total uncommitted disk space that is available for use (in bytes)."
             },
             "UnsharedDisk": {
               "type": "integer",
@@ -99095,7 +99428,7 @@
     },
     "virtualizationVmMemoryShareInfo": {
       "title": "Virtualization:Vm Memory Share Info",
-      "description": "Information about the virtual machine's memory sharing and limits (details in VMware docs).",
+      "description": "Information about the virtual machine's memory sharing and limits. For more information, see VMware documentation.",
       "allOf": [
         {
           "$ref": "#/definitions/moBaseComplexType"
@@ -99121,7 +99454,7 @@
             "MemShares": {
               "type": "integer",
               "format": "int64",
-              "description": "Similar to cpuShares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools."
+              "description": "Similar to CPU Shares but applicable to memory. There is no unit for this value. It is a relative measure based on the settings for other resource pools."
             }
           },
           "additionalProperties": {
@@ -99260,7 +99593,7 @@
     },
     "virtualizationVmwareDatastore": {
       "title": "Virtualization:Vmware Datastore",
-      "description": "The VMware Datastore entity with its attributes. Every Datastore belongs to a Datacenter and maybe attached to VMs.",
+      "description": "The VMware Datastore entity with its attributes. Each Datastore belongs to a Datacenter and maybe attached to VMs.",
       "allOf": [
         {
           "$ref": "#/definitions/virtualizationDatastore"
@@ -99270,17 +99603,17 @@
           "properties": {
             "Accessible": {
               "type": "boolean",
-              "description": "Indicates if this datastore is accessible.",
+              "description": "Shows if this datastore is accessible.",
               "x-nullable": true
             },
             "MaintenanceMode": {
               "type": "boolean",
-              "description": "Is the datastore in maintenance mode. Will be set to true when in maintenance mode.",
+              "description": "Indicates if the datastore is in maintenance mode. Will be set to True, when in maintenance mode.",
               "x-nullable": true
             },
             "MultipleHostAccess": {
               "type": "boolean",
-              "description": "Is this datastore connected to multiple hosts.",
+              "description": "Indicates if this datastore is connected to multiple hosts.",
               "x-nullable": true
             },
             "Status": {
@@ -99296,7 +99629,7 @@
             },
             "ThinProvisioningSupported": {
               "type": "boolean",
-              "description": "Does this datastore support thin provisioning for files.",
+              "description": "Indicates if this datastore supports thin provisioning for files.",
               "x-nullable": true
             },
             "UnCommitted": {
@@ -99310,7 +99643,7 @@
             },
             "Cluster": {
               "$ref": "#/definitions/virtualizationVmwareClusterRef",
-              "description": "Specifies cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist."
+              "description": "Identifies the cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist for all datastores."
             },
             "Datacenter": {
               "$ref": "#/definitions/virtualizationVmwareDatacenterRef",
@@ -99354,7 +99687,7 @@
     },
     "virtualizationVmwareHost": {
       "title": "Virtualization:Vmware Host",
-      "description": "The VMware Host entity with its attributes. Every Host belongs to a Datacenter and probably runs VMs.",
+      "description": "The VMware Host entity with its attributes. Every Host belongs to a Datacenter and may run VMs.",
       "allOf": [
         {
           "$ref": "#/definitions/virtualizationHost"
@@ -99365,11 +99698,11 @@
             "BootTime": {
               "type": "string",
               "format": "date-time",
-              "description": "It is the time when this host booted up."
+              "description": "The time when this host booted up."
             },
             "ConnectionState": {
               "type": "string",
-              "description": "Is host connected to vCenter. Values are connected, notconnected."
+              "description": "Indicates if the host is connected to the vCenter. Values are connected, not connected."
             },
             "HwPowerState": {
               "type": "string",
@@ -99381,12 +99714,12 @@
                 "Paused"
               ],
               "default": "Unknown",
-              "description": "Is the host powered-up or powered-down."
+              "description": "Is the host Powered-up or Powered-down."
             },
             "NetworkAdapterCount": {
               "type": "integer",
               "format": "int64",
-              "description": "It is the count of all network adapters attached to this host."
+              "description": "The count of all network adapters attached to this host."
             },
             "ResourceConsumed": {
               "$ref": "#/definitions/virtualizationResourceConsumption",
@@ -99395,7 +99728,7 @@
             "StorageAdapterCount": {
               "type": "integer",
               "format": "int64",
-              "description": "It is the count of all storage adapters attached to this host."
+              "description": "The count of all storage adapters attached to this host."
             },
             "VcenterHostId": {
               "type": "string",
@@ -99403,7 +99736,7 @@
             },
             "Cluster": {
               "$ref": "#/definitions/virtualizationVmwareClusterRef",
-              "description": "Specifies associated cluster with the host entity. It is optional and upto platform to decide."
+              "description": "Identifies the cluster associated with the host entity. It is optional and depends on the platform."
             },
             "Datacenter": {
               "$ref": "#/definitions/virtualizationVmwareDatacenterRef",
@@ -99492,48 +99825,48 @@
           "properties": {
             "Annotation": {
               "type": "string",
-              "description": "List of annotations provided to this VM by user; Can be long."
+              "description": "List of annotations provided to this VM by user. Can be long."
             },
             "BootTime": {
               "type": "string",
               "format": "date-time",
-              "description": "Time when this vm booted up."
+              "description": "Time when this VM booted up."
             },
             "ConfigName": {
               "type": "string",
-              "description": "The named config for this vm, might be the same as guestHostname."
+              "description": "The configuration name for this VM. This maybe the same as the guest hostname."
             },
             "ConnectionState": {
               "type": "string",
-              "description": "Is virtual machine connected to vCenter. Values are connected, disconnected, orphaned, inaccessible, invalid."
+              "description": "Shows if virtual machine is connected to vCenter. Values are Connected, Disconnected, Orphaned, Inaccessible, and Invalid."
             },
             "CpuHotAddEnabled": {
               "type": "boolean",
-              "description": "Is the capability to add CPUs to a running VM enabled.",
+              "description": "Indicates if the capability to add CPUs to a running VM is enabled.",
               "x-nullable": true
             },
             "CpuShares": {
               "$ref": "#/definitions/virtualizationVmCpuShareInfo",
-              "description": "Basically, indicates the relative importance of a vm and its CPU limits."
+              "description": "Shows the relative importance of a VM and its CPU limits."
             },
             "CpuSocketInfo": {
               "$ref": "#/definitions/virtualizationVmCpuSocketInfo",
-              "description": "Details of CPUs/sockets of this vm."
+              "description": "Details of CPUs/sockets of this VM."
             },
             "CustomAttributes": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "User provided meta information associated with VMs. Can be long."
+              "description": "User provided meta information associated with the VMs. Can be long."
             },
             "DefaultPowerOffType": {
               "type": "string",
-              "description": "Indication of how the VM will be powered off (soft, hard, etc)."
+              "description": "Indicates how the VM will be powered off (soft, hard etc.)."
             },
             "DhcpEnabled": {
               "type": "boolean",
-              "description": "Is Dhcp used for IP/DNS on this vm.",
+              "description": "Shows if DHCP is used for IP/DNS on this VM.",
               "x-nullable": true
             },
             "DiskCommitInfo": {
@@ -99552,7 +99885,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "List of dnssuffixes given to this VM."
+              "description": "List of DNS suffixes given to this VM."
             },
             "Folder": {
               "type": "string",
@@ -99569,7 +99902,7 @@
                 "Standby"
               ],
               "default": "Unknown",
-              "description": "State of the guest OS on this VM. Is it running, notRunning, etc."
+              "description": "The state of the guest OS running on this VM. Could be running, not running etc."
             },
             "InstanceUuid": {
               "type": "string",
@@ -99589,7 +99922,7 @@
             },
             "MemShares": {
               "$ref": "#/definitions/virtualizationVmMemoryShareInfo",
-              "description": "Similar to cpuShares but applicable to memory."
+              "description": "Similar to CPU Shares but applicable to memory."
             },
             "MemoryHotAddEnabled": {
               "type": "boolean",
@@ -99599,18 +99932,18 @@
             "NetworkCount": {
               "type": "integer",
               "format": "int64",
-              "description": "How many networks are used by this VM."
+              "description": "Indicates how many networks are used by this VM."
             },
             "PortGroups": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "List of portgroup names allocated to this vm."
+              "description": "List of portgroup names allocated to this VM."
             },
             "ProtectedVm": {
               "type": "boolean",
-              "description": "Is this a protected VM. VMs can be in protection groups.",
+              "description": "Shows if this is a protected VM. VMs can be in protection groups.",
               "x-nullable": true
             },
             "RemoteDisplayInfo": {
@@ -99619,12 +99952,12 @@
             },
             "RemoteDisplayVncEnabled": {
               "type": "boolean",
-              "description": "Is support for a remote VNC access enabled.",
+              "description": "Shows if support for a remote VNC access is enabled.",
               "x-nullable": true
             },
             "ResourcePool": {
               "type": "string",
-              "description": "Name of the resource pool to which this vm belongs (optional)."
+              "description": "Name of the resource pool to which this VM belongs (optional)."
             },
             "ResourcePoolOwner": {
               "type": "string",
@@ -99636,7 +99969,7 @@
             },
             "ToolRunningStatus": {
               "type": "string",
-              "description": "Are guest tools running on this vm. Set to (guestToolNotRunning,  guestToolsRunning)."
+              "description": "Indicates if guest tools are running on this VM. Could be set to guestToolNotRunning or guestToolsRunning."
             },
             "ToolsVersion": {
               "type": "string",
@@ -99645,11 +99978,11 @@
             "VmDiskCount": {
               "type": "integer",
               "format": "int64",
-              "description": "How many disks are assigned to this VM."
+              "description": "Shows the number of disks assigned to this VM."
             },
             "VmOverallStatus": {
               "type": "string",
-              "description": "The operational state (there are many possible states, Available, Provisioned, Maintenance mode, Deleting, etc.) of this vm."
+              "description": "The operational state of the VM. Could be Available, Provisioned, Maintenance mode, Deleting, etc."
             },
             "VmPath": {
               "type": "string",
@@ -99666,7 +99999,7 @@
             },
             "VnicDeviceConfigId": {
               "type": "string",
-              "description": "Information related to the guest info's vnic virtual device (this is a comma separated list)."
+              "description": "Information related to the guest info's VNIC virtual device. It is a comma-separated list."
             },
             "Cluster": {
               "$ref": "#/definitions/virtualizationVmwareClusterRef",
@@ -99764,11 +100097,12 @@
             },
             "IsPasswordSet": {
               "type": "boolean",
-              "x-nullable": true
+              "readOnly": true,
+              "description": "Indicates whether the value of the 'password' property has been set."
             },
             "MountOptions": {
               "type": "string",
-              "description": "Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\\n For CIFS, supported options are soft, nounix, noserverino, guest.\\n For HTTP/HTTPS, the only supported option is noauto."
+              "description": "Mount options for the Virtual Media mapping. The field can be left blank or filled in a comma separated list with the following options.\\n For NFS, supported options are ro, rw, nolock, noexec, soft, port=VALUE, timeo=VALUE, retry=VALUE.\\n For CIFS, supported options are soft, nounix, noserverino, guest.\\n For CIFS version < 3.0, vers=VALUE is mandatory. e.g. vers=2.0\\n For HTTP/HTTPS, the only supported option is noauto."
             },
             "MountProtocol": {
               "type": "string",
@@ -99791,7 +100125,7 @@
             },
             "RemotePath": {
               "type": "string",
-              "description": "URL path to the location of the image on the remote server. The preferred format is '/path/'."
+              "description": "URL path to the location of the image on the remote server. The preferred format is '/path'."
             },
             "Username": {
               "type": "string",
@@ -103903,14 +104237,14 @@
               "readOnly": true,
               "description": "Total number of workflow tasks in this workflow."
             },
-            "_0_ClusterProfile": {
-              "$ref": "#/definitions/hyperflexClusterProfileRef",
-              "description": "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
-              "readOnly": true
-            },
-            "_1_Profile": {
+            "_0_Profile": {
               "$ref": "#/definitions/serverProfileRef",
               "description": "A collection of references to the [server.Profile](mo://server.Profile) Managed Object.\nWhen this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.",
+              "readOnly": true
+            },
+            "_1_ClusterProfile": {
+              "$ref": "#/definitions/hyperflexClusterProfileRef",
+              "description": "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
               "readOnly": true
             },
             "Account": {

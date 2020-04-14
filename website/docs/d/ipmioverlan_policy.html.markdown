@@ -10,6 +10,7 @@ Intelligent Platform Management Interface Over LAN Policy.
 Intelligent Platform Management Interface Over LAN Policy.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"Description of the policy."
 * `enabled`:(bool)"State of the IPMI Over LAN service on the endpoint."
 * `encryption_key`:(string)"The encryption key to use for IPMI communication. It should have an even number of hexadecimal characters and not exceed 40 characters."

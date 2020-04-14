@@ -10,6 +10,7 @@ The web session of a user. After a user logs into Intersight, a session object i
 The web session of a user. After a user logs into Intersight, a session object is created. Session object is deleted upon logout, idle timeout, expiry timeout, or manual deletion.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `client_ip_address`:(string)"The user agent IP address from which the session is launched."
 * `expiration`:(string)"Expiration time for the session."
 * `idle_time_expiration`:(string)"Idle time expiration for the session."

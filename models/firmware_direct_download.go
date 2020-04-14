@@ -111,7 +111,8 @@ type FirmwareDirectDownloadAO1P1 struct {
 	// Enum: [cisco localHttp]
 	ImageSource *string `json:"ImageSource,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Password as configured on the local https server.
@@ -140,7 +141,8 @@ func (m *FirmwareDirectDownloadAO1P1) UnmarshalJSON(data []byte) error {
 		// Enum: [cisco localHttp]
 		ImageSource *string `json:"ImageSource,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password as configured on the local https server.
@@ -205,7 +207,8 @@ func (m FirmwareDirectDownloadAO1P1) MarshalJSON() ([]byte, error) {
 		// Enum: [cisco localHttp]
 		ImageSource *string `json:"ImageSource,omitempty"`
 
-		// is password set
+		// Indicates whether the value of the 'password' property has been set.
+		// Read Only: true
 		IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 		// Password as configured on the local https server.

@@ -11,6 +11,7 @@ This MO contains a task definition.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `action_type`:(string)"A task execution type to indicate if it is a system task."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `description`:(string)"A description of the task."
 * `internal`:(bool)"Denotes whether or not this is an internal task.  Internal tasks will be hidden from the UI within a workflow."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

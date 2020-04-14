@@ -15,6 +15,7 @@ the feature set defined for the license entitlement is granted to the customer.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `active_admin`:(bool)"The license administrative state.\nSet this property to 'true' to activate the license entitlements."
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `days_left`:(int)"The number of days left for licenseState to stay in TrialPeriod or OutOfCompliance state."
 * `end_time`:(string)"The date and time when the trial period expires.\nThe value of the 'endTime' property is set when the account enters the TrialPeriod or OutOfCompliance state."
 * `enforce_mode`:(string)"The entitlement mode reported by Cisco Smart Software Manager."

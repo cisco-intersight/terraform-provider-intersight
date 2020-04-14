@@ -27,7 +27,8 @@ type HyperflexProxySettingPolicy struct {
 	// HTTP Proxy server FQDN or IP.
 	Hostname string `json:"Hostname,omitempty"`
 
-	// is password set
+	// Indicates whether the value of the 'password' property has been set.
+	// Read Only: true
 	IsPasswordSet *bool `json:"IsPasswordSet,omitempty"`
 
 	// Relationship to the Organization that owns the Managed Object.

@@ -24,6 +24,7 @@ shall be given during OS installation in the form of os.Answers type and 'additi
 os.OsInstall object.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `file_content`:(string)"The content of the entire configuration file is stored as value. The content\ncan either be a static file content or a template content.\nThe template is expected to conform to the golang template syntax. The values\nfrom os.Answers properties will be used to populate this template."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"The name of the OS ConfigurationFile that uniquely identifies the configuration file."
