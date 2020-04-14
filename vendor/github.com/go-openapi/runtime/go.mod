@@ -1,5 +1,7 @@
 module github.com/go-openapi/runtime
 
+go 1.14
+
 require (
 	github.com/docker/go-units v0.4.0
 	github.com/go-openapi/analysis v0.19.2
