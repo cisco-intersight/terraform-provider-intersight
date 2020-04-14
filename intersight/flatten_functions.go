@@ -4386,7 +4386,7 @@ func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSig
 	assetparentconnectionsignature["device_id"] = item.DeviceID
 	assetparentconnectionsignature["node_id"] = item.NodeID
 	assetparentconnectionsignature["object_type"] = item.ObjectType
-	assetparentconnectionsignature["signature"] = item.Signature
+	assetparentconnectionsignature["signature"] = string(item.Signature)
 
 	assetparentconnectionsignatures = append(assetparentconnectionsignatures, assetparentconnectionsignature)
 	return assetparentconnectionsignatures
