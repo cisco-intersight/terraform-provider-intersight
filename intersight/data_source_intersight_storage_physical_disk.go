@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -73,18 +73,20 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Optional: true,
 			},
 			"drive_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The drive state as reported by the controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"fde_capable": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"link_speed": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The speed of the link between the drive and the controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"link_state": {
 				Type:     schema.TypeString,
@@ -92,12 +94,24 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"locator_led": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Description: "A reference to a equipmentLocatorLed resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -105,7 +119,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -159,12 +173,23 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -172,7 +197,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -192,11 +217,22 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"physical_disk_extensions": {
-				Description: "The physical connectivity between a SCSI controller and physical disks.",
+				Description: "An array of relationships to storagePhysicalDiskExtension resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -204,7 +240,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -241,13 +277,24 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -255,7 +302,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -281,11 +328,23 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"running_firmware": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "An array of relationships to firmwareRunningFirmware resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -293,7 +352,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -308,12 +367,23 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"sas_ports": {
-				Description: "It is a reference to SAS Port to physical disk.",
+				Description: "An array of relationships to storageSasPort resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -321,7 +391,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -352,13 +422,24 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"storage_controller": {
-				Description: "A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.\nWhen this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageController resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -366,7 +447,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -381,13 +462,24 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"storage_enclosure": {
-				Description: "A collection of references to the [storage.Enclosure](mo://storage.Enclosure) Managed Object.\nWhen this managed object is deleted, the referenced [storage.Enclosure](mo://storage.Enclosure) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageEnclosure resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -395,7 +487,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -410,32 +502,14 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -444,7 +518,6 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"thermal": {
 				Type:     schema.TypeString,
@@ -470,178 +543,172 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "storage/PhysicalDisks"
-	var o models.StoragePhysicalDisk
+	var o = models.NewStoragePhysicalDisk()
 	if v, ok := d.GetOk("block_size"); ok {
 		x := (v.(string))
-		o.BlockSize = x
+		o.SetBlockSize(x)
 	}
 	if v, ok := d.GetOk("bootable"); ok {
 		x := (v.(string))
-		o.Bootable = x
+		o.SetBootable(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("configuration_checkpoint"); ok {
 		x := (v.(string))
-		o.ConfigurationCheckpoint = x
+		o.SetConfigurationCheckpoint(x)
 	}
 	if v, ok := d.GetOk("configuration_state"); ok {
 		x := (v.(string))
-		o.ConfigurationState = x
+		o.SetConfigurationState(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("discovered_path"); ok {
 		x := (v.(string))
-		o.DiscoveredPath = x
+		o.SetDiscoveredPath(x)
 	}
 	if v, ok := d.GetOk("disk_id"); ok {
 		x := (v.(string))
-		o.DiskID = x
+		o.SetDiskId(x)
 	}
 	if v, ok := d.GetOk("disk_state"); ok {
 		x := (v.(string))
-		o.DiskState = x
+		o.SetDiskState(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("drive_firmware"); ok {
 		x := (v.(string))
-		o.DriveFirmware = x
+		o.SetDriveFirmware(x)
 	}
 	if v, ok := d.GetOk("drive_state"); ok {
 		x := (v.(string))
-		o.DriveState = x
+		o.SetDriveState(x)
 	}
 	if v, ok := d.GetOk("fde_capable"); ok {
 		x := (v.(string))
-		o.FdeCapable = x
+		o.SetFdeCapable(x)
 	}
 	if v, ok := d.GetOk("link_speed"); ok {
 		x := (v.(string))
-		o.LinkSpeed = x
+		o.SetLinkSpeed(x)
 	}
 	if v, ok := d.GetOk("link_state"); ok {
 		x := (v.(string))
-		o.LinkState = x
+		o.SetLinkState(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("num_blocks"); ok {
 		x := (v.(string))
-		o.NumBlocks = x
+		o.SetNumBlocks(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("oper_power_state"); ok {
 		x := (v.(string))
-		o.OperPowerState = x
+		o.SetOperPowerState(x)
 	}
 	if v, ok := d.GetOk("oper_qualifier_reason"); ok {
 		x := (v.(string))
-		o.OperQualifierReason = x
+		o.SetOperQualifierReason(x)
 	}
 	if v, ok := d.GetOk("operability"); ok {
 		x := (v.(string))
-		o.Operability = x
+		o.SetOperability(x)
 	}
 	if v, ok := d.GetOk("physical_block_size"); ok {
 		x := (v.(string))
-		o.PhysicalBlockSize = x
+		o.SetPhysicalBlockSize(x)
 	}
 	if v, ok := d.GetOk("pid"); ok {
 		x := (v.(string))
-		o.Pid = x
+		o.SetPid(x)
 	}
 	if v, ok := d.GetOk("presence"); ok {
 		x := (v.(string))
-		o.Presence = x
+		o.SetPresence(x)
 	}
 	if v, ok := d.GetOk("protocol"); ok {
 		x := (v.(string))
-		o.Protocol = x
+		o.SetProtocol(x)
 	}
 	if v, ok := d.GetOk("raw_size"); ok {
 		x := (v.(string))
-		o.RawSize = x
+		o.SetRawSize(x)
 	}
 	if v, ok := d.GetOk("revision"); ok {
 		x := (v.(string))
-		o.Revision = x
+		o.SetRevision(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("secured"); ok {
 		x := (v.(string))
-		o.Secured = x
+		o.SetSecured(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("size"); ok {
 		x := (v.(string))
-		o.Size = x
+		o.SetSize(x)
 	}
 	if v, ok := d.GetOk("thermal"); ok {
 		x := (v.(string))
-		o.Thermal = x
+		o.SetThermal(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("variant_type"); ok {
 		x := (v.(string))
-		o.VariantType = x
+		o.SetVariantType(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.StorageApi.GetStoragePhysicalDiskList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.StoragePhysicalDisk
+			var s = models.NewStoragePhysicalDisk()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("block_size", (s.BlockSize)); err != nil {
@@ -650,7 +717,7 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("bootable", (s.Bootable)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("configuration_checkpoint", (s.ConfigurationCheckpoint)); err != nil {
@@ -659,13 +726,13 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("configuration_state", (s.ConfigurationState)); err != nil {
 				return err
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
+			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
 				return err
 			}
 			if err := d.Set("discovered_path", (s.DiscoveredPath)); err != nil {
 				return err
 			}
-			if err := d.Set("disk_id", (s.DiskID)); err != nil {
+			if err := d.Set("disk_id", (s.DiskId)); err != nil {
 				return err
 			}
 			if err := d.Set("disk_state", (s.DiskState)); err != nil {
@@ -690,7 +757,7 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRef(s.LocatorLed, d)); err != nil {
+			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRelationship(s.LocatorLed, d)); err != nil {
 				return err
 			}
 			if err := d.Set("model", (s.Model)); err != nil {
@@ -715,14 +782,14 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("physical_block_size", (s.PhysicalBlockSize)); err != nil {
 				return err
 			}
 
-			if err := d.Set("physical_disk_extensions", flattenListStoragePhysicalDiskExtensionRef(s.PhysicalDiskExtensions, d)); err != nil {
+			if err := d.Set("physical_disk_extensions", flattenListStoragePhysicalDiskExtensionRelationship(s.PhysicalDiskExtensions, d)); err != nil {
 				return err
 			}
 			if err := d.Set("pid", (s.Pid)); err != nil {
@@ -738,7 +805,7 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
@@ -748,11 +815,11 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRef(s.RunningFirmware, d)); err != nil {
+			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRelationship(s.RunningFirmware, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("sas_ports", flattenListStorageSasPortRef(s.SasPorts, d)); err != nil {
+			if err := d.Set("sas_ports", flattenListStorageSasPortRelationship(s.SasPorts, d)); err != nil {
 				return err
 			}
 			if err := d.Set("secured", (s.Secured)); err != nil {
@@ -765,11 +832,11 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("storage_controller", flattenMapStorageControllerRef(s.StorageController, d)); err != nil {
+			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.StorageController, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("storage_enclosure", flattenMapStorageEnclosureRef(s.StorageEnclosure, d)); err != nil {
+			if err := d.Set("storage_enclosure", flattenMapStorageEnclosureRelationship(s.StorageEnclosure, d)); err != nil {
 				return err
 			}
 
@@ -788,7 +855,7 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

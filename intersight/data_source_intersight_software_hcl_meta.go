@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -21,12 +21,23 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Computed:    true,
 			},
 			"catalog": {
-				Description: "The catalog where this file is present.",
+				Description: "A reference to a softwarerepositoryCatalog resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -34,7 +45,7 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -122,12 +133,23 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -135,7 +157,7 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -193,11 +215,6 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -215,38 +232,19 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Computed: true,
 			},
 			"supported_models": {
-				Description: "The server models for which this image is applicable.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -255,7 +253,6 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"vendor": {
 				Description: "The vendor or publisher of this file.",
@@ -270,136 +267,130 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "software/HclMeta"
-	var o models.SoftwareHclMeta
+	var o = models.NewSoftwareHclMeta()
 	if v, ok := d.GetOk("bundle_type"); ok {
 		x := (v.(string))
-		o.BundleType = x
+		o.SetBundleType(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("content_type"); ok {
 		x := (v.(string))
-		o.ContentType = &x
+		o.SetContentType(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("download_count"); ok {
 		x := int64(v.(int))
-		o.DownloadCount = x
+		o.SetDownloadCount(x)
 	}
 	if v, ok := d.GetOk("guid"); ok {
 		x := (v.(string))
-		o.GUID = x
+		o.SetGuid(x)
 	}
 	if v, ok := d.GetOk("import_action"); ok {
 		x := (v.(string))
-		o.ImportAction = &x
+		o.SetImportAction(x)
 	}
 	if v, ok := d.GetOk("import_state"); ok {
 		x := (v.(string))
-		o.ImportState = x
+		o.SetImportState(x)
 	}
 	if v, ok := d.GetOk("md5sum"); ok {
 		x := (v.(string))
-		o.Md5sum = x
+		o.SetMd5sum(x)
 	}
 	if v, ok := d.GetOk("mdfid"); ok {
 		x := (v.(string))
-		o.Mdfid = x
+		o.SetMdfid(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 	if v, ok := d.GetOk("recommended_build"); ok {
 		x := (v.(string))
-		o.RecommendedBuild = x
+		o.SetRecommendedBuild(x)
 	}
 	if v, ok := d.GetOk("release_notes_url"); ok {
 		x := (v.(string))
-		o.ReleaseNotesURL = x
+		o.SetReleaseNotesUrl(x)
 	}
 	if v, ok := d.GetOk("sha512sum"); ok {
 		x := (v.(string))
-		o.Sha512sum = x
+		o.SetSha512sum(x)
 	}
 	if v, ok := d.GetOk("size"); ok {
 		x := int64(v.(int))
-		o.Size = x
+		o.SetSize(x)
 	}
 	if v, ok := d.GetOk("software_advisory_url"); ok {
 		x := (v.(string))
-		o.SoftwareAdvisoryURL = x
+		o.SetSoftwareAdvisoryUrl(x)
 	}
 	if v, ok := d.GetOk("software_type_id"); ok {
 		x := (v.(string))
-		o.SoftwareTypeID = x
+		o.SetSoftwareTypeId(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = &x
+		o.SetVendor(x)
 	}
 	if v, ok := d.GetOk("version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.SoftwareApi.GetSoftwareHclMetaList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.SoftwareHclMeta
+			var s = models.NewSoftwareHclMeta()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("bundle_type", (s.BundleType)); err != nil {
 				return err
 			}
 
-			if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRef(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.Catalog, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("content_type", (s.ContentType)); err != nil {
@@ -411,7 +402,7 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err := d.Set("download_count", (s.DownloadCount)); err != nil {
 				return err
 			}
-			if err := d.Set("guid", (s.GUID)); err != nil {
+			if err := d.Set("guid", (s.Guid)); err != nil {
 				return err
 			}
 			if err := d.Set("import_action", (s.ImportAction)); err != nil {
@@ -439,7 +430,7 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
@@ -448,7 +439,7 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err := d.Set("recommended_build", (s.RecommendedBuild)); err != nil {
 				return err
 			}
-			if err := d.Set("release_notes_url", (s.ReleaseNotesURL)); err != nil {
+			if err := d.Set("release_notes_url", (s.ReleaseNotesUrl)); err != nil {
 				return err
 			}
 			if err := d.Set("sha512sum", (s.Sha512sum)); err != nil {
@@ -457,10 +448,10 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err := d.Set("size", (s.Size)); err != nil {
 				return err
 			}
-			if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryURL)); err != nil {
+			if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
 				return err
 			}
-			if err := d.Set("software_type_id", (s.SoftwareTypeID)); err != nil {
+			if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
 				return err
 			}
 
@@ -480,7 +471,7 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err := d.Set("version", (s.Version)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

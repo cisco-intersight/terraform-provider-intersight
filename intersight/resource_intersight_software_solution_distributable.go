@@ -1,11 +1,10 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -23,12 +22,23 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 				Computed:    true,
 			},
 			"catalog": {
-				Description: "The catalog where this image is present.",
+				Description: "A reference to a softwarerepositoryCatalog resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -36,10 +46,9 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -130,12 +139,23 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -143,10 +163,9 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -208,11 +227,6 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -223,7 +237,6 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -237,38 +250,19 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 				Default:     "osimage",
 			},
 			"supported_models": {
-				Description: "The server models for which this image is applicable.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -277,14 +271,11 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"vendor": {
 				Description: "The vendor or publisher of this file.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Default:     "Cisco",
 			},
 			"version": {
 				Description: "Vendor provided version for the file.",
@@ -294,246 +285,194 @@ func resourceSoftwareSolutionDistributable() *schema.Resource {
 		},
 	}
 }
+
 func resourceSoftwareSolutionDistributableCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.SoftwareSolutionDistributable
+	var o = models.NewSoftwareSolutionDistributable()
 	if v, ok := d.GetOk("bundle_type"); ok {
 		x := (v.(string))
-		o.BundleType = x
-
+		o.SetBundleType(x)
 	}
 
 	if v, ok := d.GetOk("catalog"); ok {
-		p := models.SoftwarerepositoryCatalogRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.SoftwarerepositoryCatalogRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.SoftwarerepositoryCatalogRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("softwarerepository.Catalog")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsSoftwarerepositoryCatalogRelationship())
 		}
-		x := p
-		o.Catalog = &x
-
+		x := p[0]
+		o.SetCatalog(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("software.SolutionDistributable")
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("download_count"); ok {
 		x := int64(v.(int))
-		o.DownloadCount = x
-
+		o.SetDownloadCount(x)
 	}
 
 	if v, ok := d.GetOk("file_path"); ok {
 		x := (v.(string))
-		o.FilePath = x
-
+		o.SetFilePath(x)
 	}
 
 	if v, ok := d.GetOk("guid"); ok {
 		x := (v.(string))
-		o.GUID = x
-
+		o.SetGuid(x)
 	}
 
 	if v, ok := d.GetOk("import_action"); ok {
 		x := (v.(string))
-		o.ImportAction = &x
-
+		o.SetImportAction(x)
 	}
 
 	if v, ok := d.GetOk("import_state"); ok {
 		x := (v.(string))
-		o.ImportState = x
-
+		o.SetImportState(x)
 	}
 
 	if v, ok := d.GetOk("md5sum"); ok {
 		x := (v.(string))
-		o.Md5sum = x
-
+		o.SetMd5sum(x)
 	}
 
 	if v, ok := d.GetOk("mdfid"); ok {
 		x := (v.(string))
-		o.Mdfid = x
-
+		o.SetMdfid(x)
 	}
 
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
-
+		o.SetModel(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("software.SolutionDistributable")
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
-
+		o.SetPlatformType(x)
 	}
 
 	if v, ok := d.GetOk("recommended_build"); ok {
 		x := (v.(string))
-		o.RecommendedBuild = x
-
+		o.SetRecommendedBuild(x)
 	}
 
 	if v, ok := d.GetOk("release_notes_url"); ok {
 		x := (v.(string))
-		o.ReleaseNotesURL = x
-
+		o.SetReleaseNotesUrl(x)
 	}
 
 	if v, ok := d.GetOk("sha512sum"); ok {
 		x := (v.(string))
-		o.Sha512sum = x
-
+		o.SetSha512sum(x)
 	}
 
 	if v, ok := d.GetOk("size"); ok {
 		x := int64(v.(int))
-		o.Size = x
-
+		o.SetSize(x)
 	}
 
 	if v, ok := d.GetOk("software_advisory_url"); ok {
 		x := (v.(string))
-		o.SoftwareAdvisoryURL = x
-
+		o.SetSoftwareAdvisoryUrl(x)
 	}
 
 	if v, ok := d.GetOk("software_type_id"); ok {
 		x := (v.(string))
-		o.SoftwareTypeID = x
-
+		o.SetSoftwareTypeId(x)
 	}
 
 	if v, ok := d.GetOk("solution_name"); ok {
 		x := (v.(string))
-		o.SolutionName = x
-
+		o.SetSolutionName(x)
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		p := models.SoftwarerepositoryFileServer{}
-		if len(v.([]interface{})) > 0 {
-			o := models.SoftwarerepositoryFileServer{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.AO1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+		p := make([]models.SoftwarerepositoryFileServer, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			o.SetClassId("softwarerepository.FileServer")
+			o.SetObjectType("softwarerepository.FileServer")
+			p = append(p, *o)
 		}
-		x := p
-		o.Source = &x
-
+		x := p[0]
+		o.SetSource(x)
 	}
 
 	if v, ok := d.GetOk("sub_type"); ok {
 		x := (v.(string))
-		o.SubType = &x
-
+		o.SetSubType(x)
 	}
 
 	if v, ok := d.GetOk("supported_models"); ok {
@@ -542,90 +481,49 @@ func resourceSoftwareSolutionDistributableCreate(d *schema.ResourceData, meta in
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SupportedModels = x
-
+		o.SetSupportedModels(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = &x
-
+		o.SetVendor(x)
 	}
 
 	if v, ok := d.GetOk("version"); ok {
 		x := (v.(string))
-		o.Version = x
-
+		o.SetVersion(x)
 	}
 
-	url := "software/SolutionDistributables"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.SoftwareApi.CreateSoftwareSolutionDistributable(conn.ctx).SoftwareSolutionDistributable(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceSoftwareSolutionDistributableRead(d, meta)
 }
 
@@ -634,14 +532,9 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "software/SolutionDistributables" + "/" + d.Id()
+	r := conn.ApiClient.SoftwareApi.GetSoftwareSolutionDistributableByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.SoftwareSolutionDistributable
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
@@ -651,11 +544,11 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 		return err
 	}
 
-	if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRef(s.Catalog, d)); err != nil {
+	if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.Catalog, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -671,7 +564,7 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 		return err
 	}
 
-	if err := d.Set("guid", (s.GUID)); err != nil {
+	if err := d.Set("guid", (s.Guid)); err != nil {
 		return err
 	}
 
@@ -707,7 +600,7 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
@@ -719,7 +612,7 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 		return err
 	}
 
-	if err := d.Set("release_notes_url", (s.ReleaseNotesURL)); err != nil {
+	if err := d.Set("release_notes_url", (s.ReleaseNotesUrl)); err != nil {
 		return err
 	}
 
@@ -731,11 +624,11 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 		return err
 	}
 
-	if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryURL)); err != nil {
+	if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
 		return err
 	}
 
-	if err := d.Set("software_type_id", (s.SoftwareTypeID)); err != nil {
+	if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
 		return err
 	}
 
@@ -768,249 +661,217 @@ func resourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta inte
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceSoftwareSolutionDistributableUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.SoftwareSolutionDistributable
+	var o = models.NewSoftwareSolutionDistributable()
 	if d.HasChange("bundle_type") {
 		v := d.Get("bundle_type")
 		x := (v.(string))
-		o.BundleType = x
+		o.SetBundleType(x)
 	}
 
 	if d.HasChange("catalog") {
 		v := d.Get("catalog")
-		p := models.SoftwarerepositoryCatalogRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.SoftwarerepositoryCatalogRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.SoftwarerepositoryCatalogRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("softwarerepository.Catalog")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsSoftwarerepositoryCatalogRelationship())
 		}
-		x := p
-		o.Catalog = &x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		x := p[0]
+		o.SetCatalog(x)
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("download_count") {
 		v := d.Get("download_count")
 		x := int64(v.(int))
-		o.DownloadCount = x
+		o.SetDownloadCount(x)
 	}
 
 	if d.HasChange("file_path") {
 		v := d.Get("file_path")
 		x := (v.(string))
-		o.FilePath = x
+		o.SetFilePath(x)
 	}
 
 	if d.HasChange("guid") {
 		v := d.Get("guid")
 		x := (v.(string))
-		o.GUID = x
+		o.SetGuid(x)
 	}
 
 	if d.HasChange("import_action") {
 		v := d.Get("import_action")
 		x := (v.(string))
-		o.ImportAction = &x
+		o.SetImportAction(x)
 	}
 
 	if d.HasChange("import_state") {
 		v := d.Get("import_state")
 		x := (v.(string))
-		o.ImportState = x
+		o.SetImportState(x)
 	}
 
 	if d.HasChange("md5sum") {
 		v := d.Get("md5sum")
 		x := (v.(string))
-		o.Md5sum = x
+		o.SetMd5sum(x)
 	}
 
 	if d.HasChange("mdfid") {
 		v := d.Get("mdfid")
 		x := (v.(string))
-		o.Mdfid = x
+		o.SetMdfid(x)
 	}
 
 	if d.HasChange("model") {
 		v := d.Get("model")
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("platform_type") {
 		v := d.Get("platform_type")
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 
 	if d.HasChange("recommended_build") {
 		v := d.Get("recommended_build")
 		x := (v.(string))
-		o.RecommendedBuild = x
+		o.SetRecommendedBuild(x)
 	}
 
 	if d.HasChange("release_notes_url") {
 		v := d.Get("release_notes_url")
 		x := (v.(string))
-		o.ReleaseNotesURL = x
+		o.SetReleaseNotesUrl(x)
 	}
 
 	if d.HasChange("sha512sum") {
 		v := d.Get("sha512sum")
 		x := (v.(string))
-		o.Sha512sum = x
+		o.SetSha512sum(x)
 	}
 
 	if d.HasChange("size") {
 		v := d.Get("size")
 		x := int64(v.(int))
-		o.Size = x
+		o.SetSize(x)
 	}
 
 	if d.HasChange("software_advisory_url") {
 		v := d.Get("software_advisory_url")
 		x := (v.(string))
-		o.SoftwareAdvisoryURL = x
+		o.SetSoftwareAdvisoryUrl(x)
 	}
 
 	if d.HasChange("software_type_id") {
 		v := d.Get("software_type_id")
 		x := (v.(string))
-		o.SoftwareTypeID = x
+		o.SetSoftwareTypeId(x)
 	}
 
 	if d.HasChange("solution_name") {
 		v := d.Get("solution_name")
 		x := (v.(string))
-		o.SolutionName = x
+		o.SetSolutionName(x)
 	}
 
 	if d.HasChange("source") {
 		v := d.Get("source")
-		p := models.SoftwarerepositoryFileServer{}
-		if len(v.([]interface{})) > 0 {
-			o := models.SoftwarerepositoryFileServer{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.AO1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+		p := make([]models.SoftwarerepositoryFileServer, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			o.SetClassId("softwarerepository.FileServer")
+			o.SetObjectType("softwarerepository.FileServer")
+			p = append(p, *o)
 		}
-		x := p
-		o.Source = &x
+		x := p[0]
+		o.SetSource(x)
 	}
 
 	if d.HasChange("sub_type") {
 		v := d.Get("sub_type")
 		x := (v.(string))
-		o.SubType = &x
+		o.SetSubType(x)
 	}
 
 	if d.HasChange("supported_models") {
@@ -1020,89 +881,52 @@ func resourceSoftwareSolutionDistributableUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SupportedModels = x
+		o.SetSupportedModels(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
 	if d.HasChange("vendor") {
 		v := d.Get("vendor")
 		x := (v.(string))
-		o.Vendor = &x
+		o.SetVendor(x)
 	}
 
 	if d.HasChange("version") {
 		v := d.Get("version")
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
-	url := "software/SolutionDistributables" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.SoftwareApi.UpdateSoftwareSolutionDistributable(conn.ctx, d.Id()).SoftwareSolutionDistributable(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceSoftwareSolutionDistributableRead(d, meta)
 }
 
@@ -1110,8 +934,9 @@ func resourceSoftwareSolutionDistributableDelete(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "software/SolutionDistributables" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.SoftwareApi.DeleteSoftwareSolutionDistributable(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

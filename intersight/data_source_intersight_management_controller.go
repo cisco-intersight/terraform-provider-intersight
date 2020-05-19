@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,13 +15,24 @@ func dataSourceManagementController() *schema.Resource {
 		Read: dataSourceManagementControllerRead,
 		Schema: map[string]*schema.Schema{
 			"adapter_unit": {
-				Description: "A collection of references to the [adapter.Unit](mo://adapter.Unit) Managed Object.\nWhen this managed object is deleted, the referenced [adapter.Unit](mo://adapter.Unit) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a adapterUnit resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -29,7 +40,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -50,13 +61,24 @@ func dataSourceManagementController() *schema.Resource {
 				Computed:    true,
 			},
 			"compute_blade": {
-				Description: "A collection of references to the [compute.Blade](mo://compute.Blade) Managed Object.\nWhen this managed object is deleted, the referenced [compute.Blade](mo://compute.Blade) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a computeBlade resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -64,7 +86,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -79,13 +101,24 @@ func dataSourceManagementController() *schema.Resource {
 				},
 			},
 			"compute_rack_unit": {
-				Description: "A collection of references to the [compute.RackUnit](mo://compute.RackUnit) Managed Object.\nWhen this managed object is deleted, the referenced [compute.RackUnit](mo://compute.RackUnit) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a computeRackUnit resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -93,7 +126,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -119,11 +152,23 @@ func dataSourceManagementController() *schema.Resource {
 				Computed:    true,
 			},
 			"management_interfaces": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "An array of relationships to managementInterface resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -131,7 +176,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -158,13 +203,24 @@ func dataSourceManagementController() *schema.Resource {
 				Computed:    true,
 			},
 			"network_element": {
-				Description: "A collection of references to the [network.Element](mo://network.Element) Managed Object.\nWhen this managed object is deleted, the referenced [network.Element](mo://network.Element) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a networkElement resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -172,7 +228,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -193,12 +249,23 @@ func dataSourceManagementController() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -206,7 +273,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -221,13 +288,24 @@ func dataSourceManagementController() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -235,7 +313,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -256,11 +334,23 @@ func dataSourceManagementController() *schema.Resource {
 				Computed:    true,
 			},
 			"running_firmware": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "An array of relationships to firmwareRunningFirmware resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -268,7 +358,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -283,13 +373,24 @@ func dataSourceManagementController() *schema.Resource {
 				},
 			},
 			"storage_sas_expander": {
-				Description: "A collection of references to the [storage.SasExpander](mo://storage.SasExpander) Managed Object.\nWhen this managed object is deleted, the referenced [storage.SasExpander](mo://storage.SasExpander) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageSasExpander resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -297,7 +398,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -312,32 +413,14 @@ func dataSourceManagementController() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -346,16 +429,26 @@ func dataSourceManagementController() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"top_system": {
-				Description: "A collection of references to the [top.System](mo://top.System) Managed Object.\nWhen this managed object is deleted, the referenced [top.System](mo://top.System) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a topSystem resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -363,7 +456,7 @@ func dataSourceManagementController() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -380,87 +473,81 @@ func dataSourceManagementController() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceManagementControllerRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "management/Controllers"
-	var o models.ManagementController
+	var o = models.NewManagementController()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.ManagementApi.GetManagementControllerList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.ManagementController
+			var s = models.NewManagementController()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
-			if err := d.Set("adapter_unit", flattenMapAdapterUnitRef(s.AdapterUnit, d)); err != nil {
+			if err := d.Set("adapter_unit", flattenMapAdapterUnitRelationship(s.AdapterUnit, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
-			}
-
-			if err := d.Set("compute_blade", flattenMapComputeBladeRef(s.ComputeBlade, d)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 
-			if err := d.Set("compute_rack_unit", flattenMapComputeRackUnitRef(s.ComputeRackUnit, d)); err != nil {
+			if err := d.Set("compute_blade", flattenMapComputeBladeRelationship(s.ComputeBlade, d)); err != nil {
 				return err
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
+
+			if err := d.Set("compute_rack_unit", flattenMapComputeRackUnitRelationship(s.ComputeRackUnit, d)); err != nil {
+				return err
+			}
+			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
 				return err
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
 				return err
 			}
 
-			if err := d.Set("management_interfaces", flattenListManagementInterfaceRef(s.ManagementInterfaces, d)); err != nil {
+			if err := d.Set("management_interfaces", flattenListManagementInterfaceRelationship(s.ManagementInterfaces, d)); err != nil {
 				return err
 			}
 			if err := d.Set("model", (s.Model)); err != nil {
@@ -470,29 +557,29 @@ func dataSourceManagementControllerRead(d *schema.ResourceData, meta interface{}
 				return err
 			}
 
-			if err := d.Set("network_element", flattenMapNetworkElementRef(s.NetworkElement, d)); err != nil {
+			if err := d.Set("network_element", flattenMapNetworkElementRelationship(s.NetworkElement, d)); err != nil {
 				return err
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
 				return err
 			}
 
-			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRef(s.RunningFirmware, d)); err != nil {
+			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRelationship(s.RunningFirmware, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("storage_sas_expander", flattenMapStorageSasExpanderRef(s.StorageSasExpander, d)); err != nil {
+			if err := d.Set("storage_sas_expander", flattenMapStorageSasExpanderRelationship(s.StorageSasExpander, d)); err != nil {
 				return err
 			}
 
@@ -500,10 +587,10 @@ func dataSourceManagementControllerRead(d *schema.ResourceData, meta interface{}
 				return err
 			}
 
-			if err := d.Set("top_system", flattenMapTopSystemRef(s.TopSystem, d)); err != nil {
+			if err := d.Set("top_system", flattenMapTopSystemRelationship(s.TopSystem, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

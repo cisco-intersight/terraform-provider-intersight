@@ -1,11 +1,9 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,16 +15,10 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 		Delete: resourceBootPrecisionPolicyDelete,
 		Schema: map[string]*schema.Schema{
 			"boot_devices": {
-				Description: "Set of boot devices to be configured.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -47,7 +39,6 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -95,12 +86,23 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -108,10 +110,9 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -126,12 +127,23 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 				ForceNew:   true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -139,10 +151,9 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -155,11 +166,22 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"profiles": {
-				Description: "Reference to the profile objects that this policy is a part of.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -167,10 +189,9 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -184,32 +205,14 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -218,300 +221,208 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 		},
 	}
 }
+
 func resourceBootPrecisionPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.BootPrecisionPolicy
+	var o = models.NewBootPrecisionPolicy()
 	if v, ok := d.GetOk("boot_devices"); ok {
-		x := make([]*models.BootDeviceBase, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.BootDeviceBase{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.BootDeviceBase, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewBootDeviceBaseWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("boot.DeviceBase")
+			if v, ok := l["enabled"]; ok {
+				{
+					x := (v.(bool))
+					o.SetEnabled(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["enabled"]; ok {
-					{
-						x := (v.(bool))
-						o.Enabled = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			o.SetObjectType("boot.DeviceBase")
+			x = append(x, *o)
 		}
-		o.BootDevices = x
-
+		o.SetBootDevices(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("boot.PrecisionPolicy")
 
 	if v, ok := d.GetOk("configured_boot_mode"); ok {
 		x := (v.(string))
-		o.ConfiguredBootMode = &x
-
+		o.SetConfiguredBootMode(x)
 	}
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
-	if v, ok := d.GetOkExists("enforce_uefi_secure_boot"); ok {
-		x := v.(bool)
-		o.EnforceUefiSecureBoot = &x
+	if v, ok := d.GetOk("enforce_uefi_secure_boot"); ok {
+		x := (v.(bool))
+		o.SetEnforceUefiSecureBoot(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("boot.PrecisionPolicy")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
-
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
 		}
-		o.Profiles = x
-
+		o.SetProfiles(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
-	url := "boot/PrecisionPolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.BootApi.CreateBootPrecisionPolicy(conn.ctx).BootPrecisionPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceBootPrecisionPolicyRead(d, meta)
 }
 func detachBootPrecisionPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "boot/PrecisionPolicies" + "/" + d.Id()
-	var o models.BootPrecisionPolicy
+	var o = models.NewBootPrecisionPolicy()
 
-	o.Profiles = []*models.PolicyAbstractConfigProfileRef{}
+	o.Profiles = new([]models.PolicyAbstractConfigProfileRelationship)
 
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.BootApi.UpdateBootPrecisionPolicy(conn.ctx, d.Id()).BootPrecisionPolicy(*o)
+	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling sol_policy. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while creating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		log.Printf("error in sending update request. error %s", err.Error())
-		return err
-	}
-	var s models.ServerProfile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling sol_policy. Error: %s", err.Error())
-	}
-
 	return err
 }
 
@@ -520,14 +431,9 @@ func resourceBootPrecisionPolicyRead(d *schema.ResourceData, meta interface{}) e
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "boot/PrecisionPolicies" + "/" + d.Id()
+	r := conn.ApiClient.BootApi.GetBootPrecisionPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.BootPrecisionPolicy
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
@@ -537,7 +443,7 @@ func resourceBootPrecisionPolicyRead(d *schema.ResourceData, meta interface{}) e
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -565,15 +471,15 @@ func resourceBootPrecisionPolicyRead(d *schema.ResourceData, meta interface{}) e
 		return err
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
 		return err
 	}
 
@@ -582,270 +488,198 @@ func resourceBootPrecisionPolicyRead(d *schema.ResourceData, meta interface{}) e
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceBootPrecisionPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.BootPrecisionPolicy
+	var o = models.NewBootPrecisionPolicy()
 	if d.HasChange("boot_devices") {
 		v := d.Get("boot_devices")
-		x := make([]*models.BootDeviceBase, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.BootDeviceBase{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.BootDeviceBaseAO1P1.BootDeviceBaseAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.BootDeviceBase, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewBootDeviceBaseWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("boot.DeviceBase")
+			if v, ok := l["enabled"]; ok {
+				{
+					x := (v.(bool))
+					o.SetEnabled(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["enabled"]; ok {
-					{
-						x := (v.(bool))
-						o.Enabled = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			o.SetObjectType("boot.DeviceBase")
+			x = append(x, *o)
 		}
-		o.BootDevices = x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		o.SetBootDevices(x)
 	}
 
 	if d.HasChange("configured_boot_mode") {
 		v := d.Get("configured_boot_mode")
 		x := (v.(string))
-		o.ConfiguredBootMode = &x
+		o.SetConfiguredBootMode(x)
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("enforce_uefi_secure_boot") {
 		v := d.Get("enforce_uefi_secure_boot")
 		x := (v.(bool))
-		o.EnforceUefiSecureBoot = &x
+		o.SetEnforceUefiSecureBoot(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("profiles") {
 		v := d.Get("profiles")
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
 		}
-		o.Profiles = x
+		o.SetProfiles(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
-	url := "boot/PrecisionPolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.BootApi.UpdateBootPrecisionPolicy(conn.ctx, d.Id()).BootPrecisionPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceBootPrecisionPolicyRead(d, meta)
 }
 
@@ -853,9 +687,13 @@ func resourceBootPrecisionPolicyDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "boot/PrecisionPolicies" + "/" + d.Id()
-	detachBootPrecisionPolicyProfiles(d, meta)
-	_, err := conn.SendDeleteRequest(url)
+	e := detachBootPrecisionPolicyProfiles(d, meta)
+	if e != nil {
+		return e
+	}
+
+	r := conn.ApiClient.BootApi.DeleteBootPrecisionPolicy(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

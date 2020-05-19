@@ -1,12 +1,11 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,12 +16,25 @@ func resourceApplianceBackup() *schema.Resource {
 		Delete: resourceApplianceBackupDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "Backup managed object to Account relationship.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -31,10 +43,9 @@ func resourceApplianceBackup() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -85,10 +96,8 @@ func resourceApplianceBackup() *schema.Resource {
 				ForceNew:    true,
 			},
 			"messages": {
-				Description: "Messages generated during the backup process.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}, ForceNew: true,
 			},
@@ -113,12 +122,25 @@ func resourceApplianceBackup() *schema.Resource {
 				ForceNew:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -127,10 +149,9 @@ func resourceApplianceBackup() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -185,35 +206,14 @@ func resourceApplianceBackup() *schema.Resource {
 				ForceNew:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-							ForceNew:         true,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 							ForceNew:    true,
 						},
 						"value": {
@@ -224,9 +224,7 @@ func resourceApplianceBackup() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
+				ForceNew: true,
 			},
 			"username": {
 				Description: "Username to authenticate the fileserver.",
@@ -237,69 +235,63 @@ func resourceApplianceBackup() *schema.Resource {
 		},
 	}
 }
+
 func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.ApplianceBackup
+	var o = models.NewApplianceBackup()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
-
+		x := p[0]
+		o.SetAccount(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("appliance.Backup")
 
 	if v, ok := d.GetOk("elapsed_time"); ok {
 		x := int64(v.(int))
-		o.ElapsedTime = x
-
+		o.SetElapsedTime(x)
 	}
 
 	if v, ok := d.GetOk("end_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.EndTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetEndTime(x)
 	}
 
 	if v, ok := d.GetOk("filename"); ok {
 		x := (v.(string))
-		o.Filename = x
-
+		o.SetFilename(x)
 	}
 
-	if v, ok := d.GetOkExists("is_password_set"); ok {
-		x := v.(bool)
-		o.IsPasswordSet = &x
+	if v, ok := d.GetOk("is_password_set"); ok {
+		x := (v.(bool))
+		o.SetIsPasswordSet(x)
 	}
 
 	if v, ok := d.GetOk("messages"); ok {
@@ -308,171 +300,117 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.Messages = x
-
+		o.SetMessages(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("appliance.Backup")
 
 	if v, ok := d.GetOk("password"); ok {
 		x := (v.(string))
-		o.Password = x
-
+		o.SetPassword(x)
 	}
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
 		x := (v.(string))
-		o.Protocol = &x
-
+		o.SetProtocol(x)
 	}
 
 	if v, ok := d.GetOk("remote_host"); ok {
 		x := (v.(string))
-		o.RemoteHost = x
-
+		o.SetRemoteHost(x)
 	}
 
 	if v, ok := d.GetOk("remote_path"); ok {
 		x := (v.(string))
-		o.RemotePath = x
-
+		o.SetRemotePath(x)
 	}
 
 	if v, ok := d.GetOk("remote_port"); ok {
 		x := int64(v.(int))
-		o.RemotePort = x
-
+		o.SetRemotePort(x)
 	}
 
 	if v, ok := d.GetOk("start_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.StartTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetStartTime(x)
 	}
 
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = x
-
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("username"); ok {
 		x := (v.(string))
-		o.Username = x
-
+		o.SetUsername(x)
 	}
 
-	url := "appliance/Backups"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.ApplianceApi.CreateApplianceBackup(conn.ctx).ApplianceBackup(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceApplianceBackupRead(d, meta)
 }
 
@@ -481,24 +419,19 @@ func resourceApplianceBackupRead(d *schema.ResourceData, meta interface{}) error
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "appliance/Backups" + "/" + d.Id()
+	r := conn.ApiClient.ApplianceApi.GetApplianceBackupByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.ApplianceBackup
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -530,11 +463,7 @@ func resourceApplianceBackupRead(d *schema.ResourceData, meta interface{}) error
 		return err
 	}
 
-	if err := d.Set("password", (s.Password)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
@@ -571,7 +500,7 @@ func resourceApplianceBackupRead(d *schema.ResourceData, meta interface{}) error
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
 
@@ -579,8 +508,9 @@ func resourceApplianceBackupDelete(d *schema.ResourceData, meta interface{}) err
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "appliance/Backups" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.ApplianceApi.DeleteApplianceBackup(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

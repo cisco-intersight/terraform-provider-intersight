@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -51,12 +51,23 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -64,7 +75,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -79,13 +90,24 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"protection_group": {
-				Description: "Protection group relationship object.",
+				Description: "A reference to a storageProtectionGroup resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -93,7 +115,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -108,13 +130,24 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "Device registration managed object that represents this storage array connection to Intersight.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -122,7 +155,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -137,19 +170,18 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"replication_blackout_intervals": {
-				Description: "Blackout intervals for replication operation in PureStorage FlashArray. System disables replication during these intervals. Blackout periods only apply to scheduled replications. On-demand replications do not observe the blackout period.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"end": {
+							Description: "The end time of day for replication blackout window.\nExample: 17:00:01 which is 17 hours, 0 minutes, 1 seconds.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -160,8 +192,21 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"start": {
+							Description: "The start time of day when replication blackout is active. When replication blackout is active, the storage array temporarily disables replication.\nExample: 15:04:03.123 which is 15 hours, 4 minutes, 3 seconds and 123 milliseconds.\nThe fractional seconds are written using the standard decimal notation which can be used for setting milliseconds and microseconds.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 					},
 				},
+				Computed: true,
+			},
+			"replication_time": {
+				Description: "Preferred time of day at which to replicate the snapshots on target array.\nIt is applicable only if the replication frequency is set for a day or more.\nFormat: hh:mm:ss\nExample: 15:00:00, Replication is set for 3:00 PM.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"retention_time": {
 				Description: "Duration to keep the replicated snapshots on the targets.\nReplicated snapshots are deleted from target array once the retention period has elapsed.\nExamples:\nP30D, Snapshots are available for 30 days.\nPT2H34M56.123S, 2 hours, 34 minutes, 56 seconds and 123 milliseconds.",
@@ -176,13 +221,24 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				Computed:    true,
 			},
 			"storage_array": {
-				Description: "Storage array managed object.",
+				Description: "A reference to a storageGenericArray resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -190,7 +246,7 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -205,32 +261,14 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -239,74 +277,71 @@ func dataSourceStoragePureReplicationSchedule() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceStoragePureReplicationScheduleRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "storage/PureReplicationSchedules"
-	var o models.StoragePureReplicationSchedule
+	var o = models.NewStoragePureReplicationSchedule()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("daily_limit"); ok {
 		x := int64(v.(int))
-		o.DailyLimit = x
+		o.SetDailyLimit(x)
 	}
 	if v, ok := d.GetOk("frequency"); ok {
 		x := (v.(string))
-		o.Frequency = x
+		o.SetFrequency(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
+	}
+	if v, ok := d.GetOk("replication_time"); ok {
+		x := (v.(string))
+		o.SetReplicationTime(x)
 	}
 	if v, ok := d.GetOk("retention_time"); ok {
 		x := (v.(string))
-		o.RetentionTime = x
+		o.SetRetentionTime(x)
 	}
 	if v, ok := d.GetOk("snapshot_expiry_time"); ok {
 		x := (v.(string))
-		o.SnapshotExpiryTime = x
+		o.SetSnapshotExpiryTime(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.StorageApi.GetStoragePureReplicationScheduleList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.StoragePureReplicationSchedule
+			var s = models.NewStoragePureReplicationSchedule()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("daily_limit", (s.DailyLimit)); err != nil {
@@ -325,19 +360,22 @@ func dataSourceStoragePureReplicationScheduleRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("protection_group", flattenMapStorageProtectionGroupRef(s.ProtectionGroup, d)); err != nil {
+			if err := d.Set("protection_group", flattenMapStorageProtectionGroupRelationship(s.ProtectionGroup, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 
 			if err := d.Set("replication_blackout_intervals", flattenListStoragePureReplicationBlackout(s.ReplicationBlackoutIntervals, d)); err != nil {
+				return err
+			}
+			if err := d.Set("replication_time", (s.ReplicationTime)); err != nil {
 				return err
 			}
 			if err := d.Set("retention_time", (s.RetentionTime)); err != nil {
@@ -347,14 +385,14 @@ func dataSourceStoragePureReplicationScheduleRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("storage_array", flattenMapStorageGenericArrayRef(s.StorageArray, d)); err != nil {
+			if err := d.Set("storage_array", flattenMapStorageGenericArrayRelationship(s.StorageArray, d)); err != nil {
 				return err
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

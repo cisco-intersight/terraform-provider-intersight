@@ -18,7 +18,7 @@ resource "intersight_storage_storage_policy" "storage_storage1" {
   }
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 
@@ -59,7 +59,7 @@ resource "intersight_storage_storage_policy" "storage_storage2" {
   }
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 

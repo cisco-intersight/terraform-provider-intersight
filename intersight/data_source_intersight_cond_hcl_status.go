@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -26,12 +26,23 @@ func dataSourceCondHclStatus() *schema.Resource {
 				Optional:    true,
 			},
 			"details": {
-				Description: "The collection of all the detailed related components for which we performed HCL validation.",
+				Description: "An array of relationships to condHclStatusDetail resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -39,7 +50,7 @@ func dataSourceCondHclStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -109,13 +120,24 @@ func dataSourceCondHclStatus() *schema.Resource {
 				Optional:    true,
 			},
 			"managed_object": {
-				Description: "The managed object relationship for this HCLStatus.",
+				Description: "A reference to a inventoryBase resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -123,7 +145,7 @@ func dataSourceCondHclStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -150,12 +172,23 @@ func dataSourceCondHclStatus() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -163,7 +196,7 @@ func dataSourceCondHclStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -183,13 +216,24 @@ func dataSourceCondHclStatus() *schema.Resource {
 				Optional:    true,
 			},
 			"registered_device": {
-				Description: "The Relationship to the registered device. We need this in order to correctly set permissions during device claim.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -197,7 +241,7 @@ func dataSourceCondHclStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -227,32 +271,14 @@ func dataSourceCondHclStatus() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -261,125 +287,118 @@ func dataSourceCondHclStatus() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceCondHclStatusRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "cond/HclStatuses"
-	var o models.CondHclStatus
+	var o = models.NewCondHclStatus()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("component_status"); ok {
 		x := (v.(string))
-		o.ComponentStatus = &x
+		o.SetComponentStatus(x)
 	}
 	if v, ok := d.GetOk("hardware_status"); ok {
 		x := (v.(string))
-		o.HardwareStatus = &x
+		o.SetHardwareStatus(x)
 	}
 	if v, ok := d.GetOk("hcl_firmware_version"); ok {
 		x := (v.(string))
-		o.HclFirmwareVersion = x
+		o.SetHclFirmwareVersion(x)
 	}
 	if v, ok := d.GetOk("hcl_model"); ok {
 		x := (v.(string))
-		o.HclModel = x
+		o.SetHclModel(x)
 	}
 	if v, ok := d.GetOk("hcl_os_vendor"); ok {
 		x := (v.(string))
-		o.HclOsVendor = x
+		o.SetHclOsVendor(x)
 	}
 	if v, ok := d.GetOk("hcl_os_version"); ok {
 		x := (v.(string))
-		o.HclOsVersion = x
+		o.SetHclOsVersion(x)
 	}
 	if v, ok := d.GetOk("hcl_processor"); ok {
 		x := (v.(string))
-		o.HclProcessor = x
+		o.SetHclProcessor(x)
 	}
 	if v, ok := d.GetOk("inv_firmware_version"); ok {
 		x := (v.(string))
-		o.InvFirmwareVersion = x
+		o.SetInvFirmwareVersion(x)
 	}
 	if v, ok := d.GetOk("inv_model"); ok {
 		x := (v.(string))
-		o.InvModel = x
+		o.SetInvModel(x)
 	}
 	if v, ok := d.GetOk("inv_os_vendor"); ok {
 		x := (v.(string))
-		o.InvOsVendor = x
+		o.SetInvOsVendor(x)
 	}
 	if v, ok := d.GetOk("inv_os_version"); ok {
 		x := (v.(string))
-		o.InvOsVersion = x
+		o.SetInvOsVersion(x)
 	}
 	if v, ok := d.GetOk("inv_processor"); ok {
 		x := (v.(string))
-		o.InvProcessor = x
+		o.SetInvProcessor(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("reason"); ok {
 		x := (v.(string))
-		o.Reason = &x
+		o.SetReason(x)
 	}
 	if v, ok := d.GetOk("server_reason"); ok {
 		x := (v.(string))
-		o.ServerReason = &x
+		o.SetServerReason(x)
 	}
 	if v, ok := d.GetOk("software_status"); ok {
 		x := (v.(string))
-		o.SoftwareStatus = &x
+		o.SetSoftwareStatus(x)
 	}
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = &x
+		o.SetStatus(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.CondApi.GetCondHclStatusList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.CondHclStatus
+			var s = models.NewCondHclStatus()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("component_status", (s.ComponentStatus)); err != nil {
 				return err
 			}
 
-			if err := d.Set("details", flattenListCondHclStatusDetailRef(s.Details, d)); err != nil {
+			if err := d.Set("details", flattenListCondHclStatusDetailRelationship(s.Details, d)); err != nil {
 				return err
 			}
 			if err := d.Set("hardware_status", (s.HardwareStatus)); err != nil {
@@ -416,7 +435,7 @@ func dataSourceCondHclStatusRead(d *schema.ResourceData, meta interface{}) error
 				return err
 			}
 
-			if err := d.Set("managed_object", flattenMapInventoryBaseRef(s.ManagedObject, d)); err != nil {
+			if err := d.Set("managed_object", flattenMapInventoryBaseRelationship(s.ManagedObject, d)); err != nil {
 				return err
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
@@ -426,14 +445,14 @@ func dataSourceCondHclStatusRead(d *schema.ResourceData, meta interface{}) error
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("reason", (s.Reason)); err != nil {
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("server_reason", (s.ServerReason)); err != nil {
@@ -449,7 +468,7 @@ func dataSourceCondHclStatusRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

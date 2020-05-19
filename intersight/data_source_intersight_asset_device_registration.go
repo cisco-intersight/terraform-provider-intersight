@@ -3,35 +3,42 @@ package intersight
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"log"
+	"reflect"
+	"time"
+
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func dataSourceAssetDeviceRegistration() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceAssetDeviceRegistrationRead,
 		Schema: map[string]*schema.Schema{
-			"api_version": {
-				Description: "The version of the connector API, describes the capability of the connector's framework.\nIf the version is lower than the current minimum supported version defined in the service managing the connection, the device connector will be connected with limited capabilities until the device connector is upgraded to a fully supported version. For example if a device connector that was released without delta inventory capabilities registers and connects to Intersight, inventory collection may be disabled until it has been upgraded.",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
-			},
 			"access_key_id": {
 				Description: "An identifier for the credential used by the device connector to authenticate with the Intersight web socket gateway.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"account": {
-				Description: "The account to which the device has been claimed.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -39,7 +46,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -53,6 +60,12 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 					},
 				},
 			},
+			"api_version": {
+				Description: "The version of the connector API, describes the capability of the connector's framework.\nIf the version is lower than the current minimum supported version defined in the service managing the connection, the device connector will be connected with limited capabilities until the device connector is upgraded to a fully supported version. For example if a device connector that was released without delta inventory capabilities registers and connects to Intersight, inventory collection may be disabled until it has been upgraded.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"app_partition_number": {
 				Description: "The partition number corresponding to the instance of the Proxy App which is managing the web-socket to the device connector.",
 				Type:        schema.TypeInt,
@@ -60,13 +73,24 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"claimed_by_user": {
-				Description: "The user who claimed the device for the account.",
+				Description: "A reference to a iamUser resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -74,7 +98,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -107,12 +131,23 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"cluster_members": {
-				Description: "The set of nodes within the devices cluster.",
+				Description: "An array of relationships to assetClusterMember resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -120,7 +155,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -165,13 +200,24 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"device_claim": {
-				Description: "The user who claimed the device for the account.",
+				Description: "A reference to a assetDeviceClaim resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -179,7 +225,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -194,13 +240,24 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				},
 			},
 			"device_configuration": {
-				Description: "The devices current configuration.",
+				Description: "A reference to a assetDeviceConfiguration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -208,7 +265,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -229,27 +286,34 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"device_hostname": {
-				Description: "The hostnames of the managed device. There can be multiple hostnames depending on the number of elements managed (i.e. HA clusters).",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"device_ip_address": {
-				Description: "The IP Addresses of the managed device. There can be multiple management IPs depending on the number of elements managed (i.e. HA clusters) and in-band/out-of-band connectivity.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"domain_group": {
-				Description: "The domain group to which the device has been assigned.",
+				Description: "A reference to a iamDomainGroup resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -257,7 +321,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -289,13 +353,24 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"parent_connection": {
-				Description: "The parent device of this device, through which this device connector is connected. If present the device will inherit its ownership through this object and any claim operation will be cascaded from it.\ne.g. A rack server may have a parent as the Fabric Interconnect cluster to which it is attached.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -303,7 +378,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -324,11 +399,6 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -361,12 +431,23 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -374,7 +455,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -389,10 +470,8 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				},
 			},
 			"pid": {
-				Description: "The product Id of the managed device.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"platform_type": {
@@ -418,69 +497,20 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"security_token": {
-				Description: "The devices current security token that can be used by a device administrator to claim the device.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"serial": {
-				Description: "A list of serial numbers of the individual device elements (e.g. HA primary/secondary or cluster members) which are exposed as a single unit of management by the device connector.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -489,7 +519,6 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"vendor": {
 				Description: "The vendor of the managed device.",
@@ -500,235 +529,226 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceAssetDeviceRegistrationRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "asset/DeviceRegistrations"
-	var o models.AssetDeviceRegistration
-	if v, ok := d.GetOk("api_version"); ok {
-		x := int64(v.(int))
-		o.APIVersion = x
-	}
+	var o = models.NewAssetDeviceRegistration()
 	if v, ok := d.GetOk("access_key_id"); ok {
 		x := (v.(string))
-		o.AccessKeyID = x
+		o.SetAccessKeyId(x)
+	}
+	if v, ok := d.GetOk("api_version"); ok {
+		x := int64(v.(int))
+		o.SetApiVersion(x)
 	}
 	if v, ok := d.GetOk("app_partition_number"); ok {
 		x := int64(v.(int))
-		o.AppPartitionNumber = x
+		o.SetAppPartitionNumber(x)
 	}
 	if v, ok := d.GetOk("claimed_by_user_name"); ok {
 		x := (v.(string))
-		o.ClaimedByUserName = x
+		o.SetClaimedByUserName(x)
 	}
 	if v, ok := d.GetOk("claimed_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ClaimedTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetClaimedTime(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("connection_id"); ok {
 		x := (v.(string))
-		o.ConnectionID = x
+		o.SetConnectionId(x)
 	}
 	if v, ok := d.GetOk("connection_reason"); ok {
 		x := (v.(string))
-		o.ConnectionReason = x
+		o.SetConnectionReason(x)
 	}
 	if v, ok := d.GetOk("connection_status"); ok {
 		x := (v.(string))
-		o.ConnectionStatus = x
+		o.SetConnectionStatus(x)
 	}
 	if v, ok := d.GetOk("connection_status_last_change_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ConnectionStatusLastChangeTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetConnectionStatusLastChangeTime(x)
 	}
 	if v, ok := d.GetOk("connector_version"); ok {
 		x := (v.(string))
-		o.ConnectorVersion = x
+		o.SetConnectorVersion(x)
 	}
 	if v, ok := d.GetOk("device_external_ip_address"); ok {
 		x := (v.(string))
-		o.DeviceExternalIPAddress = x
+		o.SetDeviceExternalIpAddress(x)
 	}
 	if v, ok := d.GetOk("execution_mode"); ok {
 		x := (v.(string))
-		o.ExecutionMode = x
+		o.SetExecutionMode(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 	if v, ok := d.GetOk("proxy_app"); ok {
 		x := (v.(string))
-		o.ProxyApp = x
+		o.SetProxyApp(x)
 	}
 	if v, ok := d.GetOk("public_access_key"); ok {
 		x := (v.(string))
-		o.PublicAccessKey = x
+		o.SetPublicAccessKey(x)
 	}
 	if v, ok := d.GetOk("read_only"); ok {
 		x := (v.(bool))
-		o.ReadOnly = &x
+		o.SetReadOnly(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	results := x["Results"]
-	if results == nil {
+	result, _, err := conn.ApiClient.AssetApi.GetAssetDeviceRegistrationList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
-	result := results.([]interface{})
-	if len(result) > 1{
-		return fmt.Errorf("your query returned multiple results. Please change your search criteria and try again")
-	}
-	var s models.AssetDeviceRegistration
-	oo, _ := json.Marshal(result[0])
-	// interface {} is map[string]interface {}, not []uint8
-	if err = s.UnmarshalJSON(oo); err != nil {
-		return err
-	}
-	if err := d.Set("api_version", (s.APIVersion)); err != nil {
-		return err
-	}
-	if err := d.Set("access_key_id", (s.AccessKeyID)); err != nil {
-		return err
-	}
+	switch reflect.TypeOf(result).Kind() {
+	case reflect.Slice:
+		r := reflect.ValueOf(result)
+		for i := 0; i < r.Len(); i++ {
+			var s = models.NewAssetDeviceRegistration()
+			oo, _ := json.Marshal(r.Index(i).Interface())
+			if err = json.Unmarshal(oo, s); err != nil {
+				return err
+			}
+			if err := d.Set("access_key_id", (s.AccessKeyId)); err != nil {
+				return err
+			}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-		return err
-	}
-	if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
-		return err
-	}
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+				return err
+			}
+			if err := d.Set("api_version", (s.ApiVersion)); err != nil {
+				return err
+			}
+			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
+				return err
+			}
 
-	if err := d.Set("claimed_by_user", flattenMapIamUserRef(s.ClaimedByUser, d)); err != nil {
-		return err
-	}
-	if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
-		return err
-	}
+			if err := d.Set("claimed_by_user", flattenMapIamUserRelationship(s.ClaimedByUser, d)); err != nil {
+				return err
+			}
+			if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
+				return err
+			}
 
-	if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
-		return err
-	}
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
-	}
+			if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
+				return err
+			}
 
-	if err := d.Set("cluster_members", flattenListAssetClusterMemberRef(s.ClusterMembers, d)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-		return err
-	}
+			if err := d.Set("cluster_members", flattenListAssetClusterMemberRelationship(s.ClusterMembers, d)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_id", (s.ConnectionId)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+				return err
+			}
 
-	if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
-		return err
-	}
-	if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
-		return err
-	}
+			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
+				return err
+			}
+			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
+				return err
+			}
 
-	if err := d.Set("device_claim", flattenMapAssetDeviceClaimRef(s.DeviceClaim, d)); err != nil {
-		return err
-	}
+			if err := d.Set("device_claim", flattenMapAssetDeviceClaimRelationship(s.DeviceClaim, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRef(s.DeviceConfiguration, d)); err != nil {
-		return err
-	}
-	if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
-		return err
-	}
-	if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
-		return err
-	}
-	if err := d.Set("device_ip_address", (s.DeviceIPAddress)); err != nil {
-		return err
-	}
+			if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRelationship(s.DeviceConfiguration, d)); err != nil {
+				return err
+			}
+			if err := d.Set("device_external_ip_address", (s.DeviceExternalIpAddress)); err != nil {
+				return err
+			}
+			if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
+				return err
+			}
+			if err := d.Set("device_ip_address", (s.DeviceIpAddress)); err != nil {
+				return err
+			}
 
-	if err := d.Set("domain_group", flattenMapIamDomainGroupRef(s.DomainGroup, d)); err != nil {
-		return err
-	}
-	if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
-		return err
-	}
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
-	}
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
+			if err := d.Set("domain_group", flattenMapIamDomainGroupRelationship(s.DomainGroup, d)); err != nil {
+				return err
+			}
+			if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
+				return err
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return err
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return err
+			}
 
-	if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRef(s.ParentConnection, d)); err != nil {
-		return err
-	}
+			if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRelationship(s.ParentConnection, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
-		return err
-	}
+			if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
-	}
-	if err := d.Set("pid", (s.Pid)); err != nil {
-		return err
-	}
-	if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-		return err
-	}
-	if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
-		return err
-	}
-	if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
-		return err
-	}
-	if err := d.Set("read_only", (s.ReadOnly)); err != nil {
-		return err
-	}
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
+				return err
+			}
+			if err := d.Set("pid", (s.Pid)); err != nil {
+				return err
+			}
+			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+				return err
+			}
+			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
+				return err
+			}
+			if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
+				return err
+			}
+			if err := d.Set("read_only", (s.ReadOnly)); err != nil {
+				return err
+			}
+			if err := d.Set("serial", (s.Serial)); err != nil {
+				return err
+			}
 
-	if err := d.Set("security_token", flattenMapAssetSecurityTokenRef(s.SecurityToken, d)); err != nil {
-		return err
+			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+				return err
+			}
+			if err := d.Set("vendor", (s.Vendor)); err != nil {
+				return err
+			}
+			d.SetId(s.GetMoid())
+		}
 	}
-	if err := d.Set("serial", (s.Serial)); err != nil {
-		return err
-	}
-
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
-	}
-	if err := d.Set("vendor", (s.Vendor)); err != nil {
-		return err
-	}
-	d.SetId(s.Moid)
 	return nil
 }

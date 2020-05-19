@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -29,11 +29,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"bill_to": {
 							Description: "BillTo address of listed for the contract.",
 							Type:        schema.TypeList,
@@ -42,11 +37,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -118,11 +108,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -209,11 +194,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"address": {
 							Description: "Address as per the information provided by the user.",
 							Type:        schema.TypeList,
@@ -222,11 +202,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -325,11 +300,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -394,12 +364,23 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -407,7 +388,7 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -435,11 +416,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"bill_to": {
 							Description: "Billing address provided by customer while buying this Cisco product.",
 							Type:        schema.TypeList,
@@ -448,11 +424,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -560,11 +531,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -644,13 +610,24 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 			},
 			"registered_device": {
-				Description: "Reference to the device connector through which the device is connected.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -658,7 +635,7 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -680,11 +657,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -754,32 +726,14 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -788,7 +742,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"warranty_end_date": {
 				Description: "End date for the warranty that covers the Cisco device.",
@@ -805,125 +758,119 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "asset/DeviceContractInformations"
-	var o models.AssetDeviceContractInformation
+	var o = models.NewAssetDeviceContractInformation()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("contract_status"); ok {
 		x := (v.(string))
-		o.ContractStatus = x
+		o.SetContractStatus(x)
 	}
 	if v, ok := d.GetOk("covered_product_line_end_date"); ok {
 		x := (v.(string))
-		o.CoveredProductLineEndDate = x
+		o.SetCoveredProductLineEndDate(x)
 	}
 	if v, ok := d.GetOk("device_id"); ok {
 		x := (v.(string))
-		o.DeviceID = x
+		o.SetDeviceId(x)
 	}
 	if v, ok := d.GetOk("device_type"); ok {
 		x := (v.(string))
-		o.DeviceType = x
+		o.SetDeviceType(x)
 	}
 	if v, ok := d.GetOk("is_valid"); ok {
 		x := (v.(bool))
-		o.IsValid = &x
+		o.SetIsValid(x)
 	}
 	if v, ok := d.GetOk("item_type"); ok {
 		x := (v.(string))
-		o.ItemType = x
+		o.SetItemType(x)
 	}
 	if v, ok := d.GetOk("maintenance_purchase_order_number"); ok {
 		x := (v.(string))
-		o.MaintenancePurchaseOrderNumber = x
+		o.SetMaintenancePurchaseOrderNumber(x)
 	}
 	if v, ok := d.GetOk("maintenance_sales_order_number"); ok {
 		x := (v.(string))
-		o.MaintenanceSalesOrderNumber = x
+		o.SetMaintenanceSalesOrderNumber(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 	if v, ok := d.GetOk("purchase_order_number"); ok {
 		x := (v.(string))
-		o.PurchaseOrderNumber = x
+		o.SetPurchaseOrderNumber(x)
 	}
 	if v, ok := d.GetOk("sales_order_number"); ok {
 		x := (v.(string))
-		o.SalesOrderNumber = x
+		o.SetSalesOrderNumber(x)
 	}
 	if v, ok := d.GetOk("service_description"); ok {
 		x := (v.(string))
-		o.ServiceDescription = x
+		o.SetServiceDescription(x)
 	}
 	if v, ok := d.GetOk("service_end_date"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ServiceEndDate = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetServiceEndDate(x)
 	}
 	if v, ok := d.GetOk("service_level"); ok {
 		x := (v.(string))
-		o.ServiceLevel = x
+		o.SetServiceLevel(x)
 	}
 	if v, ok := d.GetOk("service_sku"); ok {
 		x := (v.(string))
-		o.ServiceSku = x
+		o.SetServiceSku(x)
 	}
 	if v, ok := d.GetOk("service_start_date"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ServiceStartDate = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetServiceStartDate(x)
 	}
 	if v, ok := d.GetOk("state_contract"); ok {
 		x := (v.(string))
-		o.StateContract = &x
+		o.SetStateContract(x)
 	}
 	if v, ok := d.GetOk("warranty_end_date"); ok {
 		x := (v.(string))
-		o.WarrantyEndDate = x
+		o.SetWarrantyEndDate(x)
 	}
 	if v, ok := d.GetOk("warranty_type"); ok {
 		x := (v.(string))
-		o.WarrantyType = x
+		o.SetWarrantyType(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.AssetApi.GetAssetDeviceContractInformationList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.AssetDeviceContractInformation
+			var s = models.NewAssetDeviceContractInformation()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 
@@ -936,7 +883,7 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 			if err := d.Set("covered_product_line_end_date", (s.CoveredProductLineEndDate)); err != nil {
 				return err
 			}
-			if err := d.Set("device_id", (s.DeviceID)); err != nil {
+			if err := d.Set("device_id", (s.DeviceId)); err != nil {
 				return err
 			}
 			if err := d.Set("device_type", (s.DeviceType)); err != nil {
@@ -969,7 +916,7 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
@@ -983,7 +930,7 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 
@@ -1023,7 +970,7 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 			if err := d.Set("warranty_type", (s.WarrantyType)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

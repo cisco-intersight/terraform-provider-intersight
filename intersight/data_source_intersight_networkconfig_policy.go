@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -25,12 +25,23 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"appliance_account": {
-				Description: "The appliance account to which the appliance Network Connectivity policy belongs.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -38,7 +49,7 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -74,13 +85,13 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
-			"enable_ipv6": {
-				Description: "If enabled, allows to configure IPv6 properties.",
+			"enable_ipv4dns_from_dhcp": {
+				Description: "If enabled, Cisco IMC retrieves the DNS server addresses from DHCP. Use DHCP field must be enabled for IPv4 in Cisco IMC to enable it.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
-			"enable_ipv4dns_from_dhcp": {
-				Description: "If enabled, Cisco IMC retrieves the DNS server addresses from DHCP. Use DHCP field must be enabled for IPv4 in Cisco IMC to enable it.",
+			"enable_ipv6": {
+				Description: "If enabled, allows to configure IPv6 properties.",
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
@@ -107,12 +118,23 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The organization to which the Network Connectivity policy belongs.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -120,7 +142,7 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -136,12 +158,23 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -149,7 +182,7 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -174,11 +207,22 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"profiles": {
-				Description: "Relationship to the profile object.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -186,7 +230,7 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -202,32 +246,14 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -236,95 +262,88 @@ func dataSourceNetworkconfigPolicy() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "networkconfig/Policies"
-	var o models.NetworkconfigPolicy
+	var o = models.NewNetworkconfigPolicy()
 	if v, ok := d.GetOk("alternate_ipv4dns_server"); ok {
 		x := (v.(string))
-		o.AlternateIpv4dnsServer = x
+		o.SetAlternateIpv4dnsServer(x)
 	}
 	if v, ok := d.GetOk("alternate_ipv6dns_server"); ok {
 		x := (v.(string))
-		o.AlternateIpv6dnsServer = x
+		o.SetAlternateIpv6dnsServer(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("dynamic_dns_domain"); ok {
 		x := (v.(string))
-		o.DynamicDNSDomain = x
+		o.SetDynamicDnsDomain(x)
 	}
 	if v, ok := d.GetOk("enable_dynamic_dns"); ok {
 		x := (v.(bool))
-		o.EnableDynamicDNS = &x
-	}
-	if v, ok := d.GetOk("enable_ipv6"); ok {
-		x := (v.(bool))
-		o.EnableIPV6 = &x
+		o.SetEnableDynamicDns(x)
 	}
 	if v, ok := d.GetOk("enable_ipv4dns_from_dhcp"); ok {
 		x := (v.(bool))
-		o.EnableIpv4dnsFromDhcp = &x
+		o.SetEnableIpv4dnsFromDhcp(x)
+	}
+	if v, ok := d.GetOk("enable_ipv6"); ok {
+		x := (v.(bool))
+		o.SetEnableIpv6(x)
 	}
 	if v, ok := d.GetOk("enable_ipv6dns_from_dhcp"); ok {
 		x := (v.(bool))
-		o.EnableIpv6dnsFromDhcp = &x
+		o.SetEnableIpv6dnsFromDhcp(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("preferred_ipv4dns_server"); ok {
 		x := (v.(string))
-		o.PreferredIpv4dnsServer = x
+		o.SetPreferredIpv4dnsServer(x)
 	}
 	if v, ok := d.GetOk("preferred_ipv6dns_server"); ok {
 		x := (v.(string))
-		o.PreferredIpv6dnsServer = x
+		o.SetPreferredIpv6dnsServer(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.NetworkconfigApi.GetNetworkconfigPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.NetworkconfigPolicy
+			var s = models.NewNetworkconfigPolicy()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("alternate_ipv4dns_server", (s.AlternateIpv4dnsServer)); err != nil {
@@ -334,25 +353,25 @@ func dataSourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("appliance_account", flattenMapIamAccountRef(s.ApplianceAccount, d)); err != nil {
+			if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.ApplianceAccount, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
 				return err
 			}
-			if err := d.Set("dynamic_dns_domain", (s.DynamicDNSDomain)); err != nil {
+			if err := d.Set("dynamic_dns_domain", (s.DynamicDnsDomain)); err != nil {
 				return err
 			}
-			if err := d.Set("enable_dynamic_dns", (s.EnableDynamicDNS)); err != nil {
-				return err
-			}
-			if err := d.Set("enable_ipv6", (s.EnableIPV6)); err != nil {
+			if err := d.Set("enable_dynamic_dns", (s.EnableDynamicDns)); err != nil {
 				return err
 			}
 			if err := d.Set("enable_ipv4dns_from_dhcp", (s.EnableIpv4dnsFromDhcp)); err != nil {
+				return err
+			}
+			if err := d.Set("enable_ipv6", (s.EnableIpv6)); err != nil {
 				return err
 			}
 			if err := d.Set("enable_ipv6dns_from_dhcp", (s.EnableIpv6dnsFromDhcp)); err != nil {
@@ -368,11 +387,11 @@ func dataSourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("preferred_ipv4dns_server", (s.PreferredIpv4dnsServer)); err != nil {
@@ -382,14 +401,14 @@ func dataSourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
+			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
 				return err
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

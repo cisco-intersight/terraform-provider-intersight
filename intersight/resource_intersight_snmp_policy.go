@@ -1,11 +1,9 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -67,12 +65,23 @@ func resourceSnmpPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -80,10 +89,9 @@ func resourceSnmpPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -98,12 +106,23 @@ func resourceSnmpPolicy() *schema.Resource {
 				ForceNew:   true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -111,10 +130,9 @@ func resourceSnmpPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -127,11 +145,22 @@ func resourceSnmpPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"profiles": {
-				Description: "Relationship to the profile object.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -139,10 +168,9 @@ func resourceSnmpPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -161,16 +189,10 @@ func resourceSnmpPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"snmp_traps": {
-				Description: "List of SNMP traps for the policy.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -191,7 +213,6 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"port": {
 							Description: "Port used by the server to communicate with trap destination. Enter a value between 1-65535.",
@@ -221,16 +242,10 @@ func resourceSnmpPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"snmp_users": {
-				Description: "List of SNMP users for the policy.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"auth_password": {
 							Description: "Authorization password for the user.",
 							Type:        schema.TypeString,
@@ -269,7 +284,6 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"privacy_password": {
 							Description: "Privacy password for the user.",
@@ -304,32 +318,14 @@ func resourceSnmpPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -338,8 +334,6 @@ func resourceSnmpPolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"trap_community": {
 				Description: "SNMP community group used for sending SNMP trap to other devices. Valid only for SNMPv2c users.",
@@ -349,439 +343,319 @@ func resourceSnmpPolicy() *schema.Resource {
 		},
 	}
 }
+
 func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.SnmpPolicy
+	var o = models.NewSnmpPolicy()
 	if v, ok := d.GetOk("access_community_string"); ok {
 		x := (v.(string))
-		o.AccessCommunityString = x
-
+		o.SetAccessCommunityString(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("snmp.Policy")
 
 	if v, ok := d.GetOk("community_access"); ok {
 		x := (v.(string))
-		o.CommunityAccess = &x
-
+		o.SetCommunityAccess(x)
 	}
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
-	if v, ok := d.GetOkExists("enabled"); ok {
-		x := v.(bool)
-		o.Enabled = &x
+	if v, ok := d.GetOk("enabled"); ok {
+		x := (v.(bool))
+		o.SetEnabled(x)
 	}
 
 	if v, ok := d.GetOk("engine_id"); ok {
 		x := (v.(string))
-		o.EngineID = x
-
+		o.SetEngineId(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("snmp.Policy")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
-
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
 		}
-		o.Profiles = x
-
+		o.SetProfiles(x)
 	}
 
 	if v, ok := d.GetOk("snmp_port"); ok {
 		x := int64(v.(int))
-		o.SnmpPort = x
-
+		o.SetSnmpPort(x)
 	}
 
 	if v, ok := d.GetOk("snmp_traps"); ok {
-		x := make([]*models.SnmpTrap, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.SnmpTrap{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.SnmpTrapAO1P1.SnmpTrapAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.SnmpTrap, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewSnmpTrapWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("snmp.Trap")
+			if v, ok := l["destination"]; ok {
+				{
+					x := (v.(string))
+					o.SetDestination(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["destination"]; ok {
-					{
-						x := (v.(string))
-						o.Destination = x
-					}
-				}
-				if v, ok := l["enabled"]; ok {
-					{
-						x := (v.(bool))
-						o.Enabled = &x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["port"]; ok {
-					{
-						x := int64(v.(int))
-						o.Port = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				if v, ok := l["user"]; ok {
-					{
-						x := (v.(string))
-						o.User = x
-					}
-				}
-				if v, ok := l["version"]; ok {
-					{
-						x := (v.(string))
-						o.Version = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["enabled"]; ok {
+				{
+					x := (v.(bool))
+					o.SetEnabled(x)
+				}
+			}
+			o.SetObjectType("snmp.Trap")
+			if v, ok := l["port"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetPort(x)
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			if v, ok := l["user"]; ok {
+				{
+					x := (v.(string))
+					o.SetUser(x)
+				}
+			}
+			if v, ok := l["version"]; ok {
+				{
+					x := (v.(string))
+					o.SetVersion(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.SnmpTraps = x
-
+		o.SetSnmpTraps(x)
 	}
 
 	if v, ok := d.GetOk("snmp_users"); ok {
-		x := make([]*models.SnmpUser, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.SnmpUser{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.SnmpUserAO1P1.SnmpUserAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.SnmpUser, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewSnmpUserWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["auth_password"]; ok {
+				{
+					x := (v.(string))
+					o.SetAuthPassword(x)
 				}
-				if v, ok := l["auth_password"]; ok {
-					{
-						x := (v.(string))
-						o.AuthPassword = x
-					}
-				}
-				if v, ok := l["auth_type"]; ok {
-					{
-						x := (v.(string))
-						o.AuthType = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["is_auth_password_set"]; ok {
-					{
-						x := (v.(bool))
-						o.IsAuthPasswordSet = &x
-					}
-				}
-				if v, ok := l["is_privacy_password_set"]; ok {
-					{
-						x := (v.(bool))
-						o.IsPrivacyPasswordSet = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["privacy_password"]; ok {
-					{
-						x := (v.(string))
-						o.PrivacyPassword = x
-					}
-				}
-				if v, ok := l["privacy_type"]; ok {
-					{
-						x := (v.(string))
-						o.PrivacyType = &x
-					}
-				}
-				if v, ok := l["security_level"]; ok {
-					{
-						x := (v.(string))
-						o.SecurityLevel = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["auth_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetAuthType(x)
+				}
+			}
+			o.SetClassId("snmp.User")
+			if v, ok := l["is_auth_password_set"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIsAuthPasswordSet(x)
+				}
+			}
+			if v, ok := l["is_privacy_password_set"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIsPrivacyPasswordSet(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			o.SetObjectType("snmp.User")
+			if v, ok := l["privacy_password"]; ok {
+				{
+					x := (v.(string))
+					o.SetPrivacyPassword(x)
+				}
+			}
+			if v, ok := l["privacy_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetPrivacyType(x)
+				}
+			}
+			if v, ok := l["security_level"]; ok {
+				{
+					x := (v.(string))
+					o.SetSecurityLevel(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.SnmpUsers = x
-
+		o.SetSnmpUsers(x)
 	}
 
 	if v, ok := d.GetOk("sys_contact"); ok {
 		x := (v.(string))
-		o.SysContact = x
-
+		o.SetSysContact(x)
 	}
 
 	if v, ok := d.GetOk("sys_location"); ok {
 		x := (v.(string))
-		o.SysLocation = x
-
+		o.SetSysLocation(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("trap_community"); ok {
 		x := (v.(string))
-		o.TrapCommunity = x
-
+		o.SetTrapCommunity(x)
 	}
 
-	url := "snmp/Policies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.SnmpApi.CreateSnmpPolicy(conn.ctx).SnmpPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceSnmpPolicyRead(d, meta)
 }
 func detachSnmpPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "snmp/Policies" + "/" + d.Id()
-	var o models.SnmpPolicy
+	var o = models.NewSnmpPolicy()
 
-	o.Profiles = []*models.PolicyAbstractConfigProfileRef{}
+	o.Profiles = new([]models.PolicyAbstractConfigProfileRelationship)
 
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.SnmpApi.UpdateSnmpPolicy(conn.ctx, d.Id()).SnmpPolicy(*o)
+	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling sol_policy. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while creating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		log.Printf("error in sending update request. error %s", err.Error())
-		return err
-	}
-	var s models.ServerProfile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling sol_policy. Error: %s", err.Error())
-	}
-
 	return err
 }
 
@@ -790,14 +664,9 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "snmp/Policies" + "/" + d.Id()
+	r := conn.ApiClient.SnmpApi.GetSnmpPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.SnmpPolicy
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
@@ -807,7 +676,7 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -823,7 +692,7 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	if err := d.Set("engine_id", (s.EngineID)); err != nil {
+	if err := d.Set("engine_id", (s.EngineId)); err != nil {
 		return err
 	}
 
@@ -839,15 +708,15 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
 		return err
 	}
 
@@ -880,415 +749,320 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.SnmpPolicy
+	var o = models.NewSnmpPolicy()
 	if d.HasChange("access_community_string") {
 		v := d.Get("access_community_string")
 		x := (v.(string))
-		o.AccessCommunityString = x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		o.SetAccessCommunityString(x)
 	}
 
 	if d.HasChange("community_access") {
 		v := d.Get("community_access")
 		x := (v.(string))
-		o.CommunityAccess = &x
+		o.SetCommunityAccess(x)
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("enabled") {
 		v := d.Get("enabled")
 		x := (v.(bool))
-		o.Enabled = &x
+		o.SetEnabled(x)
 	}
 
 	if d.HasChange("engine_id") {
 		v := d.Get("engine_id")
 		x := (v.(string))
-		o.EngineID = x
+		o.SetEngineId(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("profiles") {
 		v := d.Get("profiles")
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
 		}
-		o.Profiles = x
+		o.SetProfiles(x)
 	}
 
 	if d.HasChange("snmp_port") {
 		v := d.Get("snmp_port")
 		x := int64(v.(int))
-		o.SnmpPort = x
+		o.SetSnmpPort(x)
 	}
 
 	if d.HasChange("snmp_traps") {
 		v := d.Get("snmp_traps")
-		x := make([]*models.SnmpTrap, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.SnmpTrap{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.SnmpTrapAO1P1.SnmpTrapAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.SnmpTrap, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewSnmpTrapWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("snmp.Trap")
+			if v, ok := l["destination"]; ok {
+				{
+					x := (v.(string))
+					o.SetDestination(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["destination"]; ok {
-					{
-						x := (v.(string))
-						o.Destination = x
-					}
-				}
-				if v, ok := l["enabled"]; ok {
-					{
-						x := (v.(bool))
-						o.Enabled = &x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["port"]; ok {
-					{
-						x := int64(v.(int))
-						o.Port = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				if v, ok := l["user"]; ok {
-					{
-						x := (v.(string))
-						o.User = x
-					}
-				}
-				if v, ok := l["version"]; ok {
-					{
-						x := (v.(string))
-						o.Version = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["enabled"]; ok {
+				{
+					x := (v.(bool))
+					o.SetEnabled(x)
+				}
+			}
+			o.SetObjectType("snmp.Trap")
+			if v, ok := l["port"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetPort(x)
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			if v, ok := l["user"]; ok {
+				{
+					x := (v.(string))
+					o.SetUser(x)
+				}
+			}
+			if v, ok := l["version"]; ok {
+				{
+					x := (v.(string))
+					o.SetVersion(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.SnmpTraps = x
+		o.SetSnmpTraps(x)
 	}
 
 	if d.HasChange("snmp_users") {
 		v := d.Get("snmp_users")
-		x := make([]*models.SnmpUser, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.SnmpUser{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.SnmpUserAO1P1.SnmpUserAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.SnmpUser, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewSnmpUserWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["auth_password"]; ok {
+				{
+					x := (v.(string))
+					o.SetAuthPassword(x)
 				}
-				if v, ok := l["auth_password"]; ok {
-					{
-						x := (v.(string))
-						o.AuthPassword = x
-					}
-				}
-				if v, ok := l["auth_type"]; ok {
-					{
-						x := (v.(string))
-						o.AuthType = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["is_auth_password_set"]; ok {
-					{
-						x := (v.(bool))
-						o.IsAuthPasswordSet = &x
-					}
-				}
-				if v, ok := l["is_privacy_password_set"]; ok {
-					{
-						x := (v.(bool))
-						o.IsPrivacyPasswordSet = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["privacy_password"]; ok {
-					{
-						x := (v.(string))
-						o.PrivacyPassword = x
-					}
-				}
-				if v, ok := l["privacy_type"]; ok {
-					{
-						x := (v.(string))
-						o.PrivacyType = &x
-					}
-				}
-				if v, ok := l["security_level"]; ok {
-					{
-						x := (v.(string))
-						o.SecurityLevel = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["auth_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetAuthType(x)
+				}
+			}
+			o.SetClassId("snmp.User")
+			if v, ok := l["is_auth_password_set"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIsAuthPasswordSet(x)
+				}
+			}
+			if v, ok := l["is_privacy_password_set"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIsPrivacyPasswordSet(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			o.SetObjectType("snmp.User")
+			if v, ok := l["privacy_password"]; ok {
+				{
+					x := (v.(string))
+					o.SetPrivacyPassword(x)
+				}
+			}
+			if v, ok := l["privacy_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetPrivacyType(x)
+				}
+			}
+			if v, ok := l["security_level"]; ok {
+				{
+					x := (v.(string))
+					o.SetSecurityLevel(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.SnmpUsers = x
+		o.SetSnmpUsers(x)
 	}
 
 	if d.HasChange("sys_contact") {
 		v := d.Get("sys_contact")
 		x := (v.(string))
-		o.SysContact = x
+		o.SetSysContact(x)
 	}
 
 	if d.HasChange("sys_location") {
 		v := d.Get("sys_location")
 		x := (v.(string))
-		o.SysLocation = x
+		o.SetSysLocation(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
 	if d.HasChange("trap_community") {
 		v := d.Get("trap_community")
 		x := (v.(string))
-		o.TrapCommunity = x
+		o.SetTrapCommunity(x)
 	}
 
-	url := "snmp/Policies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.SnmpApi.UpdateSnmpPolicy(conn.ctx, d.Id()).SnmpPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceSnmpPolicyRead(d, meta)
 }
 
@@ -1296,9 +1070,13 @@ func resourceSnmpPolicyDelete(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "snmp/Policies" + "/" + d.Id()
-	detachSnmpPolicyProfiles(d, meta)
-	_, err := conn.SendDeleteRequest(url)
+	e := detachSnmpPolicyProfiles(d, meta)
+	if e != nil {
+		return e
+	}
+
+	r := conn.ApiClient.SnmpApi.DeleteSnmpPolicy(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

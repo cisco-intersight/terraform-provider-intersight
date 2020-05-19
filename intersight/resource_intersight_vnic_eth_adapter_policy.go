@@ -1,11 +1,9 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -28,11 +26,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -48,7 +41,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -68,11 +60,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -88,7 +75,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each completion queue.",
@@ -113,11 +99,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -150,7 +131,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -176,11 +156,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -196,7 +171,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -210,12 +184,23 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -223,10 +208,9 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -241,12 +225,23 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				ForceNew:   true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -254,10 +249,9 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -276,11 +270,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -301,7 +290,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"queue_pairs": {
 							Description: "The number of queue pairs per adapter. Recommended value = integer power of 2.",
@@ -330,11 +318,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -350,7 +333,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -362,6 +344,24 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"tags": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"key": {
+							Description: "The string representation of a tag key.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"value": {
+							Description: "The string representation of a tag value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+					},
+				},
+			},
 			"tcp_offload_settings": {
 				Description: "The TCP offload settings decide whether to offload the TCP related network functions from the CPU to the network hardware or not.",
 				Type:        schema.TypeList,
@@ -369,11 +369,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -394,7 +389,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"rx_checksum": {
 							Description: "When enabled, the CPU sends all packet checksums to the hardware for validation.",
@@ -411,44 +405,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
-			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"key": {
-							Description: "The string representation of a tag key.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"value": {
-							Description: "The string representation of a tag value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-			},
 			"tx_queue_settings": {
 				Description: "Transmit Queue resource settings.",
 				Type:        schema.TypeList,
@@ -456,11 +412,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -476,7 +427,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -495,11 +445,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -515,7 +460,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -525,624 +469,376 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 		},
 	}
 }
+
 func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.VnicEthAdapterPolicy
-	if v, ok := d.GetOkExists("advanced_filter"); ok {
-		x := v.(bool)
-		o.AdvancedFilter = &x
+	var o = models.NewVnicEthAdapterPolicy()
+	if v, ok := d.GetOk("advanced_filter"); ok {
+		x := (v.(bool))
+		o.SetAdvancedFilter(x)
 	}
 
 	if v, ok := d.GetOk("arfs_settings"); ok {
-		p := models.VnicArfsSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicArfsSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicArfsSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicArfsSettingsWithDefaults()
+			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.ArfsSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.ArfsSettings = &x
-
+		x := p[0]
+		o.SetArfsSettings(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("vnic.EthAdapterPolicy")
 
 	if v, ok := d.GetOk("completion_queue_settings"); ok {
-		p := models.VnicCompletionQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicCompletionQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicCompletionQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicCompletionQueueSettingsWithDefaults()
+			o.SetClassId("vnic.CompletionQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.CompletionQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.CompletionQueueSettings = &x
-
+		x := p[0]
+		o.SetCompletionQueueSettings(x)
 	}
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("interrupt_settings"); ok {
-		p := models.VnicEthInterruptSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthInterruptSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthInterruptSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthInterruptSettingsWithDefaults()
+			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
 				{
 					x := int64(v.(int))
-					o.CoalescingTime = x
+					o.SetCoalescingTime(x)
 				}
 			}
 			if v, ok := l["coalescing_type"]; ok {
 				{
 					x := (v.(string))
-					o.CoalescingType = &x
+					o.SetCoalescingType(x)
 				}
 			}
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
 			if v, ok := l["mode"]; ok {
 				{
 					x := (v.(string))
-					o.Mode = &x
+					o.SetMode(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.EthInterruptSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.InterruptSettings = &x
-
+		x := p[0]
+		o.SetInterruptSettings(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
 	if v, ok := d.GetOk("nvgre_settings"); ok {
-		p := models.VnicNvgreSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicNvgreSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicNvgreSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicNvgreSettingsWithDefaults()
+			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.NvgreSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.NvgreSettings = &x
-
+		x := p[0]
+		o.SetNvgreSettings(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("vnic.EthAdapterPolicy")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
-
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("roce_settings"); ok {
-		p := models.VnicRoceSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicRoceSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicRoceSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicRoceSettingsWithDefaults()
+			o.SetClassId("vnic.RoceSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
 			if v, ok := l["memory_regions"]; ok {
 				{
 					x := int64(v.(int))
-					o.MemoryRegions = x
+					o.SetMemoryRegions(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.RoceSettings")
 			if v, ok := l["queue_pairs"]; ok {
 				{
 					x := int64(v.(int))
-					o.QueuePairs = x
+					o.SetQueuePairs(x)
 				}
 			}
 			if v, ok := l["resource_groups"]; ok {
 				{
 					x := int64(v.(int))
-					o.ResourceGroups = x
+					o.SetResourceGroups(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.RoceSettings = &x
-
+		x := p[0]
+		o.SetRoceSettings(x)
 	}
 
-	if v, ok := d.GetOkExists("rss_settings"); ok {
-		x := v.(bool)
-		o.RssSettings = &x
+	if v, ok := d.GetOk("rss_settings"); ok {
+		x := (v.(bool))
+		o.SetRssSettings(x)
 	}
 
 	if v, ok := d.GetOk("rx_queue_settings"); ok {
-		p := models.VnicEthRxQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthRxQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthRxQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthRxQueueSettingsWithDefaults()
+			o.SetClassId("vnic.EthRxQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.EthRxQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.RxQueueSettings = &x
+		x := p[0]
+		o.SetRxQueueSettings(x)
+	}
 
+	if v, ok := d.GetOk("tags"); ok {
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("tcp_offload_settings"); ok {
-		p := models.VnicTCPOffloadSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicTCPOffloadSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicTcpOffloadSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicTcpOffloadSettingsWithDefaults()
+			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
 				{
 					x := (v.(bool))
-					o.LargeReceive = &x
+					o.SetLargeReceive(x)
 				}
 			}
 			if v, ok := l["large_send"]; ok {
 				{
 					x := (v.(bool))
-					o.LargeSend = &x
+					o.SetLargeSend(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.TcpOffloadSettings")
 			if v, ok := l["rx_checksum"]; ok {
 				{
 					x := (v.(bool))
-					o.RxChecksum = &x
+					o.SetRxChecksum(x)
 				}
 			}
 			if v, ok := l["tx_checksum"]; ok {
 				{
 					x := (v.(bool))
-					o.TxChecksum = &x
+					o.SetTxChecksum(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.TCPOffloadSettings = &x
-
-	}
-
-	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
-
+		x := p[0]
+		o.SetTcpOffloadSettings(x)
 	}
 
 	if v, ok := d.GetOk("tx_queue_settings"); ok {
-		p := models.VnicEthTxQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthTxQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthTxQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthTxQueueSettingsWithDefaults()
+			o.SetClassId("vnic.EthTxQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.EthTxQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.TxQueueSettings = &x
-
+		x := p[0]
+		o.SetTxQueueSettings(x)
 	}
 
 	if v, ok := d.GetOk("vxlan_settings"); ok {
-		p := models.VnicVxlanSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicVxlanSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicVxlanSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicVxlanSettingsWithDefaults()
+			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.VxlanSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.VxlanSettings = &x
-
+		x := p[0]
+		o.SetVxlanSettings(x)
 	}
 
-	url := "vnic/EthAdapterPolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.VnicApi.CreateVnicEthAdapterPolicy(conn.ctx).VnicEthAdapterPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceVnicEthAdapterPolicyRead(d, meta)
 }
 
@@ -1151,14 +847,9 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "vnic/EthAdapterPolicies" + "/" + d.Id()
+	r := conn.ApiClient.VnicApi.GetVnicEthAdapterPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.VnicEthAdapterPolicy
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
@@ -1172,7 +863,7 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -1204,11 +895,11 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
@@ -1224,11 +915,11 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("tcp_offload_settings", flattenMapVnicTCPOffloadSettings(s.TCPOffloadSettings, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tcp_offload_settings", flattenMapVnicTcpOffloadSettings(s.TcpOffloadSettings, d)); err != nil {
 		return err
 	}
 
@@ -1241,629 +932,392 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.VnicEthAdapterPolicy
+	var o = models.NewVnicEthAdapterPolicy()
 	if d.HasChange("advanced_filter") {
 		v := d.Get("advanced_filter")
 		x := (v.(bool))
-		o.AdvancedFilter = &x
+		o.SetAdvancedFilter(x)
 	}
 
 	if d.HasChange("arfs_settings") {
 		v := d.Get("arfs_settings")
-		p := models.VnicArfsSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicArfsSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicArfsSettingsAO1P1.VnicArfsSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicArfsSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicArfsSettingsWithDefaults()
+			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.ArfsSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.ArfsSettings = &x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		x := p[0]
+		o.SetArfsSettings(x)
 	}
 
 	if d.HasChange("completion_queue_settings") {
 		v := d.Get("completion_queue_settings")
-		p := models.VnicCompletionQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicCompletionQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicCompletionQueueSettingsAO1P1.VnicCompletionQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicCompletionQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicCompletionQueueSettingsWithDefaults()
+			o.SetClassId("vnic.CompletionQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.CompletionQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.CompletionQueueSettings = &x
+		x := p[0]
+		o.SetCompletionQueueSettings(x)
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("interrupt_settings") {
 		v := d.Get("interrupt_settings")
-		p := models.VnicEthInterruptSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthInterruptSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthInterruptSettingsAO1P1.VnicEthInterruptSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthInterruptSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthInterruptSettingsWithDefaults()
+			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
 				{
 					x := int64(v.(int))
-					o.CoalescingTime = x
+					o.SetCoalescingTime(x)
 				}
 			}
 			if v, ok := l["coalescing_type"]; ok {
 				{
 					x := (v.(string))
-					o.CoalescingType = &x
+					o.SetCoalescingType(x)
 				}
 			}
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
 			if v, ok := l["mode"]; ok {
 				{
 					x := (v.(string))
-					o.Mode = &x
+					o.SetMode(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.EthInterruptSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.InterruptSettings = &x
+		x := p[0]
+		o.SetInterruptSettings(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("nvgre_settings") {
 		v := d.Get("nvgre_settings")
-		p := models.VnicNvgreSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicNvgreSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicNvgreSettingsAO1P1.VnicNvgreSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicNvgreSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicNvgreSettingsWithDefaults()
+			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.NvgreSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.NvgreSettings = &x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		x := p[0]
+		o.SetNvgreSettings(x)
 	}
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("roce_settings") {
 		v := d.Get("roce_settings")
-		p := models.VnicRoceSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicRoceSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicRoceSettingsAO1P1.VnicRoceSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicRoceSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicRoceSettingsWithDefaults()
+			o.SetClassId("vnic.RoceSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
 			if v, ok := l["memory_regions"]; ok {
 				{
 					x := int64(v.(int))
-					o.MemoryRegions = x
+					o.SetMemoryRegions(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.RoceSettings")
 			if v, ok := l["queue_pairs"]; ok {
 				{
 					x := int64(v.(int))
-					o.QueuePairs = x
+					o.SetQueuePairs(x)
 				}
 			}
 			if v, ok := l["resource_groups"]; ok {
 				{
 					x := int64(v.(int))
-					o.ResourceGroups = x
+					o.SetResourceGroups(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.RoceSettings = &x
+		x := p[0]
+		o.SetRoceSettings(x)
 	}
 
 	if d.HasChange("rss_settings") {
 		v := d.Get("rss_settings")
 		x := (v.(bool))
-		o.RssSettings = &x
+		o.SetRssSettings(x)
 	}
 
 	if d.HasChange("rx_queue_settings") {
 		v := d.Get("rx_queue_settings")
-		p := models.VnicEthRxQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthRxQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthRxQueueSettingsAO1P1.VnicEthRxQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthRxQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthRxQueueSettingsWithDefaults()
+			o.SetClassId("vnic.EthRxQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.EthRxQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.RxQueueSettings = &x
+		x := p[0]
+		o.SetRxQueueSettings(x)
+	}
+
+	if d.HasChange("tags") {
+		v := d.Get("tags")
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		o.SetTags(x)
 	}
 
 	if d.HasChange("tcp_offload_settings") {
 		v := d.Get("tcp_offload_settings")
-		p := models.VnicTCPOffloadSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicTCPOffloadSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicTCPOffloadSettingsAO1P1.VnicTCPOffloadSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicTcpOffloadSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicTcpOffloadSettingsWithDefaults()
+			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
 				{
 					x := (v.(bool))
-					o.LargeReceive = &x
+					o.SetLargeReceive(x)
 				}
 			}
 			if v, ok := l["large_send"]; ok {
 				{
 					x := (v.(bool))
-					o.LargeSend = &x
+					o.SetLargeSend(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.TcpOffloadSettings")
 			if v, ok := l["rx_checksum"]; ok {
 				{
 					x := (v.(bool))
-					o.RxChecksum = &x
+					o.SetRxChecksum(x)
 				}
 			}
 			if v, ok := l["tx_checksum"]; ok {
 				{
 					x := (v.(bool))
-					o.TxChecksum = &x
+					o.SetTxChecksum(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.TCPOffloadSettings = &x
-	}
-
-	if d.HasChange("tags") {
-		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
+		x := p[0]
+		o.SetTcpOffloadSettings(x)
 	}
 
 	if d.HasChange("tx_queue_settings") {
 		v := d.Get("tx_queue_settings")
-		p := models.VnicEthTxQueueSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicEthTxQueueSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicEthTxQueueSettingsAO1P1.VnicEthTxQueueSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicEthTxQueueSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicEthTxQueueSettingsWithDefaults()
+			o.SetClassId("vnic.EthTxQueueSettings")
 			if v, ok := l["count"]; ok {
 				{
 					x := int64(v.(int))
-					o.Count = x
+					o.SetCount(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("vnic.EthTxQueueSettings")
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
-					o.RingSize = x
+					o.SetRingSize(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.TxQueueSettings = &x
+		x := p[0]
+		o.SetTxQueueSettings(x)
 	}
 
 	if d.HasChange("vxlan_settings") {
 		v := d.Get("vxlan_settings")
-		p := models.VnicVxlanSettings{}
-		if len(v.([]interface{})) > 0 {
-			o := models.VnicVxlanSettings{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.VnicVxlanSettingsAO1P1.VnicVxlanSettingsAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.VnicVxlanSettings, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewVnicVxlanSettingsWithDefaults()
+			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
-					o.Enabled = &x
+					o.SetEnabled(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-
-			p = o
+			o.SetObjectType("vnic.VxlanSettings")
+			p = append(p, *o)
 		}
-		x := p
-		o.VxlanSettings = &x
+		x := p[0]
+		o.SetVxlanSettings(x)
 	}
 
-	url := "vnic/EthAdapterPolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.VnicApi.UpdateVnicEthAdapterPolicy(conn.ctx, d.Id()).VnicEthAdapterPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceVnicEthAdapterPolicyRead(d, meta)
 }
 
@@ -1871,8 +1325,9 @@ func resourceVnicEthAdapterPolicyDelete(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "vnic/EthAdapterPolicies" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.VnicApi.DeleteVnicEthAdapterPolicy(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

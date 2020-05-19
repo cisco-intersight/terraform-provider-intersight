@@ -1,25 +1,21 @@
 package intersight
 
 import (
-	"bytes"
-	"crypto"
+	"context"
 	"crypto/rand"
-	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/base64"
-	"encoding/json"
-	"encoding/pem"
+	"encoding/hex"
+	"errors"
 	"fmt"
-	"io/ioutil"
+	gosdk "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/clientcredentials"
 	"log"
 	"net/http"
-	u "net/url"
+	"net/http/httptrace"
 	"os"
-	"reflect"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -27,344 +23,278 @@ type Config struct {
 	ApiKey        string
 	SecretKeyFile string
 	Endpoint      string
+	ApiClient     *gosdk.APIClient
+	ctx           context.Context
 }
 
-// getComputedDigest accepts json in bytes format
-// Returns an encoded form of the json using sha256 hash algorithm.
-func getComputedDigest(jsonPayload []byte) string {
-	digest := sha256.New()
-	digest.Write(jsonPayload)
-	finalDigest := "SHA-256=" + base64.StdEncoding.EncodeToString(digest.Sum(nil))
-	log.Println("Payload digest", finalDigest)
-	return finalDigest
+type AuthCodePKCEKeys struct {
+	Verifier  string //Random URL-safe string with a minimum length of 43 characters
+	Challenge string
 }
 
-// readPrivateKey reads RSA PRIVATE FROM a file, parses and returns an object of rsa PrivateKey
-func readPrivateKey(filePath string) (*rsa.PrivateKey, error) {
-	privateKeyFile, err := os.Open(filePath)
-	if err != nil {
-		log.Printf("failed to open secret key file: %s\n", err)
-		return nil, err
-	}
-	privateKey, err := ioutil.ReadAll(privateKeyFile)
-	if err != nil {
-		log.Printf("failed to read secret key: %s\n", err)
-		return nil, err
-	}
-	err = privateKeyFile.Close()
-	if err != nil {
-		log.Println("failed while closing file: ", err)
-		return nil, err
-	}
-	block, _ := pem.Decode(privateKey)
-	if block == nil {
-		log.Println("failed to parse PEM block containing the public key")
-		return nil, err
-	}
-	privateKeyParsed, err := x509.ParsePKCS1PrivateKey(block.Bytes)
-	if err != nil {
-		panic("failed to parse DER encoded public key: " + err.Error())
-	}
-	return privateKeyParsed, nil
+type Client struct {
+	hostname            string
+	skipTlsVerification bool
 }
 
-// method will be POST, GET, PATCH or DELETE
-// target url is the request endpoint e.g. /api/v1/sol/Policies
-// return authorization header content and current date if no error occurred, else empty string
-func (s *Config) getHTTPSign(method string, targetPath string, digest string) (string, string, error) {
-	privateKey, err := readPrivateKey(s.SecretKeyFile)
-	if err != nil {
-		return "", "", err
-	}
-	currentDate := strings.Replace(time.Now().UTC().Format(time.RFC1123), "UTC", "GMT", -1)
-	host := strings.TrimPrefix(strings.TrimPrefix(s.Endpoint, "https://"), "http://")
-	lStringToSign := "(request-target): " + strings.ToLower(method) + " " + strings.ToLower(targetPath) + "\ncontent-type: application/json\ndate: " + currentDate + "\ndigest: " + digest + "\nhost: " + host
-	h := sha256.New()
-	_, shaerr := h.Write([]byte(lStringToSign))
-	if shaerr != nil {
-		return "", "", shaerr
-	}
-	hashed := h.Sum(nil)
+func (c *Client) SetInputs(apiKeyId, apiKeyFile, hostName string, ignoreTls bool) context.Context {
+	c.hostname = hostName
+	c.skipTlsVerification = ignoreTls
 
-	rng := rand.Reader
-	signature, signerr := rsa.SignPKCS1v15(rng, privateKey, crypto.SHA256, hashed[:])
-	if signerr != nil {
-		return "", "", signerr
-	}
-	encSignature := base64.StdEncoding.EncodeToString(signature)
-	authorisationHeader := fmt.Sprintf(`Signature keyId="%s",algorithm="rsa-sha256",headers="(request-target) content-type date digest host",signature="%s"`, s.ApiKey, encSignature)
-	return authorisationHeader, currentDate, nil
-}
-
-//SendRequest accepts url and payload json. Sends a POST request.
-func (s *Config) SendRequest(url string, data []byte) ([]byte, error) {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	log.Println("URL:>", s.Endpoint+"/api/v1/"+url)
-
-	payloadBytes, err := sanitizeJson(data)
-	if err != nil {
-		log.Printf("error in sanitizing data. error: %s", err.Error())
-		return []byte(""), err
-	}
-	digest := getComputedDigest(payloadBytes)
-	authorizationHeader, currentDate, authErr := s.getHTTPSign(http.MethodPost, "/api/v1/"+url, digest)
-	if authErr != nil {
-		panic(authErr)
-	}
-	req, err := http.NewRequest(http.MethodPost, s.Endpoint+"/api/v1/"+url, bytes.NewBuffer(payloadBytes))
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Digest", digest)
-	req.Header.Set("Origin", s.Endpoint)
-	req.Header.Set("Authorization", authorizationHeader)
-	req.Header.Set("Date", currentDate)
-
-	log.Println("===========>", string(payloadBytes))
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	log.Println("response Status:", resp.Status)
-	log.Println("response Headers:", resp.Header)
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return body, err
-	}
-	log.Println("response Body:", string(body))
-	if resp.StatusCode != http.StatusOK {
-		log.Println("response Status:", resp.Status)
-		log.Println("response Headers:", resp.Header)
-		return body, fmt.Errorf("SendRequest failed. Url %s Status Code: %d Message: %v", url, resp.StatusCode, string(body))
-	}
-	return body, nil
-}
-
-func (s *Config) SendDeleteRequest(url string) ([]byte, error) {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	log.Println("URL:>", s.Endpoint+"/api/v1/"+url)
-
-	authorizationHeader, currentDate, authErr := s.getHTTPSign(http.MethodDelete, "/api/v1/"+url, getComputedDigest([]byte("")))
-	if authErr != nil {
-		panic(authErr)
-	}
-	req, err := http.NewRequest(http.MethodDelete, s.Endpoint+"/api/v1/"+url, nil)
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Digest", getComputedDigest([]byte("")))
-	req.Header.Set("Origin", s.Endpoint)
-	req.Header.Set("Authorization", authorizationHeader)
-	req.Header.Set("Date", currentDate)
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	log.Println("response Status:", resp.Status)
-	log.Println("response Headers:", resp.Header)
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return body, err
-	}
-
-	log.Println("response Body:", string(body))
-	if resp.StatusCode != http.StatusOK {
-		log.Println("response Status:", resp.Status)
-		log.Println("response Headers:", resp.Header)
-		return body, fmt.Errorf("SendDeleteRequest failed. Url %s Status Code: %d Message: %v", url, resp.StatusCode, string(body))
-	}
-
-	return body, nil
-}
-
-func (s *Config) SendUpdateRequest(url string, data []byte) ([]byte, error) {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	log.Println("URL:>", s.Endpoint+"/api/v1/"+url)
-
-	payloadBytes, err := sanitizeJson(data)
-	if err != nil {
-		log.Printf("error in sanitizing data. error: %s", err.Error())
-		return []byte(""), err
-	}
-	digest := getComputedDigest(payloadBytes)
-	authorizationHeader, currentDate, authErr := s.getHTTPSign(http.MethodPatch, "/api/v1/"+url, digest)
-	if authErr != nil {
-		panic(authErr)
-	}
-	req, err := http.NewRequest(http.MethodPatch, s.Endpoint+"/api/v1/"+url, bytes.NewBuffer(payloadBytes))
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Digest", digest)
-	req.Header.Set("Origin", s.Endpoint)
-	req.Header.Set("Authorization", authorizationHeader)
-	req.Header.Set("Date", currentDate)
-
-	log.Println("===========>", string(payloadBytes))
-	log.Printf("Request %+v\n", req)
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return body, err
-	}
-
-	log.Println("response Body:", string(body))
-	if resp.StatusCode != http.StatusOK {
-		log.Println("response Status:", resp.Status)
-		log.Println("response Headers:", resp.Header)
-		return body, fmt.Errorf("SendUpdateRequest failed. Url %s Status Code: %d Message: %v", url, resp.StatusCode, string(body))
-	}
-
-	return body, nil
-}
-
-// SendGetRequest sends Get request to appliance with or without payload
-func (s *Config) SendGetRequest(url string, data []byte) ([]byte, error) {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	log.Println("SendGetRequest URL:>", s.Endpoint+"/api/v1/"+url)
 	var err error
-	req, err := http.NewRequest(http.MethodGet, s.Endpoint+"/api/v1/"+url, nil)
-	if err != nil {
-		return []byte(""), err
-	}
-	// add GET request query, if exists
-	payloadBytes := []byte("")
-	if string(data) != "" {
-		data, err = sanitizeJson(data)
+	ctx := context.Background()
+	if apiKeyId != "" {
+		ctx, err = c.getHttpSignatureContext(ctx, apiKeyId, apiKeyFile)
 		if err != nil {
-			log.Printf("error in sanitizing data. error: %s", err.Error())
-			return []byte(""), err
+			log.Fatalf("Failed to get signature context: %v", err)
 		}
-		req.URL.RawQuery = "$filter=" + (&u.URL{Path: getRequestParams(data)}).String()
+	} else {
+		fmt.Printf("Missing API Key and ID. Please specify API Key and for authentication\n")
+		os.Exit(2)
 	}
-	targetURL := strings.TrimPrefix(req.URL.String(), s.Endpoint)
-	log.Println("get data source URL", targetURL)
-	digest := getComputedDigest(payloadBytes)
-	authorizationHeader, currentDate, authErr := s.getHTTPSign(http.MethodGet, targetURL, digest)
-	if authErr != nil {
-		panic(authErr)
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Digest", digest)
-	req.Header.Set("Origin", s.Endpoint)
-	req.Header.Set("Authorization", authorizationHeader)
-	req.Header.Set("Date", currentDate)
-
-	log.Printf("Request: %+v", req)
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-
-	client := &http.Client{Transport: tr}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	log.Println("response Status:", resp.Status)
-	log.Println("response Headers:", resp.Header)
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return body, err
-	}
-
-	log.Println("response Body:", string(body))
-	if resp.StatusCode != http.StatusOK {
-		log.Println("response Status:", resp.Status)
-		log.Println("response Headers:", resp.Header)
-		return body, fmt.Errorf("SendGetRequest failed. Url %s Status Code: %d Message: %v", url, resp.StatusCode, string(body))
-	}
-
-	return body, nil
+	return ctx
 }
 
-func sanitizeJson(in []byte) ([]byte, error) {
-	log.Println("Data to be sanitized", string(in))
-	var s map[string]interface{}
-	err := json.Unmarshal(in, &s)
+func newTransport(t http.RoundTripper) *transport {
+	return &transport{t: t}
+}
+
+func (c *Client) getHttpSignatureContext(ctx context.Context, flagKeyId string, flagKeyFileName string) (context.Context, error) {
+	// Example keyId: 596cc79e5d91b400010d15ad/59b856cb16267c0001286496/5dbb09b27564612d30b68668
+	// Create Authentication context.
+	if flagKeyId == "" {
+		return nil, errors.New("KeyId must be set")
+	}
+	if flagKeyFileName == "" {
+		return nil, errors.New("Private key path must be set")
+	}
+	// The following headers are required by Intersight:
+	//   (request-target)
+	//   Date
+	//   Digest
+	//   Host
+	// It is also recommended to add the following headers:
+	//   (created)
+	//
+	//SigningScheme:    intersight.HttpSigningSchemeHs2019,
+	//SigningAlgorithm: intersight.HttpSigningAlgorithmRsaPSS,
+	authCfg := gosdk.HttpSignatureAuth{
+		KeyId:            flagKeyId,
+		PrivateKeyPath:   flagKeyFileName,
+		Passphrase:       "",
+		SigningScheme:    gosdk.HttpSigningSchemeRsaSha256,
+		SigningAlgorithm: gosdk.HttpSigningAlgorithmRsaPKCS1v15,
+		SignedHeaders: []string{
+			gosdk.HttpSignatureParameterRequestTarget,
+			gosdk.HttpSignatureParameterCreated,
+			gosdk.HttpSignatureParameterExpires,
+			gosdk.HttpHeaderHost,
+			gosdk.HttpHeaderDate,
+			gosdk.HttpHeaderDigest,
+			"Content-Type",
+		},
+		SignatureMaxValidity: 10 * time.Minute,
+	}
+	log.Printf("Loading Intersight API private key. key-id: %v", flagKeyId)
+	// Create a context that will load the Intersight API private key.
+	// To create an Intersight private key:
+	// - Go to Settings, API keys
+	// - Generate a key
+	// - Copy the key Id
+
+	// Attach the HTTP signature attribute to the context.
+	ctx, err := authCfg.ContextWithValue(ctx)
+	_, err = authCfg.GetPublicKey()
 	if err != nil {
-		return []byte(""), err
+		return nil, err
+	}
+	return ctx, err
+}
+
+func (c *Client) getHttpClientContext(ctx context.Context) context.Context {
+	// Use a custom HTTP Client when requesting a token.
+	t := newTransport(&http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: c.skipTlsVerification,
+		},
+	})
+	trace := &httptrace.ClientTrace{
+		GotConn: t.GotConn,
+		WroteHeaderField: func(key string, value []string) {
+			log.Printf("Header %v: %v", key, value)
+		},
+	}
+	ctx = httptrace.WithClientTrace(ctx, trace)
+	httpClient := &http.Client{
+		Transport: t,
+	}
+	return context.WithValue(ctx, oauth2.HTTPClient, httpClient)
+}
+
+// getClientCredentialsContext returns a context suitable for OAuth2 Client-credentials.
+func (c *Client) getClientCredentialsContext(ctx context.Context, flagClientId string, flagClientSecret string) (context.Context, error) {
+	ctx = c.getHttpClientContext(ctx)
+	conf := &clientcredentials.Config{
+		ClientID:     flagClientId,
+		ClientSecret: flagClientSecret,
+		TokenURL:     fmt.Sprintf("https://%s/iam/token", c.hostname),
+		Scopes:       []string{},
+	}
+	return context.WithValue(ctx, gosdk.ContextOAuth2, conf.TokenSource(ctx)), nil
+}
+
+// getAuthorizationCodeContext returns a context suitable for OAuth2 authorization-code.
+func (c *Client) getAuthorizationCodeContext(ctx context.Context, flagClientId string, flagClientSecret string) (context.Context, error) {
+	ctx = c.getHttpClientContext(ctx)
+	conf := &oauth2.Config{
+		ClientID:     flagClientId,
+		ClientSecret: flagClientSecret,
+		Scopes:       []string{},
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  fmt.Sprintf("https://%s/iam/token", c.hostname),
+			TokenURL: fmt.Sprintf("https://%s/iam/token", c.hostname),
+		},
 	}
 
-	readOnlyProps := []string{
-		"Ancestors",
-		"ClaimedTime",
-		"ConnectionStatusLastChangeTime",
-		"CreateTime",
-		"ModTime",
-		"ReleaseTime",
-		"ReleaseDate",
-		"ImportedTime",
-		"LastAccessTime",
-		"Owners",
-		"ConfigChangeDetails",
-		"RunningWorkflows",
-		"TimeZone",
-		"CleanupTime",
-		"EndTime",
-		"StartTime",
+	// Redirect user to consent page to ask for permission
+	// for the scopes specified above.
+	url := conf.AuthCodeURL("state", oauth2.AccessTypeOffline)
+	log.Printf("Login to Intersight at %s, then visit the URL for the auth dialog: %v", c.hostname, url)
+
+	// Use the authorization code that is pushed to the redirect
+	// URL. Exchange will do the handshake to retrieve the
+	// initial access token. The HTTP Client returned by
+	// conf.Client will refresh the token as necessary.
+	var code string
+	if _, err := fmt.Scan(&code); err != nil {
+		return nil, fmt.Errorf("Failed to get OAuth2 code: %v", err)
 	}
-	for k, v := range s {
-		if v == nil || v == "" {
-			delete(s, k)
-			continue
-		}
-		for _, p := range readOnlyProps {
-			if k == p {
-				delete(s, k)
-			}
-		}
+	tok, err := conf.Exchange(ctx, code)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to perform exchange OAuth2: %v", err)
 	}
-	b, err := json.Marshal(s)
+
+	return context.WithValue(ctx, gosdk.ContextOAuth2, conf.TokenSource(ctx, tok)), nil
+}
+
+func (c *Client) getAuthorizationCodePKCEContext(ctx context.Context, flagClientId string, flagRedirectUrl string) (context.Context, error) {
+	ctx = c.getHttpClientContext(ctx)
+	conf := &oauth2.Config{
+		ClientID:    flagClientId,
+		Scopes:      []string{},
+		RedirectURL: flagRedirectUrl,
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  fmt.Sprintf("https://%s/iam/token", c.hostname),
+			TokenURL: fmt.Sprintf("https://%s/iam/token", c.hostname),
+		},
+	}
+
+	keys, err := generateKeys()
+	if err != nil {
+		return nil, fmt.Errorf("Failed to generate OAuth2 key: %v", err)
+	}
+
+	// Redirect user to consent page to ask for permission
+	// for the scopes specified above.
+	var csrfToken []byte
+	csrfToken, err = generateRandomBytes(32)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to generate OAuth2 key: %v", err)
+	}
+	url := conf.AuthCodeURL(base64.URLEncoding.EncodeToString(csrfToken),
+		oauth2.SetAuthURLParam("domainname", "cisco.com"),
+		oauth2.SetAuthURLParam("code_challenge_method", "S256"),
+		oauth2.SetAuthURLParam("code_challenge", keys.Challenge),
+	)
+	log.Printf("Login to Intersight at %s, then visit the URL for the auth dialog: %v", c.hostname, url)
+
+	// Use the authorization code that is pushed to the redirect
+	// URL. Exchange will do the handshake to retrieve the
+	// initial access token. The HTTP Client returned by
+	// conf.Client will refresh the token as necessary.
+	var code string
+	if _, err = fmt.Scan(&code); err != nil {
+		return nil, fmt.Errorf("Failed to get OAuth2 code: %v", err)
+	}
+	tok, err := conf.Exchange(ctx, code, oauth2.SetAuthURLParam("code_verifier", keys.Verifier))
+	if err != nil {
+		return nil, fmt.Errorf("Failed to perform exchange OAuth2: %v", err)
+	}
+
+	return context.WithValue(ctx, gosdk.ContextOAuth2, conf.TokenSource(ctx, tok)), nil
+}
+
+func (c *Client) GetApiClient(ctx context.Context, enableDebug bool) *gosdk.APIClient {
+	cfg := gosdk.NewConfiguration()
+	cfg.Host = c.hostname
+	cfg.AddDefaultHeader("Content-Type", "application/json")
+	cfg.HTTPClient = &http.Client{
+		Transport: &http.Transport{
+			MaxIdleConns:       10,
+			IdleConnTimeout:    30 * time.Second,
+			DisableCompression: true,
+			TLSClientConfig:    &tls.Config{InsecureSkipVerify: c.skipTlsVerification},
+		},
+	}
+	cfg.Debug = enableDebug
+	return gosdk.NewAPIClient(cfg)
+}
+
+// transport is an http.RoundTripper that keeps track of the in-flight
+// request and implements hooks to report HTTP tracing events.
+type transport struct {
+	t       http.RoundTripper
+	current *http.Request
+}
+
+// RoundTrip wraps http.DefaultTransport.RoundTrip to keep track
+// of the current request.
+func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
+	t.current = req
+	log.Printf("RoundTrip URL: %v %v", t.current.Method, t.current.URL)
+	/*
+		b, err1 := ioutil.ReadAll(t.current.Body)
+		if err1 == nil {
+			log.Printf("RoundTrip Body: %v", string(b))
+		}
+	*/
+	resp, err := t.t.RoundTrip(req)
 	if err == nil {
-		b = bytes.Replace(b, []byte("\\u003c"), []byte("<"), -1)
-		b = bytes.Replace(b, []byte("\\u003e"), []byte(">"), -1)
-		b = bytes.Replace(b, []byte("\\u0026"), []byte("&"), -1)
+		log.Printf("Response status: %s", resp.Status)
+	} else {
+		log.Printf("Response error: %v", err)
 	}
-	log.Println("Sanitized data", string(b))
-	return b, err
+	return resp, err
 }
 
-func getRequestParams(in []byte) string {
-	var o string
-	var s map[string]interface{}
-	err := json.Unmarshal(in, &s)
+// GotConn prints whether the connection has been used previously
+// for the current request.
+func (t *transport) GotConn(info httptrace.GotConnInfo) {
+	log.Printf("Connected to %v", t.current.URL)
+}
+
+func generateKeys() (*AuthCodePKCEKeys, error) {
+	var keys AuthCodePKCEKeys
+
+	bytes, err := generateRandomBytes(32)
 	if err != nil {
-		return ""
+		return nil, err
 	}
-	for k, v := range s {
-		log.Printf("Type: %+v", reflect.TypeOf(v).Kind())
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.String:
-			o += k + " eq '" + v.(string) + "'"
-		case reflect.Bool:
-			o += k + " eq " + strconv.FormatBool(v.(bool))
-		case reflect.Int:
-			o += k + " eq " + strconv.FormatInt(v.(int64), 10)
-		case reflect.Float64:
-			o += k + " eq " + fmt.Sprintf("%f", v.(float64))
-		}
-		o += " and "
+	keys.Verifier = hex.EncodeToString(bytes)
+
+	lCodeSum := sha256.Sum256([]byte(keys.Verifier))
+	lCodeSumString := hex.EncodeToString(lCodeSum[:])
+	keys.Challenge = base64.URLEncoding.EncodeToString([]byte(lCodeSumString))
+
+	return &keys, nil
+}
+
+func generateRandomBytes(n uint32) ([]byte, error) {
+	b := make([]byte, n)
+	_, err := rand.Read(b)
+	if err != nil {
+		return nil, err
 	}
-	o = strings.TrimSuffix(o, " and ")
-	return o
+
+	return b, nil
 }

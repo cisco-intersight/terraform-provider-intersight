@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,10 +16,8 @@ func dataSourceIamSession() *schema.Resource {
 		Read: dataSourceIamSessionRead,
 		Schema: map[string]*schema.Schema{
 			"account_permissions": {
-				Description: "The accounts and the permissions within each account which a user can select after authentication. After authentication if user has access to multiple permissions, then user and session object are created in onboarding user account and asked to select one of these permissions.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"account_identifier": {
@@ -40,11 +38,6 @@ func dataSourceIamSession() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -58,17 +51,10 @@ func dataSourceIamSession() *schema.Resource {
 							Computed:    true,
 						},
 						"permissions": {
-							Description: "Permissions within an account which a user can select after authentication.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -95,9 +81,11 @@ func dataSourceIamSession() *schema.Resource {
 									},
 								},
 							},
+							Computed: true,
 						},
 					},
 				},
+				Computed: true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -148,13 +136,24 @@ func dataSourceIamSession() *schema.Resource {
 				Computed:    true,
 			},
 			"permission": {
-				Description: "Permissions associated with the web session. Permission provides a way to assign roles to a user or user group to perform operations on object hierarchy.",
+				Description: "A reference to a iamPermission resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -162,7 +161,7 @@ func dataSourceIamSession() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -177,12 +176,23 @@ func dataSourceIamSession() *schema.Resource {
 				},
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -190,7 +200,7 @@ func dataSourceIamSession() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -205,32 +215,14 @@ func dataSourceIamSession() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -239,16 +231,26 @@ func dataSourceIamSession() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"user": {
-				Description: "A collection of references to the [iam.User](mo://iam.User) Managed Object.\nWhen this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a iamUser resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -256,7 +258,7 @@ func dataSourceIamSession() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -273,76 +275,70 @@ func dataSourceIamSession() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceIamSessionRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "iam/Sessions"
-	var o models.IamSession
+	var o = models.NewIamSession()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("client_ip_address"); ok {
 		x := (v.(string))
-		o.ClientIPAddress = x
+		o.SetClientIpAddress(x)
 	}
 	if v, ok := d.GetOk("expiration"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.Expiration = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetExpiration(x)
 	}
 	if v, ok := d.GetOk("idle_time_expiration"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.IdleTimeExpiration = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetIdleTimeExpiration(x)
 	}
 	if v, ok := d.GetOk("last_login_client"); ok {
 		x := (v.(string))
-		o.LastLoginClient = x
+		o.SetLastLoginClient(x)
 	}
 	if v, ok := d.GetOk("last_login_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.LastLoginTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetLastLoginTime(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.IamApi.GetIamSessionList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.IamSession
+			var s = models.NewIamSession()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
 			if err := d.Set("account_permissions", flattenListIamAccountPermissions(s.AccountPermissions, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
-			if err := d.Set("client_ip_address", (s.ClientIPAddress)); err != nil {
+			if err := d.Set("client_ip_address", (s.ClientIpAddress)); err != nil {
 				return err
 			}
 
@@ -367,11 +363,11 @@ func dataSourceIamSessionRead(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
+			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
@@ -379,10 +375,10 @@ func dataSourceIamSessionRead(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			if err := d.Set("user", flattenMapIamUserRef(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

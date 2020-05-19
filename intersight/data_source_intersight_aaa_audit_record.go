@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,13 +16,24 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 		Read: dataSourceAaaAuditRecordRead,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The account of the user who performed the operation.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -30,7 +41,7 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -88,12 +99,23 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -101,7 +123,7 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -116,13 +138,24 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				},
 			},
 			"sessions": {
-				Description: "The sessions of the user who performed the operation.",
+				Description: "A reference to a iamSession resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -130,7 +163,7 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -150,32 +183,14 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -184,7 +199,6 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"timestamp": {
 				Description: "The creation time of AuditRecordLocal, which is the time when the affected MO was created/modified/deleted.",
@@ -198,13 +212,24 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Optional:    true,
 			},
 			"user": {
-				Description: "The user who performed the operation.",
+				Description: "A reference to a iamUser resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -212,7 +237,7 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -234,89 +259,83 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "aaa/AuditRecords"
-	var o models.AaaAuditRecord
+	var o = models.NewAaaAuditRecord()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("email"); ok {
 		x := (v.(string))
-		o.Email = x
+		o.SetEmail(x)
 	}
 	if v, ok := d.GetOk("event"); ok {
 		x := (v.(string))
-		o.Event = x
+		o.SetEvent(x)
 	}
 	if v, ok := d.GetOk("inst_id"); ok {
 		x := (v.(string))
-		o.InstID = x
+		o.SetInstId(x)
 	}
 	if v, ok := d.GetOk("mo_type"); ok {
 		x := (v.(string))
-		o.MoType = x
+		o.SetMoType(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_moid"); ok {
 		x := (v.(string))
-		o.ObjectMoid = x
+		o.SetObjectMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("source_ip"); ok {
 		x := (v.(string))
-		o.SourceIP = x
+		o.SetSourceIp(x)
 	}
 	if v, ok := d.GetOk("timestamp"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.Timestamp = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetTimestamp(x)
 	}
 	if v, ok := d.GetOk("trace_id"); ok {
 		x := (v.(string))
-		o.TraceID = x
+		o.SetTraceId(x)
 	}
 	if v, ok := d.GetOk("user_id_or_email"); ok {
 		x := (v.(string))
-		o.UserIDOrEmail = x
+		o.SetUserIdOrEmail(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.AaaApi.GetAaaAuditRecordList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.AaaAuditRecord
+			var s = models.NewAaaAuditRecord()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("email", (s.Email)); err != nil {
@@ -325,7 +344,7 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 			if err := d.Set("event", (s.Event)); err != nil {
 				return err
 			}
-			if err := d.Set("inst_id", (s.InstID)); err != nil {
+			if err := d.Set("inst_id", (s.InstId)); err != nil {
 				return err
 			}
 			if err := d.Set("mo_type", (s.MoType)); err != nil {
@@ -341,14 +360,14 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("sessions", flattenMapIamSessionRef(s.Sessions, d)); err != nil {
+			if err := d.Set("sessions", flattenMapIamSessionRelationship(s.Sessions, d)); err != nil {
 				return err
 			}
-			if err := d.Set("source_ip", (s.SourceIP)); err != nil {
+			if err := d.Set("source_ip", (s.SourceIp)); err != nil {
 				return err
 			}
 
@@ -359,17 +378,17 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 			if err := d.Set("timestamp", (s.Timestamp).String()); err != nil {
 				return err
 			}
-			if err := d.Set("trace_id", (s.TraceID)); err != nil {
+			if err := d.Set("trace_id", (s.TraceId)); err != nil {
 				return err
 			}
 
-			if err := d.Set("user", flattenMapIamUserRef(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
 				return err
 			}
-			if err := d.Set("user_id_or_email", (s.UserIDOrEmail)); err != nil {
+			if err := d.Set("user_id_or_email", (s.UserIdOrEmail)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

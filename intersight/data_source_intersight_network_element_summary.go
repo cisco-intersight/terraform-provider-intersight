@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -48,12 +48,6 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"ipv4_address": {
-				Description: "IP version 4 address is saved in this property.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
 			"inband_ip_address": {
 				Description: "The IP address of the network Element inband management interface.",
 				Type:        schema.TypeString,
@@ -75,6 +69,12 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 			"inband_vlan": {
 				Description: "The VLAN ID of the network Element inband management interface.",
 				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
+			"ipv4_address": {
+				Description: "IP version 4 address is saved in this property.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -205,12 +205,23 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -218,7 +229,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -233,13 +244,24 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -247,7 +269,7 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -291,32 +313,14 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -325,7 +329,6 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",
@@ -342,199 +345,193 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "network/ElementSummaries"
-	var o models.NetworkElementSummary
+	var o = models.NewNetworkElementSummary()
 	if v, ok := d.GetOk("admin_inband_interface_state"); ok {
 		x := (v.(string))
-		o.AdminInbandInterfaceState = x
+		o.SetAdminInbandInterfaceState(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("fault_summary"); ok {
 		x := int64(v.(int))
-		o.FaultSummary = x
+		o.SetFaultSummary(x)
 	}
 	if v, ok := d.GetOk("firmware"); ok {
 		x := (v.(string))
-		o.Firmware = x
-	}
-	if v, ok := d.GetOk("ipv4_address"); ok {
-		x := (v.(string))
-		o.IPV4Address = x
+		o.SetFirmware(x)
 	}
 	if v, ok := d.GetOk("inband_ip_address"); ok {
 		x := (v.(string))
-		o.InbandIPAddress = x
+		o.SetInbandIpAddress(x)
 	}
 	if v, ok := d.GetOk("inband_ip_gateway"); ok {
 		x := (v.(string))
-		o.InbandIPGateway = x
+		o.SetInbandIpGateway(x)
 	}
 	if v, ok := d.GetOk("inband_ip_mask"); ok {
 		x := (v.(string))
-		o.InbandIPMask = x
+		o.SetInbandIpMask(x)
 	}
 	if v, ok := d.GetOk("inband_vlan"); ok {
 		x := int64(v.(int))
-		o.InbandVlan = x
+		o.SetInbandVlan(x)
+	}
+	if v, ok := d.GetOk("ipv4_address"); ok {
+		x := (v.(string))
+		o.SetIpv4Address(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("num_ether_ports"); ok {
 		x := int64(v.(int))
-		o.NumEtherPorts = x
+		o.SetNumEtherPorts(x)
 	}
 	if v, ok := d.GetOk("num_ether_ports_configured"); ok {
 		x := int64(v.(int))
-		o.NumEtherPortsConfigured = x
+		o.SetNumEtherPortsConfigured(x)
 	}
 	if v, ok := d.GetOk("num_ether_ports_link_up"); ok {
 		x := int64(v.(int))
-		o.NumEtherPortsLinkUp = x
+		o.SetNumEtherPortsLinkUp(x)
 	}
 	if v, ok := d.GetOk("num_expansion_modules"); ok {
 		x := int64(v.(int))
-		o.NumExpansionModules = x
+		o.SetNumExpansionModules(x)
 	}
 	if v, ok := d.GetOk("num_fc_ports"); ok {
 		x := int64(v.(int))
-		o.NumFcPorts = x
+		o.SetNumFcPorts(x)
 	}
 	if v, ok := d.GetOk("num_fc_ports_configured"); ok {
 		x := int64(v.(int))
-		o.NumFcPortsConfigured = x
+		o.SetNumFcPortsConfigured(x)
 	}
 	if v, ok := d.GetOk("num_fc_ports_link_up"); ok {
 		x := int64(v.(int))
-		o.NumFcPortsLinkUp = x
+		o.SetNumFcPortsLinkUp(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ip_address"); ok {
 		x := (v.(string))
-		o.OutOfBandIPAddress = x
+		o.SetOutOfBandIpAddress(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ip_gateway"); ok {
 		x := (v.(string))
-		o.OutOfBandIPGateway = x
+		o.SetOutOfBandIpGateway(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ip_mask"); ok {
 		x := (v.(string))
-		o.OutOfBandIPMask = x
+		o.SetOutOfBandIpMask(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv4_address"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV4Address = x
+		o.SetOutOfBandIpv4Address(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv4_gateway"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV4Gateway = x
+		o.SetOutOfBandIpv4Gateway(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv4_mask"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV4Mask = x
+		o.SetOutOfBandIpv4Mask(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv6_address"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV6Address = x
+		o.SetOutOfBandIpv6Address(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv6_gateway"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV6Gateway = x
+		o.SetOutOfBandIpv6Gateway(x)
 	}
 	if v, ok := d.GetOk("out_of_band_ipv6_prefix"); ok {
 		x := (v.(string))
-		o.OutOfBandIPV6Prefix = x
+		o.SetOutOfBandIpv6Prefix(x)
 	}
 	if v, ok := d.GetOk("out_of_band_mac"); ok {
 		x := (v.(string))
-		o.OutOfBandMac = x
+		o.SetOutOfBandMac(x)
 	}
 	if v, ok := d.GetOk("revision"); ok {
 		x := (v.(string))
-		o.Revision = x
+		o.SetRevision(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("source_object_type"); ok {
 		x := (v.(string))
-		o.SourceObjectType = x
+		o.SetSourceObjectType(x)
 	}
 	if v, ok := d.GetOk("switch_id"); ok {
 		x := (v.(string))
-		o.SwitchID = x
+		o.SetSwitchId(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 	if v, ok := d.GetOk("version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.NetworkApi.GetNetworkElementSummaryList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.NetworkElementSummary
+			var s = models.NewNetworkElementSummary()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("admin_inband_interface_state", (s.AdminInbandInterfaceState)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
+			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
 				return err
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
@@ -546,19 +543,19 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 			if err := d.Set("firmware", (s.Firmware)); err != nil {
 				return err
 			}
-			if err := d.Set("ipv4_address", (s.IPV4Address)); err != nil {
+			if err := d.Set("inband_ip_address", (s.InbandIpAddress)); err != nil {
 				return err
 			}
-			if err := d.Set("inband_ip_address", (s.InbandIPAddress)); err != nil {
+			if err := d.Set("inband_ip_gateway", (s.InbandIpGateway)); err != nil {
 				return err
 			}
-			if err := d.Set("inband_ip_gateway", (s.InbandIPGateway)); err != nil {
-				return err
-			}
-			if err := d.Set("inband_ip_mask", (s.InbandIPMask)); err != nil {
+			if err := d.Set("inband_ip_mask", (s.InbandIpMask)); err != nil {
 				return err
 			}
 			if err := d.Set("inband_vlan", (s.InbandVlan)); err != nil {
+				return err
+			}
+			if err := d.Set("ipv4_address", (s.Ipv4Address)); err != nil {
 				return err
 			}
 			if err := d.Set("model", (s.Model)); err != nil {
@@ -594,42 +591,42 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ip_address", (s.OutOfBandIPAddress)); err != nil {
+			if err := d.Set("out_of_band_ip_address", (s.OutOfBandIpAddress)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ip_gateway", (s.OutOfBandIPGateway)); err != nil {
+			if err := d.Set("out_of_band_ip_gateway", (s.OutOfBandIpGateway)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ip_mask", (s.OutOfBandIPMask)); err != nil {
+			if err := d.Set("out_of_band_ip_mask", (s.OutOfBandIpMask)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv4_address", (s.OutOfBandIPV4Address)); err != nil {
+			if err := d.Set("out_of_band_ipv4_address", (s.OutOfBandIpv4Address)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv4_gateway", (s.OutOfBandIPV4Gateway)); err != nil {
+			if err := d.Set("out_of_band_ipv4_gateway", (s.OutOfBandIpv4Gateway)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv4_mask", (s.OutOfBandIPV4Mask)); err != nil {
+			if err := d.Set("out_of_band_ipv4_mask", (s.OutOfBandIpv4Mask)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv6_address", (s.OutOfBandIPV6Address)); err != nil {
+			if err := d.Set("out_of_band_ipv6_address", (s.OutOfBandIpv6Address)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv6_gateway", (s.OutOfBandIPV6Gateway)); err != nil {
+			if err := d.Set("out_of_band_ipv6_gateway", (s.OutOfBandIpv6Gateway)); err != nil {
 				return err
 			}
-			if err := d.Set("out_of_band_ipv6_prefix", (s.OutOfBandIPV6Prefix)); err != nil {
+			if err := d.Set("out_of_band_ipv6_prefix", (s.OutOfBandIpv6Prefix)); err != nil {
 				return err
 			}
 			if err := d.Set("out_of_band_mac", (s.OutOfBandMac)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
@@ -644,7 +641,7 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 			if err := d.Set("source_object_type", (s.SourceObjectType)); err != nil {
 				return err
 			}
-			if err := d.Set("switch_id", (s.SwitchID)); err != nil {
+			if err := d.Set("switch_id", (s.SwitchId)); err != nil {
 				return err
 			}
 
@@ -657,7 +654,7 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 			if err := d.Set("version", (s.Version)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

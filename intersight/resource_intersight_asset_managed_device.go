@@ -1,11 +1,9 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,12 +15,23 @@ func resourceAssetManagedDevice() *schema.Resource {
 		Delete: resourceAssetManagedDeviceDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "ManagedDevice to Account MO relationship.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -30,10 +39,9 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -59,11 +67,6 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -80,7 +83,6 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"password": {
 							Description: "Password for the Managed Device.",
@@ -98,12 +100,23 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:   true,
 			},
 			"device_connector_manager": {
-				Description: "Intersight Assist Appliance Device within the asset Device Registration.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -111,10 +124,9 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -131,6 +143,7 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Description: "Type of the Device such as VMware, Pure Storage supported by Intersight Assist.",
 				Type:        schema.TypeString,
 				Optional:    true,
+				Default:     "",
 			},
 			"ignore_cert": {
 				Description: "Ignore Certificates with protocol https for connecting to the Managed Device. It is not used for other protocols.",
@@ -161,12 +174,23 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -174,10 +198,9 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -201,13 +224,24 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Default:     "https",
 			},
 			"registered_device": {
-				Description: "ManagedDevice once auto claimed within the asset Device Registration.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -215,10 +249,9 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -238,11 +271,6 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -279,7 +307,6 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"process_id": {
 							Description: "Maintains the process pid of the Device Connector for the Managed Device.",
@@ -302,32 +329,14 @@ func resourceAssetManagedDevice() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -336,17 +345,26 @@ func resourceAssetManagedDevice() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"workflow_info": {
-				Description: "Worklfow managed object reference associated with managed device. No managed device operations are supported, in case of associated worklfow is in progress.",
+				Description: "A reference to a workflowWorkflowInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -354,10 +372,9 @@ func resourceAssetManagedDevice() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -372,424 +389,328 @@ func resourceAssetManagedDevice() *schema.Resource {
 		},
 	}
 }
+
 func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.AssetManagedDevice
+	var o = models.NewAssetManagedDevice()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
-
+		x := p[0]
+		o.SetAccount(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("asset.ManagedDevice")
 
 	if v, ok := d.GetOk("credential"); ok {
-		p := models.CommCredential{}
-		if len(v.([]interface{})) > 0 {
-			o := models.CommCredential{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.CommCredentialAO1P1.CommCredentialAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.CommCredential, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewCommCredentialWithDefaults()
+			o.SetClassId("comm.Credential")
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("comm.Credential")
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["username"]; ok {
 				{
 					x := (v.(string))
-					o.Username = x
+					o.SetUsername(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Credential = &x
-
+		x := p[0]
+		o.SetCredential(x)
 	}
 
 	if v, ok := d.GetOk("device_connector_manager"); ok {
-		p := models.AssetDeviceRegistrationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetDeviceRegistrationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.AssetDeviceRegistrationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.DeviceRegistration")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsAssetDeviceRegistrationRelationship())
 		}
-		x := p
-		o.DeviceConnectorManager = &x
-
+		x := p[0]
+		o.SetDeviceConnectorManager(x)
 	}
 
 	if v, ok := d.GetOk("device_type"); ok {
 		x := (v.(string))
-		o.DeviceType = x
-
+		o.SetDeviceType(x)
 	}
 
-	if v, ok := d.GetOkExists("ignore_cert"); ok {
-		x := v.(bool)
-		o.IgnoreCert = &x
+	if v, ok := d.GetOk("ignore_cert"); ok {
+		x := (v.(bool))
+		o.SetIgnoreCert(x)
 	}
 
-	if v, ok := d.GetOkExists("is_enabled"); ok {
-		x := v.(bool)
-		o.IsEnabled = &x
+	if v, ok := d.GetOk("is_enabled"); ok {
+		x := (v.(bool))
+		o.SetIsEnabled(x)
 	}
 
 	if v, ok := d.GetOk("management_address"); ok {
 		x := (v.(string))
-		o.ManagementAddress = x
-
+		o.SetManagementAddress(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("asset.ManagedDevice")
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("port"); ok {
 		x := int64(v.(int))
-		o.Port = x
-
+		o.SetPort(x)
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
 		x := (v.(string))
-		o.Protocol = &x
-
+		o.SetProtocol(x)
 	}
 
 	if v, ok := d.GetOk("registered_device"); ok {
-		p := models.AssetDeviceRegistrationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetDeviceRegistrationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.AssetDeviceRegistrationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.DeviceRegistration")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsAssetDeviceRegistrationRelationship())
 		}
-		x := p
-		o.RegisteredDevice = &x
-
+		x := p[0]
+		o.SetRegisteredDevice(x)
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		p := models.AssetManagedDeviceStatus{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetManagedDeviceStatus{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.AssetManagedDeviceStatus, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewAssetManagedDeviceStatusWithDefaults()
+			o.SetClassId("asset.ManagedDeviceStatus")
 			if v, ok := l["cloud_port"]; ok {
 				{
 					x := int64(v.(int))
-					o.CloudPort = x
+					o.SetCloudPort(x)
 				}
 			}
 			if v, ok := l["connection_failure_reason"]; ok {
 				{
 					x := (v.(string))
-					o.ConnectionFailureReason = x
+					o.SetConnectionFailureReason(x)
 				}
 			}
 			if v, ok := l["connection_status"]; ok {
 				{
 					x := (v.(string))
-					o.ConnectionStatus = &x
+					o.SetConnectionStatus(x)
 				}
 			}
 			if v, ok := l["error_code"]; ok {
 				{
 					x := int64(v.(int))
-					o.ErrorCode = x
+					o.SetErrorCode(x)
 				}
 			}
 			if v, ok := l["error_reason"]; ok {
 				{
 					x := (v.(string))
-					o.ErrorReason = x
+					o.SetErrorReason(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.ManagedDeviceStatus")
 			if v, ok := l["process_id"]; ok {
 				{
 					x := int64(v.(int))
-					o.ProcessID = x
+					o.SetProcessId(x)
 				}
 			}
 			if v, ok := l["server_port"]; ok {
 				{
 					x := int64(v.(int))
-					o.ServerPort = x
+					o.SetServerPort(x)
 				}
 			}
 			if v, ok := l["state"]; ok {
 				{
 					x := (v.(string))
-					o.State = &x
+					o.SetState(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Status = &x
-
+		x := p[0]
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("workflow_info"); ok {
-		p := models.WorkflowWorkflowInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowWorkflowInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.WorkflowInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowWorkflowInfoRelationship())
 		}
-		x := p
-		o.WorkflowInfo = &x
-
+		x := p[0]
+		o.SetWorkflowInfo(x)
 	}
 
-	url := "asset/ManagedDevices"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.AssetApi.CreateAssetManagedDevice(conn.ctx).AssetManagedDevice(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceAssetManagedDeviceRead(d, meta)
 }
 
@@ -798,24 +719,19 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "asset/ManagedDevices" + "/" + d.Id()
+	r := conn.ApiClient.AssetApi.GetAssetManagedDeviceByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.AssetManagedDevice
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -823,7 +739,7 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 		return err
 	}
 
-	if err := d.Set("device_connector_manager", flattenMapAssetDeviceRegistrationRef(s.DeviceConnectorManager, d)); err != nil {
+	if err := d.Set("device_connector_manager", flattenMapAssetDeviceRegistrationRelationship(s.DeviceConnectorManager, d)); err != nil {
 		return err
 	}
 
@@ -851,7 +767,7 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
@@ -863,7 +779,7 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 		return err
 	}
 
-	if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+	if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 		return err
 	}
 
@@ -875,434 +791,347 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 		return err
 	}
 
-	if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRef(s.WorkflowInfo, d)); err != nil {
+	if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.WorkflowInfo, d)); err != nil {
 		return err
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.AssetManagedDevice
+	var o = models.NewAssetManagedDevice()
 	if d.HasChange("account") {
 		v := d.Get("account")
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		x := p[0]
+		o.SetAccount(x)
 	}
 
 	if d.HasChange("credential") {
 		v := d.Get("credential")
-		p := models.CommCredential{}
-		if len(v.([]interface{})) > 0 {
-			o := models.CommCredential{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.CommCredentialAO1P1.CommCredentialAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.CommCredential, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewCommCredentialWithDefaults()
+			o.SetClassId("comm.Credential")
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("comm.Credential")
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["username"]; ok {
 				{
 					x := (v.(string))
-					o.Username = x
+					o.SetUsername(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Credential = &x
+		x := p[0]
+		o.SetCredential(x)
 	}
 
 	if d.HasChange("device_connector_manager") {
 		v := d.Get("device_connector_manager")
-		p := models.AssetDeviceRegistrationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetDeviceRegistrationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.AssetDeviceRegistrationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.DeviceRegistration")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsAssetDeviceRegistrationRelationship())
 		}
-		x := p
-		o.DeviceConnectorManager = &x
+		x := p[0]
+		o.SetDeviceConnectorManager(x)
 	}
 
 	if d.HasChange("device_type") {
 		v := d.Get("device_type")
 		x := (v.(string))
-		o.DeviceType = x
+		o.SetDeviceType(x)
 	}
 
 	if d.HasChange("ignore_cert") {
 		v := d.Get("ignore_cert")
 		x := (v.(bool))
-		o.IgnoreCert = &x
+		o.SetIgnoreCert(x)
 	}
 
 	if d.HasChange("is_enabled") {
 		v := d.Get("is_enabled")
 		x := (v.(bool))
-		o.IsEnabled = &x
+		o.SetIsEnabled(x)
 	}
 
 	if d.HasChange("management_address") {
 		v := d.Get("management_address")
 		x := (v.(string))
-		o.ManagementAddress = x
+		o.SetManagementAddress(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("port") {
 		v := d.Get("port")
 		x := int64(v.(int))
-		o.Port = x
+		o.SetPort(x)
 	}
 
 	if d.HasChange("protocol") {
 		v := d.Get("protocol")
 		x := (v.(string))
-		o.Protocol = &x
+		o.SetProtocol(x)
 	}
 
 	if d.HasChange("registered_device") {
 		v := d.Get("registered_device")
-		p := models.AssetDeviceRegistrationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetDeviceRegistrationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.AssetDeviceRegistrationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.DeviceRegistration")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsAssetDeviceRegistrationRelationship())
 		}
-		x := p
-		o.RegisteredDevice = &x
+		x := p[0]
+		o.SetRegisteredDevice(x)
 	}
 
 	if d.HasChange("status") {
 		v := d.Get("status")
-		p := models.AssetManagedDeviceStatus{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetManagedDeviceStatus{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.AssetManagedDeviceStatusAO1P1.AssetManagedDeviceStatusAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.AssetManagedDeviceStatus, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewAssetManagedDeviceStatusWithDefaults()
+			o.SetClassId("asset.ManagedDeviceStatus")
 			if v, ok := l["cloud_port"]; ok {
 				{
 					x := int64(v.(int))
-					o.CloudPort = x
+					o.SetCloudPort(x)
 				}
 			}
 			if v, ok := l["connection_failure_reason"]; ok {
 				{
 					x := (v.(string))
-					o.ConnectionFailureReason = x
+					o.SetConnectionFailureReason(x)
 				}
 			}
 			if v, ok := l["connection_status"]; ok {
 				{
 					x := (v.(string))
-					o.ConnectionStatus = &x
+					o.SetConnectionStatus(x)
 				}
 			}
 			if v, ok := l["error_code"]; ok {
 				{
 					x := int64(v.(int))
-					o.ErrorCode = x
+					o.SetErrorCode(x)
 				}
 			}
 			if v, ok := l["error_reason"]; ok {
 				{
 					x := (v.(string))
-					o.ErrorReason = x
+					o.SetErrorReason(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("asset.ManagedDeviceStatus")
 			if v, ok := l["process_id"]; ok {
 				{
 					x := int64(v.(int))
-					o.ProcessID = x
+					o.SetProcessId(x)
 				}
 			}
 			if v, ok := l["server_port"]; ok {
 				{
 					x := int64(v.(int))
-					o.ServerPort = x
+					o.SetServerPort(x)
 				}
 			}
 			if v, ok := l["state"]; ok {
 				{
 					x := (v.(string))
-					o.State = &x
+					o.SetState(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Status = &x
+		x := p[0]
+		o.SetStatus(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
 	if d.HasChange("workflow_info") {
 		v := d.Get("workflow_info")
-		p := models.WorkflowWorkflowInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowWorkflowInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.WorkflowInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowWorkflowInfoRelationship())
 		}
-		x := p
-		o.WorkflowInfo = &x
+		x := p[0]
+		o.SetWorkflowInfo(x)
 	}
 
-	url := "asset/ManagedDevices" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.AssetApi.UpdateAssetManagedDevice(conn.ctx, d.Id()).AssetManagedDevice(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceAssetManagedDeviceRead(d, meta)
 }
 
@@ -1310,8 +1139,9 @@ func resourceAssetManagedDeviceDelete(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "asset/ManagedDevices" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.AssetApi.DeleteAssetManagedDevice(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

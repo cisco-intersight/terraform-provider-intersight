@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,13 +16,24 @@ func dataSourceIamAppRegistration() *schema.Resource {
 		Read: dataSourceIamAppRegistrationRead,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "A collection of references to the [iam.Account](mo://iam.Account) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -30,7 +41,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -77,10 +88,8 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"grant_types": {
-				Description: "The set of grant types that OAuth2 clients can use for this application.\nThe grant type is used in the OAuth2 login flow to validate the grant type that has been requested by the client.\nSee https://tools.ietf.org/html/rfc7591#page-9 for more details.\n# It is set automatically when AppRegistration is created since currently we do not provide option for the user.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"moid": {
@@ -90,12 +99,23 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"oauth_tokens": {
-				Description: "Collection of the OAuth2 tokens. Each OAuth2 token represents valid OAuth session.\nOAuth2 token is created when login over OAuth2 is performed using Authorization Code grant type.",
+				Description: "An array of relationships to iamOAuthToken resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -103,7 +123,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -124,13 +144,24 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"permission": {
-				Description: "Permission associated with OAuth token issued through Client Credentials flow. Permission of the current session will be used.",
+				Description: "A reference to a iamPermission resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -138,7 +169,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -153,12 +184,23 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				},
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -166,7 +208,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -181,9 +223,8 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				},
 			},
 			"redirect_uris": {
-				Description: "After a user successfully authorizes an application, the OAuth2 authorization server will redirect the user back to the\napplication with either an authorization code or access token in the URL.\nRegistered redirect URLs may contain query string parameters, but must not contain anything in the fragment.\nThe registration server rejects the request if a user tries to register a redirect URL that contains a fragment.\nFor native and mobile apps, Intersight allows a user to register a URL scheme such as myapp:// which can then be used\nin the redirect URL. The authorization server allows arbitrary URL schemes to be registered in order to support\nregistering redirect URLs for native apps.\nRedirect URLs are a critical part of the OAuth flow. After a user successfully authorizes an application,\nthe authorization server will redirect the user back to the application with either an authorization code or access\ntoken in the URL. Because the redirect URL will contain sensitive information, it is critical that the service\ndoesn’t redirect the user to arbitrary locations.\nThe best way to ensure the user will only be directed to appropriate locations is to require the developer to\nregister one or more redirect URLs when they create the application.\nThe redirection endpoint URI MUST be an absolute URI.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"renew_client_secret": {
@@ -192,10 +233,8 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"response_types": {
-				Description: "The set of response types that a OAuth2 client can use.\nThis is static list and it is set automatically when AppRegistration is created.\nAccording to RFC, it is used in OAuth2 login flow to check that this AppRegistration supports response type from the request.\nSee https://tools.ietf.org/html/rfc7591#page-9 for more details.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"revocation_timestamp": {
@@ -210,11 +249,22 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"roles": {
-				Description: "The set of roles that can be used when a OAuth2 client is accessing this registered application.\nFor example, multiple roles may be defined in your Intersight account, but you want users to login\nwith the 'Read-Only' role when accessing Intersight through a registered application.\nIn that case, the 'roles' property should contain a single element referencing the 'Read-Only' role.\nA user can only assign roles they already have.\nThis relationship is deprecated. Authorization is now performed by passing the 'scope' query parameter\nin the first request of the Authorization Code OAuth2 flow.\nThe value of the 'scope' parameter is a list of scope names separated by comma:\nROLE.Account Administrator, ROLE.<any role name>.",
+				Description: "An array of relationships to iamRole resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -222,7 +272,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -238,32 +288,14 @@ func dataSourceIamAppRegistration() *schema.Resource {
 				Computed: true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -272,16 +304,26 @@ func dataSourceIamAppRegistration() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"user": {
-				Description: "A collection of references to the [iam.User](mo://iam.User) Managed Object.\nWhen this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a iamUser resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -289,7 +331,7 @@ func dataSourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -306,88 +348,82 @@ func dataSourceIamAppRegistration() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "iam/AppRegistrations"
-	var o models.IamAppRegistration
+	var o = models.NewIamAppRegistration()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("client_id"); ok {
 		x := (v.(string))
-		o.ClientID = x
+		o.SetClientId(x)
 	}
 	if v, ok := d.GetOk("client_name"); ok {
 		x := (v.(string))
-		o.ClientName = x
+		o.SetClientName(x)
 	}
 	if v, ok := d.GetOk("client_secret"); ok {
 		x := (v.(string))
-		o.ClientSecret = x
+		o.SetClientSecret(x)
 	}
 	if v, ok := d.GetOk("client_type"); ok {
 		x := (v.(string))
-		o.ClientType = &x
+		o.SetClientType(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("renew_client_secret"); ok {
 		x := (v.(bool))
-		o.RenewClientSecret = &x
+		o.SetRenewClientSecret(x)
 	}
 	if v, ok := d.GetOk("revocation_timestamp"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.RevocationTimestamp = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetRevocationTimestamp(x)
 	}
 	if v, ok := d.GetOk("revoke"); ok {
 		x := (v.(bool))
-		o.Revoke = &x
+		o.SetRevoke(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.IamApi.GetIamAppRegistrationList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.IamAppRegistration
+			var s = models.NewIamAppRegistration()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
-			if err := d.Set("client_id", (s.ClientID)); err != nil {
+			if err := d.Set("client_id", (s.ClientId)); err != nil {
 				return err
 			}
 			if err := d.Set("client_name", (s.ClientName)); err != nil {
@@ -409,18 +445,18 @@ func dataSourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRef(s.OauthTokens, d)); err != nil {
+			if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRelationship(s.OauthTokens, d)); err != nil {
 				return err
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
+			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("redirect_uris", (s.RedirectUris)); err != nil {
@@ -440,7 +476,7 @@ func dataSourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("roles", flattenListIamRoleRef(s.Roles, d)); err != nil {
+			if err := d.Set("roles", flattenListIamRoleRelationship(s.Roles, d)); err != nil {
 				return err
 			}
 
@@ -448,10 +484,10 @@ func dataSourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("user", flattenMapIamUserRef(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

@@ -2,8 +2,10 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -31,7 +33,30 @@ func SuppressDiffAdditionProps(k, old, new string, d *schema.ResourceData) bool 
 	}
 	return different
 }
-
+func getRequestParams(in []byte) string {
+	var o string
+	var s map[string]interface{}
+	err := json.Unmarshal(in, &s)
+	if err != nil {
+		return ""
+	}
+	for k, v := range s {
+		log.Printf("Type: %+v", reflect.TypeOf(v).Kind())
+		switch reflect.TypeOf(v).Kind() {
+		case reflect.String:
+			o += k + " eq '" + v.(string) + "'"
+		case reflect.Bool:
+			o += k + " eq " + strconv.FormatBool(v.(bool))
+		case reflect.Int:
+			o += k + " eq " + strconv.FormatInt(v.(int64), 10)
+		case reflect.Float64:
+			o += k + " eq " + fmt.Sprintf("%f", v.(float64))
+		}
+		o += " and "
+	}
+	o = strings.TrimSuffix(o, " and ")
+	return o
+}
 func recursiveValueCheck(oldM map[string]interface{}, k string, v interface{}) bool {
 	x := reflect.TypeOf(v).String()
 	b := true

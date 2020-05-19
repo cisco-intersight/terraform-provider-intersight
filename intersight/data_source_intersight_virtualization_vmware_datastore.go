@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -26,11 +26,6 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"capacity": {
 							Description: "The total capacity of the entity (bytes).",
 							Type:        schema.TypeInt,
@@ -69,12 +64,23 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Computed:    true,
 			},
 			"cluster": {
-				Description: "Identifies the cluster associated with the datastore entity. Not every datastore is in a cluster and therefore this relation may not exist for all datastores.",
+				Description: "A reference to a virtualizationVmwareCluster resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -82,7 +88,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -98,13 +104,24 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Computed: true,
 			},
 			"datacenter": {
-				Description: "Every entity is grouped under the datacenter object and managed as a group.",
+				Description: "A reference to a virtualizationVmwareDatacenter resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -112,7 +129,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -132,12 +149,23 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Optional:    true,
 			},
 			"hosts": {
-				Description: "The list of hosts that are attached to this host. Used for the new inventory model and will soon replace hostList above.",
+				Description: "An array of relationships to virtualizationVmwareHost resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -145,7 +173,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -192,12 +220,23 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -205,7 +244,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -220,12 +259,23 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				},
 			},
 			"registered_device": {
-				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -233,7 +283,7 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -254,32 +304,14 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -288,7 +320,6 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"thin_provisioning_supported": {
 				Description: "Indicates if this datastore supports thin provisioning for files.",
@@ -300,14 +331,14 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"url": {
-				Description: "The URL to access this datastore (example - 'ds:///vmfs/volumes/562a4e8a-0eeb5372-dd61-78baf9cb9afa/').",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"un_committed": {
 				Description: "Space uncommitted in this datastore in bytes.",
 				Type:        schema.TypeInt,
+				Optional:    true,
+			},
+			"url": {
+				Description: "The URL to access this datastore (example - 'ds:///vmfs/volumes/562a4e8a-0eeb5372-dd61-78baf9cb9afa/').",
+				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"vm_count": {
@@ -318,94 +349,88 @@ func dataSourceVirtualizationVmwareDatastore() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "virtualization/VmwareDatastores"
-	var o models.VirtualizationVmwareDatastore
+	var o = models.NewVirtualizationVmwareDatastore()
 	if v, ok := d.GetOk("accessible"); ok {
 		x := (v.(bool))
-		o.Accessible = &x
+		o.SetAccessible(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("host_count"); ok {
 		x := int64(v.(int))
-		o.HostCount = x
+		o.SetHostCount(x)
 	}
 	if v, ok := d.GetOk("identity"); ok {
 		x := (v.(string))
-		o.Identity = x
+		o.SetIdentity(x)
 	}
 	if v, ok := d.GetOk("maintenance_mode"); ok {
 		x := (v.(bool))
-		o.MaintenanceMode = &x
+		o.SetMaintenanceMode(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("multiple_host_access"); ok {
 		x := (v.(bool))
-		o.MultipleHostAccess = &x
+		o.SetMultipleHostAccess(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = &x
+		o.SetStatus(x)
 	}
 	if v, ok := d.GetOk("thin_provisioning_supported"); ok {
 		x := (v.(bool))
-		o.ThinProvisioningSupported = &x
+		o.SetThinProvisioningSupported(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = &x
-	}
-	if v, ok := d.GetOk("url"); ok {
-		x := (v.(string))
-		o.URL = x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("un_committed"); ok {
 		x := int64(v.(int))
-		o.UnCommitted = x
+		o.SetUnCommitted(x)
+	}
+	if v, ok := d.GetOk("url"); ok {
+		x := (v.(string))
+		o.SetUrl(x)
 	}
 	if v, ok := d.GetOk("vm_count"); ok {
 		x := int64(v.(int))
-		o.VMCount = x
+		o.SetVmCount(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.VirtualizationApi.GetVirtualizationVmwareDatastoreList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.VirtualizationVmwareDatastore
+			var s = models.NewVirtualizationVmwareDatastore()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("accessible", (s.Accessible)); err != nil {
@@ -415,22 +440,22 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 			if err := d.Set("capacity", flattenMapVirtualizationStorageCapacity(s.Capacity, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 
-			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRef(s.Cluster, d)); err != nil {
+			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRelationship(s.Cluster, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRef(s.Datacenter, d)); err != nil {
+			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRelationship(s.Datacenter, d)); err != nil {
 				return err
 			}
 			if err := d.Set("host_count", (s.HostCount)); err != nil {
 				return err
 			}
 
-			if err := d.Set("hosts", flattenListVirtualizationVmwareHostRef(s.Hosts, d)); err != nil {
+			if err := d.Set("hosts", flattenListVirtualizationVmwareHostRelationship(s.Hosts, d)); err != nil {
 				return err
 			}
 			if err := d.Set("identity", (s.Identity)); err != nil {
@@ -452,11 +477,11 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("status", (s.Status)); err != nil {
@@ -472,16 +497,16 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 			if err := d.Set("type", (s.Type)); err != nil {
 				return err
 			}
-			if err := d.Set("url", (s.URL)); err != nil {
-				return err
-			}
 			if err := d.Set("un_committed", (s.UnCommitted)); err != nil {
 				return err
 			}
-			if err := d.Set("vm_count", (s.VMCount)); err != nil {
+			if err := d.Set("url", (s.Url)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("vm_count", (s.VmCount)); err != nil {
+				return err
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

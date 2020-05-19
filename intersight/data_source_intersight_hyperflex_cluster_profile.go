@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -20,13 +20,24 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"associated_cluster": {
-				Description: "HyperFlex cluster associated with this cluster profile.",
+				Description: "A reference to a hyperflexCluster resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -34,7 +45,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -49,12 +60,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"auto_support": {
-				Description: "A collection of references to the [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.AutoSupportPolicy](mo://hyperflex.AutoSupportPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexAutoSupportPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -62,7 +84,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -84,12 +106,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed:    true,
 			},
 			"cluster_network": {
-				Description: "A collection of references to the [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterNetworkPolicy](mo://hyperflex.ClusterNetworkPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexClusterNetworkPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -97,7 +130,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -113,12 +146,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"cluster_storage": {
-				Description: "A collection of references to the [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterStoragePolicy](mo://hyperflex.ClusterStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexClusterStoragePolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -126,7 +170,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -148,11 +192,6 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -192,13 +231,24 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"config_result": {
-				Description: "The profile configuration (deploy, validation) results with the overall state and detailed result messages.",
+				Description: "A reference to a hyperflexConfigResult resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -206,7 +256,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -231,12 +281,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"ext_fc_storage": {
-				Description: "A collection of references to the [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ExtFcStoragePolicy](mo://hyperflex.ExtFcStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexExtFcStoragePolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -244,7 +305,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -260,12 +321,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"ext_iscsi_storage": {
-				Description: "A collection of references to the [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ExtIscsiStoragePolicy](mo://hyperflex.ExtIscsiStoragePolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexExtIscsiStoragePolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -273,7 +345,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -294,12 +366,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"local_credential": {
-				Description: "A collection of references to the [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.LocalCredentialPolicy](mo://hyperflex.LocalCredentialPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexLocalCredentialPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -307,7 +390,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -349,12 +432,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"node_config": {
-				Description: "A collection of references to the [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.NodeConfigPolicy](mo://hyperflex.NodeConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexNodeConfigPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -362,7 +456,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -378,11 +472,22 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"node_profile_config": {
-				Description: "List of node profiles representing the configuraion of the corresponding HX cluster nodes.",
+				Description: "An array of relationships to hyperflexNodeProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -390,7 +495,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -412,12 +517,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -425,7 +541,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -441,12 +557,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -454,7 +581,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -469,12 +596,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"proxy_setting": {
-				Description: "A collection of references to the [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ProxySettingPolicy](mo://hyperflex.ProxySettingPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexProxySettingPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -482,7 +620,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -503,12 +641,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"running_workflows": {
-				Description: "List of workflows that are currently running for this cluster profile.",
+				Description: "An array of relationships to workflowWorkflowInfo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -516,7 +665,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -531,12 +680,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				},
 			},
 			"software_version": {
-				Description: "A collection of references to the [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.SoftwareVersionPolicy](mo://hyperflex.SoftwareVersionPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexSoftwareVersionPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -544,7 +704,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -560,12 +720,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"src_template": {
-				Description: "The source profile template to apply to the profile instance. All configuration settings from the profile template will be applied to the profile instance.",
+				Description: "A reference to a policyAbstractProfile resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -573,7 +744,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -595,11 +766,6 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -627,12 +793,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"sys_config": {
-				Description: "A collection of references to the [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.SysConfigPolicy](mo://hyperflex.SysConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexSysConfigPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -640,7 +817,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -656,32 +833,14 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -690,7 +849,6 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"type": {
 				Description: "Defines the type of the profile. Accepted value is instance.",
@@ -698,12 +856,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 			},
 			"ucsm_config": {
-				Description: "A collection of references to the [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.UcsmConfigPolicy](mo://hyperflex.UcsmConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexUcsmConfigPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -711,7 +880,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -727,12 +896,23 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"vcenter_config": {
-				Description: "A collection of references to the [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.VcenterConfigPolicy](mo://hyperflex.VcenterConfigPolicy) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a hyperflexVcenterConfigPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -740,7 +920,7 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -763,112 +943,106 @@ func dataSourceHyperflexClusterProfile() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "hyperflex/ClusterProfiles"
-	var o models.HyperflexClusterProfile
+	var o = models.NewHyperflexClusterProfile()
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
-		o.Action = &x
+		o.SetAction(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("data_ip_address"); ok {
 		x := (v.(string))
-		o.DataIPAddress = x
+		o.SetDataIpAddress(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("hypervisor_type"); ok {
 		x := (v.(string))
-		o.HypervisorType = &x
+		o.SetHypervisorType(x)
 	}
 	if v, ok := d.GetOk("mac_address_prefix"); ok {
 		x := (v.(string))
-		o.MacAddressPrefix = x
+		o.SetMacAddressPrefix(x)
 	}
 	if v, ok := d.GetOk("mgmt_ip_address"); ok {
 		x := (v.(string))
-		o.MgmtIPAddress = x
+		o.SetMgmtIpAddress(x)
 	}
 	if v, ok := d.GetOk("mgmt_platform"); ok {
 		x := (v.(string))
-		o.MgmtPlatform = &x
+		o.SetMgmtPlatform(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("replication"); ok {
 		x := int64(v.(int))
-		o.Replication = x
+		o.SetReplication(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = &x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("wwxn_prefix"); ok {
 		x := (v.(string))
-		o.WwxnPrefix = x
+		o.SetWwxnPrefix(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.HyperflexApi.GetHyperflexClusterProfileList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.HyperflexClusterProfile
+			var s = models.NewHyperflexClusterProfile()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("action", (s.Action)); err != nil {
 				return err
 			}
 
-			if err := d.Set("associated_cluster", flattenMapHyperflexClusterRef(s.AssociatedCluster, d)); err != nil {
+			if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.AssociatedCluster, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("auto_support", flattenMapHyperflexAutoSupportPolicyRef(s.AutoSupport, d)); err != nil {
+			if err := d.Set("auto_support", flattenMapHyperflexAutoSupportPolicyRelationship(s.AutoSupport, d)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
-			}
-
-			if err := d.Set("cluster_network", flattenMapHyperflexClusterNetworkPolicyRef(s.ClusterNetwork, d)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 
-			if err := d.Set("cluster_storage", flattenMapHyperflexClusterStoragePolicyRef(s.ClusterStorage, d)); err != nil {
+			if err := d.Set("cluster_network", flattenMapHyperflexClusterNetworkPolicyRelationship(s.ClusterNetwork, d)); err != nil {
+				return err
+			}
+
+			if err := d.Set("cluster_storage", flattenMapHyperflexClusterStoragePolicyRelationship(s.ClusterStorage, d)); err != nil {
 				return err
 			}
 
@@ -876,34 +1050,34 @@ func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interfac
 				return err
 			}
 
-			if err := d.Set("config_result", flattenMapHyperflexConfigResultRef(s.ConfigResult, d)); err != nil {
+			if err := d.Set("config_result", flattenMapHyperflexConfigResultRelationship(s.ConfigResult, d)); err != nil {
 				return err
 			}
-			if err := d.Set("data_ip_address", (s.DataIPAddress)); err != nil {
+			if err := d.Set("data_ip_address", (s.DataIpAddress)); err != nil {
 				return err
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
 				return err
 			}
 
-			if err := d.Set("ext_fc_storage", flattenMapHyperflexExtFcStoragePolicyRef(s.ExtFcStorage, d)); err != nil {
+			if err := d.Set("ext_fc_storage", flattenMapHyperflexExtFcStoragePolicyRelationship(s.ExtFcStorage, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("ext_iscsi_storage", flattenMapHyperflexExtIscsiStoragePolicyRef(s.ExtIscsiStorage, d)); err != nil {
+			if err := d.Set("ext_iscsi_storage", flattenMapHyperflexExtIscsiStoragePolicyRelationship(s.ExtIscsiStorage, d)); err != nil {
 				return err
 			}
 			if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
 				return err
 			}
 
-			if err := d.Set("local_credential", flattenMapHyperflexLocalCredentialPolicyRef(s.LocalCredential, d)); err != nil {
+			if err := d.Set("local_credential", flattenMapHyperflexLocalCredentialPolicyRelationship(s.LocalCredential, d)); err != nil {
 				return err
 			}
 			if err := d.Set("mac_address_prefix", (s.MacAddressPrefix)); err != nil {
 				return err
 			}
-			if err := d.Set("mgmt_ip_address", (s.MgmtIPAddress)); err != nil {
+			if err := d.Set("mgmt_ip_address", (s.MgmtIpAddress)); err != nil {
 				return err
 			}
 			if err := d.Set("mgmt_platform", (s.MgmtPlatform)); err != nil {
@@ -916,41 +1090,41 @@ func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interfac
 				return err
 			}
 
-			if err := d.Set("node_config", flattenMapHyperflexNodeConfigPolicyRef(s.NodeConfig, d)); err != nil {
+			if err := d.Set("node_config", flattenMapHyperflexNodeConfigPolicyRelationship(s.NodeConfig, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("node_profile_config", flattenListHyperflexNodeProfileRef(s.NodeProfileConfig, d)); err != nil {
+			if err := d.Set("node_profile_config", flattenListHyperflexNodeProfileRelationship(s.NodeProfileConfig, d)); err != nil {
 				return err
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
 				return err
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("proxy_setting", flattenMapHyperflexProxySettingPolicyRef(s.ProxySetting, d)); err != nil {
+			if err := d.Set("proxy_setting", flattenMapHyperflexProxySettingPolicyRelationship(s.ProxySetting, d)); err != nil {
 				return err
 			}
 			if err := d.Set("replication", (s.Replication)); err != nil {
 				return err
 			}
 
-			if err := d.Set("running_workflows", flattenListWorkflowWorkflowInfoRef(s.RunningWorkflows, d)); err != nil {
+			if err := d.Set("running_workflows", flattenListWorkflowWorkflowInfoRelationship(s.RunningWorkflows, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("software_version", flattenMapHyperflexSoftwareVersionPolicyRef(s.SoftwareVersion, d)); err != nil {
+			if err := d.Set("software_version", flattenMapHyperflexSoftwareVersionPolicyRelationship(s.SoftwareVersion, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRef(s.SrcTemplate, d)); err != nil {
+			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.SrcTemplate, d)); err != nil {
 				return err
 			}
 
@@ -958,7 +1132,7 @@ func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interfac
 				return err
 			}
 
-			if err := d.Set("sys_config", flattenMapHyperflexSysConfigPolicyRef(s.SysConfig, d)); err != nil {
+			if err := d.Set("sys_config", flattenMapHyperflexSysConfigPolicyRelationship(s.SysConfig, d)); err != nil {
 				return err
 			}
 
@@ -969,17 +1143,17 @@ func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interfac
 				return err
 			}
 
-			if err := d.Set("ucsm_config", flattenMapHyperflexUcsmConfigPolicyRef(s.UcsmConfig, d)); err != nil {
+			if err := d.Set("ucsm_config", flattenMapHyperflexUcsmConfigPolicyRelationship(s.UcsmConfig, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("vcenter_config", flattenMapHyperflexVcenterConfigPolicyRef(s.VcenterConfig, d)); err != nil {
+			if err := d.Set("vcenter_config", flattenMapHyperflexVcenterConfigPolicyRelationship(s.VcenterConfig, d)); err != nil {
 				return err
 			}
 			if err := d.Set("wwxn_prefix", (s.WwxnPrefix)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

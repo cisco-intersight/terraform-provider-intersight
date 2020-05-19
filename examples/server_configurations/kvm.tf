@@ -8,7 +8,7 @@ resource "intersight_kvm_policy" "kvm1" {
   enable_local_server_video = true
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   profiles {
     moid        = intersight_server_profile.server1.id

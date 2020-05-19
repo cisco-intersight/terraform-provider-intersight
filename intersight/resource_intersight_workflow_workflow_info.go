@@ -1,12 +1,10 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
-	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -18,12 +16,23 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 		Delete: resourceWorkflowWorkflowInfoDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The Account to which the workflow is associated.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -31,10 +40,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -104,16 +112,10 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"message": {
-				Description: "Collection of Workflow execution messages with severity.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -121,15 +123,16 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"message": {
-							Description: "An i18n message that can be translated in multiple languages to support internationalization.",
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description: "An i18n message that can be translated in multiple languages to support internationalization.\ntype: string",
+							Type:        schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"severity": {
 							Description: "The severity of the Task or Workflow message warning/error/info etc.",
@@ -161,66 +164,6 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				ForceNew:    true,
 			},
-			"nr0_profile": {
-				Description: "A collection of references to the [server.Profile](mo://server.Profile) Managed Object.\nWhen this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
-			"nr1_cluster_profile": {
-				Description: "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
@@ -228,12 +171,23 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The Organization to which the workflow is associated.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -241,10 +195,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -267,13 +220,24 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed: true,
 			},
 			"parent_task_info": {
-				Description: "Link to the task in the parent workflow which launched this workflow.",
+				Description: "A reference to a workflowTaskInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -281,10 +245,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -297,13 +260,24 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"pending_dynamic_workflow_info": {
-				Description: "Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance.",
+				Description: "A reference to a workflowPendingDynamicWorkflowInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -311,10 +285,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -327,12 +300,23 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"permission": {
-				Description: "Reference to the permission object for which user has access to start this workflow.",
+				Description: "A reference to a iamPermission resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -340,10 +324,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -357,12 +340,23 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:   true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -370,10 +364,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -399,11 +392,6 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -414,7 +402,6 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"retryable": {
 							Description: "When true, this workflow can be retried if has not been modified for more than a period of 2 weeks.",
@@ -456,32 +443,14 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				ForceNew:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -490,16 +459,25 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"task_infos": {
-				Description: "List of task instances that ran as part of this workflow execution.",
+				Description: "An array of relationships to workflowTaskInfo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -507,10 +485,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -555,12 +532,23 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				}, Optional: true,
 			},
 			"workflow_definition": {
-				Description: "The workflow definition that was used to launch this workflow execution instance.",
+				Description: "A reference to a workflowWorkflowDefinition resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -568,10 +556,9 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -600,644 +587,463 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 		},
 	}
 }
+
 func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.WorkflowWorkflowInfo
+	var o = models.NewWorkflowWorkflowInfo()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
-
+		x := p[0]
+		o.SetAccount(x)
 	}
 
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
-		o.Action = &x
-
+		o.SetAction(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("workflow.WorkflowInfo")
 
 	if v, ok := d.GetOk("cleanup_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.CleanupTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetCleanupTime(x)
 	}
 
 	if v, ok := d.GetOk("end_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.EndTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetEndTime(x)
 	}
 
 	if v, ok := d.GetOk("failed_workflow_cleanup_duration"); ok {
 		x := int64(v.(int))
-		o.FailedWorkflowCleanupDuration = x
-
+		o.SetFailedWorkflowCleanupDuration(x)
 	}
 
 	if v, ok := d.GetOk("input"); ok {
-		x := v
-		o.Input = &x
-
+		x := v.(map[string]interface{})
+		o.SetInput(x)
 	}
 
 	if v, ok := d.GetOk("inst_id"); ok {
 		x := (v.(string))
-		o.InstID = x
-
+		o.SetInstId(x)
 	}
 
-	if v, ok := d.GetOkExists("internal"); ok {
-		x := v.(bool)
-		o.Internal = &x
+	if v, ok := d.GetOk("internal"); ok {
+		x := (v.(bool))
+		o.SetInternal(x)
 	}
 
 	if v, ok := d.GetOk("last_action"); ok {
 		x := (v.(string))
-		o.LastAction = x
-
+		o.SetLastAction(x)
 	}
 
 	if v, ok := d.GetOk("message"); ok {
-		x := make([]*models.WorkflowMessage, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.WorkflowMessage{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.WorkflowMessageAO1P1.WorkflowMessageAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.WorkflowMessage, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewWorkflowMessageWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("workflow.Message")
+			if v, ok := l["message"]; ok {
+				{
+					x := v.(map[string]interface{})
+					o.SetMessage(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["message"]; ok {
-					{
-						x := (v.(string))
-						o.Message = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["severity"]; ok {
-					{
-						x := (v.(string))
-						o.Severity = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetObjectType("workflow.Message")
+			if v, ok := l["severity"]; ok {
+				{
+					x := (v.(string))
+					o.SetSeverity(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Message = x
-
+		o.SetMessage(x)
 	}
 
 	if v, ok := d.GetOk("meta_version"); ok {
 		x := int64(v.(int))
-		o.MetaVersion = x
-
+		o.SetMetaVersion(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("nr0_profile"); ok {
-		p := models.ServerProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.ServerProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Profile = &x
-
-	}
-
-	if v, ok := d.GetOk("nr1_cluster_profile"); ok {
-		p := models.HyperflexClusterProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexClusterProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr1ClusterProfile = &x
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("workflow.WorkflowInfo")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
-
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if v, ok := d.GetOk("output"); ok {
-		x := v
-		o.Output = &x
-
+		x := v.(map[string]interface{})
+		o.SetOutput(x)
 	}
 
 	if v, ok := d.GetOk("parent_task_info"); ok {
-		p := models.WorkflowTaskInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowTaskInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowTaskInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.TaskInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowTaskInfoRelationship())
 		}
-		x := p
-		o.ParentTaskInfo = &x
-
+		x := p[0]
+		o.SetParentTaskInfo(x)
 	}
 
 	if v, ok := d.GetOk("pending_dynamic_workflow_info"); ok {
-		p := models.WorkflowPendingDynamicWorkflowInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowPendingDynamicWorkflowInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowPendingDynamicWorkflowInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.PendingDynamicWorkflowInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowPendingDynamicWorkflowInfoRelationship())
 		}
-		x := p
-		o.PendingDynamicWorkflowInfo = &x
-
+		x := p[0]
+		o.SetPendingDynamicWorkflowInfo(x)
 	}
 
 	if v, ok := d.GetOk("permission"); ok {
-		p := models.IamPermissionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPermissionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamPermissionRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Permission")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamPermissionRelationship())
 		}
-		x := p
-		o.Permission = &x
-
+		x := p[0]
+		o.SetPermission(x)
 	}
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
-
+		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("progress"); ok {
 		x := v.(float32)
-		o.Progress = x
-
+		o.SetProgress(x)
 	}
 
 	if v, ok := d.GetOk("properties"); ok {
-		p := models.WorkflowWorkflowInfoProperties{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowInfoProperties{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.WorkflowWorkflowInfoPropertiesAO1P1.WorkflowWorkflowInfoPropertiesAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+		p := make([]models.WorkflowWorkflowInfoProperties, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewWorkflowWorkflowInfoPropertiesWithDefaults()
+			o.SetClassId("workflow.WorkflowInfoProperties")
+			o.SetObjectType("workflow.WorkflowInfoProperties")
 			if v, ok := l["retryable"]; ok {
 				{
 					x := (v.(bool))
-					o.Retryable = &x
+					o.SetRetryable(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Properties = &x
-
+		x := p[0]
+		o.SetProperties(x)
 	}
 
 	if v, ok := d.GetOk("retry_from_task_name"); ok {
 		x := (v.(string))
-		o.RetryFromTaskName = x
-
+		o.SetRetryFromTaskName(x)
 	}
 
 	if v, ok := d.GetOk("src"); ok {
 		x := (v.(string))
-		o.Src = x
-
+		o.SetSrc(x)
 	}
 
 	if v, ok := d.GetOk("start_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.StartTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetStartTime(x)
 	}
 
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = x
-
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("success_workflow_cleanup_duration"); ok {
 		x := int64(v.(int))
-		o.SuccessWorkflowCleanupDuration = x
-
+		o.SetSuccessWorkflowCleanupDuration(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
 	if v, ok := d.GetOk("task_infos"); ok {
-		x := make([]*models.WorkflowTaskInfoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.WorkflowTaskInfoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.WorkflowTaskInfoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("workflow.TaskInfo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsWorkflowTaskInfoRelationship())
 		}
-		o.TaskInfos = x
-
+		o.SetTaskInfos(x)
 	}
 
 	if v, ok := d.GetOk("trace_id"); ok {
 		x := (v.(string))
-		o.TraceID = x
-
+		o.SetTraceId(x)
 	}
 
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = x
-
+		o.SetType(x)
 	}
 
 	if v, ok := d.GetOk("user_id"); ok {
 		x := (v.(string))
-		o.UserID = x
-
+		o.SetUserId(x)
 	}
 
 	if v, ok := d.GetOk("wait_reason"); ok {
 		x := (v.(string))
-		o.WaitReason = &x
-
+		o.SetWaitReason(x)
 	}
 
 	if v, ok := d.GetOk("workflow_ctx"); ok {
-		x := v
-		o.WorkflowCtx = &x
-
+		x := v.(map[string]interface{})
+		o.SetWorkflowCtx(x)
 	}
 
 	if v, ok := d.GetOk("workflow_definition"); ok {
-		p := models.WorkflowWorkflowDefinitionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowDefinitionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowWorkflowDefinitionRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.WorkflowDefinition")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowWorkflowDefinitionRelationship())
 		}
-		x := p
-		o.WorkflowDefinition = &x
-
+		x := p[0]
+		o.SetWorkflowDefinition(x)
 	}
 
 	if v, ok := d.GetOk("workflow_meta_type"); ok {
 		x := (v.(string))
-		o.WorkflowMetaType = &x
-
+		o.SetWorkflowMetaType(x)
 	}
 
 	if v, ok := d.GetOk("workflow_task_count"); ok {
 		x := int64(v.(int))
-		o.WorkflowTaskCount = x
-
+		o.SetWorkflowTaskCount(x)
 	}
 
-	url := "workflow/WorkflowInfos"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.WorkflowApi.CreateWorkflowWorkflowInfo(conn.ctx).WorkflowWorkflowInfo(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceWorkflowWorkflowInfoRead(d, meta)
 }
 
@@ -1246,20 +1052,15 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "workflow/WorkflowInfos" + "/" + d.Id()
+	r := conn.ApiClient.WorkflowApi.GetWorkflowWorkflowInfoByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.WorkflowWorkflowInfo
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 		return err
 	}
 
@@ -1267,7 +1068,7 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -1287,7 +1088,7 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("inst_id", (s.InstID)); err != nil {
+	if err := d.Set("inst_id", (s.InstId)); err != nil {
 		return err
 	}
 
@@ -1315,19 +1116,11 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("nr0_profile", flattenMapServerProfileRef(s.Nr0Profile, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("nr1_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr1ClusterProfile, d)); err != nil {
-		return err
-	}
-
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
 		return err
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
 		return err
 	}
 
@@ -1335,19 +1128,19 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRef(s.ParentTaskInfo, d)); err != nil {
+	if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRelationship(s.ParentTaskInfo, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRef(s.PendingDynamicWorkflowInfo, d)); err != nil {
+	if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(s.PendingDynamicWorkflowInfo, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
+	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
@@ -1383,11 +1176,11 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("task_infos", flattenListWorkflowTaskInfoRef(s.TaskInfos, d)); err != nil {
+	if err := d.Set("task_infos", flattenListWorkflowTaskInfoRelationship(s.TaskInfos, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("trace_id", (s.TraceID)); err != nil {
+	if err := d.Set("trace_id", (s.TraceId)); err != nil {
 		return err
 	}
 
@@ -1395,7 +1188,7 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("user_id", (s.UserID)); err != nil {
+	if err := d.Set("user_id", (s.UserId)); err != nil {
 		return err
 	}
 
@@ -1407,7 +1200,7 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRef(s.WorkflowDefinition, d)); err != nil {
+	if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRelationship(s.WorkflowDefinition, d)); err != nil {
 		return err
 	}
 
@@ -1420,648 +1213,498 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.WorkflowWorkflowInfo
+	var o = models.NewWorkflowWorkflowInfo()
 	if d.HasChange("account") {
 		v := d.Get("account")
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
+		x := p[0]
+		o.SetAccount(x)
 	}
 
 	if d.HasChange("action") {
 		v := d.Get("action")
 		x := (v.(string))
-		o.Action = &x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		o.SetAction(x)
 	}
 
 	if d.HasChange("cleanup_time") {
 		v := d.Get("cleanup_time")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.CleanupTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetCleanupTime(x)
 	}
 
 	if d.HasChange("end_time") {
 		v := d.Get("end_time")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.EndTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetEndTime(x)
 	}
 
 	if d.HasChange("failed_workflow_cleanup_duration") {
 		v := d.Get("failed_workflow_cleanup_duration")
 		x := int64(v.(int))
-		o.FailedWorkflowCleanupDuration = x
+		o.SetFailedWorkflowCleanupDuration(x)
 	}
 
 	if d.HasChange("input") {
 		v := d.Get("input")
-		x := v
-		o.Input = &x
+		x := v.(map[string]interface{})
+		o.SetInput(x)
 	}
 
 	if d.HasChange("inst_id") {
 		v := d.Get("inst_id")
 		x := (v.(string))
-		o.InstID = x
+		o.SetInstId(x)
 	}
 
 	if d.HasChange("internal") {
 		v := d.Get("internal")
 		x := (v.(bool))
-		o.Internal = &x
+		o.SetInternal(x)
 	}
 
 	if d.HasChange("last_action") {
 		v := d.Get("last_action")
 		x := (v.(string))
-		o.LastAction = x
+		o.SetLastAction(x)
 	}
 
 	if d.HasChange("message") {
 		v := d.Get("message")
-		x := make([]*models.WorkflowMessage, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.WorkflowMessage{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.WorkflowMessageAO1P1.WorkflowMessageAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.WorkflowMessage, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewWorkflowMessageWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("workflow.Message")
+			if v, ok := l["message"]; ok {
+				{
+					x := v.(map[string]interface{})
+					o.SetMessage(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["message"]; ok {
-					{
-						x := (v.(string))
-						o.Message = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["severity"]; ok {
-					{
-						x := (v.(string))
-						o.Severity = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetObjectType("workflow.Message")
+			if v, ok := l["severity"]; ok {
+				{
+					x := (v.(string))
+					o.SetSeverity(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Message = x
+		o.SetMessage(x)
 	}
 
 	if d.HasChange("meta_version") {
 		v := d.Get("meta_version")
 		x := int64(v.(int))
-		o.MetaVersion = x
+		o.SetMetaVersion(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("nr0_profile") {
-		v := d.Get("nr0_profile")
-		p := models.ServerProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.ServerProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Profile = &x
-	}
-
-	if d.HasChange("nr1_cluster_profile") {
-		v := d.Get("nr1_cluster_profile")
-		p := models.HyperflexClusterProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexClusterProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr1ClusterProfile = &x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("organization.Organization")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsOrganizationOrganizationRelationship())
 		}
-		x := p
-		o.Organization = &x
+		x := p[0]
+		o.SetOrganization(x)
 	}
 
 	if d.HasChange("output") {
 		v := d.Get("output")
-		x := v
-		o.Output = &x
+		x := v.(map[string]interface{})
+		o.SetOutput(x)
 	}
 
 	if d.HasChange("parent_task_info") {
 		v := d.Get("parent_task_info")
-		p := models.WorkflowTaskInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowTaskInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowTaskInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.TaskInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowTaskInfoRelationship())
 		}
-		x := p
-		o.ParentTaskInfo = &x
+		x := p[0]
+		o.SetParentTaskInfo(x)
 	}
 
 	if d.HasChange("pending_dynamic_workflow_info") {
 		v := d.Get("pending_dynamic_workflow_info")
-		p := models.WorkflowPendingDynamicWorkflowInfoRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowPendingDynamicWorkflowInfoRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowPendingDynamicWorkflowInfoRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.PendingDynamicWorkflowInfo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowPendingDynamicWorkflowInfoRelationship())
 		}
-		x := p
-		o.PendingDynamicWorkflowInfo = &x
+		x := p[0]
+		o.SetPendingDynamicWorkflowInfo(x)
 	}
 
 	if d.HasChange("permission") {
 		v := d.Get("permission")
-		p := models.IamPermissionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPermissionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamPermissionRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Permission")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamPermissionRelationship())
 		}
-		x := p
-		o.Permission = &x
+		x := p[0]
+		o.SetPermission(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("progress") {
 		v := d.Get("progress")
 		x := v.(float32)
-		o.Progress = x
+		o.SetProgress(x)
 	}
 
 	if d.HasChange("properties") {
 		v := d.Get("properties")
-		p := models.WorkflowWorkflowInfoProperties{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowInfoProperties{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.WorkflowWorkflowInfoPropertiesAO1P1.WorkflowWorkflowInfoPropertiesAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+		p := make([]models.WorkflowWorkflowInfoProperties, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewWorkflowWorkflowInfoPropertiesWithDefaults()
+			o.SetClassId("workflow.WorkflowInfoProperties")
+			o.SetObjectType("workflow.WorkflowInfoProperties")
 			if v, ok := l["retryable"]; ok {
 				{
 					x := (v.(bool))
-					o.Retryable = &x
+					o.SetRetryable(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Properties = &x
+		x := p[0]
+		o.SetProperties(x)
 	}
 
 	if d.HasChange("retry_from_task_name") {
 		v := d.Get("retry_from_task_name")
 		x := (v.(string))
-		o.RetryFromTaskName = x
+		o.SetRetryFromTaskName(x)
 	}
 
 	if d.HasChange("src") {
 		v := d.Get("src")
 		x := (v.(string))
-		o.Src = x
+		o.SetSrc(x)
 	}
 
 	if d.HasChange("start_time") {
 		v := d.Get("start_time")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.StartTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetStartTime(x)
 	}
 
 	if d.HasChange("status") {
 		v := d.Get("status")
 		x := (v.(string))
-		o.Status = x
+		o.SetStatus(x)
 	}
 
 	if d.HasChange("success_workflow_cleanup_duration") {
 		v := d.Get("success_workflow_cleanup_duration")
 		x := int64(v.(int))
-		o.SuccessWorkflowCleanupDuration = x
+		o.SetSuccessWorkflowCleanupDuration(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
 	if d.HasChange("task_infos") {
 		v := d.Get("task_infos")
-		x := make([]*models.WorkflowTaskInfoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.WorkflowTaskInfoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.WorkflowTaskInfoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("workflow.TaskInfo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsWorkflowTaskInfoRelationship())
 		}
-		o.TaskInfos = x
+		o.SetTaskInfos(x)
 	}
 
 	if d.HasChange("trace_id") {
 		v := d.Get("trace_id")
 		x := (v.(string))
-		o.TraceID = x
+		o.SetTraceId(x)
 	}
 
 	if d.HasChange("type") {
 		v := d.Get("type")
 		x := (v.(string))
-		o.Type = x
+		o.SetType(x)
 	}
 
 	if d.HasChange("user_id") {
 		v := d.Get("user_id")
 		x := (v.(string))
-		o.UserID = x
+		o.SetUserId(x)
 	}
 
 	if d.HasChange("wait_reason") {
 		v := d.Get("wait_reason")
 		x := (v.(string))
-		o.WaitReason = &x
+		o.SetWaitReason(x)
 	}
 
 	if d.HasChange("workflow_ctx") {
 		v := d.Get("workflow_ctx")
-		x := v
-		o.WorkflowCtx = &x
+		x := v.(map[string]interface{})
+		o.SetWorkflowCtx(x)
 	}
 
 	if d.HasChange("workflow_definition") {
 		v := d.Get("workflow_definition")
-		p := models.WorkflowWorkflowDefinitionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.WorkflowWorkflowDefinitionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.WorkflowWorkflowDefinitionRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("workflow.WorkflowDefinition")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsWorkflowWorkflowDefinitionRelationship())
 		}
-		x := p
-		o.WorkflowDefinition = &x
+		x := p[0]
+		o.SetWorkflowDefinition(x)
 	}
 
 	if d.HasChange("workflow_meta_type") {
 		v := d.Get("workflow_meta_type")
 		x := (v.(string))
-		o.WorkflowMetaType = &x
+		o.SetWorkflowMetaType(x)
 	}
 
 	if d.HasChange("workflow_task_count") {
 		v := d.Get("workflow_task_count")
 		x := int64(v.(int))
-		o.WorkflowTaskCount = x
+		o.SetWorkflowTaskCount(x)
 	}
 
-	url := "workflow/WorkflowInfos" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.WorkflowApi.UpdateWorkflowWorkflowInfo(conn.ctx, d.Id()).WorkflowWorkflowInfo(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceWorkflowWorkflowInfoRead(d, meta)
 }
 
@@ -2069,8 +1712,9 @@ func resourceWorkflowWorkflowInfoDelete(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "workflow/WorkflowInfos" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.WorkflowApi.DeleteWorkflowWorkflowInfo(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

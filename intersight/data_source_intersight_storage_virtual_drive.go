@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -132,12 +132,23 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -145,7 +156,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -165,10 +176,22 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"physical_disk_usages": {
-				Type:     schema.TypeList,
-				Optional: true,
+				Description: "An array of relationships to storagePhysicalDiskUsage resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -176,7 +199,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -202,13 +225,24 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -216,7 +250,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -258,13 +292,24 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"storage_controller": {
-				Description: "A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.\nWhen this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageController resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -272,7 +317,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -293,32 +338,14 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -327,7 +354,6 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"type": {
 				Type:     schema.TypeString,
@@ -340,12 +366,23 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"vd_member_eps": {
-				Description: "It is a reference to LocalDisk to build up a VirtualDrive.",
+				Description: "An array of relationships to storageVdMemberEp resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -353,7 +390,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -379,13 +416,24 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 				Computed: true,
 			},
 			"virtual_drive_extension": {
-				Description: "A collection of references to the [storage.VirtualDriveExtension](mo://storage.VirtualDriveExtension) Managed Object.\nWhen this managed object is deleted, the referenced [storage.VirtualDriveExtension](mo://storage.VirtualDriveExtension) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageVirtualDriveExtension resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -393,7 +441,7 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -415,178 +463,172 @@ func dataSourceStorageVirtualDrive() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "storage/VirtualDrives"
-	var o models.StorageVirtualDrive
+	var o = models.NewStorageVirtualDrive()
 	if v, ok := d.GetOk("access_policy"); ok {
 		x := (v.(string))
-		o.AccessPolicy = x
+		o.SetAccessPolicy(x)
 	}
 	if v, ok := d.GetOk("actual_write_cache_policy"); ok {
 		x := (v.(string))
-		o.ActualWriteCachePolicy = x
+		o.SetActualWriteCachePolicy(x)
 	}
 	if v, ok := d.GetOk("available_size"); ok {
 		x := (v.(string))
-		o.AvailableSize = x
+		o.SetAvailableSize(x)
 	}
 	if v, ok := d.GetOk("block_size"); ok {
 		x := (v.(string))
-		o.BlockSize = x
+		o.SetBlockSize(x)
 	}
 	if v, ok := d.GetOk("bootable"); ok {
 		x := (v.(string))
-		o.Bootable = x
+		o.SetBootable(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("config_state"); ok {
 		x := (v.(string))
-		o.ConfigState = x
+		o.SetConfigState(x)
 	}
 	if v, ok := d.GetOk("configured_write_cache_policy"); ok {
 		x := (v.(string))
-		o.ConfiguredWriteCachePolicy = x
+		o.SetConfiguredWriteCachePolicy(x)
 	}
 	if v, ok := d.GetOk("connection_protocol"); ok {
 		x := (v.(string))
-		o.ConnectionProtocol = x
+		o.SetConnectionProtocol(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("drive_cache"); ok {
 		x := (v.(string))
-		o.DriveCache = x
+		o.SetDriveCache(x)
 	}
 	if v, ok := d.GetOk("drive_security"); ok {
 		x := (v.(string))
-		o.DriveSecurity = x
+		o.SetDriveSecurity(x)
 	}
 	if v, ok := d.GetOk("drive_state"); ok {
 		x := (v.(string))
-		o.DriveState = x
+		o.SetDriveState(x)
 	}
 	if v, ok := d.GetOk("io_policy"); ok {
 		x := (v.(string))
-		o.IoPolicy = x
+		o.SetIoPolicy(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("num_blocks"); ok {
 		x := (v.(string))
-		o.NumBlocks = x
+		o.SetNumBlocks(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("oper_state"); ok {
 		x := (v.(string))
-		o.OperState = x
+		o.SetOperState(x)
 	}
 	if v, ok := d.GetOk("operability"); ok {
 		x := (v.(string))
-		o.Operability = x
+		o.SetOperability(x)
 	}
 	if v, ok := d.GetOk("physical_block_size"); ok {
 		x := (v.(string))
-		o.PhysicalBlockSize = x
+		o.SetPhysicalBlockSize(x)
 	}
 	if v, ok := d.GetOk("presence"); ok {
 		x := (v.(string))
-		o.Presence = x
+		o.SetPresence(x)
 	}
 	if v, ok := d.GetOk("read_policy"); ok {
 		x := (v.(string))
-		o.ReadPolicy = x
+		o.SetReadPolicy(x)
 	}
 	if v, ok := d.GetOk("revision"); ok {
 		x := (v.(string))
-		o.Revision = x
+		o.SetRevision(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("security_flags"); ok {
 		x := (v.(string))
-		o.SecurityFlags = x
+		o.SetSecurityFlags(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("size"); ok {
 		x := (v.(string))
-		o.Size = x
+		o.SetSize(x)
 	}
 	if v, ok := d.GetOk("strip_size"); ok {
 		x := (v.(string))
-		o.StripSize = x
+		o.SetStripSize(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("uuid"); ok {
 		x := (v.(string))
-		o.UUID = x
+		o.SetUuid(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 	if v, ok := d.GetOk("vendor_uuid"); ok {
 		x := (v.(string))
-		o.VendorUUID = x
+		o.SetVendorUuid(x)
 	}
 	if v, ok := d.GetOk("virtual_drive_id"); ok {
 		x := (v.(string))
-		o.VirtualDriveID = x
+		o.SetVirtualDriveId(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.StorageApi.GetStorageVirtualDriveList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.StorageVirtualDrive
+			var s = models.NewStorageVirtualDrive()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 			if err := d.Set("access_policy", (s.AccessPolicy)); err != nil {
@@ -604,7 +646,7 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("bootable", (s.Bootable)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("config_state", (s.ConfigState)); err != nil {
@@ -616,7 +658,7 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("connection_protocol", (s.ConnectionProtocol)); err != nil {
 				return err
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
+			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
 				return err
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
@@ -656,14 +698,14 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("physical_block_size", (s.PhysicalBlockSize)); err != nil {
 				return err
 			}
 
-			if err := d.Set("physical_disk_usages", flattenListStoragePhysicalDiskUsageRef(s.PhysicalDiskUsages, d)); err != nil {
+			if err := d.Set("physical_disk_usages", flattenListStoragePhysicalDiskUsageRelationship(s.PhysicalDiskUsages, d)); err != nil {
 				return err
 			}
 			if err := d.Set("presence", (s.Presence)); err != nil {
@@ -673,7 +715,7 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
 				return err
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
@@ -692,7 +734,7 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 				return err
 			}
 
-			if err := d.Set("storage_controller", flattenMapStorageControllerRef(s.StorageController, d)); err != nil {
+			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.StorageController, d)); err != nil {
 				return err
 			}
 			if err := d.Set("strip_size", (s.StripSize)); err != nil {
@@ -705,27 +747,27 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("type", (s.Type)); err != nil {
 				return err
 			}
-			if err := d.Set("uuid", (s.UUID)); err != nil {
+			if err := d.Set("uuid", (s.Uuid)); err != nil {
 				return err
 			}
 
-			if err := d.Set("vd_member_eps", flattenListStorageVdMemberEpRef(s.VdMemberEps, d)); err != nil {
+			if err := d.Set("vd_member_eps", flattenListStorageVdMemberEpRelationship(s.VdMemberEps, d)); err != nil {
 				return err
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
 				return err
 			}
-			if err := d.Set("vendor_uuid", (s.VendorUUID)); err != nil {
+			if err := d.Set("vendor_uuid", (s.VendorUuid)); err != nil {
 				return err
 			}
 
-			if err := d.Set("virtual_drive_extension", flattenMapStorageVirtualDriveExtensionRef(s.VirtualDriveExtension, d)); err != nil {
+			if err := d.Set("virtual_drive_extension", flattenMapStorageVirtualDriveExtensionRelationship(s.VirtualDriveExtension, d)); err != nil {
 				return err
 			}
-			if err := d.Set("virtual_drive_id", (s.VirtualDriveID)); err != nil {
+			if err := d.Set("virtual_drive_id", (s.VirtualDriveId)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

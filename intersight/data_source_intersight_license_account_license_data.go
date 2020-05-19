@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,12 +16,23 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 		Read: dataSourceLicenseAccountLicenseDataRead,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "AccountLicenseData record to Account record relationship.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -29,7 +40,7 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -87,12 +98,23 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Computed:    true,
 			},
 			"customer_op": {
-				Description: "AccountLicenseData record to CustomerOp record relationship.",
+				Description: "A reference to a licenseCustomerOp resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -100,7 +122,7 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -163,11 +185,22 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Computed:    true,
 			},
 			"licenseinfos": {
-				Description: "All LicenceInfo records refercing this AccountLicenseData record.",
+				Description: "An array of relationships to licenseLicenseInfo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -175,7 +208,7 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -203,12 +236,23 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -216,7 +260,7 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -267,12 +311,23 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Computed:    true,
 			},
 			"smartlicense_token": {
-				Description: "AccountLicenseData record to SmartlicenseToken record relationship.",
+				Description: "A reference to a licenseSmartlicenseToken resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -280,7 +335,7 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -302,32 +357,14 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -336,7 +373,6 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"virtual_account": {
 				Description: "Name of the virtual account.",
@@ -347,141 +383,135 @@ func dataSourceLicenseAccountLicenseData() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "license/AccountLicenseData"
-	var o models.LicenseAccountLicenseData
+	var o = models.NewLicenseAccountLicenseData()
 	if v, ok := d.GetOk("account_id"); ok {
 		x := (v.(string))
-		o.AccountID = x
+		o.SetAccountId(x)
 	}
 	if v, ok := d.GetOk("agent_data"); ok {
 		x := (v.(string))
-		o.AgentData = x
+		o.SetAgentData(x)
 	}
 	if v, ok := d.GetOk("auth_expire_time"); ok {
 		x := (v.(string))
-		o.AuthExpireTime = x
+		o.SetAuthExpireTime(x)
 	}
 	if v, ok := d.GetOk("auth_initial_time"); ok {
 		x := (v.(string))
-		o.AuthInitialTime = x
+		o.SetAuthInitialTime(x)
 	}
 	if v, ok := d.GetOk("auth_next_time"); ok {
 		x := (v.(string))
-		o.AuthNextTime = x
+		o.SetAuthNextTime(x)
 	}
 	if v, ok := d.GetOk("category"); ok {
 		x := (v.(string))
-		o.Category = x
+		o.SetCategory(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("default_license_type"); ok {
 		x := (v.(string))
-		o.DefaultLicenseType = &x
+		o.SetDefaultLicenseType(x)
 	}
 	if v, ok := d.GetOk("error_desc"); ok {
 		x := (v.(string))
-		o.ErrorDesc = x
+		o.SetErrorDesc(x)
 	}
 	if v, ok := d.GetOk("group"); ok {
 		x := (v.(string))
-		o.Group = x
+		o.SetGroup(x)
 	}
 	if v, ok := d.GetOk("highest_compliant_license_tier"); ok {
 		x := (v.(string))
-		o.HighestCompliantLicenseTier = x
+		o.SetHighestCompliantLicenseTier(x)
 	}
 	if v, ok := d.GetOk("last_sync"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.LastSync = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetLastSync(x)
 	}
 	if v, ok := d.GetOk("last_updated_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.LastUpdatedTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetLastUpdatedTime(x)
 	}
 	if v, ok := d.GetOk("license_state"); ok {
 		x := (v.(string))
-		o.LicenseState = x
+		o.SetLicenseState(x)
 	}
 	if v, ok := d.GetOk("license_tech_support_info"); ok {
 		x := (v.(string))
-		o.LicenseTechSupportInfo = x
+		o.SetLicenseTechSupportInfo(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("register_expire_time"); ok {
 		x := (v.(string))
-		o.RegisterExpireTime = x
+		o.SetRegisterExpireTime(x)
 	}
 	if v, ok := d.GetOk("register_initial_time"); ok {
 		x := (v.(string))
-		o.RegisterInitialTime = x
+		o.SetRegisterInitialTime(x)
 	}
 	if v, ok := d.GetOk("register_next_time"); ok {
 		x := (v.(string))
-		o.RegisterNextTime = x
+		o.SetRegisterNextTime(x)
 	}
 	if v, ok := d.GetOk("registration_status"); ok {
 		x := (v.(string))
-		o.RegistrationStatus = x
+		o.SetRegistrationStatus(x)
 	}
 	if v, ok := d.GetOk("renew_failure_string"); ok {
 		x := (v.(string))
-		o.RenewFailureString = x
+		o.SetRenewFailureString(x)
 	}
 	if v, ok := d.GetOk("smart_account"); ok {
 		x := (v.(string))
-		o.SmartAccount = x
+		o.SetSmartAccount(x)
 	}
 	if v, ok := d.GetOk("sync_status"); ok {
 		x := (v.(string))
-		o.SyncStatus = x
+		o.SetSyncStatus(x)
 	}
 	if v, ok := d.GetOk("virtual_account"); ok {
 		x := (v.(string))
-		o.VirtualAccount = x
+		o.SetVirtualAccount(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.LicenseApi.GetLicenseAccountLicenseDataList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.LicenseAccountLicenseData
+			var s = models.NewLicenseAccountLicenseData()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 				return err
 			}
-			if err := d.Set("account_id", (s.AccountID)); err != nil {
+			if err := d.Set("account_id", (s.AccountId)); err != nil {
 				return err
 			}
 			if err := d.Set("agent_data", (s.AgentData)); err != nil {
@@ -499,11 +529,11 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 			if err := d.Set("category", (s.Category)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 
-			if err := d.Set("customer_op", flattenMapLicenseCustomerOpRef(s.CustomerOp, d)); err != nil {
+			if err := d.Set("customer_op", flattenMapLicenseCustomerOpRelationship(s.CustomerOp, d)); err != nil {
 				return err
 			}
 			if err := d.Set("default_license_type", (s.DefaultLicenseType)); err != nil {
@@ -533,7 +563,7 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 				return err
 			}
 
-			if err := d.Set("licenseinfos", flattenListLicenseLicenseInfoRef(s.Licenseinfos, d)); err != nil {
+			if err := d.Set("licenseinfos", flattenListLicenseLicenseInfoRelationship(s.Licenseinfos, d)); err != nil {
 				return err
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
@@ -543,7 +573,7 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("register_expire_time", (s.RegisterExpireTime)); err != nil {
@@ -565,7 +595,7 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 				return err
 			}
 
-			if err := d.Set("smartlicense_token", flattenMapLicenseSmartlicenseTokenRef(s.SmartlicenseToken, d)); err != nil {
+			if err := d.Set("smartlicense_token", flattenMapLicenseSmartlicenseTokenRelationship(s.SmartlicenseToken, d)); err != nil {
 				return err
 			}
 			if err := d.Set("sync_status", (s.SyncStatus)); err != nil {
@@ -578,7 +608,7 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 			if err := d.Set("virtual_account", (s.VirtualAccount)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

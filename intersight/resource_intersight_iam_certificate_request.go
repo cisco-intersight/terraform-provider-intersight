@@ -1,11 +1,10 @@
 package intersight
 
 import (
-	"encoding/json"
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,13 +16,24 @@ func resourceIamCertificateRequest() *schema.Resource {
 		Delete: resourceIamCertificateRequestDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The account associated with the CertificateRequest.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -31,10 +41,9 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -47,12 +56,23 @@ func resourceIamCertificateRequest() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"certificate": {
-				Description: "A collection of references to the [iam.Certificate](mo://iam.Certificate) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Certificate](mo://iam.Certificate) MO on the other side of the relationship is deleted.",
+				Description: "A reference to a iamCertificate resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -60,10 +80,9 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -108,12 +127,23 @@ func resourceIamCertificateRequest() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -121,10 +151,9 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -137,12 +166,23 @@ func resourceIamCertificateRequest() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"private_key_spec": {
-				Description: "A collection of references to the [iam.PrivateKeySpec](mo://iam.PrivateKeySpec) Managed Object.\nWhen this managed object is deleted, the referenced [iam.PrivateKeySpec](mo://iam.PrivateKeySpec) MO on the other side of the relationship is deleted.",
+				Description: "A reference to a iamPrivateKeySpec resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -150,10 +190,9 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -185,11 +224,6 @@ func resourceIamCertificateRequest() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -203,44 +237,33 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"country": {
-							Description: "Identifier for the country in which the entity resides.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"locality": {
-							Description: "Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"organization": {
-							Description: "Identifier for the organization in which the entity resides.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"organizational_unit": {
-							Description: "Identifier for a unit within the organization.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"state": {
-							Description: "Identifier for the state or province of the entity.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 					},
@@ -255,11 +278,6 @@ func resourceIamCertificateRequest() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -267,37 +285,28 @@ func resourceIamCertificateRequest() *schema.Resource {
 							Computed:    true,
 						},
 						"dns_name": {
-							Description: "Alternate DNS names for the host.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"email_address": {
-							Description: "Alternate email addresses for the host.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"ip_address": {
-							Description: "Alternate IP addresses for the host.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"uri": {
-							Description: "Alternate URIs for the host.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString}},
 					},
@@ -306,32 +315,14 @@ func resourceIamCertificateRequest() *schema.Resource {
 				Computed:   true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -340,209 +331,179 @@ func resourceIamCertificateRequest() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 		},
 	}
 }
+
 func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamCertificateRequest
+	var o = models.NewIamCertificateRequest()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
-
+		x := p[0]
+		o.SetAccount(x)
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-		p := models.IamCertificateRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamCertificateRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamCertificateRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Certificate")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamCertificateRelationship())
 		}
-		x := p
-		o.Certificate = &x
-
+		x := p[0]
+		o.SetCertificate(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("iam.CertificateRequest")
 
 	if v, ok := d.GetOk("email_address"); ok {
 		x := (v.(string))
-		o.EmailAddress = x
-
+		o.SetEmailAddress(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("iam.CertificateRequest")
 
 	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.PermissionResources = x
-
-	}
-
-	if v, ok := d.GetOk("private_key_spec"); ok {
-		p := models.IamPrivateKeySpecRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPrivateKeySpecRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("mo.BaseMo")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		x := p
-		o.PrivateKeySpec = &x
+		o.SetPermissionResources(x)
+	}
 
+	if v, ok := d.GetOk("private_key_spec"); ok {
+		p := make([]models.IamPrivateKeySpecRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("iam.PrivateKeySpec")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, o.AsIamPrivateKeySpecRelationship())
+		}
+		x := p[0]
+		o.SetPrivateKeySpec(x)
 	}
 
 	if v, ok := d.GetOk("request"); ok {
 		x := (v.(string))
-		o.Request = x
-
+		o.SetRequest(x)
 	}
 
-	if v, ok := d.GetOkExists("self_signed"); ok {
-		x := v.(bool)
-		o.SelfSigned = &x
+	if v, ok := d.GetOk("self_signed"); ok {
+		x := (v.(bool))
+		o.SetSelfSigned(x)
 	}
 
 	if v, ok := d.GetOk("subject"); ok {
-		p := models.PkixDistinguishedName{}
-		if len(v.([]interface{})) > 0 {
-			o := models.PkixDistinguishedName{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.PkixDistinguishedName, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewPkixDistinguishedNameWithDefaults()
+			o.SetClassId("pkix.DistinguishedName")
 			if v, ok := l["common_name"]; ok {
 				{
 					x := (v.(string))
-					o.CommonName = x
+					o.SetCommonName(x)
 				}
 			}
 			if v, ok := l["country"]; ok {
@@ -552,7 +513,7 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Country = x
+					o.SetCountry(x)
 				}
 			}
 			if v, ok := l["locality"]; ok {
@@ -562,15 +523,10 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Locality = x
+					o.SetLocality(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("pkix.DistinguishedName")
 			if v, ok := l["organization"]; ok {
 				{
 					x := make([]string, 0)
@@ -578,7 +534,7 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Organization = x
+					o.SetOrganization(x)
 				}
 			}
 			if v, ok := l["organizational_unit"]; ok {
@@ -588,7 +544,7 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.OrganizationalUnit = x
+					o.SetOrganizationalUnit(x)
 				}
 			}
 			if v, ok := l["state"]; ok {
@@ -598,38 +554,21 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.State = x
+					o.SetState(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Subject = &x
-
+		x := p[0]
+		o.SetSubject(x)
 	}
 
 	if v, ok := d.GetOk("subject_alternate_name"); ok {
-		p := models.PkixSubjectAlternateName{}
-		if len(v.([]interface{})) > 0 {
-			o := models.PkixSubjectAlternateName{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.PkixSubjectAlternateName, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewPkixSubjectAlternateNameWithDefaults()
+			o.SetClassId("pkix.SubjectAlternateName")
 			if v, ok := l["dns_name"]; ok {
 				{
 					x := make([]string, 0)
@@ -637,7 +576,7 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.DNSName = x
+					o.SetDnsName(x)
 				}
 			}
 			if v, ok := l["email_address"]; ok {
@@ -647,7 +586,7 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.EmailAddress = x
+					o.SetEmailAddress(x)
 				}
 			}
 			if v, ok := l["ip_address"]; ok {
@@ -657,15 +596,10 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.IPAddress = x
+					o.SetIpAddress(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("pkix.SubjectAlternateName")
 			if v, ok := l["uri"]; ok {
 				{
 					x := make([]string, 0)
@@ -673,85 +607,45 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.URI = x
+					o.SetUri(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.SubjectAlternateName = &x
-
+		x := p[0]
+		o.SetSubjectAlternateName(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		o.SetTags(x)
 	}
 
-	url := "iam/CertificateRequests"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.CreateIamCertificateRequest(conn.ctx).IamCertificateRequest(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Panicf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamCertificateRequestRead(d, meta)
 }
 
@@ -760,28 +654,23 @@ func resourceIamCertificateRequestRead(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "iam/CertificateRequests" + "/" + d.Id()
+	r := conn.ApiClient.IamApi.GetIamCertificateRequestByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
-	if err != nil {
-		return err
-	}
-	var s models.IamCertificateRequest
-	err = s.UnmarshalJSON(body)
 	if err != nil {
 		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
 		return err
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("certificate", flattenMapIamCertificateRef(s.Certificate, d)); err != nil {
+	if err := d.Set("certificate", flattenMapIamCertificateRelationship(s.Certificate, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
+	if err := d.Set("class_id", (s.ClassId)); err != nil {
 		return err
 	}
 
@@ -801,11 +690,11 @@ func resourceIamCertificateRequestRead(d *schema.ResourceData, meta interface{})
 		return err
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("private_key_spec", flattenMapIamPrivateKeySpecRef(s.PrivateKeySpec, d)); err != nil {
+	if err := d.Set("private_key_spec", flattenMapIamPrivateKeySpecRelationship(s.PrivateKeySpec, d)); err != nil {
 		return err
 	}
 
@@ -830,208 +719,184 @@ func resourceIamCertificateRequestRead(d *schema.ResourceData, meta interface{})
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamCertificateRequest
+	var o = models.NewIamCertificateRequest()
 	if d.HasChange("account") {
 		v := d.Get("account")
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Account")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamAccountRelationship())
 		}
-		x := p
-		o.Account = &x
+		x := p[0]
+		o.SetAccount(x)
 	}
 
 	if d.HasChange("certificate") {
 		v := d.Get("certificate")
-		p := models.IamCertificateRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamCertificateRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamCertificateRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.Certificate")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamCertificateRelationship())
 		}
-		x := p
-		o.Certificate = &x
-	}
-
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+		x := p[0]
+		o.SetCertificate(x)
 	}
 
 	if d.HasChange("email_address") {
 		v := d.Get("email_address")
 		x := (v.(string))
-		o.EmailAddress = x
+		o.SetEmailAddress(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
+		o.SetName(x)
 	}
 
 	if d.HasChange("permission_resources") {
 		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
+		x := make([]models.MoBaseMoRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, o.AsMoBaseMoRelationship())
 		}
-		o.PermissionResources = x
+		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("private_key_spec") {
 		v := d.Get("private_key_spec")
-		p := models.IamPrivateKeySpecRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPrivateKeySpecRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamPrivateKeySpecRelationship, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["link"]; ok {
+				{
+					x := (v.(string))
+					o.SetLink(x)
+				}
+			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("iam.PrivateKeySpec")
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, o.AsIamPrivateKeySpecRelationship())
 		}
-		x := p
-		o.PrivateKeySpec = &x
+		x := p[0]
+		o.SetPrivateKeySpec(x)
 	}
 
 	if d.HasChange("request") {
 		v := d.Get("request")
 		x := (v.(string))
-		o.Request = x
+		o.SetRequest(x)
 	}
 
 	if d.HasChange("self_signed") {
 		v := d.Get("self_signed")
 		x := (v.(bool))
-		o.SelfSigned = &x
+		o.SetSelfSigned(x)
 	}
 
 	if d.HasChange("subject") {
 		v := d.Get("subject")
-		p := models.PkixDistinguishedName{}
-		if len(v.([]interface{})) > 0 {
-			o := models.PkixDistinguishedName{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.PkixDistinguishedName, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewPkixDistinguishedNameWithDefaults()
+			o.SetClassId("pkix.DistinguishedName")
 			if v, ok := l["common_name"]; ok {
 				{
 					x := (v.(string))
-					o.CommonName = x
+					o.SetCommonName(x)
 				}
 			}
 			if v, ok := l["country"]; ok {
@@ -1041,7 +906,7 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Country = x
+					o.SetCountry(x)
 				}
 			}
 			if v, ok := l["locality"]; ok {
@@ -1051,15 +916,10 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Locality = x
+					o.SetLocality(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("pkix.DistinguishedName")
 			if v, ok := l["organization"]; ok {
 				{
 					x := make([]string, 0)
@@ -1067,7 +927,7 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.Organization = x
+					o.SetOrganization(x)
 				}
 			}
 			if v, ok := l["organizational_unit"]; ok {
@@ -1077,7 +937,7 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.OrganizationalUnit = x
+					o.SetOrganizationalUnit(x)
 				}
 			}
 			if v, ok := l["state"]; ok {
@@ -1087,38 +947,22 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.State = x
+					o.SetState(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.Subject = &x
+		x := p[0]
+		o.SetSubject(x)
 	}
 
 	if d.HasChange("subject_alternate_name") {
 		v := d.Get("subject_alternate_name")
-		p := models.PkixSubjectAlternateName{}
-		if len(v.([]interface{})) > 0 {
-			o := models.PkixSubjectAlternateName{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.PkixSubjectAlternateNameAO1P1.PkixSubjectAlternateNameAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+		p := make([]models.PkixSubjectAlternateName, 0, 1)
+		l := (v.([]interface{})[0]).(map[string]interface{})
+		{
+			o := models.NewPkixSubjectAlternateNameWithDefaults()
+			o.SetClassId("pkix.SubjectAlternateName")
 			if v, ok := l["dns_name"]; ok {
 				{
 					x := make([]string, 0)
@@ -1126,7 +970,7 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.DNSName = x
+					o.SetDnsName(x)
 				}
 			}
 			if v, ok := l["email_address"]; ok {
@@ -1136,7 +980,7 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.EmailAddress = x
+					o.SetEmailAddress(x)
 				}
 			}
 			if v, ok := l["ip_address"]; ok {
@@ -1146,15 +990,10 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.IPAddress = x
+					o.SetIpAddress(x)
 				}
 			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
+			o.SetObjectType("pkix.SubjectAlternateName")
 			if v, ok := l["uri"]; ok {
 				{
 					x := make([]string, 0)
@@ -1162,84 +1001,46 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < y.Len(); i++ {
 						x = append(x, y.Index(i).Interface().(string))
 					}
-					o.URI = x
+					o.SetUri(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		o.SubjectAlternateName = &x
+		x := p[0]
+		o.SetSubjectAlternateName(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		o.SetTags(x)
 	}
 
-	url := "iam/CertificateRequests" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.UpdateIamCertificateRequest(conn.ctx, d.Id()).IamCertificateRequest(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		log.Printf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamCertificateRequestRead(d, meta)
 }
 
@@ -1247,8 +1048,9 @@ func resourceIamCertificateRequestDelete(d *schema.ResourceData, meta interface{
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "iam/CertificateRequests" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+
+	r := conn.ApiClient.IamApi.DeleteIamCertificateRequest(conn.ctx, d.Id())
+	_, err := r.Execute()
 	if err != nil {
 		log.Printf("error occurred while deleting: %s", err.Error())
 	}

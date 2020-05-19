@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,17 +15,10 @@ func dataSourceMetaDefinition() *schema.Resource {
 		Read: dataSourceMetaDefinitionRead,
 		Schema: map[string]*schema.Schema{
 			"access_privileges": {
-				Description: "The list of access privileges that are required to perform CRUD operations on this managed object. If no access privileges are specified, the object is not accessible.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -52,12 +45,11 @@ func dataSourceMetaDefinition() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"ancestor_classes": {
-				Description: "An array of parent metaclasses in the class inheritance hierarchy. The first element in the array is the parent class. The next element is the grand-parent, etc. The last element in the array is the mo.BaseMo class.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"class_id": {
@@ -109,12 +101,23 @@ func dataSourceMetaDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
+				Description: "An array of relationships to moBaseMo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"link": {
+							Description: "A URL to an instance of the 'mo.MoRef' class.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -122,7 +125,7 @@ func dataSourceMetaDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -143,10 +146,8 @@ func dataSourceMetaDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"properties": {
-				Description: "Meta definition for the properties in the meta class and from all classes in the inheritance hierarchy.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"api_access": {
@@ -154,11 +155,6 @@ func dataSourceMetaDefinition() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -192,6 +188,7 @@ func dataSourceMetaDefinition() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"rbac_resource": {
 				Description: "Boolean flag to specify whether instances of this class type can be assigned to resource groups that are part of an organization for access control. Inventoried physical/logical objects which needs access control should have rbacResource=yes. These objects are not part of any organization by default like device registrations and should be assigned to organizations for access control. Profiles, policies, workflow definitions which are created by specifying organization need not have this flag set.",
@@ -200,10 +197,8 @@ func dataSourceMetaDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"relationships": {
-				Description: "Meta definition for the relationship in the meta class.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"api_access": {
@@ -211,11 +206,6 @@ func dataSourceMetaDefinition() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -249,6 +239,7 @@ func dataSourceMetaDefinition() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"rest_path": {
 				Description: "Restful URL path for the meta.",
@@ -257,32 +248,14 @@ func dataSourceMetaDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -291,7 +264,6 @@ func dataSourceMetaDefinition() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"version": {
 				Description: "The version of the service that defines the meta-data.",
@@ -302,82 +274,76 @@ func dataSourceMetaDefinition() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "meta/Definitions"
-	var o models.MetaDefinition
+	var o = models.NewMetaDefinition()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("is_concrete"); ok {
 		x := (v.(bool))
-		o.IsConcrete = &x
+		o.SetIsConcrete(x)
 	}
 	if v, ok := d.GetOk("meta_type"); ok {
 		x := (v.(string))
-		o.MetaType = x
+		o.SetMetaType(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("namespace"); ok {
 		x := (v.(string))
-		o.Namespace = x
+		o.SetNamespace(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("parent_class"); ok {
 		x := (v.(string))
-		o.ParentClass = x
+		o.SetParentClass(x)
 	}
 	if v, ok := d.GetOk("permission_supported"); ok {
 		x := (v.(bool))
-		o.PermissionSupported = &x
+		o.SetPermissionSupported(x)
 	}
 	if v, ok := d.GetOk("rbac_resource"); ok {
 		x := (v.(bool))
-		o.RbacResource = &x
+		o.SetRbacResource(x)
 	}
 	if v, ok := d.GetOk("rest_path"); ok {
 		x := (v.(string))
-		o.RestPath = x
+		o.SetRestPath(x)
 	}
 	if v, ok := d.GetOk("version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
-	}
-	result := x["Results"]
-	if result == nil {
+	result, _, err := conn.ApiClient.MetaApi.GetMetaDefinitionList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.MetaDefinition
+			var s = models.NewMetaDefinition()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
+			if err = json.Unmarshal(oo, s); err != nil {
 				return err
 			}
 
@@ -387,7 +353,7 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 			if err := d.Set("ancestor_classes", (s.AncestorClasses)); err != nil {
 				return err
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
+			if err := d.Set("class_id", (s.ClassId)); err != nil {
 				return err
 			}
 			if err := d.Set("is_concrete", (s.IsConcrete)); err != nil {
@@ -412,7 +378,7 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 				return err
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
 				return err
 			}
 			if err := d.Set("permission_supported", (s.PermissionSupported)); err != nil {
@@ -439,7 +405,7 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 			if err := d.Set("version", (s.Version)); err != nil {
 				return err
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil
