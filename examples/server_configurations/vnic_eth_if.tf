@@ -3,7 +3,7 @@ resource "intersight_vnic_eth_adapter_policy" "v_eth_adapter1" {
   rss_settings = true
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   vxlan_settings {
     enabled = false
@@ -48,7 +48,7 @@ resource "intersight_vnic_eth_network_policy" "v_eth_network1" {
   name = "v_eth_network1"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   vlan_settings {
     default_vlan = 1
@@ -64,7 +64,7 @@ resource "intersight_vnic_eth_qos_policy" "v_eth_qos1" {
   trust_host_cos = false
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 
@@ -72,7 +72,7 @@ resource "intersight_vnic_lan_connectivity_policy" "vnic_lan1" {
   name = "vnic_lan1"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   profiles {
     moid        = intersight_server_profile.server1.id
@@ -85,7 +85,7 @@ resource "intersight_vnic_eth_if" "eth1" {
   order = 0
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id     = "1"
@@ -123,7 +123,7 @@ resource "intersight_vnic_eth_if" "eth2" {
   order = 0
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id     = "1"
@@ -161,7 +161,7 @@ resource "intersight_vnic_eth_if" "eth3" {
   order = 0
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id     = "MLOM"
@@ -199,7 +199,7 @@ resource "intersight_vnic_eth_if" "eth4" {
   order = 1
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id     = "MLOM"

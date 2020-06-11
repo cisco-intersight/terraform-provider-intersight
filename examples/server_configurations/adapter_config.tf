@@ -3,7 +3,7 @@ resource "intersight_adapter_config_policy" "adapter_config1" {
   description = "test policy"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   settings {
     slot_id = "1"

@@ -6,7 +6,7 @@ resource "intersight_iam_ldap_policy" "ldap1" {
   user_search_precedence = "LocalUserDb"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   base_properties {
     attribute                  = "CiscoAvPair"
@@ -36,7 +36,7 @@ resource "intersight_iam_ldap_policy" "ldap2" {
   user_search_precedence = "LocalUserDb"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   base_properties {
     attribute                  = "CiscoAvPair"
