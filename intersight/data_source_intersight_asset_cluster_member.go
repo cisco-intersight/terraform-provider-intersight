@@ -40,7 +40,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_reason": {
-				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud.",
+				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -52,7 +52,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_status_last_change_time": {
-				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between the cloud and device connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with the cloud.",
+				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between Intersight and Device Connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -93,7 +93,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				},
 			},
 			"device_external_ip_address": {
-				Description: "The IP Address of the managed device as seen from the cloud at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
+				Description: "The IP Address of the managed device as seen from Intersight at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

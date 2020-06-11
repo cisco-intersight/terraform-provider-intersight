@@ -37,7 +37,7 @@ type IamEndPointPrivilege struct {
 
 	// The type of the end point like Cisco UCS Fabric Interconnect or Cisco IMC.
 	// Read Only: true
-	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray NetAppOntap EmcScaleIo EmcVmax EmcVplex EmcXtremIo VmwareVcenter MicrosoftHyperV AppDynamics Dynatrace MicrosoftSqlServer Kubernetes MicrosoftAzure ServiceEngine IMCBlade]
 	Type string `json:"Type,omitempty"`
 }
 
@@ -155,7 +155,7 @@ var iamEndPointPrivilegeTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","NetAppOntap","EmcScaleIo","EmcVmax","EmcVplex","EmcXtremIo","VmwareVcenter","MicrosoftHyperV","AppDynamics","Dynatrace","MicrosoftSqlServer","Kubernetes","MicrosoftAzure","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

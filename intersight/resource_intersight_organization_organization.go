@@ -206,7 +206,9 @@ func resourceOrganizationOrganizationCreate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -468,7 +470,9 @@ func resourceOrganizationOrganizationUpdate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

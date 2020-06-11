@@ -183,7 +183,9 @@ func resourceIamLdapProviderCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.LdapPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LdapPolicy = &x
+		}
 
 	}
 
@@ -408,7 +410,9 @@ func resourceIamLdapProviderUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.LdapPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LdapPolicy = &x
+		}
 	}
 
 	if d.HasChange("moid") {

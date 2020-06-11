@@ -404,7 +404,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -463,7 +465,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Credential = &x
+		if len(v.([]interface{})) > 0 {
+			o.Credential = &x
+		}
 
 	}
 
@@ -494,7 +498,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.DeviceConnectorManager = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceConnectorManager = &x
+		}
 
 	}
 
@@ -604,7 +610,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.RegisteredDevice = &x
+		if len(v.([]interface{})) > 0 {
+			o.RegisteredDevice = &x
+		}
 
 	}
 
@@ -687,7 +695,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Status = &x
+		if len(v.([]interface{})) > 0 {
+			o.Status = &x
+		}
 
 	}
 
@@ -767,7 +777,9 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.WorkflowInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.WorkflowInfo = &x
+		}
 
 	}
 
@@ -916,7 +928,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -975,7 +989,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Credential = &x
+		if len(v.([]interface{})) > 0 {
+			o.Credential = &x
+		}
 	}
 
 	if d.HasChange("device_connector_manager") {
@@ -1006,7 +1022,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.DeviceConnectorManager = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceConnectorManager = &x
+		}
 	}
 
 	if d.HasChange("device_type") {
@@ -1118,7 +1136,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.RegisteredDevice = &x
+		if len(v.([]interface{})) > 0 {
+			o.RegisteredDevice = &x
+		}
 	}
 
 	if d.HasChange("status") {
@@ -1201,7 +1221,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Status = &x
+		if len(v.([]interface{})) > 0 {
+			o.Status = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1281,7 +1303,9 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.WorkflowInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.WorkflowInfo = &x
+		}
 	}
 
 	url := "asset/ManagedDevices" + "/" + d.Id()

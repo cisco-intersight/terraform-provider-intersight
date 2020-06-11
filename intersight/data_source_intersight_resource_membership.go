@@ -115,7 +115,7 @@ func dataSourceResourceMembership() *schema.Resource {
 				},
 			},
 			"holder": {
-				Description: "A collection of references to the [resource.MembershipHolder](mo://resource.MembershipHolder) Managed Object.\nWhen this managed object is deleted, the referenced [resource.MembershipHolder](mo://resource.MembershipHolder) MO unsets its reference to this deleted MO.",
+				Description: "The list of all resources and their membership which are part of resource groups.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,

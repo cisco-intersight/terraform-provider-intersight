@@ -1015,11 +1015,11 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 				return err
 			}
 
-			if err := d.Set("cpu_shares", flattenMapVirtualizationVMCPUShareInfo(s.CPUShares, d)); err != nil {
+			if err := d.Set("cpu_shares", flattenMapVirtualizationVmwareVMCPUShareInfo(s.CPUShares, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("cpu_socket_info", flattenMapVirtualizationVMCPUSocketInfo(s.CPUSocketInfo, d)); err != nil {
+			if err := d.Set("cpu_socket_info", flattenMapVirtualizationVmwareVMCPUSocketInfo(s.CPUSocketInfo, d)); err != nil {
 				return err
 			}
 
@@ -1063,7 +1063,7 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 				return err
 			}
 
-			if err := d.Set("disk_commit_info", flattenMapVirtualizationVMDiskCommitInfo(s.DiskCommitInfo, d)); err != nil {
+			if err := d.Set("disk_commit_info", flattenMapVirtualizationVmwareVMDiskCommitInfo(s.DiskCommitInfo, d)); err != nil {
 				return err
 			}
 			if err := d.Set("folder", (s.Folder)); err != nil {
@@ -1099,7 +1099,7 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 				return err
 			}
 
-			if err := d.Set("mem_shares", flattenMapVirtualizationVMMemoryShareInfo(s.MemShares, d)); err != nil {
+			if err := d.Set("mem_shares", flattenMapVirtualizationVmwareVMMemoryShareInfo(s.MemShares, d)); err != nil {
 				return err
 			}
 
@@ -1143,7 +1143,7 @@ func dataSourceVirtualizationVmwareVirtualMachineRead(d *schema.ResourceData, me
 				return err
 			}
 
-			if err := d.Set("remote_display_info", flattenMapVirtualizationRemoteDisplayInfo(s.RemoteDisplayInfo, d)); err != nil {
+			if err := d.Set("remote_display_info", flattenMapVirtualizationVmwareRemoteDisplayInfo(s.RemoteDisplayInfo, d)); err != nil {
 				return err
 			}
 			if err := d.Set("remote_display_vnc_enabled", (s.RemoteDisplayVncEnabled)); err != nil {

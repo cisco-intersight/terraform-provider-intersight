@@ -50,12 +50,12 @@ func dataSourceNiatelemetryNiaLicenseState() *schema.Resource {
 				Computed: true,
 			},
 			"feature_activated": {
-				Description: "Features activated on device being inventoried",
+				Description: "Features activated on device being inventoried. This determines which features are currently enabled on the device that the license API can check.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"license_activated": {
-				Description: "Licenses activated on device being inventoried",
+				Description: "Licenses activated on device being inventoried. This determines which lienceses are currently enabled on the device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -100,12 +100,12 @@ func dataSourceNiatelemetryNiaLicenseState() *schema.Resource {
 				},
 			},
 			"pid_type": {
-				Description: "PID of device being inventoried",
+				Description: "PID of device being inventoried. This determines the hardware model type of the device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"serial": {
-				Description: "Serial number of device being inventoried",
+				Description: "Serial number of device being inventoried. The serial number is unique per device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

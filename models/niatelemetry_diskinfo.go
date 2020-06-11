@@ -15,6 +15,8 @@ import (
 
 // NiatelemetryDiskinfo Niatelemetry:Diskinfo
 //
+// Object that carries all the fields needed for Disk usage. This determines the usage of disk capacity of a device.
+//
 // swagger:model niatelemetryDiskinfo
 type NiatelemetryDiskinfo struct {
 	MoBaseComplexType
@@ -101,16 +103,16 @@ func (m *NiatelemetryDiskinfo) UnmarshalBinary(b []byte) error {
 // swagger:model NiatelemetryDiskinfoAO1P1
 type NiatelemetryDiskinfoAO1P1 struct {
 
-	// The free disk capacity, currently the type of this field is set to integer.
+	// The free disk capacity, currently the type of this field is set to integer. This determines how much memory is free in Bytes.
 	Free int64 `json:"Free,omitempty"`
 
-	// Disk Name used to identified the disk usage record.
+	// Disk Name used to identified the disk usage record. This determines the name of the disk partition that is inventoried.
 	Name string `json:"Name,omitempty"`
 
-	// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
+	// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer. This determines the total memory for this partition.
 	Total int64 `json:"Total,omitempty"`
 
-	// The used disk capacity, currently the type of this field is set to integer.
+	// The used disk capacity, currently the type of this field is set to integer. This determines how much memory is used in Bytes.
 	Used int64 `json:"Used,omitempty"`
 
 	// niatelemetry diskinfo a o1 p1
@@ -122,16 +124,16 @@ func (m *NiatelemetryDiskinfoAO1P1) UnmarshalJSON(data []byte) error {
 	// stage 1, bind the properties
 	var stage1 struct {
 
-		// The free disk capacity, currently the type of this field is set to integer.
+		// The free disk capacity, currently the type of this field is set to integer. This determines how much memory is free in Bytes.
 		Free int64 `json:"Free,omitempty"`
 
-		// Disk Name used to identified the disk usage record.
+		// Disk Name used to identified the disk usage record. This determines the name of the disk partition that is inventoried.
 		Name string `json:"Name,omitempty"`
 
-		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
+		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer. This determines the total memory for this partition.
 		Total int64 `json:"Total,omitempty"`
 
-		// The used disk capacity, currently the type of this field is set to integer.
+		// The used disk capacity, currently the type of this field is set to integer. This determines how much memory is used in Bytes.
 		Used int64 `json:"Used,omitempty"`
 	}
 	if err := json.Unmarshal(data, &stage1); err != nil {
@@ -175,16 +177,16 @@ func (m *NiatelemetryDiskinfoAO1P1) UnmarshalJSON(data []byte) error {
 func (m NiatelemetryDiskinfoAO1P1) MarshalJSON() ([]byte, error) {
 	var stage1 struct {
 
-		// The free disk capacity, currently the type of this field is set to integer.
+		// The free disk capacity, currently the type of this field is set to integer. This determines how much memory is free in Bytes.
 		Free int64 `json:"Free,omitempty"`
 
-		// Disk Name used to identified the disk usage record.
+		// Disk Name used to identified the disk usage record. This determines the name of the disk partition that is inventoried.
 		Name string `json:"Name,omitempty"`
 
-		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.
+		// The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer. This determines the total memory for this partition.
 		Total int64 `json:"Total,omitempty"`
 
-		// The used disk capacity, currently the type of this field is set to integer.
+		// The used disk capacity, currently the type of this field is set to integer. This determines how much memory is used in Bytes.
 		Used int64 `json:"Used,omitempty"`
 	}
 

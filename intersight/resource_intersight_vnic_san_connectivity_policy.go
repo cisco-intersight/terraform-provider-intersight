@@ -299,7 +299,9 @@ func resourceVnicSanConnectivityPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -626,7 +628,9 @@ func resourceVnicSanConnectivityPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

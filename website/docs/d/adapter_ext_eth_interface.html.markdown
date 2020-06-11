@@ -14,8 +14,8 @@ The following arguments can be used to get data of already created objects in In
 * `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
-* `ep_dn`:(string)
-* `ext_eth_interface_id`:(string)
+* `ep_dn`:(string)"Endpoint Config DN of an External Ethernet Interface."
+* `ext_eth_interface_id`:(string)"Unique Identifier for an External Ethernet Interface within the adapter object."
 * `interface_type`:(string)
 * `mac_address`:(string)
 * `model`:(string)"This field identifies the model of the given component."

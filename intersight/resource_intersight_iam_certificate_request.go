@@ -378,7 +378,9 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -409,7 +411,9 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Certificate = &x
+		if len(v.([]interface{})) > 0 {
+			o.Certificate = &x
+		}
 
 	}
 
@@ -503,7 +507,9 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.PrivateKeySpec = &x
+		if len(v.([]interface{})) > 0 {
+			o.PrivateKeySpec = &x
+		}
 
 	}
 
@@ -605,7 +611,9 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Subject = &x
+		if len(v.([]interface{})) > 0 {
+			o.Subject = &x
+		}
 
 	}
 
@@ -680,7 +688,9 @@ func resourceIamCertificateRequestCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.SubjectAlternateName = &x
+		if len(v.([]interface{})) > 0 {
+			o.SubjectAlternateName = &x
+		}
 
 	}
 
@@ -866,7 +876,9 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("certificate") {
@@ -897,7 +909,9 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Certificate = &x
+		if len(v.([]interface{})) > 0 {
+			o.Certificate = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -991,7 +1005,9 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.PrivateKeySpec = &x
+		if len(v.([]interface{})) > 0 {
+			o.PrivateKeySpec = &x
+		}
 	}
 
 	if d.HasChange("request") {
@@ -1094,7 +1110,9 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Subject = &x
+		if len(v.([]interface{})) > 0 {
+			o.Subject = &x
+		}
 	}
 
 	if d.HasChange("subject_alternate_name") {
@@ -1169,7 +1187,9 @@ func resourceIamCertificateRequestUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.SubjectAlternateName = &x
+		if len(v.([]interface{})) > 0 {
+			o.SubjectAlternateName = &x
+		}
 	}
 
 	if d.HasChange("tags") {

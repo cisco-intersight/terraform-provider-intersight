@@ -48,6 +48,34 @@ func dataSourceOsCatalog() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"distributions": {
+				Description: "This captures the associated OS Distributions.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
 				Type:        schema.TypeString,
@@ -213,6 +241,10 @@ func dataSourceOsCatalogRead(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			if err := d.Set("configuration_files", flattenListOsConfigurationFileRef(s.ConfigurationFiles, d)); err != nil {
+				return err
+			}
+
+			if err := d.Set("distributions", flattenListOsDistributionRef(s.Distributions, d)); err != nil {
 				return err
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {

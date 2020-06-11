@@ -27,7 +27,7 @@ type TamAdvisoryInfo struct {
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// Reference to the source Intersight advisory.
-	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+	Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 	// Current state of the advisory for the owner. Indicates if the user is interested in getting updates for the advisory.
 	// Enum: [active acknowledged]
@@ -47,7 +47,7 @@ func (m *TamAdvisoryInfo) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}
@@ -76,7 +76,7 @@ func (m TamAdvisoryInfo) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 		State *string `json:"State,omitempty"`
 	}

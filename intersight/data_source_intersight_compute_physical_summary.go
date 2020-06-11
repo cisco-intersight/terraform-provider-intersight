@@ -15,9 +15,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 		Read: dataSourceComputePhysicalSummaryRead,
 		Schema: map[string]*schema.Schema{
 			"admin_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Desired power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"asset_tag": {
 				Type:     schema.TypeString,
@@ -25,9 +26,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed: true,
 			},
 			"available_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The actual amount of memory currently available to the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"cpu_capacity": {
 				Description: "CPU Capacity = Number of CPU Sockets x Enabled Cores x Speed (GHz).",
@@ -156,9 +158,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				},
 			},
 			"memory_speed": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The memory speed, in megahertz.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"mgmt_ip_address": {
 				Description: "Management address of the server.",
@@ -233,9 +236,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Current power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"oper_state": {
 				Type:     schema.TypeString,
@@ -282,9 +286,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Identifies the presence of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
 				Description: "The Device to which this Managed Object is associated.",
@@ -350,9 +355,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"slot_id": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The slot number in the chassis where the blade is present.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"source_object_type": {
 				Description: "The source object type of this view MO.",
@@ -398,9 +404,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed: true,
 			},
 			"total_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The total amount of memory installed on the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"uuid": {
 				Type:     schema.TypeString,

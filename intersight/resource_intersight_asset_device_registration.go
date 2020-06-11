@@ -148,7 +148,7 @@ func resourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_reason": {
-				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud.",
+				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -160,7 +160,7 @@ func resourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_status_last_change_time": {
-				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between the cloud and device connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with the cloud.",
+				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between Intersight and Device Connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -232,7 +232,7 @@ func resourceAssetDeviceRegistration() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"device_external_ip_address": {
-				Description: "The IP Address of the managed device as seen from the cloud at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
+				Description: "The IP Address of the managed device as seen from Intersight at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -424,7 +424,7 @@ func resourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"public_access_key": {
-				Description: "The device connector's public key used by the cloud to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.",
+				Description: "The device connector's public key used by Intersight to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -563,7 +563,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -600,7 +602,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClaimedByUser = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClaimedByUser = &x
+		}
 
 	}
 
@@ -712,7 +716,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DeviceClaim = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceClaim = &x
+		}
 
 	}
 
@@ -743,7 +749,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DeviceConfiguration = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceConfiguration = &x
+		}
 
 	}
 
@@ -800,7 +808,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DomainGroup = &x
+		if len(v.([]interface{})) > 0 {
+			o.DomainGroup = &x
+		}
 
 	}
 
@@ -849,7 +859,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ParentConnection = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentConnection = &x
+		}
 
 	}
 
@@ -902,7 +914,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ParentSignature = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentSignature = &x
+		}
 
 	}
 
@@ -999,7 +1013,9 @@ func resourceAssetDeviceRegistrationCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SecurityToken = &x
+		if len(v.([]interface{})) > 0 {
+			o.SecurityToken = &x
+		}
 
 	}
 
@@ -1297,7 +1313,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("app_partition_number") {
@@ -1334,7 +1352,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClaimedByUser = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClaimedByUser = &x
+		}
 	}
 
 	if d.HasChange("claimed_by_user_name") {
@@ -1446,7 +1466,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DeviceClaim = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceClaim = &x
+		}
 	}
 
 	if d.HasChange("device_configuration") {
@@ -1477,7 +1499,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DeviceConfiguration = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceConfiguration = &x
+		}
 	}
 
 	if d.HasChange("device_external_ip_address") {
@@ -1534,7 +1558,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.DomainGroup = &x
+		if len(v.([]interface{})) > 0 {
+			o.DomainGroup = &x
+		}
 	}
 
 	if d.HasChange("execution_mode") {
@@ -1583,7 +1609,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ParentConnection = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentConnection = &x
+		}
 	}
 
 	if d.HasChange("parent_signature") {
@@ -1628,7 +1656,7 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			}
 			if v, ok := l["signature"]; ok {
 				{
-					x := strfmt.Base64(v.(string))
+					x := []byte(v.(string))
 					o.Signature = x
 				}
 			}
@@ -1636,7 +1664,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ParentSignature = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentSignature = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1734,7 +1764,9 @@ func resourceAssetDeviceRegistrationUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SecurityToken = &x
+		if len(v.([]interface{})) > 0 {
+			o.SecurityToken = &x
+		}
 	}
 
 	if d.HasChange("serial") {

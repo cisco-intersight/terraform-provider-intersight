@@ -42,9 +42,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"admin_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Desired power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"asset_tag": {
 				Type:     schema.TypeString,
@@ -52,9 +53,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed: true,
 			},
 			"available_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The actual amount of memory currently available to the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"bios_units": {
 				Type:     schema.TypeList,
@@ -358,9 +360,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				},
 			},
 			"memory_speed": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The memory speed, in megahertz.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"mgmt_ip_address": {
 				Description: "Management address of the server.",
@@ -428,9 +431,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Current power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"oper_state": {
 				Type:     schema.TypeString,
@@ -443,9 +447,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed: true,
 			},
 			"pci_devices": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The PCI devices present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -503,9 +508,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				Optional:    true,
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Identifies the presence of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
 				Description: "The Device to which this Managed Object is associated.",
@@ -565,14 +571,16 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed:    true,
 			},
 			"slot_id": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The slot number in the chassis where the blade is present.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"storage_enclosures": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The storage enclosures for physical disks present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -663,9 +671,10 @@ func dataSourceComputeBlade() *schema.Resource {
 				Computed: true,
 			},
 			"total_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The total amount of memory installed on the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"uuid": {
 				Type:     schema.TypeString,

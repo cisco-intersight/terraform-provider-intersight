@@ -42,9 +42,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				},
 			},
 			"admin_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Desired power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"asset_tag": {
 				Type:     schema.TypeString,
@@ -52,9 +53,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				Computed: true,
 			},
 			"available_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The actual amount of memory currently available to the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"bios_bootmode": {
 				Type:     schema.TypeList,
@@ -213,9 +215,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"fanmodules": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The fan modules present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -379,9 +382,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				},
 			},
 			"memory_speed": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The memory speed, in megahertz.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"mgmt_ip_address": {
 				Description: "Management address of the server.",
@@ -449,9 +453,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Current power state of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"oper_state": {
 				Type:     schema.TypeString,
@@ -524,14 +529,16 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				Optional:    true,
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Identifies the presence of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"psus": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The power supply units present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -763,9 +770,10 @@ func dataSourceComputeRackUnit() *schema.Resource {
 				},
 			},
 			"total_memory": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The total amount of memory installed on the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"uuid": {
 				Type:     schema.TypeString,

@@ -17,7 +17,7 @@ import (
 //
 // swagger:model storagePureArray
 type StoragePureArray struct {
-	StorageGenericArray
+	StorageBaseArray
 
 	// Device registration managed object that represents this storage array connection to Intersight.
 	// Read Only: true
@@ -27,11 +27,11 @@ type StoragePureArray struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureArray) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageGenericArray
+	var aO0 StorageBaseArray
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageGenericArray = aO0
+	m.StorageBaseArray = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -50,7 +50,7 @@ func (m *StoragePureArray) UnmarshalJSON(raw []byte) error {
 func (m StoragePureArray) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageGenericArray)
+	aO0, err := swag.WriteJSON(m.StorageBaseArray)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +73,8 @@ func (m StoragePureArray) MarshalJSON() ([]byte, error) {
 func (m *StoragePureArray) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageGenericArray
-	if err := m.StorageGenericArray.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseArray
+	if err := m.StorageBaseArray.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

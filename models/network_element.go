@@ -52,11 +52,11 @@ type NetworkElement struct {
 	// Read Only: true
 	InbandVlan int64 `json:"InbandVlan,omitempty"`
 
-	// management contoller
+	// A specialized service processor that monitors the physical state of the fabric interconnect.
 	// Read Only: true
 	ManagementContoller *ManagementControllerRef `json:"ManagementContoller,omitempty"`
 
-	// management entity
+	// Logical representation that captures the role of each Fabric Interconnect in UCS Manager.
 	// Read Only: true
 	ManagementEntity *ManagementEntityRef `json:"ManagementEntity,omitempty"`
 

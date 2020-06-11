@@ -13,6 +13,8 @@ import (
 
 // NiatelemetryNiaLicenseState Niatelemetry:Nia License State
 //
+// Object available at device scope for license information. This determines the usage of this attribute.
+//
 // swagger:model niatelemetryNiaLicenseState
 type NiatelemetryNiaLicenseState struct {
 	MoBaseMo
@@ -21,16 +23,16 @@ type NiatelemetryNiaLicenseState struct {
 	// When this managed object is deleted, the referenced [niatelemetry.NiaInventory](mo://niatelemetry.NiaInventory) MO unsets its reference to this deleted MO.
 	Device *NiatelemetryNiaInventoryRef `json:"Device,omitempty"`
 
-	// Features activated on device being inventoried
+	// Features activated on device being inventoried. This determines which features are currently enabled on the device that the license API can check.
 	FeatureActivated string `json:"FeatureActivated,omitempty"`
 
-	// Licenses activated on device being inventoried
+	// Licenses activated on device being inventoried. This determines which lienceses are currently enabled on the device.
 	LicenseActivated string `json:"LicenseActivated,omitempty"`
 
-	// PID of device being inventoried
+	// PID of device being inventoried. This determines the hardware model type of the device.
 	PidType string `json:"PidType,omitempty"`
 
-	// Serial number of device being inventoried
+	// Serial number of device being inventoried. The serial number is unique per device.
 	Serial string `json:"Serial,omitempty"`
 }
 

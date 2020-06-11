@@ -67,14 +67,16 @@ func dataSourceAdapterExtEthInterface() *schema.Resource {
 				Computed:    true,
 			},
 			"ep_dn": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Endpoint Config DN of an External Ethernet Interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"ext_eth_interface_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Unique Identifier for an External Ethernet Interface within the adapter object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"interface_type": {
 				Type:     schema.TypeString,

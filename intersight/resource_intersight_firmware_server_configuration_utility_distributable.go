@@ -315,7 +315,9 @@ func resourceFirmwareServerConfigurationUtilityDistributableCreate(d *schema.Res
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -497,7 +499,9 @@ func resourceFirmwareServerConfigurationUtilityDistributableCreate(d *schema.Res
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 
 	}
 
@@ -763,7 +767,9 @@ func resourceFirmwareServerConfigurationUtilityDistributableUpdate(d *schema.Res
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -945,7 +951,9 @@ func resourceFirmwareServerConfigurationUtilityDistributableUpdate(d *schema.Res
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 	}
 
 	if d.HasChange("supported_models") {

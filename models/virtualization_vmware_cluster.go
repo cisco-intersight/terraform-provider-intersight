@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -19,7 +17,7 @@ import (
 //
 // swagger:model virtualizationVmwareCluster
 type VirtualizationVmwareCluster struct {
-	VirtualizationCluster
+	VirtualizationBaseCluster
 
 	// Every entity is grouped under the datacenter object and managed as a group.
 	// Read Only: true
@@ -27,28 +25,22 @@ type VirtualizationVmwareCluster struct {
 
 	// Count of all datastores associated with this cluster.
 	DatastoreCount int64 `json:"DatastoreCount,omitempty"`
-
-	// A collection of references to the [virtualization.VmwareHost](mo://virtualization.VmwareHost) Managed Object.
-	// When this managed object is deleted, the referenced [virtualization.VmwareHost](mo://virtualization.VmwareHost) MOs unset their reference to this deleted MO.
-	Hosts []*VirtualizationVmwareHostRef `json:"Hosts"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareCluster) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationCluster
+	var aO0 VirtualizationBaseCluster
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationCluster = aO0
+	m.VirtualizationBaseCluster = aO0
 
 	// AO1
 	var dataAO1 struct {
 		Datacenter *VirtualizationVmwareDatacenterRef `json:"Datacenter,omitempty"`
 
 		DatastoreCount int64 `json:"DatastoreCount,omitempty"`
-
-		Hosts []*VirtualizationVmwareHostRef `json:"Hosts"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -58,8 +50,6 @@ func (m *VirtualizationVmwareCluster) UnmarshalJSON(raw []byte) error {
 
 	m.DatastoreCount = dataAO1.DatastoreCount
 
-	m.Hosts = dataAO1.Hosts
-
 	return nil
 }
 
@@ -67,7 +57,7 @@ func (m *VirtualizationVmwareCluster) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareCluster) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationCluster)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseCluster)
 	if err != nil {
 		return nil, err
 	}
@@ -76,15 +66,11 @@ func (m VirtualizationVmwareCluster) MarshalJSON() ([]byte, error) {
 		Datacenter *VirtualizationVmwareDatacenterRef `json:"Datacenter,omitempty"`
 
 		DatastoreCount int64 `json:"DatastoreCount,omitempty"`
-
-		Hosts []*VirtualizationVmwareHostRef `json:"Hosts"`
 	}
 
 	dataAO1.Datacenter = m.Datacenter
 
 	dataAO1.DatastoreCount = m.DatastoreCount
-
-	dataAO1.Hosts = m.Hosts
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -98,16 +84,12 @@ func (m VirtualizationVmwareCluster) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareCluster) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationCluster
-	if err := m.VirtualizationCluster.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseCluster
+	if err := m.VirtualizationBaseCluster.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateDatacenter(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHosts(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -130,31 +112,6 @@ func (m *VirtualizationVmwareCluster) validateDatacenter(formats strfmt.Registry
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *VirtualizationVmwareCluster) validateHosts(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Hosts) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Hosts); i++ {
-		if swag.IsZero(m.Hosts[i]) { // not required
-			continue
-		}
-
-		if m.Hosts[i] != nil {
-			if err := m.Hosts[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("Hosts" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

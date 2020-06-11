@@ -44,7 +44,7 @@ type ComputeRackUnit struct {
 	// Read Only: true
 	BootDeviceBootmode *BootDeviceBootModeRef `json:"BootDeviceBootmode,omitempty"`
 
-	// fanmodules
+	// The fan modules present in the server.
 	// Read Only: true
 	Fanmodules []*EquipmentFanModuleRef `json:"Fanmodules"`
 
@@ -60,7 +60,7 @@ type ComputeRackUnit struct {
 	// Read Only: true
 	PciDevices []*PciDeviceRef `json:"PciDevices"`
 
-	// psus
+	// The power supply units present in the server.
 	// Read Only: true
 	Psus []*EquipmentPsuRef `json:"Psus"`
 

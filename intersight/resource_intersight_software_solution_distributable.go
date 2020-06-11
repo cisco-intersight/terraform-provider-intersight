@@ -332,7 +332,9 @@ func resourceSoftwareSolutionDistributableCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -526,7 +528,9 @@ func resourceSoftwareSolutionDistributableCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 
 	}
 
@@ -810,7 +814,9 @@ func resourceSoftwareSolutionDistributableUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1004,7 +1010,9 @@ func resourceSoftwareSolutionDistributableUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 	}
 
 	if d.HasChange("sub_type") {

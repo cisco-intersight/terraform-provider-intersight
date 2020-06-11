@@ -257,7 +257,9 @@ func resourceSoftwarerepositoryOperatingSystemFileCreate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -397,7 +399,9 @@ func resourceSoftwarerepositoryOperatingSystemFileCreate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 
 	}
 
@@ -611,7 +615,9 @@ func resourceSoftwarerepositoryOperatingSystemFileUpdate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -751,7 +757,9 @@ func resourceSoftwarerepositoryOperatingSystemFileUpdate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 	}
 
 	if d.HasChange("tags") {

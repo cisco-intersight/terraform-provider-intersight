@@ -48,6 +48,12 @@ func dataSourceFcPhysicalPort() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"peer_dn": {
+				Description: "PeerDn for fibre channel physical port.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"permission_resources": {
 				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
 				Type:        schema.TypeList,
@@ -226,6 +232,10 @@ func dataSourceFcPhysicalPortRead(d *schema.ResourceData, meta interface{}) erro
 		x := (v.(string))
 		o.OperState = x
 	}
+	if v, ok := d.GetOk("peer_dn"); ok {
+		x := (v.(string))
+		o.PeerDn = x
+	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
 		o.Rn = x
@@ -281,6 +291,9 @@ func dataSourceFcPhysicalPortRead(d *schema.ResourceData, meta interface{}) erro
 				return err
 			}
 			if err := d.Set("oper_state", (s.OperState)); err != nil {
+				return err
+			}
+			if err := d.Set("peer_dn", (s.PeerDn)); err != nil {
 				return err
 			}
 

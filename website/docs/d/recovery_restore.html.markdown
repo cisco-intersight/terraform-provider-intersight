@@ -3,11 +3,11 @@ layout: "intersight"
 page_title: "Intersight: intersight_recovery_restore"
 sidebar_current: "docs-intersight-data-source-recoveryRestore"
 description: |-
-
+Triggers a restore operation on the target endpoint.
 ---
 
 # Data Source: intersight_recovery_restore
-
+Triggers a restore operation on the target endpoint.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."

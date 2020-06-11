@@ -19,7 +19,7 @@ import (
 // Appliance setup, and it is configured with an automatic upgrade policy.
 // Automatic upgrade policy lets the system start software upgrade after a pre-defined
 // number of seconds set in the software manifest.
-// Scheduled upgrade pilicy lets the user start software upgrade at a specified schedule.
+// Scheduled upgrade policy lets the user start software upgrade at a specified schedule.
 // However, scheduled time cannot be beyond the time limit enforced by the upgrade grace
 // period set in the software manifest.
 //

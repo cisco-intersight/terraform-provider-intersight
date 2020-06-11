@@ -17,7 +17,15 @@ import (
 //
 // swagger:model storagePureProtectionGroupSnapshot
 type StoragePureProtectionGroupSnapshot struct {
-	StorageProtectionGroupSnapshot
+	StorageBaseProtectionGroupSnapshot
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+	// Protection group relationship object.
+	// Read Only: true
+	ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
 	// Read Only: true
@@ -27,19 +35,27 @@ type StoragePureProtectionGroupSnapshot struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureProtectionGroupSnapshot) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageProtectionGroupSnapshot
+	var aO0 StorageBaseProtectionGroupSnapshot
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageProtectionGroupSnapshot = aO0
+	m.StorageBaseProtectionGroupSnapshot = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Array = dataAO1.Array
+
+	m.ProtectionGroup = dataAO1.ProtectionGroup
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
@@ -50,14 +66,22 @@ func (m *StoragePureProtectionGroupSnapshot) UnmarshalJSON(raw []byte) error {
 func (m StoragePureProtectionGroupSnapshot) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageProtectionGroupSnapshot)
+	aO0, err := swag.WriteJSON(m.StorageBaseProtectionGroupSnapshot)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 	}
+
+	dataAO1.Array = m.Array
+
+	dataAO1.ProtectionGroup = m.ProtectionGroup
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
@@ -73,8 +97,16 @@ func (m StoragePureProtectionGroupSnapshot) MarshalJSON() ([]byte, error) {
 func (m *StoragePureProtectionGroupSnapshot) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageProtectionGroupSnapshot
-	if err := m.StorageProtectionGroupSnapshot.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseProtectionGroupSnapshot
+	if err := m.StorageBaseProtectionGroupSnapshot.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProtectionGroup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,6 +117,42 @@ func (m *StoragePureProtectionGroupSnapshot) Validate(formats strfmt.Registry) e
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureProtectionGroupSnapshot) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePureProtectionGroupSnapshot) validateProtectionGroup(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ProtectionGroup) { // not required
+		return nil
+	}
+
+	if m.ProtectionGroup != nil {
+		if err := m.ProtectionGroup.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ProtectionGroup")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -541,7 +541,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ErrorRecoverySettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ErrorRecoverySettings = &x
+		}
 
 	}
 
@@ -588,7 +590,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FlogiSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.FlogiSettings = &x
+		}
 
 	}
 
@@ -629,7 +633,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.InterruptSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterruptSettings = &x
+		}
 
 	}
 
@@ -696,7 +702,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -776,7 +784,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.PlogiSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.PlogiSettings = &x
+		}
 
 	}
 
@@ -829,7 +839,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.RxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RxQueueSettings = &x
+		}
 
 	}
 
@@ -876,7 +888,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ScsiQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ScsiQueueSettings = &x
+		}
 
 	}
 
@@ -972,7 +986,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.TxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TxQueueSettings = &x
+		}
 
 	}
 
@@ -1185,7 +1201,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ErrorRecoverySettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ErrorRecoverySettings = &x
+		}
 	}
 
 	if d.HasChange("flogi_settings") {
@@ -1232,7 +1250,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FlogiSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.FlogiSettings = &x
+		}
 	}
 
 	if d.HasChange("interrupt_settings") {
@@ -1273,7 +1293,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.InterruptSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterruptSettings = &x
+		}
 	}
 
 	if d.HasChange("io_throttle_count") {
@@ -1340,7 +1362,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1420,7 +1444,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.PlogiSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.PlogiSettings = &x
+		}
 	}
 
 	if d.HasChange("resource_allocation_timeout") {
@@ -1473,7 +1499,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.RxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RxQueueSettings = &x
+		}
 	}
 
 	if d.HasChange("scsi_queue_settings") {
@@ -1520,7 +1548,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ScsiQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ScsiQueueSettings = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1616,7 +1646,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.TxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TxQueueSettings = &x
+		}
 	}
 
 	url := "vnic/FcAdapterPolicies" + "/" + d.Id()

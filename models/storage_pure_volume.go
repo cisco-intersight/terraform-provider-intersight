@@ -18,7 +18,11 @@ import (
 //
 // swagger:model storagePureVolume
 type StoragePureVolume struct {
-	StorageVolume
+	StorageBaseVolume
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
 
 	// Creation time of the volume.
 	// Read Only: true
@@ -46,14 +50,16 @@ type StoragePureVolume struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureVolume) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageVolume
+	var aO0 StorageBaseVolume
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageVolume = aO0
+	m.StorageBaseVolume = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		Created strfmt.DateTime `json:"Created,omitempty"`
 
 		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
@@ -67,6 +73,8 @@ func (m *StoragePureVolume) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Array = dataAO1.Array
 
 	m.Created = dataAO1.Created
 
@@ -85,12 +93,14 @@ func (m *StoragePureVolume) UnmarshalJSON(raw []byte) error {
 func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageVolume)
+	aO0, err := swag.WriteJSON(m.StorageBaseVolume)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		Created strfmt.DateTime `json:"Created,omitempty"`
 
 		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
@@ -101,6 +111,8 @@ func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 
 		Source string `json:"Source,omitempty"`
 	}
+
+	dataAO1.Array = m.Array
 
 	dataAO1.Created = m.Created
 
@@ -124,8 +136,12 @@ func (m StoragePureVolume) MarshalJSON() ([]byte, error) {
 func (m *StoragePureVolume) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageVolume
-	if err := m.StorageVolume.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseVolume
+	if err := m.StorageBaseVolume.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -144,6 +160,24 @@ func (m *StoragePureVolume) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureVolume) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

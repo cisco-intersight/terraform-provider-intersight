@@ -355,7 +355,9 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FeatureLimitExternal = &x
+		if len(v.([]interface{})) > 0 {
+			o.FeatureLimitExternal = &x
+		}
 
 	}
 
@@ -386,7 +388,9 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FeatureLimitInternal = &x
+		if len(v.([]interface{})) > 0 {
+			o.FeatureLimitInternal = &x
+		}
 
 	}
 
@@ -561,7 +565,9 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ServerFirmwareVersion = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerFirmwareVersion = &x
+		}
 
 	}
 
@@ -592,7 +598,9 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ServerModel = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerModel = &x
+		}
 
 	}
 
@@ -786,7 +794,9 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FeatureLimitExternal = &x
+		if len(v.([]interface{})) > 0 {
+			o.FeatureLimitExternal = &x
+		}
 	}
 
 	if d.HasChange("feature_limit_internal") {
@@ -817,7 +827,9 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.FeatureLimitInternal = &x
+		if len(v.([]interface{})) > 0 {
+			o.FeatureLimitInternal = &x
+		}
 	}
 
 	if d.HasChange("hxdp_versions") {
@@ -992,7 +1004,9 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ServerFirmwareVersion = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerFirmwareVersion = &x
+		}
 	}
 
 	if d.HasChange("server_model") {
@@ -1023,7 +1037,9 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ServerModel = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerModel = &x
+		}
 	}
 
 	if d.HasChange("tags") {

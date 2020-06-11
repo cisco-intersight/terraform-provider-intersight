@@ -511,7 +511,9 @@ func resourceIamUserCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Idp = &x
+		if len(v.([]interface{})) > 0 {
+			o.Idp = &x
+		}
 
 	}
 
@@ -542,7 +544,9 @@ func resourceIamUserCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Idpreference = &x
+		if len(v.([]interface{})) > 0 {
+			o.Idpreference = &x
+		}
 
 	}
 
@@ -585,7 +589,9 @@ func resourceIamUserCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LocalUserPassword = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalUserPassword = &x
+		}
 
 	}
 
@@ -1051,7 +1057,9 @@ func resourceIamUserUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Idp = &x
+		if len(v.([]interface{})) > 0 {
+			o.Idp = &x
+		}
 	}
 
 	if d.HasChange("idpreference") {
@@ -1082,7 +1090,9 @@ func resourceIamUserUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Idpreference = &x
+		if len(v.([]interface{})) > 0 {
+			o.Idpreference = &x
+		}
 	}
 
 	if d.HasChange("last_login_time") {
@@ -1125,7 +1135,9 @@ func resourceIamUserUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LocalUserPassword = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalUserPassword = &x
+		}
 	}
 
 	if d.HasChange("moid") {

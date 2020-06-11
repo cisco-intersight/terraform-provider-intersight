@@ -442,7 +442,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 						p = o
 					}
 					x := p
-					o.Issuer = &x
+					if len(v.([]interface{})) > 0 {
+						o.Issuer = &x
+					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
@@ -557,14 +559,18 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 						p = o
 					}
 					x := p
-					o.Subject = &x
+					if len(v.([]interface{})) > 0 {
+						o.Subject = &x
+					}
 				}
 			}
 
 			p = o
 		}
 		x := p
-		o.Certificate = &x
+		if len(v.([]interface{})) > 0 {
+			o.Certificate = &x
+		}
 
 	}
 
@@ -595,7 +601,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 			p = o
 		}
 		x := p
-		o.CertificateRequest = &x
+		if len(v.([]interface{})) > 0 {
+			o.CertificateRequest = &x
+		}
 
 	}
 
@@ -896,7 +904,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 						p = o
 					}
 					x := p
-					o.Issuer = &x
+					if len(v.([]interface{})) > 0 {
+						o.Issuer = &x
+					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
@@ -1011,14 +1021,18 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 						p = o
 					}
 					x := p
-					o.Subject = &x
+					if len(v.([]interface{})) > 0 {
+						o.Subject = &x
+					}
 				}
 			}
 
 			p = o
 		}
 		x := p
-		o.Certificate = &x
+		if len(v.([]interface{})) > 0 {
+			o.Certificate = &x
+		}
 	}
 
 	if d.HasChange("certificate_request") {
@@ -1049,7 +1063,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 			p = o
 		}
 		x := p
-		o.CertificateRequest = &x
+		if len(v.([]interface{})) > 0 {
+			o.CertificateRequest = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

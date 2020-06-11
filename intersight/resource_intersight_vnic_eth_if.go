@@ -476,7 +476,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Cdn = &x
+		if len(v.([]interface{})) > 0 {
+			o.Cdn = &x
+		}
 
 	}
 
@@ -513,7 +515,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthAdapterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthAdapterPolicy = &x
+		}
 
 	}
 
@@ -544,7 +548,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthNetworkPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthNetworkPolicy = &x
+		}
 
 	}
 
@@ -575,7 +581,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthQosPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthQosPolicy = &x
+		}
 
 	}
 
@@ -606,7 +614,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LanConnectivityPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LanConnectivityPolicy = &x
+		}
 
 	}
 
@@ -661,7 +671,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -747,7 +759,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Placement = &x
+		if len(v.([]interface{})) > 0 {
+			o.Placement = &x
+		}
 
 	}
 
@@ -849,7 +863,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.UsnicSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.UsnicSettings = &x
+		}
 
 	}
 
@@ -890,7 +906,9 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.VmqSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.VmqSettings = &x
+		}
 
 	}
 
@@ -1051,7 +1069,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Cdn = &x
+		if len(v.([]interface{})) > 0 {
+			o.Cdn = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1088,7 +1108,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthAdapterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthAdapterPolicy = &x
+		}
 	}
 
 	if d.HasChange("eth_network_policy") {
@@ -1119,7 +1141,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthNetworkPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthNetworkPolicy = &x
+		}
 	}
 
 	if d.HasChange("eth_qos_policy") {
@@ -1150,7 +1174,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.EthQosPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EthQosPolicy = &x
+		}
 	}
 
 	if d.HasChange("lan_connectivity_policy") {
@@ -1181,7 +1207,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LanConnectivityPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LanConnectivityPolicy = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1236,7 +1264,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1322,7 +1352,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Placement = &x
+		if len(v.([]interface{})) > 0 {
+			o.Placement = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1424,7 +1456,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.UsnicSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.UsnicSettings = &x
+		}
 	}
 
 	if d.HasChange("vmq_settings") {
@@ -1465,7 +1499,9 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.VmqSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.VmqSettings = &x
+		}
 	}
 
 	url := "vnic/EthIfs" + "/" + d.Id()

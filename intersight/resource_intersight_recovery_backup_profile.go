@@ -402,7 +402,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.BackupConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.BackupConfig = &x
+		}
 
 	}
 
@@ -467,7 +469,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 
 	}
 
@@ -498,7 +502,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 
 	}
 
@@ -535,7 +541,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.DeviceID = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceID = &x
+		}
 
 	}
 
@@ -589,7 +597,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -653,7 +663,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ScheduleConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.ScheduleConfig = &x
+		}
 
 	}
 
@@ -684,7 +696,9 @@ func resourceRecoveryBackupProfileCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 
 	}
 
@@ -894,7 +908,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.BackupConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.BackupConfig = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -959,7 +975,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 	}
 
 	if d.HasChange("config_result") {
@@ -990,7 +1008,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -1027,7 +1047,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.DeviceID = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceID = &x
+		}
 	}
 
 	if d.HasChange("enabled") {
@@ -1082,7 +1104,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1146,7 +1170,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.ScheduleConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.ScheduleConfig = &x
+		}
 	}
 
 	if d.HasChange("src_template") {
@@ -1177,7 +1203,9 @@ func resourceRecoveryBackupProfileUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 	}
 
 	if d.HasChange("tags") {

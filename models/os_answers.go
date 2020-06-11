@@ -124,7 +124,7 @@ type OsAnswersAO1P1 struct {
 
 	// In case of static IP configuration, IP address, netmask and gateway details are
 	// provided.
-	IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
+	IPConfiguration *OsIPConfiguration `json:"IpConfiguration,omitempty"`
 
 	// Indicates whether the value of the 'answerFile' property has been set.
 	// Read Only: true
@@ -184,7 +184,7 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
+		IPConfiguration *OsIPConfiguration `json:"IpConfiguration,omitempty"`
 
 		// Indicates whether the value of the 'answerFile' property has been set.
 		// Read Only: true
@@ -226,7 +226,7 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 	rcv.AnswerFile = stage1.AnswerFile
 	rcv.Hostname = stage1.Hostname
 	rcv.IPConfigType = stage1.IPConfigType
-	rcv.IPV4Config = stage1.IPV4Config
+	rcv.IPConfiguration = stage1.IPConfiguration
 	rcv.IsAnswerFileSet = stage1.IsAnswerFileSet
 	rcv.IsRootPasswordCrypted = stage1.IsRootPasswordCrypted
 	rcv.IsRootPasswordSet = stage1.IsRootPasswordSet
@@ -245,7 +245,7 @@ func (m *OsAnswersAO1P1) UnmarshalJSON(data []byte) error {
 	delete(stage2, "AnswerFile")
 	delete(stage2, "Hostname")
 	delete(stage2, "IpConfigType")
-	delete(stage2, "IpV4Config")
+	delete(stage2, "IpConfiguration")
 	delete(stage2, "IsAnswerFileSet")
 	delete(stage2, "IsRootPasswordCrypted")
 	delete(stage2, "IsRootPasswordSet")
@@ -290,7 +290,7 @@ func (m OsAnswersAO1P1) MarshalJSON() ([]byte, error) {
 
 		// In case of static IP configuration, IP address, netmask and gateway details are
 		// provided.
-		IPV4Config *CommIPV4Interface `json:"IpV4Config,omitempty"`
+		IPConfiguration *OsIPConfiguration `json:"IpConfiguration,omitempty"`
 
 		// Indicates whether the value of the 'answerFile' property has been set.
 		// Read Only: true
@@ -328,7 +328,7 @@ func (m OsAnswersAO1P1) MarshalJSON() ([]byte, error) {
 	stage1.AnswerFile = m.AnswerFile
 	stage1.Hostname = m.Hostname
 	stage1.IPConfigType = m.IPConfigType
-	stage1.IPV4Config = m.IPV4Config
+	stage1.IPConfiguration = m.IPConfiguration
 	stage1.IsAnswerFileSet = m.IsAnswerFileSet
 	stage1.IsRootPasswordCrypted = m.IsRootPasswordCrypted
 	stage1.IsRootPasswordSet = m.IsRootPasswordSet
@@ -370,7 +370,7 @@ func (m *OsAnswersAO1P1) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateIPV4Config(formats); err != nil {
+	if err := m.validateIPConfiguration(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -427,16 +427,16 @@ func (m *OsAnswersAO1P1) validateIPConfigType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *OsAnswersAO1P1) validateIPV4Config(formats strfmt.Registry) error {
+func (m *OsAnswersAO1P1) validateIPConfiguration(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.IPV4Config) { // not required
+	if swag.IsZero(m.IPConfiguration) { // not required
 		return nil
 	}
 
-	if m.IPV4Config != nil {
-		if err := m.IPV4Config.Validate(formats); err != nil {
+	if m.IPConfiguration != nil {
+		if err := m.IPConfiguration.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("IpV4Config")
+				return ve.ValidateName("IpConfiguration")
 			}
 			return err
 		}

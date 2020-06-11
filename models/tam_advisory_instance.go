@@ -23,7 +23,7 @@ type TamAdvisoryInstance struct {
 	MoBaseMo
 
 	// Reference to the Intersight advisory affecting the managed object.
-	Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+	Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 	// Reference to the Intersight managed object afftected by the advisory.
 	AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
@@ -63,7 +63,7 @@ func (m *TamAdvisoryInstance) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 		AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
 
@@ -112,7 +112,7 @@ func (m TamAdvisoryInstance) MarshalJSON() ([]byte, error) {
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
-		Advisory *TamAdvisoryRef `json:"Advisory,omitempty"`
+		Advisory *TamBaseAdvisoryRef `json:"Advisory,omitempty"`
 
 		AffectedObject *MoBaseMoRef `json:"AffectedObject,omitempty"`
 

@@ -230,9 +230,9 @@ func resourceTamAdvisoryInstanceCreate(d *schema.ResourceData, meta interface{})
 	conn := meta.(*Config)
 	var o models.TamAdvisoryInstance
 	if v, ok := d.GetOk("advisory"); ok {
-		p := models.TamAdvisoryRef{}
+		p := models.TamBaseAdvisoryRef{}
 		if len(v.([]interface{})) > 0 {
-			o := models.TamAdvisoryRef{}
+			o := models.TamBaseAdvisoryRef{}
 			l := (v.([]interface{})[0]).(map[string]interface{})
 			if v, ok := l["moid"]; ok {
 				{
@@ -256,7 +256,9 @@ func resourceTamAdvisoryInstanceCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Advisory = &x
+		if len(v.([]interface{})) > 0 {
+			o.Advisory = &x
+		}
 
 	}
 
@@ -287,7 +289,9 @@ func resourceTamAdvisoryInstanceCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.AffectedObject = &x
+		if len(v.([]interface{})) > 0 {
+			o.AffectedObject = &x
+		}
 
 	}
 
@@ -336,7 +340,9 @@ func resourceTamAdvisoryInstanceCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.DeviceRegistration = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceRegistration = &x
+		}
 
 	}
 
@@ -492,7 +498,7 @@ func resourceTamAdvisoryInstanceRead(d *schema.ResourceData, meta interface{}) e
 		return err
 	}
 
-	if err := d.Set("advisory", flattenMapTamAdvisoryRef(s.Advisory, d)); err != nil {
+	if err := d.Set("advisory", flattenMapTamBaseAdvisoryRef(s.Advisory, d)); err != nil {
 		return err
 	}
 
@@ -555,9 +561,9 @@ func resourceTamAdvisoryInstanceUpdate(d *schema.ResourceData, meta interface{})
 	var o models.TamAdvisoryInstance
 	if d.HasChange("advisory") {
 		v := d.Get("advisory")
-		p := models.TamAdvisoryRef{}
+		p := models.TamBaseAdvisoryRef{}
 		if len(v.([]interface{})) > 0 {
-			o := models.TamAdvisoryRef{}
+			o := models.TamBaseAdvisoryRef{}
 			l := (v.([]interface{})[0]).(map[string]interface{})
 			if v, ok := l["moid"]; ok {
 				{
@@ -581,7 +587,9 @@ func resourceTamAdvisoryInstanceUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Advisory = &x
+		if len(v.([]interface{})) > 0 {
+			o.Advisory = &x
+		}
 	}
 
 	if d.HasChange("affected_object") {
@@ -612,7 +620,9 @@ func resourceTamAdvisoryInstanceUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.AffectedObject = &x
+		if len(v.([]interface{})) > 0 {
+			o.AffectedObject = &x
+		}
 	}
 
 	if d.HasChange("affected_object_moid") {
@@ -661,7 +671,9 @@ func resourceTamAdvisoryInstanceUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.DeviceRegistration = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceRegistration = &x
+		}
 	}
 
 	if d.HasChange("last_state_change_time") {

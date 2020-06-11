@@ -369,7 +369,9 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.HxdpVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.HxdpVersionInfo = &x
+		}
 
 	}
 
@@ -406,7 +408,9 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.HypervisorVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.HypervisorVersionInfo = &x
+		}
 
 	}
 
@@ -455,7 +459,9 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -525,7 +531,9 @@ func resourceHyperflexSoftwareVersionPolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ServerFirmwareVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerFirmwareVersionInfo = &x
+		}
 
 	}
 
@@ -781,7 +789,9 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.HxdpVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.HxdpVersionInfo = &x
+		}
 	}
 
 	if d.HasChange("hypervisor_version") {
@@ -818,7 +828,9 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.HypervisorVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.HypervisorVersionInfo = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -867,7 +879,9 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -937,7 +951,9 @@ func resourceHyperflexSoftwareVersionPolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ServerFirmwareVersionInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerFirmwareVersionInfo = &x
+		}
 	}
 
 	if d.HasChange("tags") {

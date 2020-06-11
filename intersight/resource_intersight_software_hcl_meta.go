@@ -321,7 +321,9 @@ func resourceSoftwareHclMetaCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -509,7 +511,9 @@ func resourceSoftwareHclMetaCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 
 	}
 
@@ -779,7 +783,9 @@ func resourceSoftwareHclMetaUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -967,7 +973,9 @@ func resourceSoftwareHclMetaUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Source = &x
+		if len(v.([]interface{})) > 0 {
+			o.Source = &x
+		}
 	}
 
 	if d.HasChange("supported_models") {

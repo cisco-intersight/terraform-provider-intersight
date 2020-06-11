@@ -21,7 +21,7 @@ import (
 type ComputeBoard struct {
 	EquipmentBase
 
-	// board Id
+	// The id of the mother board located in the server.
 	// Read Only: true
 	BoardID int64 `json:"BoardId,omitempty"`
 
@@ -47,7 +47,7 @@ type ComputeBoard struct {
 	// Read Only: true
 	GraphicsCards []*GraphicsCardRef `json:"GraphicsCards"`
 
-	// memory arrays
+	// Holders housing multiple memory units present in the server.
 	// Read Only: true
 	MemoryArrays []*MemoryArrayRef `json:"MemoryArrays"`
 
@@ -71,7 +71,7 @@ type ComputeBoard struct {
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
-	// processors
+	// The CPUs present in the server.
 	// Read Only: true
 	Processors []*ProcessorUnitRef `json:"Processors"`
 
@@ -79,7 +79,7 @@ type ComputeBoard struct {
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// security units
+	// The crypto cards present in the server.
 	// Read Only: true
 	SecurityUnits []*SecurityUnitRef `json:"SecurityUnits"`
 

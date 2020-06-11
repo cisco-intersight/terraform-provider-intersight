@@ -356,7 +356,9 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ExtaTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtaTraffic = &x
+		}
 
 	}
 
@@ -403,7 +405,9 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ExtbTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtbTraffic = &x
+		}
 
 	}
 
@@ -452,7 +456,9 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -730,7 +736,9 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ExtaTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtaTraffic = &x
+		}
 	}
 
 	if d.HasChange("extb_traffic") {
@@ -777,7 +785,9 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.ExtbTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtbTraffic = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -826,7 +836,9 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

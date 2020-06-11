@@ -256,7 +256,9 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -346,7 +348,9 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["name"]; ok {
@@ -573,7 +577,9 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -663,7 +669,9 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["name"]; ok {

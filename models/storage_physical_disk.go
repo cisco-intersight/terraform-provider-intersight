@@ -52,14 +52,14 @@ type StoragePhysicalDisk struct {
 	// drive firmware
 	DriveFirmware string `json:"DriveFirmware,omitempty"`
 
-	// drive state
+	// The drive state as reported by the controller.
 	// Read Only: true
 	DriveState string `json:"DriveState,omitempty"`
 
 	// fde capable
 	FdeCapable string `json:"FdeCapable,omitempty"`
 
-	// link speed
+	// The speed of the link between the drive and the controller.
 	// Read Only: true
 	LinkSpeed string `json:"LinkSpeed,omitempty"`
 

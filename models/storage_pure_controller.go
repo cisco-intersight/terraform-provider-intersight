@@ -17,7 +17,11 @@ import (
 //
 // swagger:model storagePureController
 type StoragePureController struct {
-	StorageArrayController
+	StorageBaseArrayController
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
 	// Read Only: true
@@ -27,19 +31,23 @@ type StoragePureController struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureController) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageArrayController
+	var aO0 StorageBaseArrayController
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageArrayController = aO0
+	m.StorageBaseArrayController = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Array = dataAO1.Array
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
@@ -50,14 +58,18 @@ func (m *StoragePureController) UnmarshalJSON(raw []byte) error {
 func (m StoragePureController) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageArrayController)
+	aO0, err := swag.WriteJSON(m.StorageBaseArrayController)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 	}
+
+	dataAO1.Array = m.Array
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
@@ -73,8 +85,12 @@ func (m StoragePureController) MarshalJSON() ([]byte, error) {
 func (m *StoragePureController) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageArrayController
-	if err := m.StorageArrayController.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseArrayController
+	if err := m.StorageBaseArrayController.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,6 +101,24 @@ func (m *StoragePureController) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureController) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

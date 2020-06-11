@@ -311,7 +311,9 @@ func resourceHyperflexClusterStoragePolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.LogicalAvalabilityZoneConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.LogicalAvalabilityZoneConfig = &x
+		}
 
 	}
 
@@ -360,7 +362,9 @@ func resourceHyperflexClusterStoragePolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -637,7 +641,9 @@ func resourceHyperflexClusterStoragePolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.LogicalAvalabilityZoneConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.LogicalAvalabilityZoneConfig = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -686,7 +692,9 @@ func resourceHyperflexClusterStoragePolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

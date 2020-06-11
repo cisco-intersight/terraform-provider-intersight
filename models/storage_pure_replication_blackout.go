@@ -17,7 +17,7 @@ import (
 //
 // swagger:model storagePureReplicationBlackout
 type StoragePureReplicationBlackout struct {
-	StorageReplicationBlackout
+	StorageBaseReplicationBlackout
 
 	StoragePureReplicationBlackoutAllOf1
 }
@@ -25,11 +25,11 @@ type StoragePureReplicationBlackout struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureReplicationBlackout) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageReplicationBlackout
+	var aO0 StorageBaseReplicationBlackout
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageReplicationBlackout = aO0
+	m.StorageBaseReplicationBlackout = aO0
 
 	// AO1
 	var aO1 StoragePureReplicationBlackoutAllOf1
@@ -45,7 +45,7 @@ func (m *StoragePureReplicationBlackout) UnmarshalJSON(raw []byte) error {
 func (m StoragePureReplicationBlackout) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageReplicationBlackout)
+	aO0, err := swag.WriteJSON(m.StorageBaseReplicationBlackout)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ func (m StoragePureReplicationBlackout) MarshalJSON() ([]byte, error) {
 func (m *StoragePureReplicationBlackout) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageReplicationBlackout
-	if err := m.StorageReplicationBlackout.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseReplicationBlackout
+	if err := m.StorageBaseReplicationBlackout.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 	// validation for a type composition with StoragePureReplicationBlackoutAllOf1

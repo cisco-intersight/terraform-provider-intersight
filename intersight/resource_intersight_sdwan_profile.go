@@ -400,7 +400,9 @@ func resourceSdwanProfileCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 
 	}
 
@@ -455,7 +457,9 @@ func resourceSdwanProfileCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -552,7 +556,9 @@ func resourceSdwanProfileCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.RouterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.RouterPolicy = &x
+		}
 
 	}
 
@@ -583,7 +589,9 @@ func resourceSdwanProfileCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 
 	}
 
@@ -669,7 +677,9 @@ func resourceSdwanProfileCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.VmanageAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.VmanageAccount = &x
+		}
 
 	}
 
@@ -850,7 +860,9 @@ func resourceSdwanProfileUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -905,7 +917,9 @@ func resourceSdwanProfileUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1002,7 +1016,9 @@ func resourceSdwanProfileUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.RouterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.RouterPolicy = &x
+		}
 	}
 
 	if d.HasChange("src_template") {
@@ -1033,7 +1049,9 @@ func resourceSdwanProfileUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1119,7 +1137,9 @@ func resourceSdwanProfileUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.VmanageAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.VmanageAccount = &x
+		}
 	}
 
 	url := "sdwan/Profiles" + "/" + d.Id()

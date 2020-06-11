@@ -400,7 +400,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -516,7 +518,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 							p = o
 						}
 						x := p
-						o.Issuer = &x
+						if len(v.([]interface{})) > 0 {
+							o.Issuer = &x
+						}
 					}
 				}
 				if v, ok := l["object_type"]; ok {
@@ -631,7 +635,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 							p = o
 						}
 						x := p
-						o.Subject = &x
+						if len(v.([]interface{})) > 0 {
+							o.Subject = &x
+						}
 					}
 				}
 				x = append(x, &o)

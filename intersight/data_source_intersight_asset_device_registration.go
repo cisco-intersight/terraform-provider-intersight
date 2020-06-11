@@ -3,10 +3,12 @@ package intersight
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"reflect"
+
 	"github.com/cisco-intersight/terraform-provider-intersight/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"log"
 )
 
 func dataSourceAssetDeviceRegistration() *schema.Resource {
@@ -141,7 +143,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_reason": {
-				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud.",
+				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -153,7 +155,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_status_last_change_time": {
-				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between the cloud and device connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with the cloud.",
+				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between Intersight and Device Connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -223,7 +225,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				},
 			},
 			"device_external_ip_address": {
-				Description: "The IP Address of the managed device as seen from the cloud at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
+				Description: "The IP Address of the managed device as seen from Intersight at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -407,7 +409,7 @@ func dataSourceAssetDeviceRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"public_access_key": {
-				Description: "The device connector's public key used by the cloud to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.",
+				Description: "The device connector's public key used by Intersight to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -597,138 +599,139 @@ func dataSourceAssetDeviceRegistrationRead(d *schema.ResourceData, meta interfac
 	if err = json.Unmarshal(body, &x); err != nil {
 		return err
 	}
-	results := x["Results"]
-	if results == nil {
+	result := x["Results"]
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
-	result := results.([]interface{})
-	if len(result) > 1{
-		return fmt.Errorf("your query returned multiple results. Please change your search criteria and try again")
-	}
-	var s models.AssetDeviceRegistration
-	oo, _ := json.Marshal(result[0])
-	// interface {} is map[string]interface {}, not []uint8
-	if err = s.UnmarshalJSON(oo); err != nil {
-		return err
-	}
-	if err := d.Set("api_version", (s.APIVersion)); err != nil {
-		return err
-	}
-	if err := d.Set("access_key_id", (s.AccessKeyID)); err != nil {
-		return err
-	}
+	switch reflect.TypeOf(result).Kind() {
+	case reflect.Slice:
+		r := reflect.ValueOf(result)
+		for i := 0; i < r.Len(); i++ {
+			var s models.AssetDeviceRegistration
+			oo, _ := json.Marshal(r.Index(i).Interface())
+			if err = s.UnmarshalJSON(oo); err != nil {
+				return err
+			}
+			if err := d.Set("api_version", (s.APIVersion)); err != nil {
+				return err
+			}
+			if err := d.Set("access_key_id", (s.AccessKeyID)); err != nil {
+				return err
+			}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-		return err
-	}
-	if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
-		return err
-	}
+			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
+				return err
+			}
+			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
+				return err
+			}
 
-	if err := d.Set("claimed_by_user", flattenMapIamUserRef(s.ClaimedByUser, d)); err != nil {
-		return err
-	}
-	if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
-		return err
-	}
+			if err := d.Set("claimed_by_user", flattenMapIamUserRef(s.ClaimedByUser, d)); err != nil {
+				return err
+			}
+			if err := d.Set("claimed_by_user_name", (s.ClaimedByUserName)); err != nil {
+				return err
+			}
 
-	if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
-		return err
-	}
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
-	}
+			if err := d.Set("claimed_time", (s.ClaimedTime).String()); err != nil {
+				return err
+			}
+			if err := d.Set("class_id", (s.ClassID)); err != nil {
+				return err
+			}
 
-	if err := d.Set("cluster_members", flattenListAssetClusterMemberRef(s.ClusterMembers, d)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
-		return err
-	}
-	if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-		return err
-	}
+			if err := d.Set("cluster_members", flattenListAssetClusterMemberRef(s.ClusterMembers, d)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
+				return err
+			}
+			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+				return err
+			}
 
-	if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
-		return err
-	}
-	if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
-		return err
-	}
+			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
+				return err
+			}
+			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
+				return err
+			}
 
-	if err := d.Set("device_claim", flattenMapAssetDeviceClaimRef(s.DeviceClaim, d)); err != nil {
-		return err
-	}
+			if err := d.Set("device_claim", flattenMapAssetDeviceClaimRef(s.DeviceClaim, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRef(s.DeviceConfiguration, d)); err != nil {
-		return err
-	}
-	if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
-		return err
-	}
-	if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
-		return err
-	}
-	if err := d.Set("device_ip_address", (s.DeviceIPAddress)); err != nil {
-		return err
-	}
+			if err := d.Set("device_configuration", flattenMapAssetDeviceConfigurationRef(s.DeviceConfiguration, d)); err != nil {
+				return err
+			}
+			if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
+				return err
+			}
+			if err := d.Set("device_hostname", (s.DeviceHostname)); err != nil {
+				return err
+			}
+			if err := d.Set("device_ip_address", (s.DeviceIPAddress)); err != nil {
+				return err
+			}
 
-	if err := d.Set("domain_group", flattenMapIamDomainGroupRef(s.DomainGroup, d)); err != nil {
-		return err
-	}
-	if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
-		return err
-	}
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
-	}
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
+			if err := d.Set("domain_group", flattenMapIamDomainGroupRef(s.DomainGroup, d)); err != nil {
+				return err
+			}
+			if err := d.Set("execution_mode", (s.ExecutionMode)); err != nil {
+				return err
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return err
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return err
+			}
 
-	if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRef(s.ParentConnection, d)); err != nil {
-		return err
-	}
+			if err := d.Set("parent_connection", flattenMapAssetDeviceRegistrationRef(s.ParentConnection, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
-		return err
-	}
+			if err := d.Set("parent_signature", flattenMapAssetParentConnectionSignature(s.ParentSignature, d)); err != nil {
+				return err
+			}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
-	}
-	if err := d.Set("pid", (s.Pid)); err != nil {
-		return err
-	}
-	if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-		return err
-	}
-	if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
-		return err
-	}
-	if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
-		return err
-	}
-	if err := d.Set("read_only", (s.ReadOnly)); err != nil {
-		return err
-	}
+			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+				return err
+			}
+			if err := d.Set("pid", (s.Pid)); err != nil {
+				return err
+			}
+			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+				return err
+			}
+			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
+				return err
+			}
+			if err := d.Set("public_access_key", (s.PublicAccessKey)); err != nil {
+				return err
+			}
+			if err := d.Set("read_only", (s.ReadOnly)); err != nil {
+				return err
+			}
 
-	if err := d.Set("security_token", flattenMapAssetSecurityTokenRef(s.SecurityToken, d)); err != nil {
-		return err
-	}
-	if err := d.Set("serial", (s.Serial)); err != nil {
-		return err
-	}
+			if err := d.Set("security_token", flattenMapAssetSecurityTokenRef(s.SecurityToken, d)); err != nil {
+				return err
+			}
+			if err := d.Set("serial", (s.Serial)); err != nil {
+				return err
+			}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+				return err
+			}
+			if err := d.Set("vendor", (s.Vendor)); err != nil {
+				return err
+			}
+			d.SetId(s.Moid)
+		}
 	}
-	if err := d.Set("vendor", (s.Vendor)); err != nil {
-		return err
-	}
-	d.SetId(s.Moid)
 	return nil
 }

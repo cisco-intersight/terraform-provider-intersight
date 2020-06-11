@@ -16,7 +16,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 		Read: dataSourceWorkflowWorkflowInfoRead,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The Account to which the workflow is associated.",
+				Description: "The Account to which the workflow is associated relation is deprecated. Use AssociatedObject to set the account relation.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -48,6 +48,35 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Description: "The action of the workflow such as start, cancel, retry, pause.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"associated_object": {
+				Description: "The object from which workflow needs to inherit permissions.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -142,36 +171,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nr0_profile": {
-				Description: "A collection of references to the [server.Profile](mo://server.Profile) Managed Object.\nWhen this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
-			"nr1_cluster_profile": {
+			"nr0_cluster_profile": {
 				Description: "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
@@ -207,7 +207,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The Organization to which the workflow is associated.",
+				Description: "The Organization to which the workflow is associated relation is deprecated. Use AssociatedObject to set the organization relation.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -263,6 +263,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 						},
 					},
 				},
+			},
+			"pause_reason": {
+				Description: "Denotes the reason workflow is in paused status.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"pending_dynamic_workflow_info": {
 				Description: "Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance.",
@@ -603,6 +608,10 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 		x := (v.(string))
 		o.ObjectType = x
 	}
+	if v, ok := d.GetOk("pause_reason"); ok {
+		x := (v.(string))
+		o.PauseReason = &x
+	}
 	if v, ok := d.GetOk("progress"); ok {
 		x := v.(float32)
 		o.Progress = x
@@ -681,6 +690,10 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 			if err := d.Set("action", (s.Action)); err != nil {
 				return err
 			}
+
+			if err := d.Set("associated_object", flattenMapMoBaseMoRef(s.AssociatedObject, d)); err != nil {
+				return err
+			}
 			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
@@ -718,11 +731,7 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 				return err
 			}
 
-			if err := d.Set("nr0_profile", flattenMapServerProfileRef(s.Nr0Profile, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("nr1_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr1ClusterProfile, d)); err != nil {
+			if err := d.Set("nr0_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr0ClusterProfile, d)); err != nil {
 				return err
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
@@ -734,6 +743,9 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 			}
 
 			if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRef(s.ParentTaskInfo, d)); err != nil {
+				return err
+			}
+			if err := d.Set("pause_reason", (s.PauseReason)); err != nil {
 				return err
 			}
 

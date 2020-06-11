@@ -321,7 +321,7 @@ func dataSourceOsInstall() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
-						"ipv4_config": {
+						"ip_configuration": {
 							Description: "In case of static IP configuration, IP address, netmask and gateway details are\nprovided.",
 							Type:        schema.TypeList,
 							MaxItems:    1,
@@ -338,21 +338,6 @@ func dataSourceOsInstall() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
-									},
-									"gateway": {
-										Description: "The IPv4 address of the default gateway.",
-										Type:        schema.TypeString,
-										Optional:    true,
-									},
-									"ip_address": {
-										Description: "The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3.",
-										Type:        schema.TypeString,
-										Optional:    true,
-									},
-									"netmask": {
-										Description: "The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.",
-										Type:        schema.TypeString,
-										Optional:    true,
 									},
 									"object_type": {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",

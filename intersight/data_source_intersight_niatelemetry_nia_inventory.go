@@ -15,7 +15,7 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 		Read: dataSourceNiatelemetryNiaInventoryRead,
 		Schema: map[string]*schema.Schema{
 			"cpu": {
-				Description: "CPU usage of device being inventoried.",
+				Description: "CPU usage of device being inventoried. This determines the percentage of CPU resources used.",
 				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
@@ -26,22 +26,22 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Computed:    true,
 			},
 			"crash_reset_logs": {
-				Description: "Last crash reset reason of device being inventoried.",
+				Description: "Last crash reset reason of device being inventoried. This determines the last reason for a device's restart due to crash of the system.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"device_name": {
-				Description: "Name of device being inventoried.",
+				Description: "Name of device being inventoried. The name the user assigns to the device is inventoried here.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"device_type": {
-				Description: "Type of device being inventoried.",
+				Description: "Type of device being inventoried. This determines whether the device is a controller, leaf or spine.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"disk": {
-				Description: "Disk Usage of device being inventoried.",
+				Description: "Disk Usage of device being inventoried. This determines the amount of disk usage.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -59,12 +59,12 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 							Computed:    true,
 						},
 						"free": {
-							Description: "The free disk capacity, currently the type of this field is set to integer.",
+							Description: "The free disk capacity, currently the type of this field is set to integer. This determines how much memory is free in Bytes.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"name": {
-							Description: "Disk Name used to identified the disk usage record.",
+							Description: "Disk Name used to identified the disk usage record. This determines the name of the disk partition that is inventoried.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -75,12 +75,12 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 							Computed:    true,
 						},
 						"total": {
-							Description: "The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer.",
+							Description: "The total disk capacity, it should be the sum of free and used, currently the type of this field is set to integer. This determines the total memory for this partition.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"used": {
-							Description: "The used disk capacity, currently the type of this field is set to integer.",
+							Description: "The used disk capacity, currently the type of this field is set to integer. This determines how much memory is used in Bytes.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -89,7 +89,7 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Computed: true,
 			},
 			"license_state": {
-				Description: "The license of this device.",
+				Description: "The license of this device. It includes features and license information.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -118,17 +118,17 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Computed: true,
 			},
 			"log_in_time": {
-				Description: "Last log in time device being inventoried.",
+				Description: "Last log in time device being inventoried. This determines the last login time on the device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"log_out_time": {
-				Description: "Last log out time of device being inventoried.",
+				Description: "Last log out time of device being inventoried. This determines the last logout time on the device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"memory": {
-				Description: "Memory usage of device being inventoried.",
+				Description: "Memory usage of device being inventoried. This determines the percentage of memory resources used.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
@@ -173,12 +173,12 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				},
 			},
 			"record_type": {
-				Description: "Type of record DCNM / APIC / SE.",
+				Description: "Type of record DCNM / APIC / SE. This determines the type of platform where inventory was collected.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"record_version": {
-				Description: "Version of record being pushed.",
+				Description: "Version of record being pushed. This determines what was the API version for data available from the device.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -212,12 +212,12 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				},
 			},
 			"serial": {
-				Description: "Serial number of device being invetoried.",
+				Description: "Serial number of device being invetoried. The serial number is unique per device and will be used as the key.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"software_download": {
-				Description: "Last software downloaded of device being inventoried.",
+				Description: "Last software downloaded of device being inventoried. This determines if software download API was used.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -259,7 +259,7 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Computed: true,
 			},
 			"version": {
-				Description: "Software version of device being inventoried.",
+				Description: "Software version of device being inventoried. The various software version values for each device are available on cisco.com.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

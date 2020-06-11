@@ -594,7 +594,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -675,7 +677,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.InterfaceTask = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterfaceTask = &x
+		}
 
 	}
 
@@ -744,7 +748,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 						p = o
 					}
 					x := p
-					o.Constraints = &x
+					if len(v.([]interface{})) > 0 {
+						o.Constraints = &x
+					}
 				}
 			}
 			if v, ok := l["internal"]; ok {
@@ -769,7 +775,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.InternalProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.InternalProperties = &x
+		}
 
 	}
 
@@ -932,7 +940,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -1046,7 +1056,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -1125,7 +1137,9 @@ func resourceWorkflowTaskDefinitionCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 
 	}
 
@@ -1334,7 +1348,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1416,7 +1432,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.InterfaceTask = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterfaceTask = &x
+		}
 	}
 
 	if d.HasChange("internal_properties") {
@@ -1485,7 +1503,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 						p = o
 					}
 					x := p
-					o.Constraints = &x
+					if len(v.([]interface{})) > 0 {
+						o.Constraints = &x
+					}
 				}
 			}
 			if v, ok := l["internal"]; ok {
@@ -1510,7 +1530,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.InternalProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.InternalProperties = &x
+		}
 	}
 
 	if d.HasChange("label") {
@@ -1673,7 +1695,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -1787,7 +1811,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -1866,7 +1892,9 @@ func resourceWorkflowTaskDefinitionUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 	}
 
 	if d.HasChange("secure_prop_access") {

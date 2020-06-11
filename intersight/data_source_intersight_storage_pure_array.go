@@ -360,7 +360,7 @@ func dataSourceStoragePureArrayRead(d *schema.ResourceData, meta interface{}) er
 				return err
 			}
 
-			if err := d.Set("storage_utilization", flattenMapStorageCapacity(s.StorageUtilization, d)); err != nil {
+			if err := d.Set("storage_utilization", flattenMapStorageBaseCapacity(s.StorageUtilization, d)); err != nil {
 				return err
 			}
 

@@ -287,7 +287,9 @@ func resourceResourceGroupCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -655,7 +657,9 @@ func resourceResourceGroupUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

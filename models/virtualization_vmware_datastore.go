@@ -21,7 +21,7 @@ import (
 //
 // swagger:model virtualizationVmwareDatastore
 type VirtualizationVmwareDatastore struct {
-	VirtualizationDatastore
+	VirtualizationBaseDatastore
 
 	// Shows if this datastore is accessible.
 	Accessible *bool `json:"Accessible,omitempty"`
@@ -60,11 +60,11 @@ type VirtualizationVmwareDatastore struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareDatastore) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationDatastore
+	var aO0 VirtualizationBaseDatastore
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationDatastore = aO0
+	m.VirtualizationBaseDatastore = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -119,7 +119,7 @@ func (m *VirtualizationVmwareDatastore) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareDatastore) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationDatastore)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseDatastore)
 	if err != nil {
 		return nil, err
 	}
@@ -178,8 +178,8 @@ func (m VirtualizationVmwareDatastore) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareDatastore) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationDatastore
-	if err := m.VirtualizationDatastore.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseDatastore
+	if err := m.VirtualizationBaseDatastore.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

@@ -857,7 +857,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 							p = o
 						}
 						x := p
-						o.ResponseSpec = &x
+						if len(v.([]interface{})) > 0 {
+							o.ResponseSpec = &x
+						}
 					}
 				}
 				if v, ok := l["skip_on_condition"]; ok {
@@ -922,7 +924,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Constraints = &x
+		if len(v.([]interface{})) > 0 {
+			o.Constraints = &x
+		}
 
 	}
 
@@ -1077,7 +1081,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.TaskDefinition = &x
+		if len(v.([]interface{})) > 0 {
+			o.TaskDefinition = &x
+		}
 
 	}
 
@@ -1531,7 +1537,9 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 							p = o
 						}
 						x := p
-						o.ResponseSpec = &x
+						if len(v.([]interface{})) > 0 {
+							o.ResponseSpec = &x
+						}
 					}
 				}
 				if v, ok := l["skip_on_condition"]; ok {
@@ -1596,7 +1604,9 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Constraints = &x
+		if len(v.([]interface{})) > 0 {
+			o.Constraints = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -1751,7 +1761,9 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.TaskDefinition = &x
+		if len(v.([]interface{})) > 0 {
+			o.TaskDefinition = &x
+		}
 	}
 
 	url := "workflow/BatchApiExecutors" + "/" + d.Id()

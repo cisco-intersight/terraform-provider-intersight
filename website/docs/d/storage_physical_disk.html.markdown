@@ -21,9 +21,9 @@ The following arguments can be used to get data of already created objects in In
 * `disk_state`:(string)"This field identifies the health of the disk."
 * `dn`:(string)"The Distinguished Name unambiguously identifies an object in the system."
 * `drive_firmware`:(string)
-* `drive_state`:(string)
+* `drive_state`:(string)"The drive state as reported by the controller."
 * `fde_capable`:(string)
-* `link_speed`:(string)
+* `link_speed`:(string)"The speed of the link between the drive and the controller."
 * `link_state`:(string)
 * `model`:(string)"This field identifies the model of the given component."
 * `moid`:(string)"The unique identifier of this Managed Object instance."

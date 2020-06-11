@@ -317,7 +317,9 @@ func resourceRecoveryScheduleConfigPolicyCreate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -403,7 +405,9 @@ func resourceRecoveryScheduleConfigPolicyCreate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Schedule = &x
+		if len(v.([]interface{})) > 0 {
+			o.Schedule = &x
+		}
 
 	}
 
@@ -636,7 +640,9 @@ func resourceRecoveryScheduleConfigPolicyUpdate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -722,7 +728,9 @@ func resourceRecoveryScheduleConfigPolicyUpdate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Schedule = &x
+		if len(v.([]interface{})) > 0 {
+			o.Schedule = &x
+		}
 	}
 
 	if d.HasChange("tags") {

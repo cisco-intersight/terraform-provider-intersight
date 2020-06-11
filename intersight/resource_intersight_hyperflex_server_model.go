@@ -256,7 +256,9 @@ func resourceHyperflexServerModelCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -391,7 +393,9 @@ func resourceHyperflexServerModelCreate(d *schema.ResourceData, meta interface{}
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["name"]; ok {
@@ -573,7 +577,9 @@ func resourceHyperflexServerModelUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -708,7 +714,9 @@ func resourceHyperflexServerModelUpdate(d *schema.ResourceData, meta interface{}
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["name"]; ok {

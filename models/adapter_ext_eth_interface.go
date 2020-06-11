@@ -28,11 +28,11 @@ type AdapterExtEthInterface struct {
 	// Read Only: true
 	AdminState string `json:"AdminState,omitempty"`
 
-	// ep dn
+	// Endpoint Config DN of an External Ethernet Interface.
 	// Read Only: true
 	EpDn string `json:"EpDn,omitempty"`
 
-	// ext eth interface Id
+	// Unique Identifier for an External Ethernet Interface within the adapter object.
 	// Read Only: true
 	ExtEthInterfaceID string `json:"ExtEthInterfaceId,omitempty"`
 

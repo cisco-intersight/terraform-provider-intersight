@@ -50,7 +50,7 @@ func dataSourceIaasLicenseInfo() *schema.Resource {
 				},
 			},
 			"license_expiration_date": {
-				Description: "Licese expiration date.",
+				Description: "UCS Director license expiration date.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

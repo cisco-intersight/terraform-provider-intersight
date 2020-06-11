@@ -17,11 +17,19 @@ import (
 //
 // swagger:model storagePureSnapshotSchedule
 type StoragePureSnapshotSchedule struct {
-	StorageSnapshotSchedule
+	StorageBaseSnapshotSchedule
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
 
 	// Total number of snapshots per day to be available on source above and over the specified retention time. PureStorage FlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired. In case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.
 	// Read Only: true
 	DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+	// Protection group relationship object.
+	// Read Only: true
+	ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
 	// Read Only: true
@@ -35,15 +43,19 @@ type StoragePureSnapshotSchedule struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureSnapshotSchedule) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageSnapshotSchedule
+	var aO0 StorageBaseSnapshotSchedule
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageSnapshotSchedule = aO0
+	m.StorageBaseSnapshotSchedule = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -53,7 +65,11 @@ func (m *StoragePureSnapshotSchedule) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
+	m.Array = dataAO1.Array
+
 	m.DailyLimit = dataAO1.DailyLimit
+
+	m.ProtectionGroup = dataAO1.ProtectionGroup
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
@@ -66,20 +82,28 @@ func (m *StoragePureSnapshotSchedule) UnmarshalJSON(raw []byte) error {
 func (m StoragePureSnapshotSchedule) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageSnapshotSchedule)
+	aO0, err := swag.WriteJSON(m.StorageBaseSnapshotSchedule)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 	}
 
+	dataAO1.Array = m.Array
+
 	dataAO1.DailyLimit = m.DailyLimit
+
+	dataAO1.ProtectionGroup = m.ProtectionGroup
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
@@ -97,8 +121,16 @@ func (m StoragePureSnapshotSchedule) MarshalJSON() ([]byte, error) {
 func (m *StoragePureSnapshotSchedule) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageSnapshotSchedule
-	if err := m.StorageSnapshotSchedule.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseSnapshotSchedule
+	if err := m.StorageBaseSnapshotSchedule.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProtectionGroup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -109,6 +141,42 @@ func (m *StoragePureSnapshotSchedule) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureSnapshotSchedule) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePureSnapshotSchedule) validateProtectionGroup(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ProtectionGroup) { // not required
+		return nil
+	}
+
+	if m.ProtectionGroup != nil {
+		if err := m.ProtectionGroup.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ProtectionGroup")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

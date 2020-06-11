@@ -38,7 +38,7 @@ type StorageStoragePolicy struct {
 	// Retains the virtual drives defined in policy if they exist already. If this flag is false, the existing virtual drives are removed and created again based on virtual drives in the policy.
 	RetainPolicyVirtualDrives *bool `json:"RetainPolicyVirtualDrives,omitempty"`
 
-	// This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.
+	// Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.
 	// Enum: [UnconfiguredGood Jbod]
 	UnusedDisksState *string `json:"UnusedDisksState,omitempty"`
 

@@ -101,6 +101,12 @@ func dataSourceApplianceSetupInfo() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"deployment_mode": {
+				Description: "Indicates where Intersight Appliance is installed in air-gapped or connected mode.\nIn connected mode, Intersight Appliance is claimed by Intesight SaaS.\nIn air-gapped mode, Intersight Appliance does not connect to any Cisco services.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"end_time": {
 				Description: "End date of the Intersight Appliance's initial setup.",
 				Type:        schema.TypeString,
@@ -218,6 +224,10 @@ func dataSourceApplianceSetupInfoRead(d *schema.ResourceData, meta interface{}) 
 		x := (v.(string))
 		o.CloudURL = x
 	}
+	if v, ok := d.GetOk("deployment_mode"); ok {
+		x := (v.(string))
+		o.DeploymentMode = x
+	}
 	if v, ok := d.GetOk("end_time"); ok {
 		x, _ := strfmt.ParseDateTime(v.(string))
 		o.EndTime = x
@@ -272,6 +282,9 @@ func dataSourceApplianceSetupInfoRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 			if err := d.Set("cloud_url", (s.CloudURL)); err != nil {
+				return err
+			}
+			if err := d.Set("deployment_mode", (s.DeploymentMode)); err != nil {
 				return err
 			}
 

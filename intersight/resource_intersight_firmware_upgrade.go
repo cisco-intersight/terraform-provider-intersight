@@ -652,7 +652,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Device = &x
+		if len(v.([]interface{})) > 0 {
+			o.Device = &x
+		}
 
 	}
 
@@ -721,7 +723,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 						p = o
 					}
 					x := p
-					o.HTTPServer = &x
+					if len(v.([]interface{})) > 0 {
+						o.HTTPServer = &x
+					}
 				}
 			}
 			if v, ok := l["image_source"]; ok {
@@ -764,7 +768,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.DirectDownload = &x
+		if len(v.([]interface{})) > 0 {
+			o.DirectDownload = &x
+		}
 
 	}
 
@@ -795,7 +801,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Distributable = &x
+		if len(v.([]interface{})) > 0 {
+			o.Distributable = &x
+		}
 
 	}
 
@@ -882,7 +890,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 						p = o
 					}
 					x := p
-					o.CifsServer = &x
+					if len(v.([]interface{})) > 0 {
+						o.CifsServer = &x
+					}
 				}
 			}
 			if v, ok := l["class_id"]; ok {
@@ -935,7 +945,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 						p = o
 					}
 					x := p
-					o.HTTPServer = &x
+					if len(v.([]interface{})) > 0 {
+						o.HTTPServer = &x
+					}
 				}
 			}
 			if v, ok := l["is_password_set"]; ok {
@@ -1012,7 +1024,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 						p = o
 					}
 					x := p
-					o.NfsServer = &x
+					if len(v.([]interface{})) > 0 {
+						o.NfsServer = &x
+					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
@@ -1043,7 +1057,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.NetworkShare = &x
+		if len(v.([]interface{})) > 0 {
+			o.NetworkShare = &x
+		}
 
 	}
 
@@ -1113,7 +1129,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Server = &x
+		if len(v.([]interface{})) > 0 {
+			o.Server = &x
+		}
 
 	}
 
@@ -1193,7 +1211,9 @@ func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.UpgradeStatus = &x
+		if len(v.([]interface{})) > 0 {
+			o.UpgradeStatus = &x
+		}
 
 	}
 

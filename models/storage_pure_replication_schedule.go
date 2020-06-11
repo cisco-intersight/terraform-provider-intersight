@@ -19,13 +19,21 @@ import (
 //
 // swagger:model storagePureReplicationSchedule
 type StoragePureReplicationSchedule struct {
-	StorageReplicationSchedule
+	StorageBaseReplicationSchedule
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
 
 	// Total number of snapshots per day to be available on target above and over the specified retention time. PureStorage
 	// FlashArray maintains all created snapshot until retention period. Daily limit is applied only on the snapshots once retention time is expired.
 	// In case of, daily limit is less than the number of snapshot available on source, system select snapshots evenly spaced out throughout the day.
 	// Read Only: true
 	DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+	// Protection group relationship object.
+	// Read Only: true
+	ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 	// Device registration managed object that represents this storage array connection to Intersight.
 	// Read Only: true
@@ -43,15 +51,19 @@ type StoragePureReplicationSchedule struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureReplicationSchedule) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageReplicationSchedule
+	var aO0 StorageBaseReplicationSchedule
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageReplicationSchedule = aO0
+	m.StorageBaseReplicationSchedule = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -63,7 +75,11 @@ func (m *StoragePureReplicationSchedule) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
+	m.Array = dataAO1.Array
+
 	m.DailyLimit = dataAO1.DailyLimit
+
+	m.ProtectionGroup = dataAO1.ProtectionGroup
 
 	m.RegisteredDevice = dataAO1.RegisteredDevice
 
@@ -78,13 +94,17 @@ func (m *StoragePureReplicationSchedule) UnmarshalJSON(raw []byte) error {
 func (m StoragePureReplicationSchedule) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageReplicationSchedule)
+	aO0, err := swag.WriteJSON(m.StorageBaseReplicationSchedule)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
 		DailyLimit int64 `json:"DailyLimit,omitempty"`
+
+		ProtectionGroup *StoragePureProtectionGroupRef `json:"ProtectionGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
@@ -93,7 +113,11 @@ func (m StoragePureReplicationSchedule) MarshalJSON() ([]byte, error) {
 		SnapshotExpiryTime string `json:"SnapshotExpiryTime,omitempty"`
 	}
 
+	dataAO1.Array = m.Array
+
 	dataAO1.DailyLimit = m.DailyLimit
+
+	dataAO1.ProtectionGroup = m.ProtectionGroup
 
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
@@ -113,8 +137,16 @@ func (m StoragePureReplicationSchedule) MarshalJSON() ([]byte, error) {
 func (m *StoragePureReplicationSchedule) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageReplicationSchedule
-	if err := m.StorageReplicationSchedule.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseReplicationSchedule
+	if err := m.StorageBaseReplicationSchedule.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProtectionGroup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -129,6 +161,42 @@ func (m *StoragePureReplicationSchedule) Validate(formats strfmt.Registry) error
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureReplicationSchedule) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePureReplicationSchedule) validateProtectionGroup(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ProtectionGroup) { // not required
+		return nil
+	}
+
+	if m.ProtectionGroup != nil {
+		if err := m.ProtectionGroup.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ProtectionGroup")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

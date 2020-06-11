@@ -436,7 +436,9 @@ func resourceSdwanRouterNodeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -500,7 +502,9 @@ func resourceSdwanRouterNodeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Profile = &x
+		if len(v.([]interface{})) > 0 {
+			o.Profile = &x
+		}
 
 	}
 
@@ -531,7 +535,9 @@ func resourceSdwanRouterNodeCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.ServerNode = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerNode = &x
+		}
 
 	}
 
@@ -883,7 +889,9 @@ func resourceSdwanRouterNodeUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -947,7 +955,9 @@ func resourceSdwanRouterNodeUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Profile = &x
+		if len(v.([]interface{})) > 0 {
+			o.Profile = &x
+		}
 	}
 
 	if d.HasChange("server_node") {
@@ -978,7 +988,9 @@ func resourceSdwanRouterNodeUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.ServerNode = &x
+		if len(v.([]interface{})) > 0 {
+			o.ServerNode = &x
+		}
 	}
 
 	if d.HasChange("tags") {

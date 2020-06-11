@@ -19,6 +19,10 @@ import (
 type FcPhysicalPort struct {
 	PortPhysical
 
+	// PeerDn for fibre channel physical port.
+	// Read Only: true
+	PeerDn string `json:"PeerDn,omitempty"`
+
 	// A collection of references to the [port.Group](mo://port.Group) Managed Object.
 	// When this managed object is deleted, the referenced [port.Group](mo://port.Group) MO unsets its reference to this deleted MO.
 	// Read Only: true
@@ -48,6 +52,8 @@ func (m *FcPhysicalPort) UnmarshalJSON(raw []byte) error {
 
 	// AO1
 	var dataAO1 struct {
+		PeerDn string `json:"PeerDn,omitempty"`
+
 		PortGroup *PortGroupRef `json:"PortGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
@@ -59,6 +65,8 @@ func (m *FcPhysicalPort) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.PeerDn = dataAO1.PeerDn
 
 	m.PortGroup = dataAO1.PortGroup
 
@@ -81,6 +89,8 @@ func (m FcPhysicalPort) MarshalJSON() ([]byte, error) {
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		PeerDn string `json:"PeerDn,omitempty"`
+
 		PortGroup *PortGroupRef `json:"PortGroup,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
@@ -89,6 +99,8 @@ func (m FcPhysicalPort) MarshalJSON() ([]byte, error) {
 
 		Wwn string `json:"Wwn,omitempty"`
 	}
+
+	dataAO1.PeerDn = m.PeerDn
 
 	dataAO1.PortGroup = m.PortGroup
 

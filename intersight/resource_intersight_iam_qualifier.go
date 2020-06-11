@@ -285,7 +285,9 @@ func resourceIamQualifierCreate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.Usergroup = &x
+		if len(v.([]interface{})) > 0 {
+			o.Usergroup = &x
+		}
 
 	}
 
@@ -514,7 +516,9 @@ func resourceIamQualifierUpdate(d *schema.ResourceData, meta interface{}) error 
 			p = o
 		}
 		x := p
-		o.Usergroup = &x
+		if len(v.([]interface{})) > 0 {
+			o.Usergroup = &x
+		}
 	}
 
 	if d.HasChange("value") {

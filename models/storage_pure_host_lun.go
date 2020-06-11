@@ -17,7 +17,15 @@ import (
 //
 // swagger:model storagePureHostLun
 type StoragePureHostLun struct {
-	StorageHostLun
+	StorageBaseHostLun
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+	// Host managed object where the volume is associated.
+	// Read Only: true
+	Host *StoragePureHostRef `json:"Host,omitempty"`
 
 	// Host group relationship object associated with LUN. It is empty, if volume has direct connection to host.
 	// Read Only: true
@@ -34,19 +42,27 @@ type StoragePureHostLun struct {
 	// Kind of volume connection to host. True if it is connected through host group. False in case of direct host connection.
 	// Read Only: true
 	Shared *bool `json:"Shared,omitempty"`
+
+	// Volume managed object used to create host lun.
+	// Read Only: true
+	Volume *StoragePureVolumeRef `json:"Volume,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePureHostLun) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageHostLun
+	var aO0 StorageBaseHostLun
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageHostLun = aO0
+	m.StorageBaseHostLun = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		Host *StoragePureHostRef `json:"Host,omitempty"`
+
 		HostGroup *StoragePureHostGroupRef `json:"HostGroup,omitempty"`
 
 		HostGroupName string `json:"HostGroupName,omitempty"`
@@ -54,10 +70,16 @@ func (m *StoragePureHostLun) UnmarshalJSON(raw []byte) error {
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Shared *bool `json:"Shared,omitempty"`
+
+		Volume *StoragePureVolumeRef `json:"Volume,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Array = dataAO1.Array
+
+	m.Host = dataAO1.Host
 
 	m.HostGroup = dataAO1.HostGroup
 
@@ -67,6 +89,8 @@ func (m *StoragePureHostLun) UnmarshalJSON(raw []byte) error {
 
 	m.Shared = dataAO1.Shared
 
+	m.Volume = dataAO1.Volume
+
 	return nil
 }
 
@@ -74,12 +98,16 @@ func (m *StoragePureHostLun) UnmarshalJSON(raw []byte) error {
 func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageHostLun)
+	aO0, err := swag.WriteJSON(m.StorageBaseHostLun)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		Host *StoragePureHostRef `json:"Host,omitempty"`
+
 		HostGroup *StoragePureHostGroupRef `json:"HostGroup,omitempty"`
 
 		HostGroupName string `json:"HostGroupName,omitempty"`
@@ -87,7 +115,13 @@ func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
 		Shared *bool `json:"Shared,omitempty"`
+
+		Volume *StoragePureVolumeRef `json:"Volume,omitempty"`
 	}
+
+	dataAO1.Array = m.Array
+
+	dataAO1.Host = m.Host
 
 	dataAO1.HostGroup = m.HostGroup
 
@@ -96,6 +130,8 @@ func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 	dataAO1.RegisteredDevice = m.RegisteredDevice
 
 	dataAO1.Shared = m.Shared
+
+	dataAO1.Volume = m.Volume
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -109,8 +145,16 @@ func (m StoragePureHostLun) MarshalJSON() ([]byte, error) {
 func (m *StoragePureHostLun) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageHostLun
-	if err := m.StorageHostLun.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseHostLun
+	if err := m.StorageBaseHostLun.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateHost(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -122,9 +166,49 @@ func (m *StoragePureHostLun) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateVolume(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePureHostLun) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePureHostLun) validateHost(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Host) { // not required
+		return nil
+	}
+
+	if m.Host != nil {
+		if err := m.Host.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Host")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -156,6 +240,24 @@ func (m *StoragePureHostLun) validateRegisteredDevice(formats strfmt.Registry) e
 		if err := m.RegisteredDevice.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("RegisteredDevice")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePureHostLun) validateVolume(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Volume) { // not required
+		return nil
+	}
+
+	if m.Volume != nil {
+		if err := m.Volume.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Volume")
 			}
 			return err
 		}

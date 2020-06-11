@@ -363,7 +363,9 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -440,7 +442,9 @@ func resourceIamEndPointUserPolicyCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.PasswordProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.PasswordProperties = &x
+		}
 
 	}
 
@@ -771,7 +775,9 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("password_properties") {
@@ -848,7 +854,9 @@ func resourceIamEndPointUserPolicyUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.PasswordProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.PasswordProperties = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

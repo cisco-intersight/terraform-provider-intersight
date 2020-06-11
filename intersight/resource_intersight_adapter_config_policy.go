@@ -411,7 +411,9 @@ func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -592,7 +594,9 @@ func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.EthSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.EthSettings = &x
+						}
 					}
 				}
 				if v, ok := l["fc_settings"]; ok {
@@ -633,7 +637,9 @@ func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.FcSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.FcSettings = &x
+						}
 					}
 				}
 				if v, ok := l["object_type"]; ok {
@@ -680,7 +686,9 @@ func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.PortChannelSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.PortChannelSettings = &x
+						}
 					}
 				}
 				if v, ok := l["slot_id"]; ok {
@@ -920,7 +928,9 @@ func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1101,7 +1111,9 @@ func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.EthSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.EthSettings = &x
+						}
 					}
 				}
 				if v, ok := l["fc_settings"]; ok {
@@ -1142,7 +1154,9 @@ func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.FcSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.FcSettings = &x
+						}
 					}
 				}
 				if v, ok := l["object_type"]; ok {
@@ -1189,7 +1203,9 @@ func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.PortChannelSettings = &x
+						if len(v.([]interface{})) > 0 {
+							o.PortChannelSettings = &x
+						}
 					}
 				}
 				if v, ok := l["slot_id"]; ok {

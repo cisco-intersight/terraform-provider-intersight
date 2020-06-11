@@ -35,16 +35,16 @@ type AssetDeviceConnection struct {
 	// Read Only: true
 	ConnectionID string `json:"ConnectionId,omitempty"`
 
-	// If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud.
+	// If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with Intersight.
 	// Read Only: true
 	ConnectionReason string `json:"ConnectionReason,omitempty"`
 
 	// The status of the persistent connection between the device connector and Intersight.
 	// Read Only: true
-	// Enum: [ Connected NotConnected Unclaimed]
+	// Enum: [ Connected NotConnected ClaimInProgress Unclaimed]
 	ConnectionStatus string `json:"ConnectionStatus,omitempty"`
 
-	// The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between the cloud and device connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with the cloud.
+	// The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between Intersight and Device Connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with Intersight.
 	// Read Only: true
 	// Format: date-time
 	ConnectionStatusLastChangeTime strfmt.DateTime `json:"ConnectionStatusLastChangeTime,omitempty"`
@@ -53,7 +53,7 @@ type AssetDeviceConnection struct {
 	// Read Only: true
 	ConnectorVersion string `json:"ConnectorVersion,omitempty"`
 
-	// The IP Address of the managed device as seen from the cloud at the time of registration.
+	// The IP Address of the managed device as seen from Intersight at the time of registration.
 	// This could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.
 	// Read Only: true
 	DeviceExternalIPAddress string `json:"DeviceExternalIpAddress,omitempty"`
@@ -199,7 +199,7 @@ var assetDeviceConnectionTypeConnectionStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","Connected","NotConnected","Unclaimed"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","Connected","NotConnected","ClaimInProgress","Unclaimed"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

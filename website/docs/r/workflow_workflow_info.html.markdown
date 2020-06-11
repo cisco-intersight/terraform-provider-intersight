@@ -10,12 +10,17 @@ description: |-
 Contains information for a workflow execution which is a runtime instance of workflow.
 ## Argument Reference
 The following arguments are supported:
-* `account`:(Array with Maximum of one item) -"The Account to which the workflow is associated."
+* `account`:(Array with Maximum of one item) -"The Account to which the workflow is associated relation is deprecated. Use AssociatedObject to set the account relation."
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
   + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
 * `action`:(string)"The action of the workflow such as start, cancel, retry, pause."
+* `associated_object`:(Array with Maximum of one item) -"The object from which workflow needs to inherit permissions."
+This complex property has following sub-properties:
+  + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
+  + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
+  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
 * `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cleanup_time`:(string)(Computed)"The time when the workflow info will be removed from database."
 * `end_time`:(string)(Computed)"The time when the workflow reached a final state."
@@ -35,18 +40,13 @@ This complex property has following sub-properties:
 * `meta_version`:(int)"Version of the workflow metadata for which this workflow execution was started."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"A name of the workflow execution instance."
-* `nr0_profile`:(Array with Maximum of one item) -(Computed)"A collection of references to the [server.Profile](mo://server.Profile) Managed Object.\nWhen this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO."
-This complex property has following sub-properties:
-  + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
-  + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
-  + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
-* `nr1_cluster_profile`:(Array with Maximum of one item) -(Computed)"A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO."
+* `nr0_cluster_profile`:(Array with Maximum of one item) -(Computed)"A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO."
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
   + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
 * `object_type`:(string)(Computed)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
-* `organization`:(Array with Maximum of one item) -"The Organization to which the workflow is associated."
+* `organization`:(Array with Maximum of one item) -"The Organization to which the workflow is associated relation is deprecated. Use AssociatedObject to set the organization relation."
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
@@ -57,6 +57,7 @@ This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."
   + `object_type`:(string)(Computed)"The Object Type of the referenced REST resource."
   + `selector`:(string)(Computed)"An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'."
+* `pause_reason`:(string)"Denotes the reason workflow is in paused status."
 * `pending_dynamic_workflow_info`:(Array with Maximum of one item) -(Computed)"Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance."
 This complex property has following sub-properties:
   + `moid`:(string)(Computed)"The Moid of the referenced REST resource."

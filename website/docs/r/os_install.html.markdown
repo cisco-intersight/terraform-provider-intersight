@@ -87,14 +87,11 @@ This complex property has following sub-properties:
   + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
   + `hostname`:(string)"Hostname to be configured for the server in the OS."
   + `ip_config_type`:(string)"IP configuration type. Values are Static or Dynamic configuration of IP.\nIn case of static IP configuration, IP address, gateway and other details need\nto be populated. In case of dynamic the IP configuration is obtained dynamically\nfrom DHCP."
-  + `ipv4_config`:(Array with Maximum of one item) -"In case of static IP configuration, IP address, netmask and gateway details are\nprovided."
+  + `ip_configuration`:(Array with Maximum of one item) -"In case of static IP configuration, IP address, netmask and gateway details are\nprovided."
 This complex property has following sub-properties:
     + `additional_properties`:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
     + `class_id`:(string)(Computed)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
-    + `gateway`:(string)"The IPv4 address of the default gateway."
-    + `ip_address`:(string)"The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3."
-    + `netmask`:(string)"The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0."
     + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
   + `is_answer_file_set`:(bool)(Computed)"Indicates whether the value of the 'answerFile' property has been set."
   + `is_root_password_crypted`:(bool)"Enable to indicate Root Password provided is encrypted."

@@ -572,7 +572,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ArfsSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ArfsSettings = &x
+		}
 
 	}
 
@@ -625,7 +627,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.CompletionQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.CompletionQueueSettings = &x
+		}
 
 	}
 
@@ -690,7 +694,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.InterruptSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterruptSettings = &x
+		}
 
 	}
 
@@ -743,7 +749,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.NvgreSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.NvgreSettings = &x
+		}
 
 	}
 
@@ -780,7 +788,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -872,7 +882,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.RoceSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RoceSettings = &x
+		}
 
 	}
 
@@ -924,7 +936,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.RxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RxQueueSettings = &x
+		}
 
 	}
 
@@ -983,7 +997,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.TCPOffloadSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TCPOffloadSettings = &x
+		}
 
 	}
 
@@ -1079,7 +1095,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.TxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TxQueueSettings = &x
+		}
 
 	}
 
@@ -1120,7 +1138,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.VxlanSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.VxlanSettings = &x
+		}
 
 	}
 
@@ -1293,7 +1313,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ArfsSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.ArfsSettings = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1346,7 +1368,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.CompletionQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.CompletionQueueSettings = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -1411,7 +1435,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.InterruptSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.InterruptSettings = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1464,7 +1490,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.NvgreSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.NvgreSettings = &x
+		}
 	}
 
 	if d.HasChange("object_type") {
@@ -1501,7 +1529,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1593,7 +1623,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.RoceSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RoceSettings = &x
+		}
 	}
 
 	if d.HasChange("rss_settings") {
@@ -1646,7 +1678,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.RxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.RxQueueSettings = &x
+		}
 	}
 
 	if d.HasChange("tcp_offload_settings") {
@@ -1705,7 +1739,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.TCPOffloadSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TCPOffloadSettings = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1801,7 +1837,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.TxQueueSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.TxQueueSettings = &x
+		}
 	}
 
 	if d.HasChange("vxlan_settings") {
@@ -1842,7 +1880,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.VxlanSettings = &x
+		if len(v.([]interface{})) > 0 {
+			o.VxlanSettings = &x
+		}
 	}
 
 	url := "vnic/EthAdapterPolicies" + "/" + d.Id()

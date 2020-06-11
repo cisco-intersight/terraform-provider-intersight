@@ -17,7 +17,15 @@ import (
 //
 // swagger:model storagePurePort
 type StoragePurePort struct {
-	StoragePhysicalPort
+	StorageBasePhysicalPort
+
+	// Storage array managed object.
+	// Read Only: true
+	Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+	// Parent storage array controller object.
+	// Read Only: true
+	Controller *StoragePureControllerRef `json:"Controller,omitempty"`
 
 	// Name of the port to which this port has failed over.
 	// Read Only: true
@@ -35,14 +43,18 @@ type StoragePurePort struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StoragePurePort) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StoragePhysicalPort
+	var aO0 StorageBasePhysicalPort
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StoragePhysicalPort = aO0
+	m.StorageBasePhysicalPort = aO0
 
 	// AO1
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		Controller *StoragePureControllerRef `json:"Controller,omitempty"`
+
 		Failover string `json:"Failover,omitempty"`
 
 		Portal string `json:"Portal,omitempty"`
@@ -52,6 +64,10 @@ func (m *StoragePurePort) UnmarshalJSON(raw []byte) error {
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
 	}
+
+	m.Array = dataAO1.Array
+
+	m.Controller = dataAO1.Controller
 
 	m.Failover = dataAO1.Failover
 
@@ -66,18 +82,26 @@ func (m *StoragePurePort) UnmarshalJSON(raw []byte) error {
 func (m StoragePurePort) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StoragePhysicalPort)
+	aO0, err := swag.WriteJSON(m.StorageBasePhysicalPort)
 	if err != nil {
 		return nil, err
 	}
 	_parts = append(_parts, aO0)
 	var dataAO1 struct {
+		Array *StoragePureArrayRef `json:"Array,omitempty"`
+
+		Controller *StoragePureControllerRef `json:"Controller,omitempty"`
+
 		Failover string `json:"Failover,omitempty"`
 
 		Portal string `json:"Portal,omitempty"`
 
 		RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 	}
+
+	dataAO1.Array = m.Array
+
+	dataAO1.Controller = m.Controller
 
 	dataAO1.Failover = m.Failover
 
@@ -97,8 +121,16 @@ func (m StoragePurePort) MarshalJSON() ([]byte, error) {
 func (m *StoragePurePort) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StoragePhysicalPort
-	if err := m.StoragePhysicalPort.Validate(formats); err != nil {
+	// validation for a type composition with StorageBasePhysicalPort
+	if err := m.StorageBasePhysicalPort.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArray(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateController(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -109,6 +141,42 @@ func (m *StoragePurePort) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *StoragePurePort) validateArray(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Array) { // not required
+		return nil
+	}
+
+	if m.Array != nil {
+		if err := m.Array.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Array")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *StoragePurePort) validateController(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Controller) { // not required
+		return nil
+	}
+
+	if m.Controller != nil {
+		if err := m.Controller.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("Controller")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

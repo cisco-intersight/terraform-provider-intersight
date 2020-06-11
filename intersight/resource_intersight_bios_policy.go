@@ -562,19 +562,19 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"lom_port1state": {
-				Description: "BIOS Token for setting LOM Port 1 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 1 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"lom_port2state": {
-				Description: "BIOS Token for setting LOM Port 2 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 2 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"lom_port3state": {
-				Description: "BIOS Token for setting LOM Port 3 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 3 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -993,7 +993,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot10state": {
-				Description: "BIOS Token for setting Slot 10 state configuration.",
+				Description: "BIOS Token for setting Slot 10 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1005,7 +1005,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot11state": {
-				Description: "BIOS Token for setting Slot 11 state configuration.",
+				Description: "BIOS Token for setting Slot 11 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1017,7 +1017,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot12state": {
-				Description: "BIOS Token for setting Slot 12 state configuration.",
+				Description: "BIOS Token for setting Slot 12 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1041,7 +1041,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot1state": {
-				Description: "BIOS Token for setting Slot 1 state configuration.",
+				Description: "BIOS Token for setting Slot 1 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1053,7 +1053,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot2state": {
-				Description: "BIOS Token for setting Slot 2 state configuration.",
+				Description: "BIOS Token for setting Slot 2 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1065,7 +1065,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot3state": {
-				Description: "BIOS Token for setting Slot 3 state configuration.",
+				Description: "BIOS Token for setting Slot 3 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1077,7 +1077,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot4state": {
-				Description: "BIOS Token for setting Slot 4 state configuration.",
+				Description: "BIOS Token for setting Slot 4 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1089,7 +1089,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot5state": {
-				Description: "BIOS Token for setting Slot 5 state configuration.",
+				Description: "BIOS Token for setting Slot 5 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1101,7 +1101,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot6state": {
-				Description: "BIOS Token for setting Slot 6 state configuration.",
+				Description: "BIOS Token for setting Slot 6 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1113,7 +1113,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot7state": {
-				Description: "BIOS Token for setting Slot 7 state configuration.",
+				Description: "BIOS Token for setting Slot 7 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1125,7 +1125,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot8state": {
-				Description: "BIOS Token for setting Slot 8 state configuration.",
+				Description: "BIOS Token for setting Slot 8 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1137,7 +1137,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot9state": {
-				Description: "BIOS Token for setting Slot 9 state configuration.",
+				Description: "BIOS Token for setting Slot 9 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1245,7 +1245,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot_mezz_state": {
-				Description: "BIOS Token for setting Slot Mezz state configuration.",
+				Description: "BIOS Token for setting Slot Mezz State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1437,7 +1437,7 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme1state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 1 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 1 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -1449,43 +1449,43 @@ func resourceBiosPolicy() *schema.Resource {
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme2state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 2 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 2 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme3state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 3 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 3 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme4state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 4 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 4 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme5state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 5 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 5 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme6state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 6 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 6 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme7state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 7 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 7 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
 			},
 			"slot_rear_nvme8state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 8 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 8 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "platform-default",
@@ -2439,7 +2439,9 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -5349,7 +5351,9 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("os_boot_watchdog_timer") {

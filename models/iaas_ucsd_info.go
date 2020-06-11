@@ -26,7 +26,7 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	ConnectorPack []*IaasConnectorPackRef `json:"ConnectorPack"`
 
-	// Moid of the UCSD device connector's asset.DeviceRegistration.
+	// Moid of the UCS Director device connector's asset.DeviceRegistration.
 	// Read Only: true
 	DeviceID string `json:"DeviceId,omitempty"`
 
@@ -34,15 +34,15 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	DeviceStatus []*IaasDeviceStatusRef `json:"DeviceStatus"`
 
-	// Unique ID of UCSD getting registerd with Intersight.
+	// Unique ID of UCS Director getting registerd with Intersight.
 	// Read Only: true
 	GUID string `json:"Guid,omitempty"`
 
-	// The UCSD host name.
+	// The UCS Director hostname for management.
 	// Read Only: true
 	HostName string `json:"HostName,omitempty"`
 
-	// The UCSD IP address.
+	// The UCS Director IP address for management.
 	// Read Only: true
 	IP string `json:"Ip,omitempty"`
 
@@ -59,27 +59,27 @@ type IaasUcsdInfo struct {
 	// Read Only: true
 	MostRunTasks []*IaasMostRunTasksRef `json:"MostRunTasks"`
 
-	// NodeType specifies if UCSD is deployed in Stand-alone or Multi Node.
+	// NodeType specifies if UCS Director is deployed in Stand-alone or Multi Node.
 	// Read Only: true
 	NodeType string `json:"NodeType,omitempty"`
 
-	// The UCSD product name.
+	// The UCS Director product name.
 	// Read Only: true
 	ProductName string `json:"ProductName,omitempty"`
 
-	// The UCSD product vendor.
+	// The UCS Director product vendor.
 	// Read Only: true
 	ProductVendor string `json:"ProductVendor,omitempty"`
 
-	// The UCSD product/platform version.
+	// The UCS Director product/platform version.
 	// Read Only: true
 	ProductVersion string `json:"ProductVersion,omitempty"`
 
-	// registered device
+	// Relationship to the device registration.
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// The UCSD status. Possible values are Active, Inactive, Unknown.
+	// The UCS Director status. Possible values are Active, Inactive, Unknown.
 	// Read Only: true
 	Status string `json:"Status,omitempty"`
 

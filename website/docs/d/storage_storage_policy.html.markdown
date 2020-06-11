@@ -16,4 +16,4 @@ The following arguments can be used to get data of already created objects in In
 * `name`:(string)"Name of the concrete policy."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
 * `retain_policy_virtual_drives`:(bool)"Retains the virtual drives defined in policy if they exist already. If this flag is false, the existing virtual drives are removed and created again based on virtual drives in the policy."
-* `unused_disks_state`:(string)"This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved."
+* `unused_disks_state`:(string)"Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved."

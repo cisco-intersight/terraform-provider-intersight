@@ -25,8 +25,7 @@ type ResourceMembership struct {
 	// Read Only: true
 	GroupPermissionRoles []*IamGroupPermissionToRoles `json:"GroupPermissionRoles"`
 
-	// A collection of references to the [resource.MembershipHolder](mo://resource.MembershipHolder) Managed Object.
-	// When this managed object is deleted, the referenced [resource.MembershipHolder](mo://resource.MembershipHolder) MO unsets its reference to this deleted MO.
+	// The list of all resources and their membership which are part of resource groups.
 	// Read Only: true
 	Holder *ResourceMembershipHolderRef `json:"Holder,omitempty"`
 

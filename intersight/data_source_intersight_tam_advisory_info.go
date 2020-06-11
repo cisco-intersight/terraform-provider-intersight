@@ -214,7 +214,7 @@ func dataSourceTamAdvisoryInfoRead(d *schema.ResourceData, meta interface{}) err
 				return err
 			}
 
-			if err := d.Set("advisory", flattenMapTamAdvisoryRef(s.Advisory, d)); err != nil {
+			if err := d.Set("advisory", flattenMapTamBaseAdvisoryRef(s.Advisory, d)); err != nil {
 				return err
 			}
 			if err := d.Set("class_id", (s.ClassID)); err != nil {
