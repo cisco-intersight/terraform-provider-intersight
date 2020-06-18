@@ -214,7 +214,9 @@ func resourceIamPrivateKeySpecCreate(d *schema.ResourceData, meta interface{}) e
 			p = o
 		}
 		x := p
-		o.Algorithm = &x
+		if len(v.([]interface{})) > 0 {
+			o.Algorithm = &x
+		}
 
 	}
 
@@ -245,7 +247,9 @@ func resourceIamPrivateKeySpecCreate(d *schema.ResourceData, meta interface{}) e
 			p = o
 		}
 		x := p
-		o.CertificateRequest = &x
+		if len(v.([]interface{})) > 0 {
+			o.CertificateRequest = &x
+		}
 
 	}
 
@@ -464,7 +468,9 @@ func resourceIamPrivateKeySpecUpdate(d *schema.ResourceData, meta interface{}) e
 			p = o
 		}
 		x := p
-		o.Algorithm = &x
+		if len(v.([]interface{})) > 0 {
+			o.Algorithm = &x
+		}
 	}
 
 	if d.HasChange("certificate_request") {
@@ -495,7 +501,9 @@ func resourceIamPrivateKeySpecUpdate(d *schema.ResourceData, meta interface{}) e
 			p = o
 		}
 		x := p
-		o.CertificateRequest = &x
+		if len(v.([]interface{})) > 0 {
+			o.CertificateRequest = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

@@ -373,7 +373,9 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.KvmIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.KvmIPRange = &x
+		}
 
 	}
 
@@ -420,7 +422,9 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.MacPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MacPrefixRange = &x
+		}
 
 	}
 
@@ -469,7 +473,9 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -759,7 +765,9 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.KvmIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.KvmIPRange = &x
+		}
 	}
 
 	if d.HasChange("mac_prefix_range") {
@@ -806,7 +814,9 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.MacPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MacPrefixRange = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -855,7 +865,9 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

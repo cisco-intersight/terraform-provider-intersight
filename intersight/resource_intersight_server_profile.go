@@ -478,7 +478,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.AssignedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssignedServer = &x
+		}
 
 	}
 
@@ -509,7 +511,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.AssociatedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedServer = &x
+		}
 
 	}
 
@@ -603,7 +607,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigChanges = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigChanges = &x
+		}
 
 	}
 
@@ -662,7 +668,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 
 	}
 
@@ -693,7 +701,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 
 	}
 
@@ -753,7 +763,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -856,7 +868,9 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 
 	}
 
@@ -1078,7 +1092,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.AssignedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssignedServer = &x
+		}
 	}
 
 	if d.HasChange("associated_server") {
@@ -1109,7 +1125,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.AssociatedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedServer = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1203,7 +1221,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigChanges = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigChanges = &x
+		}
 	}
 
 	if d.HasChange("config_context") {
@@ -1262,7 +1282,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 	}
 
 	if d.HasChange("config_result") {
@@ -1293,7 +1315,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -1354,7 +1378,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1457,7 +1483,9 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 	}
 
 	if d.HasChange("tags") {

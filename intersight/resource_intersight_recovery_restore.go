@@ -351,7 +351,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.BackupInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.BackupInfo = &x
+		}
 
 	}
 
@@ -392,7 +394,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.ConfigParams = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigParams = &x
+		}
 
 	}
 
@@ -423,7 +427,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Device = &x
+		if len(v.([]interface{})) > 0 {
+			o.Device = &x
+		}
 
 	}
 
@@ -466,7 +472,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -530,7 +538,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.RestoreStatus = &x
+		if len(v.([]interface{})) > 0 {
+			o.RestoreStatus = &x
+		}
 
 	}
 
@@ -610,7 +620,9 @@ func resourceRecoveryRestoreCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Workflow = &x
+		if len(v.([]interface{})) > 0 {
+			o.Workflow = &x
+		}
 
 	}
 

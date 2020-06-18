@@ -353,7 +353,9 @@ func resourceIamPermissionCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -546,7 +548,9 @@ func resourceIamPermissionCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.SessionLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.SessionLimits = &x
+		}
 
 	}
 
@@ -798,7 +802,9 @@ func resourceIamPermissionUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -991,7 +997,9 @@ func resourceIamPermissionUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.SessionLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.SessionLimits = &x
+		}
 	}
 
 	if d.HasChange("tags") {

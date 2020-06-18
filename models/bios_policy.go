@@ -379,15 +379,15 @@ type BiosPolicy struct {
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort0state *string `json:"LomPort0state,omitempty"`
 
-	// BIOS Token for setting LOM Port 1 OptionRom configuration.
+	// BIOS Token for setting LOM Port 1 OptionROM configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort1state *string `json:"LomPort1state,omitempty"`
 
-	// BIOS Token for setting LOM Port 2 OptionRom configuration.
+	// BIOS Token for setting LOM Port 2 OptionROM configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort2state *string `json:"LomPort2state,omitempty"`
 
-	// BIOS Token for setting LOM Port 3 OptionRom configuration.
+	// BIOS Token for setting LOM Port 3 OptionROM configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	LomPort3state *string `json:"LomPort3state,omitempty"`
 
@@ -599,7 +599,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot10linkSpeed *string `json:"Slot10linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 10 state configuration.
+	// BIOS Token for setting Slot 10 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot10state *string `json:"Slot10state,omitempty"`
 
@@ -607,7 +607,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot11linkSpeed *string `json:"Slot11linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 11 state configuration.
+	// BIOS Token for setting Slot 11 State configuration.
 	// Enum: [platform-default enabled disabled]
 	Slot11state *string `json:"Slot11state,omitempty"`
 
@@ -615,7 +615,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot12linkSpeed *string `json:"Slot12linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 12 state configuration.
+	// BIOS Token for setting Slot 12 State configuration.
 	// Enum: [platform-default enabled disabled]
 	Slot12state *string `json:"Slot12state,omitempty"`
 
@@ -631,7 +631,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot1linkSpeed *string `json:"Slot1linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 1 state configuration.
+	// BIOS Token for setting Slot 1 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot1state *string `json:"Slot1state,omitempty"`
 
@@ -639,7 +639,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot2linkSpeed *string `json:"Slot2linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 2 state configuration.
+	// BIOS Token for setting Slot 2 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot2state *string `json:"Slot2state,omitempty"`
 
@@ -647,7 +647,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot3linkSpeed *string `json:"Slot3linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 3 state configuration.
+	// BIOS Token for setting Slot 3 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot3state *string `json:"Slot3state,omitempty"`
 
@@ -655,7 +655,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot4linkSpeed *string `json:"Slot4linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 4 state configuration.
+	// BIOS Token for setting Slot 4 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot4state *string `json:"Slot4state,omitempty"`
 
@@ -663,7 +663,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot5linkSpeed *string `json:"Slot5linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 5 state configuration.
+	// BIOS Token for setting Slot 5 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot5state *string `json:"Slot5state,omitempty"`
 
@@ -671,7 +671,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot6linkSpeed *string `json:"Slot6linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 6 state configuration.
+	// BIOS Token for setting Slot 6 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot6state *string `json:"Slot6state,omitempty"`
 
@@ -679,7 +679,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot7linkSpeed *string `json:"Slot7linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 7 state configuration.
+	// BIOS Token for setting Slot 7 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot7state *string `json:"Slot7state,omitempty"`
 
@@ -687,7 +687,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot8linkSpeed *string `json:"Slot8linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 8 state configuration.
+	// BIOS Token for setting Slot 8 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot8state *string `json:"Slot8state,omitempty"`
 
@@ -695,7 +695,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	Slot9linkSpeed *string `json:"Slot9linkSpeed,omitempty"`
 
-	// BIOS Token for setting Slot 9 state configuration.
+	// BIOS Token for setting Slot 9 State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	Slot9state *string `json:"Slot9state,omitempty"`
 
@@ -767,7 +767,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default enabled disabled]
 	SlotLom2link *string `json:"SlotLom2link,omitempty"`
 
-	// BIOS Token for setting Slot Mezz state configuration.
+	// BIOS Token for setting Slot Mezz State configuration.
 	// Enum: [platform-default disabled enabled Legacy Only UEFI Only]
 	SlotMezzState *string `json:"SlotMezzState,omitempty"`
 
@@ -895,7 +895,7 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRearNvme1linkSpeed *string `json:"SlotRearNvme1linkSpeed,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 1 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 1 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme1state *string `json:"SlotRearNvme1state,omitempty"`
 
@@ -903,31 +903,31 @@ type BiosPolicy struct {
 	// Enum: [platform-default Auto Disabled GEN1 GEN2 GEN3]
 	SlotRearNvme2linkSpeed *string `json:"SlotRearNvme2linkSpeed,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 2 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 2 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme2state *string `json:"SlotRearNvme2state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 3 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 3 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme3state *string `json:"SlotRearNvme3state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 4 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 4 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme4state *string `json:"SlotRearNvme4state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 5 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 5 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme5state *string `json:"SlotRearNvme5state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 6 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 6 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme6state *string `json:"SlotRearNvme6state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 7 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 7 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme7state *string `json:"SlotRearNvme7state,omitempty"`
 
-	// BIOS Token for setting PCIe Slot:Rear NVME 8 OptionRom configuration.
+	// BIOS Token for setting PCIe Slot:Rear NVME 8 OptionROM configuration.
 	// Enum: [platform-default enabled disabled]
 	SlotRearNvme8state *string `json:"SlotRearNvme8state,omitempty"`
 

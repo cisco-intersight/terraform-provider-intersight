@@ -202,7 +202,9 @@ func resourceHyperflexHxdpVersionCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -239,7 +241,9 @@ func resourceHyperflexHxdpVersionCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.InstallerImage = &x
+		if len(v.([]interface{})) > 0 {
+			o.InstallerImage = &x
+		}
 
 	}
 
@@ -452,7 +456,9 @@ func resourceHyperflexHxdpVersionUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -489,7 +495,9 @@ func resourceHyperflexHxdpVersionUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.InstallerImage = &x
+		if len(v.([]interface{})) > 0 {
+			o.InstallerImage = &x
+		}
 	}
 
 	if d.HasChange("moid") {

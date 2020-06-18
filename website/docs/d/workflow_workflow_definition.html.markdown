@@ -17,6 +17,6 @@ The following arguments can be used to get data of already created objects in In
 * `license_entitlement`:(string)"License entitlement required to run this workflow. It is calculated based on the highest license requirement of all its tasks."
 * `max_task_count`:(int)"The maximum number of tasks that can be executed on this workflow."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
-* `name`:(string)"The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_)."
+* `name`:(string)"The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.) or an underscore (_)."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
 * `version`:(int)"The version of the workflow to support multiple versions."

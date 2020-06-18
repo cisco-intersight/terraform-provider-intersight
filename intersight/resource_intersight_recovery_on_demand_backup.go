@@ -287,7 +287,9 @@ func resourceRecoveryOnDemandBackupCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 
 	}
 
@@ -324,7 +326,9 @@ func resourceRecoveryOnDemandBackupCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.DeviceID = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceID = &x
+		}
 
 	}
 
@@ -390,7 +394,9 @@ func resourceRecoveryOnDemandBackupCreate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -661,7 +667,9 @@ func resourceRecoveryOnDemandBackupUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -698,7 +706,9 @@ func resourceRecoveryOnDemandBackupUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.DeviceID = &x
+		if len(v.([]interface{})) > 0 {
+			o.DeviceID = &x
+		}
 	}
 
 	if d.HasChange("file_name_prefix") {
@@ -765,7 +775,9 @@ func resourceRecoveryOnDemandBackupUpdate(d *schema.ResourceData, meta interface
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("password") {

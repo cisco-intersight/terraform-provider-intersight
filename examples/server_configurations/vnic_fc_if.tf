@@ -3,7 +3,7 @@ resource "intersight_vnic_fc_adapter_policy" "v_fc_adapter1" {
   error_detection_timeout = 100000
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   error_recovery_settings {
     enabled           = false
@@ -56,7 +56,7 @@ resource "intersight_vnic_fc_network_policy" "v_fc_network1" {
   }
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 
@@ -67,7 +67,7 @@ resource "intersight_vnic_fc_qos_policy" "v_fc_qos1" {
   max_data_field_size = 2112
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 
@@ -75,7 +75,7 @@ resource "intersight_vnic_san_connectivity_policy" "vnic_san1" {
   name = "vnic_san1"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   profiles {
     moid        = intersight_server_profile.server1.id
@@ -89,7 +89,7 @@ resource "intersight_vnic_fc_if" "fc1" {
   order = 1
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id = "1"
@@ -117,7 +117,7 @@ resource "intersight_vnic_fc_if" "fc2" {
   order = 2
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id = "MLOM"
@@ -145,7 +145,7 @@ resource "intersight_vnic_fc_if" "fc3" {
   order = 3
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id = "MLOM"
@@ -173,7 +173,7 @@ resource "intersight_vnic_fc_if" "fc4" {
   order = 1
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   placement {
     id = "1"

@@ -23,7 +23,7 @@ type OsWindowsParameters struct {
 	OsOperatingSystemParameters
 
 	// Lists all the editions supported for Windows Server installation.
-	// Enum: [Standard StandardCore Datacenter DatacenterCore]
+	// Enum: [Standard StandardCore Datacenter DatacenterCore Core]
 	Edition *string `json:"Edition,omitempty"`
 }
 
@@ -95,7 +95,7 @@ var osWindowsParametersTypeEditionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","StandardCore","Datacenter","DatacenterCore"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Standard","StandardCore","Datacenter","DatacenterCore","Core"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

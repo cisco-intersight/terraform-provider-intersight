@@ -395,7 +395,9 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.ExtaTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtaTraffic = &x
+		}
 
 	}
 
@@ -442,7 +444,9 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.ExtbTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtbTraffic = &x
+		}
 
 	}
 
@@ -491,7 +495,9 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -620,7 +626,9 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.WwxnPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.WwxnPrefixRange = &x
+		}
 
 	}
 
@@ -820,7 +828,9 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.ExtaTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtaTraffic = &x
+		}
 	}
 
 	if d.HasChange("extb_traffic") {
@@ -867,7 +877,9 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.ExtbTraffic = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtbTraffic = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -916,7 +928,9 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1045,7 +1059,9 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.WwxnPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.WwxnPrefixRange = &x
+		}
 	}
 
 	url := "hyperflex/ExtFcStoragePolicies" + "/" + d.Id()

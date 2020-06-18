@@ -29,6 +29,7 @@ The following arguments can be used to get data of already created objects in In
 * `build_type`:(string)"Build type of the Intersight Appliance setup (e.g. release or debug)."
 * `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `cloud_url`:(string)"URL of the Intersight to which this Intersight Appliance is connected to."
+* `deployment_mode`:(string)"Indicates where Intersight Appliance is installed in air-gapped or connected mode.\nIn connected mode, Intersight Appliance is claimed by Intesight SaaS.\nIn air-gapped mode, Intersight Appliance does not connect to any Cisco services."
 * `end_time`:(string)"End date of the Intersight Appliance's initial setup."
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."

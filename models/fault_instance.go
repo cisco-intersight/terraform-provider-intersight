@@ -55,11 +55,11 @@ type FaultInstance struct {
 	// Read Only: true
 	Description string `json:"Description,omitempty"`
 
-	// last transition time
+	// Last transition time of the fault.
 	// Read Only: true
 	LastTransitionTime string `json:"LastTransitionTime,omitempty"`
 
-	// num occurrences
+	// The number of times this fault has occured.
 	// Read Only: true
 	NumOccurrences int64 `json:"NumOccurrences,omitempty"`
 

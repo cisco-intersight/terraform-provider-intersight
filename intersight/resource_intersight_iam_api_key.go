@@ -279,7 +279,9 @@ func resourceIamApiKeyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.KeySpec = &x
+		if len(v.([]interface{})) > 0 {
+			o.KeySpec = &x
+		}
 
 	}
 
@@ -322,7 +324,9 @@ func resourceIamApiKeyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 
 	}
 
@@ -453,7 +457,9 @@ func resourceIamApiKeyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.User = &x
+		if len(v.([]interface{})) > 0 {
+			o.User = &x
+		}
 
 	}
 
@@ -604,7 +610,9 @@ func resourceIamApiKeyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.KeySpec = &x
+		if len(v.([]interface{})) > 0 {
+			o.KeySpec = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -647,7 +655,9 @@ func resourceIamApiKeyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -778,7 +788,9 @@ func resourceIamApiKeyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.User = &x
+		if len(v.([]interface{})) > 0 {
+			o.User = &x
+		}
 	}
 
 	url := "iam/ApiKeys" + "/" + d.Id()

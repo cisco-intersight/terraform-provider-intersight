@@ -26,7 +26,7 @@ type ApplianceSystemInfo struct {
 
 	// Connection state of the Intersight Appliance to the Intersight.
 	// Read Only: true
-	// Enum: [ Connected NotConnected Unclaimed]
+	// Enum: [ Connected NotConnected ClaimInProgress Unclaimed]
 	CloudConnStatus string `json:"CloudConnStatus,omitempty"`
 
 	// Current running deployment size for the Intersight Appliance cluster. Eg. small, medium, large etc.
@@ -191,7 +191,7 @@ var applianceSystemInfoTypeCloudConnStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","Connected","NotConnected","Unclaimed"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","Connected","NotConnected","ClaimInProgress","Unclaimed"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

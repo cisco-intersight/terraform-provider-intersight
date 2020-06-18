@@ -13,6 +13,8 @@ import (
 
 // RecoveryRestore Restore
 //
+// Triggers a restore operation on the target endpoint.
+//
 // swagger:model recoveryRestore
 type RecoveryRestore struct {
 	MoBaseMo

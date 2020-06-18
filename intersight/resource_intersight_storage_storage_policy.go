@@ -240,7 +240,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"unused_disks_state": {
-				Description: "This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.",
+				Description: "Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "UnconfiguredGood",
@@ -296,7 +296,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"io_policy": {
-							Description: "This property expects the desired IO mode - direct IO or cached IO.",
+							Description: "Desired IO mode - direct IO or cached IO.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "Default",
@@ -476,7 +476,9 @@ func resourceStorageStoragePolicyCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -976,7 +978,9 @@ func resourceStorageStoragePolicyUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

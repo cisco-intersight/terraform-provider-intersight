@@ -21,7 +21,7 @@ import (
 type ComputePhysicalSummary struct {
 	ViewsView
 
-	// admin power state
+	// Desired power state of the server.
 	// Read Only: true
 	AdminPowerState string `json:"AdminPowerState,omitempty"`
 
@@ -29,7 +29,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	AssetTag string `json:"AssetTag,omitempty"`
 
-	// available memory
+	// The actual amount of memory currently available to the server.
 	// Read Only: true
 	AvailableMemory int64 `json:"AvailableMemory,omitempty"`
 
@@ -65,7 +65,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
-	// memory speed
+	// The memory speed, in megahertz.
 	// Read Only: true
 	MemorySpeed string `json:"MemorySpeed,omitempty"`
 
@@ -111,7 +111,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
-	// oper power state
+	// Current power state of the server.
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
@@ -127,7 +127,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	PlatformType string `json:"PlatformType,omitempty"`
 
-	// presence
+	// Identifies the presence of the server.
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
@@ -159,7 +159,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	ServiceProfile string `json:"ServiceProfile,omitempty"`
 
-	// slot Id
+	// The slot number in the chassis where the blade is present.
 	// Read Only: true
 	SlotID int64 `json:"SlotId,omitempty"`
 
@@ -167,7 +167,7 @@ type ComputePhysicalSummary struct {
 	// Read Only: true
 	SourceObjectType string `json:"SourceObjectType,omitempty"`
 
-	// total memory
+	// The total amount of memory installed on the server.
 	// Read Only: true
 	TotalMemory int64 `json:"TotalMemory,omitempty"`
 

@@ -832,7 +832,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AssociatedCluster = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedCluster = &x
+		}
 
 	}
 
@@ -863,7 +865,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AutoSupport = &x
+		if len(v.([]interface{})) > 0 {
+			o.AutoSupport = &x
+		}
 
 	}
 
@@ -900,7 +904,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClusterNetwork = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterNetwork = &x
+		}
 
 	}
 
@@ -931,7 +937,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClusterStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterStorage = &x
+		}
 
 	}
 
@@ -990,7 +998,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 
 	}
 
@@ -1021,7 +1031,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 
 	}
 
@@ -1064,7 +1076,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ExtFcStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtFcStorage = &x
+		}
 
 	}
 
@@ -1095,7 +1109,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ExtIscsiStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtIscsiStorage = &x
+		}
 
 	}
 
@@ -1132,7 +1148,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.LocalCredential = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalCredential = &x
+		}
 
 	}
 
@@ -1193,7 +1211,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.NodeConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.NodeConfig = &x
+		}
 
 	}
 
@@ -1263,7 +1283,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -1327,7 +1349,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ProxySetting = &x
+		if len(v.([]interface{})) > 0 {
+			o.ProxySetting = &x
+		}
 
 	}
 
@@ -1397,7 +1421,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SoftwareVersion = &x
+		if len(v.([]interface{})) > 0 {
+			o.SoftwareVersion = &x
+		}
 
 	}
 
@@ -1428,7 +1454,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 
 	}
 
@@ -1475,7 +1503,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.StorageDataVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.StorageDataVlan = &x
+		}
 
 	}
 
@@ -1506,7 +1536,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SysConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.SysConfig = &x
+		}
 
 	}
 
@@ -1592,7 +1624,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.UcsmConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.UcsmConfig = &x
+		}
 
 	}
 
@@ -1623,7 +1657,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.VcenterConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.VcenterConfig = &x
+		}
 
 	}
 
@@ -1860,7 +1896,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AssociatedCluster = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedCluster = &x
+		}
 	}
 
 	if d.HasChange("auto_support") {
@@ -1891,7 +1929,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AutoSupport = &x
+		if len(v.([]interface{})) > 0 {
+			o.AutoSupport = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1928,7 +1968,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClusterNetwork = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterNetwork = &x
+		}
 	}
 
 	if d.HasChange("cluster_storage") {
@@ -1959,7 +2001,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ClusterStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterStorage = &x
+		}
 	}
 
 	if d.HasChange("config_context") {
@@ -2018,7 +2062,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ConfigContext = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigContext = &x
+		}
 	}
 
 	if d.HasChange("config_result") {
@@ -2049,7 +2095,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ConfigResult = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigResult = &x
+		}
 	}
 
 	if d.HasChange("data_ip_address") {
@@ -2092,7 +2140,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ExtFcStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtFcStorage = &x
+		}
 	}
 
 	if d.HasChange("ext_iscsi_storage") {
@@ -2123,7 +2173,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ExtIscsiStorage = &x
+		if len(v.([]interface{})) > 0 {
+			o.ExtIscsiStorage = &x
+		}
 	}
 
 	if d.HasChange("hypervisor_type") {
@@ -2160,7 +2212,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.LocalCredential = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalCredential = &x
+		}
 	}
 
 	if d.HasChange("mac_address_prefix") {
@@ -2221,7 +2275,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.NodeConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.NodeConfig = &x
+		}
 	}
 
 	if d.HasChange("node_profile_config") {
@@ -2291,7 +2347,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -2355,7 +2413,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.ProxySetting = &x
+		if len(v.([]interface{})) > 0 {
+			o.ProxySetting = &x
+		}
 	}
 
 	if d.HasChange("replication") {
@@ -2425,7 +2485,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SoftwareVersion = &x
+		if len(v.([]interface{})) > 0 {
+			o.SoftwareVersion = &x
+		}
 	}
 
 	if d.HasChange("src_template") {
@@ -2456,7 +2518,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 	}
 
 	if d.HasChange("storage_data_vlan") {
@@ -2503,7 +2567,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.StorageDataVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.StorageDataVlan = &x
+		}
 	}
 
 	if d.HasChange("sys_config") {
@@ -2534,7 +2600,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.SysConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.SysConfig = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -2620,7 +2688,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.UcsmConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.UcsmConfig = &x
+		}
 	}
 
 	if d.HasChange("vcenter_config") {
@@ -2651,7 +2721,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.VcenterConfig = &x
+		if len(v.([]interface{})) > 0 {
+			o.VcenterConfig = &x
+		}
 	}
 
 	if d.HasChange("wwxn_prefix") {

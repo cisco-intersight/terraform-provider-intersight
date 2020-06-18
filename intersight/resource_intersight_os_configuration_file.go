@@ -576,7 +576,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -778,7 +780,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -926,7 +930,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 													p = o
 												}
 												x := p
-												o.Constraints = &x
+												if len(v.([]interface{})) > 0 {
+													o.Constraints = &x
+												}
 											}
 										}
 										if v, ok := l["inventory_selector"]; ok {
@@ -1010,7 +1016,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 										p = o
 									}
 									x := p
-									o.Properties = &x
+									if len(v.([]interface{})) > 0 {
+										o.Properties = &x
+									}
 								}
 							}
 							if v, ok := l["required"]; ok {
@@ -1023,7 +1031,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 							p = o
 						}
 						x := p
-						o.Type = &x
+						if len(v.([]interface{})) > 0 {
+							o.Type = &x
+						}
 					}
 				}
 				if v, ok := l["value"]; ok {

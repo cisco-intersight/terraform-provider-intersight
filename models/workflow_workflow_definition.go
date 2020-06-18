@@ -47,7 +47,7 @@ type WorkflowWorkflowDefinition struct {
 	// Read Only: true
 	MaxTaskCount int64 `json:"MaxTaskCount,omitempty"`
 
-	// The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_).
+	// The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.) or an underscore (_).
 	Name string `json:"Name,omitempty"`
 
 	// The schema expected for output parameters for this workflow.

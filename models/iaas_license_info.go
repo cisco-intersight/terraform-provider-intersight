@@ -26,7 +26,7 @@ type IaasLicenseInfo struct {
 	// Read Only: true
 	GUID *IaasUcsdInfoRef `json:"Guid,omitempty"`
 
-	// Licese expiration date.
+	// UCS Director license expiration date.
 	// Read Only: true
 	LicenseExpirationDate string `json:"LicenseExpirationDate,omitempty"`
 

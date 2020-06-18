@@ -171,8 +171,8 @@ func dataSourceIamAccount() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nr0_decrypt": {
-				Description: "A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.",
+			"nr0_encrypt": {
+				Description: "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -200,8 +200,37 @@ func dataSourceIamAccount() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"nr1_encrypt": {
-				Description: "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.",
+			"nr1_tenant": {
+				Description: "A collection of references to the [iwotenant.Tenant](mo://iwotenant.Tenant) Managed Object.\nWhen this managed object is deleted, the referenced [iwotenant.Tenant](mo://iwotenant.Tenant) MO unsets its reference to this deleted MO.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
+			"nr2_decrypt": {
+				Description: "A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -588,11 +617,15 @@ func dataSourceIamAccountRead(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			if err := d.Set("nr0_decrypt", flattenMapCryptDecryptRef(s.Nr0Decrypt, d)); err != nil {
+			if err := d.Set("nr0_encrypt", flattenMapCryptEncryptRef(s.Nr0Encrypt, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("nr1_encrypt", flattenMapCryptEncryptRef(s.Nr1Encrypt, d)); err != nil {
+			if err := d.Set("nr1_tenant", flattenMapIwotenantTenantRef(s.Nr1Tenant, d)); err != nil {
+				return err
+			}
+
+			if err := d.Set("nr2_decrypt", flattenMapCryptDecryptRef(s.Nr2Decrypt, d)); err != nil {
 				return err
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {

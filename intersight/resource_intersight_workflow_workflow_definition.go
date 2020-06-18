@@ -176,7 +176,7 @@ func resourceWorkflowWorkflowDefinition() *schema.Resource {
 				ForceNew:    true,
 			},
 			"name": {
-				Description: "The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_).",
+				Description: "The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.) or an underscore (_).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -572,7 +572,9 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -661,7 +663,9 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {
@@ -805,7 +809,9 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {
@@ -933,7 +939,9 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 
 	}
 
@@ -1145,7 +1153,9 @@ func resourceWorkflowWorkflowDefinitionCreate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.ValidationInformation = &x
+		if len(v.([]interface{})) > 0 {
+			o.ValidationInformation = &x
+		}
 
 	}
 
@@ -1312,7 +1322,9 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1402,7 +1414,9 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {
@@ -1546,7 +1560,9 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {
@@ -1674,7 +1690,9 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1886,7 +1904,9 @@ func resourceWorkflowWorkflowDefinitionUpdate(d *schema.ResourceData, meta inter
 			p = o
 		}
 		x := p
-		o.ValidationInformation = &x
+		if len(v.([]interface{})) > 0 {
+			o.ValidationInformation = &x
+		}
 	}
 
 	if d.HasChange("version") {

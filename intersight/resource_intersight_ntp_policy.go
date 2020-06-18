@@ -248,7 +248,9 @@ func resourceNtpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 
 	}
 
@@ -324,7 +326,9 @@ func resourceNtpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -596,7 +600,9 @@ func resourceNtpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -673,7 +679,9 @@ func resourceNtpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

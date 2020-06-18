@@ -18,7 +18,7 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 		Delete: resourceWorkflowWorkflowInfoDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The Account to which the workflow is associated.",
+				Description: "The Account to which the workflow is associated relation is deprecated. Use AssociatedObject to set the account relation.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -53,6 +53,37 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "None",
+			},
+			"associated_object": {
+				Description: "The object from which workflow needs to inherit permissions.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+				ForceNew:   true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -161,37 +192,7 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				ForceNew:    true,
 			},
-			"nr0_profile": {
-				Description: "A collection of references to the [server.Profile](mo://server.Profile) Managed Object.\nWhen this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
-			"nr1_cluster_profile": {
+			"nr0_cluster_profile": {
 				Description: "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
@@ -228,7 +229,7 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The Organization to which the workflow is associated.",
+				Description: "The Organization to which the workflow is associated relation is deprecated. Use AssociatedObject to set the organization relation.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -295,6 +296,13 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
+			},
+			"pause_reason": {
+				Description: "Denotes the reason workflow is in paused status.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "None",
+				ForceNew:    true,
 			},
 			"pending_dynamic_workflow_info": {
 				Description: "Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance.",
@@ -632,13 +640,48 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
 		o.Action = &x
+
+	}
+
+	if v, ok := d.GetOk("associated_object"); ok {
+		p := models.MoBaseMoRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.MoBaseMoRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedObject = &x
+		}
 
 	}
 
@@ -756,38 +799,7 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 
 	}
 
-	if v, ok := d.GetOk("nr0_profile"); ok {
-		p := models.ServerProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.ServerProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Profile = &x
-
-	}
-
-	if v, ok := d.GetOk("nr1_cluster_profile"); ok {
+	if v, ok := d.GetOk("nr0_cluster_profile"); ok {
 		p := models.HyperflexClusterProfileRef{}
 		if len(v.([]interface{})) > 0 {
 			o := models.HyperflexClusterProfileRef{}
@@ -814,7 +826,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Nr1ClusterProfile = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0ClusterProfile = &x
+		}
 
 	}
 
@@ -851,7 +865,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -888,7 +904,15 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ParentTaskInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentTaskInfo = &x
+		}
+
+	}
+
+	if v, ok := d.GetOk("pause_reason"); ok {
+		x := (v.(string))
+		o.PauseReason = &x
 
 	}
 
@@ -919,7 +943,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.PendingDynamicWorkflowInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.PendingDynamicWorkflowInfo = &x
+		}
 
 	}
 
@@ -950,7 +976,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 
 	}
 
@@ -1030,7 +1058,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 
 	}
 
@@ -1203,7 +1233,9 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.WorkflowDefinition = &x
+		if len(v.([]interface{})) > 0 {
+			o.WorkflowDefinition = &x
+		}
 
 	}
 
@@ -1267,6 +1299,10 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
+	if err := d.Set("associated_object", flattenMapMoBaseMoRef(s.AssociatedObject, d)); err != nil {
+		return err
+	}
+
 	if err := d.Set("class_id", (s.ClassID)); err != nil {
 		return err
 	}
@@ -1315,11 +1351,7 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return err
 	}
 
-	if err := d.Set("nr0_profile", flattenMapServerProfileRef(s.Nr0Profile, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("nr1_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr1ClusterProfile, d)); err != nil {
+	if err := d.Set("nr0_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr0ClusterProfile, d)); err != nil {
 		return err
 	}
 
@@ -1336,6 +1368,10 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 	}
 
 	if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRef(s.ParentTaskInfo, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("pause_reason", (s.PauseReason)); err != nil {
 		return err
 	}
 
@@ -1456,13 +1492,48 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("action") {
 		v := d.Get("action")
 		x := (v.(string))
 		o.Action = &x
+	}
+
+	if d.HasChange("associated_object") {
+		v := d.Get("associated_object")
+		p := models.MoBaseMoRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.MoBaseMoRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.AssociatedObject = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1580,39 +1651,8 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		o.Name = x
 	}
 
-	if d.HasChange("nr0_profile") {
-		v := d.Get("nr0_profile")
-		p := models.ServerProfileRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.ServerProfileRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Profile = &x
-	}
-
-	if d.HasChange("nr1_cluster_profile") {
-		v := d.Get("nr1_cluster_profile")
+	if d.HasChange("nr0_cluster_profile") {
+		v := d.Get("nr0_cluster_profile")
 		p := models.HyperflexClusterProfileRef{}
 		if len(v.([]interface{})) > 0 {
 			o := models.HyperflexClusterProfileRef{}
@@ -1639,7 +1679,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Nr1ClusterProfile = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0ClusterProfile = &x
+		}
 	}
 
 	if d.HasChange("object_type") {
@@ -1676,7 +1718,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("output") {
@@ -1713,7 +1757,15 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ParentTaskInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.ParentTaskInfo = &x
+		}
+	}
+
+	if d.HasChange("pause_reason") {
+		v := d.Get("pause_reason")
+		x := (v.(string))
+		o.PauseReason = &x
 	}
 
 	if d.HasChange("pending_dynamic_workflow_info") {
@@ -1744,7 +1796,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.PendingDynamicWorkflowInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.PendingDynamicWorkflowInfo = &x
+		}
 	}
 
 	if d.HasChange("permission") {
@@ -1775,7 +1829,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1855,7 +1911,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.Properties = &x
+		if len(v.([]interface{})) > 0 {
+			o.Properties = &x
+		}
 	}
 
 	if d.HasChange("retry_from_task_name") {
@@ -2028,7 +2086,9 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.WorkflowDefinition = &x
+		if len(v.([]interface{})) > 0 {
+			o.WorkflowDefinition = &x
+		}
 	}
 
 	if d.HasChange("workflow_meta_type") {

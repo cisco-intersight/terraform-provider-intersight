@@ -17,7 +17,7 @@ import (
 //
 // swagger:model virtualizationVmwareDatacenter
 type VirtualizationVmwareDatacenter struct {
-	VirtualizationDatacenter
+	VirtualizationBaseDatacenter
 
 	// Count of all clusters associated with this DC.
 	ClusterCount int64 `json:"ClusterCount,omitempty"`
@@ -42,11 +42,11 @@ type VirtualizationVmwareDatacenter struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareDatacenter) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationDatacenter
+	var aO0 VirtualizationBaseDatacenter
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationDatacenter = aO0
+	m.VirtualizationBaseDatacenter = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -85,7 +85,7 @@ func (m *VirtualizationVmwareDatacenter) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareDatacenter) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationDatacenter)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseDatacenter)
 	if err != nil {
 		return nil, err
 	}
@@ -128,8 +128,8 @@ func (m VirtualizationVmwareDatacenter) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareDatacenter) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationDatacenter
-	if err := m.VirtualizationDatacenter.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseDatacenter
+	if err := m.VirtualizationBaseDatacenter.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

@@ -748,7 +748,7 @@ func dataSourceVirtualizationVmwareHostRead(d *schema.ResourceData, meta interfa
 				return err
 			}
 
-			if err := d.Set("resource_consumed", flattenMapVirtualizationResourceConsumption(s.ResourceConsumed, d)); err != nil {
+			if err := d.Set("resource_consumed", flattenMapVirtualizationVmwareResourceConsumption(s.ResourceConsumed, d)); err != nil {
 				return err
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {

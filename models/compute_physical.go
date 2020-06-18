@@ -21,7 +21,7 @@ import (
 type ComputePhysical struct {
 	EquipmentBase
 
-	// admin power state
+	// Desired power state of the server.
 	// Read Only: true
 	AdminPowerState string `json:"AdminPowerState,omitempty"`
 
@@ -29,7 +29,7 @@ type ComputePhysical struct {
 	// Read Only: true
 	AssetTag string `json:"AssetTag,omitempty"`
 
-	// available memory
+	// The actual amount of memory currently available to the server.
 	// Read Only: true
 	AvailableMemory int64 `json:"AvailableMemory,omitempty"`
 
@@ -39,7 +39,7 @@ type ComputePhysical struct {
 	// KVM address of the device.
 	KvmIPAddresses []*ComputeIPAddress `json:"KvmIpAddresses"`
 
-	// memory speed
+	// The memory speed, in megahertz.
 	// Read Only: true
 	MemorySpeed string `json:"MemorySpeed,omitempty"`
 
@@ -74,7 +74,7 @@ type ComputePhysical struct {
 	// Read Only: true
 	NumThreads int64 `json:"NumThreads,omitempty"`
 
-	// oper power state
+	// Current power state of the server.
 	// Read Only: true
 	OperPowerState string `json:"OperPowerState,omitempty"`
 
@@ -89,7 +89,7 @@ type ComputePhysical struct {
 	// Platform type of the device.
 	PlatformType string `json:"PlatformType,omitempty"`
 
-	// presence
+	// Identifies the presence of the server.
 	// Read Only: true
 	Presence string `json:"Presence,omitempty"`
 
@@ -97,7 +97,7 @@ type ComputePhysical struct {
 	// Read Only: true
 	ServiceProfile string `json:"ServiceProfile,omitempty"`
 
-	// total memory
+	// The total amount of memory installed on the server.
 	// Read Only: true
 	TotalMemory int64 `json:"TotalMemory,omitempty"`
 

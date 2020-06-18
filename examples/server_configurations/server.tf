@@ -6,6 +6,6 @@ resource "intersight_server_profile" "server1" {
   }
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }

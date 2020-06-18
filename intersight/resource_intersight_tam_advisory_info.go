@@ -203,14 +203,16 @@ func resourceTamAdvisoryInfoCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
 	if v, ok := d.GetOk("advisory"); ok {
-		p := models.TamAdvisoryRef{}
+		p := models.TamBaseAdvisoryRef{}
 		if len(v.([]interface{})) > 0 {
-			o := models.TamAdvisoryRef{}
+			o := models.TamBaseAdvisoryRef{}
 			l := (v.([]interface{})[0]).(map[string]interface{})
 			if v, ok := l["moid"]; ok {
 				{
@@ -234,7 +236,9 @@ func resourceTamAdvisoryInfoCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Advisory = &x
+		if len(v.([]interface{})) > 0 {
+			o.Advisory = &x
+		}
 
 	}
 
@@ -388,7 +392,7 @@ func resourceTamAdvisoryInfoRead(d *schema.ResourceData, meta interface{}) error
 		return err
 	}
 
-	if err := d.Set("advisory", flattenMapTamAdvisoryRef(s.Advisory, d)); err != nil {
+	if err := d.Set("advisory", flattenMapTamBaseAdvisoryRef(s.Advisory, d)); err != nil {
 		return err
 	}
 
@@ -453,14 +457,16 @@ func resourceTamAdvisoryInfoUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("advisory") {
 		v := d.Get("advisory")
-		p := models.TamAdvisoryRef{}
+		p := models.TamBaseAdvisoryRef{}
 		if len(v.([]interface{})) > 0 {
-			o := models.TamAdvisoryRef{}
+			o := models.TamBaseAdvisoryRef{}
 			l := (v.([]interface{})[0]).(map[string]interface{})
 			if v, ok := l["moid"]; ok {
 				{
@@ -484,7 +490,9 @@ func resourceTamAdvisoryInfoUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Advisory = &x
+		if len(v.([]interface{})) > 0 {
+			o.Advisory = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

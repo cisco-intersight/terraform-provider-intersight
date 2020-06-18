@@ -455,7 +455,9 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.LocalSecurity = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalSecurity = &x
+		}
 
 	}
 
@@ -577,7 +579,9 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -951,7 +955,9 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.LocalSecurity = &x
+		if len(v.([]interface{})) > 0 {
+			o.LocalSecurity = &x
+		}
 	}
 
 	if d.HasChange("logical_namespaces") {
@@ -1073,7 +1079,9 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

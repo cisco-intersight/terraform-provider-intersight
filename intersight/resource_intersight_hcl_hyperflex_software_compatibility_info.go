@@ -226,7 +226,9 @@ func resourceHclHyperflexSoftwareCompatibilityInfoCreate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -524,7 +526,9 @@ func resourceHclHyperflexSoftwareCompatibilityInfoUpdate(d *schema.ResourceData,
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {

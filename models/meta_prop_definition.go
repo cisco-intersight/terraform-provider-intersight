@@ -116,7 +116,7 @@ type MetaPropDefinitionAO1P1 struct {
 	// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 	// For example, Encrypted or Cleartext.
 	// Read Only: true
-	// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
+	// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt Argon2id]
 	OpSecurity string `json:"OpSecurity,omitempty"`
 
 	// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -144,7 +144,7 @@ func (m *MetaPropDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 		// For example, Encrypted or Cleartext.
 		// Read Only: true
-		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt Argon2id]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -204,7 +204,7 @@ func (m MetaPropDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 		// The data-at-rest security protection applied to this property when a Managed Object is persisted.
 		// For example, Encrypted or Cleartext.
 		// Read Only: true
-		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt]
+		// Enum: [ClearText Encrypted Pbkdf2 Bcrypt Sha512crypt Argon2id]
 		OpSecurity string `json:"OpSecurity,omitempty"`
 
 		// Enables the property to be searchable from global search. A value of 0 means this property is not globally searchable.
@@ -319,7 +319,7 @@ var metaPropDefinitionAO1P1TypeOpSecurityPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ClearText","Encrypted","Pbkdf2","Bcrypt","Sha512crypt"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ClearText","Encrypted","Pbkdf2","Bcrypt","Sha512crypt","Argon2id"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -343,6 +343,9 @@ const (
 
 	// MetaPropDefinitionAO1P1OpSecuritySha512crypt captures enum value "Sha512crypt"
 	MetaPropDefinitionAO1P1OpSecuritySha512crypt string = "Sha512crypt"
+
+	// MetaPropDefinitionAO1P1OpSecurityArgon2id captures enum value "Argon2id"
+	MetaPropDefinitionAO1P1OpSecurityArgon2id string = "Argon2id"
 )
 
 // prop value enum

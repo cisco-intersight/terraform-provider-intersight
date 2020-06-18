@@ -297,7 +297,9 @@ func resourceIamEndPointUserRoleCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.EndPointUser = &x
+		if len(v.([]interface{})) > 0 {
+			o.EndPointUser = &x
+		}
 
 	}
 
@@ -328,7 +330,9 @@ func resourceIamEndPointUserRoleCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.EndPointUserPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EndPointUserPolicy = &x
+		}
 
 	}
 
@@ -613,7 +617,9 @@ func resourceIamEndPointUserRoleUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.EndPointUser = &x
+		if len(v.([]interface{})) > 0 {
+			o.EndPointUser = &x
+		}
 	}
 
 	if d.HasChange("end_point_user_policy") {
@@ -644,7 +650,9 @@ func resourceIamEndPointUserRoleUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.EndPointUserPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.EndPointUserPolicy = &x
+		}
 	}
 
 	if d.HasChange("is_password_set") {

@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -24,10 +22,6 @@ type ResourceMembershipHolder struct {
 	// The account to which this resource membership holder belongs to.
 	// Read Only: true
 	Account *IamAccountRef `json:"Account,omitempty"`
-
-	// The list of all resources and their membership which are part of resource groups.
-	// Read Only: true
-	Memberships []*ResourceMembershipRef `json:"Memberships"`
 
 	// The name of this resource membership holder.
 	// Read Only: true
@@ -47,8 +41,6 @@ func (m *ResourceMembershipHolder) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Memberships []*ResourceMembershipRef `json:"Memberships"`
-
 		Name string `json:"Name,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -56,8 +48,6 @@ func (m *ResourceMembershipHolder) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.Account = dataAO1.Account
-
-	m.Memberships = dataAO1.Memberships
 
 	m.Name = dataAO1.Name
 
@@ -76,14 +66,10 @@ func (m ResourceMembershipHolder) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
-		Memberships []*ResourceMembershipRef `json:"Memberships"`
-
 		Name string `json:"Name,omitempty"`
 	}
 
 	dataAO1.Account = m.Account
-
-	dataAO1.Memberships = m.Memberships
 
 	dataAO1.Name = m.Name
 
@@ -108,10 +94,6 @@ func (m *ResourceMembershipHolder) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateMemberships(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -131,31 +113,6 @@ func (m *ResourceMembershipHolder) validateAccount(formats strfmt.Registry) erro
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *ResourceMembershipHolder) validateMemberships(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Memberships) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Memberships); i++ {
-		if swag.IsZero(m.Memberships[i]) { // not required
-			continue
-		}
-
-		if m.Memberships[i] != nil {
-			if err := m.Memberships[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("Memberships" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

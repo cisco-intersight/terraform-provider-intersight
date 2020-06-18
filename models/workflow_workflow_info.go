@@ -23,12 +23,15 @@ import (
 type WorkflowWorkflowInfo struct {
 	MoBaseMo
 
-	// The Account to which the workflow is associated.
+	// The Account to which the workflow is associated relation is deprecated. Use AssociatedObject to set the account relation.
 	Account *IamAccountRef `json:"Account,omitempty"`
 
 	// The action of the workflow such as start, cancel, retry, pause.
 	// Enum: [None Create Start Pause Resume Retry RetryFailed Cancel]
 	Action *string `json:"Action,omitempty"`
+
+	// The object from which workflow needs to inherit permissions.
+	AssociatedObject *MoBaseMoRef `json:"AssociatedObject,omitempty"`
 
 	// The time when the workflow info will be removed from database.
 	// Read Only: true
@@ -67,7 +70,7 @@ type WorkflowWorkflowInfo struct {
 	// A name of the workflow execution instance.
 	Name string `json:"Name,omitempty"`
 
-	// The Organization to which the workflow is associated.
+	// The Organization to which the workflow is associated relation is deprecated. Use AssociatedObject to set the organization relation.
 	Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 
 	// All the generated outputs for the workflow.
@@ -77,6 +80,10 @@ type WorkflowWorkflowInfo struct {
 	// Link to the task in the parent workflow which launched this workflow.
 	// Read Only: true
 	ParentTaskInfo *WorkflowTaskInfoRef `json:"ParentTaskInfo,omitempty"`
+
+	// Denotes the reason workflow is in paused status.
+	// Enum: [None TaskWithWarning]
+	PauseReason *string `json:"PauseReason,omitempty"`
 
 	// Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance.
 	// Read Only: true
@@ -146,15 +153,10 @@ type WorkflowWorkflowInfo struct {
 	// Read Only: true
 	WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-	// A collection of references to the [server.Profile](mo://server.Profile) Managed Object.
-	// When this managed object is deleted, the referenced [server.Profile](mo://server.Profile) MO unsets its reference to this deleted MO.
-	// Read Only: true
-	Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
-
 	// A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.
 	// When this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.
 	// Read Only: true
-	Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
+	Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -171,6 +173,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
 		Action *string `json:"Action,omitempty"`
+
+		AssociatedObject *MoBaseMoRef `json:"AssociatedObject,omitempty"`
 
 		CleanupTime strfmt.DateTime `json:"CleanupTime,omitempty"`
 
@@ -197,6 +201,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 		Output interface{} `json:"Output,omitempty"`
 
 		ParentTaskInfo *WorkflowTaskInfoRef `json:"ParentTaskInfo,omitempty"`
+
+		PauseReason *string `json:"PauseReason,omitempty"`
 
 		PendingDynamicWorkflowInfo *WorkflowPendingDynamicWorkflowInfoRef `json:"PendingDynamicWorkflowInfo,omitempty"`
 
@@ -234,9 +240,7 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-		Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
-
-		Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
+		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -245,6 +249,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 	m.Account = dataAO1.Account
 
 	m.Action = dataAO1.Action
+
+	m.AssociatedObject = dataAO1.AssociatedObject
 
 	m.CleanupTime = dataAO1.CleanupTime
 
@@ -271,6 +277,8 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 	m.Output = dataAO1.Output
 
 	m.ParentTaskInfo = dataAO1.ParentTaskInfo
+
+	m.PauseReason = dataAO1.PauseReason
 
 	m.PendingDynamicWorkflowInfo = dataAO1.PendingDynamicWorkflowInfo
 
@@ -308,9 +316,7 @@ func (m *WorkflowWorkflowInfo) UnmarshalJSON(raw []byte) error {
 
 	m.WorkflowTaskCount = dataAO1.WorkflowTaskCount
 
-	m.Nr0Profile = dataAO1.Nr0Profile
-
-	m.Nr1ClusterProfile = dataAO1.Nr1ClusterProfile
+	m.Nr0ClusterProfile = dataAO1.Nr0ClusterProfile
 
 	return nil
 }
@@ -328,6 +334,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 		Account *IamAccountRef `json:"Account,omitempty"`
 
 		Action *string `json:"Action,omitempty"`
+
+		AssociatedObject *MoBaseMoRef `json:"AssociatedObject,omitempty"`
 
 		CleanupTime strfmt.DateTime `json:"CleanupTime,omitempty"`
 
@@ -354,6 +362,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 		Output interface{} `json:"Output,omitempty"`
 
 		ParentTaskInfo *WorkflowTaskInfoRef `json:"ParentTaskInfo,omitempty"`
+
+		PauseReason *string `json:"PauseReason,omitempty"`
 
 		PendingDynamicWorkflowInfo *WorkflowPendingDynamicWorkflowInfoRef `json:"PendingDynamicWorkflowInfo,omitempty"`
 
@@ -391,14 +401,14 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 		WorkflowTaskCount int64 `json:"WorkflowTaskCount,omitempty"`
 
-		Nr0Profile *ServerProfileRef `json:"_0_Profile,omitempty"`
-
-		Nr1ClusterProfile *HyperflexClusterProfileRef `json:"_1_ClusterProfile,omitempty"`
+		Nr0ClusterProfile *HyperflexClusterProfileRef `json:"_0_ClusterProfile,omitempty"`
 	}
 
 	dataAO1.Account = m.Account
 
 	dataAO1.Action = m.Action
+
+	dataAO1.AssociatedObject = m.AssociatedObject
 
 	dataAO1.CleanupTime = m.CleanupTime
 
@@ -425,6 +435,8 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.Output = m.Output
 
 	dataAO1.ParentTaskInfo = m.ParentTaskInfo
+
+	dataAO1.PauseReason = m.PauseReason
 
 	dataAO1.PendingDynamicWorkflowInfo = m.PendingDynamicWorkflowInfo
 
@@ -462,9 +474,7 @@ func (m WorkflowWorkflowInfo) MarshalJSON() ([]byte, error) {
 
 	dataAO1.WorkflowTaskCount = m.WorkflowTaskCount
 
-	dataAO1.Nr0Profile = m.Nr0Profile
-
-	dataAO1.Nr1ClusterProfile = m.Nr1ClusterProfile
+	dataAO1.Nr0ClusterProfile = m.Nr0ClusterProfile
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {
@@ -491,6 +501,10 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateAssociatedObject(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCleanupTime(formats); err != nil {
 		res = append(res, err)
 	}
@@ -512,6 +526,10 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateParentTaskInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePauseReason(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -547,11 +565,7 @@ func (m *WorkflowWorkflowInfo) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateNr0Profile(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNr1ClusterProfile(formats); err != nil {
+	if err := m.validateNr0ClusterProfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -608,6 +622,24 @@ func (m *WorkflowWorkflowInfo) validateAction(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validateActionEnum("Action", "body", *m.Action); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *WorkflowWorkflowInfo) validateAssociatedObject(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AssociatedObject) { // not required
+		return nil
+	}
+
+	if m.AssociatedObject != nil {
+		if err := m.AssociatedObject.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("AssociatedObject")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -729,6 +761,40 @@ func (m *WorkflowWorkflowInfo) validateParentTaskInfo(formats strfmt.Registry) e
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var workflowWorkflowInfoTypePauseReasonPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["None","TaskWithWarning"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		workflowWorkflowInfoTypePauseReasonPropEnum = append(workflowWorkflowInfoTypePauseReasonPropEnum, v)
+	}
+}
+
+// property enum
+func (m *WorkflowWorkflowInfo) validatePauseReasonEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, workflowWorkflowInfoTypePauseReasonPropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *WorkflowWorkflowInfo) validatePauseReason(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PauseReason) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validatePauseReasonEnum("PauseReason", "body", *m.PauseReason); err != nil {
+		return err
 	}
 
 	return nil
@@ -912,34 +978,16 @@ func (m *WorkflowWorkflowInfo) validateWorkflowMetaType(formats strfmt.Registry)
 	return nil
 }
 
-func (m *WorkflowWorkflowInfo) validateNr0Profile(formats strfmt.Registry) error {
+func (m *WorkflowWorkflowInfo) validateNr0ClusterProfile(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Nr0Profile) { // not required
+	if swag.IsZero(m.Nr0ClusterProfile) { // not required
 		return nil
 	}
 
-	if m.Nr0Profile != nil {
-		if err := m.Nr0Profile.Validate(formats); err != nil {
+	if m.Nr0ClusterProfile != nil {
+		if err := m.Nr0ClusterProfile.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_0_Profile")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *WorkflowWorkflowInfo) validateNr1ClusterProfile(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Nr1ClusterProfile) { // not required
-		return nil
-	}
-
-	if m.Nr1ClusterProfile != nil {
-		if err := m.Nr1ClusterProfile.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("_1_ClusterProfile")
+				return ve.ValidateName("_0_ClusterProfile")
 			}
 			return err
 		}

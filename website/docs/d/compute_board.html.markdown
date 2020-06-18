@@ -10,7 +10,7 @@ Mother board of a server.
 Mother board of a server.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `board_id`:(int)
+* `board_id`:(int)"The id of the mother board located in the server."
 * `cpu_type_controller`:(string)
 * `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
 * `device_mo_id`:(string)

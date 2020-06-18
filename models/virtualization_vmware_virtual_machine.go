@@ -21,7 +21,7 @@ import (
 //
 // swagger:model virtualizationVmwareVirtualMachine
 type VirtualizationVmwareVirtualMachine struct {
-	VirtualizationAbstractVirtualMachine
+	VirtualizationBaseVirtualMachine
 
 	// List of annotations provided to this VM by user. Can be long.
 	Annotation string `json:"Annotation,omitempty"`
@@ -44,10 +44,10 @@ type VirtualizationVmwareVirtualMachine struct {
 	CPUHotAddEnabled *bool `json:"CpuHotAddEnabled,omitempty"`
 
 	// Shows the relative importance of a VM and its CPU limits.
-	CPUShares *VirtualizationVMCPUShareInfo `json:"CpuShares,omitempty"`
+	CPUShares *VirtualizationVmwareVMCPUShareInfo `json:"CpuShares,omitempty"`
 
 	// Details of CPUs/sockets of this VM.
-	CPUSocketInfo *VirtualizationVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
+	CPUSocketInfo *VirtualizationVmwareVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
 
 	// User provided meta information associated with the VMs. Can be long.
 	CustomAttributes []string `json:"CustomAttributes"`
@@ -67,7 +67,7 @@ type VirtualizationVmwareVirtualMachine struct {
 	DhcpEnabled *bool `json:"DhcpEnabled,omitempty"`
 
 	// Information about the virtual machine's disk commits, sharing and limits.
-	DiskCommitInfo *VirtualizationVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
+	DiskCommitInfo *VirtualizationVmwareVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
 
 	// List of DNS server IPs assigned to this VM.
 	DNSServerList []string `json:"DnsServerList"`
@@ -96,7 +96,7 @@ type VirtualizationVmwareVirtualMachine struct {
 	MacAddress []string `json:"MacAddress"`
 
 	// Similar to CPU Shares but applicable to memory.
-	MemShares *VirtualizationVMMemoryShareInfo `json:"MemShares,omitempty"`
+	MemShares *VirtualizationVmwareVMMemoryShareInfo `json:"MemShares,omitempty"`
 
 	// Adding memory to a running VM.
 	MemoryHotAddEnabled *bool `json:"MemoryHotAddEnabled,omitempty"`
@@ -111,7 +111,7 @@ type VirtualizationVmwareVirtualMachine struct {
 	ProtectedVM *bool `json:"ProtectedVm,omitempty"`
 
 	// Applies only when remoteDisplayvnc is enabled.
-	RemoteDisplayInfo *VirtualizationRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
+	RemoteDisplayInfo *VirtualizationVmwareRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
 
 	// Shows if support for a remote VNC access is enabled.
 	RemoteDisplayVncEnabled *bool `json:"RemoteDisplayVncEnabled,omitempty"`
@@ -153,11 +153,11 @@ type VirtualizationVmwareVirtualMachine struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationAbstractVirtualMachine
+	var aO0 VirtualizationBaseVirtualMachine
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationAbstractVirtualMachine = aO0
+	m.VirtualizationBaseVirtualMachine = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -173,9 +173,9 @@ func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 
 		CPUHotAddEnabled *bool `json:"CpuHotAddEnabled,omitempty"`
 
-		CPUShares *VirtualizationVMCPUShareInfo `json:"CpuShares,omitempty"`
+		CPUShares *VirtualizationVmwareVMCPUShareInfo `json:"CpuShares,omitempty"`
 
-		CPUSocketInfo *VirtualizationVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
+		CPUSocketInfo *VirtualizationVmwareVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
 
 		CustomAttributes []string `json:"CustomAttributes"`
 
@@ -187,7 +187,7 @@ func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 
 		DhcpEnabled *bool `json:"DhcpEnabled,omitempty"`
 
-		DiskCommitInfo *VirtualizationVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
+		DiskCommitInfo *VirtualizationVmwareVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
 
 		DNSServerList []string `json:"DnsServerList"`
 
@@ -205,7 +205,7 @@ func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 
 		MacAddress []string `json:"MacAddress"`
 
-		MemShares *VirtualizationVMMemoryShareInfo `json:"MemShares,omitempty"`
+		MemShares *VirtualizationVmwareVMMemoryShareInfo `json:"MemShares,omitempty"`
 
 		MemoryHotAddEnabled *bool `json:"MemoryHotAddEnabled,omitempty"`
 
@@ -215,7 +215,7 @@ func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 
 		ProtectedVM *bool `json:"ProtectedVm,omitempty"`
 
-		RemoteDisplayInfo *VirtualizationRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
+		RemoteDisplayInfo *VirtualizationVmwareRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
 
 		RemoteDisplayVncEnabled *bool `json:"RemoteDisplayVncEnabled,omitempty"`
 
@@ -332,7 +332,7 @@ func (m *VirtualizationVmwareVirtualMachine) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationAbstractVirtualMachine)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseVirtualMachine)
 	if err != nil {
 		return nil, err
 	}
@@ -350,9 +350,9 @@ func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 
 		CPUHotAddEnabled *bool `json:"CpuHotAddEnabled,omitempty"`
 
-		CPUShares *VirtualizationVMCPUShareInfo `json:"CpuShares,omitempty"`
+		CPUShares *VirtualizationVmwareVMCPUShareInfo `json:"CpuShares,omitempty"`
 
-		CPUSocketInfo *VirtualizationVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
+		CPUSocketInfo *VirtualizationVmwareVMCPUSocketInfo `json:"CpuSocketInfo,omitempty"`
 
 		CustomAttributes []string `json:"CustomAttributes"`
 
@@ -364,7 +364,7 @@ func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 
 		DhcpEnabled *bool `json:"DhcpEnabled,omitempty"`
 
-		DiskCommitInfo *VirtualizationVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
+		DiskCommitInfo *VirtualizationVmwareVMDiskCommitInfo `json:"DiskCommitInfo,omitempty"`
 
 		DNSServerList []string `json:"DnsServerList"`
 
@@ -382,7 +382,7 @@ func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 
 		MacAddress []string `json:"MacAddress"`
 
-		MemShares *VirtualizationVMMemoryShareInfo `json:"MemShares,omitempty"`
+		MemShares *VirtualizationVmwareVMMemoryShareInfo `json:"MemShares,omitempty"`
 
 		MemoryHotAddEnabled *bool `json:"MemoryHotAddEnabled,omitempty"`
 
@@ -392,7 +392,7 @@ func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 
 		ProtectedVM *bool `json:"ProtectedVm,omitempty"`
 
-		RemoteDisplayInfo *VirtualizationRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
+		RemoteDisplayInfo *VirtualizationVmwareRemoteDisplayInfo `json:"RemoteDisplayInfo,omitempty"`
 
 		RemoteDisplayVncEnabled *bool `json:"RemoteDisplayVncEnabled,omitempty"`
 
@@ -511,8 +511,8 @@ func (m VirtualizationVmwareVirtualMachine) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareVirtualMachine) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationAbstractVirtualMachine
-	if err := m.VirtualizationAbstractVirtualMachine.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseVirtualMachine
+	if err := m.VirtualizationBaseVirtualMachine.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

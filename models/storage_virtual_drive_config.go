@@ -125,7 +125,7 @@ type StorageVirtualDriveConfigAO1P1 struct {
 	// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
 	ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
-	// This property expects the desired IO mode - direct IO or cached IO.
+	// Desired IO mode - direct IO or cached IO.
 	// Enum: [Default Direct Cached]
 	IoPolicy *string `json:"IoPolicy,omitempty"`
 
@@ -173,7 +173,7 @@ func (m *StorageVirtualDriveConfigAO1P1) UnmarshalJSON(data []byte) error {
 		// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
 		ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
-		// This property expects the desired IO mode - direct IO or cached IO.
+		// Desired IO mode - direct IO or cached IO.
 		// Enum: [Default Direct Cached]
 		IoPolicy *string `json:"IoPolicy,omitempty"`
 
@@ -267,7 +267,7 @@ func (m StorageVirtualDriveConfigAO1P1) MarshalJSON() ([]byte, error) {
 		// This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.
 		ExpandToAvailable *bool `json:"ExpandToAvailable,omitempty"`
 
-		// This property expects the desired IO mode - direct IO or cached IO.
+		// Desired IO mode - direct IO or cached IO.
 		// Enum: [Default Direct Cached]
 		IoPolicy *string `json:"IoPolicy,omitempty"`
 

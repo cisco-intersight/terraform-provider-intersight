@@ -216,7 +216,9 @@ func resourceHyperflexCapabilityInfoCreate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -494,7 +496,9 @@ func resourceHyperflexCapabilityInfoUpdate(d *schema.ResourceData, meta interfac
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("capability_constraints") {

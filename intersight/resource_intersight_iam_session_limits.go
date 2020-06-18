@@ -219,7 +219,9 @@ func resourceIamSessionLimitsCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -286,7 +288,9 @@ func resourceIamSessionLimitsCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 
 	}
 
@@ -499,7 +503,9 @@ func resourceIamSessionLimitsUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -566,7 +572,9 @@ func resourceIamSessionLimitsUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

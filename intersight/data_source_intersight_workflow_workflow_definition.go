@@ -163,7 +163,7 @@ func dataSourceWorkflowWorkflowDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.), colon (:) or an underscore (_).",
+				Description: "The name for this workflow. You can have multiple versions of the workflow with the same name. Name can only contain letters (a-z, A-Z), numbers (0-9), hyphen (-), period (.) or an underscore (_).",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

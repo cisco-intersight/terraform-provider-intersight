@@ -370,7 +370,9 @@ func resourceIamIdpCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -419,7 +421,9 @@ func resourceIamIdpCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LdapPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LdapPolicy = &x
+		}
 
 	}
 
@@ -507,7 +511,9 @@ func resourceIamIdpCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.System = &x
+		if len(v.([]interface{})) > 0 {
+			o.System = &x
+		}
 
 	}
 
@@ -843,7 +849,9 @@ func resourceIamIdpUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -892,7 +900,9 @@ func resourceIamIdpUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.LdapPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.LdapPolicy = &x
+		}
 	}
 
 	if d.HasChange("metadata") {
@@ -980,7 +990,9 @@ func resourceIamIdpUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.System = &x
+		if len(v.([]interface{})) > 0 {
+			o.System = &x
+		}
 	}
 
 	if d.HasChange("tags") {

@@ -207,6 +207,12 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"error_code": {
+				Description: "Error code for Intersight Appliance's software upgrade. In case of failure - this code will help decide if software upgrade can be retried.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"fingerprint": {
 				Description: "Software upgrade manifest's fingerprint.",
 				Type:        schema.TypeString,
@@ -241,6 +247,12 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 						},
 					},
 				},
+			},
+			"is_rolling_back": {
+				Description: "Track if software upgrade is upgrading or rolling back.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Computed:    true,
 			},
 			"messages": {
 				Description: "Messages generated during the software upgrade process.",
@@ -288,6 +300,80 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 						},
 					},
 				},
+			},
+			"rollback_needed": {
+				Description: "Track if rollback is needed.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
+			"rollback_phases": {
+				Description: "Collection of the completed software rollback phases.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"elapsed_time": {
+							Description: "Elapsed time in seconds to complete the current upgrade phase.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
+						},
+						"end_time": {
+							Description: "End date of the software upgrade phase.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"failed": {
+							Description: "Indicates if the upgrade phase has failed or not.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
+						"message": {
+							Description: "Status message set during the upgrade phase.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"name": {
+							Description: "Name of the upgrade phase.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"start_time": {
+							Description: "Start date of the software upgrade phase.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"rollback_status": {
+				Description: "Status of the Intersight Appliance's software rollback status.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"services": {
 				Description: "Services that are upgraded during the software upgrade process. For example, if the software upgrade has updates for five Intersight micro-services, then this field will have the names of those five micro-services.",
@@ -397,9 +483,17 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 		x, _ := strfmt.ParseDateTime(v.(string))
 		o.EndTime = x
 	}
+	if v, ok := d.GetOk("error_code"); ok {
+		x := int64(v.(int))
+		o.ErrorCode = x
+	}
 	if v, ok := d.GetOk("fingerprint"); ok {
 		x := (v.(string))
 		o.Fingerprint = x
+	}
+	if v, ok := d.GetOk("is_rolling_back"); ok {
+		x := (v.(bool))
+		o.IsRollingBack = &x
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -408,6 +502,14 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.ObjectType = x
+	}
+	if v, ok := d.GetOk("rollback_needed"); ok {
+		x := (v.(bool))
+		o.RollbackNeeded = &x
+	}
+	if v, ok := d.GetOk("rollback_status"); ok {
+		x := (v.(string))
+		o.RollbackStatus = x
 	}
 	if v, ok := d.GetOk("start_time"); ok {
 		x, _ := strfmt.ParseDateTime(v.(string))
@@ -479,11 +581,17 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
 				return err
 			}
+			if err := d.Set("error_code", (s.ErrorCode)); err != nil {
+				return err
+			}
 			if err := d.Set("fingerprint", (s.Fingerprint)); err != nil {
 				return err
 			}
 
 			if err := d.Set("image_bundle", flattenMapApplianceImageBundleRef(s.ImageBundle, d)); err != nil {
+				return err
+			}
+			if err := d.Set("is_rolling_back", (s.IsRollingBack)); err != nil {
 				return err
 			}
 			if err := d.Set("messages", (s.Messages)); err != nil {
@@ -497,6 +605,16 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 			}
 
 			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
+				return err
+			}
+			if err := d.Set("rollback_needed", (s.RollbackNeeded)); err != nil {
+				return err
+			}
+
+			if err := d.Set("rollback_phases", flattenListOnpremUpgradePhase(s.RollbackPhases, d)); err != nil {
+				return err
+			}
+			if err := d.Set("rollback_status", (s.RollbackStatus)); err != nil {
 				return err
 			}
 			if err := d.Set("services", (s.Services)); err != nil {

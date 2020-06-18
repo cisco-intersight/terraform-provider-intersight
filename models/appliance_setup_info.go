@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -45,6 +46,13 @@ type ApplianceSetupInfo struct {
 	// Read Only: true
 	CloudURL string `json:"CloudUrl,omitempty"`
 
+	// Indicates where Intersight Appliance is installed in air-gapped or connected mode.
+	// In connected mode, Intersight Appliance is claimed by Intesight SaaS.
+	// In air-gapped mode, Intersight Appliance does not connect to any Cisco services.
+	// Read Only: true
+	// Enum: [Connected Private]
+	DeploymentMode string `json:"DeploymentMode,omitempty"`
+
 	// End date of the Intersight Appliance's initial setup.
 	// Read Only: true
 	// Format: date-time
@@ -78,6 +86,8 @@ func (m *ApplianceSetupInfo) UnmarshalJSON(raw []byte) error {
 
 		CloudURL string `json:"CloudUrl,omitempty"`
 
+		DeploymentMode string `json:"DeploymentMode,omitempty"`
+
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 		SetupStates []string `json:"SetupStates"`
@@ -95,6 +105,8 @@ func (m *ApplianceSetupInfo) UnmarshalJSON(raw []byte) error {
 	m.Capabilities = dataAO1.Capabilities
 
 	m.CloudURL = dataAO1.CloudURL
+
+	m.DeploymentMode = dataAO1.DeploymentMode
 
 	m.EndTime = dataAO1.EndTime
 
@@ -123,6 +135,8 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 
 		CloudURL string `json:"CloudUrl,omitempty"`
 
+		DeploymentMode string `json:"DeploymentMode,omitempty"`
+
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
 		SetupStates []string `json:"SetupStates"`
@@ -137,6 +151,8 @@ func (m ApplianceSetupInfo) MarshalJSON() ([]byte, error) {
 	dataAO1.Capabilities = m.Capabilities
 
 	dataAO1.CloudURL = m.CloudURL
+
+	dataAO1.DeploymentMode = m.DeploymentMode
 
 	dataAO1.EndTime = m.EndTime
 
@@ -166,6 +182,10 @@ func (m *ApplianceSetupInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCapabilities(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDeploymentMode(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -221,6 +241,40 @@ func (m *ApplianceSetupInfo) validateCapabilities(formats strfmt.Registry) error
 			}
 		}
 
+	}
+
+	return nil
+}
+
+var applianceSetupInfoTypeDeploymentModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Connected","Private"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		applianceSetupInfoTypeDeploymentModePropEnum = append(applianceSetupInfoTypeDeploymentModePropEnum, v)
+	}
+}
+
+// property enum
+func (m *ApplianceSetupInfo) validateDeploymentModeEnum(path, location string, value string) error {
+	if err := validate.Enum(path, location, value, applianceSetupInfoTypeDeploymentModePropEnum); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ApplianceSetupInfo) validateDeploymentMode(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DeploymentMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateDeploymentModeEnum("DeploymentMode", "body", m.DeploymentMode); err != nil {
+		return err
 	}
 
 	return nil

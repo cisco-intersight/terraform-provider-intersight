@@ -261,7 +261,9 @@ func resourceHyperflexServerFirmwareVersionCreate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 
 	}
 
@@ -396,7 +398,9 @@ func resourceHyperflexServerFirmwareVersionCreate(d *schema.ResourceData, meta i
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["label"]; ok {
@@ -584,7 +588,9 @@ func resourceHyperflexServerFirmwareVersionUpdate(d *schema.ResourceData, meta i
 			p = o
 		}
 		x := p
-		o.AppCatalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.AppCatalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -719,7 +725,9 @@ func resourceHyperflexServerFirmwareVersionUpdate(d *schema.ResourceData, meta i
 							p = o
 						}
 						x := p
-						o.Constraint = &x
+						if len(v.([]interface{})) > 0 {
+							o.Constraint = &x
+						}
 					}
 				}
 				if v, ok := l["label"]; ok {

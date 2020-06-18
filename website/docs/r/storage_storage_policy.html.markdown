@@ -51,7 +51,7 @@ This complex property has following sub-properties:
   + `key`:(string)"The string representation of a tag key."
   + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
   + `value`:(string)"The string representation of a tag value."
-* `unused_disks_state`:(string)"This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved."
+* `unused_disks_state`:(string)"Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved."
 * `virtual_drives`:(Array)"The list of virtual drives and the disk groups that need to be created through this policy."
 This complex property has following sub-properties:
   + `access_policy`:(string)"Access policy that host has on this virtual drive."
@@ -63,7 +63,7 @@ This complex property has following sub-properties:
   + `disk_group_policy`:(string)"Disk group policy that has the disk group in which this virtual drive needs to be created."
   + `drive_cache`:(string)"This property expect disk cache policy."
   + `expand_to_available`:(bool)"This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored."
-  + `io_policy`:(string)"This property expects the desired IO mode - direct IO or cached IO."
+  + `io_policy`:(string)"Desired IO mode - direct IO or cached IO."
   + `name`:(string)"The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed."
   + `object_type`:(string)"The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types."
   + `read_policy`:(string)"Read ahead mode to be used to read data from this virtual drive."

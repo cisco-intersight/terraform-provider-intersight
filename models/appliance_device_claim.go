@@ -50,7 +50,7 @@ type ApplianceDeviceClaim struct {
 	Password string `json:"Password,omitempty"`
 
 	// Platform type of the endpoint device.
-	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray NetAppOntap EmcScaleIo EmcVmax EmcVplex EmcXtremIo VmwareVcenter MicrosoftHyperV AppDynamics Dynatrace MicrosoftSqlServer Kubernetes MicrosoftAzure ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
 	// User defined claim request identifier set by the UI. The RequestId field is not a mandatory. The Intersight Appliance will assign a unique value automatically if the field is not set.
@@ -243,7 +243,7 @@ var applianceDeviceClaimTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","NetAppOntap","EmcScaleIo","EmcVmax","EmcVplex","EmcXtremIo","VmwareVcenter","MicrosoftHyperV","AppDynamics","Dynatrace","MicrosoftSqlServer","Kubernetes","MicrosoftAzure","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

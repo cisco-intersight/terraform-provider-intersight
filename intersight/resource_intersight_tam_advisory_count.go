@@ -172,7 +172,9 @@ func resourceTamAdvisoryCountCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -387,7 +389,9 @@ func resourceTamAdvisoryCountUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("advisory_count") {

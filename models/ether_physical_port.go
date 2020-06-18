@@ -23,6 +23,10 @@ type EtherPhysicalPort struct {
 	// Read Only: true
 	MacAddress string `json:"MacAddress,omitempty"`
 
+	// PeerDn for ethernet physical port.
+	// Read Only: true
+	PeerDn string `json:"PeerDn,omitempty"`
+
 	// A collection of references to the [port.Group](mo://port.Group) Managed Object.
 	// When this managed object is deleted, the referenced [port.Group](mo://port.Group) MO unsets its reference to this deleted MO.
 	// Read Only: true
@@ -55,6 +59,8 @@ func (m *EtherPhysicalPort) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		MacAddress string `json:"MacAddress,omitempty"`
 
+		PeerDn string `json:"PeerDn,omitempty"`
+
 		PortGroup *PortGroupRef `json:"PortGroup,omitempty"`
 
 		PortSubGroup *PortSubGroupRef `json:"PortSubGroup,omitempty"`
@@ -68,6 +74,8 @@ func (m *EtherPhysicalPort) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.MacAddress = dataAO1.MacAddress
+
+	m.PeerDn = dataAO1.PeerDn
 
 	m.PortGroup = dataAO1.PortGroup
 
@@ -92,6 +100,8 @@ func (m EtherPhysicalPort) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		MacAddress string `json:"MacAddress,omitempty"`
 
+		PeerDn string `json:"PeerDn,omitempty"`
+
 		PortGroup *PortGroupRef `json:"PortGroup,omitempty"`
 
 		PortSubGroup *PortSubGroupRef `json:"PortSubGroup,omitempty"`
@@ -102,6 +112,8 @@ func (m EtherPhysicalPort) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.MacAddress = m.MacAddress
+
+	dataAO1.PeerDn = m.PeerDn
 
 	dataAO1.PortGroup = m.PortGroup
 

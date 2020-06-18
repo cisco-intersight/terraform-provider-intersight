@@ -84,10 +84,10 @@ type AssetDeviceRegistration struct {
 	Pid []string `json:"Pid"`
 
 	// The platform type on which device connector is executing.
-	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray VmwareVcenter ServiceEngine IMCBlade]
+	// Enum: [ APIC DCNM UCSFI UCSFIISM IMC IMCM4 IMCM5 UCSIOM HX HyperFlexAP UCSD IntersightAppliance PureStorageFlashArray NetAppOntap EmcScaleIo EmcVmax EmcVplex EmcXtremIo VmwareVcenter MicrosoftHyperV AppDynamics Dynatrace MicrosoftSqlServer Kubernetes MicrosoftAzure ServiceEngine IMCBlade]
 	PlatformType string `json:"PlatformType,omitempty"`
 
-	// The device connector's public key used by the cloud to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.
+	// The device connector's public key used by Intersight to authenticate a connection from the device connector. The public key is used to verify that the signature a device connector sends on connect has been signed by the connector's private key stored on the device's filesystem. Must be a PEM encoded RSA public key string.
 	// Read Only: true
 	PublicAccessKey string `json:"PublicAccessKey,omitempty"`
 
@@ -578,7 +578,7 @@ var assetDeviceRegistrationTypePlatformTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","VmwareVcenter","ServiceEngine","IMCBlade"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["","APIC","DCNM","UCSFI","UCSFIISM","IMC","IMCM4","IMCM5","UCSIOM","HX","HyperFlexAP","UCSD","IntersightAppliance","PureStorageFlashArray","NetAppOntap","EmcScaleIo","EmcVmax","EmcVplex","EmcXtremIo","VmwareVcenter","MicrosoftHyperV","AppDynamics","Dynatrace","MicrosoftSqlServer","Kubernetes","MicrosoftAzure","ServiceEngine","IMCBlade"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

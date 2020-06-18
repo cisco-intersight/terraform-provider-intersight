@@ -500,7 +500,9 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.KvmIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.KvmIPRange = &x
+		}
 
 	}
 
@@ -547,7 +549,9 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.MacPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MacPrefixRange = &x
+		}
 
 	}
 
@@ -594,7 +598,9 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.MgmtVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.MgmtVlan = &x
+		}
 
 	}
 
@@ -643,7 +649,9 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -778,7 +786,9 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.VMMigrationVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.VMMigrationVlan = &x
+		}
 
 	}
 
@@ -1051,7 +1061,9 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.KvmIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.KvmIPRange = &x
+		}
 	}
 
 	if d.HasChange("mac_prefix_range") {
@@ -1098,7 +1110,9 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.MacPrefixRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MacPrefixRange = &x
+		}
 	}
 
 	if d.HasChange("mgmt_vlan") {
@@ -1145,7 +1159,9 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.MgmtVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.MgmtVlan = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1194,7 +1210,9 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1329,7 +1347,9 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 			p = o
 		}
 		x := p
-		o.VMMigrationVlan = &x
+		if len(v.([]interface{})) > 0 {
+			o.VMMigrationVlan = &x
+		}
 	}
 
 	if d.HasChange("vm_network_vlans") {

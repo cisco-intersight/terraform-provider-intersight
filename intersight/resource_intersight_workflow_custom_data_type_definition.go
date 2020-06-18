@@ -276,7 +276,9 @@ func resourceWorkflowCustomDataTypeDefinitionCreate(d *schema.ResourceData, meta
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 
 	}
 
@@ -471,7 +473,9 @@ func resourceWorkflowCustomDataTypeDefinitionCreate(d *schema.ResourceData, meta
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {
@@ -632,7 +636,9 @@ func resourceWorkflowCustomDataTypeDefinitionUpdate(d *schema.ResourceData, meta
 			p = o
 		}
 		x := p
-		o.Catalog = &x
+		if len(v.([]interface{})) > 0 {
+			o.Catalog = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -828,7 +834,9 @@ func resourceWorkflowCustomDataTypeDefinitionUpdate(d *schema.ResourceData, meta
 							p = o
 						}
 						x := p
-						o.Default = &x
+						if len(v.([]interface{})) > 0 {
+							o.Default = &x
+						}
 					}
 				}
 				if v, ok := l["description"]; ok {

@@ -73,18 +73,20 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Optional: true,
 			},
 			"drive_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The drive state as reported by the controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"fde_capable": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"link_speed": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The speed of the link between the drive and the controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"link_state": {
 				Type:     schema.TypeString,

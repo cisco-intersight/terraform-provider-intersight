@@ -482,7 +482,9 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 
 	}
 
@@ -595,7 +597,9 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.BaseProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.BaseProperties = &x
+		}
 
 	}
 
@@ -654,7 +658,9 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.DNSParameters = &x
+		if len(v.([]interface{})) > 0 {
+			o.DNSParameters = &x
+		}
 
 	}
 
@@ -746,7 +752,9 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Nr0Idp = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0Idp = &x
+		}
 
 	}
 
@@ -783,7 +791,9 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -1118,7 +1128,9 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 	}
 
 	if d.HasChange("base_properties") {
@@ -1231,7 +1243,9 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.BaseProperties = &x
+		if len(v.([]interface{})) > 0 {
+			o.BaseProperties = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -1290,7 +1304,9 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.DNSParameters = &x
+		if len(v.([]interface{})) > 0 {
+			o.DNSParameters = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -1384,7 +1400,9 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Nr0Idp = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0Idp = &x
+		}
 	}
 
 	if d.HasChange("object_type") {
@@ -1421,7 +1439,9 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

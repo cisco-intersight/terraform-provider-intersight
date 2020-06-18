@@ -58,7 +58,7 @@ type ComputeBlade struct {
 	// Read Only: true
 	LocatorLed *EquipmentLocatorLedRef `json:"LocatorLed,omitempty"`
 
-	// pci devices
+	// The PCI devices present in the server.
 	// Read Only: true
 	PciDevices []*PciDeviceRef `json:"PciDevices"`
 
@@ -70,11 +70,11 @@ type ComputeBlade struct {
 	// Read Only: true
 	ScaledMode string `json:"ScaledMode,omitempty"`
 
-	// slot Id
+	// The slot number in the chassis where the blade is present.
 	// Read Only: true
 	SlotID int64 `json:"SlotId,omitempty"`
 
-	// storage enclosures
+	// The storage enclosures for physical disks present in the server.
 	// Read Only: true
 	StorageEnclosures []*StorageEnclosureRef `json:"StorageEnclosures"`
 

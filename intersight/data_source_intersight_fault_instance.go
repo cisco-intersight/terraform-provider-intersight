@@ -80,9 +80,10 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"last_transition_time": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Last transition time of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -91,9 +92,10 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"num_occurrences": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The number of times this fault has occured.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",

@@ -13,54 +13,56 @@ import (
 
 // NiatelemetryNiaInventory Niatelemetry:Nia Inventory
 //
+// Inventory object available per device scope. This common object holds a device level information.
+//
 // swagger:model niatelemetryNiaInventory
 type NiatelemetryNiaInventory struct {
 	MoBaseMo
 
-	// CPU usage of device being inventoried.
+	// CPU usage of device being inventoried. This determines the percentage of CPU resources used.
 	CPU float32 `json:"Cpu,omitempty"`
 
-	// Last crash reset reason of device being inventoried.
+	// Last crash reset reason of device being inventoried. This determines the last reason for a device's restart due to crash of the system.
 	CrashResetLogs string `json:"CrashResetLogs,omitempty"`
 
-	// Name of device being inventoried.
+	// Name of device being inventoried. The name the user assigns to the device is inventoried here.
 	DeviceName string `json:"DeviceName,omitempty"`
 
-	// Type of device being inventoried.
+	// Type of device being inventoried. This determines whether the device is a controller, leaf or spine.
 	DeviceType string `json:"DeviceType,omitempty"`
 
-	// Disk Usage of device being inventoried.
+	// Disk Usage of device being inventoried. This determines the amount of disk usage.
 	Disk *NiatelemetryDiskinfo `json:"Disk,omitempty"`
 
-	// The license of this device.
+	// The license of this device. It includes features and license information.
 	LicenseState *NiatelemetryNiaLicenseStateRef `json:"LicenseState,omitempty"`
 
-	// Last log in time device being inventoried.
+	// Last log in time device being inventoried. This determines the last login time on the device.
 	LogInTime string `json:"LogInTime,omitempty"`
 
-	// Last log out time of device being inventoried.
+	// Last log out time of device being inventoried. This determines the last logout time on the device.
 	LogOutTime string `json:"LogOutTime,omitempty"`
 
-	// Memory usage of device being inventoried.
+	// Memory usage of device being inventoried. This determines the percentage of memory resources used.
 	Memory int64 `json:"Memory,omitempty"`
 
-	// Type of record DCNM / APIC / SE.
+	// Type of record DCNM / APIC / SE. This determines the type of platform where inventory was collected.
 	RecordType string `json:"RecordType,omitempty"`
 
-	// Version of record being pushed.
+	// Version of record being pushed. This determines what was the API version for data available from the device.
 	RecordVersion string `json:"RecordVersion,omitempty"`
 
 	// Relationship to the Device Registration object for this setup.
 	// Read Only: true
 	RegisteredDevice *AssetDeviceRegistrationRef `json:"RegisteredDevice,omitempty"`
 
-	// Serial number of device being invetoried.
+	// Serial number of device being invetoried. The serial number is unique per device and will be used as the key.
 	Serial string `json:"Serial,omitempty"`
 
-	// Last software downloaded of device being inventoried.
+	// Last software downloaded of device being inventoried. This determines if software download API was used.
 	SoftwareDownload string `json:"SoftwareDownload,omitempty"`
 
-	// Software version of device being inventoried.
+	// Software version of device being inventoried. The various software version values for each device are available on cisco.com.
 	Version string `json:"Version,omitempty"`
 }
 

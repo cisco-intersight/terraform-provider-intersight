@@ -179,8 +179,8 @@ func resourceIamAccount() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nr0_decrypt": {
-				Description: "A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.",
+			"nr0_encrypt": {
+				Description: "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -209,8 +209,38 @@ func resourceIamAccount() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
-			"nr1_encrypt": {
-				Description: "A collection of references to the [crypt.Encrypt](mo://crypt.Encrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Encrypt](mo://crypt.Encrypt) MO unsets its reference to this deleted MO.",
+			"nr1_tenant": {
+				Description: "A collection of references to the [iwotenant.Tenant](mo://iwotenant.Tenant) Managed Object.\nWhen this managed object is deleted, the referenced [iwotenant.Tenant](mo://iwotenant.Tenant) MO unsets its reference to this deleted MO.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"nr2_decrypt": {
+				Description: "A collection of references to the [crypt.Decrypt](mo://crypt.Decrypt) Managed Object.\nWhen this managed object is deleted, the referenced [crypt.Decrypt](mo://crypt.Decrypt) MO unsets its reference to this deleted MO.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -715,38 +745,7 @@ func resourceIamAccountCreate(d *schema.ResourceData, meta interface{}) error {
 
 	}
 
-	if v, ok := d.GetOk("nr0_decrypt"); ok {
-		p := models.CryptDecryptRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.CryptDecryptRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Decrypt = &x
-
-	}
-
-	if v, ok := d.GetOk("nr1_encrypt"); ok {
+	if v, ok := d.GetOk("nr0_encrypt"); ok {
 		p := models.CryptEncryptRef{}
 		if len(v.([]interface{})) > 0 {
 			o := models.CryptEncryptRef{}
@@ -773,7 +772,75 @@ func resourceIamAccountCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Nr1Encrypt = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0Encrypt = &x
+		}
+
+	}
+
+	if v, ok := d.GetOk("nr1_tenant"); ok {
+		p := models.IwotenantTenantRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.IwotenantTenantRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.Nr1Tenant = &x
+		}
+
+	}
+
+	if v, ok := d.GetOk("nr2_decrypt"); ok {
+		p := models.CryptDecryptRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.CryptDecryptRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.Nr2Decrypt = &x
+		}
 
 	}
 
@@ -942,7 +1009,9 @@ func resourceIamAccountCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.ResourceLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.ResourceLimits = &x
+		}
 
 	}
 
@@ -1006,7 +1075,9 @@ func resourceIamAccountCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SecurityHolder = &x
+		if len(v.([]interface{})) > 0 {
+			o.SecurityHolder = &x
+		}
 
 	}
 
@@ -1037,7 +1108,9 @@ func resourceIamAccountCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SessionLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.SessionLimits = &x
+		}
 
 	}
 
@@ -1168,11 +1241,15 @@ func resourceIamAccountRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	if err := d.Set("nr0_decrypt", flattenMapCryptDecryptRef(s.Nr0Decrypt, d)); err != nil {
+	if err := d.Set("nr0_encrypt", flattenMapCryptEncryptRef(s.Nr0Encrypt, d)); err != nil {
 		return err
 	}
 
-	if err := d.Set("nr1_encrypt", flattenMapCryptEncryptRef(s.Nr1Encrypt, d)); err != nil {
+	if err := d.Set("nr1_tenant", flattenMapIwotenantTenantRef(s.Nr1Tenant, d)); err != nil {
+		return err
+	}
+
+	if err := d.Set("nr2_decrypt", flattenMapCryptDecryptRef(s.Nr2Decrypt, d)); err != nil {
 		return err
 	}
 
@@ -1412,39 +1489,8 @@ func resourceIamAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.Name = x
 	}
 
-	if d.HasChange("nr0_decrypt") {
-		v := d.Get("nr0_decrypt")
-		p := models.CryptDecryptRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.CryptDecryptRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		o.Nr0Decrypt = &x
-	}
-
-	if d.HasChange("nr1_encrypt") {
-		v := d.Get("nr1_encrypt")
+	if d.HasChange("nr0_encrypt") {
+		v := d.Get("nr0_encrypt")
 		p := models.CryptEncryptRef{}
 		if len(v.([]interface{})) > 0 {
 			o := models.CryptEncryptRef{}
@@ -1471,7 +1517,75 @@ func resourceIamAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Nr1Encrypt = &x
+		if len(v.([]interface{})) > 0 {
+			o.Nr0Encrypt = &x
+		}
+	}
+
+	if d.HasChange("nr1_tenant") {
+		v := d.Get("nr1_tenant")
+		p := models.IwotenantTenantRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.IwotenantTenantRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.Nr1Tenant = &x
+		}
+	}
+
+	if d.HasChange("nr2_decrypt") {
+		v := d.Get("nr2_decrypt")
+		p := models.CryptDecryptRef{}
+		if len(v.([]interface{})) > 0 {
+			o := models.CryptDecryptRef{}
+			l := (v.([]interface{})[0]).(map[string]interface{})
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.Moid = x
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.ObjectType = x
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.Selector = x
+				}
+			}
+
+			p = o
+		}
+		x := p
+		if len(v.([]interface{})) > 0 {
+			o.Nr2Decrypt = &x
+		}
 	}
 
 	if d.HasChange("object_type") {
@@ -1640,7 +1754,9 @@ func resourceIamAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.ResourceLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.ResourceLimits = &x
+		}
 	}
 
 	if d.HasChange("roles") {
@@ -1704,7 +1820,9 @@ func resourceIamAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SecurityHolder = &x
+		if len(v.([]interface{})) > 0 {
+			o.SecurityHolder = &x
+		}
 	}
 
 	if d.HasChange("session_limits") {
@@ -1735,7 +1853,9 @@ func resourceIamAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SessionLimits = &x
+		if len(v.([]interface{})) > 0 {
+			o.SessionLimits = &x
+		}
 	}
 
 	if d.HasChange("status") {

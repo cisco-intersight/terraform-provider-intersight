@@ -13,7 +13,7 @@ import (
 
 // ConnectorScopedInventory Connector:Scoped Inventory
 //
-// Abstract object defined to handle scoped inventory for a set of objects identified by the query parameters defined in the properties. All vendor specific scoped inventory objects will inherit from this object and the scoped inventory framework will address the inventory  collection.
+// Abstract object defined to handle scoped inventory for a set of objects identified by the query parameters defined in the properties. All vendor specific scoped inventory objects will inherit from this object and the scoped inventory framework will address the inventory collection.
 //
 // swagger:model connectorScopedInventory
 type ConnectorScopedInventory struct {

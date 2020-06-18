@@ -58,6 +58,10 @@ type ApplianceUpgrade struct {
 	// Format: date-time
 	EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
+	// Error code for Intersight Appliance's software upgrade. In case of failure - this code will help decide if software upgrade can be retried.
+	// Read Only: true
+	ErrorCode int64 `json:"ErrorCode,omitempty"`
+
 	// Software upgrade manifest's fingerprint.
 	// Read Only: true
 	Fingerprint string `json:"Fingerprint,omitempty"`
@@ -66,9 +70,24 @@ type ApplianceUpgrade struct {
 	// Read Only: true
 	ImageBundle *ApplianceImageBundleRef `json:"ImageBundle,omitempty"`
 
+	// Track if software upgrade is upgrading or rolling back.
+	// Read Only: true
+	IsRollingBack *bool `json:"IsRollingBack,omitempty"`
+
 	// Messages generated during the software upgrade process.
 	// Read Only: true
 	Messages []string `json:"Messages"`
+
+	// Track if rollback is needed.
+	RollbackNeeded *bool `json:"RollbackNeeded,omitempty"`
+
+	// Collection of the completed software rollback phases.
+	// Read Only: true
+	RollbackPhases []*OnpremUpgradePhase `json:"RollbackPhases"`
+
+	// Status of the Intersight Appliance's software rollback status.
+	// Read Only: true
+	RollbackStatus string `json:"RollbackStatus,omitempty"`
 
 	// Services that are upgraded during the software upgrade process. For example, if the software upgrade has updates for five Intersight micro-services, then this field will have the names of those five micro-services.
 	// Read Only: true
@@ -122,11 +141,21 @@ func (m *ApplianceUpgrade) UnmarshalJSON(raw []byte) error {
 
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
+		ErrorCode int64 `json:"ErrorCode,omitempty"`
+
 		Fingerprint string `json:"Fingerprint,omitempty"`
 
 		ImageBundle *ApplianceImageBundleRef `json:"ImageBundle,omitempty"`
 
+		IsRollingBack *bool `json:"IsRollingBack,omitempty"`
+
 		Messages []string `json:"Messages"`
+
+		RollbackNeeded *bool `json:"RollbackNeeded,omitempty"`
+
+		RollbackPhases []*OnpremUpgradePhase `json:"RollbackPhases"`
+
+		RollbackStatus string `json:"RollbackStatus,omitempty"`
 
 		Services []string `json:"Services"`
 
@@ -160,11 +189,21 @@ func (m *ApplianceUpgrade) UnmarshalJSON(raw []byte) error {
 
 	m.EndTime = dataAO1.EndTime
 
+	m.ErrorCode = dataAO1.ErrorCode
+
 	m.Fingerprint = dataAO1.Fingerprint
 
 	m.ImageBundle = dataAO1.ImageBundle
 
+	m.IsRollingBack = dataAO1.IsRollingBack
+
 	m.Messages = dataAO1.Messages
+
+	m.RollbackNeeded = dataAO1.RollbackNeeded
+
+	m.RollbackPhases = dataAO1.RollbackPhases
+
+	m.RollbackStatus = dataAO1.RollbackStatus
 
 	m.Services = dataAO1.Services
 
@@ -207,11 +246,21 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 
 		EndTime strfmt.DateTime `json:"EndTime,omitempty"`
 
+		ErrorCode int64 `json:"ErrorCode,omitempty"`
+
 		Fingerprint string `json:"Fingerprint,omitempty"`
 
 		ImageBundle *ApplianceImageBundleRef `json:"ImageBundle,omitempty"`
 
+		IsRollingBack *bool `json:"IsRollingBack,omitempty"`
+
 		Messages []string `json:"Messages"`
+
+		RollbackNeeded *bool `json:"RollbackNeeded,omitempty"`
+
+		RollbackPhases []*OnpremUpgradePhase `json:"RollbackPhases"`
+
+		RollbackStatus string `json:"RollbackStatus,omitempty"`
 
 		Services []string `json:"Services"`
 
@@ -242,11 +291,21 @@ func (m ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 
 	dataAO1.EndTime = m.EndTime
 
+	dataAO1.ErrorCode = m.ErrorCode
+
 	dataAO1.Fingerprint = m.Fingerprint
 
 	dataAO1.ImageBundle = m.ImageBundle
 
+	dataAO1.IsRollingBack = m.IsRollingBack
+
 	dataAO1.Messages = m.Messages
+
+	dataAO1.RollbackNeeded = m.RollbackNeeded
+
+	dataAO1.RollbackPhases = m.RollbackPhases
+
+	dataAO1.RollbackStatus = m.RollbackStatus
 
 	dataAO1.Services = m.Services
 
@@ -294,6 +353,10 @@ func (m *ApplianceUpgrade) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateImageBundle(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRollbackPhases(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -394,6 +457,31 @@ func (m *ApplianceUpgrade) validateImageBundle(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *ApplianceUpgrade) validateRollbackPhases(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RollbackPhases) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.RollbackPhases); i++ {
+		if swag.IsZero(m.RollbackPhases[i]) { // not required
+			continue
+		}
+
+		if m.RollbackPhases[i] != nil {
+			if err := m.RollbackPhases[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("RollbackPhases" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

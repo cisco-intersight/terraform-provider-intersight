@@ -396,7 +396,7 @@ func resourceOsInstall() *schema.Resource {
 							Default:     "static",
 							ForceNew:    true,
 						},
-						"ipv4_config": {
+						"ip_configuration": {
 							Description: "In case of static IP configuration, IP address, netmask and gateway details are\nprovided.",
 							Type:        schema.TypeList,
 							MaxItems:    1,
@@ -414,24 +414,6 @@ func resourceOsInstall() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
-										ForceNew:    true,
-									},
-									"gateway": {
-										Description: "The IPv4 address of the default gateway.",
-										Type:        schema.TypeString,
-										Optional:    true,
-										ForceNew:    true,
-									},
-									"ip_address": {
-										Description: "The IPv4 Address, represented in the standard dot-decimal notation, e.g. 192.168.1.3.",
-										Type:        schema.TypeString,
-										Optional:    true,
-										ForceNew:    true,
-									},
-									"netmask": {
-										Description: "The IPv4 Netmask, represented in the standard dot-decimal notation, e.g. 255.255.255.0.",
-										Type:        schema.TypeString,
-										Optional:    true,
 										ForceNew:    true,
 									},
 									"object_type": {
@@ -1002,7 +984,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 										p = o
 									}
 									x := p
-									o.Default = &x
+									if len(v.([]interface{})) > 0 {
+										o.Default = &x
+									}
 								}
 							}
 							if v, ok := l["description"]; ok {
@@ -1150,7 +1134,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 													p = o
 												}
 												x := p
-												o.Constraints = &x
+												if len(v.([]interface{})) > 0 {
+													o.Constraints = &x
+												}
 											}
 										}
 										if v, ok := l["inventory_selector"]; ok {
@@ -1234,7 +1220,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 										p = o
 									}
 									x := p
-									o.Properties = &x
+									if len(v.([]interface{})) > 0 {
+										o.Properties = &x
+									}
 								}
 							}
 							if v, ok := l["required"]; ok {
@@ -1247,7 +1235,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 							p = o
 						}
 						x := p
-						o.Type = &x
+						if len(v.([]interface{})) > 0 {
+							o.Type = &x
+						}
 					}
 				}
 				if v, ok := l["value"]; ok {
@@ -1302,11 +1292,11 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 					o.IPConfigType = &x
 				}
 			}
-			if v, ok := l["ipv4_config"]; ok {
+			if v, ok := l["ip_configuration"]; ok {
 				{
-					p := models.CommIPV4Interface{}
+					p := models.OsIPConfiguration{}
 					if len(v.([]interface{})) > 0 {
-						o := models.CommIPV4Interface{}
+						o := models.OsIPConfiguration{}
 						l := (v.([]interface{})[0]).(map[string]interface{})
 						if v, ok := l["additional_properties"]; ok {
 							{
@@ -1314,7 +1304,7 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.CommIPV4InterfaceAO1P1.CommIPV4InterfaceAO1P1 = x1.(map[string]interface{})
+									o.AO1 = x1.(map[string]interface{})
 								}
 							}
 						}
@@ -1322,24 +1312,6 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 							{
 								x := (v.(string))
 								o.ClassID = x
-							}
-						}
-						if v, ok := l["gateway"]; ok {
-							{
-								x := (v.(string))
-								o.Gateway = x
-							}
-						}
-						if v, ok := l["ip_address"]; ok {
-							{
-								x := (v.(string))
-								o.IPAddress = x
-							}
-						}
-						if v, ok := l["netmask"]; ok {
-							{
-								x := (v.(string))
-								o.Netmask = x
 							}
 						}
 						if v, ok := l["object_type"]; ok {
@@ -1352,7 +1324,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 						p = o
 					}
 					x := p
-					o.IPV4Config = &x
+					if len(v.([]interface{})) > 0 {
+						o.IPConfiguration = &x
+					}
 				}
 			}
 			if v, ok := l["is_answer_file_set"]; ok {
@@ -1407,7 +1381,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Answers = &x
+		if len(v.([]interface{})) > 0 {
+			o.Answers = &x
+		}
 
 	}
 
@@ -1444,7 +1420,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.ConfigurationFile = &x
+		if len(v.([]interface{})) > 0 {
+			o.ConfigurationFile = &x
+		}
 
 	}
 
@@ -1481,7 +1459,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Image = &x
+		if len(v.([]interface{})) > 0 {
+			o.Image = &x
+		}
 
 	}
 
@@ -1540,7 +1520,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.OperatingSystemParameters = &x
+		if len(v.([]interface{})) > 0 {
+			o.OperatingSystemParameters = &x
+		}
 
 	}
 
@@ -1571,7 +1553,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -1602,7 +1586,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.OsduImage = &x
+		if len(v.([]interface{})) > 0 {
+			o.OsduImage = &x
+		}
 
 	}
 
@@ -1699,7 +1685,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Server = &x
+		if len(v.([]interface{})) > 0 {
+			o.Server = &x
+		}
 
 	}
 
@@ -1779,7 +1767,9 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.WorkflowInfo = &x
+		if len(v.([]interface{})) > 0 {
+			o.WorkflowInfo = &x
+		}
 
 	}
 

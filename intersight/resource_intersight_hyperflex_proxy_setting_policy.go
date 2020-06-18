@@ -307,7 +307,9 @@ func resourceHyperflexProxySettingPolicyCreate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -619,7 +621,9 @@ func resourceHyperflexProxySettingPolicyUpdate(d *schema.ResourceData, meta inte
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("password") {

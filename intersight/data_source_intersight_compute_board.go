@@ -15,9 +15,10 @@ func dataSourceComputeBoard() *schema.Resource {
 		Read: dataSourceComputeBoardRead,
 		Schema: map[string]*schema.Schema{
 			"board_id": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The id of the mother board located in the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"cpu_type_controller": {
 				Type:     schema.TypeString,
@@ -156,9 +157,10 @@ func dataSourceComputeBoard() *schema.Resource {
 				},
 			},
 			"memory_arrays": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "Holders housing multiple memory units present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -326,9 +328,10 @@ func dataSourceComputeBoard() *schema.Resource {
 				Computed:    true,
 			},
 			"processors": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The CPUs present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -393,9 +396,10 @@ func dataSourceComputeBoard() *schema.Resource {
 				Computed:    true,
 			},
 			"security_units": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "The crypto cards present in the server.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {

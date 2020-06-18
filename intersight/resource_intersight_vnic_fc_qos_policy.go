@@ -235,7 +235,9 @@ func resourceVnicFcQosPolicyCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -490,7 +492,9 @@ func resourceVnicFcQosPolicyUpdate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

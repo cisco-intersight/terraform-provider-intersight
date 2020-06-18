@@ -247,7 +247,9 @@ func resourceDeviceconnectorPolicyCreate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -547,7 +549,9 @@ func resourceDeviceconnectorPolicyUpdate(d *schema.ResourceData, meta interface{
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

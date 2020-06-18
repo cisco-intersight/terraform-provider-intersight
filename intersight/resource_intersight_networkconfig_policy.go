@@ -294,7 +294,9 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 
 	}
 
@@ -381,7 +383,9 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -705,7 +709,9 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.ApplianceAccount = &x
+		if len(v.([]interface{})) > 0 {
+			o.ApplianceAccount = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -796,7 +802,9 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

@@ -25,6 +25,9 @@ type OsCatalog struct {
 	// This captures the associated Configuration files.
 	ConfigurationFiles []*OsConfigurationFileRef `json:"ConfigurationFiles"`
 
+	// This captures the associated OS Distributions.
+	Distributions []*OsDistributionRef `json:"Distributions"`
+
 	// The catalog name. There will be one for system and one for each user account.
 	Name string `json:"Name,omitempty"`
 
@@ -45,6 +48,8 @@ func (m *OsCatalog) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		ConfigurationFiles []*OsConfigurationFileRef `json:"ConfigurationFiles"`
 
+		Distributions []*OsDistributionRef `json:"Distributions"`
+
 		Name string `json:"Name,omitempty"`
 
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
@@ -54,6 +59,8 @@ func (m *OsCatalog) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.ConfigurationFiles = dataAO1.ConfigurationFiles
+
+	m.Distributions = dataAO1.Distributions
 
 	m.Name = dataAO1.Name
 
@@ -74,12 +81,16 @@ func (m OsCatalog) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		ConfigurationFiles []*OsConfigurationFileRef `json:"ConfigurationFiles"`
 
+		Distributions []*OsDistributionRef `json:"Distributions"`
+
 		Name string `json:"Name,omitempty"`
 
 		Organization *OrganizationOrganizationRef `json:"Organization,omitempty"`
 	}
 
 	dataAO1.ConfigurationFiles = m.ConfigurationFiles
+
+	dataAO1.Distributions = m.Distributions
 
 	dataAO1.Name = m.Name
 
@@ -103,6 +114,10 @@ func (m *OsCatalog) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateConfigurationFiles(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDistributions(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -131,6 +146,31 @@ func (m *OsCatalog) validateConfigurationFiles(formats strfmt.Registry) error {
 			if err := m.ConfigurationFiles[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ConfigurationFiles" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *OsCatalog) validateDistributions(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Distributions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Distributions); i++ {
+		if swag.IsZero(m.Distributions[i]) { // not required
+			continue
+		}
+
+		if m.Distributions[i] != nil {
+			if err := m.Distributions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("Distributions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

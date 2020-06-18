@@ -263,7 +263,9 @@ func resourceHyperflexNodeProfileCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AssignedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssignedServer = &x
+		}
 
 	}
 
@@ -300,7 +302,9 @@ func resourceHyperflexNodeProfileCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ClusterProfile = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterProfile = &x
+		}
 
 	}
 
@@ -412,7 +416,9 @@ func resourceHyperflexNodeProfileCreate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 
 	}
 
@@ -608,7 +614,9 @@ func resourceHyperflexNodeProfileUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.AssignedServer = &x
+		if len(v.([]interface{})) > 0 {
+			o.AssignedServer = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -645,7 +653,9 @@ func resourceHyperflexNodeProfileUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.ClusterProfile = &x
+		if len(v.([]interface{})) > 0 {
+			o.ClusterProfile = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -757,7 +767,9 @@ func resourceHyperflexNodeProfileUpdate(d *schema.ResourceData, meta interface{}
 			p = o
 		}
 		x := p
-		o.SrcTemplate = &x
+		if len(v.([]interface{})) > 0 {
+			o.SrcTemplate = &x
+		}
 	}
 
 	if d.HasChange("tags") {

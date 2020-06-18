@@ -229,6 +229,18 @@ func dataSourceMetaDefinition() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"export": {
+							Description: "When turned off, the peer MO is not exported when the local MO is exported.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
+						"export_with_peer": {
+							Description: "When turned on, the local MO is exported when the peer is exported.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
 						"name": {
 							Description: "The name of the relationship.",
 							Type:        schema.TypeString,

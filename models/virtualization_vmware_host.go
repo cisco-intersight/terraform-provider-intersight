@@ -21,7 +21,7 @@ import (
 //
 // swagger:model virtualizationVmwareHost
 type VirtualizationVmwareHost struct {
-	VirtualizationHost
+	VirtualizationBaseHost
 
 	// The time when this host booted up.
 	// Format: date-time
@@ -50,7 +50,7 @@ type VirtualizationVmwareHost struct {
 	NetworkAdapterCount int64 `json:"NetworkAdapterCount,omitempty"`
 
 	// Snapshot of resources (CPU, memory, etc.) consumed by this host.
-	ResourceConsumed *VirtualizationResourceConsumption `json:"ResourceConsumed,omitempty"`
+	ResourceConsumed *VirtualizationVmwareResourceConsumption `json:"ResourceConsumed,omitempty"`
 
 	// The count of all storage adapters attached to this host.
 	StorageAdapterCount int64 `json:"StorageAdapterCount,omitempty"`
@@ -62,11 +62,11 @@ type VirtualizationVmwareHost struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareHost) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationHost
+	var aO0 VirtualizationBaseHost
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationHost = aO0
+	m.VirtualizationBaseHost = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -84,7 +84,7 @@ func (m *VirtualizationVmwareHost) UnmarshalJSON(raw []byte) error {
 
 		NetworkAdapterCount int64 `json:"NetworkAdapterCount,omitempty"`
 
-		ResourceConsumed *VirtualizationResourceConsumption `json:"ResourceConsumed,omitempty"`
+		ResourceConsumed *VirtualizationVmwareResourceConsumption `json:"ResourceConsumed,omitempty"`
 
 		StorageAdapterCount int64 `json:"StorageAdapterCount,omitempty"`
 
@@ -121,7 +121,7 @@ func (m *VirtualizationVmwareHost) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareHost) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationHost)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseHost)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (m VirtualizationVmwareHost) MarshalJSON() ([]byte, error) {
 
 		NetworkAdapterCount int64 `json:"NetworkAdapterCount,omitempty"`
 
-		ResourceConsumed *VirtualizationResourceConsumption `json:"ResourceConsumed,omitempty"`
+		ResourceConsumed *VirtualizationVmwareResourceConsumption `json:"ResourceConsumed,omitempty"`
 
 		StorageAdapterCount int64 `json:"StorageAdapterCount,omitempty"`
 
@@ -180,8 +180,8 @@ func (m VirtualizationVmwareHost) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareHost) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationHost
-	if err := m.VirtualizationHost.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseHost
+	if err := m.VirtualizationBaseHost.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

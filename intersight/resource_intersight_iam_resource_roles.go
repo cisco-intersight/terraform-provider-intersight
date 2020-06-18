@@ -308,7 +308,9 @@ func resourceIamResourceRolesCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 
 	}
 
@@ -372,7 +374,9 @@ func resourceIamResourceRolesCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Resource = &x
+		if len(v.([]interface{})) > 0 {
+			o.Resource = &x
+		}
 
 	}
 
@@ -622,7 +626,9 @@ func resourceIamResourceRolesUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -686,7 +692,9 @@ func resourceIamResourceRolesUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Resource = &x
+		if len(v.([]interface{})) > 0 {
+			o.Resource = &x
+		}
 	}
 
 	if d.HasChange("roles") {

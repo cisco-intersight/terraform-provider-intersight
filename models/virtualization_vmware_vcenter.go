@@ -17,7 +17,7 @@ import (
 //
 // swagger:model virtualizationVmwareVcenter
 type VirtualizationVmwareVcenter struct {
-	VirtualizationHypervisorManager
+	VirtualizationBaseHypervisorManager
 
 	VirtualizationVmwareVcenterAllOf1
 }
@@ -25,11 +25,11 @@ type VirtualizationVmwareVcenter struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *VirtualizationVmwareVcenter) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 VirtualizationHypervisorManager
+	var aO0 VirtualizationBaseHypervisorManager
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.VirtualizationHypervisorManager = aO0
+	m.VirtualizationBaseHypervisorManager = aO0
 
 	// AO1
 	var aO1 VirtualizationVmwareVcenterAllOf1
@@ -45,7 +45,7 @@ func (m *VirtualizationVmwareVcenter) UnmarshalJSON(raw []byte) error {
 func (m VirtualizationVmwareVcenter) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.VirtualizationHypervisorManager)
+	aO0, err := swag.WriteJSON(m.VirtualizationBaseHypervisorManager)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ func (m VirtualizationVmwareVcenter) MarshalJSON() ([]byte, error) {
 func (m *VirtualizationVmwareVcenter) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with VirtualizationHypervisorManager
-	if err := m.VirtualizationHypervisorManager.Validate(formats); err != nil {
+	// validation for a type composition with VirtualizationBaseHypervisorManager
+	if err := m.VirtualizationBaseHypervisorManager.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 	// validation for a type composition with VirtualizationVmwareVcenterAllOf1

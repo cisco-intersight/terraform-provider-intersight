@@ -120,10 +120,11 @@ func dataSourceNetworkElement() *schema.Resource {
 				Computed:    true,
 			},
 			"management_contoller": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Description: "A specialized service processor that monitors the physical state of the fabric interconnect.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -148,10 +149,11 @@ func dataSourceNetworkElement() *schema.Resource {
 				},
 			},
 			"management_entity": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Description: "Logical representation that captures the role of each Fabric Interconnect in UCS Manager.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {

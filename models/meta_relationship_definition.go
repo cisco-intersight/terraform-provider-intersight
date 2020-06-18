@@ -113,6 +113,14 @@ type MetaRelationshipDefinitionAO1P1 struct {
 	// Read Only: true
 	Collection *bool `json:"Collection,omitempty"`
 
+	// When turned off, the peer MO is not exported when the local MO is exported.
+	// Read Only: true
+	Export *bool `json:"Export,omitempty"`
+
+	// When turned on, the local MO is exported when the peer is exported.
+	// Read Only: true
+	ExportWithPeer *bool `json:"ExportWithPeer,omitempty"`
+
 	// The name of the relationship.
 	// Read Only: true
 	Name string `json:"Name,omitempty"`
@@ -139,6 +147,14 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 		// Read Only: true
 		Collection *bool `json:"Collection,omitempty"`
 
+		// When turned off, the peer MO is not exported when the local MO is exported.
+		// Read Only: true
+		Export *bool `json:"Export,omitempty"`
+
+		// When turned on, the local MO is exported when the peer is exported.
+		// Read Only: true
+		ExportWithPeer *bool `json:"ExportWithPeer,omitempty"`
+
 		// The name of the relationship.
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
@@ -154,6 +170,8 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 
 	rcv.APIAccess = stage1.APIAccess
 	rcv.Collection = stage1.Collection
+	rcv.Export = stage1.Export
+	rcv.ExportWithPeer = stage1.ExportWithPeer
 	rcv.Name = stage1.Name
 	rcv.Type = stage1.Type
 	*m = rcv
@@ -166,6 +184,8 @@ func (m *MetaRelationshipDefinitionAO1P1) UnmarshalJSON(data []byte) error {
 
 	delete(stage2, "ApiAccess")
 	delete(stage2, "Collection")
+	delete(stage2, "Export")
+	delete(stage2, "ExportWithPeer")
 	delete(stage2, "Name")
 	delete(stage2, "Type")
 	// stage 3, add additional properties values
@@ -197,6 +217,14 @@ func (m MetaRelationshipDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 		// Read Only: true
 		Collection *bool `json:"Collection,omitempty"`
 
+		// When turned off, the peer MO is not exported when the local MO is exported.
+		// Read Only: true
+		Export *bool `json:"Export,omitempty"`
+
+		// When turned on, the local MO is exported when the peer is exported.
+		// Read Only: true
+		ExportWithPeer *bool `json:"ExportWithPeer,omitempty"`
+
 		// The name of the relationship.
 		// Read Only: true
 		Name string `json:"Name,omitempty"`
@@ -208,6 +236,8 @@ func (m MetaRelationshipDefinitionAO1P1) MarshalJSON() ([]byte, error) {
 
 	stage1.APIAccess = m.APIAccess
 	stage1.Collection = m.Collection
+	stage1.Export = m.Export
+	stage1.ExportWithPeer = m.ExportWithPeer
 	stage1.Name = m.Name
 	stage1.Type = m.Type
 

@@ -3,11 +3,11 @@ layout: "intersight"
 page_title: "Intersight: intersight_recovery_restore"
 sidebar_current: "docs-intersight-resource-recoveryRestore"
 description: |-
-  
+  Triggers a restore operation on the target endpoint.
 ---
 
 # Resource: intersight_recovery_restore
-
+Triggers a restore operation on the target endpoint.
 ## Argument Reference
 The following arguments are supported:
 * `backup_info`:(Array with Maximum of one item) -"The backup info that needs to be restored in the target endpoint."

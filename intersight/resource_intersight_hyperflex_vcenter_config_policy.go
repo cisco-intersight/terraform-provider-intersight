@@ -318,7 +318,9 @@ func resourceHyperflexVcenterConfigPolicyCreate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -640,7 +642,9 @@ func resourceHyperflexVcenterConfigPolicyUpdate(d *schema.ResourceData, meta int
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("password") {

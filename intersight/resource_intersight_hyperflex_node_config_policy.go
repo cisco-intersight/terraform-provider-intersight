@@ -426,7 +426,9 @@ func resourceHyperflexNodeConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.DataIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.DataIPRange = &x
+		}
 
 	}
 
@@ -491,7 +493,9 @@ func resourceHyperflexNodeConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.HxdpIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.HxdpIPRange = &x
+		}
 
 	}
 
@@ -550,7 +554,9 @@ func resourceHyperflexNodeConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.MgmtIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MgmtIPRange = &x
+		}
 
 	}
 
@@ -605,7 +611,9 @@ func resourceHyperflexNodeConfigPolicyCreate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -887,7 +895,9 @@ func resourceHyperflexNodeConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.DataIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.DataIPRange = &x
+		}
 	}
 
 	if d.HasChange("description") {
@@ -952,7 +962,9 @@ func resourceHyperflexNodeConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.HxdpIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.HxdpIPRange = &x
+		}
 	}
 
 	if d.HasChange("mgmt_ip_range") {
@@ -1011,7 +1023,9 @@ func resourceHyperflexNodeConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.MgmtIPRange = &x
+		if len(v.([]interface{})) > 0 {
+			o.MgmtIPRange = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1066,7 +1080,9 @@ func resourceHyperflexNodeConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

@@ -50,7 +50,7 @@ func dataSourceIaasUcsdInfo() *schema.Resource {
 				},
 			},
 			"device_id": {
-				Description: "Moid of the UCSD device connector's asset.DeviceRegistration.",
+				Description: "Moid of the UCS Director device connector's asset.DeviceRegistration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -84,19 +84,19 @@ func dataSourceIaasUcsdInfo() *schema.Resource {
 				},
 			},
 			"guid": {
-				Description: "Unique ID of UCSD getting registerd with Intersight.",
+				Description: "Unique ID of UCS Director getting registerd with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"host_name": {
-				Description: "The UCSD host name.",
+				Description: "The UCS Director hostname for management.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"ip": {
-				Description: "The UCSD IP address.",
+				Description: "The UCS Director IP address for management.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -171,7 +171,7 @@ func dataSourceIaasUcsdInfo() *schema.Resource {
 				},
 			},
 			"node_type": {
-				Description: "NodeType specifies if UCSD is deployed in Stand-alone or Multi Node.",
+				Description: "NodeType specifies if UCS Director is deployed in Stand-alone or Multi Node.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -211,28 +211,29 @@ func dataSourceIaasUcsdInfo() *schema.Resource {
 				},
 			},
 			"product_name": {
-				Description: "The UCSD product name.",
+				Description: "The UCS Director product name.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"product_vendor": {
-				Description: "The UCSD product vendor.",
+				Description: "The UCS Director product vendor.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"product_version": {
-				Description: "The UCSD product/platform version.",
+				Description: "The UCS Director product/platform version.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"registered_device": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Description: "Relationship to the device registration.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"moid": {
@@ -257,7 +258,7 @@ func dataSourceIaasUcsdInfo() *schema.Resource {
 				},
 			},
 			"status": {
-				Description: "The UCSD status. Possible values are Active, Inactive, Unknown.",
+				Description: "The UCS Director status. Possible values are Active, Inactive, Unknown.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,

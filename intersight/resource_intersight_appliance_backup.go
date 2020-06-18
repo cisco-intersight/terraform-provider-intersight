@@ -269,7 +269,9 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 

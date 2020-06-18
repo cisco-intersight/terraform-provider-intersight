@@ -349,7 +349,9 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 
 	}
 
@@ -472,7 +474,9 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 
 	}
 
@@ -655,7 +659,9 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.User = &x
+		if len(v.([]interface{})) > 0 {
+			o.User = &x
+		}
 
 	}
 
@@ -820,7 +826,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Account = &x
+		if len(v.([]interface{})) > 0 {
+			o.Account = &x
+		}
 	}
 
 	if d.HasChange("class_id") {
@@ -943,7 +951,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.Permission = &x
+		if len(v.([]interface{})) > 0 {
+			o.Permission = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -1128,7 +1138,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			p = o
 		}
 		x := p
-		o.User = &x
+		if len(v.([]interface{})) > 0 {
+			o.User = &x
+		}
 	}
 
 	url := "iam/AppRegistrations" + "/" + d.Id()

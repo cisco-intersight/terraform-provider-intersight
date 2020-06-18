@@ -319,7 +319,9 @@ func resourceHyperflexSysConfigPolicyCreate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -629,7 +631,9 @@ func resourceHyperflexSysConfigPolicyUpdate(d *schema.ResourceData, meta interfa
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

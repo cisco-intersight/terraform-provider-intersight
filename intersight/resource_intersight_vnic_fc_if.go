@@ -353,7 +353,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcAdapterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcAdapterPolicy = &x
+		}
 
 	}
 
@@ -384,7 +386,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcNetworkPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcNetworkPolicy = &x
+		}
 
 	}
 
@@ -415,7 +419,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcQosPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcQosPolicy = &x
+		}
 
 	}
 
@@ -470,7 +476,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -561,7 +569,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Placement = &x
+		if len(v.([]interface{})) > 0 {
+			o.Placement = &x
+		}
 
 	}
 
@@ -592,7 +602,9 @@ func resourceVnicFcIfCreate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SanConnectivityPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.SanConnectivityPolicy = &x
+		}
 
 	}
 
@@ -784,7 +796,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcAdapterPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcAdapterPolicy = &x
+		}
 	}
 
 	if d.HasChange("fc_network_policy") {
@@ -815,7 +829,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcNetworkPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcNetworkPolicy = &x
+		}
 	}
 
 	if d.HasChange("fc_qos_policy") {
@@ -846,7 +862,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.FcQosPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.FcQosPolicy = &x
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -901,7 +919,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {
@@ -993,7 +1013,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.Placement = &x
+		if len(v.([]interface{})) > 0 {
+			o.Placement = &x
+		}
 	}
 
 	if d.HasChange("san_connectivity_policy") {
@@ -1024,7 +1046,9 @@ func resourceVnicFcIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			p = o
 		}
 		x := p
-		o.SanConnectivityPolicy = &x
+		if len(v.([]interface{})) > 0 {
+			o.SanConnectivityPolicy = &x
+		}
 	}
 
 	if d.HasChange("tags") {

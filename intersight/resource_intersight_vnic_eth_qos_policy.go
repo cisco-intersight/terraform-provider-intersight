@@ -240,7 +240,9 @@ func resourceVnicEthQosPolicyCreate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 
 	}
 
@@ -504,7 +506,9 @@ func resourceVnicEthQosPolicyUpdate(d *schema.ResourceData, meta interface{}) er
 			p = o
 		}
 		x := p
-		o.Organization = &x
+		if len(v.([]interface{})) > 0 {
+			o.Organization = &x
+		}
 	}
 
 	if d.HasChange("permission_resources") {

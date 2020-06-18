@@ -17,7 +17,7 @@ import (
 //
 // swagger:model storageStorageUtilization
 type StorageStorageUtilization struct {
-	StorageCapacity
+	StorageBaseCapacity
 
 	// Ratio of mapped sectors within a volume versus the amount of physical space the data occupies after data compression and deduplication. The data reduction ratio does not include thin provisioning savings. For example, a data reduction ratio of 5.0 means that for every 5 MB the host writes to the array, 1 MB is stored on the array's flash modules.
 	// Read Only: true
@@ -43,11 +43,11 @@ type StorageStorageUtilization struct {
 // UnmarshalJSON unmarshals this object from a JSON structure
 func (m *StorageStorageUtilization) UnmarshalJSON(raw []byte) error {
 	// AO0
-	var aO0 StorageCapacity
+	var aO0 StorageBaseCapacity
 	if err := swag.ReadJSON(raw, &aO0); err != nil {
 		return err
 	}
-	m.StorageCapacity = aO0
+	m.StorageBaseCapacity = aO0
 
 	// AO1
 	var dataAO1 struct {
@@ -82,7 +82,7 @@ func (m *StorageStorageUtilization) UnmarshalJSON(raw []byte) error {
 func (m StorageStorageUtilization) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	aO0, err := swag.WriteJSON(m.StorageCapacity)
+	aO0, err := swag.WriteJSON(m.StorageBaseCapacity)
 	if err != nil {
 		return nil, err
 	}
@@ -121,8 +121,8 @@ func (m StorageStorageUtilization) MarshalJSON() ([]byte, error) {
 func (m *StorageStorageUtilization) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	// validation for a type composition with StorageCapacity
-	if err := m.StorageCapacity.Validate(formats); err != nil {
+	// validation for a type composition with StorageBaseCapacity
+	if err := m.StorageBaseCapacity.Validate(formats); err != nil {
 		res = append(res, err)
 	}
 

@@ -14,6 +14,35 @@ func dataSourceStoragePureHostLun() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceStoragePureHostLunRead,
 		Schema: map[string]*schema.Schema{
+			"array": {
+				Description: "Storage array managed object.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The Object Type of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -171,35 +200,6 @@ func dataSourceStoragePureHostLun() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"storage_array": {
-				Description: "Storage array managed object.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"tags": {
 				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
 				Type:        schema.TypeList,
@@ -337,6 +337,10 @@ func dataSourceStoragePureHostLunRead(d *schema.ResourceData, meta interface{}) 
 			if err = s.UnmarshalJSON(oo); err != nil {
 				return err
 			}
+
+			if err := d.Set("array", flattenMapStoragePureArrayRef(s.Array, d)); err != nil {
+				return err
+			}
 			if err := d.Set("class_id", (s.ClassID)); err != nil {
 				return err
 			}
@@ -344,7 +348,7 @@ func dataSourceStoragePureHostLunRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("host", flattenMapStorageHostRef(s.Host, d)); err != nil {
+			if err := d.Set("host", flattenMapStoragePureHostRef(s.Host, d)); err != nil {
 				return err
 			}
 
@@ -375,15 +379,11 @@ func dataSourceStoragePureHostLunRead(d *schema.ResourceData, meta interface{}) 
 				return err
 			}
 
-			if err := d.Set("storage_array", flattenMapStorageGenericArrayRef(s.StorageArray, d)); err != nil {
-				return err
-			}
-
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
 				return err
 			}
 
-			if err := d.Set("volume", flattenMapStorageVolumeRef(s.Volume, d)); err != nil {
+			if err := d.Set("volume", flattenMapStoragePureVolumeRef(s.Volume, d)); err != nil {
 				return err
 			}
 			if err := d.Set("volume_name", (s.VolumeName)); err != nil {

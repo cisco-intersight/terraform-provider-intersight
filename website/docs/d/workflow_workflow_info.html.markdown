@@ -22,6 +22,7 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string)"The unique identifier of this Managed Object instance."
 * `name`:(string)"A name of the workflow execution instance."
 * `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
+* `pause_reason`:(string)"Denotes the reason workflow is in paused status."
 * `progress`:(float)"This field indicates percentage of workflow task execution."
 * `retry_from_task_name`:(string)"This field is applicable when Retry action is issued for a workflow which is in a final state. When this field is not specified then the workflow will retry from the start of the workflow. When this field is specified then the workflow will be retried from the specified task. The field should carry the task name which is the unique name of the task within the workflow. The task name must be one of the tasks that completed or failed in the previous run, you cannot retry a workflow from a task which wasn't run in the previous iteration."
 * `src`:(string)"The source microservice name which is the owner for this workflow."
