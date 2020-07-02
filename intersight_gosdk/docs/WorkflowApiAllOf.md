@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Outcomes** | Pointer to **interface{}** | All the possible outcomes of this API are captured here. Outcomes property is a collection property of type workflow.Outcome objects. The outcomes can be mapped to the message to be shown. The outcomes are evaluated in the order they are given. At the end of the outcomes list, an catchall success/fail outcome can be added with condition as &#39;true&#39;. This is an optional property and if not specified the task will be marked as success. | [optional] 
 **ResponseSpec** | Pointer to [**ContentGrammar**](content.Grammar.md) |  | [optional] 
 **SkipOnCondition** | Pointer to **string** | The skip expression, if provided, allows the batch API executor to skip the api execution when the given expression evaluates to true. The expression is given as such a golang template that has to be evaluated to a final content true/false. The expression is an optional and in case not provided, the API will always be executed. | [optional] 
+**StartDelay** | Pointer to **int64** | The delay in seconds after which the API needs to be executed. By default, the given API is executed immediately. Specifying a start delay adds to the delay to execution. Start Delay is not supported for the first API in the Batch and cumulative delay of all the APIs in the Batch should not exceed the task time out. | [optional] 
 **Timeout** | Pointer to **int64** | The duration in seconds by which the API response is expected from the API target. If the end point does not respond for the API request within this timeout duration, the task will be marked as failed. | [optional] 
 
 ## Methods
@@ -190,6 +191,31 @@ SetSkipOnCondition sets SkipOnCondition field to given value.
 `func (o *WorkflowApiAllOf) HasSkipOnCondition() bool`
 
 HasSkipOnCondition returns a boolean if a field has been set.
+
+### GetStartDelay
+
+`func (o *WorkflowApiAllOf) GetStartDelay() int64`
+
+GetStartDelay returns the StartDelay field if non-nil, zero value otherwise.
+
+### GetStartDelayOk
+
+`func (o *WorkflowApiAllOf) GetStartDelayOk() (*int64, bool)`
+
+GetStartDelayOk returns a tuple with the StartDelay field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStartDelay
+
+`func (o *WorkflowApiAllOf) SetStartDelay(v int64)`
+
+SetStartDelay sets StartDelay field to given value.
+
+### HasStartDelay
+
+`func (o *WorkflowApiAllOf) HasStartDelay() bool`
+
+HasStartDelay returns a boolean if a field has been set.
 
 ### GetTimeout
 

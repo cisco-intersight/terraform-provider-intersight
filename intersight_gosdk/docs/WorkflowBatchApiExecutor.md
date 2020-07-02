@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | Name for the batch API task. | [optional] 
 **Outcomes** | Pointer to **interface{}** | All the possible outcomes of this task are captured here. Outcomes property is a collection property of type workflow.Outcome objects. The outcomes can be mapped to the message to be shown. The outcomes are evaluated in the order they are given. At the end of the outcomes list, an catchall success/fail outcome can be added with condition as &#39;true&#39;. This is an optional property and if not specified the task will be marked as success. | [optional] 
 **Output** | Pointer to **interface{}** | Intersight Orchestrator allows the extraction of required values from API responses using the API response grammar. These extracted values can be mapped to task output parameters defined in task definition. The mapping of API output parameters to the task output parameters is provided as JSON in this property. | [optional] 
+**RetryFromFailedApi** | Pointer to **bool** | When an execution of a nth API in the Batch fails, Retry from falied API flag indicates if the execution should start from the nth API or the first API during task retry. By default the value is set to false. | [optional] 
 **SkipOnCondition** | Pointer to **string** | The skip expression, if provided, allows the batch API executor to skip the task execution when the given expression evaluates to true. The expression is given as such a golang template that has to be evaluated to a final content true/false. The expression is an optional and in case not provided, the API will always be executed. | [optional] 
+**ErrorResponseHandler** | Pointer to [**WorkflowErrorResponseHandlerRelationship**](workflow.ErrorResponseHandler.Relationship.md) |  | [optional] 
 **TaskDefinition** | Pointer to [**WorkflowTaskDefinitionRelationship**](workflow.TaskDefinition.Relationship.md) |  | [optional] 
 
 ## Methods
@@ -202,6 +204,31 @@ HasOutput returns a boolean if a field has been set.
 `func (o *WorkflowBatchApiExecutor) UnsetOutput()`
 
 UnsetOutput ensures that no value is present for Output, not even an explicit nil
+### GetRetryFromFailedApi
+
+`func (o *WorkflowBatchApiExecutor) GetRetryFromFailedApi() bool`
+
+GetRetryFromFailedApi returns the RetryFromFailedApi field if non-nil, zero value otherwise.
+
+### GetRetryFromFailedApiOk
+
+`func (o *WorkflowBatchApiExecutor) GetRetryFromFailedApiOk() (*bool, bool)`
+
+GetRetryFromFailedApiOk returns a tuple with the RetryFromFailedApi field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRetryFromFailedApi
+
+`func (o *WorkflowBatchApiExecutor) SetRetryFromFailedApi(v bool)`
+
+SetRetryFromFailedApi sets RetryFromFailedApi field to given value.
+
+### HasRetryFromFailedApi
+
+`func (o *WorkflowBatchApiExecutor) HasRetryFromFailedApi() bool`
+
+HasRetryFromFailedApi returns a boolean if a field has been set.
+
 ### GetSkipOnCondition
 
 `func (o *WorkflowBatchApiExecutor) GetSkipOnCondition() string`
@@ -226,6 +253,31 @@ SetSkipOnCondition sets SkipOnCondition field to given value.
 `func (o *WorkflowBatchApiExecutor) HasSkipOnCondition() bool`
 
 HasSkipOnCondition returns a boolean if a field has been set.
+
+### GetErrorResponseHandler
+
+`func (o *WorkflowBatchApiExecutor) GetErrorResponseHandler() WorkflowErrorResponseHandlerRelationship`
+
+GetErrorResponseHandler returns the ErrorResponseHandler field if non-nil, zero value otherwise.
+
+### GetErrorResponseHandlerOk
+
+`func (o *WorkflowBatchApiExecutor) GetErrorResponseHandlerOk() (*WorkflowErrorResponseHandlerRelationship, bool)`
+
+GetErrorResponseHandlerOk returns a tuple with the ErrorResponseHandler field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetErrorResponseHandler
+
+`func (o *WorkflowBatchApiExecutor) SetErrorResponseHandler(v WorkflowErrorResponseHandlerRelationship)`
+
+SetErrorResponseHandler sets ErrorResponseHandler field to given value.
+
+### HasErrorResponseHandler
+
+`func (o *WorkflowBatchApiExecutor) HasErrorResponseHandler() bool`
+
+HasErrorResponseHandler returns a boolean if a field has been set.
 
 ### GetTaskDefinition
 
