@@ -27,11 +27,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -84,9 +79,10 @@ func dataSourceEquipmentChassis() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -106,11 +102,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -134,12 +125,14 @@ func dataSourceEquipmentChassis() *schema.Resource {
 				},
 			},
 			"fault_summary": {
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: "This field summarizes the faults on the chassis enclosure.",
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
-			"ioms": {
-				Description: "An array of relationships to equipmentIoCard resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -149,11 +142,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -175,6 +163,81 @@ func dataSourceEquipmentChassis() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ioms": {
+				Description: "An array of relationships to equipmentIoCard resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"locator_led": {
+				Description: "A reference to a equipmentLocatorLed resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"management_mode": {
+				Description: "The management mode of the blade server chassis.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"model": {
 				Description: "This field identifies the model of the given component.",
@@ -201,9 +264,10 @@ func dataSourceEquipmentChassis() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the Chassis Operational State.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"part_number": {
 				Description: "Part Number identifier for the chassis enclosure.",
@@ -211,9 +275,27 @@ func dataSourceEquipmentChassis() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"pid": {
+				Description: "This field identifies the Product ID for the chassis enclosure.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"platform_type": {
+				Description: "The platform type that the chassis is a part of.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"product_name": {
+				Description: "This field identifies the Product Name for the chassis enclosure.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"psu_control": {
+				Description: "A reference to a equipmentPsuControl resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -223,11 +305,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -250,22 +327,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 					},
 				},
 			},
-			"pid": {
-				Description: "This field identifies the Product ID for the chassis enclosure.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"platform_type": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"product_name": {
-				Description: "This field identifies the Product Name for the chassis enclosure.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
 			"psus": {
 				Description: "An array of relationships to equipmentPsu resources.",
 				Type:        schema.TypeList,
@@ -278,11 +339,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -319,11 +375,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -346,9 +397,10 @@ func dataSourceEquipmentChassis() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -368,11 +420,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -414,11 +461,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -458,11 +500,6 @@ func dataSourceEquipmentChassis() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -523,7 +560,7 @@ func dataSourceEquipmentChassisRead(d *schema.ResourceData, meta interface{}) er
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewEquipmentChassis()
+	var o = models.NewEquipmentChassisWithDefaults()
 	if v, ok := d.GetOk("chassis_id"); ok {
 		x := int64(v.(int))
 		o.SetChassisId(x)
@@ -555,6 +592,10 @@ func dataSourceEquipmentChassisRead(d *schema.ResourceData, meta interface{}) er
 	if v, ok := d.GetOk("fault_summary"); ok {
 		x := int64(v.(int))
 		o.SetFaultSummary(x)
+	}
+	if v, ok := d.GetOk("management_mode"); ok {
+		x := (v.(string))
+		o.SetManagementMode(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
@@ -621,127 +662,152 @@ func dataSourceEquipmentChassisRead(d *schema.ResourceData, meta interface{}) er
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.EquipmentApi.GetEquipmentChassisList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.EquipmentApi.GetEquipmentChassisList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.EquipmentChassisList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to EquipmentChassis: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewEquipmentChassis()
+			var s = models.NewEquipmentChassisWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("blades", flattenListComputeBladeRelationship(s.Blades, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Blades: %+v", err)
 			}
 			if err := d.Set("chassis_id", (s.ChassisId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ChassisId: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("connection_path", (s.ConnectionPath)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionPath: %+v", err)
 			}
 			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
 			if err := d.Set("fanmodules", flattenListEquipmentFanModuleRelationship(s.Fanmodules, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Fanmodules: %+v", err)
 			}
 			if err := d.Set("fault_summary", (s.FaultSummary)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FaultSummary: %+v", err)
+			}
+
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
 
 			if err := d.Set("ioms", flattenListEquipmentIoCardRelationship(s.Ioms, d)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
-				return err
-			}
-			if err := d.Set("part_number", (s.PartNumber)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Ioms: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRelationship(s.LocatorLed, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property LocatorLed: %+v", err)
+			}
+			if err := d.Set("management_mode", (s.ManagementMode)); err != nil {
+				return fmt.Errorf("error occurred while setting property ManagementMode: %+v", err)
+			}
+			if err := d.Set("model", (s.Model)); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("name", (s.Name)); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_state", (s.OperState)); err != nil {
+				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
+			}
+			if err := d.Set("part_number", (s.PartNumber)); err != nil {
+				return fmt.Errorf("error occurred while setting property PartNumber: %+v", err)
 			}
 			if err := d.Set("pid", (s.Pid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 			}
 			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
 			if err := d.Set("product_name", (s.ProductName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProductName: %+v", err)
+			}
+
+			if err := d.Set("psu_control", flattenMapEquipmentPsuControlRelationship(s.PsuControl, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property PsuControl: %+v", err)
 			}
 
 			if err := d.Set("psus", flattenListEquipmentPsuRelationship(s.Psus, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Psus: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
 			if err := d.Set("sasexpanders", flattenListStorageSasExpanderRelationship(s.Sasexpanders, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Sasexpanders: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
 			if err := d.Set("siocs", flattenListEquipmentSystemIoControllerRelationship(s.Siocs, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Siocs: %+v", err)
 			}
 			if err := d.Set("sku", (s.Sku)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Sku: %+v", err)
 			}
 
 			if err := d.Set("storage_enclosures", flattenListStorageEnclosureRelationship(s.StorageEnclosures, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StorageEnclosures: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			if err := d.Set("vid", (s.Vid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

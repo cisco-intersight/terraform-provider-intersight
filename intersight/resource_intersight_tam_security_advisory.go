@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 	"time"
@@ -58,6 +59,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"value": {
 										Description: "Value of the filter paramter.",
@@ -78,6 +80,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"operation_type": {
 							Description: "Operation type for the alert action. An action is used to carry out the process of \"reacting\" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.",
@@ -105,6 +108,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"priority": {
 										Description: "An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.",
@@ -162,6 +166,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"queries": {
 							Type:     schema.TypeList,
@@ -183,6 +188,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"priority": {
 										Description: "An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.",
@@ -282,11 +288,6 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -297,6 +298,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -309,45 +311,6 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"recommendation": {
 				Description: "Recommended action to resolve the security advisory.",
@@ -371,6 +334,7 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -378,10 +342,10 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 				Computed:   true,
 			},
 			"state": {
-				Description: "Current state of the advisory. Indicates if the user is interested in getting updates for the advisory.",
+				Description: "Current state of the advisory.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Default:     "active",
+				Default:     "ready",
 			},
 			"status": {
 				Description: "Cisco assigned status of the published advisory based on whether the investigation is complete or on-going.",
@@ -412,8 +376,13 @@ func resourceTamSecurityAdvisory() *schema.Resource {
 				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Cisco assigned advisory version after latest revision.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"workaround": {
+				Description: "Workarounds available for the advisory.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -425,7 +394,7 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewTamSecurityAdvisory()
+	var o = models.NewTamSecurityAdvisoryWithDefaults()
 	if v, ok := d.GetOk("actions"); ok {
 		x := make([]models.TamAction, 0)
 		s := v.([]interface{})
@@ -459,7 +428,12 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.Identifiers")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["value"]; ok {
 							{
 								x := (v.(string))
@@ -468,7 +442,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetIdentifiers(x)
+					if len(x) > 0 {
+						o.SetIdentifiers(x)
+					}
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -477,7 +453,12 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("tam.Action")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["operation_type"]; ok {
 				{
 					x := (v.(string))
@@ -498,7 +479,12 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.QueryEntry")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["priority"]; ok {
 							{
 								x := int64(v.(int))
@@ -513,7 +499,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetQueries(x)
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
 				}
 			}
 			if v, ok := l["type"]; ok {
@@ -524,7 +512,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetActions(x)
+		if len(x) > 0 {
+			o.SetActions(x)
+		}
 	}
 
 	if v, ok := d.GetOk("advisory_id"); ok {
@@ -551,7 +541,12 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("tam.ApiDataSource")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["queries"]; ok {
 				{
 					x := make([]models.TamQueryEntry, 0)
@@ -566,7 +561,12 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.QueryEntry")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["priority"]; ok {
 							{
 								x := int64(v.(int))
@@ -581,7 +581,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetQueries(x)
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
 				}
 			}
 			if v, ok := l["type"]; ok {
@@ -592,7 +594,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetApiDataSources(x)
+		if len(x) > 0 {
+			o.SetApiDataSources(x)
+		}
 	}
 
 	if v, ok := d.GetOk("base_score"); ok {
@@ -608,7 +612,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetCveIds(x)
+		if len(x) > 0 {
+			o.SetCveIds(x)
+		}
 	}
 
 	if v, ok := d.GetOk("date_published"); ok {
@@ -650,64 +656,35 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("recommendation"); ok {
@@ -717,15 +694,23 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("severity"); ok {
 		p := make([]models.TamSeverity, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewTamSeverityWithDefaults()
 			o.SetClassId("tam.Severity")
-			o.SetObjectType("tam.Severity")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetSeverity(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSeverity(x)
+		}
 	}
 
 	if v, ok := d.GetOk("state"); ok {
@@ -758,7 +743,9 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("temporal_score"); ok {
@@ -766,15 +753,20 @@ func resourceTamSecurityAdvisoryCreate(d *schema.ResourceData, meta interface{})
 		o.SetTemporalScore(x)
 	}
 
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
+	}
+
+	if v, ok := d.GetOk("workaround"); ok {
+		x := (v.(string))
+		o.SetWorkaround(x)
 	}
 
 	r := conn.ApiClient.TamApi.CreateTamSecurityAdvisory(conn.ctx).TamSecurityAdvisory(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -790,100 +782,99 @@ func resourceTamSecurityAdvisoryRead(d *schema.ResourceData, meta interface{}) e
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("actions", flattenListTamAction(s.Actions, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Actions: %+v", err)
 	}
 
 	if err := d.Set("advisory_id", (s.AdvisoryId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AdvisoryId: %+v", err)
 	}
 
 	if err := d.Set("api_data_sources", flattenListTamApiDataSource(s.ApiDataSources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ApiDataSources: %+v", err)
 	}
 
 	if err := d.Set("base_score", (s.BaseScore)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property BaseScore: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("cve_ids", (s.CveIds)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property CveIds: %+v", err)
 	}
 
 	if err := d.Set("date_published", (s.DatePublished).String()); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property DatePublished: %+v", err)
 	}
 
 	if err := d.Set("date_updated", (s.DateUpdated).String()); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property DateUpdated: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("environmental_score", (s.EnvironmentalScore)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnvironmentalScore: %+v", err)
 	}
 
 	if err := d.Set("external_url", (s.ExternalUrl)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ExternalUrl: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("recommendation", (s.Recommendation)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Recommendation: %+v", err)
 	}
 
 	if err := d.Set("severity", flattenMapTamSeverity(s.Severity, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 	}
 
 	if err := d.Set("state", (s.State)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property State: %+v", err)
 	}
 
 	if err := d.Set("status", (s.Status)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("temporal_score", (s.TemporalScore)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TemporalScore: %+v", err)
 	}
 
-	if err := d.Set("version", (s.Version)); err != nil {
-		return err
+	if err := d.Set("nr_version", (s.Version)); err != nil {
+		return fmt.Errorf("error occurred while setting property Version: %+v", err)
+	}
+
+	if err := d.Set("workaround", (s.Workaround)); err != nil {
+		return fmt.Errorf("error occurred while setting property Workaround: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -895,7 +886,7 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewTamSecurityAdvisory()
+	var o = models.NewTamSecurityAdvisoryWithDefaults()
 	if d.HasChange("actions") {
 		v := d.Get("actions")
 		x := make([]models.TamAction, 0)
@@ -930,7 +921,12 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.Identifiers")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["value"]; ok {
 							{
 								x := (v.(string))
@@ -939,7 +935,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetIdentifiers(x)
+					if len(x) > 0 {
+						o.SetIdentifiers(x)
+					}
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -948,7 +946,12 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("tam.Action")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["operation_type"]; ok {
 				{
 					x := (v.(string))
@@ -969,7 +972,12 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.QueryEntry")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["priority"]; ok {
 							{
 								x := int64(v.(int))
@@ -984,7 +992,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetQueries(x)
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
 				}
 			}
 			if v, ok := l["type"]; ok {
@@ -995,7 +1005,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetActions(x)
+		if len(x) > 0 {
+			o.SetActions(x)
+		}
 	}
 
 	if d.HasChange("advisory_id") {
@@ -1024,7 +1036,12 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("tam.ApiDataSource")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["queries"]; ok {
 				{
 					x := make([]models.TamQueryEntry, 0)
@@ -1039,7 +1056,12 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("tam.QueryEntry")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["priority"]; ok {
 							{
 								x := int64(v.(int))
@@ -1054,7 +1076,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 						}
 						x = append(x, *o)
 					}
-					o.SetQueries(x)
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
 				}
 			}
 			if v, ok := l["type"]; ok {
@@ -1065,7 +1089,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetApiDataSources(x)
+		if len(x) > 0 {
+			o.SetApiDataSources(x)
+		}
 	}
 
 	if d.HasChange("base_score") {
@@ -1074,6 +1100,8 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 		o.SetBaseScore(x)
 	}
 
+	o.SetClassId("tam.SecurityAdvisory")
+
 	if d.HasChange("cve_ids") {
 		v := d.Get("cve_ids")
 		x := make([]string, 0)
@@ -1081,7 +1109,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetCveIds(x)
+		if len(x) > 0 {
+			o.SetCveIds(x)
+		}
 	}
 
 	if d.HasChange("date_published") {
@@ -1126,68 +1156,40 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 		o.SetName(x)
 	}
 
+	o.SetObjectType("tam.SecurityAdvisory")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("recommendation") {
@@ -1199,15 +1201,23 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 	if d.HasChange("severity") {
 		v := d.Get("severity")
 		p := make([]models.TamSeverity, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewTamSeverityWithDefaults()
 			o.SetClassId("tam.Severity")
-			o.SetObjectType("tam.Severity")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetSeverity(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSeverity(x)
+		}
 	}
 
 	if d.HasChange("state") {
@@ -1243,7 +1253,9 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("temporal_score") {
@@ -1252,16 +1264,22 @@ func resourceTamSecurityAdvisoryUpdate(d *schema.ResourceData, meta interface{})
 		o.SetTemporalScore(x)
 	}
 
-	if d.HasChange("version") {
-		v := d.Get("version")
+	if d.HasChange("nr_version") {
+		v := d.Get("nr_version")
 		x := (v.(string))
 		o.SetVersion(x)
+	}
+
+	if d.HasChange("workaround") {
+		v := d.Get("workaround")
+		x := (v.(string))
+		o.SetWorkaround(x)
 	}
 
 	r := conn.ApiClient.TamApi.UpdateTamSecurityAdvisory(conn.ctx, d.Id()).TamSecurityAdvisory(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1272,11 +1290,10 @@ func resourceTamSecurityAdvisoryDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.TamApi.DeleteTamSecurityAdvisory(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.TamApi.DeleteTamSecurityAdvisory(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -76,16 +76,15 @@ func flattenListAdapterAdapterConfig(p *[]models.AdapterAdapterConfig, d *schema
 	}
 	return adapteradapterconfigs
 }
-func flattenListAdapterExtEthInterfaceRelationship(p *[]models.AdapterExtEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterExtEthInterfaceRelationship(p []models.AdapterExtEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterextethinterfacerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AdapterExtEthInterfaceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		adapterextethinterfacerelationship := make(map[string]interface{})
 		adapterextethinterfacerelationship["class_id"] = item.ClassId
-		adapterextethinterfacerelationship["link"] = item.Link
 		adapterextethinterfacerelationship["moid"] = item.Moid
 		adapterextethinterfacerelationship["object_type"] = item.ObjectType
 		adapterextethinterfacerelationship["selector"] = item.Selector
@@ -93,16 +92,15 @@ func flattenListAdapterExtEthInterfaceRelationship(p *[]models.AdapterExtEthInte
 	}
 	return adapterextethinterfacerelationships
 }
-func flattenListAdapterHostEthInterfaceRelationship(p *[]models.AdapterHostEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterHostEthInterfaceRelationship(p []models.AdapterHostEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostethinterfacerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AdapterHostEthInterfaceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		adapterhostethinterfacerelationship := make(map[string]interface{})
 		adapterhostethinterfacerelationship["class_id"] = item.ClassId
-		adapterhostethinterfacerelationship["link"] = item.Link
 		adapterhostethinterfacerelationship["moid"] = item.Moid
 		adapterhostethinterfacerelationship["object_type"] = item.ObjectType
 		adapterhostethinterfacerelationship["selector"] = item.Selector
@@ -110,16 +108,15 @@ func flattenListAdapterHostEthInterfaceRelationship(p *[]models.AdapterHostEthIn
 	}
 	return adapterhostethinterfacerelationships
 }
-func flattenListAdapterHostFcInterfaceRelationship(p *[]models.AdapterHostFcInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterHostFcInterfaceRelationship(p []models.AdapterHostFcInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostfcinterfacerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AdapterHostFcInterfaceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		adapterhostfcinterfacerelationship := make(map[string]interface{})
 		adapterhostfcinterfacerelationship["class_id"] = item.ClassId
-		adapterhostfcinterfacerelationship["link"] = item.Link
 		adapterhostfcinterfacerelationship["moid"] = item.Moid
 		adapterhostfcinterfacerelationship["object_type"] = item.ObjectType
 		adapterhostfcinterfacerelationship["selector"] = item.Selector
@@ -127,16 +124,15 @@ func flattenListAdapterHostFcInterfaceRelationship(p *[]models.AdapterHostFcInte
 	}
 	return adapterhostfcinterfacerelationships
 }
-func flattenListAdapterHostIscsiInterfaceRelationship(p *[]models.AdapterHostIscsiInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterHostIscsiInterfaceRelationship(p []models.AdapterHostIscsiInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostiscsiinterfacerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AdapterHostIscsiInterfaceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		adapterhostiscsiinterfacerelationship := make(map[string]interface{})
 		adapterhostiscsiinterfacerelationship["class_id"] = item.ClassId
-		adapterhostiscsiinterfacerelationship["link"] = item.Link
 		adapterhostiscsiinterfacerelationship["moid"] = item.Moid
 		adapterhostiscsiinterfacerelationship["object_type"] = item.ObjectType
 		adapterhostiscsiinterfacerelationship["selector"] = item.Selector
@@ -144,16 +140,15 @@ func flattenListAdapterHostIscsiInterfaceRelationship(p *[]models.AdapterHostIsc
 	}
 	return adapterhostiscsiinterfacerelationships
 }
-func flattenListAdapterUnitRelationship(p *[]models.AdapterUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterUnitRelationship(p []models.AdapterUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AdapterUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		adapterunitrelationship := make(map[string]interface{})
 		adapterunitrelationship["class_id"] = item.ClassId
-		adapterunitrelationship["link"] = item.Link
 		adapterunitrelationship["moid"] = item.Moid
 		adapterunitrelationship["object_type"] = item.ObjectType
 		adapterunitrelationship["selector"] = item.Selector
@@ -161,16 +156,15 @@ func flattenListAdapterUnitRelationship(p *[]models.AdapterUnitRelationship, d *
 	}
 	return adapterunitrelationships
 }
-func flattenListApplianceDataExportPolicyRelationship(p *[]models.ApplianceDataExportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListApplianceDataExportPolicyRelationship(p []models.ApplianceDataExportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var appliancedataexportpolicyrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ApplianceDataExportPolicyRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		appliancedataexportpolicyrelationship := make(map[string]interface{})
 		appliancedataexportpolicyrelationship["class_id"] = item.ClassId
-		appliancedataexportpolicyrelationship["link"] = item.Link
 		appliancedataexportpolicyrelationship["moid"] = item.Moid
 		appliancedataexportpolicyrelationship["object_type"] = item.ObjectType
 		appliancedataexportpolicyrelationship["selector"] = item.Selector
@@ -193,16 +187,15 @@ func flattenListApplianceKeyValuePair(p *[]models.ApplianceKeyValuePair, d *sche
 	}
 	return appliancekeyvaluepairs
 }
-func flattenListAssetClusterMemberRelationship(p *[]models.AssetClusterMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAssetClusterMemberRelationship(p []models.AssetClusterMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetclustermemberrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.AssetClusterMemberRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		assetclustermemberrelationship := make(map[string]interface{})
 		assetclustermemberrelationship["class_id"] = item.ClassId
-		assetclustermemberrelationship["link"] = item.Link
 		assetclustermemberrelationship["moid"] = item.Moid
 		assetclustermemberrelationship["object_type"] = item.ObjectType
 		assetclustermemberrelationship["selector"] = item.Selector
@@ -210,16 +203,72 @@ func flattenListAssetClusterMemberRelationship(p *[]models.AssetClusterMemberRel
 	}
 	return assetclustermemberrelationships
 }
-func flattenListBiosUnitRelationship(p *[]models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var biosunitrelationships []map[string]interface{}
+func flattenListAssetConnection(p *[]models.AssetConnection, d *schema.ResourceData) []map[string]interface{} {
+	var assetconnections []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.BiosUnitRelationshipInterface.(*models.MoMoRef)
+		assetconnection := make(map[string]interface{})
+		assetconnection["class_id"] = item.ClassId
+		assetconnection["object_type"] = item.ObjectType
+		assetconnections = append(assetconnections, assetconnection)
+	}
+	return assetconnections
+}
+func flattenListAssetService(p *[]models.AssetService, d *schema.ResourceData) []map[string]interface{} {
+	var assetservices []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		assetservice := make(map[string]interface{})
+		assetservice["class_id"] = item.ClassId
+		assetservice["object_type"] = item.ObjectType
+		assetservice["options"] = (func(p *models.AssetServiceOptions, d *schema.ResourceData) []map[string]interface{} {
+			var assetserviceoptionss []map[string]interface{}
+			if p == nil {
+				return nil
+			}
+			item := *p
+			assetserviceoptions := make(map[string]interface{})
+			assetserviceoptions["class_id"] = item.ClassId
+			assetserviceoptions["object_type"] = item.ObjectType
+
+			assetserviceoptionss = append(assetserviceoptionss, assetserviceoptions)
+			return assetserviceoptionss
+		})(item.Options, d)
+		assetservice["status"] = item.Status
+		assetservice["status_error_reason"] = item.StatusErrorReason
+		assetservices = append(assetservices, assetservice)
+	}
+	return assetservices
+}
+func flattenListBiosBootDeviceRelationship(p []models.BiosBootDeviceRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var biosbootdevicerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		biosbootdevicerelationship := make(map[string]interface{})
+		biosbootdevicerelationship["class_id"] = item.ClassId
+		biosbootdevicerelationship["moid"] = item.Moid
+		biosbootdevicerelationship["object_type"] = item.ObjectType
+		biosbootdevicerelationship["selector"] = item.Selector
+		biosbootdevicerelationships = append(biosbootdevicerelationships, biosbootdevicerelationship)
+	}
+	return biosbootdevicerelationships
+}
+func flattenListBiosUnitRelationship(p []models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var biosunitrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		biosunitrelationship := make(map[string]interface{})
 		biosunitrelationship["class_id"] = item.ClassId
-		biosunitrelationship["link"] = item.Link
 		biosunitrelationship["moid"] = item.Moid
 		biosunitrelationship["object_type"] = item.ObjectType
 		biosunitrelationship["selector"] = item.Selector
@@ -242,16 +291,48 @@ func flattenListBootDeviceBase(p *[]models.BootDeviceBase, d *schema.ResourceDat
 	}
 	return bootdevicebases
 }
-func flattenListComputeBladeRelationship(p *[]models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var computebladerelationships []map[string]interface{}
+func flattenListCapabilityCapabilityRelationship(p []models.CapabilityCapabilityRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitycapabilityrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		capabilitycapabilityrelationship := make(map[string]interface{})
+		capabilitycapabilityrelationship["class_id"] = item.ClassId
+		capabilitycapabilityrelationship["moid"] = item.Moid
+		capabilitycapabilityrelationship["object_type"] = item.ObjectType
+		capabilitycapabilityrelationship["selector"] = item.Selector
+		capabilitycapabilityrelationships = append(capabilitycapabilityrelationships, capabilitycapabilityrelationship)
+	}
+	return capabilitycapabilityrelationships
+}
+func flattenListCapabilityPortRange(p *[]models.CapabilityPortRange, d *schema.ResourceData) []map[string]interface{} {
+	var capabilityportranges []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.ComputeBladeRelationshipInterface.(*models.MoMoRef)
+		capabilityportrange := make(map[string]interface{})
+		capabilityportrange["class_id"] = item.ClassId
+		capabilityportrange["end_port_id"] = item.EndPortId
+		capabilityportrange["end_slot_id"] = item.EndSlotId
+		capabilityportrange["object_type"] = item.ObjectType
+		capabilityportrange["start_port_id"] = item.StartPortId
+		capabilityportrange["start_slot_id"] = item.StartSlotId
+		capabilityportranges = append(capabilityportranges, capabilityportrange)
+	}
+	return capabilityportranges
+}
+func flattenListComputeBladeRelationship(p []models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var computebladerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		computebladerelationship := make(map[string]interface{})
 		computebladerelationship["class_id"] = item.ClassId
-		computebladerelationship["link"] = item.Link
 		computebladerelationship["moid"] = item.Moid
 		computebladerelationship["object_type"] = item.ObjectType
 		computebladerelationship["selector"] = item.Selector
@@ -274,6 +355,7 @@ func flattenListComputeIpAddress(p *[]models.ComputeIpAddress, d *schema.Resourc
 		computeipaddress["http_port"] = item.HttpPort
 		computeipaddress["https_port"] = item.HttpsPort
 		computeipaddress["kvm_port"] = item.KvmPort
+		computeipaddress["kvm_vlan"] = item.KvmVlan
 		computeipaddress["name"] = item.Name
 		computeipaddress["object_type"] = item.ObjectType
 		computeipaddress["subnet"] = item.Subnet
@@ -282,16 +364,15 @@ func flattenListComputeIpAddress(p *[]models.ComputeIpAddress, d *schema.Resourc
 	}
 	return computeipaddresss
 }
-func flattenListComputeRackUnitRelationship(p *[]models.ComputeRackUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListComputeRackUnitRelationship(p []models.ComputeRackUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computerackunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ComputeRackUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		computerackunitrelationship := make(map[string]interface{})
 		computerackunitrelationship["class_id"] = item.ClassId
-		computerackunitrelationship["link"] = item.Link
 		computerackunitrelationship["moid"] = item.Moid
 		computerackunitrelationship["object_type"] = item.ObjectType
 		computerackunitrelationship["selector"] = item.Selector
@@ -299,16 +380,15 @@ func flattenListComputeRackUnitRelationship(p *[]models.ComputeRackUnitRelations
 	}
 	return computerackunitrelationships
 }
-func flattenListCondHclStatusDetailRelationship(p *[]models.CondHclStatusDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListCondHclStatusDetailRelationship(p []models.CondHclStatusDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var condhclstatusdetailrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.CondHclStatusDetailRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		condhclstatusdetailrelationship := make(map[string]interface{})
 		condhclstatusdetailrelationship["class_id"] = item.ClassId
-		condhclstatusdetailrelationship["link"] = item.Link
 		condhclstatusdetailrelationship["moid"] = item.Moid
 		condhclstatusdetailrelationship["object_type"] = item.ObjectType
 		condhclstatusdetailrelationship["selector"] = item.Selector
@@ -316,16 +396,129 @@ func flattenListCondHclStatusDetailRelationship(p *[]models.CondHclStatusDetailR
 	}
 	return condhclstatusdetailrelationships
 }
-func flattenListEquipmentFanRelationship(p *[]models.EquipmentFanRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var equipmentfanrelationships []map[string]interface{}
+func flattenListConfigExportedItemRelationship(p []models.ConfigExportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var configexporteditemrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		configexporteditemrelationship := make(map[string]interface{})
+		configexporteditemrelationship["class_id"] = item.ClassId
+		configexporteditemrelationship["moid"] = item.Moid
+		configexporteditemrelationship["object_type"] = item.ObjectType
+		configexporteditemrelationship["selector"] = item.Selector
+		configexporteditemrelationships = append(configexporteditemrelationships, configexporteditemrelationship)
+	}
+	return configexporteditemrelationships
+}
+func flattenListConfigImportedItemRelationship(p []models.ConfigImportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var configimporteditemrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		configimporteditemrelationship := make(map[string]interface{})
+		configimporteditemrelationship["class_id"] = item.ClassId
+		configimporteditemrelationship["moid"] = item.Moid
+		configimporteditemrelationship["object_type"] = item.ObjectType
+		configimporteditemrelationship["selector"] = item.Selector
+		configimporteditemrelationships = append(configimporteditemrelationships, configimporteditemrelationship)
+	}
+	return configimporteditemrelationships
+}
+func flattenListConfigMoRef(p *[]models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
+	var configmorefs []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.EquipmentFanRelationshipInterface.(*models.MoMoRef)
+		configmoref := make(map[string]interface{})
+		configmoref["class_id"] = item.ClassId
+		configmoref["moid"] = item.Moid
+		configmoref["object_type"] = item.ObjectType
+		configmorefs = append(configmorefs, configmoref)
+	}
+	return configmorefs
+}
+func flattenListConnectorpackConnectorPackUpdate(p *[]models.ConnectorpackConnectorPackUpdate, d *schema.ResourceData) []map[string]interface{} {
+	var connectorpackconnectorpackupdates []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		connectorpackconnectorpackupdate := make(map[string]interface{})
+		connectorpackconnectorpackupdate["class_id"] = item.ClassId
+		connectorpackconnectorpackupdate["current_version"] = item.CurrentVersion
+		connectorpackconnectorpackupdate["name"] = item.Name
+		connectorpackconnectorpackupdate["new_version"] = item.NewVersion
+		connectorpackconnectorpackupdate["object_type"] = item.ObjectType
+		connectorpackconnectorpackupdates = append(connectorpackconnectorpackupdates, connectorpackconnectorpackupdate)
+	}
+	return connectorpackconnectorpackupdates
+}
+func flattenListContentComplexType(p *[]models.ContentComplexType, d *schema.ResourceData) []map[string]interface{} {
+	var contentcomplextypes []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		contentcomplextype := make(map[string]interface{})
+		contentcomplextype["class_id"] = item.ClassId
+		contentcomplextype["name"] = item.Name
+		contentcomplextype["object_type"] = item.ObjectType
+		contentcomplextype["parameters"] = (func(p *[]models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
+			var contentbaseparameters []map[string]interface{}
+			if *p == nil {
+				return nil
+			}
+			for _, item := range *p {
+				contentbaseparameter := make(map[string]interface{})
+				contentbaseparameter["accept_single_value"] = item.AcceptSingleValue
+				contentbaseparameter["class_id"] = item.ClassId
+				contentbaseparameter["complex_type"] = item.ComplexType
+				contentbaseparameter["item_type"] = item.ItemType
+				contentbaseparameter["name"] = item.Name
+				contentbaseparameter["object_type"] = item.ObjectType
+				contentbaseparameter["path"] = item.Path
+				contentbaseparameter["type"] = item.Type
+				contentbaseparameters = append(contentbaseparameters, contentbaseparameter)
+			}
+			return contentbaseparameters
+		})(item.Parameters, d)
+		contentcomplextypes = append(contentcomplextypes, contentcomplextype)
+	}
+	return contentcomplextypes
+}
+func flattenListContentParameter(p *[]models.ContentParameter, d *schema.ResourceData) []map[string]interface{} {
+	var contentparameters []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		contentparameter := make(map[string]interface{})
+		contentparameter["accept_single_value"] = item.AcceptSingleValue
+		contentparameter["class_id"] = item.ClassId
+		contentparameter["complex_type"] = item.ComplexType
+		contentparameter["item_type"] = item.ItemType
+		contentparameter["name"] = item.Name
+		contentparameter["object_type"] = item.ObjectType
+		contentparameter["path"] = item.Path
+		contentparameter["type"] = item.Type
+		contentparameters = append(contentparameters, contentparameter)
+	}
+	return contentparameters
+}
+func flattenListEquipmentFanRelationship(p []models.EquipmentFanRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentfanrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentfanrelationship := make(map[string]interface{})
 		equipmentfanrelationship["class_id"] = item.ClassId
-		equipmentfanrelationship["link"] = item.Link
 		equipmentfanrelationship["moid"] = item.Moid
 		equipmentfanrelationship["object_type"] = item.ObjectType
 		equipmentfanrelationship["selector"] = item.Selector
@@ -333,16 +526,15 @@ func flattenListEquipmentFanRelationship(p *[]models.EquipmentFanRelationship, d
 	}
 	return equipmentfanrelationships
 }
-func flattenListEquipmentFanModuleRelationship(p *[]models.EquipmentFanModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentFanModuleRelationship(p []models.EquipmentFanModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentfanmodulerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentFanModuleRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentfanmodulerelationship := make(map[string]interface{})
 		equipmentfanmodulerelationship["class_id"] = item.ClassId
-		equipmentfanmodulerelationship["link"] = item.Link
 		equipmentfanmodulerelationship["moid"] = item.Moid
 		equipmentfanmodulerelationship["object_type"] = item.ObjectType
 		equipmentfanmodulerelationship["selector"] = item.Selector
@@ -350,16 +542,15 @@ func flattenListEquipmentFanModuleRelationship(p *[]models.EquipmentFanModuleRel
 	}
 	return equipmentfanmodulerelationships
 }
-func flattenListEquipmentIoCardRelationship(p *[]models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentIoCardRelationship(p []models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentiocardrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentIoCardRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentiocardrelationship := make(map[string]interface{})
 		equipmentiocardrelationship["class_id"] = item.ClassId
-		equipmentiocardrelationship["link"] = item.Link
 		equipmentiocardrelationship["moid"] = item.Moid
 		equipmentiocardrelationship["object_type"] = item.ObjectType
 		equipmentiocardrelationship["selector"] = item.Selector
@@ -367,16 +558,32 @@ func flattenListEquipmentIoCardRelationship(p *[]models.EquipmentIoCardRelations
 	}
 	return equipmentiocardrelationships
 }
-func flattenListEquipmentIoExpanderRelationship(p *[]models.EquipmentIoExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var equipmentioexpanderrelationships []map[string]interface{}
+func flattenListEquipmentIoCardIdentity(p *[]models.EquipmentIoCardIdentity, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentiocardidentitys []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.EquipmentIoExpanderRelationshipInterface.(*models.MoMoRef)
+		equipmentiocardidentity := make(map[string]interface{})
+		equipmentiocardidentity["class_id"] = item.ClassId
+		equipmentiocardidentity["io_card_moid"] = item.IoCardMoid
+		equipmentiocardidentity["module_id"] = item.ModuleId
+		equipmentiocardidentity["network_element_moid"] = item.NetworkElementMoid
+		equipmentiocardidentity["object_type"] = item.ObjectType
+		equipmentiocardidentity["switch_id"] = item.SwitchId
+		equipmentiocardidentitys = append(equipmentiocardidentitys, equipmentiocardidentity)
+	}
+	return equipmentiocardidentitys
+}
+func flattenListEquipmentIoExpanderRelationship(p []models.EquipmentIoExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentioexpanderrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentioexpanderrelationship := make(map[string]interface{})
 		equipmentioexpanderrelationship["class_id"] = item.ClassId
-		equipmentioexpanderrelationship["link"] = item.Link
 		equipmentioexpanderrelationship["moid"] = item.Moid
 		equipmentioexpanderrelationship["object_type"] = item.ObjectType
 		equipmentioexpanderrelationship["selector"] = item.Selector
@@ -384,16 +591,15 @@ func flattenListEquipmentIoExpanderRelationship(p *[]models.EquipmentIoExpanderR
 	}
 	return equipmentioexpanderrelationships
 }
-func flattenListEquipmentPsuRelationship(p *[]models.EquipmentPsuRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentPsuRelationship(p []models.EquipmentPsuRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentpsurelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentPsuRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentpsurelationship := make(map[string]interface{})
 		equipmentpsurelationship["class_id"] = item.ClassId
-		equipmentpsurelationship["link"] = item.Link
 		equipmentpsurelationship["moid"] = item.Moid
 		equipmentpsurelationship["object_type"] = item.ObjectType
 		equipmentpsurelationship["selector"] = item.Selector
@@ -401,16 +607,15 @@ func flattenListEquipmentPsuRelationship(p *[]models.EquipmentPsuRelationship, d
 	}
 	return equipmentpsurelationships
 }
-func flattenListEquipmentRackEnclosureSlotRelationship(p *[]models.EquipmentRackEnclosureSlotRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentRackEnclosureSlotRelationship(p []models.EquipmentRackEnclosureSlotRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentrackenclosureslotrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentRackEnclosureSlotRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentrackenclosureslotrelationship := make(map[string]interface{})
 		equipmentrackenclosureslotrelationship["class_id"] = item.ClassId
-		equipmentrackenclosureslotrelationship["link"] = item.Link
 		equipmentrackenclosureslotrelationship["moid"] = item.Moid
 		equipmentrackenclosureslotrelationship["object_type"] = item.ObjectType
 		equipmentrackenclosureslotrelationship["selector"] = item.Selector
@@ -418,16 +623,15 @@ func flattenListEquipmentRackEnclosureSlotRelationship(p *[]models.EquipmentRack
 	}
 	return equipmentrackenclosureslotrelationships
 }
-func flattenListEquipmentSwitchCardRelationship(p *[]models.EquipmentSwitchCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentSwitchCardRelationship(p []models.EquipmentSwitchCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentswitchcardrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentSwitchCardRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentswitchcardrelationship := make(map[string]interface{})
 		equipmentswitchcardrelationship["class_id"] = item.ClassId
-		equipmentswitchcardrelationship["link"] = item.Link
 		equipmentswitchcardrelationship["moid"] = item.Moid
 		equipmentswitchcardrelationship["object_type"] = item.ObjectType
 		equipmentswitchcardrelationship["selector"] = item.Selector
@@ -435,16 +639,15 @@ func flattenListEquipmentSwitchCardRelationship(p *[]models.EquipmentSwitchCardR
 	}
 	return equipmentswitchcardrelationships
 }
-func flattenListEquipmentSystemIoControllerRelationship(p *[]models.EquipmentSystemIoControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentSystemIoControllerRelationship(p []models.EquipmentSystemIoControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentsystemiocontrollerrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentSystemIoControllerRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmentsystemiocontrollerrelationship := make(map[string]interface{})
 		equipmentsystemiocontrollerrelationship["class_id"] = item.ClassId
-		equipmentsystemiocontrollerrelationship["link"] = item.Link
 		equipmentsystemiocontrollerrelationship["moid"] = item.Moid
 		equipmentsystemiocontrollerrelationship["object_type"] = item.ObjectType
 		equipmentsystemiocontrollerrelationship["selector"] = item.Selector
@@ -452,16 +655,15 @@ func flattenListEquipmentSystemIoControllerRelationship(p *[]models.EquipmentSys
 	}
 	return equipmentsystemiocontrollerrelationships
 }
-func flattenListEquipmentTpmRelationship(p *[]models.EquipmentTpmRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentTpmRelationship(p []models.EquipmentTpmRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmenttpmrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EquipmentTpmRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		equipmenttpmrelationship := make(map[string]interface{})
 		equipmenttpmrelationship["class_id"] = item.ClassId
-		equipmenttpmrelationship["link"] = item.Link
 		equipmenttpmrelationship["moid"] = item.Moid
 		equipmenttpmrelationship["object_type"] = item.ObjectType
 		equipmenttpmrelationship["selector"] = item.Selector
@@ -469,16 +671,47 @@ func flattenListEquipmentTpmRelationship(p *[]models.EquipmentTpmRelationship, d
 	}
 	return equipmenttpmrelationships
 }
-func flattenListEtherPhysicalPortRelationship(p *[]models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var etherphysicalportrelationships []map[string]interface{}
-	if *p == nil {
+func flattenListEtherHostPortRelationship(p []models.EtherHostPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var etherhostportrelationships []map[string]interface{}
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.EtherPhysicalPortRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
+		etherhostportrelationship := make(map[string]interface{})
+		etherhostportrelationship["class_id"] = item.ClassId
+		etherhostportrelationship["moid"] = item.Moid
+		etherhostportrelationship["object_type"] = item.ObjectType
+		etherhostportrelationship["selector"] = item.Selector
+		etherhostportrelationships = append(etherhostportrelationships, etherhostportrelationship)
+	}
+	return etherhostportrelationships
+}
+func flattenListEtherNetworkPortRelationship(p []models.EtherNetworkPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ethernetworkportrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		ethernetworkportrelationship := make(map[string]interface{})
+		ethernetworkportrelationship["class_id"] = item.ClassId
+		ethernetworkportrelationship["moid"] = item.Moid
+		ethernetworkportrelationship["object_type"] = item.ObjectType
+		ethernetworkportrelationship["selector"] = item.Selector
+		ethernetworkportrelationships = append(ethernetworkportrelationships, ethernetworkportrelationship)
+	}
+	return ethernetworkportrelationships
+}
+func flattenListEtherPhysicalPortRelationship(p []models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var etherphysicalportrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		etherphysicalportrelationship := make(map[string]interface{})
 		etherphysicalportrelationship["class_id"] = item.ClassId
-		etherphysicalportrelationship["link"] = item.Link
 		etherphysicalportrelationship["moid"] = item.Moid
 		etherphysicalportrelationship["object_type"] = item.ObjectType
 		etherphysicalportrelationship["selector"] = item.Selector
@@ -486,16 +719,116 @@ func flattenListEtherPhysicalPortRelationship(p *[]models.EtherPhysicalPortRelat
 	}
 	return etherphysicalportrelationships
 }
-func flattenListFcPhysicalPortRelationship(p *[]models.FcPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var fcphysicalportrelationships []map[string]interface{}
+func flattenListEtherPortChannelRelationship(p []models.EtherPortChannelRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var etherportchannelrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		etherportchannelrelationship := make(map[string]interface{})
+		etherportchannelrelationship["class_id"] = item.ClassId
+		etherportchannelrelationship["moid"] = item.Moid
+		etherportchannelrelationship["object_type"] = item.ObjectType
+		etherportchannelrelationship["selector"] = item.Selector
+		etherportchannelrelationships = append(etherportchannelrelationships, etherportchannelrelationship)
+	}
+	return etherportchannelrelationships
+}
+func flattenListFabricConfigChangeDetailRelationship(p []models.FabricConfigChangeDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricconfigchangedetailrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		fabricconfigchangedetailrelationship := make(map[string]interface{})
+		fabricconfigchangedetailrelationship["class_id"] = item.ClassId
+		fabricconfigchangedetailrelationship["moid"] = item.Moid
+		fabricconfigchangedetailrelationship["object_type"] = item.ObjectType
+		fabricconfigchangedetailrelationship["selector"] = item.Selector
+		fabricconfigchangedetailrelationships = append(fabricconfigchangedetailrelationships, fabricconfigchangedetailrelationship)
+	}
+	return fabricconfigchangedetailrelationships
+}
+func flattenListFabricConfigResultEntryRelationship(p []models.FabricConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricconfigresultentryrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		fabricconfigresultentryrelationship := make(map[string]interface{})
+		fabricconfigresultentryrelationship["class_id"] = item.ClassId
+		fabricconfigresultentryrelationship["moid"] = item.Moid
+		fabricconfigresultentryrelationship["object_type"] = item.ObjectType
+		fabricconfigresultentryrelationship["selector"] = item.Selector
+		fabricconfigresultentryrelationships = append(fabricconfigresultentryrelationships, fabricconfigresultentryrelationship)
+	}
+	return fabricconfigresultentryrelationships
+}
+func flattenListFabricPortIdentifier(p *[]models.FabricPortIdentifier, d *schema.ResourceData) []map[string]interface{} {
+	var fabricportidentifiers []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.FcPhysicalPortRelationshipInterface.(*models.MoMoRef)
+		fabricportidentifier := make(map[string]interface{})
+		fabricportidentifier["aggregate_port_id"] = item.AggregatePortId
+		fabricportidentifier["class_id"] = item.ClassId
+		fabricportidentifier["object_type"] = item.ObjectType
+		fabricportidentifier["port_id"] = item.PortId
+		fabricportidentifier["slot_id"] = item.SlotId
+		fabricportidentifiers = append(fabricportidentifiers, fabricportidentifier)
+	}
+	return fabricportidentifiers
+}
+func flattenListFabricQosClass(p *[]models.FabricQosClass, d *schema.ResourceData) []map[string]interface{} {
+	var fabricqosclasss []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		fabricqosclass := make(map[string]interface{})
+		fabricqosclass["admin_state"] = item.AdminState
+		fabricqosclass["bandwidth_percent"] = item.BandwidthPercent
+		fabricqosclass["class_id"] = item.ClassId
+		fabricqosclass["cos"] = item.Cos
+		fabricqosclass["mtu"] = item.Mtu
+		fabricqosclass["multicast_optimize"] = item.MulticastOptimize
+		fabricqosclass["name"] = item.Name
+		fabricqosclass["object_type"] = item.ObjectType
+		fabricqosclass["packet_drop"] = item.PacketDrop
+		fabricqosclass["weight"] = item.Weight
+		fabricqosclasss = append(fabricqosclasss, fabricqosclass)
+	}
+	return fabricqosclasss
+}
+func flattenListFabricSwitchProfileRelationship(p []models.FabricSwitchProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricswitchprofilerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		fabricswitchprofilerelationship := make(map[string]interface{})
+		fabricswitchprofilerelationship["class_id"] = item.ClassId
+		fabricswitchprofilerelationship["moid"] = item.Moid
+		fabricswitchprofilerelationship["object_type"] = item.ObjectType
+		fabricswitchprofilerelationship["selector"] = item.Selector
+		fabricswitchprofilerelationships = append(fabricswitchprofilerelationships, fabricswitchprofilerelationship)
+	}
+	return fabricswitchprofilerelationships
+}
+func flattenListFcPhysicalPortRelationship(p []models.FcPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcphysicalportrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		fcphysicalportrelationship := make(map[string]interface{})
 		fcphysicalportrelationship["class_id"] = item.ClassId
-		fcphysicalportrelationship["link"] = item.Link
 		fcphysicalportrelationship["moid"] = item.Moid
 		fcphysicalportrelationship["object_type"] = item.ObjectType
 		fcphysicalportrelationship["selector"] = item.Selector
@@ -503,16 +836,143 @@ func flattenListFcPhysicalPortRelationship(p *[]models.FcPhysicalPortRelationshi
 	}
 	return fcphysicalportrelationships
 }
-func flattenListFirmwareRunningFirmwareRelationship(p *[]models.FirmwareRunningFirmwareRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var firmwarerunningfirmwarerelationships []map[string]interface{}
+func flattenListFcPortChannelRelationship(p []models.FcPortChannelRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcportchannelrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		fcportchannelrelationship := make(map[string]interface{})
+		fcportchannelrelationship["class_id"] = item.ClassId
+		fcportchannelrelationship["moid"] = item.Moid
+		fcportchannelrelationship["object_type"] = item.ObjectType
+		fcportchannelrelationship["selector"] = item.Selector
+		fcportchannelrelationships = append(fcportchannelrelationships, fcportchannelrelationship)
+	}
+	return fcportchannelrelationships
+}
+func flattenListFcpoolBlock(p *[]models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolblocks []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.FirmwareRunningFirmwareRelationshipInterface.(*models.MoMoRef)
+		fcpoolblock := make(map[string]interface{})
+		fcpoolblock["class_id"] = item.ClassId
+		fcpoolblock["from"] = item.From
+		fcpoolblock["object_type"] = item.ObjectType
+		fcpoolblock["size"] = item.Size
+		fcpoolblock["to"] = item.To
+		fcpoolblocks = append(fcpoolblocks, fcpoolblock)
+	}
+	return fcpoolblocks
+}
+func flattenListFcpoolFcBlockRelationship(p []models.FcpoolFcBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolfcblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		fcpoolfcblockrelationship := make(map[string]interface{})
+		fcpoolfcblockrelationship["class_id"] = item.ClassId
+		fcpoolfcblockrelationship["moid"] = item.Moid
+		fcpoolfcblockrelationship["object_type"] = item.ObjectType
+		fcpoolfcblockrelationship["selector"] = item.Selector
+		fcpoolfcblockrelationships = append(fcpoolfcblockrelationships, fcpoolfcblockrelationship)
+	}
+	return fcpoolfcblockrelationships
+}
+func flattenListFirmwareBaseImpact(p *[]models.FirmwareBaseImpact, d *schema.ResourceData) []map[string]interface{} {
+	var firmwarebaseimpacts []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		firmwarebaseimpact := make(map[string]interface{})
+		firmwarebaseimpact["class_id"] = item.ClassId
+		firmwarebaseimpact["computation_error"] = item.ComputationError
+		firmwarebaseimpact["computation_status_detail"] = item.ComputationStatusDetail
+		firmwarebaseimpact["domain_name"] = item.DomainName
+		firmwarebaseimpact["end_point"] = item.EndPoint
+		firmwarebaseimpact["firmware_version"] = item.FirmwareVersion
+		firmwarebaseimpact["impact_type"] = item.ImpactType
+		firmwarebaseimpact["model"] = item.Model
+		firmwarebaseimpact["object_type"] = item.ObjectType
+		firmwarebaseimpact["target_firmware_version"] = item.TargetFirmwareVersion
+		firmwarebaseimpact["version_impact"] = item.VersionImpact
+		firmwarebaseimpacts = append(firmwarebaseimpacts, firmwarebaseimpact)
+	}
+	return firmwarebaseimpacts
+}
+func flattenListFirmwareComponentMeta(p *[]models.FirmwareComponentMeta, d *schema.ResourceData) []map[string]interface{} {
+	var firmwarecomponentmetas []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		firmwarecomponentmeta := make(map[string]interface{})
+		firmwarecomponentmeta["class_id"] = item.ClassId
+		firmwarecomponentmeta["component_label"] = item.ComponentLabel
+		firmwarecomponentmeta["component_type"] = item.ComponentType
+		firmwarecomponentmeta["description"] = item.Description
+		firmwarecomponentmeta["disruption"] = item.Disruption
+		firmwarecomponentmeta["is_oob_supported"] = item.IsOobSupported
+		firmwarecomponentmeta["model"] = item.Model
+		firmwarecomponentmeta["object_type"] = item.ObjectType
+		firmwarecomponentmeta["oob_manageability"] = item.OobManageability
+		firmwarecomponentmeta["packed_version"] = item.PackedVersion
+		firmwarecomponentmeta["redfish_url"] = item.RedfishUrl
+		firmwarecomponentmeta["vendor"] = item.Vendor
+		firmwarecomponentmetas = append(firmwarecomponentmetas, firmwarecomponentmeta)
+	}
+	return firmwarecomponentmetas
+}
+func flattenListFirmwareDistributableMetaRelationship(p []models.FirmwareDistributableMetaRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var firmwaredistributablemetarelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		firmwaredistributablemetarelationship := make(map[string]interface{})
+		firmwaredistributablemetarelationship["class_id"] = item.ClassId
+		firmwaredistributablemetarelationship["moid"] = item.Moid
+		firmwaredistributablemetarelationship["object_type"] = item.ObjectType
+		firmwaredistributablemetarelationship["selector"] = item.Selector
+		firmwaredistributablemetarelationships = append(firmwaredistributablemetarelationships, firmwaredistributablemetarelationship)
+	}
+	return firmwaredistributablemetarelationships
+}
+func flattenListFirmwareFirmwareInventory(p *[]models.FirmwareFirmwareInventory, d *schema.ResourceData) []map[string]interface{} {
+	var firmwarefirmwareinventorys []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		firmwarefirmwareinventory := make(map[string]interface{})
+		firmwarefirmwareinventory["category"] = item.Category
+		firmwarefirmwareinventory["class_id"] = item.ClassId
+		firmwarefirmwareinventory["label"] = item.Label
+		firmwarefirmwareinventory["model"] = item.Model
+		firmwarefirmwareinventory["object_type"] = item.ObjectType
+		firmwarefirmwareinventory["update_uri"] = item.UpdateUri
+		firmwarefirmwareinventory["vendor"] = item.Vendor
+		firmwarefirmwareinventory["nr_version"] = item.Version
+		firmwarefirmwareinventorys = append(firmwarefirmwareinventorys, firmwarefirmwareinventory)
+	}
+	return firmwarefirmwareinventorys
+}
+func flattenListFirmwareRunningFirmwareRelationship(p []models.FirmwareRunningFirmwareRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var firmwarerunningfirmwarerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		firmwarerunningfirmwarerelationship := make(map[string]interface{})
 		firmwarerunningfirmwarerelationship["class_id"] = item.ClassId
-		firmwarerunningfirmwarerelationship["link"] = item.Link
 		firmwarerunningfirmwarerelationship["moid"] = item.Moid
 		firmwarerunningfirmwarerelationship["object_type"] = item.ObjectType
 		firmwarerunningfirmwarerelationship["selector"] = item.Selector
@@ -520,16 +980,15 @@ func flattenListFirmwareRunningFirmwareRelationship(p *[]models.FirmwareRunningF
 	}
 	return firmwarerunningfirmwarerelationships
 }
-func flattenListForecastDefinitionRelationship(p *[]models.ForecastDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListForecastDefinitionRelationship(p []models.ForecastDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var forecastdefinitionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ForecastDefinitionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		forecastdefinitionrelationship := make(map[string]interface{})
 		forecastdefinitionrelationship["class_id"] = item.ClassId
-		forecastdefinitionrelationship["link"] = item.Link
 		forecastdefinitionrelationship["moid"] = item.Moid
 		forecastdefinitionrelationship["object_type"] = item.ObjectType
 		forecastdefinitionrelationship["selector"] = item.Selector
@@ -537,16 +996,15 @@ func flattenListForecastDefinitionRelationship(p *[]models.ForecastDefinitionRel
 	}
 	return forecastdefinitionrelationships
 }
-func flattenListGraphicsCardRelationship(p *[]models.GraphicsCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListGraphicsCardRelationship(p []models.GraphicsCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var graphicscardrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.GraphicsCardRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		graphicscardrelationship := make(map[string]interface{})
 		graphicscardrelationship["class_id"] = item.ClassId
-		graphicscardrelationship["link"] = item.Link
 		graphicscardrelationship["moid"] = item.Moid
 		graphicscardrelationship["object_type"] = item.ObjectType
 		graphicscardrelationship["selector"] = item.Selector
@@ -554,16 +1012,15 @@ func flattenListGraphicsCardRelationship(p *[]models.GraphicsCardRelationship, d
 	}
 	return graphicscardrelationships
 }
-func flattenListGraphicsControllerRelationship(p *[]models.GraphicsControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListGraphicsControllerRelationship(p []models.GraphicsControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var graphicscontrollerrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.GraphicsControllerRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		graphicscontrollerrelationship := make(map[string]interface{})
 		graphicscontrollerrelationship["class_id"] = item.ClassId
-		graphicscontrollerrelationship["link"] = item.Link
 		graphicscontrollerrelationship["moid"] = item.Moid
 		graphicscontrollerrelationship["object_type"] = item.ObjectType
 		graphicscontrollerrelationship["selector"] = item.Selector
@@ -586,16 +1043,15 @@ func flattenListHclConstraint(p *[]models.HclConstraint, d *schema.ResourceData)
 	}
 	return hclconstraints
 }
-func flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(p *[]models.HclHyperflexSoftwareCompatibilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(p []models.HclHyperflexSoftwareCompatibilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hclhyperflexsoftwarecompatibilityinforelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HclHyperflexSoftwareCompatibilityInfoRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hclhyperflexsoftwarecompatibilityinforelationship := make(map[string]interface{})
 		hclhyperflexsoftwarecompatibilityinforelationship["class_id"] = item.ClassId
-		hclhyperflexsoftwarecompatibilityinforelationship["link"] = item.Link
 		hclhyperflexsoftwarecompatibilityinforelationship["moid"] = item.Moid
 		hclhyperflexsoftwarecompatibilityinforelationship["object_type"] = item.ObjectType
 		hclhyperflexsoftwarecompatibilityinforelationship["selector"] = item.Selector
@@ -603,16 +1059,15 @@ func flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(p *[]models.Hc
 	}
 	return hclhyperflexsoftwarecompatibilityinforelationships
 }
-func flattenListHclOperatingSystemRelationship(p *[]models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHclOperatingSystemRelationship(p []models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hcloperatingsystemrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HclOperatingSystemRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hcloperatingsystemrelationship := make(map[string]interface{})
 		hcloperatingsystemrelationship["class_id"] = item.ClassId
-		hcloperatingsystemrelationship["link"] = item.Link
 		hcloperatingsystemrelationship["moid"] = item.Moid
 		hcloperatingsystemrelationship["object_type"] = item.ObjectType
 		hcloperatingsystemrelationship["selector"] = item.Selector
@@ -620,16 +1075,15 @@ func flattenListHclOperatingSystemRelationship(p *[]models.HclOperatingSystemRel
 	}
 	return hcloperatingsystemrelationships
 }
-func flattenListHyperflexAlarmRelationship(p *[]models.HyperflexAlarmRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexAlarmRelationship(p []models.HyperflexAlarmRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexalarmrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexAlarmRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexalarmrelationship := make(map[string]interface{})
 		hyperflexalarmrelationship["class_id"] = item.ClassId
-		hyperflexalarmrelationship["link"] = item.Link
 		hyperflexalarmrelationship["moid"] = item.Moid
 		hyperflexalarmrelationship["object_type"] = item.ObjectType
 		hyperflexalarmrelationship["selector"] = item.Selector
@@ -637,16 +1091,15 @@ func flattenListHyperflexAlarmRelationship(p *[]models.HyperflexAlarmRelationshi
 	}
 	return hyperflexalarmrelationships
 }
-func flattenListHyperflexCapabilityInfoRelationship(p *[]models.HyperflexCapabilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexCapabilityInfoRelationship(p []models.HyperflexCapabilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexcapabilityinforelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexCapabilityInfoRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexcapabilityinforelationship := make(map[string]interface{})
 		hyperflexcapabilityinforelationship["class_id"] = item.ClassId
-		hyperflexcapabilityinforelationship["link"] = item.Link
 		hyperflexcapabilityinforelationship["moid"] = item.Moid
 		hyperflexcapabilityinforelationship["object_type"] = item.ObjectType
 		hyperflexcapabilityinforelationship["selector"] = item.Selector
@@ -654,16 +1107,15 @@ func flattenListHyperflexCapabilityInfoRelationship(p *[]models.HyperflexCapabil
 	}
 	return hyperflexcapabilityinforelationships
 }
-func flattenListHyperflexClusterProfileRelationship(p *[]models.HyperflexClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexClusterProfileRelationship(p []models.HyperflexClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexclusterprofilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexClusterProfileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexclusterprofilerelationship := make(map[string]interface{})
 		hyperflexclusterprofilerelationship["class_id"] = item.ClassId
-		hyperflexclusterprofilerelationship["link"] = item.Link
 		hyperflexclusterprofilerelationship["moid"] = item.Moid
 		hyperflexclusterprofilerelationship["object_type"] = item.ObjectType
 		hyperflexclusterprofilerelationship["selector"] = item.Selector
@@ -671,16 +1123,15 @@ func flattenListHyperflexClusterProfileRelationship(p *[]models.HyperflexCluster
 	}
 	return hyperflexclusterprofilerelationships
 }
-func flattenListHyperflexConfigResultEntryRelationship(p *[]models.HyperflexConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexConfigResultEntryRelationship(p []models.HyperflexConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexconfigresultentryrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexConfigResultEntryRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexconfigresultentryrelationship := make(map[string]interface{})
 		hyperflexconfigresultentryrelationship["class_id"] = item.ClassId
-		hyperflexconfigresultentryrelationship["link"] = item.Link
 		hyperflexconfigresultentryrelationship["moid"] = item.Moid
 		hyperflexconfigresultentryrelationship["object_type"] = item.ObjectType
 		hyperflexconfigresultentryrelationship["selector"] = item.Selector
@@ -754,16 +1205,15 @@ func flattenListHyperflexHxZoneResiliencyInfoDt(p *[]models.HyperflexHxZoneResil
 	}
 	return hyperflexhxzoneresiliencyinfodts
 }
-func flattenListHyperflexHxdpVersionRelationship(p *[]models.HyperflexHxdpVersionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexHxdpVersionRelationship(p []models.HyperflexHxdpVersionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxdpversionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexHxdpVersionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexhxdpversionrelationship := make(map[string]interface{})
 		hyperflexhxdpversionrelationship["class_id"] = item.ClassId
-		hyperflexhxdpversionrelationship["link"] = item.Link
 		hyperflexhxdpversionrelationship["moid"] = item.Moid
 		hyperflexhxdpversionrelationship["object_type"] = item.ObjectType
 		hyperflexhxdpversionrelationship["selector"] = item.Selector
@@ -786,16 +1236,15 @@ func flattenListHyperflexNamedVlan(p *[]models.HyperflexNamedVlan, d *schema.Res
 	}
 	return hyperflexnamedvlans
 }
-func flattenListHyperflexNodeRelationship(p *[]models.HyperflexNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexNodeRelationship(p []models.HyperflexNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnoderelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexNodeRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexnoderelationship := make(map[string]interface{})
 		hyperflexnoderelationship["class_id"] = item.ClassId
-		hyperflexnoderelationship["link"] = item.Link
 		hyperflexnoderelationship["moid"] = item.Moid
 		hyperflexnoderelationship["object_type"] = item.ObjectType
 		hyperflexnoderelationship["selector"] = item.Selector
@@ -803,16 +1252,15 @@ func flattenListHyperflexNodeRelationship(p *[]models.HyperflexNodeRelationship,
 	}
 	return hyperflexnoderelationships
 }
-func flattenListHyperflexNodeProfileRelationship(p *[]models.HyperflexNodeProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexNodeProfileRelationship(p []models.HyperflexNodeProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnodeprofilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.HyperflexNodeProfileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		hyperflexnodeprofilerelationship := make(map[string]interface{})
 		hyperflexnodeprofilerelationship["class_id"] = item.ClassId
-		hyperflexnodeprofilerelationship["link"] = item.Link
 		hyperflexnodeprofilerelationship["moid"] = item.Moid
 		hyperflexnodeprofilerelationship["object_type"] = item.ObjectType
 		hyperflexnodeprofilerelationship["selector"] = item.Selector
@@ -885,16 +1333,15 @@ func flattenListHyperflexServerModelEntry(p *[]models.HyperflexServerModelEntry,
 	}
 	return hyperflexservermodelentrys
 }
-func flattenListIaasConnectorPackRelationship(p *[]models.IaasConnectorPackRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIaasConnectorPackRelationship(p []models.IaasConnectorPackRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasconnectorpackrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IaasConnectorPackRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iaasconnectorpackrelationship := make(map[string]interface{})
 		iaasconnectorpackrelationship["class_id"] = item.ClassId
-		iaasconnectorpackrelationship["link"] = item.Link
 		iaasconnectorpackrelationship["moid"] = item.Moid
 		iaasconnectorpackrelationship["object_type"] = item.ObjectType
 		iaasconnectorpackrelationship["selector"] = item.Selector
@@ -902,16 +1349,15 @@ func flattenListIaasConnectorPackRelationship(p *[]models.IaasConnectorPackRelat
 	}
 	return iaasconnectorpackrelationships
 }
-func flattenListIaasDeviceStatusRelationship(p *[]models.IaasDeviceStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIaasDeviceStatusRelationship(p []models.IaasDeviceStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasdevicestatusrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IaasDeviceStatusRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iaasdevicestatusrelationship := make(map[string]interface{})
 		iaasdevicestatusrelationship["class_id"] = item.ClassId
-		iaasdevicestatusrelationship["link"] = item.Link
 		iaasdevicestatusrelationship["moid"] = item.Moid
 		iaasdevicestatusrelationship["object_type"] = item.ObjectType
 		iaasdevicestatusrelationship["selector"] = item.Selector
@@ -927,7 +1373,7 @@ func flattenListIaasLicenseKeysInfo(p *[]models.IaasLicenseKeysInfo, d *schema.R
 	for _, item := range *p {
 		iaaslicensekeysinfo := make(map[string]interface{})
 		iaaslicensekeysinfo["class_id"] = item.ClassId
-		iaaslicensekeysinfo["count"] = item.Count
+		iaaslicensekeysinfo["nr_count"] = item.Count
 		iaaslicensekeysinfo["expiration_date"] = item.ExpirationDate
 		iaaslicensekeysinfo["license_id"] = item.LicenseId
 		iaaslicensekeysinfo["object_type"] = item.ObjectType
@@ -953,16 +1399,15 @@ func flattenListIaasLicenseUtilizationInfo(p *[]models.IaasLicenseUtilizationInf
 	}
 	return iaaslicenseutilizationinfos
 }
-func flattenListIaasMostRunTasksRelationship(p *[]models.IaasMostRunTasksRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIaasMostRunTasksRelationship(p []models.IaasMostRunTasksRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasmostruntasksrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IaasMostRunTasksRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iaasmostruntasksrelationship := make(map[string]interface{})
 		iaasmostruntasksrelationship["class_id"] = item.ClassId
-		iaasmostruntasksrelationship["link"] = item.Link
 		iaasmostruntasksrelationship["moid"] = item.Moid
 		iaasmostruntasksrelationship["object_type"] = item.ObjectType
 		iaasmostruntasksrelationship["selector"] = item.Selector
@@ -1001,16 +1446,15 @@ func flattenListIamAccountPermissions(p *[]models.IamAccountPermissions, d *sche
 	}
 	return iamaccountpermissionss
 }
-func flattenListIamApiKeyRelationship(p *[]models.IamApiKeyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamApiKeyRelationship(p []models.IamApiKeyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamapikeyrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamApiKeyRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamapikeyrelationship := make(map[string]interface{})
 		iamapikeyrelationship["class_id"] = item.ClassId
-		iamapikeyrelationship["link"] = item.Link
 		iamapikeyrelationship["moid"] = item.Moid
 		iamapikeyrelationship["object_type"] = item.ObjectType
 		iamapikeyrelationship["selector"] = item.Selector
@@ -1018,16 +1462,15 @@ func flattenListIamApiKeyRelationship(p *[]models.IamApiKeyRelationship, d *sche
 	}
 	return iamapikeyrelationships
 }
-func flattenListIamAppRegistrationRelationship(p *[]models.IamAppRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamAppRegistrationRelationship(p []models.IamAppRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamappregistrationrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamAppRegistrationRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamappregistrationrelationship := make(map[string]interface{})
 		iamappregistrationrelationship["class_id"] = item.ClassId
-		iamappregistrationrelationship["link"] = item.Link
 		iamappregistrationrelationship["moid"] = item.Moid
 		iamappregistrationrelationship["object_type"] = item.ObjectType
 		iamappregistrationrelationship["selector"] = item.Selector
@@ -1035,16 +1478,15 @@ func flattenListIamAppRegistrationRelationship(p *[]models.IamAppRegistrationRel
 	}
 	return iamappregistrationrelationships
 }
-func flattenListIamDomainGroupRelationship(p *[]models.IamDomainGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamDomainGroupRelationship(p []models.IamDomainGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamdomaingrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamDomainGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamdomaingrouprelationship := make(map[string]interface{})
 		iamdomaingrouprelationship["class_id"] = item.ClassId
-		iamdomaingrouprelationship["link"] = item.Link
 		iamdomaingrouprelationship["moid"] = item.Moid
 		iamdomaingrouprelationship["object_type"] = item.ObjectType
 		iamdomaingrouprelationship["selector"] = item.Selector
@@ -1052,16 +1494,15 @@ func flattenListIamDomainGroupRelationship(p *[]models.IamDomainGroupRelationshi
 	}
 	return iamdomaingrouprelationships
 }
-func flattenListIamEndPointPrivilegeRelationship(p *[]models.IamEndPointPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamEndPointPrivilegeRelationship(p []models.IamEndPointPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointprivilegerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamEndPointPrivilegeRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamendpointprivilegerelationship := make(map[string]interface{})
 		iamendpointprivilegerelationship["class_id"] = item.ClassId
-		iamendpointprivilegerelationship["link"] = item.Link
 		iamendpointprivilegerelationship["moid"] = item.Moid
 		iamendpointprivilegerelationship["object_type"] = item.ObjectType
 		iamendpointprivilegerelationship["selector"] = item.Selector
@@ -1069,16 +1510,15 @@ func flattenListIamEndPointPrivilegeRelationship(p *[]models.IamEndPointPrivileg
 	}
 	return iamendpointprivilegerelationships
 }
-func flattenListIamEndPointRoleRelationship(p *[]models.IamEndPointRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamEndPointRoleRelationship(p []models.IamEndPointRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointrolerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamEndPointRoleRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamendpointrolerelationship := make(map[string]interface{})
 		iamendpointrolerelationship["class_id"] = item.ClassId
-		iamendpointrolerelationship["link"] = item.Link
 		iamendpointrolerelationship["moid"] = item.Moid
 		iamendpointrolerelationship["object_type"] = item.ObjectType
 		iamendpointrolerelationship["selector"] = item.Selector
@@ -1086,22 +1526,35 @@ func flattenListIamEndPointRoleRelationship(p *[]models.IamEndPointRoleRelations
 	}
 	return iamendpointrolerelationships
 }
-func flattenListIamEndPointUserRoleRelationship(p *[]models.IamEndPointUserRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamEndPointUserRoleRelationship(p []models.IamEndPointUserRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointuserrolerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamEndPointUserRoleRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamendpointuserrolerelationship := make(map[string]interface{})
 		iamendpointuserrolerelationship["class_id"] = item.ClassId
-		iamendpointuserrolerelationship["link"] = item.Link
 		iamendpointuserrolerelationship["moid"] = item.Moid
 		iamendpointuserrolerelationship["object_type"] = item.ObjectType
 		iamendpointuserrolerelationship["selector"] = item.Selector
 		iamendpointuserrolerelationships = append(iamendpointuserrolerelationships, iamendpointuserrolerelationship)
 	}
 	return iamendpointuserrolerelationships
+}
+func flattenListIamFeatureDefinition(p *[]models.IamFeatureDefinition, d *schema.ResourceData) []map[string]interface{} {
+	var iamfeaturedefinitions []map[string]interface{}
+	if *p == nil {
+		return nil
+	}
+	for _, item := range *p {
+		iamfeaturedefinition := make(map[string]interface{})
+		iamfeaturedefinition["class_id"] = item.ClassId
+		iamfeaturedefinition["feature"] = item.Feature
+		iamfeaturedefinition["object_type"] = item.ObjectType
+		iamfeaturedefinitions = append(iamfeaturedefinitions, iamfeaturedefinition)
+	}
+	return iamfeaturedefinitions
 }
 func flattenListIamGroupPermissionToRoles(p *[]models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
 	var iamgrouppermissiontoroless []map[string]interface{}
@@ -1121,7 +1574,6 @@ func flattenListIamGroupPermissionToRoles(p *[]models.IamGroupPermissionToRoles,
 			cmrfcmrf["class_id"] = item.ClassId
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
-			cmrfcmrf["object_type"] = item.ObjectType
 
 			cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			return cmrfcmrfs
@@ -1137,7 +1589,6 @@ func flattenListIamGroupPermissionToRoles(p *[]models.IamGroupPermissionToRoles,
 				cmrfcmrf["class_id"] = item.ClassId
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
-				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			}
 			return cmrfcmrfs
@@ -1146,16 +1597,15 @@ func flattenListIamGroupPermissionToRoles(p *[]models.IamGroupPermissionToRoles,
 	}
 	return iamgrouppermissiontoroless
 }
-func flattenListIamIdpRelationship(p *[]models.IamIdpRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamIdpRelationship(p []models.IamIdpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamIdpRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamidprelationship := make(map[string]interface{})
 		iamidprelationship["class_id"] = item.ClassId
-		iamidprelationship["link"] = item.Link
 		iamidprelationship["moid"] = item.Moid
 		iamidprelationship["object_type"] = item.ObjectType
 		iamidprelationship["selector"] = item.Selector
@@ -1163,16 +1613,15 @@ func flattenListIamIdpRelationship(p *[]models.IamIdpRelationship, d *schema.Res
 	}
 	return iamidprelationships
 }
-func flattenListIamIdpReferenceRelationship(p *[]models.IamIdpReferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamIdpReferenceRelationship(p []models.IamIdpReferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidpreferencerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamIdpReferenceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamidpreferencerelationship := make(map[string]interface{})
 		iamidpreferencerelationship["class_id"] = item.ClassId
-		iamidpreferencerelationship["link"] = item.Link
 		iamidpreferencerelationship["moid"] = item.Moid
 		iamidpreferencerelationship["object_type"] = item.ObjectType
 		iamidpreferencerelationship["selector"] = item.Selector
@@ -1180,16 +1629,15 @@ func flattenListIamIdpReferenceRelationship(p *[]models.IamIdpReferenceRelations
 	}
 	return iamidpreferencerelationships
 }
-func flattenListIamLdapGroupRelationship(p *[]models.IamLdapGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamLdapGroupRelationship(p []models.IamLdapGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapgrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamLdapGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamldapgrouprelationship := make(map[string]interface{})
 		iamldapgrouprelationship["class_id"] = item.ClassId
-		iamldapgrouprelationship["link"] = item.Link
 		iamldapgrouprelationship["moid"] = item.Moid
 		iamldapgrouprelationship["object_type"] = item.ObjectType
 		iamldapgrouprelationship["selector"] = item.Selector
@@ -1197,16 +1645,15 @@ func flattenListIamLdapGroupRelationship(p *[]models.IamLdapGroupRelationship, d
 	}
 	return iamldapgrouprelationships
 }
-func flattenListIamLdapProviderRelationship(p *[]models.IamLdapProviderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamLdapProviderRelationship(p []models.IamLdapProviderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapproviderrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamLdapProviderRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamldapproviderrelationship := make(map[string]interface{})
 		iamldapproviderrelationship["class_id"] = item.ClassId
-		iamldapproviderrelationship["link"] = item.Link
 		iamldapproviderrelationship["moid"] = item.Moid
 		iamldapproviderrelationship["object_type"] = item.ObjectType
 		iamldapproviderrelationship["selector"] = item.Selector
@@ -1214,16 +1661,15 @@ func flattenListIamLdapProviderRelationship(p *[]models.IamLdapProviderRelations
 	}
 	return iamldapproviderrelationships
 }
-func flattenListIamOAuthTokenRelationship(p *[]models.IamOAuthTokenRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamOAuthTokenRelationship(p []models.IamOAuthTokenRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamoauthtokenrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamOAuthTokenRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamoauthtokenrelationship := make(map[string]interface{})
 		iamoauthtokenrelationship["class_id"] = item.ClassId
-		iamoauthtokenrelationship["link"] = item.Link
 		iamoauthtokenrelationship["moid"] = item.Moid
 		iamoauthtokenrelationship["object_type"] = item.ObjectType
 		iamoauthtokenrelationship["selector"] = item.Selector
@@ -1231,16 +1677,15 @@ func flattenListIamOAuthTokenRelationship(p *[]models.IamOAuthTokenRelationship,
 	}
 	return iamoauthtokenrelationships
 }
-func flattenListIamPermissionRelationship(p *[]models.IamPermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamPermissionRelationship(p []models.IamPermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iampermissionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamPermissionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iampermissionrelationship := make(map[string]interface{})
 		iampermissionrelationship["class_id"] = item.ClassId
-		iampermissionrelationship["link"] = item.Link
 		iampermissionrelationship["moid"] = item.Moid
 		iampermissionrelationship["object_type"] = item.ObjectType
 		iampermissionrelationship["selector"] = item.Selector
@@ -1267,7 +1712,6 @@ func flattenListIamPermissionToRoles(p *[]models.IamPermissionToRoles, d *schema
 			cmrfcmrf["class_id"] = item.ClassId
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
-			cmrfcmrf["object_type"] = item.ObjectType
 
 			cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			return cmrfcmrfs
@@ -1282,7 +1726,6 @@ func flattenListIamPermissionToRoles(p *[]models.IamPermissionToRoles, d *schema
 				cmrfcmrf["class_id"] = item.ClassId
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
-				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			}
 			return cmrfcmrfs
@@ -1291,16 +1734,15 @@ func flattenListIamPermissionToRoles(p *[]models.IamPermissionToRoles, d *schema
 	}
 	return iampermissiontoroless
 }
-func flattenListIamPrivilegeRelationship(p *[]models.IamPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamPrivilegeRelationship(p []models.IamPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamprivilegerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamPrivilegeRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamprivilegerelationship := make(map[string]interface{})
 		iamprivilegerelationship["class_id"] = item.ClassId
-		iamprivilegerelationship["link"] = item.Link
 		iamprivilegerelationship["moid"] = item.Moid
 		iamprivilegerelationship["object_type"] = item.ObjectType
 		iamprivilegerelationship["selector"] = item.Selector
@@ -1308,16 +1750,15 @@ func flattenListIamPrivilegeRelationship(p *[]models.IamPrivilegeRelationship, d
 	}
 	return iamprivilegerelationships
 }
-func flattenListIamPrivilegeSetRelationship(p *[]models.IamPrivilegeSetRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamPrivilegeSetRelationship(p []models.IamPrivilegeSetRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamprivilegesetrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamPrivilegeSetRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamprivilegesetrelationship := make(map[string]interface{})
 		iamprivilegesetrelationship["class_id"] = item.ClassId
-		iamprivilegesetrelationship["link"] = item.Link
 		iamprivilegesetrelationship["moid"] = item.Moid
 		iamprivilegesetrelationship["object_type"] = item.ObjectType
 		iamprivilegesetrelationship["selector"] = item.Selector
@@ -1325,16 +1766,15 @@ func flattenListIamPrivilegeSetRelationship(p *[]models.IamPrivilegeSetRelations
 	}
 	return iamprivilegesetrelationships
 }
-func flattenListIamResourcePermissionRelationship(p *[]models.IamResourcePermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamResourcePermissionRelationship(p []models.IamResourcePermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamresourcepermissionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamResourcePermissionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamresourcepermissionrelationship := make(map[string]interface{})
 		iamresourcepermissionrelationship["class_id"] = item.ClassId
-		iamresourcepermissionrelationship["link"] = item.Link
 		iamresourcepermissionrelationship["moid"] = item.Moid
 		iamresourcepermissionrelationship["object_type"] = item.ObjectType
 		iamresourcepermissionrelationship["selector"] = item.Selector
@@ -1342,16 +1782,15 @@ func flattenListIamResourcePermissionRelationship(p *[]models.IamResourcePermiss
 	}
 	return iamresourcepermissionrelationships
 }
-func flattenListIamResourceRolesRelationship(p *[]models.IamResourceRolesRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamResourceRolesRelationship(p []models.IamResourceRolesRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamresourcerolesrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamResourceRolesRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamresourcerolesrelationship := make(map[string]interface{})
 		iamresourcerolesrelationship["class_id"] = item.ClassId
-		iamresourcerolesrelationship["link"] = item.Link
 		iamresourcerolesrelationship["moid"] = item.Moid
 		iamresourcerolesrelationship["object_type"] = item.ObjectType
 		iamresourcerolesrelationship["selector"] = item.Selector
@@ -1359,16 +1798,15 @@ func flattenListIamResourceRolesRelationship(p *[]models.IamResourceRolesRelatio
 	}
 	return iamresourcerolesrelationships
 }
-func flattenListIamRoleRelationship(p *[]models.IamRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamRoleRelationship(p []models.IamRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamrolerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamRoleRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamrolerelationship := make(map[string]interface{})
 		iamrolerelationship["class_id"] = item.ClassId
-		iamrolerelationship["link"] = item.Link
 		iamrolerelationship["moid"] = item.Moid
 		iamrolerelationship["object_type"] = item.ObjectType
 		iamrolerelationship["selector"] = item.Selector
@@ -1376,16 +1814,15 @@ func flattenListIamRoleRelationship(p *[]models.IamRoleRelationship, d *schema.R
 	}
 	return iamrolerelationships
 }
-func flattenListIamSessionRelationship(p *[]models.IamSessionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamSessionRelationship(p []models.IamSessionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsessionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamSessionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamsessionrelationship := make(map[string]interface{})
 		iamsessionrelationship["class_id"] = item.ClassId
-		iamsessionrelationship["link"] = item.Link
 		iamsessionrelationship["moid"] = item.Moid
 		iamsessionrelationship["object_type"] = item.ObjectType
 		iamsessionrelationship["selector"] = item.Selector
@@ -1393,16 +1830,15 @@ func flattenListIamSessionRelationship(p *[]models.IamSessionRelationship, d *sc
 	}
 	return iamsessionrelationships
 }
-func flattenListIamUserRelationship(p *[]models.IamUserRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamUserRelationship(p []models.IamUserRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamuserrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamUserRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamuserrelationship := make(map[string]interface{})
 		iamuserrelationship["class_id"] = item.ClassId
-		iamuserrelationship["link"] = item.Link
 		iamuserrelationship["moid"] = item.Moid
 		iamuserrelationship["object_type"] = item.ObjectType
 		iamuserrelationship["selector"] = item.Selector
@@ -1410,16 +1846,15 @@ func flattenListIamUserRelationship(p *[]models.IamUserRelationship, d *schema.R
 	}
 	return iamuserrelationships
 }
-func flattenListIamUserGroupRelationship(p *[]models.IamUserGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamUserGroupRelationship(p []models.IamUserGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamusergrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamUserGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamusergrouprelationship := make(map[string]interface{})
 		iamusergrouprelationship["class_id"] = item.ClassId
-		iamusergrouprelationship["link"] = item.Link
 		iamusergrouprelationship["moid"] = item.Moid
 		iamusergrouprelationship["object_type"] = item.ObjectType
 		iamusergrouprelationship["selector"] = item.Selector
@@ -1427,16 +1862,15 @@ func flattenListIamUserGroupRelationship(p *[]models.IamUserGroupRelationship, d
 	}
 	return iamusergrouprelationships
 }
-func flattenListIamUserPreferenceRelationship(p *[]models.IamUserPreferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamUserPreferenceRelationship(p []models.IamUserPreferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamuserpreferencerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.IamUserPreferenceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		iamuserpreferencerelationship := make(map[string]interface{})
 		iamuserpreferencerelationship["class_id"] = item.ClassId
-		iamuserpreferencerelationship["link"] = item.Link
 		iamuserpreferencerelationship["moid"] = item.Moid
 		iamuserpreferencerelationship["object_type"] = item.ObjectType
 		iamuserpreferencerelationship["selector"] = item.Selector
@@ -1444,16 +1878,15 @@ func flattenListIamUserPreferenceRelationship(p *[]models.IamUserPreferenceRelat
 	}
 	return iamuserpreferencerelationships
 }
-func flattenListInventoryGenericInventoryRelationship(p *[]models.InventoryGenericInventoryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListInventoryGenericInventoryRelationship(p []models.InventoryGenericInventoryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.InventoryGenericInventoryRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		inventorygenericinventoryrelationship := make(map[string]interface{})
 		inventorygenericinventoryrelationship["class_id"] = item.ClassId
-		inventorygenericinventoryrelationship["link"] = item.Link
 		inventorygenericinventoryrelationship["moid"] = item.Moid
 		inventorygenericinventoryrelationship["object_type"] = item.ObjectType
 		inventorygenericinventoryrelationship["selector"] = item.Selector
@@ -1461,16 +1894,15 @@ func flattenListInventoryGenericInventoryRelationship(p *[]models.InventoryGener
 	}
 	return inventorygenericinventoryrelationships
 }
-func flattenListInventoryGenericInventoryHolderRelationship(p *[]models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListInventoryGenericInventoryHolderRelationship(p []models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryholderrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.InventoryGenericInventoryHolderRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		inventorygenericinventoryholderrelationship := make(map[string]interface{})
 		inventorygenericinventoryholderrelationship["class_id"] = item.ClassId
-		inventorygenericinventoryholderrelationship["link"] = item.Link
 		inventorygenericinventoryholderrelationship["moid"] = item.Moid
 		inventorygenericinventoryholderrelationship["object_type"] = item.ObjectType
 		inventorygenericinventoryholderrelationship["selector"] = item.Selector
@@ -1478,16 +1910,63 @@ func flattenListInventoryGenericInventoryHolderRelationship(p *[]models.Inventor
 	}
 	return inventorygenericinventoryholderrelationships
 }
-func flattenListLicenseLicenseInfoRelationship(p *[]models.LicenseLicenseInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var licenselicenseinforelationships []map[string]interface{}
+func flattenListIppoolIpBlock(p *[]models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolipblocks []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.LicenseLicenseInfoRelationshipInterface.(*models.MoMoRef)
+		ippoolipblock := make(map[string]interface{})
+		ippoolipblock["class_id"] = item.ClassId
+		ippoolipblock["from"] = item.From
+		ippoolipblock["object_type"] = item.ObjectType
+		ippoolipblock["size"] = item.Size
+		ippoolipblock["to"] = item.To
+		ippoolipblocks = append(ippoolipblocks, ippoolipblock)
+	}
+	return ippoolipblocks
+}
+func flattenListIppoolShadowBlockRelationship(p []models.IppoolShadowBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolshadowblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		ippoolshadowblockrelationship := make(map[string]interface{})
+		ippoolshadowblockrelationship["class_id"] = item.ClassId
+		ippoolshadowblockrelationship["moid"] = item.Moid
+		ippoolshadowblockrelationship["object_type"] = item.ObjectType
+		ippoolshadowblockrelationship["selector"] = item.Selector
+		ippoolshadowblockrelationships = append(ippoolshadowblockrelationships, ippoolshadowblockrelationship)
+	}
+	return ippoolshadowblockrelationships
+}
+func flattenListIppoolShadowPoolRelationship(p []models.IppoolShadowPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolshadowpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		ippoolshadowpoolrelationship := make(map[string]interface{})
+		ippoolshadowpoolrelationship["class_id"] = item.ClassId
+		ippoolshadowpoolrelationship["moid"] = item.Moid
+		ippoolshadowpoolrelationship["object_type"] = item.ObjectType
+		ippoolshadowpoolrelationship["selector"] = item.Selector
+		ippoolshadowpoolrelationships = append(ippoolshadowpoolrelationships, ippoolshadowpoolrelationship)
+	}
+	return ippoolshadowpoolrelationships
+}
+func flattenListLicenseLicenseInfoRelationship(p []models.LicenseLicenseInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var licenselicenseinforelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		licenselicenseinforelationship := make(map[string]interface{})
 		licenselicenseinforelationship["class_id"] = item.ClassId
-		licenselicenseinforelationship["link"] = item.Link
 		licenselicenseinforelationship["moid"] = item.Moid
 		licenselicenseinforelationship["object_type"] = item.ObjectType
 		licenselicenseinforelationship["selector"] = item.Selector
@@ -1495,16 +1974,47 @@ func flattenListLicenseLicenseInfoRelationship(p *[]models.LicenseLicenseInfoRel
 	}
 	return licenselicenseinforelationships
 }
-func flattenListManagementInterfaceRelationship(p *[]models.ManagementInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var managementinterfacerelationships []map[string]interface{}
+func flattenListMacpoolBlock(p *[]models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolblocks []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.ManagementInterfaceRelationshipInterface.(*models.MoMoRef)
+		macpoolblock := make(map[string]interface{})
+		macpoolblock["class_id"] = item.ClassId
+		macpoolblock["from"] = item.From
+		macpoolblock["object_type"] = item.ObjectType
+		macpoolblock["size"] = item.Size
+		macpoolblock["to"] = item.To
+		macpoolblocks = append(macpoolblocks, macpoolblock)
+	}
+	return macpoolblocks
+}
+func flattenListMacpoolIdBlockRelationship(p []models.MacpoolIdBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolidblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		macpoolidblockrelationship := make(map[string]interface{})
+		macpoolidblockrelationship["class_id"] = item.ClassId
+		macpoolidblockrelationship["moid"] = item.Moid
+		macpoolidblockrelationship["object_type"] = item.ObjectType
+		macpoolidblockrelationship["selector"] = item.Selector
+		macpoolidblockrelationships = append(macpoolidblockrelationships, macpoolidblockrelationship)
+	}
+	return macpoolidblockrelationships
+}
+func flattenListManagementInterfaceRelationship(p []models.ManagementInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var managementinterfacerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		managementinterfacerelationship := make(map[string]interface{})
 		managementinterfacerelationship["class_id"] = item.ClassId
-		managementinterfacerelationship["link"] = item.Link
 		managementinterfacerelationship["moid"] = item.Moid
 		managementinterfacerelationship["object_type"] = item.ObjectType
 		managementinterfacerelationship["selector"] = item.Selector
@@ -1512,16 +2022,15 @@ func flattenListManagementInterfaceRelationship(p *[]models.ManagementInterfaceR
 	}
 	return managementinterfacerelationships
 }
-func flattenListMemoryArrayRelationship(p *[]models.MemoryArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryArrayRelationship(p []models.MemoryArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memoryarrayrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryArrayRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memoryarrayrelationship := make(map[string]interface{})
 		memoryarrayrelationship["class_id"] = item.ClassId
-		memoryarrayrelationship["link"] = item.Link
 		memoryarrayrelationship["moid"] = item.Moid
 		memoryarrayrelationship["object_type"] = item.ObjectType
 		memoryarrayrelationship["selector"] = item.Selector
@@ -1563,16 +2072,15 @@ func flattenListMemoryPersistentMemoryLogicalNamespace(p *[]models.MemoryPersist
 	}
 	return memorypersistentmemorylogicalnamespaces
 }
-func flattenListMemoryPersistentMemoryNamespaceRelationship(p *[]models.MemoryPersistentMemoryNamespaceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryNamespaceRelationship(p []models.MemoryPersistentMemoryNamespaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorynamespacerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryPersistentMemoryNamespaceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memorypersistentmemorynamespacerelationship := make(map[string]interface{})
 		memorypersistentmemorynamespacerelationship["class_id"] = item.ClassId
-		memorypersistentmemorynamespacerelationship["link"] = item.Link
 		memorypersistentmemorynamespacerelationship["moid"] = item.Moid
 		memorypersistentmemorynamespacerelationship["object_type"] = item.ObjectType
 		memorypersistentmemorynamespacerelationship["selector"] = item.Selector
@@ -1580,16 +2088,15 @@ func flattenListMemoryPersistentMemoryNamespaceRelationship(p *[]models.MemoryPe
 	}
 	return memorypersistentmemorynamespacerelationships
 }
-func flattenListMemoryPersistentMemoryNamespaceConfigResultRelationship(p *[]models.MemoryPersistentMemoryNamespaceConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryNamespaceConfigResultRelationship(p []models.MemoryPersistentMemoryNamespaceConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorynamespaceconfigresultrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryPersistentMemoryNamespaceConfigResultRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memorypersistentmemorynamespaceconfigresultrelationship := make(map[string]interface{})
 		memorypersistentmemorynamespaceconfigresultrelationship["class_id"] = item.ClassId
-		memorypersistentmemorynamespaceconfigresultrelationship["link"] = item.Link
 		memorypersistentmemorynamespaceconfigresultrelationship["moid"] = item.Moid
 		memorypersistentmemorynamespaceconfigresultrelationship["object_type"] = item.ObjectType
 		memorypersistentmemorynamespaceconfigresultrelationship["selector"] = item.Selector
@@ -1597,16 +2104,15 @@ func flattenListMemoryPersistentMemoryNamespaceConfigResultRelationship(p *[]mod
 	}
 	return memorypersistentmemorynamespaceconfigresultrelationships
 }
-func flattenListMemoryPersistentMemoryRegionRelationship(p *[]models.MemoryPersistentMemoryRegionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryRegionRelationship(p []models.MemoryPersistentMemoryRegionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryregionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryPersistentMemoryRegionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memorypersistentmemoryregionrelationship := make(map[string]interface{})
 		memorypersistentmemoryregionrelationship["class_id"] = item.ClassId
-		memorypersistentmemoryregionrelationship["link"] = item.Link
 		memorypersistentmemoryregionrelationship["moid"] = item.Moid
 		memorypersistentmemoryregionrelationship["object_type"] = item.ObjectType
 		memorypersistentmemoryregionrelationship["selector"] = item.Selector
@@ -1614,16 +2120,15 @@ func flattenListMemoryPersistentMemoryRegionRelationship(p *[]models.MemoryPersi
 	}
 	return memorypersistentmemoryregionrelationships
 }
-func flattenListMemoryPersistentMemoryUnitRelationship(p *[]models.MemoryPersistentMemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryUnitRelationship(p []models.MemoryPersistentMemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryPersistentMemoryUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memorypersistentmemoryunitrelationship := make(map[string]interface{})
 		memorypersistentmemoryunitrelationship["class_id"] = item.ClassId
-		memorypersistentmemoryunitrelationship["link"] = item.Link
 		memorypersistentmemoryunitrelationship["moid"] = item.Moid
 		memorypersistentmemoryunitrelationship["object_type"] = item.ObjectType
 		memorypersistentmemoryunitrelationship["selector"] = item.Selector
@@ -1631,16 +2136,15 @@ func flattenListMemoryPersistentMemoryUnitRelationship(p *[]models.MemoryPersist
 	}
 	return memorypersistentmemoryunitrelationships
 }
-func flattenListMemoryUnitRelationship(p *[]models.MemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryUnitRelationship(p []models.MemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memoryunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.MemoryUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		memoryunitrelationship := make(map[string]interface{})
 		memoryunitrelationship["class_id"] = item.ClassId
-		memoryunitrelationship["link"] = item.Link
 		memoryunitrelationship["moid"] = item.Moid
 		memoryunitrelationship["object_type"] = item.ObjectType
 		memoryunitrelationship["selector"] = item.Selector
@@ -1690,24 +2194,14 @@ func flattenListMetaRelationshipDefinition(p *[]models.MetaRelationshipDefinitio
 		metarelationshipdefinition["api_access"] = item.ApiAccess
 		metarelationshipdefinition["class_id"] = item.ClassId
 		metarelationshipdefinition["collection"] = item.Collection
+		metarelationshipdefinition["export"] = item.Export
+		metarelationshipdefinition["export_with_peer"] = item.ExportWithPeer
 		metarelationshipdefinition["name"] = item.Name
 		metarelationshipdefinition["object_type"] = item.ObjectType
 		metarelationshipdefinition["type"] = item.Type
 		metarelationshipdefinitions = append(metarelationshipdefinitions, metarelationshipdefinition)
 	}
 	return metarelationshipdefinitions
-}
-func flattenListMoBaseMoRelationship(p *[]models.MoBaseMoRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var mobasemorelationships []map[string]interface{}
-	if *p == nil {
-		return nil
-	}
-	for _, item := range *p {
-		item := item.MoBaseMoRelationshipInterface.(*models.MoBaseMo)
-		mobasemorelationship := make(map[string]interface{})
-		mobasemorelationships = append(mobasemorelationships, mobasemorelationship)
-	}
-	return mobasemorelationships
 }
 func flattenListMoTag(p *[]models.MoTag, d *schema.ResourceData) []map[string]interface{} {
 	var motags []map[string]interface{}
@@ -1722,16 +2216,15 @@ func flattenListMoTag(p *[]models.MoTag, d *schema.ResourceData) []map[string]in
 	}
 	return motags
 }
-func flattenListNetworkElementRelationship(p *[]models.NetworkElementRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListNetworkElementRelationship(p []models.NetworkElementRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var networkelementrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.NetworkElementRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		networkelementrelationship := make(map[string]interface{})
 		networkelementrelationship["class_id"] = item.ClassId
-		networkelementrelationship["link"] = item.Link
 		networkelementrelationship["moid"] = item.Moid
 		networkelementrelationship["object_type"] = item.ObjectType
 		networkelementrelationship["selector"] = item.Selector
@@ -1787,7 +2280,7 @@ func flattenListOnpremImagePackage(p *[]models.OnpremImagePackage, d *schema.Res
 		onpremimagepackage["name"] = item.Name
 		onpremimagepackage["object_type"] = item.ObjectType
 		onpremimagepackage["package_type"] = item.PackageType
-		onpremimagepackage["version"] = item.Version
+		onpremimagepackage["nr_version"] = item.Version
 		onpremimagepackages = append(onpremimagepackages, onpremimagepackage)
 	}
 	return onpremimagepackages
@@ -1825,16 +2318,15 @@ func flattenListOnpremUpgradePhase(p *[]models.OnpremUpgradePhase, d *schema.Res
 	}
 	return onpremupgradephases
 }
-func flattenListOrganizationOrganizationRelationship(p *[]models.OrganizationOrganizationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListOrganizationOrganizationRelationship(p []models.OrganizationOrganizationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var organizationorganizationrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.OrganizationOrganizationRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		organizationorganizationrelationship := make(map[string]interface{})
 		organizationorganizationrelationship["class_id"] = item.ClassId
-		organizationorganizationrelationship["link"] = item.Link
 		organizationorganizationrelationship["moid"] = item.Moid
 		organizationorganizationrelationship["object_type"] = item.ObjectType
 		organizationorganizationrelationship["selector"] = item.Selector
@@ -1842,22 +2334,37 @@ func flattenListOrganizationOrganizationRelationship(p *[]models.OrganizationOrg
 	}
 	return organizationorganizationrelationships
 }
-func flattenListOsConfigurationFileRelationship(p *[]models.OsConfigurationFileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListOsConfigurationFileRelationship(p []models.OsConfigurationFileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var osconfigurationfilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.OsConfigurationFileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		osconfigurationfilerelationship := make(map[string]interface{})
 		osconfigurationfilerelationship["class_id"] = item.ClassId
-		osconfigurationfilerelationship["link"] = item.Link
 		osconfigurationfilerelationship["moid"] = item.Moid
 		osconfigurationfilerelationship["object_type"] = item.ObjectType
 		osconfigurationfilerelationship["selector"] = item.Selector
 		osconfigurationfilerelationships = append(osconfigurationfilerelationships, osconfigurationfilerelationship)
 	}
 	return osconfigurationfilerelationships
+}
+func flattenListOsDistributionRelationship(p []models.OsDistributionRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var osdistributionrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		osdistributionrelationship := make(map[string]interface{})
+		osdistributionrelationship["class_id"] = item.ClassId
+		osdistributionrelationship["moid"] = item.Moid
+		osdistributionrelationship["object_type"] = item.ObjectType
+		osdistributionrelationship["selector"] = item.Selector
+		osdistributionrelationships = append(osdistributionrelationships, osdistributionrelationship)
+	}
+	return osdistributionrelationships
 }
 func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
 	var osplaceholders []map[string]interface{}
@@ -1968,16 +2475,15 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 	}
 	return osplaceholders
 }
-func flattenListPciCoprocessorCardRelationship(p *[]models.PciCoprocessorCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPciCoprocessorCardRelationship(p []models.PciCoprocessorCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcicoprocessorcardrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PciCoprocessorCardRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		pcicoprocessorcardrelationship := make(map[string]interface{})
 		pcicoprocessorcardrelationship["class_id"] = item.ClassId
-		pcicoprocessorcardrelationship["link"] = item.Link
 		pcicoprocessorcardrelationship["moid"] = item.Moid
 		pcicoprocessorcardrelationship["object_type"] = item.ObjectType
 		pcicoprocessorcardrelationship["selector"] = item.Selector
@@ -1985,16 +2491,15 @@ func flattenListPciCoprocessorCardRelationship(p *[]models.PciCoprocessorCardRel
 	}
 	return pcicoprocessorcardrelationships
 }
-func flattenListPciDeviceRelationship(p *[]models.PciDeviceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPciDeviceRelationship(p []models.PciDeviceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcidevicerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PciDeviceRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		pcidevicerelationship := make(map[string]interface{})
 		pcidevicerelationship["class_id"] = item.ClassId
-		pcidevicerelationship["link"] = item.Link
 		pcidevicerelationship["moid"] = item.Moid
 		pcidevicerelationship["object_type"] = item.ObjectType
 		pcidevicerelationship["selector"] = item.Selector
@@ -2002,16 +2507,15 @@ func flattenListPciDeviceRelationship(p *[]models.PciDeviceRelationship, d *sche
 	}
 	return pcidevicerelationships
 }
-func flattenListPciLinkRelationship(p *[]models.PciLinkRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPciLinkRelationship(p []models.PciLinkRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcilinkrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PciLinkRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		pcilinkrelationship := make(map[string]interface{})
 		pcilinkrelationship["class_id"] = item.ClassId
-		pcilinkrelationship["link"] = item.Link
 		pcilinkrelationship["moid"] = item.Moid
 		pcilinkrelationship["object_type"] = item.ObjectType
 		pcilinkrelationship["selector"] = item.Selector
@@ -2019,16 +2523,15 @@ func flattenListPciLinkRelationship(p *[]models.PciLinkRelationship, d *schema.R
 	}
 	return pcilinkrelationships
 }
-func flattenListPciSwitchRelationship(p *[]models.PciSwitchRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPciSwitchRelationship(p []models.PciSwitchRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pciswitchrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PciSwitchRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		pciswitchrelationship := make(map[string]interface{})
 		pciswitchrelationship["class_id"] = item.ClassId
-		pciswitchrelationship["link"] = item.Link
 		pciswitchrelationship["moid"] = item.Moid
 		pciswitchrelationship["object_type"] = item.ObjectType
 		pciswitchrelationship["selector"] = item.Selector
@@ -2036,16 +2539,15 @@ func flattenListPciSwitchRelationship(p *[]models.PciSwitchRelationship, d *sche
 	}
 	return pciswitchrelationships
 }
-func flattenListPolicyAbstractConfigProfileRelationship(p *[]models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPolicyAbstractConfigProfileRelationship(p []models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var policyabstractconfigprofilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PolicyAbstractConfigProfileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		policyabstractconfigprofilerelationship := make(map[string]interface{})
 		policyabstractconfigprofilerelationship["class_id"] = item.ClassId
-		policyabstractconfigprofilerelationship["link"] = item.Link
 		policyabstractconfigprofilerelationship["moid"] = item.Moid
 		policyabstractconfigprofilerelationship["object_type"] = item.ObjectType
 		policyabstractconfigprofilerelationship["selector"] = item.Selector
@@ -2070,16 +2572,15 @@ func flattenListPolicyinventoryJobInfo(p *[]models.PolicyinventoryJobInfo, d *sc
 	}
 	return policyinventoryjobinfos
 }
-func flattenListPortGroupRelationship(p *[]models.PortGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPortGroupRelationship(p []models.PortGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portgrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PortGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		portgrouprelationship := make(map[string]interface{})
 		portgrouprelationship["class_id"] = item.ClassId
-		portgrouprelationship["link"] = item.Link
 		portgrouprelationship["moid"] = item.Moid
 		portgrouprelationship["object_type"] = item.ObjectType
 		portgrouprelationship["selector"] = item.Selector
@@ -2087,16 +2588,31 @@ func flattenListPortGroupRelationship(p *[]models.PortGroupRelationship, d *sche
 	}
 	return portgrouprelationships
 }
-func flattenListPortSubGroupRelationship(p *[]models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var portsubgrouprelationships []map[string]interface{}
-	if *p == nil {
+func flattenListPortMacBindingRelationship(p []models.PortMacBindingRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var portmacbindingrelationships []map[string]interface{}
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.PortSubGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
+		portmacbindingrelationship := make(map[string]interface{})
+		portmacbindingrelationship["class_id"] = item.ClassId
+		portmacbindingrelationship["moid"] = item.Moid
+		portmacbindingrelationship["object_type"] = item.ObjectType
+		portmacbindingrelationship["selector"] = item.Selector
+		portmacbindingrelationships = append(portmacbindingrelationships, portmacbindingrelationship)
+	}
+	return portmacbindingrelationships
+}
+func flattenListPortSubGroupRelationship(p []models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var portsubgrouprelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		portsubgrouprelationship := make(map[string]interface{})
 		portsubgrouprelationship["class_id"] = item.ClassId
-		portsubgrouprelationship["link"] = item.Link
 		portsubgrouprelationship["moid"] = item.Moid
 		portsubgrouprelationship["object_type"] = item.ObjectType
 		portsubgrouprelationship["selector"] = item.Selector
@@ -2104,16 +2620,15 @@ func flattenListPortSubGroupRelationship(p *[]models.PortSubGroupRelationship, d
 	}
 	return portsubgrouprelationships
 }
-func flattenListProcessorUnitRelationship(p *[]models.ProcessorUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListProcessorUnitRelationship(p []models.ProcessorUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var processorunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ProcessorUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		processorunitrelationship := make(map[string]interface{})
 		processorunitrelationship["class_id"] = item.ClassId
-		processorunitrelationship["link"] = item.Link
 		processorunitrelationship["moid"] = item.Moid
 		processorunitrelationship["object_type"] = item.ObjectType
 		processorunitrelationship["selector"] = item.Selector
@@ -2121,16 +2636,15 @@ func flattenListProcessorUnitRelationship(p *[]models.ProcessorUnitRelationship,
 	}
 	return processorunitrelationships
 }
-func flattenListRecoveryBackupProfileRelationship(p *[]models.RecoveryBackupProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListRecoveryBackupProfileRelationship(p []models.RecoveryBackupProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoverybackupprofilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.RecoveryBackupProfileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		recoverybackupprofilerelationship := make(map[string]interface{})
 		recoverybackupprofilerelationship["class_id"] = item.ClassId
-		recoverybackupprofilerelationship["link"] = item.Link
 		recoverybackupprofilerelationship["moid"] = item.Moid
 		recoverybackupprofilerelationship["object_type"] = item.ObjectType
 		recoverybackupprofilerelationship["selector"] = item.Selector
@@ -2138,16 +2652,15 @@ func flattenListRecoveryBackupProfileRelationship(p *[]models.RecoveryBackupProf
 	}
 	return recoverybackupprofilerelationships
 }
-func flattenListRecoveryConfigResultEntryRelationship(p *[]models.RecoveryConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListRecoveryConfigResultEntryRelationship(p []models.RecoveryConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryconfigresultentryrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.RecoveryConfigResultEntryRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		recoveryconfigresultentryrelationship := make(map[string]interface{})
 		recoveryconfigresultentryrelationship["class_id"] = item.ClassId
-		recoveryconfigresultentryrelationship["link"] = item.Link
 		recoveryconfigresultentryrelationship["moid"] = item.Moid
 		recoveryconfigresultentryrelationship["object_type"] = item.ObjectType
 		recoveryconfigresultentryrelationship["selector"] = item.Selector
@@ -2155,39 +2668,21 @@ func flattenListRecoveryConfigResultEntryRelationship(p *[]models.RecoveryConfig
 	}
 	return recoveryconfigresultentryrelationships
 }
-func flattenListResourceGroupRelationship(p *[]models.ResourceGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListResourceGroupRelationship(p []models.ResourceGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var resourcegrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ResourceGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		resourcegrouprelationship := make(map[string]interface{})
 		resourcegrouprelationship["class_id"] = item.ClassId
-		resourcegrouprelationship["link"] = item.Link
 		resourcegrouprelationship["moid"] = item.Moid
 		resourcegrouprelationship["object_type"] = item.ObjectType
 		resourcegrouprelationship["selector"] = item.Selector
 		resourcegrouprelationships = append(resourcegrouprelationships, resourcegrouprelationship)
 	}
 	return resourcegrouprelationships
-}
-func flattenListResourceMembershipRelationship(p *[]models.ResourceMembershipRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var resourcemembershiprelationships []map[string]interface{}
-	if *p == nil {
-		return nil
-	}
-	for _, item := range *p {
-		item := item.ResourceMembershipRelationshipInterface.(*models.MoMoRef)
-		resourcemembershiprelationship := make(map[string]interface{})
-		resourcemembershiprelationship["class_id"] = item.ClassId
-		resourcemembershiprelationship["link"] = item.Link
-		resourcemembershiprelationship["moid"] = item.Moid
-		resourcemembershiprelationship["object_type"] = item.ObjectType
-		resourcemembershiprelationship["selector"] = item.Selector
-		resourcemembershiprelationships = append(resourcemembershiprelationships, resourcemembershiprelationship)
-	}
-	return resourcemembershiprelationships
 }
 func flattenListResourcePerTypeCombinedSelector(p *[]models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
 	var resourcepertypecombinedselectors []map[string]interface{}
@@ -2263,16 +2758,15 @@ func flattenListSdwanNetworkConfigurationType(p *[]models.SdwanNetworkConfigurat
 	}
 	return sdwannetworkconfigurationtypes
 }
-func flattenListSdwanProfileRelationship(p *[]models.SdwanProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSdwanProfileRelationship(p []models.SdwanProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanprofilerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.SdwanProfileRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		sdwanprofilerelationship := make(map[string]interface{})
 		sdwanprofilerelationship["class_id"] = item.ClassId
-		sdwanprofilerelationship["link"] = item.Link
 		sdwanprofilerelationship["moid"] = item.Moid
 		sdwanprofilerelationship["object_type"] = item.ObjectType
 		sdwanprofilerelationship["selector"] = item.Selector
@@ -2280,16 +2774,15 @@ func flattenListSdwanProfileRelationship(p *[]models.SdwanProfileRelationship, d
 	}
 	return sdwanprofilerelationships
 }
-func flattenListSdwanRouterNodeRelationship(p *[]models.SdwanRouterNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSdwanRouterNodeRelationship(p []models.SdwanRouterNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanrouternoderelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.SdwanRouterNodeRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		sdwanrouternoderelationship := make(map[string]interface{})
 		sdwanrouternoderelationship["class_id"] = item.ClassId
-		sdwanrouternoderelationship["link"] = item.Link
 		sdwanrouternoderelationship["moid"] = item.Moid
 		sdwanrouternoderelationship["object_type"] = item.ObjectType
 		sdwanrouternoderelationship["selector"] = item.Selector
@@ -2317,16 +2810,15 @@ func flattenListSdwanTemplateInputsType(p *[]models.SdwanTemplateInputsType, d *
 	}
 	return sdwantemplateinputstypes
 }
-func flattenListSecurityUnitRelationship(p *[]models.SecurityUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSecurityUnitRelationship(p []models.SecurityUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var securityunitrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.SecurityUnitRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		securityunitrelationship := make(map[string]interface{})
 		securityunitrelationship["class_id"] = item.ClassId
-		securityunitrelationship["link"] = item.Link
 		securityunitrelationship["moid"] = item.Moid
 		securityunitrelationship["object_type"] = item.ObjectType
 		securityunitrelationship["selector"] = item.Selector
@@ -2334,16 +2826,15 @@ func flattenListSecurityUnitRelationship(p *[]models.SecurityUnitRelationship, d
 	}
 	return securityunitrelationships
 }
-func flattenListServerConfigChangeDetailRelationship(p *[]models.ServerConfigChangeDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListServerConfigChangeDetailRelationship(p []models.ServerConfigChangeDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigchangedetailrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ServerConfigChangeDetailRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		serverconfigchangedetailrelationship := make(map[string]interface{})
 		serverconfigchangedetailrelationship["class_id"] = item.ClassId
-		serverconfigchangedetailrelationship["link"] = item.Link
 		serverconfigchangedetailrelationship["moid"] = item.Moid
 		serverconfigchangedetailrelationship["object_type"] = item.ObjectType
 		serverconfigchangedetailrelationship["selector"] = item.Selector
@@ -2351,16 +2842,15 @@ func flattenListServerConfigChangeDetailRelationship(p *[]models.ServerConfigCha
 	}
 	return serverconfigchangedetailrelationships
 }
-func flattenListServerConfigResultEntryRelationship(p *[]models.ServerConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListServerConfigResultEntryRelationship(p []models.ServerConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigresultentryrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.ServerConfigResultEntryRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		serverconfigresultentryrelationship := make(map[string]interface{})
 		serverconfigresultentryrelationship["class_id"] = item.ClassId
-		serverconfigresultentryrelationship["link"] = item.Link
 		serverconfigresultentryrelationship["moid"] = item.Moid
 		serverconfigresultentryrelationship["object_type"] = item.ObjectType
 		serverconfigresultentryrelationship["selector"] = item.Selector
@@ -2382,7 +2872,7 @@ func flattenListSnmpTrap(p *[]models.SnmpTrap, d *schema.ResourceData) []map[str
 		snmptrap["port"] = item.Port
 		snmptrap["type"] = item.Type
 		snmptrap["user"] = item.User
-		snmptrap["version"] = item.Version
+		snmptrap["nr_version"] = item.Version
 		snmptraps = append(snmptraps, snmptrap)
 	}
 	return snmptraps
@@ -2412,16 +2902,32 @@ func flattenListSnmpUser(p *[]models.SnmpUser, d *schema.ResourceData) []map[str
 	}
 	return snmpusers
 }
-func flattenListStorageControllerRelationship(p *[]models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagecontrollerrelationships []map[string]interface{}
+func flattenListStorageBaseInitiator(p *[]models.StorageBaseInitiator, d *schema.ResourceData) []map[string]interface{} {
+	var storagebaseinitiators []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.StorageControllerRelationshipInterface.(*models.MoMoRef)
+		storagebaseinitiator := make(map[string]interface{})
+		storagebaseinitiator["class_id"] = item.ClassId
+		storagebaseinitiator["iqn"] = item.Iqn
+		storagebaseinitiator["name"] = item.Name
+		storagebaseinitiator["object_type"] = item.ObjectType
+		storagebaseinitiator["type"] = item.Type
+		storagebaseinitiator["wwn"] = item.Wwn
+		storagebaseinitiators = append(storagebaseinitiators, storagebaseinitiator)
+	}
+	return storagebaseinitiators
+}
+func flattenListStorageControllerRelationship(p []models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagecontrollerrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		storagecontrollerrelationship := make(map[string]interface{})
 		storagecontrollerrelationship["class_id"] = item.ClassId
-		storagecontrollerrelationship["link"] = item.Link
 		storagecontrollerrelationship["moid"] = item.Moid
 		storagecontrollerrelationship["object_type"] = item.ObjectType
 		storagecontrollerrelationship["selector"] = item.Selector
@@ -2429,16 +2935,31 @@ func flattenListStorageControllerRelationship(p *[]models.StorageControllerRelat
 	}
 	return storagecontrollerrelationships
 }
-func flattenListStorageDiskGroupPolicyRelationship(p *[]models.StorageDiskGroupPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagediskgrouppolicyrelationships []map[string]interface{}
-	if *p == nil {
+func flattenListStorageDiskGroupRelationship(p []models.StorageDiskGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagediskgrouprelationships []map[string]interface{}
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageDiskGroupPolicyRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
+		storagediskgrouprelationship := make(map[string]interface{})
+		storagediskgrouprelationship["class_id"] = item.ClassId
+		storagediskgrouprelationship["moid"] = item.Moid
+		storagediskgrouprelationship["object_type"] = item.ObjectType
+		storagediskgrouprelationship["selector"] = item.Selector
+		storagediskgrouprelationships = append(storagediskgrouprelationships, storagediskgrouprelationship)
+	}
+	return storagediskgrouprelationships
+}
+func flattenListStorageDiskGroupPolicyRelationship(p []models.StorageDiskGroupPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagediskgrouppolicyrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		storagediskgrouppolicyrelationship := make(map[string]interface{})
 		storagediskgrouppolicyrelationship["class_id"] = item.ClassId
-		storagediskgrouppolicyrelationship["link"] = item.Link
 		storagediskgrouppolicyrelationship["moid"] = item.Moid
 		storagediskgrouppolicyrelationship["object_type"] = item.ObjectType
 		storagediskgrouppolicyrelationship["selector"] = item.Selector
@@ -2446,16 +2967,15 @@ func flattenListStorageDiskGroupPolicyRelationship(p *[]models.StorageDiskGroupP
 	}
 	return storagediskgrouppolicyrelationships
 }
-func flattenListStorageEnclosureRelationship(p *[]models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageEnclosureRelationship(p []models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageEnclosureRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageenclosurerelationship := make(map[string]interface{})
 		storageenclosurerelationship["class_id"] = item.ClassId
-		storageenclosurerelationship["link"] = item.Link
 		storageenclosurerelationship["moid"] = item.Moid
 		storageenclosurerelationship["object_type"] = item.ObjectType
 		storageenclosurerelationship["selector"] = item.Selector
@@ -2463,16 +2983,15 @@ func flattenListStorageEnclosureRelationship(p *[]models.StorageEnclosureRelatio
 	}
 	return storageenclosurerelationships
 }
-func flattenListStorageEnclosureDiskRelationship(p *[]models.StorageEnclosureDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageEnclosureDiskRelationship(p []models.StorageEnclosureDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurediskrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageEnclosureDiskRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageenclosurediskrelationship := make(map[string]interface{})
 		storageenclosurediskrelationship["class_id"] = item.ClassId
-		storageenclosurediskrelationship["link"] = item.Link
 		storageenclosurediskrelationship["moid"] = item.Moid
 		storageenclosurediskrelationship["object_type"] = item.ObjectType
 		storageenclosurediskrelationship["selector"] = item.Selector
@@ -2480,16 +2999,15 @@ func flattenListStorageEnclosureDiskRelationship(p *[]models.StorageEnclosureDis
 	}
 	return storageenclosurediskrelationships
 }
-func flattenListStorageEnclosureDiskSlotEpRelationship(p *[]models.StorageEnclosureDiskSlotEpRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageEnclosureDiskSlotEpRelationship(p []models.StorageEnclosureDiskSlotEpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosuredisksloteprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageEnclosureDiskSlotEpRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageenclosuredisksloteprelationship := make(map[string]interface{})
 		storageenclosuredisksloteprelationship["class_id"] = item.ClassId
-		storageenclosuredisksloteprelationship["link"] = item.Link
 		storageenclosuredisksloteprelationship["moid"] = item.Moid
 		storageenclosuredisksloteprelationship["object_type"] = item.ObjectType
 		storageenclosuredisksloteprelationship["selector"] = item.Selector
@@ -2497,16 +3015,15 @@ func flattenListStorageEnclosureDiskSlotEpRelationship(p *[]models.StorageEnclos
 	}
 	return storageenclosuredisksloteprelationships
 }
-func flattenListStorageFlexFlashControllerRelationship(p *[]models.StorageFlexFlashControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexFlashControllerRelationship(p []models.StorageFlexFlashControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashcontrollerrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexFlashControllerRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexflashcontrollerrelationship := make(map[string]interface{})
 		storageflexflashcontrollerrelationship["class_id"] = item.ClassId
-		storageflexflashcontrollerrelationship["link"] = item.Link
 		storageflexflashcontrollerrelationship["moid"] = item.Moid
 		storageflexflashcontrollerrelationship["object_type"] = item.ObjectType
 		storageflexflashcontrollerrelationship["selector"] = item.Selector
@@ -2514,16 +3031,15 @@ func flattenListStorageFlexFlashControllerRelationship(p *[]models.StorageFlexFl
 	}
 	return storageflexflashcontrollerrelationships
 }
-func flattenListStorageFlexFlashControllerPropsRelationship(p *[]models.StorageFlexFlashControllerPropsRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexFlashControllerPropsRelationship(p []models.StorageFlexFlashControllerPropsRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashcontrollerpropsrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexFlashControllerPropsRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexflashcontrollerpropsrelationship := make(map[string]interface{})
 		storageflexflashcontrollerpropsrelationship["class_id"] = item.ClassId
-		storageflexflashcontrollerpropsrelationship["link"] = item.Link
 		storageflexflashcontrollerpropsrelationship["moid"] = item.Moid
 		storageflexflashcontrollerpropsrelationship["object_type"] = item.ObjectType
 		storageflexflashcontrollerpropsrelationship["selector"] = item.Selector
@@ -2531,16 +3047,15 @@ func flattenListStorageFlexFlashControllerPropsRelationship(p *[]models.StorageF
 	}
 	return storageflexflashcontrollerpropsrelationships
 }
-func flattenListStorageFlexFlashPhysicalDriveRelationship(p *[]models.StorageFlexFlashPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexFlashPhysicalDriveRelationship(p []models.StorageFlexFlashPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashphysicaldriverelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexFlashPhysicalDriveRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexflashphysicaldriverelationship := make(map[string]interface{})
 		storageflexflashphysicaldriverelationship["class_id"] = item.ClassId
-		storageflexflashphysicaldriverelationship["link"] = item.Link
 		storageflexflashphysicaldriverelationship["moid"] = item.Moid
 		storageflexflashphysicaldriverelationship["object_type"] = item.ObjectType
 		storageflexflashphysicaldriverelationship["selector"] = item.Selector
@@ -2548,16 +3063,15 @@ func flattenListStorageFlexFlashPhysicalDriveRelationship(p *[]models.StorageFle
 	}
 	return storageflexflashphysicaldriverelationships
 }
-func flattenListStorageFlexFlashVirtualDriveRelationship(p *[]models.StorageFlexFlashVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexFlashVirtualDriveRelationship(p []models.StorageFlexFlashVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashvirtualdriverelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexFlashVirtualDriveRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexflashvirtualdriverelationship := make(map[string]interface{})
 		storageflexflashvirtualdriverelationship["class_id"] = item.ClassId
-		storageflexflashvirtualdriverelationship["link"] = item.Link
 		storageflexflashvirtualdriverelationship["moid"] = item.Moid
 		storageflexflashvirtualdriverelationship["object_type"] = item.ObjectType
 		storageflexflashvirtualdriverelationship["selector"] = item.Selector
@@ -2565,16 +3079,15 @@ func flattenListStorageFlexFlashVirtualDriveRelationship(p *[]models.StorageFlex
 	}
 	return storageflexflashvirtualdriverelationships
 }
-func flattenListStorageFlexUtilControllerRelationship(p *[]models.StorageFlexUtilControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexUtilControllerRelationship(p []models.StorageFlexUtilControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilcontrollerrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexUtilControllerRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexutilcontrollerrelationship := make(map[string]interface{})
 		storageflexutilcontrollerrelationship["class_id"] = item.ClassId
-		storageflexutilcontrollerrelationship["link"] = item.Link
 		storageflexutilcontrollerrelationship["moid"] = item.Moid
 		storageflexutilcontrollerrelationship["object_type"] = item.ObjectType
 		storageflexutilcontrollerrelationship["selector"] = item.Selector
@@ -2582,16 +3095,15 @@ func flattenListStorageFlexUtilControllerRelationship(p *[]models.StorageFlexUti
 	}
 	return storageflexutilcontrollerrelationships
 }
-func flattenListStorageFlexUtilPhysicalDriveRelationship(p *[]models.StorageFlexUtilPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexUtilPhysicalDriveRelationship(p []models.StorageFlexUtilPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilphysicaldriverelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexUtilPhysicalDriveRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexutilphysicaldriverelationship := make(map[string]interface{})
 		storageflexutilphysicaldriverelationship["class_id"] = item.ClassId
-		storageflexutilphysicaldriverelationship["link"] = item.Link
 		storageflexutilphysicaldriverelationship["moid"] = item.Moid
 		storageflexutilphysicaldriverelationship["object_type"] = item.ObjectType
 		storageflexutilphysicaldriverelationship["selector"] = item.Selector
@@ -2599,16 +3111,15 @@ func flattenListStorageFlexUtilPhysicalDriveRelationship(p *[]models.StorageFlex
 	}
 	return storageflexutilphysicaldriverelationships
 }
-func flattenListStorageFlexUtilVirtualDriveRelationship(p *[]models.StorageFlexUtilVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageFlexUtilVirtualDriveRelationship(p []models.StorageFlexUtilVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilvirtualdriverelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageFlexUtilVirtualDriveRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storageflexutilvirtualdriverelationship := make(map[string]interface{})
 		storageflexutilvirtualdriverelationship["class_id"] = item.ClassId
-		storageflexutilvirtualdriverelationship["link"] = item.Link
 		storageflexutilvirtualdriverelationship["moid"] = item.Moid
 		storageflexutilvirtualdriverelationship["object_type"] = item.ObjectType
 		storageflexutilvirtualdriverelationship["selector"] = item.Selector
@@ -2616,22 +3127,21 @@ func flattenListStorageFlexUtilVirtualDriveRelationship(p *[]models.StorageFlexU
 	}
 	return storageflexutilvirtualdriverelationships
 }
-func flattenListStorageInitiator(p *[]models.StorageInitiator, d *schema.ResourceData) []map[string]interface{} {
-	var storageinitiators []map[string]interface{}
-	if *p == nil {
+func flattenListStorageItemRelationship(p []models.StorageItemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storageitemrelationships []map[string]interface{}
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		storageinitiator := make(map[string]interface{})
-		storageinitiator["class_id"] = item.ClassId
-		storageinitiator["iqn"] = item.Iqn
-		storageinitiator["name"] = item.Name
-		storageinitiator["object_type"] = item.ObjectType
-		storageinitiator["type"] = item.Type
-		storageinitiator["wwn"] = item.Wwn
-		storageinitiators = append(storageinitiators, storageinitiator)
+	for _, item := range p {
+		item := item.MoMoRef
+		storageitemrelationship := make(map[string]interface{})
+		storageitemrelationship["class_id"] = item.ClassId
+		storageitemrelationship["moid"] = item.Moid
+		storageitemrelationship["object_type"] = item.ObjectType
+		storageitemrelationship["selector"] = item.Selector
+		storageitemrelationships = append(storageitemrelationships, storageitemrelationship)
 	}
-	return storageinitiators
+	return storageitemrelationships
 }
 func flattenListStorageLocalDisk(p *[]models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
 	var storagelocaldisks []map[string]interface{}
@@ -2647,16 +3157,15 @@ func flattenListStorageLocalDisk(p *[]models.StorageLocalDisk, d *schema.Resourc
 	}
 	return storagelocaldisks
 }
-func flattenListStoragePhysicalDiskRelationship(p *[]models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePhysicalDiskRelationship(p []models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePhysicalDiskRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagephysicaldiskrelationship := make(map[string]interface{})
 		storagephysicaldiskrelationship["class_id"] = item.ClassId
-		storagephysicaldiskrelationship["link"] = item.Link
 		storagephysicaldiskrelationship["moid"] = item.Moid
 		storagephysicaldiskrelationship["object_type"] = item.ObjectType
 		storagephysicaldiskrelationship["selector"] = item.Selector
@@ -2664,16 +3173,15 @@ func flattenListStoragePhysicalDiskRelationship(p *[]models.StoragePhysicalDiskR
 	}
 	return storagephysicaldiskrelationships
 }
-func flattenListStoragePhysicalDiskExtensionRelationship(p *[]models.StoragePhysicalDiskExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePhysicalDiskExtensionRelationship(p []models.StoragePhysicalDiskExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskextensionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePhysicalDiskExtensionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagephysicaldiskextensionrelationship := make(map[string]interface{})
 		storagephysicaldiskextensionrelationship["class_id"] = item.ClassId
-		storagephysicaldiskextensionrelationship["link"] = item.Link
 		storagephysicaldiskextensionrelationship["moid"] = item.Moid
 		storagephysicaldiskextensionrelationship["object_type"] = item.ObjectType
 		storagephysicaldiskextensionrelationship["selector"] = item.Selector
@@ -2681,16 +3189,15 @@ func flattenListStoragePhysicalDiskExtensionRelationship(p *[]models.StoragePhys
 	}
 	return storagephysicaldiskextensionrelationships
 }
-func flattenListStoragePhysicalDiskUsageRelationship(p *[]models.StoragePhysicalDiskUsageRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePhysicalDiskUsageRelationship(p []models.StoragePhysicalDiskUsageRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskusagerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePhysicalDiskUsageRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagephysicaldiskusagerelationship := make(map[string]interface{})
 		storagephysicaldiskusagerelationship["class_id"] = item.ClassId
-		storagephysicaldiskusagerelationship["link"] = item.Link
 		storagephysicaldiskusagerelationship["moid"] = item.Moid
 		storagephysicaldiskusagerelationship["object_type"] = item.ObjectType
 		storagephysicaldiskusagerelationship["selector"] = item.Selector
@@ -2698,16 +3205,15 @@ func flattenListStoragePhysicalDiskUsageRelationship(p *[]models.StoragePhysical
 	}
 	return storagephysicaldiskusagerelationships
 }
-func flattenListStoragePureHostRelationship(p *[]models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePureHostRelationship(p []models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePureHostRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagepurehostrelationship := make(map[string]interface{})
 		storagepurehostrelationship["class_id"] = item.ClassId
-		storagepurehostrelationship["link"] = item.Link
 		storagepurehostrelationship["moid"] = item.Moid
 		storagepurehostrelationship["object_type"] = item.ObjectType
 		storagepurehostrelationship["selector"] = item.Selector
@@ -2715,16 +3221,15 @@ func flattenListStoragePureHostRelationship(p *[]models.StoragePureHostRelations
 	}
 	return storagepurehostrelationships
 }
-func flattenListStoragePureHostGroupRelationship(p *[]models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePureHostGroupRelationship(p []models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostgrouprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePureHostGroupRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagepurehostgrouprelationship := make(map[string]interface{})
 		storagepurehostgrouprelationship["class_id"] = item.ClassId
-		storagepurehostgrouprelationship["link"] = item.Link
 		storagepurehostgrouprelationship["moid"] = item.Moid
 		storagepurehostgrouprelationship["object_type"] = item.ObjectType
 		storagepurehostgrouprelationship["selector"] = item.Selector
@@ -2747,16 +3252,15 @@ func flattenListStoragePureReplicationBlackout(p *[]models.StoragePureReplicatio
 	}
 	return storagepurereplicationblackouts
 }
-func flattenListStoragePureVolumeRelationship(p *[]models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePureVolumeRelationship(p []models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurevolumerelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StoragePureVolumeRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagepurevolumerelationship := make(map[string]interface{})
 		storagepurevolumerelationship["class_id"] = item.ClassId
-		storagepurevolumerelationship["link"] = item.Link
 		storagepurevolumerelationship["moid"] = item.Moid
 		storagepurevolumerelationship["object_type"] = item.ObjectType
 		storagepurevolumerelationship["selector"] = item.Selector
@@ -2764,16 +3268,15 @@ func flattenListStoragePureVolumeRelationship(p *[]models.StoragePureVolumeRelat
 	}
 	return storagepurevolumerelationships
 }
-func flattenListStorageSasExpanderRelationship(p *[]models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageSasExpanderRelationship(p []models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageSasExpanderRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagesasexpanderrelationship := make(map[string]interface{})
 		storagesasexpanderrelationship["class_id"] = item.ClassId
-		storagesasexpanderrelationship["link"] = item.Link
 		storagesasexpanderrelationship["moid"] = item.Moid
 		storagesasexpanderrelationship["object_type"] = item.ObjectType
 		storagesasexpanderrelationship["selector"] = item.Selector
@@ -2781,22 +3284,37 @@ func flattenListStorageSasExpanderRelationship(p *[]models.StorageSasExpanderRel
 	}
 	return storagesasexpanderrelationships
 }
-func flattenListStorageSasPortRelationship(p *[]models.StorageSasPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageSasPortRelationship(p []models.StorageSasPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasportrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageSasPortRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagesasportrelationship := make(map[string]interface{})
 		storagesasportrelationship["class_id"] = item.ClassId
-		storagesasportrelationship["link"] = item.Link
 		storagesasportrelationship["moid"] = item.Moid
 		storagesasportrelationship["object_type"] = item.ObjectType
 		storagesasportrelationship["selector"] = item.Selector
 		storagesasportrelationships = append(storagesasportrelationships, storagesasportrelationship)
 	}
 	return storagesasportrelationships
+}
+func flattenListStorageSpanRelationship(p []models.StorageSpanRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagespanrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		storagespanrelationship := make(map[string]interface{})
+		storagespanrelationship["class_id"] = item.ClassId
+		storagespanrelationship["moid"] = item.Moid
+		storagespanrelationship["object_type"] = item.ObjectType
+		storagespanrelationship["selector"] = item.Selector
+		storagespanrelationships = append(storagespanrelationships, storagespanrelationship)
+	}
+	return storagespanrelationships
 }
 func flattenListStorageSpanGroup(p *[]models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
 	var storagespangroups []map[string]interface{}
@@ -2825,16 +3343,15 @@ func flattenListStorageSpanGroup(p *[]models.StorageSpanGroup, d *schema.Resourc
 	}
 	return storagespangroups
 }
-func flattenListStorageStoragePolicyRelationship(p *[]models.StorageStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageStoragePolicyRelationship(p []models.StorageStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagestoragepolicyrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageStoragePolicyRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagestoragepolicyrelationship := make(map[string]interface{})
 		storagestoragepolicyrelationship["class_id"] = item.ClassId
-		storagestoragepolicyrelationship["link"] = item.Link
 		storagestoragepolicyrelationship["moid"] = item.Moid
 		storagestoragepolicyrelationship["object_type"] = item.ObjectType
 		storagestoragepolicyrelationship["selector"] = item.Selector
@@ -2842,16 +3359,15 @@ func flattenListStorageStoragePolicyRelationship(p *[]models.StorageStoragePolic
 	}
 	return storagestoragepolicyrelationships
 }
-func flattenListStorageVdMemberEpRelationship(p *[]models.StorageVdMemberEpRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageVdMemberEpRelationship(p []models.StorageVdMemberEpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevdmembereprelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageVdMemberEpRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagevdmembereprelationship := make(map[string]interface{})
 		storagevdmembereprelationship["class_id"] = item.ClassId
-		storagevdmembereprelationship["link"] = item.Link
 		storagevdmembereprelationship["moid"] = item.Moid
 		storagevdmembereprelationship["object_type"] = item.ObjectType
 		storagevdmembereprelationship["selector"] = item.Selector
@@ -2859,16 +3375,15 @@ func flattenListStorageVdMemberEpRelationship(p *[]models.StorageVdMemberEpRelat
 	}
 	return storagevdmembereprelationships
 }
-func flattenListStorageVirtualDriveRelationship(p *[]models.StorageVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageVirtualDriveRelationship(p []models.StorageVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriverelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageVirtualDriveRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagevirtualdriverelationship := make(map[string]interface{})
 		storagevirtualdriverelationship["class_id"] = item.ClassId
-		storagevirtualdriverelationship["link"] = item.Link
 		storagevirtualdriverelationship["moid"] = item.Moid
 		storagevirtualdriverelationship["object_type"] = item.ObjectType
 		storagevirtualdriverelationship["selector"] = item.Selector
@@ -2900,16 +3415,15 @@ func flattenListStorageVirtualDriveConfig(p *[]models.StorageVirtualDriveConfig,
 	}
 	return storagevirtualdriveconfigs
 }
-func flattenListStorageVirtualDriveExtensionRelationship(p *[]models.StorageVirtualDriveExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageVirtualDriveExtensionRelationship(p []models.StorageVirtualDriveExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriveextensionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.StorageVirtualDriveExtensionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		storagevirtualdriveextensionrelationship := make(map[string]interface{})
 		storagevirtualdriveextensionrelationship["class_id"] = item.ClassId
-		storagevirtualdriveextensionrelationship["link"] = item.Link
 		storagevirtualdriveextensionrelationship["moid"] = item.Moid
 		storagevirtualdriveextensionrelationship["object_type"] = item.ObjectType
 		storagevirtualdriveextensionrelationship["selector"] = item.Selector
@@ -3045,21 +3559,52 @@ func flattenListUcsdConnectorPack(p *[]models.UcsdConnectorPack, d *schema.Resou
 		ucsdconnectorpack["object_type"] = item.ObjectType
 		ucsdconnectorpack["services"] = item.Services
 		ucsdconnectorpack["state"] = item.State
-		ucsdconnectorpack["version"] = item.Version
+		ucsdconnectorpack["nr_version"] = item.Version
 		ucsdconnectorpacks = append(ucsdconnectorpacks, ucsdconnectorpack)
 	}
 	return ucsdconnectorpacks
 }
-func flattenListVirtualizationVmwareDatastoreRelationship(p *[]models.VirtualizationVmwareDatastoreRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationvmwaredatastorerelationships []map[string]interface{}
+func flattenListUuidpoolBlockRelationship(p []models.UuidpoolBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpoolblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		uuidpoolblockrelationship := make(map[string]interface{})
+		uuidpoolblockrelationship["class_id"] = item.ClassId
+		uuidpoolblockrelationship["moid"] = item.Moid
+		uuidpoolblockrelationship["object_type"] = item.ObjectType
+		uuidpoolblockrelationship["selector"] = item.Selector
+		uuidpoolblockrelationships = append(uuidpoolblockrelationships, uuidpoolblockrelationship)
+	}
+	return uuidpoolblockrelationships
+}
+func flattenListUuidpoolUuidBlock(p *[]models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpooluuidblocks []map[string]interface{}
 	if *p == nil {
 		return nil
 	}
 	for _, item := range *p {
-		item := item.VirtualizationVmwareDatastoreRelationshipInterface.(*models.MoMoRef)
+		uuidpooluuidblock := make(map[string]interface{})
+		uuidpooluuidblock["class_id"] = item.ClassId
+		uuidpooluuidblock["from"] = item.From
+		uuidpooluuidblock["object_type"] = item.ObjectType
+		uuidpooluuidblock["size"] = item.Size
+		uuidpooluuidblock["to"] = item.To
+		uuidpooluuidblocks = append(uuidpooluuidblocks, uuidpooluuidblock)
+	}
+	return uuidpooluuidblocks
+}
+func flattenListVirtualizationVmwareDatastoreRelationship(p []models.VirtualizationVmwareDatastoreRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwaredatastorerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		virtualizationvmwaredatastorerelationship := make(map[string]interface{})
 		virtualizationvmwaredatastorerelationship["class_id"] = item.ClassId
-		virtualizationvmwaredatastorerelationship["link"] = item.Link
 		virtualizationvmwaredatastorerelationship["moid"] = item.Moid
 		virtualizationvmwaredatastorerelationship["object_type"] = item.ObjectType
 		virtualizationvmwaredatastorerelationship["selector"] = item.Selector
@@ -3067,16 +3612,15 @@ func flattenListVirtualizationVmwareDatastoreRelationship(p *[]models.Virtualiza
 	}
 	return virtualizationvmwaredatastorerelationships
 }
-func flattenListVirtualizationVmwareHostRelationship(p *[]models.VirtualizationVmwareHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListVirtualizationVmwareHostRelationship(p []models.VirtualizationVmwareHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarehostrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.VirtualizationVmwareHostRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		virtualizationvmwarehostrelationship := make(map[string]interface{})
 		virtualizationvmwarehostrelationship["class_id"] = item.ClassId
-		virtualizationvmwarehostrelationship["link"] = item.Link
 		virtualizationvmwarehostrelationship["moid"] = item.Moid
 		virtualizationvmwarehostrelationship["object_type"] = item.ObjectType
 		virtualizationvmwarehostrelationship["selector"] = item.Selector
@@ -3110,16 +3654,15 @@ func flattenListVmediaMapping(p *[]models.VmediaMapping, d *schema.ResourceData)
 	}
 	return vmediamappings
 }
-func flattenListVnicEthIfRelationship(p *[]models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListVnicEthIfRelationship(p []models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethifrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.VnicEthIfRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		vnicethifrelationship := make(map[string]interface{})
 		vnicethifrelationship["class_id"] = item.ClassId
-		vnicethifrelationship["link"] = item.Link
 		vnicethifrelationship["moid"] = item.Moid
 		vnicethifrelationship["object_type"] = item.ObjectType
 		vnicethifrelationship["selector"] = item.Selector
@@ -3127,16 +3670,31 @@ func flattenListVnicEthIfRelationship(p *[]models.VnicEthIfRelationship, d *sche
 	}
 	return vnicethifrelationships
 }
-func flattenListVnicFcIfRelationship(p *[]models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var vnicfcifrelationships []map[string]interface{}
-	if *p == nil {
+func flattenListVnicEthNetworkPolicyRelationship(p []models.VnicEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var vnicethnetworkpolicyrelationships []map[string]interface{}
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.VnicFcIfRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
+		vnicethnetworkpolicyrelationship := make(map[string]interface{})
+		vnicethnetworkpolicyrelationship["class_id"] = item.ClassId
+		vnicethnetworkpolicyrelationship["moid"] = item.Moid
+		vnicethnetworkpolicyrelationship["object_type"] = item.ObjectType
+		vnicethnetworkpolicyrelationship["selector"] = item.Selector
+		vnicethnetworkpolicyrelationships = append(vnicethnetworkpolicyrelationships, vnicethnetworkpolicyrelationship)
+	}
+	return vnicethnetworkpolicyrelationships
+}
+func flattenListVnicFcIfRelationship(p []models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var vnicfcifrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
 		vnicfcifrelationship := make(map[string]interface{})
 		vnicfcifrelationship["class_id"] = item.ClassId
-		vnicfcifrelationship["link"] = item.Link
 		vnicfcifrelationship["moid"] = item.Moid
 		vnicfcifrelationship["object_type"] = item.ObjectType
 		vnicfcifrelationship["selector"] = item.Selector
@@ -3242,6 +3800,7 @@ func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []m
 			return contentgrammars
 		})(item.ResponseSpec, d)
 		workflowapi["skip_on_condition"] = item.SkipOnCondition
+		workflowapi["start_delay"] = item.StartDelay
 		workflowapi["timeout"] = item.Timeout
 		workflowapis = append(workflowapis, workflowapi)
 	}
@@ -3309,16 +3868,15 @@ func flattenListWorkflowMessage(p *[]models.WorkflowMessage, d *schema.ResourceD
 	}
 	return workflowmessages
 }
-func flattenListWorkflowTaskDefinitionRelationship(p *[]models.WorkflowTaskDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowTaskDefinitionRelationship(p []models.WorkflowTaskDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskdefinitionrelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.WorkflowTaskDefinitionRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		workflowtaskdefinitionrelationship := make(map[string]interface{})
 		workflowtaskdefinitionrelationship["class_id"] = item.ClassId
-		workflowtaskdefinitionrelationship["link"] = item.Link
 		workflowtaskdefinitionrelationship["moid"] = item.Moid
 		workflowtaskdefinitionrelationship["object_type"] = item.ObjectType
 		workflowtaskdefinitionrelationship["selector"] = item.Selector
@@ -3326,16 +3884,15 @@ func flattenListWorkflowTaskDefinitionRelationship(p *[]models.WorkflowTaskDefin
 	}
 	return workflowtaskdefinitionrelationships
 }
-func flattenListWorkflowTaskInfoRelationship(p *[]models.WorkflowTaskInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowTaskInfoRelationship(p []models.WorkflowTaskInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskinforelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.WorkflowTaskInfoRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		workflowtaskinforelationship := make(map[string]interface{})
 		workflowtaskinforelationship["class_id"] = item.ClassId
-		workflowtaskinforelationship["link"] = item.Link
 		workflowtaskinforelationship["moid"] = item.Moid
 		workflowtaskinforelationship["object_type"] = item.ObjectType
 		workflowtaskinforelationship["selector"] = item.Selector
@@ -3358,16 +3915,15 @@ func flattenListWorkflowTaskRetryInfo(p *[]models.WorkflowTaskRetryInfo, d *sche
 	}
 	return workflowtaskretryinfos
 }
-func flattenListWorkflowWorkflowInfoRelationship(p *[]models.WorkflowWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowWorkflowInfoRelationship(p []models.WorkflowWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowinforelationships []map[string]interface{}
-	if *p == nil {
+	if p == nil {
 		return nil
 	}
-	for _, item := range *p {
-		item := item.WorkflowWorkflowInfoRelationshipInterface.(*models.MoMoRef)
+	for _, item := range p {
+		item := item.MoMoRef
 		workflowworkflowinforelationship := make(map[string]interface{})
 		workflowworkflowinforelationship["class_id"] = item.ClassId
-		workflowworkflowinforelationship["link"] = item.Link
 		workflowworkflowinforelationship["moid"] = item.Moid
 		workflowworkflowinforelationship["object_type"] = item.ObjectType
 		workflowworkflowinforelationship["selector"] = item.Selector
@@ -3451,10 +4007,9 @@ func flattenMapAdapterUnitRelationship(p *models.AdapterUnitRelationship, d *sch
 		return nil
 	}
 	x := *p
-	item := x.AdapterUnitRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	adapterunitrelationship := make(map[string]interface{})
 	adapterunitrelationship["class_id"] = item.ClassId
-	adapterunitrelationship["link"] = item.Link
 	adapterunitrelationship["moid"] = item.Moid
 	adapterunitrelationship["object_type"] = item.ObjectType
 	adapterunitrelationship["selector"] = item.Selector
@@ -3468,10 +4023,9 @@ func flattenMapApplianceDataExportPolicyRelationship(p *models.ApplianceDataExpo
 		return nil
 	}
 	x := *p
-	item := x.ApplianceDataExportPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	appliancedataexportpolicyrelationship := make(map[string]interface{})
 	appliancedataexportpolicyrelationship["class_id"] = item.ClassId
-	appliancedataexportpolicyrelationship["link"] = item.Link
 	appliancedataexportpolicyrelationship["moid"] = item.Moid
 	appliancedataexportpolicyrelationship["object_type"] = item.ObjectType
 	appliancedataexportpolicyrelationship["selector"] = item.Selector
@@ -3485,10 +4039,9 @@ func flattenMapApplianceImageBundleRelationship(p *models.ApplianceImageBundleRe
 		return nil
 	}
 	x := *p
-	item := x.ApplianceImageBundleRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	applianceimagebundlerelationship := make(map[string]interface{})
 	applianceimagebundlerelationship["class_id"] = item.ClassId
-	applianceimagebundlerelationship["link"] = item.Link
 	applianceimagebundlerelationship["moid"] = item.Moid
 	applianceimagebundlerelationship["object_type"] = item.ObjectType
 	applianceimagebundlerelationship["selector"] = item.Selector
@@ -3502,10 +4055,9 @@ func flattenMapAssetClusterMemberRelationship(p *models.AssetClusterMemberRelati
 		return nil
 	}
 	x := *p
-	item := x.AssetClusterMemberRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	assetclustermemberrelationship := make(map[string]interface{})
 	assetclustermemberrelationship["class_id"] = item.ClassId
-	assetclustermemberrelationship["link"] = item.Link
 	assetclustermemberrelationship["moid"] = item.Moid
 	assetclustermemberrelationship["object_type"] = item.ObjectType
 	assetclustermemberrelationship["selector"] = item.Selector
@@ -3606,10 +4158,9 @@ func flattenMapAssetDeviceClaimRelationship(p *models.AssetDeviceClaimRelationsh
 		return nil
 	}
 	x := *p
-	item := x.AssetDeviceClaimRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	assetdeviceclaimrelationship := make(map[string]interface{})
 	assetdeviceclaimrelationship["class_id"] = item.ClassId
-	assetdeviceclaimrelationship["link"] = item.Link
 	assetdeviceclaimrelationship["moid"] = item.Moid
 	assetdeviceclaimrelationship["object_type"] = item.ObjectType
 	assetdeviceclaimrelationship["selector"] = item.Selector
@@ -3623,10 +4174,9 @@ func flattenMapAssetDeviceConfigurationRelationship(p *models.AssetDeviceConfigu
 		return nil
 	}
 	x := *p
-	item := x.AssetDeviceConfigurationRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	assetdeviceconfigurationrelationship := make(map[string]interface{})
 	assetdeviceconfigurationrelationship["class_id"] = item.ClassId
-	assetdeviceconfigurationrelationship["link"] = item.Link
 	assetdeviceconfigurationrelationship["moid"] = item.Moid
 	assetdeviceconfigurationrelationship["object_type"] = item.ObjectType
 	assetdeviceconfigurationrelationship["selector"] = item.Selector
@@ -3640,10 +4190,9 @@ func flattenMapAssetDeviceConnectionRelationship(p *models.AssetDeviceConnection
 		return nil
 	}
 	x := *p
-	item := x.AssetDeviceConnectionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	assetdeviceconnectionrelationship := make(map[string]interface{})
 	assetdeviceconnectionrelationship["class_id"] = item.ClassId
-	assetdeviceconnectionrelationship["link"] = item.Link
 	assetdeviceconnectionrelationship["moid"] = item.Moid
 	assetdeviceconnectionrelationship["object_type"] = item.ObjectType
 	assetdeviceconnectionrelationship["selector"] = item.Selector
@@ -3657,10 +4206,9 @@ func flattenMapAssetDeviceRegistrationRelationship(p *models.AssetDeviceRegistra
 		return nil
 	}
 	x := *p
-	item := x.AssetDeviceRegistrationRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	assetdeviceregistrationrelationship := make(map[string]interface{})
 	assetdeviceregistrationrelationship["class_id"] = item.ClassId
-	assetdeviceregistrationrelationship["link"] = item.Link
 	assetdeviceregistrationrelationship["moid"] = item.Moid
 	assetdeviceregistrationrelationship["object_type"] = item.ObjectType
 	assetdeviceregistrationrelationship["selector"] = item.Selector
@@ -3715,7 +4263,6 @@ func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSig
 	assetparentconnectionsignature["device_id"] = item.DeviceId
 	assetparentconnectionsignature["node_id"] = item.NodeId
 	assetparentconnectionsignature["object_type"] = item.ObjectType
-	assetparentconnectionsignature["signature"] = item.Signature
 
 	assetparentconnectionsignatures = append(assetparentconnectionsignatures, assetparentconnectionsignature)
 	return assetparentconnectionsignatures
@@ -3857,10 +4404,9 @@ func flattenMapBiosBootModeRelationship(p *models.BiosBootModeRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.BiosBootModeRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	biosbootmoderelationship := make(map[string]interface{})
 	biosbootmoderelationship["class_id"] = item.ClassId
-	biosbootmoderelationship["link"] = item.Link
 	biosbootmoderelationship["moid"] = item.Moid
 	biosbootmoderelationship["object_type"] = item.ObjectType
 	biosbootmoderelationship["selector"] = item.Selector
@@ -3868,16 +4414,31 @@ func flattenMapBiosBootModeRelationship(p *models.BiosBootModeRelationship, d *s
 	biosbootmoderelationships = append(biosbootmoderelationships, biosbootmoderelationship)
 	return biosbootmoderelationships
 }
+func flattenMapBiosSystemBootOrderRelationship(p *models.BiosSystemBootOrderRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var biossystembootorderrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	biossystembootorderrelationship := make(map[string]interface{})
+	biossystembootorderrelationship["class_id"] = item.ClassId
+	biossystembootorderrelationship["moid"] = item.Moid
+	biossystembootorderrelationship["object_type"] = item.ObjectType
+	biossystembootorderrelationship["selector"] = item.Selector
+
+	biossystembootorderrelationships = append(biossystembootorderrelationships, biossystembootorderrelationship)
+	return biossystembootorderrelationships
+}
 func flattenMapBiosUnitRelationship(p *models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biosunitrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.BiosUnitRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	biosunitrelationship := make(map[string]interface{})
 	biosunitrelationship["class_id"] = item.ClassId
-	biosunitrelationship["link"] = item.Link
 	biosunitrelationship["moid"] = item.Moid
 	biosunitrelationship["object_type"] = item.ObjectType
 	biosunitrelationship["selector"] = item.Selector
@@ -3891,16 +4452,31 @@ func flattenMapBootDeviceBootModeRelationship(p *models.BootDeviceBootModeRelati
 		return nil
 	}
 	x := *p
-	item := x.BootDeviceBootModeRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	bootdevicebootmoderelationship := make(map[string]interface{})
 	bootdevicebootmoderelationship["class_id"] = item.ClassId
-	bootdevicebootmoderelationship["link"] = item.Link
 	bootdevicebootmoderelationship["moid"] = item.Moid
 	bootdevicebootmoderelationship["object_type"] = item.ObjectType
 	bootdevicebootmoderelationship["selector"] = item.Selector
 
 	bootdevicebootmoderelationships = append(bootdevicebootmoderelationships, bootdevicebootmoderelationship)
 	return bootdevicebootmoderelationships
+}
+func flattenMapCapabilitySectionRelationship(p *models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitysectionrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	capabilitysectionrelationship := make(map[string]interface{})
+	capabilitysectionrelationship["class_id"] = item.ClassId
+	capabilitysectionrelationship["moid"] = item.Moid
+	capabilitysectionrelationship["object_type"] = item.ObjectType
+	capabilitysectionrelationship["selector"] = item.Selector
+
+	capabilitysectionrelationships = append(capabilitysectionrelationships, capabilitysectionrelationship)
+	return capabilitysectionrelationships
 }
 func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
 	var commcredentials []map[string]interface{}
@@ -3942,10 +4518,9 @@ func flattenMapComputeBladeRelationship(p *models.ComputeBladeRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.ComputeBladeRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	computebladerelationship := make(map[string]interface{})
 	computebladerelationship["class_id"] = item.ClassId
-	computebladerelationship["link"] = item.Link
 	computebladerelationship["moid"] = item.Moid
 	computebladerelationship["object_type"] = item.ObjectType
 	computebladerelationship["selector"] = item.Selector
@@ -3959,10 +4534,9 @@ func flattenMapComputeBoardRelationship(p *models.ComputeBoardRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.ComputeBoardRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	computeboardrelationship := make(map[string]interface{})
 	computeboardrelationship["class_id"] = item.ClassId
-	computeboardrelationship["link"] = item.Link
 	computeboardrelationship["moid"] = item.Moid
 	computeboardrelationship["object_type"] = item.ObjectType
 	computeboardrelationship["selector"] = item.Selector
@@ -4009,10 +4583,9 @@ func flattenMapComputePhysicalRelationship(p *models.ComputePhysicalRelationship
 		return nil
 	}
 	x := *p
-	item := x.ComputePhysicalRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	computephysicalrelationship := make(map[string]interface{})
 	computephysicalrelationship["class_id"] = item.ClassId
-	computephysicalrelationship["link"] = item.Link
 	computephysicalrelationship["moid"] = item.Moid
 	computephysicalrelationship["object_type"] = item.ObjectType
 	computephysicalrelationship["selector"] = item.Selector
@@ -4026,10 +4599,9 @@ func flattenMapComputeRackUnitRelationship(p *models.ComputeRackUnitRelationship
 		return nil
 	}
 	x := *p
-	item := x.ComputeRackUnitRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	computerackunitrelationship := make(map[string]interface{})
 	computerackunitrelationship["class_id"] = item.ClassId
-	computerackunitrelationship["link"] = item.Link
 	computerackunitrelationship["moid"] = item.Moid
 	computerackunitrelationship["object_type"] = item.ObjectType
 	computerackunitrelationship["selector"] = item.Selector
@@ -4058,10 +4630,9 @@ func flattenMapCondHclStatusRelationship(p *models.CondHclStatusRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.CondHclStatusRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	condhclstatusrelationship := make(map[string]interface{})
 	condhclstatusrelationship["class_id"] = item.ClassId
-	condhclstatusrelationship["link"] = item.Link
 	condhclstatusrelationship["moid"] = item.Moid
 	condhclstatusrelationship["object_type"] = item.ObjectType
 	condhclstatusrelationship["selector"] = item.Selector
@@ -4069,16 +4640,104 @@ func flattenMapCondHclStatusRelationship(p *models.CondHclStatusRelationship, d 
 	condhclstatusrelationships = append(condhclstatusrelationships, condhclstatusrelationship)
 	return condhclstatusrelationships
 }
+func flattenMapConfigExportedItemRelationship(p *models.ConfigExportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var configexporteditemrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	configexporteditemrelationship := make(map[string]interface{})
+	configexporteditemrelationship["class_id"] = item.ClassId
+	configexporteditemrelationship["moid"] = item.Moid
+	configexporteditemrelationship["object_type"] = item.ObjectType
+	configexporteditemrelationship["selector"] = item.Selector
+
+	configexporteditemrelationships = append(configexporteditemrelationships, configexporteditemrelationship)
+	return configexporteditemrelationships
+}
+func flattenMapConfigExporterRelationship(p *models.ConfigExporterRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var configexporterrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	configexporterrelationship := make(map[string]interface{})
+	configexporterrelationship["class_id"] = item.ClassId
+	configexporterrelationship["moid"] = item.Moid
+	configexporterrelationship["object_type"] = item.ObjectType
+	configexporterrelationship["selector"] = item.Selector
+
+	configexporterrelationships = append(configexporterrelationships, configexporterrelationship)
+	return configexporterrelationships
+}
+func flattenMapConfigImporterRelationship(p *models.ConfigImporterRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var configimporterrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	configimporterrelationship := make(map[string]interface{})
+	configimporterrelationship["class_id"] = item.ClassId
+	configimporterrelationship["moid"] = item.Moid
+	configimporterrelationship["object_type"] = item.ObjectType
+	configimporterrelationship["selector"] = item.Selector
+
+	configimporterrelationships = append(configimporterrelationships, configimporterrelationship)
+	return configimporterrelationships
+}
+func flattenMapConfigMoRef(p *models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
+	var configmorefs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	configmoref := make(map[string]interface{})
+	configmoref["class_id"] = item.ClassId
+	configmoref["moid"] = item.Moid
+	configmoref["object_type"] = item.ObjectType
+
+	configmorefs = append(configmorefs, configmoref)
+	return configmorefs
+}
+func flattenMapConnectorFileChecksum(p *models.ConnectorFileChecksum, d *schema.ResourceData) []map[string]interface{} {
+	var connectorfilechecksums []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	connectorfilechecksum := make(map[string]interface{})
+	connectorfilechecksum["class_id"] = item.ClassId
+	connectorfilechecksum["hash_algorithm"] = item.HashAlgorithm
+	connectorfilechecksum["object_type"] = item.ObjectType
+
+	connectorfilechecksums = append(connectorfilechecksums, connectorfilechecksum)
+	return connectorfilechecksums
+}
+func flattenMapConnectorPlatformParamBase(p *models.ConnectorPlatformParamBase, d *schema.ResourceData) []map[string]interface{} {
+	var connectorplatformparambases []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	connectorplatformparambase := make(map[string]interface{})
+	connectorplatformparambase["class_id"] = item.ClassId
+	connectorplatformparambase["object_type"] = item.ObjectType
+
+	connectorplatformparambases = append(connectorplatformparambases, connectorplatformparambase)
+	return connectorplatformparambases
+}
 func flattenMapEquipmentChassisRelationship(p *models.EquipmentChassisRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentchassisrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.EquipmentChassisRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentchassisrelationship := make(map[string]interface{})
 	equipmentchassisrelationship["class_id"] = item.ClassId
-	equipmentchassisrelationship["link"] = item.Link
 	equipmentchassisrelationship["moid"] = item.Moid
 	equipmentchassisrelationship["object_type"] = item.ObjectType
 	equipmentchassisrelationship["selector"] = item.Selector
@@ -4092,10 +4751,9 @@ func flattenMapEquipmentFanModuleRelationship(p *models.EquipmentFanModuleRelati
 		return nil
 	}
 	x := *p
-	item := x.EquipmentFanModuleRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentfanmodulerelationship := make(map[string]interface{})
 	equipmentfanmodulerelationship["class_id"] = item.ClassId
-	equipmentfanmodulerelationship["link"] = item.Link
 	equipmentfanmodulerelationship["moid"] = item.Moid
 	equipmentfanmodulerelationship["object_type"] = item.ObjectType
 	equipmentfanmodulerelationship["selector"] = item.Selector
@@ -4103,16 +4761,63 @@ func flattenMapEquipmentFanModuleRelationship(p *models.EquipmentFanModuleRelati
 	equipmentfanmodulerelationships = append(equipmentfanmodulerelationships, equipmentfanmodulerelationship)
 	return equipmentfanmodulerelationships
 }
+func flattenMapEquipmentFexRelationship(p *models.EquipmentFexRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentfexrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	equipmentfexrelationship := make(map[string]interface{})
+	equipmentfexrelationship["class_id"] = item.ClassId
+	equipmentfexrelationship["moid"] = item.Moid
+	equipmentfexrelationship["object_type"] = item.ObjectType
+	equipmentfexrelationship["selector"] = item.Selector
+
+	equipmentfexrelationships = append(equipmentfexrelationships, equipmentfexrelationship)
+	return equipmentfexrelationships
+}
+func flattenMapEquipmentIoCardRelationship(p *models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentiocardrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	equipmentiocardrelationship := make(map[string]interface{})
+	equipmentiocardrelationship["class_id"] = item.ClassId
+	equipmentiocardrelationship["moid"] = item.Moid
+	equipmentiocardrelationship["object_type"] = item.ObjectType
+	equipmentiocardrelationship["selector"] = item.Selector
+
+	equipmentiocardrelationships = append(equipmentiocardrelationships, equipmentiocardrelationship)
+	return equipmentiocardrelationships
+}
+func flattenMapEquipmentIoCardBaseRelationship(p *models.EquipmentIoCardBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentiocardbaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	equipmentiocardbaserelationship := make(map[string]interface{})
+	equipmentiocardbaserelationship["class_id"] = item.ClassId
+	equipmentiocardbaserelationship["moid"] = item.Moid
+	equipmentiocardbaserelationship["object_type"] = item.ObjectType
+	equipmentiocardbaserelationship["selector"] = item.Selector
+
+	equipmentiocardbaserelationships = append(equipmentiocardbaserelationships, equipmentiocardbaserelationship)
+	return equipmentiocardbaserelationships
+}
 func flattenMapEquipmentLocatorLedRelationship(p *models.EquipmentLocatorLedRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentlocatorledrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.EquipmentLocatorLedRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentlocatorledrelationship := make(map[string]interface{})
 	equipmentlocatorledrelationship["class_id"] = item.ClassId
-	equipmentlocatorledrelationship["link"] = item.Link
 	equipmentlocatorledrelationship["moid"] = item.Moid
 	equipmentlocatorledrelationship["object_type"] = item.ObjectType
 	equipmentlocatorledrelationship["selector"] = item.Selector
@@ -4120,16 +4825,47 @@ func flattenMapEquipmentLocatorLedRelationship(p *models.EquipmentLocatorLedRela
 	equipmentlocatorledrelationships = append(equipmentlocatorledrelationships, equipmentlocatorledrelationship)
 	return equipmentlocatorledrelationships
 }
+func flattenMapEquipmentPhysicalIdentityRelationship(p *models.EquipmentPhysicalIdentityRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentphysicalidentityrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	equipmentphysicalidentityrelationship := make(map[string]interface{})
+	equipmentphysicalidentityrelationship["class_id"] = item.ClassId
+	equipmentphysicalidentityrelationship["moid"] = item.Moid
+	equipmentphysicalidentityrelationship["object_type"] = item.ObjectType
+	equipmentphysicalidentityrelationship["selector"] = item.Selector
+
+	equipmentphysicalidentityrelationships = append(equipmentphysicalidentityrelationships, equipmentphysicalidentityrelationship)
+	return equipmentphysicalidentityrelationships
+}
+func flattenMapEquipmentPsuControlRelationship(p *models.EquipmentPsuControlRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var equipmentpsucontrolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	equipmentpsucontrolrelationship := make(map[string]interface{})
+	equipmentpsucontrolrelationship["class_id"] = item.ClassId
+	equipmentpsucontrolrelationship["moid"] = item.Moid
+	equipmentpsucontrolrelationship["object_type"] = item.ObjectType
+	equipmentpsucontrolrelationship["selector"] = item.Selector
+
+	equipmentpsucontrolrelationships = append(equipmentpsucontrolrelationships, equipmentpsucontrolrelationship)
+	return equipmentpsucontrolrelationships
+}
 func flattenMapEquipmentRackEnclosureRelationship(p *models.EquipmentRackEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentrackenclosurerelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.EquipmentRackEnclosureRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentrackenclosurerelationship := make(map[string]interface{})
 	equipmentrackenclosurerelationship["class_id"] = item.ClassId
-	equipmentrackenclosurerelationship["link"] = item.Link
 	equipmentrackenclosurerelationship["moid"] = item.Moid
 	equipmentrackenclosurerelationship["object_type"] = item.ObjectType
 	equipmentrackenclosurerelationship["selector"] = item.Selector
@@ -4143,10 +4879,9 @@ func flattenMapEquipmentRackEnclosureSlotRelationship(p *models.EquipmentRackEnc
 		return nil
 	}
 	x := *p
-	item := x.EquipmentRackEnclosureSlotRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentrackenclosureslotrelationship := make(map[string]interface{})
 	equipmentrackenclosureslotrelationship["class_id"] = item.ClassId
-	equipmentrackenclosureslotrelationship["link"] = item.Link
 	equipmentrackenclosureslotrelationship["moid"] = item.Moid
 	equipmentrackenclosureslotrelationship["object_type"] = item.ObjectType
 	equipmentrackenclosureslotrelationship["selector"] = item.Selector
@@ -4160,10 +4895,9 @@ func flattenMapEquipmentSharedIoModuleRelationship(p *models.EquipmentSharedIoMo
 		return nil
 	}
 	x := *p
-	item := x.EquipmentSharedIoModuleRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentsharediomodulerelationship := make(map[string]interface{})
 	equipmentsharediomodulerelationship["class_id"] = item.ClassId
-	equipmentsharediomodulerelationship["link"] = item.Link
 	equipmentsharediomodulerelationship["moid"] = item.Moid
 	equipmentsharediomodulerelationship["object_type"] = item.ObjectType
 	equipmentsharediomodulerelationship["selector"] = item.Selector
@@ -4177,10 +4911,9 @@ func flattenMapEquipmentSwitchCardRelationship(p *models.EquipmentSwitchCardRela
 		return nil
 	}
 	x := *p
-	item := x.EquipmentSwitchCardRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentswitchcardrelationship := make(map[string]interface{})
 	equipmentswitchcardrelationship["class_id"] = item.ClassId
-	equipmentswitchcardrelationship["link"] = item.Link
 	equipmentswitchcardrelationship["moid"] = item.Moid
 	equipmentswitchcardrelationship["object_type"] = item.ObjectType
 	equipmentswitchcardrelationship["selector"] = item.Selector
@@ -4194,16 +4927,254 @@ func flattenMapEquipmentSystemIoControllerRelationship(p *models.EquipmentSystem
 		return nil
 	}
 	x := *p
-	item := x.EquipmentSystemIoControllerRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	equipmentsystemiocontrollerrelationship := make(map[string]interface{})
 	equipmentsystemiocontrollerrelationship["class_id"] = item.ClassId
-	equipmentsystemiocontrollerrelationship["link"] = item.Link
 	equipmentsystemiocontrollerrelationship["moid"] = item.Moid
 	equipmentsystemiocontrollerrelationship["object_type"] = item.ObjectType
 	equipmentsystemiocontrollerrelationship["selector"] = item.Selector
 
 	equipmentsystemiocontrollerrelationships = append(equipmentsystemiocontrollerrelationships, equipmentsystemiocontrollerrelationship)
 	return equipmentsystemiocontrollerrelationships
+}
+func flattenMapEtherPhysicalPortRelationship(p *models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var etherphysicalportrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	etherphysicalportrelationship := make(map[string]interface{})
+	etherphysicalportrelationship["class_id"] = item.ClassId
+	etherphysicalportrelationship["moid"] = item.Moid
+	etherphysicalportrelationship["object_type"] = item.ObjectType
+	etherphysicalportrelationship["selector"] = item.Selector
+
+	etherphysicalportrelationships = append(etherphysicalportrelationships, etherphysicalportrelationship)
+	return etherphysicalportrelationships
+}
+func flattenMapEtherPhysicalPortBaseRelationship(p *models.EtherPhysicalPortBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var etherphysicalportbaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	etherphysicalportbaserelationship := make(map[string]interface{})
+	etherphysicalportbaserelationship["class_id"] = item.ClassId
+	etherphysicalportbaserelationship["moid"] = item.Moid
+	etherphysicalportbaserelationship["object_type"] = item.ObjectType
+	etherphysicalportbaserelationship["selector"] = item.Selector
+
+	etherphysicalportbaserelationships = append(etherphysicalportbaserelationships, etherphysicalportbaserelationship)
+	return etherphysicalportbaserelationships
+}
+func flattenMapFabricConfigResultRelationship(p *models.FabricConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricconfigresultrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricconfigresultrelationship := make(map[string]interface{})
+	fabricconfigresultrelationship["class_id"] = item.ClassId
+	fabricconfigresultrelationship["moid"] = item.Moid
+	fabricconfigresultrelationship["object_type"] = item.ObjectType
+	fabricconfigresultrelationship["selector"] = item.Selector
+
+	fabricconfigresultrelationships = append(fabricconfigresultrelationships, fabricconfigresultrelationship)
+	return fabricconfigresultrelationships
+}
+func flattenMapFabricEthNetworkPolicyRelationship(p *models.FabricEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricethnetworkpolicyrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricethnetworkpolicyrelationship := make(map[string]interface{})
+	fabricethnetworkpolicyrelationship["class_id"] = item.ClassId
+	fabricethnetworkpolicyrelationship["moid"] = item.Moid
+	fabricethnetworkpolicyrelationship["object_type"] = item.ObjectType
+	fabricethnetworkpolicyrelationship["selector"] = item.Selector
+
+	fabricethnetworkpolicyrelationships = append(fabricethnetworkpolicyrelationships, fabricethnetworkpolicyrelationship)
+	return fabricethnetworkpolicyrelationships
+}
+func flattenMapFabricFcNetworkPolicyRelationship(p *models.FabricFcNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricfcnetworkpolicyrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricfcnetworkpolicyrelationship := make(map[string]interface{})
+	fabricfcnetworkpolicyrelationship["class_id"] = item.ClassId
+	fabricfcnetworkpolicyrelationship["moid"] = item.Moid
+	fabricfcnetworkpolicyrelationship["object_type"] = item.ObjectType
+	fabricfcnetworkpolicyrelationship["selector"] = item.Selector
+
+	fabricfcnetworkpolicyrelationships = append(fabricfcnetworkpolicyrelationships, fabricfcnetworkpolicyrelationship)
+	return fabricfcnetworkpolicyrelationships
+}
+func flattenMapFabricLldpSettings(p *models.FabricLldpSettings, d *schema.ResourceData) []map[string]interface{} {
+	var fabriclldpsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	fabriclldpsettings := make(map[string]interface{})
+	fabriclldpsettings["class_id"] = item.ClassId
+	fabriclldpsettings["object_type"] = item.ObjectType
+	fabriclldpsettings["receive_enabled"] = item.ReceiveEnabled
+	fabriclldpsettings["transmit_enabled"] = item.TransmitEnabled
+
+	fabriclldpsettingss = append(fabriclldpsettingss, fabriclldpsettings)
+	return fabriclldpsettingss
+}
+func flattenMapFabricPortPolicyRelationship(p *models.FabricPortPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricportpolicyrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricportpolicyrelationship := make(map[string]interface{})
+	fabricportpolicyrelationship["class_id"] = item.ClassId
+	fabricportpolicyrelationship["moid"] = item.Moid
+	fabricportpolicyrelationship["object_type"] = item.ObjectType
+	fabricportpolicyrelationship["selector"] = item.Selector
+
+	fabricportpolicyrelationships = append(fabricportpolicyrelationships, fabricportpolicyrelationship)
+	return fabricportpolicyrelationships
+}
+func flattenMapFabricSwitchClusterProfileRelationship(p *models.FabricSwitchClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricswitchclusterprofilerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricswitchclusterprofilerelationship := make(map[string]interface{})
+	fabricswitchclusterprofilerelationship["class_id"] = item.ClassId
+	fabricswitchclusterprofilerelationship["moid"] = item.Moid
+	fabricswitchclusterprofilerelationship["object_type"] = item.ObjectType
+	fabricswitchclusterprofilerelationship["selector"] = item.Selector
+
+	fabricswitchclusterprofilerelationships = append(fabricswitchclusterprofilerelationships, fabricswitchclusterprofilerelationship)
+	return fabricswitchclusterprofilerelationships
+}
+func flattenMapFabricSwitchProfileRelationship(p *models.FabricSwitchProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fabricswitchprofilerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fabricswitchprofilerelationship := make(map[string]interface{})
+	fabricswitchprofilerelationship["class_id"] = item.ClassId
+	fabricswitchprofilerelationship["moid"] = item.Moid
+	fabricswitchprofilerelationship["object_type"] = item.ObjectType
+	fabricswitchprofilerelationship["selector"] = item.Selector
+
+	fabricswitchprofilerelationships = append(fabricswitchprofilerelationships, fabricswitchprofilerelationship)
+	return fabricswitchprofilerelationships
+}
+func flattenMapFcpoolBlock(p *models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolblocks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	fcpoolblock := make(map[string]interface{})
+	fcpoolblock["class_id"] = item.ClassId
+	fcpoolblock["from"] = item.From
+	fcpoolblock["object_type"] = item.ObjectType
+	fcpoolblock["size"] = item.Size
+	fcpoolblock["to"] = item.To
+
+	fcpoolblocks = append(fcpoolblocks, fcpoolblock)
+	return fcpoolblocks
+}
+func flattenMapFcpoolFcBlockRelationship(p *models.FcpoolFcBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolfcblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fcpoolfcblockrelationship := make(map[string]interface{})
+	fcpoolfcblockrelationship["class_id"] = item.ClassId
+	fcpoolfcblockrelationship["moid"] = item.Moid
+	fcpoolfcblockrelationship["object_type"] = item.ObjectType
+	fcpoolfcblockrelationship["selector"] = item.Selector
+
+	fcpoolfcblockrelationships = append(fcpoolfcblockrelationships, fcpoolfcblockrelationship)
+	return fcpoolfcblockrelationships
+}
+func flattenMapFcpoolLeaseRelationship(p *models.FcpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolleaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fcpoolleaserelationship := make(map[string]interface{})
+	fcpoolleaserelationship["class_id"] = item.ClassId
+	fcpoolleaserelationship["moid"] = item.Moid
+	fcpoolleaserelationship["object_type"] = item.ObjectType
+	fcpoolleaserelationship["selector"] = item.Selector
+
+	fcpoolleaserelationships = append(fcpoolleaserelationships, fcpoolleaserelationship)
+	return fcpoolleaserelationships
+}
+func flattenMapFcpoolPoolRelationship(p *models.FcpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fcpoolpoolrelationship := make(map[string]interface{})
+	fcpoolpoolrelationship["class_id"] = item.ClassId
+	fcpoolpoolrelationship["moid"] = item.Moid
+	fcpoolpoolrelationship["object_type"] = item.ObjectType
+	fcpoolpoolrelationship["selector"] = item.Selector
+
+	fcpoolpoolrelationships = append(fcpoolpoolrelationships, fcpoolpoolrelationship)
+	return fcpoolpoolrelationships
+}
+func flattenMapFcpoolPoolMemberRelationship(p *models.FcpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpoolpoolmemberrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fcpoolpoolmemberrelationship := make(map[string]interface{})
+	fcpoolpoolmemberrelationship["class_id"] = item.ClassId
+	fcpoolpoolmemberrelationship["moid"] = item.Moid
+	fcpoolpoolmemberrelationship["object_type"] = item.ObjectType
+	fcpoolpoolmemberrelationship["selector"] = item.Selector
+
+	fcpoolpoolmemberrelationships = append(fcpoolpoolmemberrelationships, fcpoolpoolmemberrelationship)
+	return fcpoolpoolmemberrelationships
+}
+func flattenMapFcpoolUniverseRelationship(p *models.FcpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var fcpooluniverserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	fcpooluniverserelationship := make(map[string]interface{})
+	fcpooluniverserelationship["class_id"] = item.ClassId
+	fcpooluniverserelationship["moid"] = item.Moid
+	fcpooluniverserelationship["object_type"] = item.ObjectType
+	fcpooluniverserelationship["selector"] = item.Selector
+
+	fcpooluniverserelationships = append(fcpooluniverserelationships, fcpooluniverserelationship)
+	return fcpooluniverserelationships
 }
 func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schema.ResourceData) []map[string]interface{} {
 	var firmwaredirectdownloads []map[string]interface{}
@@ -4213,9 +5184,21 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 	item := *p
 	firmwaredirectdownload := make(map[string]interface{})
 	firmwaredirectdownload["class_id"] = item.ClassId
-	http_server_x := d.Get("direct_download").([]interface{})
-	http_server_y := http_server_x[0].(map[string]interface{})
-	firmwaredirectdownload["http_server"] = http_server_y["http_server"]
+	firmwaredirectdownload["http_server"] = (func(p *models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
+		var firmwarehttpservers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		firmwarehttpserver := make(map[string]interface{})
+		firmwarehttpserver["class_id"] = item.ClassId
+		firmwarehttpserver["location_link"] = item.LocationLink
+		firmwarehttpserver["mount_options"] = item.MountOptions
+		firmwarehttpserver["object_type"] = item.ObjectType
+
+		firmwarehttpservers = append(firmwarehttpservers, firmwarehttpserver)
+		return firmwarehttpservers
+	})(item.HttpServer, d)
 	firmwaredirectdownload["image_source"] = item.ImageSource
 	firmwaredirectdownload["is_password_set"] = item.IsPasswordSet
 	firmwaredirectdownload["object_type"] = item.ObjectType
@@ -4223,9 +5206,7 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 	password_y := password_x[0].(map[string]interface{})
 	firmwaredirectdownload["password"] = password_y["password"]
 	firmwaredirectdownload["upgradeoption"] = item.Upgradeoption
-	username_x := d.Get("direct_download").([]interface{})
-	username_y := username_x[0].(map[string]interface{})
-	firmwaredirectdownload["username"] = username_y["username"]
+	firmwaredirectdownload["username"] = item.Username
 
 	firmwaredirectdownloads = append(firmwaredirectdownloads, firmwaredirectdownload)
 	return firmwaredirectdownloads
@@ -4236,10 +5217,9 @@ func flattenMapFirmwareDistributableRelationship(p *models.FirmwareDistributable
 		return nil
 	}
 	x := *p
-	item := x.FirmwareDistributableRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	firmwaredistributablerelationship := make(map[string]interface{})
 	firmwaredistributablerelationship["class_id"] = item.ClassId
-	firmwaredistributablerelationship["link"] = item.Link
 	firmwaredistributablerelationship["moid"] = item.Moid
 	firmwaredistributablerelationship["object_type"] = item.ObjectType
 	firmwaredistributablerelationship["selector"] = item.Selector
@@ -4254,26 +5234,66 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 	}
 	item := *p
 	firmwarenetworkshare := make(map[string]interface{})
-	cifs_server_x := d.Get("network_share").([]interface{})
-	cifs_server_y := cifs_server_x[0].(map[string]interface{})
-	firmwarenetworkshare["cifs_server"] = cifs_server_y["cifs_server"]
+	firmwarenetworkshare["cifs_server"] = (func(p *models.FirmwareCifsServer, d *schema.ResourceData) []map[string]interface{} {
+		var firmwarecifsservers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		firmwarecifsserver := make(map[string]interface{})
+		firmwarecifsserver["class_id"] = item.ClassId
+		firmwarecifsserver["file_location"] = item.FileLocation
+		firmwarecifsserver["mount_options"] = item.MountOptions
+		firmwarecifsserver["object_type"] = item.ObjectType
+		firmwarecifsserver["remote_file"] = item.RemoteFile
+		firmwarecifsserver["remote_ip"] = item.RemoteIp
+		firmwarecifsserver["remote_share"] = item.RemoteShare
+
+		firmwarecifsservers = append(firmwarecifsservers, firmwarecifsserver)
+		return firmwarecifsservers
+	})(item.CifsServer, d)
 	firmwarenetworkshare["class_id"] = item.ClassId
-	http_server_x := d.Get("network_share").([]interface{})
-	http_server_y := http_server_x[0].(map[string]interface{})
-	firmwarenetworkshare["http_server"] = http_server_y["http_server"]
+	firmwarenetworkshare["http_server"] = (func(p *models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
+		var firmwarehttpservers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		firmwarehttpserver := make(map[string]interface{})
+		firmwarehttpserver["class_id"] = item.ClassId
+		firmwarehttpserver["location_link"] = item.LocationLink
+		firmwarehttpserver["mount_options"] = item.MountOptions
+		firmwarehttpserver["object_type"] = item.ObjectType
+
+		firmwarehttpservers = append(firmwarehttpservers, firmwarehttpserver)
+		return firmwarehttpservers
+	})(item.HttpServer, d)
 	firmwarenetworkshare["is_password_set"] = item.IsPasswordSet
 	firmwarenetworkshare["map_type"] = item.MapType
-	nfs_server_x := d.Get("network_share").([]interface{})
-	nfs_server_y := nfs_server_x[0].(map[string]interface{})
-	firmwarenetworkshare["nfs_server"] = nfs_server_y["nfs_server"]
+	firmwarenetworkshare["nfs_server"] = (func(p *models.FirmwareNfsServer, d *schema.ResourceData) []map[string]interface{} {
+		var firmwarenfsservers []map[string]interface{}
+		if p == nil {
+			return nil
+		}
+		item := *p
+		firmwarenfsserver := make(map[string]interface{})
+		firmwarenfsserver["class_id"] = item.ClassId
+		firmwarenfsserver["file_location"] = item.FileLocation
+		firmwarenfsserver["mount_options"] = item.MountOptions
+		firmwarenfsserver["object_type"] = item.ObjectType
+		firmwarenfsserver["remote_file"] = item.RemoteFile
+		firmwarenfsserver["remote_ip"] = item.RemoteIp
+		firmwarenfsserver["remote_share"] = item.RemoteShare
+
+		firmwarenfsservers = append(firmwarenfsservers, firmwarenfsserver)
+		return firmwarenfsservers
+	})(item.NfsServer, d)
 	firmwarenetworkshare["object_type"] = item.ObjectType
 	password_x := d.Get("network_share").([]interface{})
 	password_y := password_x[0].(map[string]interface{})
 	firmwarenetworkshare["password"] = password_y["password"]
 	firmwarenetworkshare["upgradeoption"] = item.Upgradeoption
-	username_x := d.Get("network_share").([]interface{})
-	username_y := username_x[0].(map[string]interface{})
-	firmwarenetworkshare["username"] = username_y["username"]
+	firmwarenetworkshare["username"] = item.Username
 
 	firmwarenetworkshares = append(firmwarenetworkshares, firmwarenetworkshare)
 	return firmwarenetworkshares
@@ -4284,10 +5304,9 @@ func flattenMapFirmwareRunningFirmwareRelationship(p *models.FirmwareRunningFirm
 		return nil
 	}
 	x := *p
-	item := x.FirmwareRunningFirmwareRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	firmwarerunningfirmwarerelationship := make(map[string]interface{})
 	firmwarerunningfirmwarerelationship["class_id"] = item.ClassId
-	firmwarerunningfirmwarerelationship["link"] = item.Link
 	firmwarerunningfirmwarerelationship["moid"] = item.Moid
 	firmwarerunningfirmwarerelationship["object_type"] = item.ObjectType
 	firmwarerunningfirmwarerelationship["selector"] = item.Selector
@@ -4301,10 +5320,9 @@ func flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(p *mo
 		return nil
 	}
 	x := *p
-	item := x.FirmwareServerConfigurationUtilityDistributableRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	firmwareserverconfigurationutilitydistributablerelationship := make(map[string]interface{})
 	firmwareserverconfigurationutilitydistributablerelationship["class_id"] = item.ClassId
-	firmwareserverconfigurationutilitydistributablerelationship["link"] = item.Link
 	firmwareserverconfigurationutilitydistributablerelationship["moid"] = item.Moid
 	firmwareserverconfigurationutilitydistributablerelationship["object_type"] = item.ObjectType
 	firmwareserverconfigurationutilitydistributablerelationship["selector"] = item.Selector
@@ -4312,22 +5330,37 @@ func flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(p *mo
 	firmwareserverconfigurationutilitydistributablerelationships = append(firmwareserverconfigurationutilitydistributablerelationships, firmwareserverconfigurationutilitydistributablerelationship)
 	return firmwareserverconfigurationutilitydistributablerelationships
 }
-func flattenMapFirmwareUpgradeRelationship(p *models.FirmwareUpgradeRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var firmwareupgraderelationships []map[string]interface{}
+func flattenMapFirmwareUpgradeBaseRelationship(p *models.FirmwareUpgradeBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var firmwareupgradebaserelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.FirmwareUpgradeRelationshipInterface.(*models.MoMoRef)
-	firmwareupgraderelationship := make(map[string]interface{})
-	firmwareupgraderelationship["class_id"] = item.ClassId
-	firmwareupgraderelationship["link"] = item.Link
-	firmwareupgraderelationship["moid"] = item.Moid
-	firmwareupgraderelationship["object_type"] = item.ObjectType
-	firmwareupgraderelationship["selector"] = item.Selector
+	item := x.MoMoRef
+	firmwareupgradebaserelationship := make(map[string]interface{})
+	firmwareupgradebaserelationship["class_id"] = item.ClassId
+	firmwareupgradebaserelationship["moid"] = item.Moid
+	firmwareupgradebaserelationship["object_type"] = item.ObjectType
+	firmwareupgradebaserelationship["selector"] = item.Selector
 
-	firmwareupgraderelationships = append(firmwareupgraderelationships, firmwareupgraderelationship)
-	return firmwareupgraderelationships
+	firmwareupgradebaserelationships = append(firmwareupgradebaserelationships, firmwareupgradebaserelationship)
+	return firmwareupgradebaserelationships
+}
+func flattenMapFirmwareUpgradeImpactStatusRelationship(p *models.FirmwareUpgradeImpactStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var firmwareupgradeimpactstatusrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	firmwareupgradeimpactstatusrelationship := make(map[string]interface{})
+	firmwareupgradeimpactstatusrelationship["class_id"] = item.ClassId
+	firmwareupgradeimpactstatusrelationship["moid"] = item.Moid
+	firmwareupgradeimpactstatusrelationship["object_type"] = item.ObjectType
+	firmwareupgradeimpactstatusrelationship["selector"] = item.Selector
+
+	firmwareupgradeimpactstatusrelationships = append(firmwareupgradeimpactstatusrelationships, firmwareupgradeimpactstatusrelationship)
+	return firmwareupgradeimpactstatusrelationships
 }
 func flattenMapFirmwareUpgradeStatusRelationship(p *models.FirmwareUpgradeStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwareupgradestatusrelationships []map[string]interface{}
@@ -4335,10 +5368,9 @@ func flattenMapFirmwareUpgradeStatusRelationship(p *models.FirmwareUpgradeStatus
 		return nil
 	}
 	x := *p
-	item := x.FirmwareUpgradeStatusRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	firmwareupgradestatusrelationship := make(map[string]interface{})
 	firmwareupgradestatusrelationship["class_id"] = item.ClassId
-	firmwareupgradestatusrelationship["link"] = item.Link
 	firmwareupgradestatusrelationship["moid"] = item.Moid
 	firmwareupgradestatusrelationship["object_type"] = item.ObjectType
 	firmwareupgradestatusrelationship["selector"] = item.Selector
@@ -4352,10 +5384,9 @@ func flattenMapForecastCatalogRelationship(p *models.ForecastCatalogRelationship
 		return nil
 	}
 	x := *p
-	item := x.ForecastCatalogRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	forecastcatalogrelationship := make(map[string]interface{})
 	forecastcatalogrelationship["class_id"] = item.ClassId
-	forecastcatalogrelationship["link"] = item.Link
 	forecastcatalogrelationship["moid"] = item.Moid
 	forecastcatalogrelationship["object_type"] = item.ObjectType
 	forecastcatalogrelationship["selector"] = item.Selector
@@ -4369,10 +5400,9 @@ func flattenMapForecastDefinitionRelationship(p *models.ForecastDefinitionRelati
 		return nil
 	}
 	x := *p
-	item := x.ForecastDefinitionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	forecastdefinitionrelationship := make(map[string]interface{})
 	forecastdefinitionrelationship["class_id"] = item.ClassId
-	forecastdefinitionrelationship["link"] = item.Link
 	forecastdefinitionrelationship["moid"] = item.Moid
 	forecastdefinitionrelationship["object_type"] = item.ObjectType
 	forecastdefinitionrelationship["selector"] = item.Selector
@@ -4402,10 +5432,9 @@ func flattenMapGraphicsCardRelationship(p *models.GraphicsCardRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.GraphicsCardRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	graphicscardrelationship := make(map[string]interface{})
 	graphicscardrelationship["class_id"] = item.ClassId
-	graphicscardrelationship["link"] = item.Link
 	graphicscardrelationship["moid"] = item.Moid
 	graphicscardrelationship["object_type"] = item.ObjectType
 	graphicscardrelationship["selector"] = item.Selector
@@ -4413,16 +5442,31 @@ func flattenMapGraphicsCardRelationship(p *models.GraphicsCardRelationship, d *s
 	graphicscardrelationships = append(graphicscardrelationships, graphicscardrelationship)
 	return graphicscardrelationships
 }
+func flattenMapHclOperatingSystemRelationship(p *models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hcloperatingsystemrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	hcloperatingsystemrelationship := make(map[string]interface{})
+	hcloperatingsystemrelationship["class_id"] = item.ClassId
+	hcloperatingsystemrelationship["moid"] = item.Moid
+	hcloperatingsystemrelationship["object_type"] = item.ObjectType
+	hcloperatingsystemrelationship["selector"] = item.Selector
+
+	hcloperatingsystemrelationships = append(hcloperatingsystemrelationships, hcloperatingsystemrelationship)
+	return hcloperatingsystemrelationships
+}
 func flattenMapHclOperatingSystemVendorRelationship(p *models.HclOperatingSystemVendorRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hcloperatingsystemvendorrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.HclOperatingSystemVendorRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hcloperatingsystemvendorrelationship := make(map[string]interface{})
 	hcloperatingsystemvendorrelationship["class_id"] = item.ClassId
-	hcloperatingsystemvendorrelationship["link"] = item.Link
 	hcloperatingsystemvendorrelationship["moid"] = item.Moid
 	hcloperatingsystemvendorrelationship["object_type"] = item.ObjectType
 	hcloperatingsystemvendorrelationship["selector"] = item.Selector
@@ -4436,10 +5480,9 @@ func flattenMapHyperflexAppCatalogRelationship(p *models.HyperflexAppCatalogRela
 		return nil
 	}
 	x := *p
-	item := x.HyperflexAppCatalogRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexappcatalogrelationship := make(map[string]interface{})
 	hyperflexappcatalogrelationship["class_id"] = item.ClassId
-	hyperflexappcatalogrelationship["link"] = item.Link
 	hyperflexappcatalogrelationship["moid"] = item.Moid
 	hyperflexappcatalogrelationship["object_type"] = item.ObjectType
 	hyperflexappcatalogrelationship["selector"] = item.Selector
@@ -4453,10 +5496,9 @@ func flattenMapHyperflexAutoSupportPolicyRelationship(p *models.HyperflexAutoSup
 		return nil
 	}
 	x := *p
-	item := x.HyperflexAutoSupportPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexautosupportpolicyrelationship := make(map[string]interface{})
 	hyperflexautosupportpolicyrelationship["class_id"] = item.ClassId
-	hyperflexautosupportpolicyrelationship["link"] = item.Link
 	hyperflexautosupportpolicyrelationship["moid"] = item.Moid
 	hyperflexautosupportpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexautosupportpolicyrelationship["selector"] = item.Selector
@@ -4470,10 +5512,9 @@ func flattenMapHyperflexClusterRelationship(p *models.HyperflexClusterRelationsh
 		return nil
 	}
 	x := *p
-	item := x.HyperflexClusterRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexclusterrelationship := make(map[string]interface{})
 	hyperflexclusterrelationship["class_id"] = item.ClassId
-	hyperflexclusterrelationship["link"] = item.Link
 	hyperflexclusterrelationship["moid"] = item.Moid
 	hyperflexclusterrelationship["object_type"] = item.ObjectType
 	hyperflexclusterrelationship["selector"] = item.Selector
@@ -4487,10 +5528,9 @@ func flattenMapHyperflexClusterNetworkPolicyRelationship(p *models.HyperflexClus
 		return nil
 	}
 	x := *p
-	item := x.HyperflexClusterNetworkPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexclusternetworkpolicyrelationship := make(map[string]interface{})
 	hyperflexclusternetworkpolicyrelationship["class_id"] = item.ClassId
-	hyperflexclusternetworkpolicyrelationship["link"] = item.Link
 	hyperflexclusternetworkpolicyrelationship["moid"] = item.Moid
 	hyperflexclusternetworkpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexclusternetworkpolicyrelationship["selector"] = item.Selector
@@ -4504,10 +5544,9 @@ func flattenMapHyperflexClusterProfileRelationship(p *models.HyperflexClusterPro
 		return nil
 	}
 	x := *p
-	item := x.HyperflexClusterProfileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexclusterprofilerelationship := make(map[string]interface{})
 	hyperflexclusterprofilerelationship["class_id"] = item.ClassId
-	hyperflexclusterprofilerelationship["link"] = item.Link
 	hyperflexclusterprofilerelationship["moid"] = item.Moid
 	hyperflexclusterprofilerelationship["object_type"] = item.ObjectType
 	hyperflexclusterprofilerelationship["selector"] = item.Selector
@@ -4521,10 +5560,9 @@ func flattenMapHyperflexClusterStoragePolicyRelationship(p *models.HyperflexClus
 		return nil
 	}
 	x := *p
-	item := x.HyperflexClusterStoragePolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexclusterstoragepolicyrelationship := make(map[string]interface{})
 	hyperflexclusterstoragepolicyrelationship["class_id"] = item.ClassId
-	hyperflexclusterstoragepolicyrelationship["link"] = item.Link
 	hyperflexclusterstoragepolicyrelationship["moid"] = item.Moid
 	hyperflexclusterstoragepolicyrelationship["object_type"] = item.ObjectType
 	hyperflexclusterstoragepolicyrelationship["selector"] = item.Selector
@@ -4538,10 +5576,9 @@ func flattenMapHyperflexConfigResultRelationship(p *models.HyperflexConfigResult
 		return nil
 	}
 	x := *p
-	item := x.HyperflexConfigResultRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexconfigresultrelationship := make(map[string]interface{})
 	hyperflexconfigresultrelationship["class_id"] = item.ClassId
-	hyperflexconfigresultrelationship["link"] = item.Link
 	hyperflexconfigresultrelationship["moid"] = item.Moid
 	hyperflexconfigresultrelationship["object_type"] = item.ObjectType
 	hyperflexconfigresultrelationship["selector"] = item.Selector
@@ -4555,10 +5592,9 @@ func flattenMapHyperflexExtFcStoragePolicyRelationship(p *models.HyperflexExtFcS
 		return nil
 	}
 	x := *p
-	item := x.HyperflexExtFcStoragePolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexextfcstoragepolicyrelationship := make(map[string]interface{})
 	hyperflexextfcstoragepolicyrelationship["class_id"] = item.ClassId
-	hyperflexextfcstoragepolicyrelationship["link"] = item.Link
 	hyperflexextfcstoragepolicyrelationship["moid"] = item.Moid
 	hyperflexextfcstoragepolicyrelationship["object_type"] = item.ObjectType
 	hyperflexextfcstoragepolicyrelationship["selector"] = item.Selector
@@ -4572,10 +5608,9 @@ func flattenMapHyperflexExtIscsiStoragePolicyRelationship(p *models.HyperflexExt
 		return nil
 	}
 	x := *p
-	item := x.HyperflexExtIscsiStoragePolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexextiscsistoragepolicyrelationship := make(map[string]interface{})
 	hyperflexextiscsistoragepolicyrelationship["class_id"] = item.ClassId
-	hyperflexextiscsistoragepolicyrelationship["link"] = item.Link
 	hyperflexextiscsistoragepolicyrelationship["moid"] = item.Moid
 	hyperflexextiscsistoragepolicyrelationship["object_type"] = item.ObjectType
 	hyperflexextiscsistoragepolicyrelationship["selector"] = item.Selector
@@ -4589,10 +5624,9 @@ func flattenMapHyperflexFeatureLimitExternalRelationship(p *models.HyperflexFeat
 		return nil
 	}
 	x := *p
-	item := x.HyperflexFeatureLimitExternalRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexfeaturelimitexternalrelationship := make(map[string]interface{})
 	hyperflexfeaturelimitexternalrelationship["class_id"] = item.ClassId
-	hyperflexfeaturelimitexternalrelationship["link"] = item.Link
 	hyperflexfeaturelimitexternalrelationship["moid"] = item.Moid
 	hyperflexfeaturelimitexternalrelationship["object_type"] = item.ObjectType
 	hyperflexfeaturelimitexternalrelationship["selector"] = item.Selector
@@ -4606,10 +5640,9 @@ func flattenMapHyperflexFeatureLimitInternalRelationship(p *models.HyperflexFeat
 		return nil
 	}
 	x := *p
-	item := x.HyperflexFeatureLimitInternalRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexfeaturelimitinternalrelationship := make(map[string]interface{})
 	hyperflexfeaturelimitinternalrelationship["class_id"] = item.ClassId
-	hyperflexfeaturelimitinternalrelationship["link"] = item.Link
 	hyperflexfeaturelimitinternalrelationship["moid"] = item.Moid
 	hyperflexfeaturelimitinternalrelationship["object_type"] = item.ObjectType
 	hyperflexfeaturelimitinternalrelationship["selector"] = item.Selector
@@ -4623,10 +5656,9 @@ func flattenMapHyperflexHealthRelationship(p *models.HyperflexHealthRelationship
 		return nil
 	}
 	x := *p
-	item := x.HyperflexHealthRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexhealthrelationship := make(map[string]interface{})
 	hyperflexhealthrelationship["class_id"] = item.ClassId
-	hyperflexhealthrelationship["link"] = item.Link
 	hyperflexhealthrelationship["moid"] = item.Moid
 	hyperflexhealthrelationship["object_type"] = item.ObjectType
 	hyperflexhealthrelationship["selector"] = item.Selector
@@ -4724,10 +5756,9 @@ func flattenMapHyperflexLocalCredentialPolicyRelationship(p *models.HyperflexLoc
 		return nil
 	}
 	x := *p
-	item := x.HyperflexLocalCredentialPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexlocalcredentialpolicyrelationship := make(map[string]interface{})
 	hyperflexlocalcredentialpolicyrelationship["class_id"] = item.ClassId
-	hyperflexlocalcredentialpolicyrelationship["link"] = item.Link
 	hyperflexlocalcredentialpolicyrelationship["moid"] = item.Moid
 	hyperflexlocalcredentialpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexlocalcredentialpolicyrelationship["selector"] = item.Selector
@@ -4800,10 +5831,9 @@ func flattenMapHyperflexNodeConfigPolicyRelationship(p *models.HyperflexNodeConf
 		return nil
 	}
 	x := *p
-	item := x.HyperflexNodeConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexnodeconfigpolicyrelationship := make(map[string]interface{})
 	hyperflexnodeconfigpolicyrelationship["class_id"] = item.ClassId
-	hyperflexnodeconfigpolicyrelationship["link"] = item.Link
 	hyperflexnodeconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexnodeconfigpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexnodeconfigpolicyrelationship["selector"] = item.Selector
@@ -4817,10 +5847,9 @@ func flattenMapHyperflexProxySettingPolicyRelationship(p *models.HyperflexProxyS
 		return nil
 	}
 	x := *p
-	item := x.HyperflexProxySettingPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexproxysettingpolicyrelationship := make(map[string]interface{})
 	hyperflexproxysettingpolicyrelationship["class_id"] = item.ClassId
-	hyperflexproxysettingpolicyrelationship["link"] = item.Link
 	hyperflexproxysettingpolicyrelationship["moid"] = item.Moid
 	hyperflexproxysettingpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexproxysettingpolicyrelationship["selector"] = item.Selector
@@ -4834,10 +5863,9 @@ func flattenMapHyperflexServerFirmwareVersionRelationship(p *models.HyperflexSer
 		return nil
 	}
 	x := *p
-	item := x.HyperflexServerFirmwareVersionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexserverfirmwareversionrelationship := make(map[string]interface{})
 	hyperflexserverfirmwareversionrelationship["class_id"] = item.ClassId
-	hyperflexserverfirmwareversionrelationship["link"] = item.Link
 	hyperflexserverfirmwareversionrelationship["moid"] = item.Moid
 	hyperflexserverfirmwareversionrelationship["object_type"] = item.ObjectType
 	hyperflexserverfirmwareversionrelationship["selector"] = item.Selector
@@ -4851,10 +5879,9 @@ func flattenMapHyperflexServerModelRelationship(p *models.HyperflexServerModelRe
 		return nil
 	}
 	x := *p
-	item := x.HyperflexServerModelRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexservermodelrelationship := make(map[string]interface{})
 	hyperflexservermodelrelationship["class_id"] = item.ClassId
-	hyperflexservermodelrelationship["link"] = item.Link
 	hyperflexservermodelrelationship["moid"] = item.Moid
 	hyperflexservermodelrelationship["object_type"] = item.ObjectType
 	hyperflexservermodelrelationship["selector"] = item.Selector
@@ -4868,10 +5895,9 @@ func flattenMapHyperflexSoftwareVersionPolicyRelationship(p *models.HyperflexSof
 		return nil
 	}
 	x := *p
-	item := x.HyperflexSoftwareVersionPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexsoftwareversionpolicyrelationship := make(map[string]interface{})
 	hyperflexsoftwareversionpolicyrelationship["class_id"] = item.ClassId
-	hyperflexsoftwareversionpolicyrelationship["link"] = item.Link
 	hyperflexsoftwareversionpolicyrelationship["moid"] = item.Moid
 	hyperflexsoftwareversionpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexsoftwareversionpolicyrelationship["selector"] = item.Selector
@@ -4956,10 +5982,9 @@ func flattenMapHyperflexSysConfigPolicyRelationship(p *models.HyperflexSysConfig
 		return nil
 	}
 	x := *p
-	item := x.HyperflexSysConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexsysconfigpolicyrelationship := make(map[string]interface{})
 	hyperflexsysconfigpolicyrelationship["class_id"] = item.ClassId
-	hyperflexsysconfigpolicyrelationship["link"] = item.Link
 	hyperflexsysconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexsysconfigpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexsysconfigpolicyrelationship["selector"] = item.Selector
@@ -4973,10 +5998,9 @@ func flattenMapHyperflexUcsmConfigPolicyRelationship(p *models.HyperflexUcsmConf
 		return nil
 	}
 	x := *p
-	item := x.HyperflexUcsmConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexucsmconfigpolicyrelationship := make(map[string]interface{})
 	hyperflexucsmconfigpolicyrelationship["class_id"] = item.ClassId
-	hyperflexucsmconfigpolicyrelationship["link"] = item.Link
 	hyperflexucsmconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexucsmconfigpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexucsmconfigpolicyrelationship["selector"] = item.Selector
@@ -4990,10 +6014,9 @@ func flattenMapHyperflexVcenterConfigPolicyRelationship(p *models.HyperflexVcent
 		return nil
 	}
 	x := *p
-	item := x.HyperflexVcenterConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	hyperflexvcenterconfigpolicyrelationship := make(map[string]interface{})
 	hyperflexvcenterconfigpolicyrelationship["class_id"] = item.ClassId
-	hyperflexvcenterconfigpolicyrelationship["link"] = item.Link
 	hyperflexvcenterconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexvcenterconfigpolicyrelationship["object_type"] = item.ObjectType
 	hyperflexvcenterconfigpolicyrelationship["selector"] = item.Selector
@@ -5022,10 +6045,9 @@ func flattenMapIaasLicenseInfoRelationship(p *models.IaasLicenseInfoRelationship
 		return nil
 	}
 	x := *p
-	item := x.IaasLicenseInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iaaslicenseinforelationship := make(map[string]interface{})
 	iaaslicenseinforelationship["class_id"] = item.ClassId
-	iaaslicenseinforelationship["link"] = item.Link
 	iaaslicenseinforelationship["moid"] = item.Moid
 	iaaslicenseinforelationship["object_type"] = item.ObjectType
 	iaaslicenseinforelationship["selector"] = item.Selector
@@ -5039,10 +6061,9 @@ func flattenMapIaasUcsdInfoRelationship(p *models.IaasUcsdInfoRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.IaasUcsdInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iaasucsdinforelationship := make(map[string]interface{})
 	iaasucsdinforelationship["class_id"] = item.ClassId
-	iaasucsdinforelationship["link"] = item.Link
 	iaasucsdinforelationship["moid"] = item.Moid
 	iaasucsdinforelationship["object_type"] = item.ObjectType
 	iaasucsdinforelationship["selector"] = item.Selector
@@ -5056,10 +6077,9 @@ func flattenMapIaasUcsdManagedInfraRelationship(p *models.IaasUcsdManagedInfraRe
 		return nil
 	}
 	x := *p
-	item := x.IaasUcsdManagedInfraRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iaasucsdmanagedinfrarelationship := make(map[string]interface{})
 	iaasucsdmanagedinfrarelationship["class_id"] = item.ClassId
-	iaasucsdmanagedinfrarelationship["link"] = item.Link
 	iaasucsdmanagedinfrarelationship["moid"] = item.Moid
 	iaasucsdmanagedinfrarelationship["object_type"] = item.ObjectType
 	iaasucsdmanagedinfrarelationship["selector"] = item.Selector
@@ -5073,10 +6093,9 @@ func flattenMapIamAccountRelationship(p *models.IamAccountRelationship, d *schem
 		return nil
 	}
 	x := *p
-	item := x.IamAccountRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamaccountrelationship := make(map[string]interface{})
 	iamaccountrelationship["class_id"] = item.ClassId
-	iamaccountrelationship["link"] = item.Link
 	iamaccountrelationship["moid"] = item.Moid
 	iamaccountrelationship["object_type"] = item.ObjectType
 	iamaccountrelationship["selector"] = item.Selector
@@ -5090,10 +6109,9 @@ func flattenMapIamAppRegistrationRelationship(p *models.IamAppRegistrationRelati
 		return nil
 	}
 	x := *p
-	item := x.IamAppRegistrationRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamappregistrationrelationship := make(map[string]interface{})
 	iamappregistrationrelationship["class_id"] = item.ClassId
-	iamappregistrationrelationship["link"] = item.Link
 	iamappregistrationrelationship["moid"] = item.Moid
 	iamappregistrationrelationship["object_type"] = item.ObjectType
 	iamappregistrationrelationship["selector"] = item.Selector
@@ -5107,10 +6125,9 @@ func flattenMapIamCertificateRelationship(p *models.IamCertificateRelationship, 
 		return nil
 	}
 	x := *p
-	item := x.IamCertificateRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamcertificaterelationship := make(map[string]interface{})
 	iamcertificaterelationship["class_id"] = item.ClassId
-	iamcertificaterelationship["link"] = item.Link
 	iamcertificaterelationship["moid"] = item.Moid
 	iamcertificaterelationship["object_type"] = item.ObjectType
 	iamcertificaterelationship["selector"] = item.Selector
@@ -5124,10 +6141,9 @@ func flattenMapIamCertificateRequestRelationship(p *models.IamCertificateRequest
 		return nil
 	}
 	x := *p
-	item := x.IamCertificateRequestRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamcertificaterequestrelationship := make(map[string]interface{})
 	iamcertificaterequestrelationship["class_id"] = item.ClassId
-	iamcertificaterequestrelationship["link"] = item.Link
 	iamcertificaterequestrelationship["moid"] = item.Moid
 	iamcertificaterequestrelationship["object_type"] = item.ObjectType
 	iamcertificaterequestrelationship["selector"] = item.Selector
@@ -5156,10 +6172,9 @@ func flattenMapIamDomainGroupRelationship(p *models.IamDomainGroupRelationship, 
 		return nil
 	}
 	x := *p
-	item := x.IamDomainGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamdomaingrouprelationship := make(map[string]interface{})
 	iamdomaingrouprelationship["class_id"] = item.ClassId
-	iamdomaingrouprelationship["link"] = item.Link
 	iamdomaingrouprelationship["moid"] = item.Moid
 	iamdomaingrouprelationship["object_type"] = item.ObjectType
 	iamdomaingrouprelationship["selector"] = item.Selector
@@ -5193,10 +6208,9 @@ func flattenMapIamEndPointUserRelationship(p *models.IamEndPointUserRelationship
 		return nil
 	}
 	x := *p
-	item := x.IamEndPointUserRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamendpointuserrelationship := make(map[string]interface{})
 	iamendpointuserrelationship["class_id"] = item.ClassId
-	iamendpointuserrelationship["link"] = item.Link
 	iamendpointuserrelationship["moid"] = item.Moid
 	iamendpointuserrelationship["object_type"] = item.ObjectType
 	iamendpointuserrelationship["selector"] = item.Selector
@@ -5210,10 +6224,9 @@ func flattenMapIamEndPointUserPolicyRelationship(p *models.IamEndPointUserPolicy
 		return nil
 	}
 	x := *p
-	item := x.IamEndPointUserPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamendpointuserpolicyrelationship := make(map[string]interface{})
 	iamendpointuserpolicyrelationship["class_id"] = item.ClassId
-	iamendpointuserpolicyrelationship["link"] = item.Link
 	iamendpointuserpolicyrelationship["moid"] = item.Moid
 	iamendpointuserpolicyrelationship["object_type"] = item.ObjectType
 	iamendpointuserpolicyrelationship["selector"] = item.Selector
@@ -5227,10 +6240,9 @@ func flattenMapIamIdpRelationship(p *models.IamIdpRelationship, d *schema.Resour
 		return nil
 	}
 	x := *p
-	item := x.IamIdpRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamidprelationship := make(map[string]interface{})
 	iamidprelationship["class_id"] = item.ClassId
-	iamidprelationship["link"] = item.Link
 	iamidprelationship["moid"] = item.Moid
 	iamidprelationship["object_type"] = item.ObjectType
 	iamidprelationship["selector"] = item.Selector
@@ -5244,10 +6256,9 @@ func flattenMapIamIdpReferenceRelationship(p *models.IamIdpReferenceRelationship
 		return nil
 	}
 	x := *p
-	item := x.IamIdpReferenceRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamidpreferencerelationship := make(map[string]interface{})
 	iamidpreferencerelationship["class_id"] = item.ClassId
-	iamidpreferencerelationship["link"] = item.Link
 	iamidpreferencerelationship["moid"] = item.Moid
 	iamidpreferencerelationship["object_type"] = item.ObjectType
 	iamidpreferencerelationship["selector"] = item.Selector
@@ -5294,7 +6305,7 @@ func flattenMapIamLdapDnsParameters(p *models.IamLdapDnsParameters, d *schema.Re
 	iamldapdnsparameters["object_type"] = item.ObjectType
 	iamldapdnsparameters["search_domain"] = item.SearchDomain
 	iamldapdnsparameters["search_forest"] = item.SearchForest
-	iamldapdnsparameters["source"] = item.Source
+	iamldapdnsparameters["nr_source"] = item.Source
 
 	iamldapdnsparameterss = append(iamldapdnsparameterss, iamldapdnsparameters)
 	return iamldapdnsparameterss
@@ -5305,10 +6316,9 @@ func flattenMapIamLdapPolicyRelationship(p *models.IamLdapPolicyRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.IamLdapPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamldappolicyrelationship := make(map[string]interface{})
 	iamldappolicyrelationship["class_id"] = item.ClassId
-	iamldappolicyrelationship["link"] = item.Link
 	iamldappolicyrelationship["moid"] = item.Moid
 	iamldappolicyrelationship["object_type"] = item.ObjectType
 	iamldappolicyrelationship["selector"] = item.Selector
@@ -5322,10 +6332,9 @@ func flattenMapIamLocalUserPasswordRelationship(p *models.IamLocalUserPasswordRe
 		return nil
 	}
 	x := *p
-	item := x.IamLocalUserPasswordRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamlocaluserpasswordrelationship := make(map[string]interface{})
 	iamlocaluserpasswordrelationship["class_id"] = item.ClassId
-	iamlocaluserpasswordrelationship["link"] = item.Link
 	iamlocaluserpasswordrelationship["moid"] = item.Moid
 	iamlocaluserpasswordrelationship["object_type"] = item.ObjectType
 	iamlocaluserpasswordrelationship["selector"] = item.Selector
@@ -5339,10 +6348,9 @@ func flattenMapIamPermissionRelationship(p *models.IamPermissionRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.IamPermissionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iampermissionrelationship := make(map[string]interface{})
 	iampermissionrelationship["class_id"] = item.ClassId
-	iampermissionrelationship["link"] = item.Link
 	iampermissionrelationship["moid"] = item.Moid
 	iampermissionrelationship["object_type"] = item.ObjectType
 	iampermissionrelationship["selector"] = item.Selector
@@ -5356,10 +6364,9 @@ func flattenMapIamPrivateKeySpecRelationship(p *models.IamPrivateKeySpecRelation
 		return nil
 	}
 	x := *p
-	item := x.IamPrivateKeySpecRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamprivatekeyspecrelationship := make(map[string]interface{})
 	iamprivatekeyspecrelationship["class_id"] = item.ClassId
-	iamprivatekeyspecrelationship["link"] = item.Link
 	iamprivatekeyspecrelationship["moid"] = item.Moid
 	iamprivatekeyspecrelationship["object_type"] = item.ObjectType
 	iamprivatekeyspecrelationship["selector"] = item.Selector
@@ -5373,10 +6380,9 @@ func flattenMapIamQualifierRelationship(p *models.IamQualifierRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.IamQualifierRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamqualifierrelationship := make(map[string]interface{})
 	iamqualifierrelationship["class_id"] = item.ClassId
-	iamqualifierrelationship["link"] = item.Link
 	iamqualifierrelationship["moid"] = item.Moid
 	iamqualifierrelationship["object_type"] = item.ObjectType
 	iamqualifierrelationship["selector"] = item.Selector
@@ -5390,10 +6396,9 @@ func flattenMapIamResourceLimitsRelationship(p *models.IamResourceLimitsRelation
 		return nil
 	}
 	x := *p
-	item := x.IamResourceLimitsRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamresourcelimitsrelationship := make(map[string]interface{})
 	iamresourcelimitsrelationship["class_id"] = item.ClassId
-	iamresourcelimitsrelationship["link"] = item.Link
 	iamresourcelimitsrelationship["moid"] = item.Moid
 	iamresourcelimitsrelationship["object_type"] = item.ObjectType
 	iamresourcelimitsrelationship["selector"] = item.Selector
@@ -5407,10 +6412,9 @@ func flattenMapIamSecurityHolderRelationship(p *models.IamSecurityHolderRelation
 		return nil
 	}
 	x := *p
-	item := x.IamSecurityHolderRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamsecurityholderrelationship := make(map[string]interface{})
 	iamsecurityholderrelationship["class_id"] = item.ClassId
-	iamsecurityholderrelationship["link"] = item.Link
 	iamsecurityholderrelationship["moid"] = item.Moid
 	iamsecurityholderrelationship["object_type"] = item.ObjectType
 	iamsecurityholderrelationship["selector"] = item.Selector
@@ -5424,10 +6428,9 @@ func flattenMapIamServiceProviderRelationship(p *models.IamServiceProviderRelati
 		return nil
 	}
 	x := *p
-	item := x.IamServiceProviderRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamserviceproviderrelationship := make(map[string]interface{})
 	iamserviceproviderrelationship["class_id"] = item.ClassId
-	iamserviceproviderrelationship["link"] = item.Link
 	iamserviceproviderrelationship["moid"] = item.Moid
 	iamserviceproviderrelationship["object_type"] = item.ObjectType
 	iamserviceproviderrelationship["selector"] = item.Selector
@@ -5441,10 +6444,9 @@ func flattenMapIamSessionRelationship(p *models.IamSessionRelationship, d *schem
 		return nil
 	}
 	x := *p
-	item := x.IamSessionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamsessionrelationship := make(map[string]interface{})
 	iamsessionrelationship["class_id"] = item.ClassId
-	iamsessionrelationship["link"] = item.Link
 	iamsessionrelationship["moid"] = item.Moid
 	iamsessionrelationship["object_type"] = item.ObjectType
 	iamsessionrelationship["selector"] = item.Selector
@@ -5458,10 +6460,9 @@ func flattenMapIamSessionLimitsRelationship(p *models.IamSessionLimitsRelationsh
 		return nil
 	}
 	x := *p
-	item := x.IamSessionLimitsRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamsessionlimitsrelationship := make(map[string]interface{})
 	iamsessionlimitsrelationship["class_id"] = item.ClassId
-	iamsessionlimitsrelationship["link"] = item.Link
 	iamsessionlimitsrelationship["moid"] = item.Moid
 	iamsessionlimitsrelationship["object_type"] = item.ObjectType
 	iamsessionlimitsrelationship["selector"] = item.Selector
@@ -5475,10 +6476,9 @@ func flattenMapIamSystemRelationship(p *models.IamSystemRelationship, d *schema.
 		return nil
 	}
 	x := *p
-	item := x.IamSystemRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamsystemrelationship := make(map[string]interface{})
 	iamsystemrelationship["class_id"] = item.ClassId
-	iamsystemrelationship["link"] = item.Link
 	iamsystemrelationship["moid"] = item.Moid
 	iamsystemrelationship["object_type"] = item.ObjectType
 	iamsystemrelationship["selector"] = item.Selector
@@ -5492,10 +6492,9 @@ func flattenMapIamUserRelationship(p *models.IamUserRelationship, d *schema.Reso
 		return nil
 	}
 	x := *p
-	item := x.IamUserRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamuserrelationship := make(map[string]interface{})
 	iamuserrelationship["class_id"] = item.ClassId
-	iamuserrelationship["link"] = item.Link
 	iamuserrelationship["moid"] = item.Moid
 	iamuserrelationship["object_type"] = item.ObjectType
 	iamuserrelationship["selector"] = item.Selector
@@ -5509,10 +6508,9 @@ func flattenMapIamUserGroupRelationship(p *models.IamUserGroupRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.IamUserGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	iamusergrouprelationship := make(map[string]interface{})
 	iamusergrouprelationship["class_id"] = item.ClassId
-	iamusergrouprelationship["link"] = item.Link
 	iamusergrouprelationship["moid"] = item.Moid
 	iamusergrouprelationship["object_type"] = item.ObjectType
 	iamusergrouprelationship["selector"] = item.Selector
@@ -5542,10 +6540,9 @@ func flattenMapInventoryBaseRelationship(p *models.InventoryBaseRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.InventoryBaseRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	inventorybaserelationship := make(map[string]interface{})
 	inventorybaserelationship["class_id"] = item.ClassId
-	inventorybaserelationship["link"] = item.Link
 	inventorybaserelationship["moid"] = item.Moid
 	inventorybaserelationship["object_type"] = item.ObjectType
 	inventorybaserelationship["selector"] = item.Selector
@@ -5553,16 +6550,53 @@ func flattenMapInventoryBaseRelationship(p *models.InventoryBaseRelationship, d 
 	inventorybaserelationships = append(inventorybaserelationships, inventorybaserelationship)
 	return inventorybaserelationships
 }
+func flattenMapInventoryDeviceInfoRelationship(p *models.InventoryDeviceInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var inventorydeviceinforelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	inventorydeviceinforelationship := make(map[string]interface{})
+	inventorydeviceinforelationship["class_id"] = item.ClassId
+	inventorydeviceinforelationship["moid"] = item.Moid
+	inventorydeviceinforelationship["object_type"] = item.ObjectType
+	inventorydeviceinforelationship["selector"] = item.Selector
+
+	inventorydeviceinforelationships = append(inventorydeviceinforelationships, inventorydeviceinforelationship)
+	return inventorydeviceinforelationships
+}
+func flattenMapInventoryEpInfo(p *models.InventoryEpInfo, d *schema.ResourceData) []map[string]interface{} {
+	var inventoryepinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	inventoryepinfo := make(map[string]interface{})
+	inventoryepinfo["class_id"] = item.ClassId
+	inventoryepinfo["connection_status"] = item.ConnectionStatus
+	inventoryepinfo["ep_type"] = item.EpType
+	inventoryepinfo["ip"] = item.Ip
+	inventoryepinfo["mac_address"] = item.MacAddress
+	inventoryepinfo["member_identity"] = item.MemberIdentity
+	inventoryepinfo["model"] = item.Model
+	inventoryepinfo["object_type"] = item.ObjectType
+	inventoryepinfo["serial"] = item.Serial
+	inventoryepinfo["server_registration_id"] = item.ServerRegistrationId
+	inventoryepinfo["vendor"] = item.Vendor
+
+	inventoryepinfos = append(inventoryepinfos, inventoryepinfo)
+	return inventoryepinfos
+}
 func flattenMapInventoryGenericInventoryHolderRelationship(p *models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryholderrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.InventoryGenericInventoryHolderRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	inventorygenericinventoryholderrelationship := make(map[string]interface{})
 	inventorygenericinventoryholderrelationship["class_id"] = item.ClassId
-	inventorygenericinventoryholderrelationship["link"] = item.Link
 	inventorygenericinventoryholderrelationship["moid"] = item.Moid
 	inventorygenericinventoryholderrelationship["object_type"] = item.ObjectType
 	inventorygenericinventoryholderrelationship["selector"] = item.Selector
@@ -5570,16 +6604,160 @@ func flattenMapInventoryGenericInventoryHolderRelationship(p *models.InventoryGe
 	inventorygenericinventoryholderrelationships = append(inventorygenericinventoryholderrelationships, inventorygenericinventoryholderrelationship)
 	return inventorygenericinventoryholderrelationships
 }
+func flattenMapInventoryUemConnectionRelationship(p *models.InventoryUemConnectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var inventoryuemconnectionrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	inventoryuemconnectionrelationship := make(map[string]interface{})
+	inventoryuemconnectionrelationship["class_id"] = item.ClassId
+	inventoryuemconnectionrelationship["moid"] = item.Moid
+	inventoryuemconnectionrelationship["object_type"] = item.ObjectType
+	inventoryuemconnectionrelationship["selector"] = item.Selector
+
+	inventoryuemconnectionrelationships = append(inventoryuemconnectionrelationships, inventoryuemconnectionrelationship)
+	return inventoryuemconnectionrelationships
+}
+func flattenMapIppoolIpBlock(p *models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolipblocks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ippoolipblock := make(map[string]interface{})
+	ippoolipblock["class_id"] = item.ClassId
+	ippoolipblock["from"] = item.From
+	ippoolipblock["object_type"] = item.ObjectType
+	ippoolipblock["size"] = item.Size
+	ippoolipblock["to"] = item.To
+
+	ippoolipblocks = append(ippoolipblocks, ippoolipblock)
+	return ippoolipblocks
+}
+func flattenMapIppoolIpLeaseRelationship(p *models.IppoolIpLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolipleaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippoolipleaserelationship := make(map[string]interface{})
+	ippoolipleaserelationship["class_id"] = item.ClassId
+	ippoolipleaserelationship["moid"] = item.Moid
+	ippoolipleaserelationship["object_type"] = item.ObjectType
+	ippoolipleaserelationship["selector"] = item.Selector
+
+	ippoolipleaserelationships = append(ippoolipleaserelationships, ippoolipleaserelationship)
+	return ippoolipleaserelationships
+}
+func flattenMapIppoolIpV4Config(p *models.IppoolIpV4Config, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolipv4configs []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	ippoolipv4config := make(map[string]interface{})
+	ippoolipv4config["class_id"] = item.ClassId
+	ippoolipv4config["gateway"] = item.Gateway
+	ippoolipv4config["netmask"] = item.Netmask
+	ippoolipv4config["object_type"] = item.ObjectType
+	ippoolipv4config["primary_dns"] = item.PrimaryDns
+	ippoolipv4config["secondary_dns"] = item.SecondaryDns
+
+	ippoolipv4configs = append(ippoolipv4configs, ippoolipv4config)
+	return ippoolipv4configs
+}
+func flattenMapIppoolPoolRelationship(p *models.IppoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippoolpoolrelationship := make(map[string]interface{})
+	ippoolpoolrelationship["class_id"] = item.ClassId
+	ippoolpoolrelationship["moid"] = item.Moid
+	ippoolpoolrelationship["object_type"] = item.ObjectType
+	ippoolpoolrelationship["selector"] = item.Selector
+
+	ippoolpoolrelationships = append(ippoolpoolrelationships, ippoolpoolrelationship)
+	return ippoolpoolrelationships
+}
+func flattenMapIppoolPoolMemberRelationship(p *models.IppoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolpoolmemberrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippoolpoolmemberrelationship := make(map[string]interface{})
+	ippoolpoolmemberrelationship["class_id"] = item.ClassId
+	ippoolpoolmemberrelationship["moid"] = item.Moid
+	ippoolpoolmemberrelationship["object_type"] = item.ObjectType
+	ippoolpoolmemberrelationship["selector"] = item.Selector
+
+	ippoolpoolmemberrelationships = append(ippoolpoolmemberrelationships, ippoolpoolmemberrelationship)
+	return ippoolpoolmemberrelationships
+}
+func flattenMapIppoolShadowBlockRelationship(p *models.IppoolShadowBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolshadowblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippoolshadowblockrelationship := make(map[string]interface{})
+	ippoolshadowblockrelationship["class_id"] = item.ClassId
+	ippoolshadowblockrelationship["moid"] = item.Moid
+	ippoolshadowblockrelationship["object_type"] = item.ObjectType
+	ippoolshadowblockrelationship["selector"] = item.Selector
+
+	ippoolshadowblockrelationships = append(ippoolshadowblockrelationships, ippoolshadowblockrelationship)
+	return ippoolshadowblockrelationships
+}
+func flattenMapIppoolShadowPoolRelationship(p *models.IppoolShadowPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippoolshadowpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippoolshadowpoolrelationship := make(map[string]interface{})
+	ippoolshadowpoolrelationship["class_id"] = item.ClassId
+	ippoolshadowpoolrelationship["moid"] = item.Moid
+	ippoolshadowpoolrelationship["object_type"] = item.ObjectType
+	ippoolshadowpoolrelationship["selector"] = item.Selector
+
+	ippoolshadowpoolrelationships = append(ippoolshadowpoolrelationships, ippoolshadowpoolrelationship)
+	return ippoolshadowpoolrelationships
+}
+func flattenMapIppoolUniverseRelationship(p *models.IppoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var ippooluniverserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	ippooluniverserelationship := make(map[string]interface{})
+	ippooluniverserelationship["class_id"] = item.ClassId
+	ippooluniverserelationship["moid"] = item.Moid
+	ippooluniverserelationship["object_type"] = item.ObjectType
+	ippooluniverserelationship["selector"] = item.Selector
+
+	ippooluniverserelationships = append(ippooluniverserelationships, ippooluniverserelationship)
+	return ippooluniverserelationships
+}
 func flattenMapLicenseAccountLicenseDataRelationship(p *models.LicenseAccountLicenseDataRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var licenseaccountlicensedatarelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.LicenseAccountLicenseDataRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	licenseaccountlicensedatarelationship := make(map[string]interface{})
 	licenseaccountlicensedatarelationship["class_id"] = item.ClassId
-	licenseaccountlicensedatarelationship["link"] = item.Link
 	licenseaccountlicensedatarelationship["moid"] = item.Moid
 	licenseaccountlicensedatarelationship["object_type"] = item.ObjectType
 	licenseaccountlicensedatarelationship["selector"] = item.Selector
@@ -5593,10 +6771,9 @@ func flattenMapLicenseCustomerOpRelationship(p *models.LicenseCustomerOpRelation
 		return nil
 	}
 	x := *p
-	item := x.LicenseCustomerOpRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	licensecustomeroprelationship := make(map[string]interface{})
 	licensecustomeroprelationship["class_id"] = item.ClassId
-	licensecustomeroprelationship["link"] = item.Link
 	licensecustomeroprelationship["moid"] = item.Moid
 	licensecustomeroprelationship["object_type"] = item.ObjectType
 	licensecustomeroprelationship["selector"] = item.Selector
@@ -5610,10 +6787,9 @@ func flattenMapLicenseSmartlicenseTokenRelationship(p *models.LicenseSmartlicens
 		return nil
 	}
 	x := *p
-	item := x.LicenseSmartlicenseTokenRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	licensesmartlicensetokenrelationship := make(map[string]interface{})
 	licensesmartlicensetokenrelationship["class_id"] = item.ClassId
-	licensesmartlicensetokenrelationship["link"] = item.Link
 	licensesmartlicensetokenrelationship["moid"] = item.Moid
 	licensesmartlicensetokenrelationship["object_type"] = item.ObjectType
 	licensesmartlicensetokenrelationship["selector"] = item.Selector
@@ -5621,16 +6797,111 @@ func flattenMapLicenseSmartlicenseTokenRelationship(p *models.LicenseSmartlicens
 	licensesmartlicensetokenrelationships = append(licensesmartlicensetokenrelationships, licensesmartlicensetokenrelationship)
 	return licensesmartlicensetokenrelationships
 }
+func flattenMapMacpoolBlock(p *models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolblocks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	macpoolblock := make(map[string]interface{})
+	macpoolblock["class_id"] = item.ClassId
+	macpoolblock["from"] = item.From
+	macpoolblock["object_type"] = item.ObjectType
+	macpoolblock["size"] = item.Size
+	macpoolblock["to"] = item.To
+
+	macpoolblocks = append(macpoolblocks, macpoolblock)
+	return macpoolblocks
+}
+func flattenMapMacpoolIdBlockRelationship(p *models.MacpoolIdBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolidblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	macpoolidblockrelationship := make(map[string]interface{})
+	macpoolidblockrelationship["class_id"] = item.ClassId
+	macpoolidblockrelationship["moid"] = item.Moid
+	macpoolidblockrelationship["object_type"] = item.ObjectType
+	macpoolidblockrelationship["selector"] = item.Selector
+
+	macpoolidblockrelationships = append(macpoolidblockrelationships, macpoolidblockrelationship)
+	return macpoolidblockrelationships
+}
+func flattenMapMacpoolLeaseRelationship(p *models.MacpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolleaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	macpoolleaserelationship := make(map[string]interface{})
+	macpoolleaserelationship["class_id"] = item.ClassId
+	macpoolleaserelationship["moid"] = item.Moid
+	macpoolleaserelationship["object_type"] = item.ObjectType
+	macpoolleaserelationship["selector"] = item.Selector
+
+	macpoolleaserelationships = append(macpoolleaserelationships, macpoolleaserelationship)
+	return macpoolleaserelationships
+}
+func flattenMapMacpoolPoolRelationship(p *models.MacpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	macpoolpoolrelationship := make(map[string]interface{})
+	macpoolpoolrelationship["class_id"] = item.ClassId
+	macpoolpoolrelationship["moid"] = item.Moid
+	macpoolpoolrelationship["object_type"] = item.ObjectType
+	macpoolpoolrelationship["selector"] = item.Selector
+
+	macpoolpoolrelationships = append(macpoolpoolrelationships, macpoolpoolrelationship)
+	return macpoolpoolrelationships
+}
+func flattenMapMacpoolPoolMemberRelationship(p *models.MacpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpoolpoolmemberrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	macpoolpoolmemberrelationship := make(map[string]interface{})
+	macpoolpoolmemberrelationship["class_id"] = item.ClassId
+	macpoolpoolmemberrelationship["moid"] = item.Moid
+	macpoolpoolmemberrelationship["object_type"] = item.ObjectType
+	macpoolpoolmemberrelationship["selector"] = item.Selector
+
+	macpoolpoolmemberrelationships = append(macpoolpoolmemberrelationships, macpoolpoolmemberrelationship)
+	return macpoolpoolmemberrelationships
+}
+func flattenMapMacpoolUniverseRelationship(p *models.MacpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var macpooluniverserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	macpooluniverserelationship := make(map[string]interface{})
+	macpooluniverserelationship["class_id"] = item.ClassId
+	macpooluniverserelationship["moid"] = item.Moid
+	macpooluniverserelationship["object_type"] = item.ObjectType
+	macpooluniverserelationship["selector"] = item.Selector
+
+	macpooluniverserelationships = append(macpooluniverserelationships, macpooluniverserelationship)
+	return macpooluniverserelationships
+}
 func flattenMapManagementControllerRelationship(p *models.ManagementControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var managementcontrollerrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.ManagementControllerRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	managementcontrollerrelationship := make(map[string]interface{})
 	managementcontrollerrelationship["class_id"] = item.ClassId
-	managementcontrollerrelationship["link"] = item.Link
 	managementcontrollerrelationship["moid"] = item.Moid
 	managementcontrollerrelationship["object_type"] = item.ObjectType
 	managementcontrollerrelationship["selector"] = item.Selector
@@ -5644,10 +6915,9 @@ func flattenMapManagementEntityRelationship(p *models.ManagementEntityRelationsh
 		return nil
 	}
 	x := *p
-	item := x.ManagementEntityRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	managemententityrelationship := make(map[string]interface{})
 	managemententityrelationship["class_id"] = item.ClassId
-	managemententityrelationship["link"] = item.Link
 	managemententityrelationship["moid"] = item.Moid
 	managemententityrelationship["object_type"] = item.ObjectType
 	managemententityrelationship["selector"] = item.Selector
@@ -5661,10 +6931,9 @@ func flattenMapMemoryArrayRelationship(p *models.MemoryArrayRelationship, d *sch
 		return nil
 	}
 	x := *p
-	item := x.MemoryArrayRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	memoryarrayrelationship := make(map[string]interface{})
 	memoryarrayrelationship["class_id"] = item.ClassId
-	memoryarrayrelationship["link"] = item.Link
 	memoryarrayrelationship["moid"] = item.Moid
 	memoryarrayrelationship["object_type"] = item.ObjectType
 	memoryarrayrelationship["selector"] = item.Selector
@@ -5678,10 +6947,9 @@ func flattenMapMemoryPersistentMemoryConfigResultRelationship(p *models.MemoryPe
 		return nil
 	}
 	x := *p
-	item := x.MemoryPersistentMemoryConfigResultRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	memorypersistentmemoryconfigresultrelationship := make(map[string]interface{})
 	memorypersistentmemoryconfigresultrelationship["class_id"] = item.ClassId
-	memorypersistentmemoryconfigresultrelationship["link"] = item.Link
 	memorypersistentmemoryconfigresultrelationship["moid"] = item.Moid
 	memorypersistentmemoryconfigresultrelationship["object_type"] = item.ObjectType
 	memorypersistentmemoryconfigresultrelationship["selector"] = item.Selector
@@ -5695,10 +6963,9 @@ func flattenMapMemoryPersistentMemoryConfigurationRelationship(p *models.MemoryP
 		return nil
 	}
 	x := *p
-	item := x.MemoryPersistentMemoryConfigurationRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	memorypersistentmemoryconfigurationrelationship := make(map[string]interface{})
 	memorypersistentmemoryconfigurationrelationship["class_id"] = item.ClassId
-	memorypersistentmemoryconfigurationrelationship["link"] = item.Link
 	memorypersistentmemoryconfigurationrelationship["moid"] = item.Moid
 	memorypersistentmemoryconfigurationrelationship["object_type"] = item.ObjectType
 	memorypersistentmemoryconfigurationrelationship["selector"] = item.Selector
@@ -5730,10 +6997,9 @@ func flattenMapMemoryPersistentMemoryRegionRelationship(p *models.MemoryPersiste
 		return nil
 	}
 	x := *p
-	item := x.MemoryPersistentMemoryRegionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	memorypersistentmemoryregionrelationship := make(map[string]interface{})
 	memorypersistentmemoryregionrelationship["class_id"] = item.ClassId
-	memorypersistentmemoryregionrelationship["link"] = item.Link
 	memorypersistentmemoryregionrelationship["moid"] = item.Moid
 	memorypersistentmemoryregionrelationship["object_type"] = item.ObjectType
 	memorypersistentmemoryregionrelationship["selector"] = item.Selector
@@ -5747,8 +7013,12 @@ func flattenMapMoBaseMoRelationship(p *models.MoBaseMoRelationship, d *schema.Re
 		return nil
 	}
 	x := *p
-	item := x.MoBaseMoRelationshipInterface.(*models.MoBaseMo)
+	item := x.MoMoRef
 	mobasemorelationship := make(map[string]interface{})
+	mobasemorelationship["class_id"] = item.ClassId
+	mobasemorelationship["moid"] = item.Moid
+	mobasemorelationship["object_type"] = item.ObjectType
+	mobasemorelationship["selector"] = item.Selector
 
 	mobasemorelationships = append(mobasemorelationships, mobasemorelationship)
 	return mobasemorelationships
@@ -5759,16 +7029,47 @@ func flattenMapNetworkElementRelationship(p *models.NetworkElementRelationship, 
 		return nil
 	}
 	x := *p
-	item := x.NetworkElementRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	networkelementrelationship := make(map[string]interface{})
 	networkelementrelationship["class_id"] = item.ClassId
-	networkelementrelationship["link"] = item.Link
 	networkelementrelationship["moid"] = item.Moid
 	networkelementrelationship["object_type"] = item.ObjectType
 	networkelementrelationship["selector"] = item.Selector
 
 	networkelementrelationships = append(networkelementrelationships, networkelementrelationship)
 	return networkelementrelationships
+}
+func flattenMapNetworkFcZoneInfoRelationship(p *models.NetworkFcZoneInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var networkfczoneinforelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	networkfczoneinforelationship := make(map[string]interface{})
+	networkfczoneinforelationship["class_id"] = item.ClassId
+	networkfczoneinforelationship["moid"] = item.Moid
+	networkfczoneinforelationship["object_type"] = item.ObjectType
+	networkfczoneinforelationship["selector"] = item.Selector
+
+	networkfczoneinforelationships = append(networkfczoneinforelationships, networkfczoneinforelationship)
+	return networkfczoneinforelationships
+}
+func flattenMapNetworkVlanPortInfoRelationship(p *models.NetworkVlanPortInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var networkvlanportinforelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	networkvlanportinforelationship := make(map[string]interface{})
+	networkvlanportinforelationship["class_id"] = item.ClassId
+	networkvlanportinforelationship["moid"] = item.Moid
+	networkvlanportinforelationship["object_type"] = item.ObjectType
+	networkvlanportinforelationship["selector"] = item.Selector
+
+	networkvlanportinforelationships = append(networkvlanportinforelationships, networkvlanportinforelationship)
+	return networkvlanportinforelationships
 }
 func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
 	var niaapinewreleasedetails []map[string]interface{}
@@ -5786,7 +7087,7 @@ func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schem
 	niaapinewreleasedetail["software_download_link"] = item.SoftwareDownloadLink
 	niaapinewreleasedetail["software_download_link_title"] = item.SoftwareDownloadLinkTitle
 	niaapinewreleasedetail["title"] = item.Title
-	niaapinewreleasedetail["version"] = item.Version
+	niaapinewreleasedetail["nr_version"] = item.Version
 
 	niaapinewreleasedetails = append(niaapinewreleasedetails, niaapinewreleasedetail)
 	return niaapinewreleasedetails
@@ -5888,10 +7189,9 @@ func flattenMapNiatelemetryNiaInventoryRelationship(p *models.NiatelemetryNiaInv
 		return nil
 	}
 	x := *p
-	item := x.NiatelemetryNiaInventoryRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	niatelemetryniainventoryrelationship := make(map[string]interface{})
 	niatelemetryniainventoryrelationship["class_id"] = item.ClassId
-	niatelemetryniainventoryrelationship["link"] = item.Link
 	niatelemetryniainventoryrelationship["moid"] = item.Moid
 	niatelemetryniainventoryrelationship["object_type"] = item.ObjectType
 	niatelemetryniainventoryrelationship["selector"] = item.Selector
@@ -5905,10 +7205,9 @@ func flattenMapNiatelemetryNiaLicenseStateRelationship(p *models.NiatelemetryNia
 		return nil
 	}
 	x := *p
-	item := x.NiatelemetryNiaLicenseStateRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	niatelemetrynialicensestaterelationship := make(map[string]interface{})
 	niatelemetrynialicensestaterelationship["class_id"] = item.ClassId
-	niatelemetrynialicensestaterelationship["link"] = item.Link
 	niatelemetrynialicensestaterelationship["moid"] = item.Moid
 	niatelemetrynialicensestaterelationship["object_type"] = item.ObjectType
 	niatelemetrynialicensestaterelationship["selector"] = item.Selector
@@ -5961,10 +7260,9 @@ func flattenMapOrganizationOrganizationRelationship(p *models.OrganizationOrgani
 		return nil
 	}
 	x := *p
-	item := x.OrganizationOrganizationRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	organizationorganizationrelationship := make(map[string]interface{})
 	organizationorganizationrelationship["class_id"] = item.ClassId
-	organizationorganizationrelationship["link"] = item.Link
 	organizationorganizationrelationship["moid"] = item.Moid
 	organizationorganizationrelationship["object_type"] = item.ObjectType
 	organizationorganizationrelationship["selector"] = item.Selector
@@ -5985,22 +7283,19 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 	osanswers["class_id"] = item.ClassId
 	osanswers["hostname"] = item.Hostname
 	osanswers["ip_config_type"] = item.IpConfigType
-	osanswers["ip_v4_config"] = (func(p *models.CommIpV4Interface, d *schema.ResourceData) []map[string]interface{} {
-		var commipv4interfaces []map[string]interface{}
+	osanswers["ip_configuration"] = (func(p *models.OsIpConfiguration, d *schema.ResourceData) []map[string]interface{} {
+		var osipconfigurations []map[string]interface{}
 		if p == nil {
 			return nil
 		}
 		item := *p
-		commipv4interface := make(map[string]interface{})
-		commipv4interface["class_id"] = item.ClassId
-		commipv4interface["gateway"] = item.Gateway
-		commipv4interface["ip_address"] = item.IpAddress
-		commipv4interface["netmask"] = item.Netmask
-		commipv4interface["object_type"] = item.ObjectType
+		osipconfiguration := make(map[string]interface{})
+		osipconfiguration["class_id"] = item.ClassId
+		osipconfiguration["object_type"] = item.ObjectType
 
-		commipv4interfaces = append(commipv4interfaces, commipv4interface)
-		return commipv4interfaces
-	})(item.IpV4Config, d)
+		osipconfigurations = append(osipconfigurations, osipconfiguration)
+		return osipconfigurations
+	})(item.IpConfiguration, d)
 	osanswers["is_answer_file_set"] = item.IsAnswerFileSet
 	osanswers["is_root_password_crypted"] = item.IsRootPasswordCrypted
 	osanswers["is_root_password_set"] = item.IsRootPasswordSet
@@ -6010,7 +7305,7 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 	root_password_x := d.Get("answers").([]interface{})
 	root_password_y := root_password_x[0].(map[string]interface{})
 	osanswers["root_password"] = root_password_y["root_password"]
-	osanswers["source"] = item.Source
+	osanswers["nr_source"] = item.Source
 
 	osanswerss = append(osanswerss, osanswers)
 	return osanswerss
@@ -6021,10 +7316,9 @@ func flattenMapOsCatalogRelationship(p *models.OsCatalogRelationship, d *schema.
 		return nil
 	}
 	x := *p
-	item := x.OsCatalogRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	oscatalogrelationship := make(map[string]interface{})
 	oscatalogrelationship["class_id"] = item.ClassId
-	oscatalogrelationship["link"] = item.Link
 	oscatalogrelationship["moid"] = item.Moid
 	oscatalogrelationship["object_type"] = item.ObjectType
 	oscatalogrelationship["selector"] = item.Selector
@@ -6038,10 +7332,9 @@ func flattenMapOsConfigurationFileRelationship(p *models.OsConfigurationFileRela
 		return nil
 	}
 	x := *p
-	item := x.OsConfigurationFileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	osconfigurationfilerelationship := make(map[string]interface{})
 	osconfigurationfilerelationship["class_id"] = item.ClassId
-	osconfigurationfilerelationship["link"] = item.Link
 	osconfigurationfilerelationship["moid"] = item.Moid
 	osconfigurationfilerelationship["object_type"] = item.ObjectType
 	osconfigurationfilerelationship["selector"] = item.Selector
@@ -6068,10 +7361,9 @@ func flattenMapPciSwitchRelationship(p *models.PciSwitchRelationship, d *schema.
 		return nil
 	}
 	x := *p
-	item := x.PciSwitchRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	pciswitchrelationship := make(map[string]interface{})
 	pciswitchrelationship["class_id"] = item.ClassId
-	pciswitchrelationship["link"] = item.Link
 	pciswitchrelationship["moid"] = item.Moid
 	pciswitchrelationship["object_type"] = item.ObjectType
 	pciswitchrelationship["selector"] = item.Selector
@@ -6129,16 +7421,31 @@ func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *s
 	pkixsubjectalternatenames = append(pkixsubjectalternatenames, pkixsubjectalternatename)
 	return pkixsubjectalternatenames
 }
+func flattenMapPolicyAbstractConfigProfileRelationship(p *models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var policyabstractconfigprofilerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	policyabstractconfigprofilerelationship := make(map[string]interface{})
+	policyabstractconfigprofilerelationship["class_id"] = item.ClassId
+	policyabstractconfigprofilerelationship["moid"] = item.Moid
+	policyabstractconfigprofilerelationship["object_type"] = item.ObjectType
+	policyabstractconfigprofilerelationship["selector"] = item.Selector
+
+	policyabstractconfigprofilerelationships = append(policyabstractconfigprofilerelationships, policyabstractconfigprofilerelationship)
+	return policyabstractconfigprofilerelationships
+}
 func flattenMapPolicyAbstractProfileRelationship(p *models.PolicyAbstractProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var policyabstractprofilerelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.PolicyAbstractProfileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	policyabstractprofilerelationship := make(map[string]interface{})
 	policyabstractprofilerelationship["class_id"] = item.ClassId
-	policyabstractprofilerelationship["link"] = item.Link
 	policyabstractprofilerelationship["moid"] = item.Moid
 	policyabstractprofilerelationship["object_type"] = item.ObjectType
 	policyabstractprofilerelationship["selector"] = item.Selector
@@ -6201,10 +7508,9 @@ func flattenMapPortGroupRelationship(p *models.PortGroupRelationship, d *schema.
 		return nil
 	}
 	x := *p
-	item := x.PortGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	portgrouprelationship := make(map[string]interface{})
 	portgrouprelationship["class_id"] = item.ClassId
-	portgrouprelationship["link"] = item.Link
 	portgrouprelationship["moid"] = item.Moid
 	portgrouprelationship["object_type"] = item.ObjectType
 	portgrouprelationship["selector"] = item.Selector
@@ -6212,16 +7518,31 @@ func flattenMapPortGroupRelationship(p *models.PortGroupRelationship, d *schema.
 	portgrouprelationships = append(portgrouprelationships, portgrouprelationship)
 	return portgrouprelationships
 }
+func flattenMapPortInterfaceBaseRelationship(p *models.PortInterfaceBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var portinterfacebaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	portinterfacebaserelationship := make(map[string]interface{})
+	portinterfacebaserelationship["class_id"] = item.ClassId
+	portinterfacebaserelationship["moid"] = item.Moid
+	portinterfacebaserelationship["object_type"] = item.ObjectType
+	portinterfacebaserelationship["selector"] = item.Selector
+
+	portinterfacebaserelationships = append(portinterfacebaserelationships, portinterfacebaserelationship)
+	return portinterfacebaserelationships
+}
 func flattenMapPortSubGroupRelationship(p *models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portsubgrouprelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.PortSubGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	portsubgrouprelationship := make(map[string]interface{})
 	portsubgrouprelationship["class_id"] = item.ClassId
-	portsubgrouprelationship["link"] = item.Link
 	portsubgrouprelationship["moid"] = item.Moid
 	portsubgrouprelationship["object_type"] = item.ObjectType
 	portsubgrouprelationship["selector"] = item.Selector
@@ -6235,10 +7556,9 @@ func flattenMapRecoveryAbstractBackupInfoRelationship(p *models.RecoveryAbstract
 		return nil
 	}
 	x := *p
-	item := x.RecoveryAbstractBackupInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	recoveryabstractbackupinforelationship := make(map[string]interface{})
 	recoveryabstractbackupinforelationship["class_id"] = item.ClassId
-	recoveryabstractbackupinforelationship["link"] = item.Link
 	recoveryabstractbackupinforelationship["moid"] = item.Moid
 	recoveryabstractbackupinforelationship["object_type"] = item.ObjectType
 	recoveryabstractbackupinforelationship["selector"] = item.Selector
@@ -6252,10 +7572,9 @@ func flattenMapRecoveryBackupConfigPolicyRelationship(p *models.RecoveryBackupCo
 		return nil
 	}
 	x := *p
-	item := x.RecoveryBackupConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	recoverybackupconfigpolicyrelationship := make(map[string]interface{})
 	recoverybackupconfigpolicyrelationship["class_id"] = item.ClassId
-	recoverybackupconfigpolicyrelationship["link"] = item.Link
 	recoverybackupconfigpolicyrelationship["moid"] = item.Moid
 	recoverybackupconfigpolicyrelationship["object_type"] = item.ObjectType
 	recoverybackupconfigpolicyrelationship["selector"] = item.Selector
@@ -6269,10 +7588,9 @@ func flattenMapRecoveryBackupProfileRelationship(p *models.RecoveryBackupProfile
 		return nil
 	}
 	x := *p
-	item := x.RecoveryBackupProfileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	recoverybackupprofilerelationship := make(map[string]interface{})
 	recoverybackupprofilerelationship["class_id"] = item.ClassId
-	recoverybackupprofilerelationship["link"] = item.Link
 	recoverybackupprofilerelationship["moid"] = item.Moid
 	recoverybackupprofilerelationship["object_type"] = item.ObjectType
 	recoverybackupprofilerelationship["selector"] = item.Selector
@@ -6315,10 +7633,9 @@ func flattenMapRecoveryConfigResultRelationship(p *models.RecoveryConfigResultRe
 		return nil
 	}
 	x := *p
-	item := x.RecoveryConfigResultRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	recoveryconfigresultrelationship := make(map[string]interface{})
 	recoveryconfigresultrelationship["class_id"] = item.ClassId
-	recoveryconfigresultrelationship["link"] = item.Link
 	recoveryconfigresultrelationship["moid"] = item.Moid
 	recoveryconfigresultrelationship["object_type"] = item.ObjectType
 	recoveryconfigresultrelationship["selector"] = item.Selector
@@ -6332,10 +7649,9 @@ func flattenMapRecoveryScheduleConfigPolicyRelationship(p *models.RecoverySchedu
 		return nil
 	}
 	x := *p
-	item := x.RecoveryScheduleConfigPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	recoveryscheduleconfigpolicyrelationship := make(map[string]interface{})
 	recoveryscheduleconfigpolicyrelationship["class_id"] = item.ClassId
-	recoveryscheduleconfigpolicyrelationship["link"] = item.Link
 	recoveryscheduleconfigpolicyrelationship["moid"] = item.Moid
 	recoveryscheduleconfigpolicyrelationship["object_type"] = item.ObjectType
 	recoveryscheduleconfigpolicyrelationship["selector"] = item.Selector
@@ -6349,10 +7665,9 @@ func flattenMapResourceGroupRelationship(p *models.ResourceGroupRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.ResourceGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	resourcegrouprelationship := make(map[string]interface{})
 	resourcegrouprelationship["class_id"] = item.ClassId
-	resourcegrouprelationship["link"] = item.Link
 	resourcegrouprelationship["moid"] = item.Moid
 	resourcegrouprelationship["object_type"] = item.ObjectType
 	resourcegrouprelationship["selector"] = item.Selector
@@ -6366,10 +7681,9 @@ func flattenMapResourceMembershipHolderRelationship(p *models.ResourceMembership
 		return nil
 	}
 	x := *p
-	item := x.ResourceMembershipHolderRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	resourcemembershipholderrelationship := make(map[string]interface{})
 	resourcemembershipholderrelationship["class_id"] = item.ClassId
-	resourcemembershipholderrelationship["link"] = item.Link
 	resourcemembershipholderrelationship["moid"] = item.Moid
 	resourcemembershipholderrelationship["object_type"] = item.ObjectType
 	resourcemembershipholderrelationship["selector"] = item.Selector
@@ -6383,10 +7697,9 @@ func flattenMapSdwanProfileRelationship(p *models.SdwanProfileRelationship, d *s
 		return nil
 	}
 	x := *p
-	item := x.SdwanProfileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	sdwanprofilerelationship := make(map[string]interface{})
 	sdwanprofilerelationship["class_id"] = item.ClassId
-	sdwanprofilerelationship["link"] = item.Link
 	sdwanprofilerelationship["moid"] = item.Moid
 	sdwanprofilerelationship["object_type"] = item.ObjectType
 	sdwanprofilerelationship["selector"] = item.Selector
@@ -6400,10 +7713,9 @@ func flattenMapSdwanRouterPolicyRelationship(p *models.SdwanRouterPolicyRelation
 		return nil
 	}
 	x := *p
-	item := x.SdwanRouterPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	sdwanrouterpolicyrelationship := make(map[string]interface{})
 	sdwanrouterpolicyrelationship["class_id"] = item.ClassId
-	sdwanrouterpolicyrelationship["link"] = item.Link
 	sdwanrouterpolicyrelationship["moid"] = item.Moid
 	sdwanrouterpolicyrelationship["object_type"] = item.ObjectType
 	sdwanrouterpolicyrelationship["selector"] = item.Selector
@@ -6417,10 +7729,9 @@ func flattenMapSdwanVmanageAccountPolicyRelationship(p *models.SdwanVmanageAccou
 		return nil
 	}
 	x := *p
-	item := x.SdwanVmanageAccountPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	sdwanvmanageaccountpolicyrelationship := make(map[string]interface{})
 	sdwanvmanageaccountpolicyrelationship["class_id"] = item.ClassId
-	sdwanvmanageaccountpolicyrelationship["link"] = item.Link
 	sdwanvmanageaccountpolicyrelationship["moid"] = item.Moid
 	sdwanvmanageaccountpolicyrelationship["object_type"] = item.ObjectType
 	sdwanvmanageaccountpolicyrelationship["selector"] = item.Selector
@@ -6434,10 +7745,9 @@ func flattenMapServerConfigResultRelationship(p *models.ServerConfigResultRelati
 		return nil
 	}
 	x := *p
-	item := x.ServerConfigResultRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	serverconfigresultrelationship := make(map[string]interface{})
 	serverconfigresultrelationship["class_id"] = item.ClassId
-	serverconfigresultrelationship["link"] = item.Link
 	serverconfigresultrelationship["moid"] = item.Moid
 	serverconfigresultrelationship["object_type"] = item.ObjectType
 	serverconfigresultrelationship["selector"] = item.Selector
@@ -6451,10 +7761,9 @@ func flattenMapServerProfileRelationship(p *models.ServerProfileRelationship, d 
 		return nil
 	}
 	x := *p
-	item := x.ServerProfileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	serverprofilerelationship := make(map[string]interface{})
 	serverprofilerelationship["class_id"] = item.ClassId
-	serverprofilerelationship["link"] = item.Link
 	serverprofilerelationship["moid"] = item.Moid
 	serverprofilerelationship["object_type"] = item.ObjectType
 	serverprofilerelationship["selector"] = item.Selector
@@ -6468,10 +7777,9 @@ func flattenMapSoftwareHyperflexDistributableRelationship(p *models.SoftwareHype
 		return nil
 	}
 	x := *p
-	item := x.SoftwareHyperflexDistributableRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	softwarehyperflexdistributablerelationship := make(map[string]interface{})
 	softwarehyperflexdistributablerelationship["class_id"] = item.ClassId
-	softwarehyperflexdistributablerelationship["link"] = item.Link
 	softwarehyperflexdistributablerelationship["moid"] = item.Moid
 	softwarehyperflexdistributablerelationship["object_type"] = item.ObjectType
 	softwarehyperflexdistributablerelationship["selector"] = item.Selector
@@ -6485,10 +7793,9 @@ func flattenMapSoftwareSolutionDistributableRelationship(p *models.SoftwareSolut
 		return nil
 	}
 	x := *p
-	item := x.SoftwareSolutionDistributableRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	softwaresolutiondistributablerelationship := make(map[string]interface{})
 	softwaresolutiondistributablerelationship["class_id"] = item.ClassId
-	softwaresolutiondistributablerelationship["link"] = item.Link
 	softwaresolutiondistributablerelationship["moid"] = item.Moid
 	softwaresolutiondistributablerelationship["object_type"] = item.ObjectType
 	softwaresolutiondistributablerelationship["selector"] = item.Selector
@@ -6502,16 +7809,31 @@ func flattenMapSoftwarerepositoryCatalogRelationship(p *models.Softwarerepositor
 		return nil
 	}
 	x := *p
-	item := x.SoftwarerepositoryCatalogRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	softwarerepositorycatalogrelationship := make(map[string]interface{})
 	softwarerepositorycatalogrelationship["class_id"] = item.ClassId
-	softwarerepositorycatalogrelationship["link"] = item.Link
 	softwarerepositorycatalogrelationship["moid"] = item.Moid
 	softwarerepositorycatalogrelationship["object_type"] = item.ObjectType
 	softwarerepositorycatalogrelationship["selector"] = item.Selector
 
 	softwarerepositorycatalogrelationships = append(softwarerepositorycatalogrelationships, softwarerepositorycatalogrelationship)
 	return softwarerepositorycatalogrelationships
+}
+func flattenMapSoftwarerepositoryFileRelationship(p *models.SoftwarerepositoryFileRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var softwarerepositoryfilerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	softwarerepositoryfilerelationship := make(map[string]interface{})
+	softwarerepositoryfilerelationship["class_id"] = item.ClassId
+	softwarerepositoryfilerelationship["moid"] = item.Moid
+	softwarerepositoryfilerelationship["object_type"] = item.ObjectType
+	softwarerepositoryfilerelationship["selector"] = item.Selector
+
+	softwarerepositoryfilerelationships = append(softwarerepositoryfilerelationships, softwarerepositoryfilerelationship)
+	return softwarerepositoryfilerelationships
 }
 func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServer, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositoryfileservers []map[string]interface{}
@@ -6532,10 +7854,9 @@ func flattenMapSoftwarerepositoryOperatingSystemFileRelationship(p *models.Softw
 		return nil
 	}
 	x := *p
-	item := x.SoftwarerepositoryOperatingSystemFileRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	softwarerepositoryoperatingsystemfilerelationship := make(map[string]interface{})
 	softwarerepositoryoperatingsystemfilerelationship["class_id"] = item.ClassId
-	softwarerepositoryoperatingsystemfilerelationship["link"] = item.Link
 	softwarerepositoryoperatingsystemfilerelationship["moid"] = item.Moid
 	softwarerepositoryoperatingsystemfilerelationship["object_type"] = item.ObjectType
 	softwarerepositoryoperatingsystemfilerelationship["selector"] = item.Selector
@@ -6543,39 +7864,38 @@ func flattenMapSoftwarerepositoryOperatingSystemFileRelationship(p *models.Softw
 	softwarerepositoryoperatingsystemfilerelationships = append(softwarerepositoryoperatingsystemfilerelationships, softwarerepositoryoperatingsystemfilerelationship)
 	return softwarerepositoryoperatingsystemfilerelationships
 }
-func flattenMapStorageArrayControllerRelationship(p *models.StorageArrayControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagearraycontrollerrelationships []map[string]interface{}
+func flattenMapSoftwarerepositoryReleaseRelationship(p *models.SoftwarerepositoryReleaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var softwarerepositoryreleaserelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageArrayControllerRelationshipInterface.(*models.MoMoRef)
-	storagearraycontrollerrelationship := make(map[string]interface{})
-	storagearraycontrollerrelationship["class_id"] = item.ClassId
-	storagearraycontrollerrelationship["link"] = item.Link
-	storagearraycontrollerrelationship["moid"] = item.Moid
-	storagearraycontrollerrelationship["object_type"] = item.ObjectType
-	storagearraycontrollerrelationship["selector"] = item.Selector
+	item := x.MoMoRef
+	softwarerepositoryreleaserelationship := make(map[string]interface{})
+	softwarerepositoryreleaserelationship["class_id"] = item.ClassId
+	softwarerepositoryreleaserelationship["moid"] = item.Moid
+	softwarerepositoryreleaserelationship["object_type"] = item.ObjectType
+	softwarerepositoryreleaserelationship["selector"] = item.Selector
 
-	storagearraycontrollerrelationships = append(storagearraycontrollerrelationships, storagearraycontrollerrelationship)
-	return storagearraycontrollerrelationships
+	softwarerepositoryreleaserelationships = append(softwarerepositoryreleaserelationships, softwarerepositoryreleaserelationship)
+	return softwarerepositoryreleaserelationships
 }
-func flattenMapStorageCapacity(p *models.StorageCapacity, d *schema.ResourceData) []map[string]interface{} {
-	var storagecapacitys []map[string]interface{}
+func flattenMapStorageBaseCapacity(p *models.StorageBaseCapacity, d *schema.ResourceData) []map[string]interface{} {
+	var storagebasecapacitys []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	item := *p
-	storagecapacity := make(map[string]interface{})
-	storagecapacity["available"] = item.Available
-	storagecapacity["class_id"] = item.ClassId
-	storagecapacity["free"] = item.Free
-	storagecapacity["object_type"] = item.ObjectType
-	storagecapacity["total"] = item.Total
-	storagecapacity["used"] = item.Used
+	storagebasecapacity := make(map[string]interface{})
+	storagebasecapacity["available"] = item.Available
+	storagebasecapacity["class_id"] = item.ClassId
+	storagebasecapacity["free"] = item.Free
+	storagebasecapacity["object_type"] = item.ObjectType
+	storagebasecapacity["total"] = item.Total
+	storagebasecapacity["used"] = item.Used
 
-	storagecapacitys = append(storagecapacitys, storagecapacity)
-	return storagecapacitys
+	storagebasecapacitys = append(storagebasecapacitys, storagebasecapacity)
+	return storagebasecapacitys
 }
 func flattenMapStorageControllerRelationship(p *models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagecontrollerrelationships []map[string]interface{}
@@ -6583,10 +7903,9 @@ func flattenMapStorageControllerRelationship(p *models.StorageControllerRelation
 		return nil
 	}
 	x := *p
-	item := x.StorageControllerRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagecontrollerrelationship := make(map[string]interface{})
 	storagecontrollerrelationship["class_id"] = item.ClassId
-	storagecontrollerrelationship["link"] = item.Link
 	storagecontrollerrelationship["moid"] = item.Moid
 	storagecontrollerrelationship["object_type"] = item.ObjectType
 	storagecontrollerrelationship["selector"] = item.Selector
@@ -6594,16 +7913,31 @@ func flattenMapStorageControllerRelationship(p *models.StorageControllerRelation
 	storagecontrollerrelationships = append(storagecontrollerrelationships, storagecontrollerrelationship)
 	return storagecontrollerrelationships
 }
+func flattenMapStorageDiskGroupRelationship(p *models.StorageDiskGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagediskgrouprelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	storagediskgrouprelationship := make(map[string]interface{})
+	storagediskgrouprelationship["class_id"] = item.ClassId
+	storagediskgrouprelationship["moid"] = item.Moid
+	storagediskgrouprelationship["object_type"] = item.ObjectType
+	storagediskgrouprelationship["selector"] = item.Selector
+
+	storagediskgrouprelationships = append(storagediskgrouprelationships, storagediskgrouprelationship)
+	return storagediskgrouprelationships
+}
 func flattenMapStorageEnclosureRelationship(p *models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurerelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageEnclosureRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storageenclosurerelationship := make(map[string]interface{})
 	storageenclosurerelationship["class_id"] = item.ClassId
-	storageenclosurerelationship["link"] = item.Link
 	storageenclosurerelationship["moid"] = item.Moid
 	storageenclosurerelationship["object_type"] = item.ObjectType
 	storageenclosurerelationship["selector"] = item.Selector
@@ -6617,10 +7951,9 @@ func flattenMapStorageFlexFlashControllerRelationship(p *models.StorageFlexFlash
 		return nil
 	}
 	x := *p
-	item := x.StorageFlexFlashControllerRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storageflexflashcontrollerrelationship := make(map[string]interface{})
 	storageflexflashcontrollerrelationship["class_id"] = item.ClassId
-	storageflexflashcontrollerrelationship["link"] = item.Link
 	storageflexflashcontrollerrelationship["moid"] = item.Moid
 	storageflexflashcontrollerrelationship["object_type"] = item.ObjectType
 	storageflexflashcontrollerrelationship["selector"] = item.Selector
@@ -6634,10 +7967,9 @@ func flattenMapStorageFlexUtilControllerRelationship(p *models.StorageFlexUtilCo
 		return nil
 	}
 	x := *p
-	item := x.StorageFlexUtilControllerRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storageflexutilcontrollerrelationship := make(map[string]interface{})
 	storageflexutilcontrollerrelationship["class_id"] = item.ClassId
-	storageflexutilcontrollerrelationship["link"] = item.Link
 	storageflexutilcontrollerrelationship["moid"] = item.Moid
 	storageflexutilcontrollerrelationship["object_type"] = item.ObjectType
 	storageflexutilcontrollerrelationship["selector"] = item.Selector
@@ -6645,72 +7977,15 @@ func flattenMapStorageFlexUtilControllerRelationship(p *models.StorageFlexUtilCo
 	storageflexutilcontrollerrelationships = append(storageflexutilcontrollerrelationships, storageflexutilcontrollerrelationship)
 	return storageflexutilcontrollerrelationships
 }
-func flattenMapStorageGenericArrayRelationship(p *models.StorageGenericArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagegenericarrayrelationships []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	x := *p
-	item := x.StorageGenericArrayRelationshipInterface.(*models.MoMoRef)
-	storagegenericarrayrelationship := make(map[string]interface{})
-	storagegenericarrayrelationship["class_id"] = item.ClassId
-	storagegenericarrayrelationship["link"] = item.Link
-	storagegenericarrayrelationship["moid"] = item.Moid
-	storagegenericarrayrelationship["object_type"] = item.ObjectType
-	storagegenericarrayrelationship["selector"] = item.Selector
-
-	storagegenericarrayrelationships = append(storagegenericarrayrelationships, storagegenericarrayrelationship)
-	return storagegenericarrayrelationships
-}
-func flattenMapStorageHostRelationship(p *models.StorageHostRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagehostrelationships []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	x := *p
-	item := x.StorageHostRelationshipInterface.(*models.MoMoRef)
-	storagehostrelationship := make(map[string]interface{})
-	storagehostrelationship["class_id"] = item.ClassId
-	storagehostrelationship["link"] = item.Link
-	storagehostrelationship["moid"] = item.Moid
-	storagehostrelationship["object_type"] = item.ObjectType
-	storagehostrelationship["selector"] = item.Selector
-
-	storagehostrelationships = append(storagehostrelationships, storagehostrelationship)
-	return storagehostrelationships
-}
-func flattenMapStorageHostUtilization(p *models.StorageHostUtilization, d *schema.ResourceData) []map[string]interface{} {
-	var storagehostutilizations []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	storagehostutilization := make(map[string]interface{})
-	storagehostutilization["available"] = item.Available
-	storagehostutilization["class_id"] = item.ClassId
-	storagehostutilization["data_reduction"] = item.DataReduction
-	storagehostutilization["free"] = item.Free
-	storagehostutilization["object_type"] = item.ObjectType
-	storagehostutilization["snapshot"] = item.Snapshot
-	storagehostutilization["thin_provisioned"] = item.ThinProvisioned
-	storagehostutilization["total"] = item.Total
-	storagehostutilization["total_reduction"] = item.TotalReduction
-	storagehostutilization["used"] = item.Used
-	storagehostutilization["volume"] = item.Volume
-
-	storagehostutilizations = append(storagehostutilizations, storagehostutilization)
-	return storagehostutilizations
-}
 func flattenMapStoragePhysicalDiskRelationship(p *models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StoragePhysicalDiskRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagephysicaldiskrelationship := make(map[string]interface{})
 	storagephysicaldiskrelationship["class_id"] = item.ClassId
-	storagephysicaldiskrelationship["link"] = item.Link
 	storagephysicaldiskrelationship["moid"] = item.Moid
 	storagephysicaldiskrelationship["object_type"] = item.ObjectType
 	storagephysicaldiskrelationship["selector"] = item.Selector
@@ -6718,39 +7993,53 @@ func flattenMapStoragePhysicalDiskRelationship(p *models.StoragePhysicalDiskRela
 	storagephysicaldiskrelationships = append(storagephysicaldiskrelationships, storagephysicaldiskrelationship)
 	return storagephysicaldiskrelationships
 }
-func flattenMapStorageProtectionGroupRelationship(p *models.StorageProtectionGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storageprotectiongrouprelationships []map[string]interface{}
+func flattenMapStoragePureArrayRelationship(p *models.StoragePureArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurearrayrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageProtectionGroupRelationshipInterface.(*models.MoMoRef)
-	storageprotectiongrouprelationship := make(map[string]interface{})
-	storageprotectiongrouprelationship["class_id"] = item.ClassId
-	storageprotectiongrouprelationship["link"] = item.Link
-	storageprotectiongrouprelationship["moid"] = item.Moid
-	storageprotectiongrouprelationship["object_type"] = item.ObjectType
-	storageprotectiongrouprelationship["selector"] = item.Selector
+	item := x.MoMoRef
+	storagepurearrayrelationship := make(map[string]interface{})
+	storagepurearrayrelationship["class_id"] = item.ClassId
+	storagepurearrayrelationship["moid"] = item.Moid
+	storagepurearrayrelationship["object_type"] = item.ObjectType
+	storagepurearrayrelationship["selector"] = item.Selector
 
-	storageprotectiongrouprelationships = append(storageprotectiongrouprelationships, storageprotectiongrouprelationship)
-	return storageprotectiongrouprelationships
+	storagepurearrayrelationships = append(storagepurearrayrelationships, storagepurearrayrelationship)
+	return storagepurearrayrelationships
 }
-func flattenMapStorageProtectionGroupSnapshotRelationship(p *models.StorageProtectionGroupSnapshotRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storageprotectiongroupsnapshotrelationships []map[string]interface{}
+func flattenMapStoragePureControllerRelationship(p *models.StoragePureControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurecontrollerrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageProtectionGroupSnapshotRelationshipInterface.(*models.MoMoRef)
-	storageprotectiongroupsnapshotrelationship := make(map[string]interface{})
-	storageprotectiongroupsnapshotrelationship["class_id"] = item.ClassId
-	storageprotectiongroupsnapshotrelationship["link"] = item.Link
-	storageprotectiongroupsnapshotrelationship["moid"] = item.Moid
-	storageprotectiongroupsnapshotrelationship["object_type"] = item.ObjectType
-	storageprotectiongroupsnapshotrelationship["selector"] = item.Selector
+	item := x.MoMoRef
+	storagepurecontrollerrelationship := make(map[string]interface{})
+	storagepurecontrollerrelationship["class_id"] = item.ClassId
+	storagepurecontrollerrelationship["moid"] = item.Moid
+	storagepurecontrollerrelationship["object_type"] = item.ObjectType
+	storagepurecontrollerrelationship["selector"] = item.Selector
 
-	storageprotectiongroupsnapshotrelationships = append(storageprotectiongroupsnapshotrelationships, storageprotectiongroupsnapshotrelationship)
-	return storageprotectiongroupsnapshotrelationships
+	storagepurecontrollerrelationships = append(storagepurecontrollerrelationships, storagepurecontrollerrelationship)
+	return storagepurecontrollerrelationships
+}
+func flattenMapStoragePureHostRelationship(p *models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurehostrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	storagepurehostrelationship := make(map[string]interface{})
+	storagepurehostrelationship["class_id"] = item.ClassId
+	storagepurehostrelationship["moid"] = item.Moid
+	storagepurehostrelationship["object_type"] = item.ObjectType
+	storagepurehostrelationship["selector"] = item.Selector
+
+	storagepurehostrelationships = append(storagepurehostrelationships, storagepurehostrelationship)
+	return storagepurehostrelationships
 }
 func flattenMapStoragePureHostGroupRelationship(p *models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostgrouprelationships []map[string]interface{}
@@ -6758,10 +8047,9 @@ func flattenMapStoragePureHostGroupRelationship(p *models.StoragePureHostGroupRe
 		return nil
 	}
 	x := *p
-	item := x.StoragePureHostGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagepurehostgrouprelationship := make(map[string]interface{})
 	storagepurehostgrouprelationship["class_id"] = item.ClassId
-	storagepurehostgrouprelationship["link"] = item.Link
 	storagepurehostgrouprelationship["moid"] = item.Moid
 	storagepurehostgrouprelationship["object_type"] = item.ObjectType
 	storagepurehostgrouprelationship["selector"] = item.Selector
@@ -6769,16 +8057,37 @@ func flattenMapStoragePureHostGroupRelationship(p *models.StoragePureHostGroupRe
 	storagepurehostgrouprelationships = append(storagepurehostgrouprelationships, storagepurehostgrouprelationship)
 	return storagepurehostgrouprelationships
 }
+func flattenMapStoragePureHostUtilization(p *models.StoragePureHostUtilization, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurehostutilizations []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	storagepurehostutilization := make(map[string]interface{})
+	storagepurehostutilization["available"] = item.Available
+	storagepurehostutilization["class_id"] = item.ClassId
+	storagepurehostutilization["data_reduction"] = item.DataReduction
+	storagepurehostutilization["free"] = item.Free
+	storagepurehostutilization["object_type"] = item.ObjectType
+	storagepurehostutilization["snapshot"] = item.Snapshot
+	storagepurehostutilization["thin_provisioned"] = item.ThinProvisioned
+	storagepurehostutilization["total"] = item.Total
+	storagepurehostutilization["total_reduction"] = item.TotalReduction
+	storagepurehostutilization["used"] = item.Used
+	storagepurehostutilization["volume"] = item.Volume
+
+	storagepurehostutilizations = append(storagepurehostutilizations, storagepurehostutilization)
+	return storagepurehostutilizations
+}
 func flattenMapStoragePureProtectionGroupRelationship(p *models.StoragePureProtectionGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepureprotectiongrouprelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StoragePureProtectionGroupRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagepureprotectiongrouprelationship := make(map[string]interface{})
 	storagepureprotectiongrouprelationship["class_id"] = item.ClassId
-	storagepureprotectiongrouprelationship["link"] = item.Link
 	storagepureprotectiongrouprelationship["moid"] = item.Moid
 	storagepureprotectiongrouprelationship["object_type"] = item.ObjectType
 	storagepureprotectiongrouprelationship["selector"] = item.Selector
@@ -6786,16 +8095,47 @@ func flattenMapStoragePureProtectionGroupRelationship(p *models.StoragePureProte
 	storagepureprotectiongrouprelationships = append(storagepureprotectiongrouprelationships, storagepureprotectiongrouprelationship)
 	return storagepureprotectiongrouprelationships
 }
+func flattenMapStoragePureProtectionGroupSnapshotRelationship(p *models.StoragePureProtectionGroupSnapshotRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagepureprotectiongroupsnapshotrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	storagepureprotectiongroupsnapshotrelationship := make(map[string]interface{})
+	storagepureprotectiongroupsnapshotrelationship["class_id"] = item.ClassId
+	storagepureprotectiongroupsnapshotrelationship["moid"] = item.Moid
+	storagepureprotectiongroupsnapshotrelationship["object_type"] = item.ObjectType
+	storagepureprotectiongroupsnapshotrelationship["selector"] = item.Selector
+
+	storagepureprotectiongroupsnapshotrelationships = append(storagepureprotectiongroupsnapshotrelationships, storagepureprotectiongroupsnapshotrelationship)
+	return storagepureprotectiongroupsnapshotrelationships
+}
+func flattenMapStoragePureVolumeRelationship(p *models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var storagepurevolumerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	storagepurevolumerelationship := make(map[string]interface{})
+	storagepurevolumerelationship["class_id"] = item.ClassId
+	storagepurevolumerelationship["moid"] = item.Moid
+	storagepurevolumerelationship["object_type"] = item.ObjectType
+	storagepurevolumerelationship["selector"] = item.Selector
+
+	storagepurevolumerelationships = append(storagepurevolumerelationships, storagepurevolumerelationship)
+	return storagepurevolumerelationships
+}
 func flattenMapStorageSasExpanderRelationship(p *models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageSasExpanderRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagesasexpanderrelationship := make(map[string]interface{})
 	storagesasexpanderrelationship["class_id"] = item.ClassId
-	storagesasexpanderrelationship["link"] = item.Link
 	storagesasexpanderrelationship["moid"] = item.Moid
 	storagesasexpanderrelationship["object_type"] = item.ObjectType
 	storagesasexpanderrelationship["selector"] = item.Selector
@@ -6809,10 +8149,9 @@ func flattenMapStorageVirtualDriveRelationship(p *models.StorageVirtualDriveRela
 		return nil
 	}
 	x := *p
-	item := x.StorageVirtualDriveRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagevirtualdriverelationship := make(map[string]interface{})
 	storagevirtualdriverelationship["class_id"] = item.ClassId
-	storagevirtualdriverelationship["link"] = item.Link
 	storagevirtualdriverelationship["moid"] = item.Moid
 	storagevirtualdriverelationship["object_type"] = item.ObjectType
 	storagevirtualdriverelationship["selector"] = item.Selector
@@ -6826,10 +8165,9 @@ func flattenMapStorageVirtualDriveExtensionRelationship(p *models.StorageVirtual
 		return nil
 	}
 	x := *p
-	item := x.StorageVirtualDriveExtensionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	storagevirtualdriveextensionrelationship := make(map[string]interface{})
 	storagevirtualdriveextensionrelationship["class_id"] = item.ClassId
-	storagevirtualdriveextensionrelationship["link"] = item.Link
 	storagevirtualdriveextensionrelationship["moid"] = item.Moid
 	storagevirtualdriveextensionrelationship["object_type"] = item.ObjectType
 	storagevirtualdriveextensionrelationship["selector"] = item.Selector
@@ -6837,39 +8175,35 @@ func flattenMapStorageVirtualDriveExtensionRelationship(p *models.StorageVirtual
 	storagevirtualdriveextensionrelationships = append(storagevirtualdriveextensionrelationships, storagevirtualdriveextensionrelationship)
 	return storagevirtualdriveextensionrelationships
 }
-func flattenMapStorageVolumeRelationship(p *models.StorageVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var storagevolumerelationships []map[string]interface{}
+func flattenMapTamBaseAdvisoryRelationship(p *models.TamBaseAdvisoryRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var tambaseadvisoryrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.StorageVolumeRelationshipInterface.(*models.MoMoRef)
-	storagevolumerelationship := make(map[string]interface{})
-	storagevolumerelationship["class_id"] = item.ClassId
-	storagevolumerelationship["link"] = item.Link
-	storagevolumerelationship["moid"] = item.Moid
-	storagevolumerelationship["object_type"] = item.ObjectType
-	storagevolumerelationship["selector"] = item.Selector
+	item := x.MoMoRef
+	tambaseadvisoryrelationship := make(map[string]interface{})
+	tambaseadvisoryrelationship["class_id"] = item.ClassId
+	tambaseadvisoryrelationship["moid"] = item.Moid
+	tambaseadvisoryrelationship["object_type"] = item.ObjectType
+	tambaseadvisoryrelationship["selector"] = item.Selector
 
-	storagevolumerelationships = append(storagevolumerelationships, storagevolumerelationship)
-	return storagevolumerelationships
+	tambaseadvisoryrelationships = append(tambaseadvisoryrelationships, tambaseadvisoryrelationship)
+	return tambaseadvisoryrelationships
 }
-func flattenMapTamAdvisoryRelationship(p *models.TamAdvisoryRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var tamadvisoryrelationships []map[string]interface{}
+func flattenMapTamBaseAdvisoryDetails(p *models.TamBaseAdvisoryDetails, d *schema.ResourceData) []map[string]interface{} {
+	var tambaseadvisorydetailss []map[string]interface{}
 	if p == nil {
 		return nil
 	}
-	x := *p
-	item := x.TamAdvisoryRelationshipInterface.(*models.MoMoRef)
-	tamadvisoryrelationship := make(map[string]interface{})
-	tamadvisoryrelationship["class_id"] = item.ClassId
-	tamadvisoryrelationship["link"] = item.Link
-	tamadvisoryrelationship["moid"] = item.Moid
-	tamadvisoryrelationship["object_type"] = item.ObjectType
-	tamadvisoryrelationship["selector"] = item.Selector
+	item := *p
+	tambaseadvisorydetails := make(map[string]interface{})
+	tambaseadvisorydetails["class_id"] = item.ClassId
+	tambaseadvisorydetails["description"] = item.Description
+	tambaseadvisorydetails["object_type"] = item.ObjectType
 
-	tamadvisoryrelationships = append(tamadvisoryrelationships, tamadvisoryrelationship)
-	return tamadvisoryrelationships
+	tambaseadvisorydetailss = append(tambaseadvisorydetailss, tambaseadvisorydetails)
+	return tambaseadvisorydetailss
 }
 func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
 	var tamseveritys []map[string]interface{}
@@ -6884,22 +8218,149 @@ func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[
 	tamseveritys = append(tamseveritys, tamseverity)
 	return tamseveritys
 }
+func flattenMapTechsupportmanagementTechSupportBundleRelationship(p *models.TechsupportmanagementTechSupportBundleRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var techsupportmanagementtechsupportbundlerelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	techsupportmanagementtechsupportbundlerelationship := make(map[string]interface{})
+	techsupportmanagementtechsupportbundlerelationship["class_id"] = item.ClassId
+	techsupportmanagementtechsupportbundlerelationship["moid"] = item.Moid
+	techsupportmanagementtechsupportbundlerelationship["object_type"] = item.ObjectType
+	techsupportmanagementtechsupportbundlerelationship["selector"] = item.Selector
+
+	techsupportmanagementtechsupportbundlerelationships = append(techsupportmanagementtechsupportbundlerelationships, techsupportmanagementtechsupportbundlerelationship)
+	return techsupportmanagementtechsupportbundlerelationships
+}
+func flattenMapTechsupportmanagementTechSupportStatusRelationship(p *models.TechsupportmanagementTechSupportStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var techsupportmanagementtechsupportstatusrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	techsupportmanagementtechsupportstatusrelationship := make(map[string]interface{})
+	techsupportmanagementtechsupportstatusrelationship["class_id"] = item.ClassId
+	techsupportmanagementtechsupportstatusrelationship["moid"] = item.Moid
+	techsupportmanagementtechsupportstatusrelationship["object_type"] = item.ObjectType
+	techsupportmanagementtechsupportstatusrelationship["selector"] = item.Selector
+
+	techsupportmanagementtechsupportstatusrelationships = append(techsupportmanagementtechsupportstatusrelationships, techsupportmanagementtechsupportstatusrelationship)
+	return techsupportmanagementtechsupportstatusrelationships
+}
 func flattenMapTopSystemRelationship(p *models.TopSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var topsystemrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.TopSystemRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	topsystemrelationship := make(map[string]interface{})
 	topsystemrelationship["class_id"] = item.ClassId
-	topsystemrelationship["link"] = item.Link
 	topsystemrelationship["moid"] = item.Moid
 	topsystemrelationship["object_type"] = item.ObjectType
 	topsystemrelationship["selector"] = item.Selector
 
 	topsystemrelationships = append(topsystemrelationships, topsystemrelationship)
 	return topsystemrelationships
+}
+func flattenMapUuidpoolBlockRelationship(p *models.UuidpoolBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpoolblockrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	uuidpoolblockrelationship := make(map[string]interface{})
+	uuidpoolblockrelationship["class_id"] = item.ClassId
+	uuidpoolblockrelationship["moid"] = item.Moid
+	uuidpoolblockrelationship["object_type"] = item.ObjectType
+	uuidpoolblockrelationship["selector"] = item.Selector
+
+	uuidpoolblockrelationships = append(uuidpoolblockrelationships, uuidpoolblockrelationship)
+	return uuidpoolblockrelationships
+}
+func flattenMapUuidpoolPoolRelationship(p *models.UuidpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpoolpoolrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	uuidpoolpoolrelationship := make(map[string]interface{})
+	uuidpoolpoolrelationship["class_id"] = item.ClassId
+	uuidpoolpoolrelationship["moid"] = item.Moid
+	uuidpoolpoolrelationship["object_type"] = item.ObjectType
+	uuidpoolpoolrelationship["selector"] = item.Selector
+
+	uuidpoolpoolrelationships = append(uuidpoolpoolrelationships, uuidpoolpoolrelationship)
+	return uuidpoolpoolrelationships
+}
+func flattenMapUuidpoolPoolMemberRelationship(p *models.UuidpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpoolpoolmemberrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	uuidpoolpoolmemberrelationship := make(map[string]interface{})
+	uuidpoolpoolmemberrelationship["class_id"] = item.ClassId
+	uuidpoolpoolmemberrelationship["moid"] = item.Moid
+	uuidpoolpoolmemberrelationship["object_type"] = item.ObjectType
+	uuidpoolpoolmemberrelationship["selector"] = item.Selector
+
+	uuidpoolpoolmemberrelationships = append(uuidpoolpoolmemberrelationships, uuidpoolpoolmemberrelationship)
+	return uuidpoolpoolmemberrelationships
+}
+func flattenMapUuidpoolUniverseRelationship(p *models.UuidpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpooluniverserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	uuidpooluniverserelationship := make(map[string]interface{})
+	uuidpooluniverserelationship["class_id"] = item.ClassId
+	uuidpooluniverserelationship["moid"] = item.Moid
+	uuidpooluniverserelationship["object_type"] = item.ObjectType
+	uuidpooluniverserelationship["selector"] = item.Selector
+
+	uuidpooluniverserelationships = append(uuidpooluniverserelationships, uuidpooluniverserelationship)
+	return uuidpooluniverserelationships
+}
+func flattenMapUuidpoolUuidBlock(p *models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpooluuidblocks []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	uuidpooluuidblock := make(map[string]interface{})
+	uuidpooluuidblock["class_id"] = item.ClassId
+	uuidpooluuidblock["from"] = item.From
+	uuidpooluuidblock["object_type"] = item.ObjectType
+	uuidpooluuidblock["size"] = item.Size
+	uuidpooluuidblock["to"] = item.To
+
+	uuidpooluuidblocks = append(uuidpooluuidblocks, uuidpooluuidblock)
+	return uuidpooluuidblocks
+}
+func flattenMapUuidpoolUuidLeaseRelationship(p *models.UuidpoolUuidLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var uuidpooluuidleaserelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	uuidpooluuidleaserelationship := make(map[string]interface{})
+	uuidpooluuidleaserelationship["class_id"] = item.ClassId
+	uuidpooluuidleaserelationship["moid"] = item.Moid
+	uuidpooluuidleaserelationship["object_type"] = item.ObjectType
+	uuidpooluuidleaserelationship["selector"] = item.Selector
+
+	uuidpooluuidleaserelationships = append(uuidpooluuidleaserelationships, uuidpooluuidleaserelationship)
+	return uuidpooluuidleaserelationships
 }
 func flattenMapVirtualizationComputeCapacity(p *models.VirtualizationComputeCapacity, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationcomputecapacitys []map[string]interface{}
@@ -6980,41 +8441,10 @@ func flattenMapVirtualizationProductInfo(p *models.VirtualizationProductInfo, d 
 	virtualizationproductinfo["product_name"] = item.ProductName
 	virtualizationproductinfo["product_type"] = item.ProductType
 	virtualizationproductinfo["product_vendor"] = item.ProductVendor
-	virtualizationproductinfo["version"] = item.Version
+	virtualizationproductinfo["nr_version"] = item.Version
 
 	virtualizationproductinfos = append(virtualizationproductinfos, virtualizationproductinfo)
 	return virtualizationproductinfos
-}
-func flattenMapVirtualizationRemoteDisplayInfo(p *models.VirtualizationRemoteDisplayInfo, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationremotedisplayinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationremotedisplayinfo := make(map[string]interface{})
-	virtualizationremotedisplayinfo["class_id"] = item.ClassId
-	virtualizationremotedisplayinfo["object_type"] = item.ObjectType
-	virtualizationremotedisplayinfo["remote_display_password"] = item.RemoteDisplayPassword
-	virtualizationremotedisplayinfo["remote_display_vnc_key"] = item.RemoteDisplayVncKey
-	virtualizationremotedisplayinfo["remote_display_vnc_port"] = item.RemoteDisplayVncPort
-
-	virtualizationremotedisplayinfos = append(virtualizationremotedisplayinfos, virtualizationremotedisplayinfo)
-	return virtualizationremotedisplayinfos
-}
-func flattenMapVirtualizationResourceConsumption(p *models.VirtualizationResourceConsumption, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationresourceconsumptions []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationresourceconsumption := make(map[string]interface{})
-	virtualizationresourceconsumption["class_id"] = item.ClassId
-	virtualizationresourceconsumption["cpu_consumed"] = item.CpuConsumed
-	virtualizationresourceconsumption["memory_consumed"] = item.MemoryConsumed
-	virtualizationresourceconsumption["object_type"] = item.ObjectType
-
-	virtualizationresourceconsumptions = append(virtualizationresourceconsumptions, virtualizationresourceconsumption)
-	return virtualizationresourceconsumptions
 }
 func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapacity, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationstoragecapacitys []map[string]interface{}
@@ -7032,82 +8462,15 @@ func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapa
 	virtualizationstoragecapacitys = append(virtualizationstoragecapacitys, virtualizationstoragecapacity)
 	return virtualizationstoragecapacitys
 }
-func flattenMapVirtualizationVmCpuShareInfo(p *models.VirtualizationVmCpuShareInfo, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationvmcpushareinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationvmcpushareinfo := make(map[string]interface{})
-	virtualizationvmcpushareinfo["class_id"] = item.ClassId
-	virtualizationvmcpushareinfo["cpu_limit"] = item.CpuLimit
-	virtualizationvmcpushareinfo["cpu_overhead_limit"] = item.CpuOverheadLimit
-	virtualizationvmcpushareinfo["cpu_reservation"] = item.CpuReservation
-	virtualizationvmcpushareinfo["cpu_shares"] = item.CpuShares
-	virtualizationvmcpushareinfo["object_type"] = item.ObjectType
-
-	virtualizationvmcpushareinfos = append(virtualizationvmcpushareinfos, virtualizationvmcpushareinfo)
-	return virtualizationvmcpushareinfos
-}
-func flattenMapVirtualizationVmCpuSocketInfo(p *models.VirtualizationVmCpuSocketInfo, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationvmcpusocketinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationvmcpusocketinfo := make(map[string]interface{})
-	virtualizationvmcpusocketinfo["class_id"] = item.ClassId
-	virtualizationvmcpusocketinfo["cores_per_socket"] = item.CoresPerSocket
-	virtualizationvmcpusocketinfo["num_cpus"] = item.NumCpus
-	virtualizationvmcpusocketinfo["num_sockets"] = item.NumSockets
-	virtualizationvmcpusocketinfo["object_type"] = item.ObjectType
-
-	virtualizationvmcpusocketinfos = append(virtualizationvmcpusocketinfos, virtualizationvmcpusocketinfo)
-	return virtualizationvmcpusocketinfos
-}
-func flattenMapVirtualizationVmDiskCommitInfo(p *models.VirtualizationVmDiskCommitInfo, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationvmdiskcommitinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationvmdiskcommitinfo := make(map[string]interface{})
-	virtualizationvmdiskcommitinfo["class_id"] = item.ClassId
-	virtualizationvmdiskcommitinfo["committed_disk"] = item.CommittedDisk
-	virtualizationvmdiskcommitinfo["object_type"] = item.ObjectType
-	virtualizationvmdiskcommitinfo["un_committed_disk"] = item.UnCommittedDisk
-	virtualizationvmdiskcommitinfo["unshared_disk"] = item.UnsharedDisk
-
-	virtualizationvmdiskcommitinfos = append(virtualizationvmdiskcommitinfos, virtualizationvmdiskcommitinfo)
-	return virtualizationvmdiskcommitinfos
-}
-func flattenMapVirtualizationVmMemoryShareInfo(p *models.VirtualizationVmMemoryShareInfo, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationvmmemoryshareinfos []map[string]interface{}
-	if p == nil {
-		return nil
-	}
-	item := *p
-	virtualizationvmmemoryshareinfo := make(map[string]interface{})
-	virtualizationvmmemoryshareinfo["class_id"] = item.ClassId
-	virtualizationvmmemoryshareinfo["mem_limit"] = item.MemLimit
-	virtualizationvmmemoryshareinfo["mem_overhead_limit"] = item.MemOverheadLimit
-	virtualizationvmmemoryshareinfo["mem_reservation"] = item.MemReservation
-	virtualizationvmmemoryshareinfo["mem_shares"] = item.MemShares
-	virtualizationvmmemoryshareinfo["object_type"] = item.ObjectType
-
-	virtualizationvmmemoryshareinfos = append(virtualizationvmmemoryshareinfos, virtualizationvmmemoryshareinfo)
-	return virtualizationvmmemoryshareinfos
-}
 func flattenMapVirtualizationVmwareClusterRelationship(p *models.VirtualizationVmwareClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwareclusterrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.VirtualizationVmwareClusterRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	virtualizationvmwareclusterrelationship := make(map[string]interface{})
 	virtualizationvmwareclusterrelationship["class_id"] = item.ClassId
-	virtualizationvmwareclusterrelationship["link"] = item.Link
 	virtualizationvmwareclusterrelationship["moid"] = item.Moid
 	virtualizationvmwareclusterrelationship["object_type"] = item.ObjectType
 	virtualizationvmwareclusterrelationship["selector"] = item.Selector
@@ -7121,10 +8484,9 @@ func flattenMapVirtualizationVmwareDatacenterRelationship(p *models.Virtualizati
 		return nil
 	}
 	x := *p
-	item := x.VirtualizationVmwareDatacenterRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	virtualizationvmwaredatacenterrelationship := make(map[string]interface{})
 	virtualizationvmwaredatacenterrelationship["class_id"] = item.ClassId
-	virtualizationvmwaredatacenterrelationship["link"] = item.Link
 	virtualizationvmwaredatacenterrelationship["moid"] = item.Moid
 	virtualizationvmwaredatacenterrelationship["object_type"] = item.ObjectType
 	virtualizationvmwaredatacenterrelationship["selector"] = item.Selector
@@ -7138,10 +8500,9 @@ func flattenMapVirtualizationVmwareHostRelationship(p *models.VirtualizationVmwa
 		return nil
 	}
 	x := *p
-	item := x.VirtualizationVmwareHostRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	virtualizationvmwarehostrelationship := make(map[string]interface{})
 	virtualizationvmwarehostrelationship["class_id"] = item.ClassId
-	virtualizationvmwarehostrelationship["link"] = item.Link
 	virtualizationvmwarehostrelationship["moid"] = item.Moid
 	virtualizationvmwarehostrelationship["object_type"] = item.ObjectType
 	virtualizationvmwarehostrelationship["selector"] = item.Selector
@@ -7149,22 +8510,118 @@ func flattenMapVirtualizationVmwareHostRelationship(p *models.VirtualizationVmwa
 	virtualizationvmwarehostrelationships = append(virtualizationvmwarehostrelationships, virtualizationvmwarehostrelationship)
 	return virtualizationvmwarehostrelationships
 }
+func flattenMapVirtualizationVmwareRemoteDisplayInfo(p *models.VirtualizationVmwareRemoteDisplayInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwareremotedisplayinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwareremotedisplayinfo := make(map[string]interface{})
+	virtualizationvmwareremotedisplayinfo["class_id"] = item.ClassId
+	virtualizationvmwareremotedisplayinfo["object_type"] = item.ObjectType
+	virtualizationvmwareremotedisplayinfo["remote_display_password"] = item.RemoteDisplayPassword
+	virtualizationvmwareremotedisplayinfo["remote_display_vnc_key"] = item.RemoteDisplayVncKey
+	virtualizationvmwareremotedisplayinfo["remote_display_vnc_port"] = item.RemoteDisplayVncPort
+
+	virtualizationvmwareremotedisplayinfos = append(virtualizationvmwareremotedisplayinfos, virtualizationvmwareremotedisplayinfo)
+	return virtualizationvmwareremotedisplayinfos
+}
+func flattenMapVirtualizationVmwareResourceConsumption(p *models.VirtualizationVmwareResourceConsumption, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwareresourceconsumptions []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwareresourceconsumption := make(map[string]interface{})
+	virtualizationvmwareresourceconsumption["class_id"] = item.ClassId
+	virtualizationvmwareresourceconsumption["cpu_consumed"] = item.CpuConsumed
+	virtualizationvmwareresourceconsumption["memory_consumed"] = item.MemoryConsumed
+	virtualizationvmwareresourceconsumption["object_type"] = item.ObjectType
+
+	virtualizationvmwareresourceconsumptions = append(virtualizationvmwareresourceconsumptions, virtualizationvmwareresourceconsumption)
+	return virtualizationvmwareresourceconsumptions
+}
 func flattenMapVirtualizationVmwareVcenterRelationship(p *models.VirtualizationVmwareVcenterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevcenterrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.VirtualizationVmwareVcenterRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	virtualizationvmwarevcenterrelationship := make(map[string]interface{})
 	virtualizationvmwarevcenterrelationship["class_id"] = item.ClassId
-	virtualizationvmwarevcenterrelationship["link"] = item.Link
 	virtualizationvmwarevcenterrelationship["moid"] = item.Moid
 	virtualizationvmwarevcenterrelationship["object_type"] = item.ObjectType
 	virtualizationvmwarevcenterrelationship["selector"] = item.Selector
 
 	virtualizationvmwarevcenterrelationships = append(virtualizationvmwarevcenterrelationships, virtualizationvmwarevcenterrelationship)
 	return virtualizationvmwarevcenterrelationships
+}
+func flattenMapVirtualizationVmwareVmCpuShareInfo(p *models.VirtualizationVmwareVmCpuShareInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarevmcpushareinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarevmcpushareinfo := make(map[string]interface{})
+	virtualizationvmwarevmcpushareinfo["class_id"] = item.ClassId
+	virtualizationvmwarevmcpushareinfo["cpu_limit"] = item.CpuLimit
+	virtualizationvmwarevmcpushareinfo["cpu_overhead_limit"] = item.CpuOverheadLimit
+	virtualizationvmwarevmcpushareinfo["cpu_reservation"] = item.CpuReservation
+	virtualizationvmwarevmcpushareinfo["cpu_shares"] = item.CpuShares
+	virtualizationvmwarevmcpushareinfo["object_type"] = item.ObjectType
+
+	virtualizationvmwarevmcpushareinfos = append(virtualizationvmwarevmcpushareinfos, virtualizationvmwarevmcpushareinfo)
+	return virtualizationvmwarevmcpushareinfos
+}
+func flattenMapVirtualizationVmwareVmCpuSocketInfo(p *models.VirtualizationVmwareVmCpuSocketInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarevmcpusocketinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarevmcpusocketinfo := make(map[string]interface{})
+	virtualizationvmwarevmcpusocketinfo["class_id"] = item.ClassId
+	virtualizationvmwarevmcpusocketinfo["cores_per_socket"] = item.CoresPerSocket
+	virtualizationvmwarevmcpusocketinfo["num_cpus"] = item.NumCpus
+	virtualizationvmwarevmcpusocketinfo["num_sockets"] = item.NumSockets
+	virtualizationvmwarevmcpusocketinfo["object_type"] = item.ObjectType
+
+	virtualizationvmwarevmcpusocketinfos = append(virtualizationvmwarevmcpusocketinfos, virtualizationvmwarevmcpusocketinfo)
+	return virtualizationvmwarevmcpusocketinfos
+}
+func flattenMapVirtualizationVmwareVmDiskCommitInfo(p *models.VirtualizationVmwareVmDiskCommitInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarevmdiskcommitinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarevmdiskcommitinfo := make(map[string]interface{})
+	virtualizationvmwarevmdiskcommitinfo["class_id"] = item.ClassId
+	virtualizationvmwarevmdiskcommitinfo["committed_disk"] = item.CommittedDisk
+	virtualizationvmwarevmdiskcommitinfo["object_type"] = item.ObjectType
+	virtualizationvmwarevmdiskcommitinfo["un_committed_disk"] = item.UnCommittedDisk
+	virtualizationvmwarevmdiskcommitinfo["unshared_disk"] = item.UnsharedDisk
+
+	virtualizationvmwarevmdiskcommitinfos = append(virtualizationvmwarevmdiskcommitinfos, virtualizationvmwarevmdiskcommitinfo)
+	return virtualizationvmwarevmdiskcommitinfos
+}
+func flattenMapVirtualizationVmwareVmMemoryShareInfo(p *models.VirtualizationVmwareVmMemoryShareInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvmwarevmmemoryshareinfos []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	virtualizationvmwarevmmemoryshareinfo := make(map[string]interface{})
+	virtualizationvmwarevmmemoryshareinfo["class_id"] = item.ClassId
+	virtualizationvmwarevmmemoryshareinfo["mem_limit"] = item.MemLimit
+	virtualizationvmwarevmmemoryshareinfo["mem_overhead_limit"] = item.MemOverheadLimit
+	virtualizationvmwarevmmemoryshareinfo["mem_reservation"] = item.MemReservation
+	virtualizationvmwarevmmemoryshareinfo["mem_shares"] = item.MemShares
+	virtualizationvmwarevmmemoryshareinfo["object_type"] = item.ObjectType
+
+	virtualizationvmwarevmmemoryshareinfos = append(virtualizationvmwarevmmemoryshareinfos, virtualizationvmwarevmmemoryshareinfo)
+	return virtualizationvmwarevmmemoryshareinfos
 }
 func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicarfssettingss []map[string]interface{}
@@ -7189,7 +8646,7 @@ func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]i
 	vniccdn := make(map[string]interface{})
 	vniccdn["class_id"] = item.ClassId
 	vniccdn["object_type"] = item.ObjectType
-	vniccdn["source"] = item.Source
+	vniccdn["nr_source"] = item.Source
 	vniccdn["value"] = item.Value
 
 	vniccdns = append(vniccdns, vniccdn)
@@ -7203,7 +8660,7 @@ func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings
 	item := *p
 	vniccompletionqueuesettings := make(map[string]interface{})
 	vniccompletionqueuesettings["class_id"] = item.ClassId
-	vniccompletionqueuesettings["count"] = item.Count
+	vniccompletionqueuesettings["nr_count"] = item.Count
 	vniccompletionqueuesettings["object_type"] = item.ObjectType
 	vniccompletionqueuesettings["ring_size"] = item.RingSize
 
@@ -7216,16 +8673,31 @@ func flattenMapVnicEthAdapterPolicyRelationship(p *models.VnicEthAdapterPolicyRe
 		return nil
 	}
 	x := *p
-	item := x.VnicEthAdapterPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicethadapterpolicyrelationship := make(map[string]interface{})
 	vnicethadapterpolicyrelationship["class_id"] = item.ClassId
-	vnicethadapterpolicyrelationship["link"] = item.Link
 	vnicethadapterpolicyrelationship["moid"] = item.Moid
 	vnicethadapterpolicyrelationship["object_type"] = item.ObjectType
 	vnicethadapterpolicyrelationship["selector"] = item.Selector
 
 	vnicethadapterpolicyrelationships = append(vnicethadapterpolicyrelationships, vnicethadapterpolicyrelationship)
 	return vnicethadapterpolicyrelationships
+}
+func flattenMapVnicEthIfRelationship(p *models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var vnicethifrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	vnicethifrelationship := make(map[string]interface{})
+	vnicethifrelationship["class_id"] = item.ClassId
+	vnicethifrelationship["moid"] = item.Moid
+	vnicethifrelationship["object_type"] = item.ObjectType
+	vnicethifrelationship["selector"] = item.Selector
+
+	vnicethifrelationships = append(vnicethifrelationships, vnicethifrelationship)
+	return vnicethifrelationships
 }
 func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethinterruptsettingss []map[string]interface{}
@@ -7237,7 +8709,7 @@ func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *s
 	vnicethinterruptsettings["class_id"] = item.ClassId
 	vnicethinterruptsettings["coalescing_time"] = item.CoalescingTime
 	vnicethinterruptsettings["coalescing_type"] = item.CoalescingType
-	vnicethinterruptsettings["count"] = item.Count
+	vnicethinterruptsettings["nr_count"] = item.Count
 	vnicethinterruptsettings["mode"] = item.Mode
 	vnicethinterruptsettings["object_type"] = item.ObjectType
 
@@ -7250,10 +8722,9 @@ func flattenMapVnicEthNetworkPolicyRelationship(p *models.VnicEthNetworkPolicyRe
 		return nil
 	}
 	x := *p
-	item := x.VnicEthNetworkPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicethnetworkpolicyrelationship := make(map[string]interface{})
 	vnicethnetworkpolicyrelationship["class_id"] = item.ClassId
-	vnicethnetworkpolicyrelationship["link"] = item.Link
 	vnicethnetworkpolicyrelationship["moid"] = item.Moid
 	vnicethnetworkpolicyrelationship["object_type"] = item.ObjectType
 	vnicethnetworkpolicyrelationship["selector"] = item.Selector
@@ -7267,10 +8738,9 @@ func flattenMapVnicEthQosPolicyRelationship(p *models.VnicEthQosPolicyRelationsh
 		return nil
 	}
 	x := *p
-	item := x.VnicEthQosPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicethqospolicyrelationship := make(map[string]interface{})
 	vnicethqospolicyrelationship["class_id"] = item.ClassId
-	vnicethqospolicyrelationship["link"] = item.Link
 	vnicethqospolicyrelationship["moid"] = item.Moid
 	vnicethqospolicyrelationship["object_type"] = item.ObjectType
 	vnicethqospolicyrelationship["selector"] = item.Selector
@@ -7286,7 +8756,7 @@ func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schem
 	item := *p
 	vnicethrxqueuesettings := make(map[string]interface{})
 	vnicethrxqueuesettings["class_id"] = item.ClassId
-	vnicethrxqueuesettings["count"] = item.Count
+	vnicethrxqueuesettings["nr_count"] = item.Count
 	vnicethrxqueuesettings["object_type"] = item.ObjectType
 	vnicethrxqueuesettings["ring_size"] = item.RingSize
 
@@ -7301,7 +8771,7 @@ func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schem
 	item := *p
 	vnicethtxqueuesettings := make(map[string]interface{})
 	vnicethtxqueuesettings["class_id"] = item.ClassId
-	vnicethtxqueuesettings["count"] = item.Count
+	vnicethtxqueuesettings["nr_count"] = item.Count
 	vnicethtxqueuesettings["object_type"] = item.ObjectType
 	vnicethtxqueuesettings["ring_size"] = item.RingSize
 
@@ -7314,10 +8784,9 @@ func flattenMapVnicFcAdapterPolicyRelationship(p *models.VnicFcAdapterPolicyRela
 		return nil
 	}
 	x := *p
-	item := x.VnicFcAdapterPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicfcadapterpolicyrelationship := make(map[string]interface{})
 	vnicfcadapterpolicyrelationship["class_id"] = item.ClassId
-	vnicfcadapterpolicyrelationship["link"] = item.Link
 	vnicfcadapterpolicyrelationship["moid"] = item.Moid
 	vnicfcadapterpolicyrelationship["object_type"] = item.ObjectType
 	vnicfcadapterpolicyrelationship["selector"] = item.Selector
@@ -7343,6 +8812,22 @@ func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings
 	vnicfcerrorrecoverysettingss = append(vnicfcerrorrecoverysettingss, vnicfcerrorrecoverysettings)
 	return vnicfcerrorrecoverysettingss
 }
+func flattenMapVnicFcIfRelationship(p *models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var vnicfcifrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	vnicfcifrelationship := make(map[string]interface{})
+	vnicfcifrelationship["class_id"] = item.ClassId
+	vnicfcifrelationship["moid"] = item.Moid
+	vnicfcifrelationship["object_type"] = item.ObjectType
+	vnicfcifrelationship["selector"] = item.Selector
+
+	vnicfcifrelationships = append(vnicfcifrelationships, vnicfcifrelationship)
+	return vnicfcifrelationships
+}
 func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcinterruptsettingss []map[string]interface{}
 	if p == nil {
@@ -7363,10 +8848,9 @@ func flattenMapVnicFcNetworkPolicyRelationship(p *models.VnicFcNetworkPolicyRela
 		return nil
 	}
 	x := *p
-	item := x.VnicFcNetworkPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicfcnetworkpolicyrelationship := make(map[string]interface{})
 	vnicfcnetworkpolicyrelationship["class_id"] = item.ClassId
-	vnicfcnetworkpolicyrelationship["link"] = item.Link
 	vnicfcnetworkpolicyrelationship["moid"] = item.Moid
 	vnicfcnetworkpolicyrelationship["object_type"] = item.ObjectType
 	vnicfcnetworkpolicyrelationship["selector"] = item.Selector
@@ -7380,10 +8864,9 @@ func flattenMapVnicFcQosPolicyRelationship(p *models.VnicFcQosPolicyRelationship
 		return nil
 	}
 	x := *p
-	item := x.VnicFcQosPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicfcqospolicyrelationship := make(map[string]interface{})
 	vnicfcqospolicyrelationship["class_id"] = item.ClassId
-	vnicfcqospolicyrelationship["link"] = item.Link
 	vnicfcqospolicyrelationship["moid"] = item.Moid
 	vnicfcqospolicyrelationship["object_type"] = item.ObjectType
 	vnicfcqospolicyrelationship["selector"] = item.Selector
@@ -7399,7 +8882,7 @@ func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.Reso
 	item := *p
 	vnicfcqueuesettings := make(map[string]interface{})
 	vnicfcqueuesettings["class_id"] = item.ClassId
-	vnicfcqueuesettings["count"] = item.Count
+	vnicfcqueuesettings["nr_count"] = item.Count
 	vnicfcqueuesettings["object_type"] = item.ObjectType
 	vnicfcqueuesettings["ring_size"] = item.RingSize
 
@@ -7427,10 +8910,9 @@ func flattenMapVnicLanConnectivityPolicyRelationship(p *models.VnicLanConnectivi
 		return nil
 	}
 	x := *p
-	item := x.VnicLanConnectivityPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vniclanconnectivitypolicyrelationship := make(map[string]interface{})
 	vniclanconnectivitypolicyrelationship["class_id"] = item.ClassId
-	vniclanconnectivitypolicyrelationship["link"] = item.Link
 	vniclanconnectivitypolicyrelationship["moid"] = item.Moid
 	vniclanconnectivitypolicyrelationship["object_type"] = item.ObjectType
 	vniclanconnectivitypolicyrelationship["selector"] = item.Selector
@@ -7463,6 +8945,7 @@ func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.
 	vnicplacementsettings["id"] = item.Id
 	vnicplacementsettings["object_type"] = item.ObjectType
 	vnicplacementsettings["pci_link"] = item.PciLink
+	vnicplacementsettings["switch_id"] = item.SwitchId
 	vnicplacementsettings["uplink"] = item.Uplink
 
 	vnicplacementsettingss = append(vnicplacementsettingss, vnicplacementsettings)
@@ -7491,14 +8974,37 @@ func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceDa
 	item := *p
 	vnicrocesettings := make(map[string]interface{})
 	vnicrocesettings["class_id"] = item.ClassId
+	vnicrocesettings["class_of_service"] = item.ClassOfService
 	vnicrocesettings["enabled"] = item.Enabled
 	vnicrocesettings["memory_regions"] = item.MemoryRegions
 	vnicrocesettings["object_type"] = item.ObjectType
 	vnicrocesettings["queue_pairs"] = item.QueuePairs
 	vnicrocesettings["resource_groups"] = item.ResourceGroups
+	vnicrocesettings["nr_version"] = item.Version
 
 	vnicrocesettingss = append(vnicrocesettingss, vnicrocesettings)
 	return vnicrocesettingss
+}
+func flattenMapVnicRssHashSettings(p *models.VnicRssHashSettings, d *schema.ResourceData) []map[string]interface{} {
+	var vnicrsshashsettingss []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	item := *p
+	vnicrsshashsettings := make(map[string]interface{})
+	vnicrsshashsettings["class_id"] = item.ClassId
+	vnicrsshashsettings["ipv4_hash"] = item.Ipv4Hash
+	vnicrsshashsettings["ipv6_ext_hash"] = item.Ipv6ExtHash
+	vnicrsshashsettings["ipv6_hash"] = item.Ipv6Hash
+	vnicrsshashsettings["object_type"] = item.ObjectType
+	vnicrsshashsettings["tcp_ipv4_hash"] = item.TcpIpv4Hash
+	vnicrsshashsettings["tcp_ipv6_ext_hash"] = item.TcpIpv6ExtHash
+	vnicrsshashsettings["tcp_ipv6_hash"] = item.TcpIpv6Hash
+	vnicrsshashsettings["udp_ipv4_hash"] = item.UdpIpv4Hash
+	vnicrsshashsettings["udp_ipv6_hash"] = item.UdpIpv6Hash
+
+	vnicrsshashsettingss = append(vnicrsshashsettingss, vnicrsshashsettings)
+	return vnicrsshashsettingss
 }
 func flattenMapVnicSanConnectivityPolicyRelationship(p *models.VnicSanConnectivityPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicsanconnectivitypolicyrelationships []map[string]interface{}
@@ -7506,10 +9012,9 @@ func flattenMapVnicSanConnectivityPolicyRelationship(p *models.VnicSanConnectivi
 		return nil
 	}
 	x := *p
-	item := x.VnicSanConnectivityPolicyRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	vnicsanconnectivitypolicyrelationship := make(map[string]interface{})
 	vnicsanconnectivitypolicyrelationship["class_id"] = item.ClassId
-	vnicsanconnectivitypolicyrelationship["link"] = item.Link
 	vnicsanconnectivitypolicyrelationship["moid"] = item.Moid
 	vnicsanconnectivitypolicyrelationship["object_type"] = item.ObjectType
 	vnicsanconnectivitypolicyrelationship["selector"] = item.Selector
@@ -7525,7 +9030,7 @@ func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.
 	item := *p
 	vnicscsiqueuesettings := make(map[string]interface{})
 	vnicscsiqueuesettings["class_id"] = item.ClassId
-	vnicscsiqueuesettings["count"] = item.Count
+	vnicscsiqueuesettings["nr_count"] = item.Count
 	vnicscsiqueuesettings["object_type"] = item.ObjectType
 	vnicscsiqueuesettings["ring_size"] = item.RingSize
 
@@ -7558,7 +9063,7 @@ func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.Resource
 	vnicusnicsettings := make(map[string]interface{})
 	vnicusnicsettings["class_id"] = item.ClassId
 	vnicusnicsettings["cos"] = item.Cos
-	vnicusnicsettings["count"] = item.Count
+	vnicusnicsettings["nr_count"] = item.Count
 	vnicusnicsettings["object_type"] = item.ObjectType
 	vnicusnicsettings["usnic_adapter_policy"] = item.UsnicAdapterPolicy
 
@@ -7572,6 +9077,7 @@ func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceDa
 	}
 	item := *p
 	vnicvlansettings := make(map[string]interface{})
+	vnicvlansettings["allowed_vlans"] = item.AllowedVlans
 	vnicvlansettings["class_id"] = item.ClassId
 	vnicvlansettings["default_vlan"] = item.DefaultVlan
 	vnicvlansettings["mode"] = item.Mode
@@ -7589,7 +9095,12 @@ func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData
 	vnicvmqsettings := make(map[string]interface{})
 	vnicvmqsettings["class_id"] = item.ClassId
 	vnicvmqsettings["enabled"] = item.Enabled
+	vnicvmqsettings["multi_queue_support"] = item.MultiQueueSupport
+	vnicvmqsettings["num_interrupts"] = item.NumInterrupts
+	vnicvmqsettings["num_sub_vnics"] = item.NumSubVnics
+	vnicvmqsettings["num_vmqs"] = item.NumVmqs
 	vnicvmqsettings["object_type"] = item.ObjectType
+	vnicvmqsettings["vmmq_adapter_policy"] = item.VmmqAdapterPolicy
 
 	vnicvmqsettingss = append(vnicvmqsettingss, vnicvmqsettings)
 	return vnicvmqsettingss
@@ -7622,22 +9133,53 @@ func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.Resource
 	vnicvxlansettingss = append(vnicvxlansettingss, vnicvxlansettings)
 	return vnicvxlansettingss
 }
+func flattenMapVrfVrfRelationship(p *models.VrfVrfRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var vrfvrfrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	vrfvrfrelationship := make(map[string]interface{})
+	vrfvrfrelationship["class_id"] = item.ClassId
+	vrfvrfrelationship["moid"] = item.Moid
+	vrfvrfrelationship["object_type"] = item.ObjectType
+	vrfvrfrelationship["selector"] = item.Selector
+
+	vrfvrfrelationships = append(vrfvrfrelationships, vrfvrfrelationship)
+	return vrfvrfrelationships
+}
 func flattenMapWorkflowCatalogRelationship(p *models.WorkflowCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowcatalogrelationships []map[string]interface{}
 	if p == nil {
 		return nil
 	}
 	x := *p
-	item := x.WorkflowCatalogRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowcatalogrelationship := make(map[string]interface{})
 	workflowcatalogrelationship["class_id"] = item.ClassId
-	workflowcatalogrelationship["link"] = item.Link
 	workflowcatalogrelationship["moid"] = item.Moid
 	workflowcatalogrelationship["object_type"] = item.ObjectType
 	workflowcatalogrelationship["selector"] = item.Selector
 
 	workflowcatalogrelationships = append(workflowcatalogrelationships, workflowcatalogrelationship)
 	return workflowcatalogrelationships
+}
+func flattenMapWorkflowErrorResponseHandlerRelationship(p *models.WorkflowErrorResponseHandlerRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var workflowerrorresponsehandlerrelationships []map[string]interface{}
+	if p == nil {
+		return nil
+	}
+	x := *p
+	item := x.MoMoRef
+	workflowerrorresponsehandlerrelationship := make(map[string]interface{})
+	workflowerrorresponsehandlerrelationship["class_id"] = item.ClassId
+	workflowerrorresponsehandlerrelationship["moid"] = item.Moid
+	workflowerrorresponsehandlerrelationship["object_type"] = item.ObjectType
+	workflowerrorresponsehandlerrelationship["selector"] = item.Selector
+
+	workflowerrorresponsehandlerrelationships = append(workflowerrorresponsehandlerrelationships, workflowerrorresponsehandlerrelationship)
+	return workflowerrorresponsehandlerrelationships
 }
 func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
 	var workflowinternalpropertiess []map[string]interface{}
@@ -7675,10 +9217,9 @@ func flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(p *models.Workflow
 		return nil
 	}
 	x := *p
-	item := x.WorkflowPendingDynamicWorkflowInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowpendingdynamicworkflowinforelationship := make(map[string]interface{})
 	workflowpendingdynamicworkflowinforelationship["class_id"] = item.ClassId
-	workflowpendingdynamicworkflowinforelationship["link"] = item.Link
 	workflowpendingdynamicworkflowinforelationship["moid"] = item.Moid
 	workflowpendingdynamicworkflowinforelationship["object_type"] = item.ObjectType
 	workflowpendingdynamicworkflowinforelationship["selector"] = item.Selector
@@ -7790,10 +9331,9 @@ func flattenMapWorkflowTaskDefinitionRelationship(p *models.WorkflowTaskDefiniti
 		return nil
 	}
 	x := *p
-	item := x.WorkflowTaskDefinitionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowtaskdefinitionrelationship := make(map[string]interface{})
 	workflowtaskdefinitionrelationship["class_id"] = item.ClassId
-	workflowtaskdefinitionrelationship["link"] = item.Link
 	workflowtaskdefinitionrelationship["moid"] = item.Moid
 	workflowtaskdefinitionrelationship["object_type"] = item.ObjectType
 	workflowtaskdefinitionrelationship["selector"] = item.Selector
@@ -7807,10 +9347,9 @@ func flattenMapWorkflowTaskInfoRelationship(p *models.WorkflowTaskInfoRelationsh
 		return nil
 	}
 	x := *p
-	item := x.WorkflowTaskInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowtaskinforelationship := make(map[string]interface{})
 	workflowtaskinforelationship["class_id"] = item.ClassId
-	workflowtaskinforelationship["link"] = item.Link
 	workflowtaskinforelationship["moid"] = item.Moid
 	workflowtaskinforelationship["object_type"] = item.ObjectType
 	workflowtaskinforelationship["selector"] = item.Selector
@@ -7855,10 +9394,9 @@ func flattenMapWorkflowWorkflowDefinitionRelationship(p *models.WorkflowWorkflow
 		return nil
 	}
 	x := *p
-	item := x.WorkflowWorkflowDefinitionRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowworkflowdefinitionrelationship := make(map[string]interface{})
 	workflowworkflowdefinitionrelationship["class_id"] = item.ClassId
-	workflowworkflowdefinitionrelationship["link"] = item.Link
 	workflowworkflowdefinitionrelationship["moid"] = item.Moid
 	workflowworkflowdefinitionrelationship["object_type"] = item.ObjectType
 	workflowworkflowdefinitionrelationship["selector"] = item.Selector
@@ -7872,10 +9410,9 @@ func flattenMapWorkflowWorkflowInfoRelationship(p *models.WorkflowWorkflowInfoRe
 		return nil
 	}
 	x := *p
-	item := x.WorkflowWorkflowInfoRelationshipInterface.(*models.MoMoRef)
+	item := x.MoMoRef
 	workflowworkflowinforelationship := make(map[string]interface{})
 	workflowworkflowinforelationship["class_id"] = item.ClassId
-	workflowworkflowinforelationship["link"] = item.Link
 	workflowworkflowinforelationship["moid"] = item.Moid
 	workflowworkflowinforelationship["object_type"] = item.ObjectType
 	workflowworkflowinforelationship["selector"] = item.Selector

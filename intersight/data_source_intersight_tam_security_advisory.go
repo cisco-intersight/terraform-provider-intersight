@@ -276,11 +276,6 @@ func dataSourceTamSecurityAdvisory() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -302,45 +297,6 @@ func dataSourceTamSecurityAdvisory() *schema.Resource {
 					},
 				},
 				Computed: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"recommendation": {
 				Description: "Recommended action to resolve the security advisory.",
@@ -371,7 +327,7 @@ func dataSourceTamSecurityAdvisory() *schema.Resource {
 				Computed: true,
 			},
 			"state": {
-				Description: "Current state of the advisory. Indicates if the user is interested in getting updates for the advisory.",
+				Description: "Current state of the advisory.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -403,8 +359,13 @@ func dataSourceTamSecurityAdvisory() *schema.Resource {
 				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Cisco assigned advisory version after latest revision.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"workaround": {
+				Description: "Workarounds available for the advisory.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -416,7 +377,7 @@ func dataSourceTamSecurityAdvisoryRead(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewTamSecurityAdvisory()
+	var o = models.NewTamSecurityAdvisoryWithDefaults()
 	if v, ok := d.GetOk("advisory_id"); ok {
 		x := (v.(string))
 		o.SetAdvisoryId(x)
@@ -477,104 +438,121 @@ func dataSourceTamSecurityAdvisoryRead(d *schema.ResourceData, meta interface{})
 		x := v.(float32)
 		o.SetTemporalScore(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
+	}
+	if v, ok := d.GetOk("workaround"); ok {
+		x := (v.(string))
+		o.SetWorkaround(x)
 	}
 
 	data, err := o.MarshalJSON()
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.TamApi.GetTamSecurityAdvisoryList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.TamApi.GetTamSecurityAdvisoryList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.TamSecurityAdvisoryList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to TamSecurityAdvisory: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewTamSecurityAdvisory()
+			var s = models.NewTamSecurityAdvisoryWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("actions", flattenListTamAction(s.Actions, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Actions: %+v", err)
 			}
 			if err := d.Set("advisory_id", (s.AdvisoryId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AdvisoryId: %+v", err)
 			}
 
 			if err := d.Set("api_data_sources", flattenListTamApiDataSource(s.ApiDataSources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ApiDataSources: %+v", err)
 			}
 			if err := d.Set("base_score", (s.BaseScore)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BaseScore: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("cve_ids", (s.CveIds)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CveIds: %+v", err)
 			}
 
 			if err := d.Set("date_published", (s.DatePublished).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DatePublished: %+v", err)
 			}
 
 			if err := d.Set("date_updated", (s.DateUpdated).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DateUpdated: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("environmental_score", (s.EnvironmentalScore)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EnvironmentalScore: %+v", err)
 			}
 			if err := d.Set("external_url", (s.ExternalUrl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ExternalUrl: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
 			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 			if err := d.Set("recommendation", (s.Recommendation)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Recommendation: %+v", err)
 			}
 
 			if err := d.Set("severity", flattenMapTamSeverity(s.Severity, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 			}
 			if err := d.Set("state", (s.State)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property State: %+v", err)
 			}
 			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("temporal_score", (s.TemporalScore)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TemporalScore: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.Version)); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
+			}
+			if err := d.Set("workaround", (s.Workaround)); err != nil {
+				return fmt.Errorf("error occurred while setting property Workaround: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

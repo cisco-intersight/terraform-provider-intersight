@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 
@@ -28,12 +29,6 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Computed:    true,
 							ForceNew:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -45,6 +40,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -80,12 +76,6 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Computed:    true,
 							ForceNew:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -97,6 +87,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -138,51 +129,6 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Computed:    true,
 				ForceNew:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
-			},
 			"placeholders": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -205,6 +151,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"type": {
@@ -239,6 +186,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 													ForceNew:    true,
 												},
 												"override": {
@@ -283,6 +231,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"properties": {
@@ -335,6 +284,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 																			Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																			Type:        schema.TypeString,
 																			Optional:    true,
+																			Computed:    true,
 																			ForceNew:    true,
 																		},
 																		"value": {
@@ -365,6 +315,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 																Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																Type:        schema.TypeString,
 																Optional:    true,
+																Computed:    true,
 																ForceNew:    true,
 															},
 															"regex": {
@@ -401,6 +352,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 																Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																Type:        schema.TypeString,
 																Optional:    true,
+																Computed:    true,
 																ForceNew:    true,
 															},
 															"selector": {
@@ -425,6 +377,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 													ForceNew:    true,
 												},
 												"secure": {
@@ -508,36 +461,38 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewOsConfigurationFile()
+	var o = models.NewOsConfigurationFileWithDefaults()
 	if v, ok := d.GetOk("catalog"); ok {
 		p := make([]models.OsCatalogRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("os.Catalog")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsOsCatalogRelationship())
+			p = append(p, models.MoMoRefAsOsCatalogRelationship(o))
 		}
-		x := p[0]
-		o.SetCatalog(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCatalog(x)
+		}
 	}
 
 	o.SetClassId("os.ConfigurationFile")
@@ -549,28 +504,29 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hcl.OperatingSystem")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHclOperatingSystemRelationship())
+			x = append(x, models.MoMoRefAsHclOperatingSystemRelationship(o))
 		}
-		o.SetDistributions(x)
+		if len(x) > 0 {
+			o.SetDistributions(x)
+		}
 	}
 
 	if v, ok := d.GetOk("file_content"); ok {
@@ -590,37 +546,6 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 
 	o.SetObjectType("os.ConfigurationFile")
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
-
 	if v, ok := d.GetOk("placeholders"); ok {
 		x := make([]models.OsPlaceHolder, 0)
 		s := v.([]interface{})
@@ -634,22 +559,34 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 					o.SetIsValueSet(x)
 				}
 			}
-			o.SetObjectType("os.PlaceHolder")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["type"]; ok {
 				{
 					p := make([]models.WorkflowPrimitiveDataType, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewWorkflowPrimitiveDataTypeWithDefaults()
 						o.SetClassId("workflow.PrimitiveDataType")
 						if v, ok := l["default"]; ok {
 							{
 								p := make([]models.WorkflowDefaultValue, 0, 1)
-								l := (v.([]interface{})[0]).(map[string]interface{})
-								{
+								s := v.([]interface{})
+								for i := 0; i < len(s); i++ {
+									l := s[i].(map[string]interface{})
 									o := models.NewWorkflowDefaultValueWithDefaults()
 									o.SetClassId("workflow.DefaultValue")
-									o.SetObjectType("workflow.DefaultValue")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["override"]; ok {
 										{
 											x := (v.(bool))
@@ -664,8 +601,10 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 									}
 									p = append(p, *o)
 								}
-								x := p[0]
-								o.SetDefault(x)
+								if len(p) > 0 {
+									x := p[0]
+									o.SetDefault(x)
+								}
 							}
 						}
 						if v, ok := l["description"]; ok {
@@ -686,19 +625,26 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 								o.SetName(x)
 							}
 						}
-						o.SetObjectType("workflow.PrimitiveDataType")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["properties"]; ok {
 							{
 								p := make([]models.WorkflowPrimitiveDataProperty, 0, 1)
-								l := (v.([]interface{})[0]).(map[string]interface{})
-								{
+								s := v.([]interface{})
+								for i := 0; i < len(s); i++ {
+									l := s[i].(map[string]interface{})
 									o := models.NewWorkflowPrimitiveDataPropertyWithDefaults()
 									o.SetClassId("workflow.PrimitiveDataProperty")
 									if v, ok := l["constraints"]; ok {
 										{
 											p := make([]models.WorkflowConstraints, 0, 1)
-											l := (v.([]interface{})[0]).(map[string]interface{})
-											{
+											s := v.([]interface{})
+											for i := 0; i < len(s); i++ {
+												l := s[i].(map[string]interface{})
 												o := models.NewWorkflowConstraintsWithDefaults()
 												o.SetClassId("workflow.Constraints")
 												if v, ok := l["enum_list"]; ok {
@@ -715,7 +661,12 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 																	o.SetLabel(x)
 																}
 															}
-															o.SetObjectType("workflow.EnumEntry")
+															if v, ok := l["object_type"]; ok {
+																{
+																	x := (v.(string))
+																	o.SetObjectType(x)
+																}
+															}
 															if v, ok := l["value"]; ok {
 																{
 																	x := (v.(string))
@@ -724,7 +675,9 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 															}
 															x = append(x, *o)
 														}
-														o.SetEnumList(x)
+														if len(x) > 0 {
+															o.SetEnumList(x)
+														}
 													}
 												}
 												if v, ok := l["max"]; ok {
@@ -739,7 +692,12 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 														o.SetMin(x)
 													}
 												}
-												o.SetObjectType("workflow.Constraints")
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
 												if v, ok := l["regex"]; ok {
 													{
 														x := (v.(string))
@@ -748,8 +706,10 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 												}
 												p = append(p, *o)
 											}
-											x := p[0]
-											o.SetConstraints(x)
+											if len(p) > 0 {
+												x := p[0]
+												o.SetConstraints(x)
+											}
 										}
 									}
 									if v, ok := l["inventory_selector"]; ok {
@@ -767,10 +727,17 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 														for i := 0; i < y.Len(); i++ {
 															x = append(x, y.Index(i).Interface().(string))
 														}
-														o.SetDisplayAttributes(x)
+														if len(x) > 0 {
+															o.SetDisplayAttributes(x)
+														}
 													}
 												}
-												o.SetObjectType("workflow.MoReferenceProperty")
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
 												if v, ok := l["selector"]; ok {
 													{
 														x := (v.(string))
@@ -785,10 +752,17 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 												}
 												x = append(x, *o)
 											}
-											o.SetInventorySelector(x)
+											if len(x) > 0 {
+												o.SetInventorySelector(x)
+											}
 										}
 									}
-									o.SetObjectType("workflow.PrimitiveDataProperty")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["secure"]; ok {
 										{
 											x := (v.(bool))
@@ -803,8 +777,10 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 									}
 									p = append(p, *o)
 								}
-								x := p[0]
-								o.SetProperties(x)
+								if len(p) > 0 {
+									x := p[0]
+									o.SetProperties(x)
+								}
 							}
 						}
 						if v, ok := l["required"]; ok {
@@ -815,8 +791,10 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetType(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetType(x)
+					}
 				}
 			}
 			if v, ok := l["value"]; ok {
@@ -827,11 +805,13 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetPlaceholders(x)
+		if len(x) > 0 {
+			o.SetPlaceholders(x)
+		}
 	}
 
-	if v, ok := d.GetOk("supported"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("supported"); ok {
+		x := v.(bool)
 		o.SetSupported(x)
 	}
 
@@ -855,13 +835,15 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.OsApi.CreateOsConfigurationFile(conn.ctx).OsConfigurationFile(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -877,52 +859,47 @@ func resourceOsConfigurationFileRead(d *schema.ResourceData, meta interface{}) e
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.Catalog, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.Distributions, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Distributions: %+v", err)
 	}
 
 	if err := d.Set("file_content", (s.FileContent)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FileContent: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("placeholders", flattenListOsPlaceHolder(s.Placeholders, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Placeholders: %+v", err)
 	}
 
 	if err := d.Set("supported", (s.Supported)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Supported: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -934,11 +911,10 @@ func resourceOsConfigurationFileDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.OsApi.DeleteOsConfigurationFile(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.OsApi.DeleteOsConfigurationFile(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

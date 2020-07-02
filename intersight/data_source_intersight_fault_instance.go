@@ -15,14 +15,16 @@ func dataSourceFaultInstance() *schema.Resource {
 		Read: dataSourceFaultInstanceRead,
 		Schema: map[string]*schema.Schema{
 			"acknowledged": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The user acknowledgement state of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"affected_dn": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The Distinguished Name of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"affected_mo_id": {
 				Description: "Managed object Id which was affected.",
@@ -37,14 +39,16 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"ancestor_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Object Id of the parent of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"ancestor_mo_type": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Object type of the parent of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -53,25 +57,28 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"code": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Numerical fault code of the fault found.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"creation_time": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The time of creation of the fault instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"description": {
-				Description: "Short summary of the fault found.",
+				Description: "Detailed message of the fault.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -79,36 +86,10 @@ func dataSourceFaultInstance() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"last_transition_time": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"num_occurrences": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"original_severity": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -118,11 +99,6 @@ func dataSourceFaultInstance() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -145,10 +121,41 @@ func dataSourceFaultInstance() *schema.Resource {
 					},
 				},
 			},
+			"last_transition_time": {
+				Description: "Last transition time of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"num_occurrences": {
+				Description: "The number of times this fault has occured.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"original_severity": {
+				Description: "Current Severity of the fault found.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"previous_severity": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The Severity of the fault prior to user update.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -163,11 +170,6 @@ func dataSourceFaultInstance() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -197,9 +199,10 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"rule": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The rule that is responsible for generation of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"severity": {
 				Description: "Severity of the fault found.",
@@ -233,7 +236,7 @@ func dataSourceFaultInstanceRead(d *schema.ResourceData, meta interface{}) error
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewFaultInstance()
+	var o = models.NewFaultInstanceWithDefaults()
 	if v, ok := d.GetOk("acknowledged"); ok {
 		x := (v.(string))
 		o.SetAcknowledged(x)
@@ -323,93 +326,107 @@ func dataSourceFaultInstanceRead(d *schema.ResourceData, meta interface{}) error
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.FaultApi.GetFaultInstanceList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.FaultApi.GetFaultInstanceList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.FaultInstanceList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to FaultInstance: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewFaultInstance()
+			var s = models.NewFaultInstanceWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("acknowledged", (s.Acknowledged)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Acknowledged: %+v", err)
 			}
 			if err := d.Set("affected_dn", (s.AffectedDn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AffectedDn: %+v", err)
 			}
 			if err := d.Set("affected_mo_id", (s.AffectedMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AffectedMoId: %+v", err)
 			}
 			if err := d.Set("affected_mo_type", (s.AffectedMoType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AffectedMoType: %+v", err)
 			}
 			if err := d.Set("ancestor_mo_id", (s.AncestorMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AncestorMoId: %+v", err)
 			}
 			if err := d.Set("ancestor_mo_type", (s.AncestorMoType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AncestorMoType: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("code", (s.Code)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Code: %+v", err)
 			}
 			if err := d.Set("creation_time", (s.CreationTime)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CreationTime: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
-			}
-			if err := d.Set("last_transition_time", (s.LastTransitionTime)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("num_occurrences", (s.NumOccurrences)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("original_severity", (s.OriginalSeverity)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("last_transition_time", (s.LastTransitionTime)); err != nil {
+				return fmt.Errorf("error occurred while setting property LastTransitionTime: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("num_occurrences", (s.NumOccurrences)); err != nil {
+				return fmt.Errorf("error occurred while setting property NumOccurrences: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("original_severity", (s.OriginalSeverity)); err != nil {
+				return fmt.Errorf("error occurred while setting property OriginalSeverity: %+v", err)
 			}
 			if err := d.Set("previous_severity", (s.PreviousSeverity)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PreviousSeverity: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("rule", (s.Rule)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rule: %+v", err)
 			}
 			if err := d.Set("severity", (s.Severity)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

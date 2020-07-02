@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -33,11 +34,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -48,6 +44,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -73,11 +70,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -88,6 +80,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -112,11 +105,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -127,6 +115,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -151,11 +140,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -166,6 +150,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -190,11 +175,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -205,6 +185,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -230,45 +211,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"server_firmware_version": {
 				Description: "A reference to a hyperflexServerFirmwareVersion resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -282,11 +224,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -297,6 +234,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -322,11 +260,6 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -337,6 +270,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -367,7 +301,7 @@ func resourceHyperflexAppCatalog() *schema.Resource {
 					},
 				},
 			},
-			"version": {
+			"nr_version": {
 				Description: "The catalog version used in HyperFlex cluster configuration service.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -380,69 +314,73 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexAppCatalog()
+	var o = models.NewHyperflexAppCatalogWithDefaults()
 	o.SetClassId("hyperflex.AppCatalog")
 
 	if v, ok := d.GetOk("feature_limit_external"); ok {
 		p := make([]models.HyperflexFeatureLimitExternalRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitExternal")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexFeatureLimitExternalRelationship())
+			p = append(p, models.MoMoRefAsHyperflexFeatureLimitExternalRelationship(o))
 		}
-		x := p[0]
-		o.SetFeatureLimitExternal(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFeatureLimitExternal(x)
+		}
 	}
 
 	if v, ok := d.GetOk("feature_limit_internal"); ok {
 		p := make([]models.HyperflexFeatureLimitInternalRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitInternal")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexFeatureLimitInternalRelationship())
+			p = append(p, models.MoMoRefAsHyperflexFeatureLimitInternalRelationship(o))
 		}
-		x := p[0]
-		o.SetFeatureLimitInternal(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFeatureLimitInternal(x)
+		}
 	}
 
 	if v, ok := d.GetOk("hxdp_versions"); ok {
@@ -452,28 +390,29 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.HxdpVersion")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexHxdpVersionRelationship())
+			x = append(x, models.MoMoRefAsHyperflexHxdpVersionRelationship(o))
 		}
-		o.SetHxdpVersions(x)
+		if len(x) > 0 {
+			o.SetHxdpVersions(x)
+		}
 	}
 
 	if v, ok := d.GetOk("hyperflex_capability_infos"); ok {
@@ -483,28 +422,29 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.CapabilityInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexCapabilityInfoRelationship())
+			x = append(x, models.MoMoRefAsHyperflexCapabilityInfoRelationship(o))
 		}
-		o.SetHyperflexCapabilityInfos(x)
+		if len(x) > 0 {
+			o.SetHyperflexCapabilityInfos(x)
+		}
 	}
 
 	if v, ok := d.GetOk("hyperflex_software_compatibility_infos"); ok {
@@ -514,28 +454,29 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hcl.HyperflexSoftwareCompatibilityInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHclHyperflexSoftwareCompatibilityInfoRelationship())
+			x = append(x, models.MoMoRefAsHclHyperflexSoftwareCompatibilityInfoRelationship(o))
 		}
-		o.SetHyperflexSoftwareCompatibilityInfos(x)
+		if len(x) > 0 {
+			o.SetHyperflexSoftwareCompatibilityInfos(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -545,97 +486,70 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 
 	o.SetObjectType("hyperflex.AppCatalog")
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
-
 	if v, ok := d.GetOk("server_firmware_version"); ok {
 		p := make([]models.HyperflexServerFirmwareVersionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ServerFirmwareVersion")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexServerFirmwareVersionRelationship())
+			p = append(p, models.MoMoRefAsHyperflexServerFirmwareVersionRelationship(o))
 		}
-		x := p[0]
-		o.SetServerFirmwareVersion(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetServerFirmwareVersion(x)
+		}
 	}
 
 	if v, ok := d.GetOk("server_model"); ok {
 		p := make([]models.HyperflexServerModelRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ServerModel")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexServerModelRelationship())
+			p = append(p, models.MoMoRefAsHyperflexServerModelRelationship(o))
 		}
-		x := p[0]
-		o.SetServerModel(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetServerModel(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -658,10 +572,12 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -669,7 +585,7 @@ func resourceHyperflexAppCatalogCreate(d *schema.ResourceData, meta interface{})
 	r := conn.ApiClient.HyperflexApi.CreateHyperflexAppCatalog(conn.ctx).HyperflexAppCatalog(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -685,60 +601,55 @@ func resourceHyperflexAppCatalogRead(d *schema.ResourceData, meta interface{}) e
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("feature_limit_external", flattenMapHyperflexFeatureLimitExternalRelationship(s.FeatureLimitExternal, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FeatureLimitExternal: %+v", err)
 	}
 
 	if err := d.Set("feature_limit_internal", flattenMapHyperflexFeatureLimitInternalRelationship(s.FeatureLimitInternal, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FeatureLimitInternal: %+v", err)
 	}
 
 	if err := d.Set("hxdp_versions", flattenListHyperflexHxdpVersionRelationship(s.HxdpVersions, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property HxdpVersions: %+v", err)
 	}
 
 	if err := d.Set("hyperflex_capability_infos", flattenListHyperflexCapabilityInfoRelationship(s.HyperflexCapabilityInfos, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property HyperflexCapabilityInfos: %+v", err)
 	}
 
 	if err := d.Set("hyperflex_software_compatibility_infos", flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(s.HyperflexSoftwareCompatibilityInfos, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property HyperflexSoftwareCompatibilityInfos: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("server_firmware_version", flattenMapHyperflexServerFirmwareVersionRelationship(s.ServerFirmwareVersion, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ServerFirmwareVersion: %+v", err)
 	}
 
 	if err := d.Set("server_model", flattenMapHyperflexServerModelRelationship(s.ServerModel, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ServerModel: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("version", (s.Version)); err != nil {
-		return err
+	if err := d.Set("nr_version", (s.Version)); err != nil {
+		return fmt.Errorf("error occurred while setting property Version: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -750,70 +661,75 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexAppCatalog()
+	var o = models.NewHyperflexAppCatalogWithDefaults()
+	o.SetClassId("hyperflex.AppCatalog")
 
 	if d.HasChange("feature_limit_external") {
 		v := d.Get("feature_limit_external")
 		p := make([]models.HyperflexFeatureLimitExternalRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitExternal")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexFeatureLimitExternalRelationship())
+			p = append(p, models.MoMoRefAsHyperflexFeatureLimitExternalRelationship(o))
 		}
-		x := p[0]
-		o.SetFeatureLimitExternal(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFeatureLimitExternal(x)
+		}
 	}
 
 	if d.HasChange("feature_limit_internal") {
 		v := d.Get("feature_limit_internal")
 		p := make([]models.HyperflexFeatureLimitInternalRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitInternal")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexFeatureLimitInternalRelationship())
+			p = append(p, models.MoMoRefAsHyperflexFeatureLimitInternalRelationship(o))
 		}
-		x := p[0]
-		o.SetFeatureLimitInternal(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFeatureLimitInternal(x)
+		}
 	}
 
 	if d.HasChange("hxdp_versions") {
@@ -824,28 +740,29 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.HxdpVersion")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexHxdpVersionRelationship())
+			x = append(x, models.MoMoRefAsHyperflexHxdpVersionRelationship(o))
 		}
-		o.SetHxdpVersions(x)
+		if len(x) > 0 {
+			o.SetHxdpVersions(x)
+		}
 	}
 
 	if d.HasChange("hyperflex_capability_infos") {
@@ -856,28 +773,29 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.CapabilityInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexCapabilityInfoRelationship())
+			x = append(x, models.MoMoRefAsHyperflexCapabilityInfoRelationship(o))
 		}
-		o.SetHyperflexCapabilityInfos(x)
+		if len(x) > 0 {
+			o.SetHyperflexCapabilityInfos(x)
+		}
 	}
 
 	if d.HasChange("hyperflex_software_compatibility_infos") {
@@ -888,28 +806,29 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hcl.HyperflexSoftwareCompatibilityInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHclHyperflexSoftwareCompatibilityInfoRelationship())
+			x = append(x, models.MoMoRefAsHclHyperflexSoftwareCompatibilityInfoRelationship(o))
 		}
-		o.SetHyperflexSoftwareCompatibilityInfos(x)
+		if len(x) > 0 {
+			o.SetHyperflexSoftwareCompatibilityInfos(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -918,100 +837,74 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 		o.SetMoid(x)
 	}
 
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
+	o.SetObjectType("hyperflex.AppCatalog")
 
 	if d.HasChange("server_firmware_version") {
 		v := d.Get("server_firmware_version")
 		p := make([]models.HyperflexServerFirmwareVersionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ServerFirmwareVersion")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexServerFirmwareVersionRelationship())
+			p = append(p, models.MoMoRefAsHyperflexServerFirmwareVersionRelationship(o))
 		}
-		x := p[0]
-		o.SetServerFirmwareVersion(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetServerFirmwareVersion(x)
+		}
 	}
 
 	if d.HasChange("server_model") {
 		v := d.Get("server_model")
 		p := make([]models.HyperflexServerModelRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ServerModel")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexServerModelRelationship())
+			p = append(p, models.MoMoRefAsHyperflexServerModelRelationship(o))
 		}
-		x := p[0]
-		o.SetServerModel(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetServerModel(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1035,11 +928,13 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	if d.HasChange("version") {
-		v := d.Get("version")
+	if d.HasChange("nr_version") {
+		v := d.Get("nr_version")
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -1047,7 +942,7 @@ func resourceHyperflexAppCatalogUpdate(d *schema.ResourceData, meta interface{})
 	r := conn.ApiClient.HyperflexApi.UpdateHyperflexAppCatalog(conn.ctx, d.Id()).HyperflexAppCatalog(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1058,11 +953,10 @@ func resourceHyperflexAppCatalogDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.HyperflexApi.DeleteHyperflexAppCatalog(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexAppCatalog(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

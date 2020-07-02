@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 	"time"
@@ -29,12 +30,6 @@ func resourceApplianceBackup() *schema.Resource {
 							Computed:    true,
 							ForceNew:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -46,6 +41,7 @@ func resourceApplianceBackup() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -121,51 +117,6 @@ func resourceApplianceBackup() *schema.Resource {
 				Optional:    true,
 				ForceNew:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
-			},
 			"protocol": {
 				Description: "Communication protocol used by the file server (e.g. scp or sftp).",
 				Type:        schema.TypeString,
@@ -240,36 +191,38 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewApplianceBackup()
+	var o = models.NewApplianceBackupWithDefaults()
 	if v, ok := d.GetOk("account"); ok {
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
+		}
 	}
 
 	o.SetClassId("appliance.Backup")
@@ -289,8 +242,8 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 		o.SetFilename(x)
 	}
 
-	if v, ok := d.GetOk("is_password_set"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("is_password_set"); ok {
+		x := v.(bool)
 		o.SetIsPasswordSet(x)
 	}
 
@@ -300,7 +253,9 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetMessages(x)
+		if len(x) > 0 {
+			o.SetMessages(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -313,37 +268,6 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 	if v, ok := d.GetOk("password"); ok {
 		x := (v.(string))
 		o.SetPassword(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -396,7 +320,9 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -407,7 +333,7 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 	r := conn.ApiClient.ApplianceApi.CreateApplianceBackup(conn.ctx).ApplianceBackup(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -423,80 +349,75 @@ func resourceApplianceBackupRead(d *schema.ResourceData, meta interface{}) error
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("elapsed_time", (s.ElapsedTime)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ElapsedTime: %+v", err)
 	}
 
 	if err := d.Set("end_time", (s.EndTime).String()); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 	}
 
 	if err := d.Set("filename", (s.Filename)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Filename: %+v", err)
 	}
 
 	if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 	}
 
 	if err := d.Set("messages", (s.Messages)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Messages: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("protocol", (s.Protocol)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 	}
 
 	if err := d.Set("remote_host", (s.RemoteHost)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RemoteHost: %+v", err)
 	}
 
 	if err := d.Set("remote_path", (s.RemotePath)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RemotePath: %+v", err)
 	}
 
 	if err := d.Set("remote_port", (s.RemotePort)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RemotePort: %+v", err)
 	}
 
 	if err := d.Set("start_time", (s.StartTime).String()); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 	}
 
 	if err := d.Set("status", (s.Status)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("username", (s.Username)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Username: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -508,11 +429,10 @@ func resourceApplianceBackupDelete(d *schema.ResourceData, meta interface{}) err
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.ApplianceApi.DeleteApplianceBackup(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.ApplianceApi.DeleteApplianceBackup(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 
@@ -29,12 +30,6 @@ func resourceIamTrustPoint() *schema.Resource {
 							Computed:    true,
 							ForceNew:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -46,6 +41,7 @@ func resourceIamTrustPoint() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"selector": {
@@ -110,6 +106,7 @@ func resourceIamTrustPoint() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"organization": {
@@ -139,6 +136,7 @@ func resourceIamTrustPoint() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"pem_certificate": {
@@ -199,6 +197,7 @@ func resourceIamTrustPoint() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 										ForceNew:    true,
 									},
 									"organization": {
@@ -257,51 +256,6 @@ func resourceIamTrustPoint() *schema.Resource {
 				Computed:    true,
 				ForceNew:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
-			},
 			"tags": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -331,36 +285,38 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewIamTrustPoint()
+	var o = models.NewIamTrustPointWithDefaults()
 	if v, ok := d.GetOk("account"); ok {
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
+		}
 	}
 
 	if v, ok := d.GetOk("certificates"); ok {
@@ -373,8 +329,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 			if v, ok := l["issuer"]; ok {
 				{
 					p := make([]models.PkixDistinguishedName, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewPkixDistinguishedNameWithDefaults()
 						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
@@ -390,7 +347,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetCountry(x)
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -400,10 +359,17 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetLocality(x)
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
-						o.SetObjectType("pkix.DistinguishedName")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["organization"]; ok {
 							{
 								x := make([]string, 0)
@@ -411,7 +377,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetOrganization(x)
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -421,7 +389,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetOrganizationalUnit(x)
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -431,16 +401,25 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetState(x)
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetIssuer(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetIssuer(x)
+					}
 				}
 			}
-			o.SetObjectType("x509.Certificate")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["pem_certificate"]; ok {
 				{
 					x := (v.(string))
@@ -462,8 +441,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 			if v, ok := l["subject"]; ok {
 				{
 					p := make([]models.PkixDistinguishedName, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewPkixDistinguishedNameWithDefaults()
 						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
@@ -479,7 +459,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetCountry(x)
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -489,10 +471,17 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetLocality(x)
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
-						o.SetObjectType("pkix.DistinguishedName")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["organization"]; ok {
 							{
 								x := make([]string, 0)
@@ -500,7 +489,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetOrganization(x)
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -510,7 +501,9 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetOrganizationalUnit(x)
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -520,18 +513,24 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.SetState(x)
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetSubject(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetSubject(x)
+					}
 				}
 			}
 			x = append(x, *o)
 		}
-		o.SetCertificates(x)
+		if len(x) > 0 {
+			o.SetCertificates(x)
+		}
 	}
 
 	if v, ok := d.GetOk("chain"); ok {
@@ -547,37 +546,6 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 	}
 
 	o.SetObjectType("iam.TrustPoint")
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
 
 	if v, ok := d.GetOk("tags"); ok {
 		x := make([]models.MoTag, 0)
@@ -599,13 +567,15 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.IamApi.CreateIamTrustPoint(conn.ctx).IamTrustPoint(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -621,40 +591,35 @@ func resourceIamTrustPointRead(d *schema.ResourceData, meta interface{}) error {
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
 	if err := d.Set("certificates", flattenListX509Certificate(s.Certificates, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Certificates: %+v", err)
 	}
 
 	if err := d.Set("chain", (s.Chain)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Chain: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -666,11 +631,10 @@ func resourceIamTrustPointDelete(d *schema.ResourceData, meta interface{}) error
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.IamApi.DeleteIamTrustPoint(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.IamApi.DeleteIamTrustPoint(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

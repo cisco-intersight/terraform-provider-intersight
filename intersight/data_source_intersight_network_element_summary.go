@@ -14,8 +14,20 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceNetworkElementSummaryRead,
 		Schema: map[string]*schema.Schema{
+			"admin_evac_state": {
+				Description: "Administratively configured state of Fabric Evacuation feature, for this switch.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"admin_inband_interface_state": {
 				Description: "The administrative state of the network Element inband management interface.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"available_memory": {
+				Description: "Available memory (un-used) on this switch platform.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -27,9 +39,10 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -37,10 +50,23 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"ethernet_mode": {
+				Description: "The user configured Ethernet operational mode for this switch (End-Host or Switching).",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"fault_summary": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The fault summary of the network Element out-of-band management interface.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
+			"fc_mode": {
+				Description: "The user configured FC operational mode for this switch (End-Host or Switching).",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"firmware": {
 				Description: "Running firmware information.",
@@ -144,6 +170,18 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"oper_evac_state": {
+				Description: "Operational state of the Fabric Evacuation feature, for this switch.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"operability": {
+				Description: "The switch's current overall operational/health state.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"out_of_band_ip_address": {
 				Description: "The IP address of the network Element out-of-band management interface.",
 				Type:        schema.TypeString,
@@ -204,45 +242,6 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -256,11 +255,6 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -284,9 +278,10 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -330,13 +325,19 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 					},
 				},
 			},
+			"total_memory": {
+				Description: "Total available memory on this switch platform.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Version holds the firmware version related information.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -350,10 +351,18 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewNetworkElementSummary()
+	var o = models.NewNetworkElementSummaryWithDefaults()
+	if v, ok := d.GetOk("admin_evac_state"); ok {
+		x := (v.(string))
+		o.SetAdminEvacState(x)
+	}
 	if v, ok := d.GetOk("admin_inband_interface_state"); ok {
 		x := (v.(string))
 		o.SetAdminInbandInterfaceState(x)
+	}
+	if v, ok := d.GetOk("available_memory"); ok {
+		x := (v.(string))
+		o.SetAvailableMemory(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
@@ -367,9 +376,17 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 		x := (v.(string))
 		o.SetDn(x)
 	}
+	if v, ok := d.GetOk("ethernet_mode"); ok {
+		x := (v.(string))
+		o.SetEthernetMode(x)
+	}
 	if v, ok := d.GetOk("fault_summary"); ok {
 		x := int64(v.(int))
 		o.SetFaultSummary(x)
+	}
+	if v, ok := d.GetOk("fc_mode"); ok {
+		x := (v.(string))
+		o.SetFcMode(x)
 	}
 	if v, ok := d.GetOk("firmware"); ok {
 		x := (v.(string))
@@ -439,6 +456,14 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 		x := (v.(string))
 		o.SetObjectType(x)
 	}
+	if v, ok := d.GetOk("oper_evac_state"); ok {
+		x := (v.(string))
+		o.SetOperEvacState(x)
+	}
+	if v, ok := d.GetOk("operability"); ok {
+		x := (v.(string))
+		o.SetOperability(x)
+	}
 	if v, ok := d.GetOk("out_of_band_ip_address"); ok {
 		x := (v.(string))
 		o.SetOutOfBandIpAddress(x)
@@ -499,11 +524,15 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 		x := (v.(string))
 		o.SetSwitchId(x)
 	}
+	if v, ok := d.GetOk("total_memory"); ok {
+		x := int64(v.(int))
+		o.SetTotalMemory(x)
+	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
 		o.SetVendor(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -512,147 +541,178 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.NetworkApi.GetNetworkElementSummaryList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.NetworkApi.GetNetworkElementSummaryList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.NetworkElementSummaryList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to NetworkElementSummary: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewNetworkElementSummary()
+			var s = models.NewNetworkElementSummaryWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
+			}
+			if err := d.Set("admin_evac_state", (s.AdminEvacState)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdminEvacState: %+v", err)
 			}
 			if err := d.Set("admin_inband_interface_state", (s.AdminInbandInterfaceState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AdminInbandInterfaceState: %+v", err)
+			}
+			if err := d.Set("available_memory", (s.AvailableMemory)); err != nil {
+				return fmt.Errorf("error occurred while setting property AvailableMemory: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
+			}
+			if err := d.Set("ethernet_mode", (s.EthernetMode)); err != nil {
+				return fmt.Errorf("error occurred while setting property EthernetMode: %+v", err)
 			}
 			if err := d.Set("fault_summary", (s.FaultSummary)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FaultSummary: %+v", err)
+			}
+			if err := d.Set("fc_mode", (s.FcMode)); err != nil {
+				return fmt.Errorf("error occurred while setting property FcMode: %+v", err)
 			}
 			if err := d.Set("firmware", (s.Firmware)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Firmware: %+v", err)
 			}
 			if err := d.Set("inband_ip_address", (s.InbandIpAddress)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property InbandIpAddress: %+v", err)
 			}
 			if err := d.Set("inband_ip_gateway", (s.InbandIpGateway)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property InbandIpGateway: %+v", err)
 			}
 			if err := d.Set("inband_ip_mask", (s.InbandIpMask)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property InbandIpMask: %+v", err)
 			}
 			if err := d.Set("inband_vlan", (s.InbandVlan)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property InbandVlan: %+v", err)
 			}
 			if err := d.Set("ipv4_address", (s.Ipv4Address)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Ipv4Address: %+v", err)
 			}
 			if err := d.Set("model", (s.Model)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("num_ether_ports", (s.NumEtherPorts)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumEtherPorts: %+v", err)
 			}
 			if err := d.Set("num_ether_ports_configured", (s.NumEtherPortsConfigured)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumEtherPortsConfigured: %+v", err)
 			}
 			if err := d.Set("num_ether_ports_link_up", (s.NumEtherPortsLinkUp)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumEtherPortsLinkUp: %+v", err)
 			}
 			if err := d.Set("num_expansion_modules", (s.NumExpansionModules)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumExpansionModules: %+v", err)
 			}
 			if err := d.Set("num_fc_ports", (s.NumFcPorts)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumFcPorts: %+v", err)
 			}
 			if err := d.Set("num_fc_ports_configured", (s.NumFcPortsConfigured)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumFcPortsConfigured: %+v", err)
 			}
 			if err := d.Set("num_fc_ports_link_up", (s.NumFcPortsLinkUp)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumFcPortsLinkUp: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_evac_state", (s.OperEvacState)); err != nil {
+				return fmt.Errorf("error occurred while setting property OperEvacState: %+v", err)
+			}
+			if err := d.Set("operability", (s.Operability)); err != nil {
+				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
 			}
 			if err := d.Set("out_of_band_ip_address", (s.OutOfBandIpAddress)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpAddress: %+v", err)
 			}
 			if err := d.Set("out_of_band_ip_gateway", (s.OutOfBandIpGateway)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpGateway: %+v", err)
 			}
 			if err := d.Set("out_of_band_ip_mask", (s.OutOfBandIpMask)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpMask: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv4_address", (s.OutOfBandIpv4Address)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv4Address: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv4_gateway", (s.OutOfBandIpv4Gateway)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv4Gateway: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv4_mask", (s.OutOfBandIpv4Mask)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv4Mask: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv6_address", (s.OutOfBandIpv6Address)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv6Address: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv6_gateway", (s.OutOfBandIpv6Gateway)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv6Gateway: %+v", err)
 			}
 			if err := d.Set("out_of_band_ipv6_prefix", (s.OutOfBandIpv6Prefix)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandIpv6Prefix: %+v", err)
 			}
 			if err := d.Set("out_of_band_mac", (s.OutOfBandMac)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandMac: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 			if err := d.Set("source_object_type", (s.SourceObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SourceObjectType: %+v", err)
 			}
 			if err := d.Set("switch_id", (s.SwitchId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SwitchId: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("total_memory", (s.TotalMemory)); err != nil {
+				return fmt.Errorf("error occurred while setting property TotalMemory: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.Version)); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

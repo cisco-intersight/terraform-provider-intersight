@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -76,11 +77,6 @@ func resourceKvmPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -91,6 +87,7 @@ func resourceKvmPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -104,45 +101,6 @@ func resourceKvmPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"profiles": {
 				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
@@ -155,11 +113,6 @@ func resourceKvmPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -170,6 +123,7 @@ func resourceKvmPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -213,7 +167,7 @@ func resourceKvmPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewKvmPolicy()
+	var o = models.NewKvmPolicyWithDefaults()
 	o.SetClassId("kvm.Policy")
 
 	if v, ok := d.GetOk("description"); ok {
@@ -221,18 +175,18 @@ func resourceKvmPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 		o.SetDescription(x)
 	}
 
-	if v, ok := d.GetOk("enable_local_server_video"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_local_server_video"); ok {
+		x := v.(bool)
 		o.SetEnableLocalServerVideo(x)
 	}
 
-	if v, ok := d.GetOk("enable_video_encryption"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_video_encryption"); ok {
+		x := v.(bool)
 		o.SetEnableVideoEncryption(x)
 	}
 
-	if v, ok := d.GetOk("enabled"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enabled"); ok {
+		x := v.(bool)
 		o.SetEnabled(x)
 	}
 
@@ -255,64 +209,35 @@ func resourceKvmPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
@@ -322,28 +247,29 @@ func resourceKvmPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("remote_port"); ok {
@@ -371,13 +297,15 @@ func resourceKvmPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.KvmApi.CreateKvmPolicy(conn.ctx).KvmPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -387,14 +315,15 @@ func detachKvmPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewKvmPolicy()
-
-	o.Profiles = new([]models.PolicyAbstractConfigProfileRelationship)
+	var o = models.NewKvmPolicyWithDefaults()
+	o.SetClassId("kvm.Policy")
+	o.SetObjectType("kvm.Policy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
 	r := conn.ApiClient.KvmApi.UpdateKvmPolicy(conn.ctx, d.Id()).KvmPolicy(*o)
 	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while creating: %s", err.Error())
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
 	return err
 }
@@ -408,64 +337,59 @@ func resourceKvmPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("enable_local_server_video", (s.EnableLocalServerVideo)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableLocalServerVideo: %+v", err)
 	}
 
 	if err := d.Set("enable_video_encryption", (s.EnableVideoEncryption)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableVideoEncryption: %+v", err)
 	}
 
 	if err := d.Set("enabled", (s.Enabled)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 	}
 
 	if err := d.Set("maximum_sessions", (s.MaximumSessions)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property MaximumSessions: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
 	if err := d.Set("remote_port", (s.RemotePort)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RemotePort: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -477,7 +401,8 @@ func resourceKvmPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewKvmPolicy()
+	var o = models.NewKvmPolicyWithDefaults()
+	o.SetClassId("kvm.Policy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
@@ -521,68 +446,40 @@ func resourceKvmPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.SetName(x)
 	}
 
+	o.SetObjectType("kvm.Policy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("profiles") {
@@ -593,28 +490,29 @@ func resourceKvmPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if d.HasChange("remote_port") {
@@ -644,13 +542,15 @@ func resourceKvmPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.KvmApi.UpdateKvmPolicy(conn.ctx, d.Id()).KvmPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -661,15 +561,18 @@ func resourceKvmPolicyDelete(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	e := detachKvmPolicyProfiles(d, meta)
-	if e != nil {
-		return e
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachKvmPolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
 	}
-
-	r := conn.ApiClient.KvmApi.DeleteKvmPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.KvmApi.DeleteKvmPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

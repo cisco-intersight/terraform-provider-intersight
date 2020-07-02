@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -33,11 +34,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -48,6 +44,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -72,11 +69,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -87,6 +79,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -118,11 +111,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -133,6 +121,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -158,11 +147,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -173,6 +157,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -218,6 +203,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"oper_state": {
 							Description: "Combined state (configState, and operational state of the associated physical resource) to indicate the current state of the profile. Values -- n/a, Power-off, Pending-changes, Configuring, Ok, Failed.",
@@ -244,11 +230,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -259,6 +240,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -293,11 +275,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -308,6 +285,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -333,11 +311,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -348,6 +321,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -379,11 +353,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -394,6 +363,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -448,11 +418,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -463,6 +428,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -487,11 +453,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -502,6 +463,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -533,11 +495,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -548,6 +505,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -560,45 +518,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"proxy_setting": {
 				Description: "A reference to a hyperflexProxySettingPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -613,11 +532,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -628,6 +542,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -658,11 +573,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -673,6 +583,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -697,11 +608,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -712,6 +618,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -737,11 +644,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -752,6 +654,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -786,6 +689,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"vlan_id": {
 							Description: "The ID of the named VLAN. An ID of 0 means the traffic is untagged.\nThe ID can be any number between 0 and 4095, inclusive.",
@@ -810,11 +714,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -825,6 +724,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -874,11 +774,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -889,6 +784,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -914,11 +810,6 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -929,6 +820,7 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -954,7 +846,7 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexClusterProfile()
+	var o = models.NewHyperflexClusterProfileWithDefaults()
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
 		o.SetAction(x)
@@ -962,134 +854,143 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 
 	if v, ok := d.GetOk("associated_cluster"); ok {
 		p := make([]models.HyperflexClusterRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.Cluster")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterRelationship(o))
 		}
-		x := p[0]
-		o.SetAssociatedCluster(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAssociatedCluster(x)
+		}
 	}
 
 	if v, ok := d.GetOk("auto_support"); ok {
 		p := make([]models.HyperflexAutoSupportPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.AutoSupportPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexAutoSupportPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexAutoSupportPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetAutoSupport(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAutoSupport(x)
+		}
 	}
 
 	o.SetClassId("hyperflex.ClusterProfile")
 
 	if v, ok := d.GetOk("cluster_network"); ok {
 		p := make([]models.HyperflexClusterNetworkPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterNetworkPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterNetworkPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterNetworkPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetClusterNetwork(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetClusterNetwork(x)
+		}
 	}
 
 	if v, ok := d.GetOk("cluster_storage"); ok {
 		p := make([]models.HyperflexClusterStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetClusterStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetClusterStorage(x)
+		}
 	}
 
 	if v, ok := d.GetOk("config_context"); ok {
 		p := make([]models.PolicyConfigContext, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewPolicyConfigContextWithDefaults()
 			o.SetClassId("policy.ConfigContext")
 			if v, ok := l["config_state"]; ok {
@@ -1110,7 +1011,12 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 					o.SetErrorState(x)
 				}
 			}
-			o.SetObjectType("policy.ConfigContext")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["oper_state"]; ok {
 				{
 					x := (v.(string))
@@ -1119,39 +1025,43 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetConfigContext(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConfigContext(x)
+		}
 	}
 
 	if v, ok := d.GetOk("config_result"); ok {
 		p := make([]models.HyperflexConfigResultRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ConfigResult")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexConfigResultRelationship())
+			p = append(p, models.MoMoRefAsHyperflexConfigResultRelationship(o))
 		}
-		x := p[0]
-		o.SetConfigResult(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConfigResult(x)
+		}
 	}
 
 	if v, ok := d.GetOk("data_ip_address"); ok {
@@ -1166,64 +1076,68 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 
 	if v, ok := d.GetOk("ext_fc_storage"); ok {
 		p := make([]models.HyperflexExtFcStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ExtFcStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexExtFcStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexExtFcStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetExtFcStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtFcStorage(x)
+		}
 	}
 
 	if v, ok := d.GetOk("ext_iscsi_storage"); ok {
 		p := make([]models.HyperflexExtIscsiStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ExtIscsiStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexExtIscsiStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexExtIscsiStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetExtIscsiStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtIscsiStorage(x)
+		}
 	}
 
 	if v, ok := d.GetOk("hypervisor_type"); ok {
@@ -1233,33 +1147,35 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 
 	if v, ok := d.GetOk("local_credential"); ok {
 		p := make([]models.HyperflexLocalCredentialPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.LocalCredentialPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexLocalCredentialPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexLocalCredentialPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetLocalCredential(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLocalCredential(x)
+		}
 	}
 
 	if v, ok := d.GetOk("mac_address_prefix"); ok {
@@ -1289,33 +1205,35 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 
 	if v, ok := d.GetOk("node_config"); ok {
 		p := make([]models.HyperflexNodeConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NodeConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexNodeConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexNodeConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetNodeConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetNodeConfig(x)
+		}
 	}
 
 	if v, ok := d.GetOk("node_profile_config"); ok {
@@ -1325,123 +1243,97 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NodeProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexNodeProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexNodeProfileRelationship(o))
 		}
-		o.SetNodeProfileConfig(x)
+		if len(x) > 0 {
+			o.SetNodeProfileConfig(x)
+		}
 	}
 
 	o.SetObjectType("hyperflex.ClusterProfile")
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("proxy_setting"); ok {
 		p := make([]models.HyperflexProxySettingPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ProxySettingPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexProxySettingPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexProxySettingPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetProxySetting(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetProxySetting(x)
+		}
 	}
 
 	if v, ok := d.GetOk("replication"); ok {
@@ -1456,96 +1348,102 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("workflow.WorkflowInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsWorkflowWorkflowInfoRelationship())
+			x = append(x, models.MoMoRefAsWorkflowWorkflowInfoRelationship(o))
 		}
-		o.SetRunningWorkflows(x)
+		if len(x) > 0 {
+			o.SetRunningWorkflows(x)
+		}
 	}
 
 	if v, ok := d.GetOk("software_version"); ok {
 		p := make([]models.HyperflexSoftwareVersionPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.SoftwareVersionPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexSoftwareVersionPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexSoftwareVersionPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetSoftwareVersion(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSoftwareVersion(x)
+		}
 	}
 
 	if v, ok := d.GetOk("src_template"); ok {
 		p := make([]models.PolicyAbstractProfileRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsPolicyAbstractProfileRelationship())
+			p = append(p, models.MoMoRefAsPolicyAbstractProfileRelationship(o))
 		}
-		x := p[0]
-		o.SetSrcTemplate(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSrcTemplate(x)
+		}
 	}
 
 	if v, ok := d.GetOk("storage_data_vlan"); ok {
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -1554,7 +1452,12 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -1563,39 +1466,43 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetStorageDataVlan(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetStorageDataVlan(x)
+		}
 	}
 
 	if v, ok := d.GetOk("sys_config"); ok {
 		p := make([]models.HyperflexSysConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.SysConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexSysConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexSysConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetSysConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSysConfig(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -1618,7 +1525,9 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1628,64 +1537,68 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 
 	if v, ok := d.GetOk("ucsm_config"); ok {
 		p := make([]models.HyperflexUcsmConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.UcsmConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexUcsmConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexUcsmConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetUcsmConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUcsmConfig(x)
+		}
 	}
 
 	if v, ok := d.GetOk("vcenter_config"); ok {
 		p := make([]models.HyperflexVcenterConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.VcenterConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexVcenterConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexVcenterConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetVcenterConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVcenterConfig(x)
+		}
 	}
 
 	if v, ok := d.GetOk("wwxn_prefix"); ok {
@@ -1696,7 +1609,7 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 	r := conn.ApiClient.HyperflexApi.CreateHyperflexClusterProfile(conn.ctx).HyperflexClusterProfile(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1712,152 +1625,147 @@ func resourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interface{
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("action", (s.Action)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Action: %+v", err)
 	}
 
 	if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.AssociatedCluster, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AssociatedCluster: %+v", err)
 	}
 
 	if err := d.Set("auto_support", flattenMapHyperflexAutoSupportPolicyRelationship(s.AutoSupport, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AutoSupport: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("cluster_network", flattenMapHyperflexClusterNetworkPolicyRelationship(s.ClusterNetwork, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClusterNetwork: %+v", err)
 	}
 
 	if err := d.Set("cluster_storage", flattenMapHyperflexClusterStoragePolicyRelationship(s.ClusterStorage, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClusterStorage: %+v", err)
 	}
 
 	if err := d.Set("config_context", flattenMapPolicyConfigContext(s.ConfigContext, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ConfigContext: %+v", err)
 	}
 
 	if err := d.Set("config_result", flattenMapHyperflexConfigResultRelationship(s.ConfigResult, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ConfigResult: %+v", err)
 	}
 
 	if err := d.Set("data_ip_address", (s.DataIpAddress)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property DataIpAddress: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("ext_fc_storage", flattenMapHyperflexExtFcStoragePolicyRelationship(s.ExtFcStorage, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ExtFcStorage: %+v", err)
 	}
 
 	if err := d.Set("ext_iscsi_storage", flattenMapHyperflexExtIscsiStoragePolicyRelationship(s.ExtIscsiStorage, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ExtIscsiStorage: %+v", err)
 	}
 
 	if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 	}
 
 	if err := d.Set("local_credential", flattenMapHyperflexLocalCredentialPolicyRelationship(s.LocalCredential, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property LocalCredential: %+v", err)
 	}
 
 	if err := d.Set("mac_address_prefix", (s.MacAddressPrefix)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property MacAddressPrefix: %+v", err)
 	}
 
 	if err := d.Set("mgmt_ip_address", (s.MgmtIpAddress)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property MgmtIpAddress: %+v", err)
 	}
 
 	if err := d.Set("mgmt_platform", (s.MgmtPlatform)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property MgmtPlatform: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("node_config", flattenMapHyperflexNodeConfigPolicyRelationship(s.NodeConfig, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property NodeConfig: %+v", err)
 	}
 
 	if err := d.Set("node_profile_config", flattenListHyperflexNodeProfileRelationship(s.NodeProfileConfig, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property NodeProfileConfig: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("proxy_setting", flattenMapHyperflexProxySettingPolicyRelationship(s.ProxySetting, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ProxySetting: %+v", err)
 	}
 
 	if err := d.Set("replication", (s.Replication)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Replication: %+v", err)
 	}
 
 	if err := d.Set("running_workflows", flattenListWorkflowWorkflowInfoRelationship(s.RunningWorkflows, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RunningWorkflows: %+v", err)
 	}
 
 	if err := d.Set("software_version", flattenMapHyperflexSoftwareVersionPolicyRelationship(s.SoftwareVersion, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SoftwareVersion: %+v", err)
 	}
 
 	if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.SrcTemplate, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SrcTemplate: %+v", err)
 	}
 
 	if err := d.Set("storage_data_vlan", flattenMapHyperflexNamedVlan(s.StorageDataVlan, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property StorageDataVlan: %+v", err)
 	}
 
 	if err := d.Set("sys_config", flattenMapHyperflexSysConfigPolicyRelationship(s.SysConfig, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SysConfig: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("type", (s.Type)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Type: %+v", err)
 	}
 
 	if err := d.Set("ucsm_config", flattenMapHyperflexUcsmConfigPolicyRelationship(s.UcsmConfig, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property UcsmConfig: %+v", err)
 	}
 
 	if err := d.Set("vcenter_config", flattenMapHyperflexVcenterConfigPolicyRelationship(s.VcenterConfig, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property VcenterConfig: %+v", err)
 	}
 
 	if err := d.Set("wwxn_prefix", (s.WwxnPrefix)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property WwxnPrefix: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -1869,7 +1777,7 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexClusterProfile()
+	var o = models.NewHyperflexClusterProfileWithDefaults()
 	if d.HasChange("action") {
 		v := d.Get("action")
 		x := (v.(string))
@@ -1879,136 +1787,147 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	if d.HasChange("associated_cluster") {
 		v := d.Get("associated_cluster")
 		p := make([]models.HyperflexClusterRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.Cluster")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterRelationship(o))
 		}
-		x := p[0]
-		o.SetAssociatedCluster(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAssociatedCluster(x)
+		}
 	}
 
 	if d.HasChange("auto_support") {
 		v := d.Get("auto_support")
 		p := make([]models.HyperflexAutoSupportPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.AutoSupportPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexAutoSupportPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexAutoSupportPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetAutoSupport(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAutoSupport(x)
+		}
 	}
+
+	o.SetClassId("hyperflex.ClusterProfile")
 
 	if d.HasChange("cluster_network") {
 		v := d.Get("cluster_network")
 		p := make([]models.HyperflexClusterNetworkPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterNetworkPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterNetworkPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterNetworkPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetClusterNetwork(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetClusterNetwork(x)
+		}
 	}
 
 	if d.HasChange("cluster_storage") {
 		v := d.Get("cluster_storage")
 		p := make([]models.HyperflexClusterStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexClusterStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexClusterStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetClusterStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetClusterStorage(x)
+		}
 	}
 
 	if d.HasChange("config_context") {
 		v := d.Get("config_context")
 		p := make([]models.PolicyConfigContext, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewPolicyConfigContextWithDefaults()
 			o.SetClassId("policy.ConfigContext")
 			if v, ok := l["config_state"]; ok {
@@ -2029,7 +1948,12 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 					o.SetErrorState(x)
 				}
 			}
-			o.SetObjectType("policy.ConfigContext")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["oper_state"]; ok {
 				{
 					x := (v.(string))
@@ -2038,40 +1962,44 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetConfigContext(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConfigContext(x)
+		}
 	}
 
 	if d.HasChange("config_result") {
 		v := d.Get("config_result")
 		p := make([]models.HyperflexConfigResultRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ConfigResult")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexConfigResultRelationship())
+			p = append(p, models.MoMoRefAsHyperflexConfigResultRelationship(o))
 		}
-		x := p[0]
-		o.SetConfigResult(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConfigResult(x)
+		}
 	}
 
 	if d.HasChange("data_ip_address") {
@@ -2089,65 +2017,69 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	if d.HasChange("ext_fc_storage") {
 		v := d.Get("ext_fc_storage")
 		p := make([]models.HyperflexExtFcStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ExtFcStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexExtFcStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexExtFcStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetExtFcStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtFcStorage(x)
+		}
 	}
 
 	if d.HasChange("ext_iscsi_storage") {
 		v := d.Get("ext_iscsi_storage")
 		p := make([]models.HyperflexExtIscsiStoragePolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ExtIscsiStoragePolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexExtIscsiStoragePolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexExtIscsiStoragePolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetExtIscsiStorage(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtIscsiStorage(x)
+		}
 	}
 
 	if d.HasChange("hypervisor_type") {
@@ -2159,33 +2091,35 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	if d.HasChange("local_credential") {
 		v := d.Get("local_credential")
 		p := make([]models.HyperflexLocalCredentialPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.LocalCredentialPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexLocalCredentialPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexLocalCredentialPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetLocalCredential(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLocalCredential(x)
+		}
 	}
 
 	if d.HasChange("mac_address_prefix") {
@@ -2221,33 +2155,35 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	if d.HasChange("node_config") {
 		v := d.Get("node_config")
 		p := make([]models.HyperflexNodeConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NodeConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexNodeConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexNodeConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetNodeConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetNodeConfig(x)
+		}
 	}
 
 	if d.HasChange("node_profile_config") {
@@ -2258,124 +2194,99 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NodeProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexNodeProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexNodeProfileRelationship(o))
 		}
-		o.SetNodeProfileConfig(x)
+		if len(x) > 0 {
+			o.SetNodeProfileConfig(x)
+		}
 	}
+
+	o.SetObjectType("hyperflex.ClusterProfile")
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("proxy_setting") {
 		v := d.Get("proxy_setting")
 		p := make([]models.HyperflexProxySettingPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ProxySettingPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexProxySettingPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexProxySettingPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetProxySetting(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetProxySetting(x)
+		}
 	}
 
 	if d.HasChange("replication") {
@@ -2392,99 +2303,105 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("workflow.WorkflowInfo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsWorkflowWorkflowInfoRelationship())
+			x = append(x, models.MoMoRefAsWorkflowWorkflowInfoRelationship(o))
 		}
-		o.SetRunningWorkflows(x)
+		if len(x) > 0 {
+			o.SetRunningWorkflows(x)
+		}
 	}
 
 	if d.HasChange("software_version") {
 		v := d.Get("software_version")
 		p := make([]models.HyperflexSoftwareVersionPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.SoftwareVersionPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexSoftwareVersionPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexSoftwareVersionPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetSoftwareVersion(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSoftwareVersion(x)
+		}
 	}
 
 	if d.HasChange("src_template") {
 		v := d.Get("src_template")
 		p := make([]models.PolicyAbstractProfileRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsPolicyAbstractProfileRelationship())
+			p = append(p, models.MoMoRefAsPolicyAbstractProfileRelationship(o))
 		}
-		x := p[0]
-		o.SetSrcTemplate(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSrcTemplate(x)
+		}
 	}
 
 	if d.HasChange("storage_data_vlan") {
 		v := d.Get("storage_data_vlan")
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -2493,7 +2410,12 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -2502,40 +2424,44 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetStorageDataVlan(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetStorageDataVlan(x)
+		}
 	}
 
 	if d.HasChange("sys_config") {
 		v := d.Get("sys_config")
 		p := make([]models.HyperflexSysConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.SysConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexSysConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexSysConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetSysConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSysConfig(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -2559,7 +2485,9 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("type") {
@@ -2571,65 +2499,69 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	if d.HasChange("ucsm_config") {
 		v := d.Get("ucsm_config")
 		p := make([]models.HyperflexUcsmConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.UcsmConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexUcsmConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexUcsmConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetUcsmConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUcsmConfig(x)
+		}
 	}
 
 	if d.HasChange("vcenter_config") {
 		v := d.Get("vcenter_config")
 		p := make([]models.HyperflexVcenterConfigPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.VcenterConfigPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexVcenterConfigPolicyRelationship())
+			p = append(p, models.MoMoRefAsHyperflexVcenterConfigPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetVcenterConfig(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVcenterConfig(x)
+		}
 	}
 
 	if d.HasChange("wwxn_prefix") {
@@ -2641,7 +2573,7 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 	r := conn.ApiClient.HyperflexApi.UpdateHyperflexClusterProfile(conn.ctx, d.Id()).HyperflexClusterProfile(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -2652,11 +2584,10 @@ func resourceHyperflexClusterProfileDelete(d *schema.ResourceData, meta interfac
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.HyperflexApi.DeleteHyperflexClusterProfile(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexClusterProfile(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

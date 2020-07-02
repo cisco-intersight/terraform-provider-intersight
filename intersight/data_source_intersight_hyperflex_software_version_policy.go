@@ -32,11 +32,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -83,11 +78,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -127,11 +117,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -184,11 +169,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -211,45 +191,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"server_firmware_version": {
 				Description: "Desired server firmware version to apply on the HyperFlex Cluster.",
 				Type:        schema.TypeString,
@@ -268,11 +209,6 @@ func dataSourceHyperflexSoftwareVersionPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -326,7 +262,7 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexSoftwareVersionPolicy()
+	var o = models.NewHyperflexSoftwareVersionPolicyWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -364,73 +300,83 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.HyperflexApi.GetHyperflexSoftwareVersionPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.HyperflexApi.GetHyperflexSoftwareVersionPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.HyperflexSoftwareVersionPolicyList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to HyperflexSoftwareVersionPolicy: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewHyperflexSoftwareVersionPolicy()
+			var s = models.NewHyperflexSoftwareVersionPolicyWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
 			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("hxdp_version", (s.HxdpVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HxdpVersion: %+v", err)
 			}
 
 			if err := d.Set("hxdp_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.HxdpVersionInfo, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HxdpVersionInfo: %+v", err)
 			}
 			if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HypervisorVersion: %+v", err)
 			}
 
 			if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.HypervisorVersionInfo, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HypervisorVersionInfo: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
 			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 			if err := d.Set("server_firmware_version", (s.ServerFirmwareVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ServerFirmwareVersion: %+v", err)
 			}
 
 			if err := d.Set("server_firmware_version_info", flattenMapFirmwareDistributableRelationship(s.ServerFirmwareVersionInfo, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ServerFirmwareVersionInfo: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("upgrade_types", (s.UpgradeTypes)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UpgradeTypes: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

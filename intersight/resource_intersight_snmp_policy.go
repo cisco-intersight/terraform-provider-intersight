@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -77,11 +78,6 @@ func resourceSnmpPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -92,6 +88,7 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -105,45 +102,6 @@ func resourceSnmpPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"profiles": {
 				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
@@ -156,11 +114,6 @@ func resourceSnmpPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -171,6 +124,7 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -213,6 +167,7 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"port": {
 							Description: "Port used by the server to communicate with trap destination. Enter a value between 1-65535.",
@@ -230,7 +185,7 @@ func resourceSnmpPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "SNMP version used for the trap.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -284,6 +239,7 @@ func resourceSnmpPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"privacy_password": {
 							Description: "Privacy password for the user.",
@@ -348,7 +304,7 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewSnmpPolicy()
+	var o = models.NewSnmpPolicyWithDefaults()
 	if v, ok := d.GetOk("access_community_string"); ok {
 		x := (v.(string))
 		o.SetAccessCommunityString(x)
@@ -366,8 +322,8 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 		o.SetDescription(x)
 	}
 
-	if v, ok := d.GetOk("enabled"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enabled"); ok {
+		x := v.(bool)
 		o.SetEnabled(x)
 	}
 
@@ -390,64 +346,35 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
@@ -457,28 +384,29 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("snmp_port"); ok {
@@ -505,7 +433,12 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("snmp.Trap")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["port"]; ok {
 				{
 					x := int64(v.(int))
@@ -524,7 +457,7 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetUser(x)
 				}
 			}
-			if v, ok := l["version"]; ok {
+			if v, ok := l["nr_version"]; ok {
 				{
 					x := (v.(string))
 					o.SetVersion(x)
@@ -532,7 +465,9 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetSnmpTraps(x)
+		if len(x) > 0 {
+			o.SetSnmpTraps(x)
+		}
 	}
 
 	if v, ok := d.GetOk("snmp_users"); ok {
@@ -572,7 +507,12 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("snmp.User")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["privacy_password"]; ok {
 				{
 					x := (v.(string))
@@ -593,7 +533,9 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetSnmpUsers(x)
+		if len(x) > 0 {
+			o.SetSnmpUsers(x)
+		}
 	}
 
 	if v, ok := d.GetOk("sys_contact"); ok {
@@ -626,7 +568,9 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("trap_community"); ok {
@@ -637,7 +581,7 @@ func resourceSnmpPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	r := conn.ApiClient.SnmpApi.CreateSnmpPolicy(conn.ctx).SnmpPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -647,14 +591,15 @@ func detachSnmpPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewSnmpPolicy()
-
-	o.Profiles = new([]models.PolicyAbstractConfigProfileRelationship)
+	var o = models.NewSnmpPolicyWithDefaults()
+	o.SetClassId("snmp.Policy")
+	o.SetObjectType("snmp.Policy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
 	r := conn.ApiClient.SnmpApi.UpdateSnmpPolicy(conn.ctx, d.Id()).SnmpPolicy(*o)
 	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while creating: %s", err.Error())
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
 	return err
 }
@@ -668,84 +613,79 @@ func resourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("access_community_string", (s.AccessCommunityString)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AccessCommunityString: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("community_access", (s.CommunityAccess)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property CommunityAccess: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("enabled", (s.Enabled)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 	}
 
 	if err := d.Set("engine_id", (s.EngineId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EngineId: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
 	if err := d.Set("snmp_port", (s.SnmpPort)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SnmpPort: %+v", err)
 	}
 
 	if err := d.Set("snmp_traps", flattenListSnmpTrap(s.SnmpTraps, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SnmpTraps: %+v", err)
 	}
 
 	if err := d.Set("snmp_users", flattenListSnmpUser(s.SnmpUsers, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SnmpUsers: %+v", err)
 	}
 
 	if err := d.Set("sys_contact", (s.SysContact)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SysContact: %+v", err)
 	}
 
 	if err := d.Set("sys_location", (s.SysLocation)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SysLocation: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("trap_community", (s.TrapCommunity)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TrapCommunity: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -757,12 +697,14 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewSnmpPolicy()
+	var o = models.NewSnmpPolicyWithDefaults()
 	if d.HasChange("access_community_string") {
 		v := d.Get("access_community_string")
 		x := (v.(string))
 		o.SetAccessCommunityString(x)
 	}
+
+	o.SetClassId("snmp.Policy")
 
 	if d.HasChange("community_access") {
 		v := d.Get("community_access")
@@ -800,68 +742,40 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.SetName(x)
 	}
 
+	o.SetObjectType("snmp.Policy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("profiles") {
@@ -872,28 +786,29 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if d.HasChange("snmp_port") {
@@ -922,7 +837,12 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("snmp.Trap")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["port"]; ok {
 				{
 					x := int64(v.(int))
@@ -941,7 +861,7 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetUser(x)
 				}
 			}
-			if v, ok := l["version"]; ok {
+			if v, ok := l["nr_version"]; ok {
 				{
 					x := (v.(string))
 					o.SetVersion(x)
@@ -949,7 +869,9 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetSnmpTraps(x)
+		if len(x) > 0 {
+			o.SetSnmpTraps(x)
+		}
 	}
 
 	if d.HasChange("snmp_users") {
@@ -990,7 +912,12 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("snmp.User")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["privacy_password"]; ok {
 				{
 					x := (v.(string))
@@ -1011,7 +938,9 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetSnmpUsers(x)
+		if len(x) > 0 {
+			o.SetSnmpUsers(x)
+		}
 	}
 
 	if d.HasChange("sys_contact") {
@@ -1047,7 +976,9 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("trap_community") {
@@ -1059,7 +990,7 @@ func resourceSnmpPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	r := conn.ApiClient.SnmpApi.UpdateSnmpPolicy(conn.ctx, d.Id()).SnmpPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1070,15 +1001,18 @@ func resourceSnmpPolicyDelete(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	e := detachSnmpPolicyProfiles(d, meta)
-	if e != nil {
-		return e
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachSnmpPolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
 	}
-
-	r := conn.ApiClient.SnmpApi.DeleteSnmpPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.SnmpApi.DeleteSnmpPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

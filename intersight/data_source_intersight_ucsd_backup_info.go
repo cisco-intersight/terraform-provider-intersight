@@ -96,7 +96,7 @@ func dataSourceUcsdBackupInfo() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Version of the connector pack.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -153,45 +153,6 @@ func dataSourceUcsdBackupInfo() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"product_version": {
 				Description: "The end device product version when the backup image was taken.",
 				Type:        schema.TypeString,
@@ -216,11 +177,6 @@ func dataSourceUcsdBackupInfo() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -287,7 +243,7 @@ func dataSourceUcsdBackupInfoRead(d *schema.ResourceData, meta interface{}) erro
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewUcsdBackupInfo()
+	var o = models.NewUcsdBackupInfoWithDefaults()
 	if v, ok := d.GetOk("backup_file_name"); ok {
 		x := (v.(string))
 		o.SetBackupFileName(x)
@@ -365,87 +321,97 @@ func dataSourceUcsdBackupInfoRead(d *schema.ResourceData, meta interface{}) erro
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.UcsdApi.GetUcsdBackupInfoList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.UcsdApi.GetUcsdBackupInfoList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.UcsdBackupInfoList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to UcsdBackupInfo: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewUcsdBackupInfo()
+			var s = models.NewUcsdBackupInfoWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("backup_file_name", (s.BackupFileName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BackupFileName: %+v", err)
 			}
 			if err := d.Set("backup_location", (s.BackupLocation)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BackupLocation: %+v", err)
 			}
 			if err := d.Set("backup_server_ip", (s.BackupServerIp)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BackupServerIp: %+v", err)
 			}
 			if err := d.Set("backup_size", (s.BackupSize)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BackupSize: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
 			if err := d.Set("connectors", flattenListUcsdConnectorPack(s.Connectors, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Connectors: %+v", err)
 			}
 			if err := d.Set("duration", (s.Duration)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Duration: %+v", err)
 			}
 			if err := d.Set("failure_reason", (s.FailureReason)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FailureReason: %+v", err)
 			}
 			if err := d.Set("is_purged", (s.IsPurged)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IsPurged: %+v", err)
 			}
 
 			if err := d.Set("last_modified", (s.LastModified).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LastModified: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("percentage_completion", (s.PercentageCompletion)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PercentageCompletion: %+v", err)
 			}
 			if err := d.Set("product_version", (s.ProductVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProductVersion: %+v", err)
 			}
 			if err := d.Set("protocol", (s.Protocol)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("stage_completion", (s.StageCompletion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StageCompletion: %+v", err)
 			}
 
 			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
 			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

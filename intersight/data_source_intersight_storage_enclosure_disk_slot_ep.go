@@ -21,9 +21,10 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -41,21 +42,10 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -65,11 +55,6 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -92,6 +77,18 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 					},
 				},
 			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"presence": {
 				Description: "This field identifies the disk is present in the enclosure slot.",
 				Type:        schema.TypeString,
@@ -110,11 +107,6 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -161,11 +153,6 @@ func dataSourceStorageEnclosureDiskSlotEp() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -214,7 +201,7 @@ func dataSourceStorageEnclosureDiskSlotEpRead(d *schema.ResourceData, meta inter
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewStorageEnclosureDiskSlotEp()
+	var o = models.NewStorageEnclosureDiskSlotEpWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -260,64 +247,78 @@ func dataSourceStorageEnclosureDiskSlotEpRead(d *schema.ResourceData, meta inter
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.StorageApi.GetStorageEnclosureDiskSlotEpList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.StorageApi.GetStorageEnclosureDiskSlotEpList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StorageEnclosureDiskSlotEpList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StorageEnclosureDiskSlotEp: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewStorageEnclosureDiskSlotEp()
+			var s = models.NewStorageEnclosureDiskSlotEpWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 			if err := d.Set("drive_path", (s.DrivePath)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DrivePath: %+v", err)
 			}
 			if err := d.Set("health", (s.Health)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Health: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("presence", (s.Presence)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("slot", (s.Slot)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot: %+v", err)
 			}
 
 			if err := d.Set("storage_enclosure", flattenMapStorageEnclosureRelationship(s.StorageEnclosure, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StorageEnclosure: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

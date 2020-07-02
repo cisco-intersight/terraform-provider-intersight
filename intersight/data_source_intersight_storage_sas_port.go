@@ -27,12 +27,13 @@ func dataSourceStorageSasPort() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"disk_id": {
-				Description: "The disk identifier.",
+				Description: "The unique disk identifier.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -49,33 +50,10 @@ func dataSourceStorageSasPort() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"link_description": {
-				Description: "The link description.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"link_speed": {
-				Description: "The link speed negotiated for communication.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -85,11 +63,6 @@ func dataSourceStorageSasPort() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -112,6 +85,30 @@ func dataSourceStorageSasPort() *schema.Resource {
 					},
 				},
 			},
+			"link_description": {
+				Description: "The description for the link.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"link_speed": {
+				Description: "The link speed negotiated for communication.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -125,11 +122,6 @@ func dataSourceStorageSasPort() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -171,11 +163,6 @@ func dataSourceStorageSasPort() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -224,7 +211,7 @@ func dataSourceStorageSasPortRead(d *schema.ResourceData, meta interface{}) erro
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewStorageSasPort()
+	var o = models.NewStorageSasPortWithDefaults()
 	if v, ok := d.GetOk("address"); ok {
 		x := (v.(string))
 		o.SetAddress(x)
@@ -274,67 +261,81 @@ func dataSourceStorageSasPortRead(d *schema.ResourceData, meta interface{}) erro
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.StorageApi.GetStorageSasPortList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.StorageApi.GetStorageSasPortList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StorageSasPortList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StorageSasPort: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewStorageSasPort()
+			var s = models.NewStorageSasPortWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("address", (s.Address)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Address: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("disk_id", (s.DiskId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DiskId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 			if err := d.Set("end_point_id", (s.EndPointId)); err != nil {
-				return err
-			}
-			if err := d.Set("link_description", (s.LinkDescription)); err != nil {
-				return err
-			}
-			if err := d.Set("link_speed", (s.LinkSpeed)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EndPointId: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("link_description", (s.LinkDescription)); err != nil {
+				return fmt.Errorf("error occurred while setting property LinkDescription: %+v", err)
+			}
+			if err := d.Set("link_speed", (s.LinkSpeed)); err != nil {
+				return fmt.Errorf("error occurred while setting property LinkSpeed: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
 			if err := d.Set("storage_physical_disk", flattenMapStoragePhysicalDiskRelationship(s.StoragePhysicalDisk, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StoragePhysicalDisk: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

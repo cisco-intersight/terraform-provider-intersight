@@ -41,6 +41,9 @@ func getRequestParams(in []byte) string {
 		return ""
 	}
 	for k, v := range s {
+		if k == "ClassId" || k == "ObjectType" {
+			continue
+		}
 		log.Printf("Type: %+v", reflect.TypeOf(v).Kind())
 		switch reflect.TypeOf(v).Kind() {
 		case reflect.String:

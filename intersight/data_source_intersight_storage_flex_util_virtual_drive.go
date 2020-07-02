@@ -21,9 +21,10 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -32,36 +33,19 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"drive_status": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Status of the Flex Util virtual drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"drive_type": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
+				Description: "Type of virtual drive managed by flex util controller.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"partition_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"partition_name": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -71,11 +55,6 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -98,6 +77,28 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 					},
 				},
 			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"partition_id": {
+				Description: "Disk Partition Id of virtual drive managed by flex util controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partition_name": {
+				Description: "Partition name of the Flex Util virtual drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -111,11 +112,6 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -139,8 +135,9 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				},
 			},
 			"resident_image": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "The resident image on the flex util virtual Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -149,8 +146,9 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"size": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Size of the Flex Util virtual drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"storage_flex_util_controller": {
 				Description: "A reference to a storageFlexUtilController resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -165,11 +163,6 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -211,8 +204,9 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				},
 			},
 			"virtual_drive": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Virtual drive on the Flex Util controller.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}
@@ -222,7 +216,7 @@ func dataSourceStorageFlexUtilVirtualDriveRead(d *schema.ResourceData, meta inte
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewStorageFlexUtilVirtualDrive()
+	var o = models.NewStorageFlexUtilVirtualDriveWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -280,73 +274,87 @@ func dataSourceStorageFlexUtilVirtualDriveRead(d *schema.ResourceData, meta inte
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.StorageApi.GetStorageFlexUtilVirtualDriveList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.StorageApi.GetStorageFlexUtilVirtualDriveList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StorageFlexUtilVirtualDriveList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StorageFlexUtilVirtualDrive: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewStorageFlexUtilVirtualDrive()
+			var s = models.NewStorageFlexUtilVirtualDriveWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 			if err := d.Set("drive_status", (s.DriveStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DriveStatus: %+v", err)
 			}
 			if err := d.Set("drive_type", (s.DriveType)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("partition_id", (s.PartitionId)); err != nil {
-				return err
-			}
-			if err := d.Set("partition_name", (s.PartitionName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DriveType: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("partition_id", (s.PartitionId)); err != nil {
+				return fmt.Errorf("error occurred while setting property PartitionId: %+v", err)
+			}
+			if err := d.Set("partition_name", (s.PartitionName)); err != nil {
+				return fmt.Errorf("error occurred while setting property PartitionName: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("resident_image", (s.ResidentImage)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ResidentImage: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("size", (s.Size)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Size: %+v", err)
 			}
 
 			if err := d.Set("storage_flex_util_controller", flattenMapStorageFlexUtilControllerRelationship(s.StorageFlexUtilController, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StorageFlexUtilController: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("virtual_drive", (s.VirtualDrive)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property VirtualDrive: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

@@ -15,12 +15,14 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 		Read: dataSourceStorageFlexUtilPhysicalDriveRead,
 		Schema: map[string]*schema.Schema{
 			"block_size": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Block size of the FlexUtil Physical drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"capacity": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Capacity of the FlexUtil Physical drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -33,9 +35,10 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Optional: true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -44,54 +47,19 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"drives_enabled": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "The number of drives enabled in the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"health": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"manufacturer_date": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"manufacturer_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"model": {
-				Description: "This field identifies the model of the given component.",
+				Description: "Health of the FlexUtil Physical drive.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"oem_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"partition_count": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"pd_status": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -101,11 +69,6 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -128,25 +91,72 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 					},
 				},
 			},
+			"manufacturer_date": {
+				Description: "Manufacturing date of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"manufacturer_id": {
+				Description: "Manufacturer identity of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"model": {
+				Description: "This field identifies the model of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"oem_id": {
+				Description: "The OEM Identifier of the FlexUtil physical drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"partition_count": {
+				Description: "The number of partitions present on the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"pd_status": {
+				Description: "Status of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"physical_drive": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"product_name": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Product name of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"product_revision": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Product revision of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"read_error_count": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Read error count of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"read_error_threshold": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Read error threshold for FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -161,11 +171,6 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -189,9 +194,10 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -218,11 +224,6 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -274,12 +275,14 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Optional: true,
 			},
 			"write_error_count": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Write error count of the FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"write_error_threshold": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Write error threshold for FlexUtil Physical Drive.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}
@@ -289,7 +292,7 @@ func dataSourceStorageFlexUtilPhysicalDriveRead(d *schema.ResourceData, meta int
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewStorageFlexUtilPhysicalDrive()
+	var o = models.NewStorageFlexUtilPhysicalDriveWithDefaults()
 	if v, ok := d.GetOk("block_size"); ok {
 		x := (v.(string))
 		o.SetBlockSize(x)
@@ -407,118 +410,132 @@ func dataSourceStorageFlexUtilPhysicalDriveRead(d *schema.ResourceData, meta int
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.StorageApi.GetStorageFlexUtilPhysicalDriveList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.StorageApi.GetStorageFlexUtilPhysicalDriveList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StorageFlexUtilPhysicalDriveList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StorageFlexUtilPhysicalDrive: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewStorageFlexUtilPhysicalDrive()
+			var s = models.NewStorageFlexUtilPhysicalDriveWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("block_size", (s.BlockSize)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BlockSize: %+v", err)
 			}
 			if err := d.Set("capacity", (s.Capacity)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Capacity: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("controller", (s.Controller)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Controller: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 			if err := d.Set("drives_enabled", (s.DrivesEnabled)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DrivesEnabled: %+v", err)
 			}
 			if err := d.Set("health", (s.Health)); err != nil {
-				return err
-			}
-			if err := d.Set("manufacturer_date", (s.ManufacturerDate)); err != nil {
-				return err
-			}
-			if err := d.Set("manufacturer_id", (s.ManufacturerId)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oem_id", (s.OemId)); err != nil {
-				return err
-			}
-			if err := d.Set("partition_count", (s.PartitionCount)); err != nil {
-				return err
-			}
-			if err := d.Set("pd_status", (s.PdStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Health: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("manufacturer_date", (s.ManufacturerDate)); err != nil {
+				return fmt.Errorf("error occurred while setting property ManufacturerDate: %+v", err)
+			}
+			if err := d.Set("manufacturer_id", (s.ManufacturerId)); err != nil {
+				return fmt.Errorf("error occurred while setting property ManufacturerId: %+v", err)
+			}
+			if err := d.Set("model", (s.Model)); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oem_id", (s.OemId)); err != nil {
+				return fmt.Errorf("error occurred while setting property OemId: %+v", err)
+			}
+			if err := d.Set("partition_count", (s.PartitionCount)); err != nil {
+				return fmt.Errorf("error occurred while setting property PartitionCount: %+v", err)
+			}
+			if err := d.Set("pd_status", (s.PdStatus)); err != nil {
+				return fmt.Errorf("error occurred while setting property PdStatus: %+v", err)
 			}
 			if err := d.Set("physical_drive", (s.PhysicalDrive)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PhysicalDrive: %+v", err)
 			}
 			if err := d.Set("product_name", (s.ProductName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProductName: %+v", err)
 			}
 			if err := d.Set("product_revision", (s.ProductRevision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProductRevision: %+v", err)
 			}
 			if err := d.Set("read_error_count", (s.ReadErrorCount)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ReadErrorCount: %+v", err)
 			}
 			if err := d.Set("read_error_threshold", (s.ReadErrorThreshold)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ReadErrorThreshold: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
 			if err := d.Set("storage_flex_util_controller", flattenMapStorageFlexUtilControllerRelationship(s.StorageFlexUtilController, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StorageFlexUtilController: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			if err := d.Set("write_enabled", (s.WriteEnabled)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property WriteEnabled: %+v", err)
 			}
 			if err := d.Set("write_error_count", (s.WriteErrorCount)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property WriteErrorCount: %+v", err)
 			}
 			if err := d.Set("write_error_threshold", (s.WriteErrorThreshold)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property WriteErrorThreshold: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

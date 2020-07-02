@@ -15,7 +15,7 @@ func dataSourceMemoryArray() *schema.Resource {
 		Read: dataSourceMemoryArrayRead,
 		Schema: map[string]*schema.Schema{
 			"array_id": {
-				Description: "ID of the memory array on a server.",
+				Description: "The instance number of the memory array.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -25,6 +25,41 @@ func dataSourceMemoryArray() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"compute_blade": {
+				Description: "A reference to a computeBlade resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"compute_board": {
 				Description: "A reference to a computeBoard resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -39,11 +74,6 @@ func dataSourceMemoryArray() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -66,6 +96,41 @@ func dataSourceMemoryArray() *schema.Resource {
 					},
 				},
 			},
+			"compute_rack_unit": {
+				Description: "A reference to a computeRackUnit resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"cpu_id": {
 				Description: "ID of the CPU that access this memory array.",
 				Type:        schema.TypeInt,
@@ -79,9 +144,10 @@ func dataSourceMemoryArray() *schema.Resource {
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -90,9 +156,45 @@ func dataSourceMemoryArray() *schema.Resource {
 				Computed:    true,
 			},
 			"error_correction": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The primary hardware error detection or correction method supported by the memory array.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"max_capacity": {
 				Description: "Maximum capacity of all the memory units on a server.",
@@ -101,9 +203,10 @@ func dataSourceMemoryArray() *schema.Resource {
 				Computed:    true,
 			},
 			"max_devices": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The maximum number of slots or sockets available for memory devices in the memory array.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"model": {
 				Description: "This field identifies the model of the given component.",
@@ -124,48 +227,10 @@ func dataSourceMemoryArray() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
+				Description: "The power state indicator of the memory array.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"persistent_memory_units": {
 				Description: "An array of relationships to memoryPersistentMemoryUnit resources.",
@@ -179,11 +244,6 @@ func dataSourceMemoryArray() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -207,9 +267,10 @@ func dataSourceMemoryArray() *schema.Resource {
 				},
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The presence of atleast one memory device in the array. Valid values are 'equipped' and 'absent'.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -224,11 +285,6 @@ func dataSourceMemoryArray() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -252,9 +308,10 @@ func dataSourceMemoryArray() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -299,11 +356,6 @@ func dataSourceMemoryArray() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -339,7 +391,7 @@ func dataSourceMemoryArrayRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewMemoryArray()
+	var o = models.NewMemoryArrayWithDefaults()
 	if v, ok := d.GetOk("array_id"); ok {
 		x := int64(v.(int))
 		o.SetArrayId(x)
@@ -417,96 +469,118 @@ func dataSourceMemoryArrayRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.MemoryApi.GetMemoryArrayList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.MemoryApi.GetMemoryArrayList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.MemoryArrayList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to MemoryArray: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewMemoryArray()
+			var s = models.NewMemoryArrayWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("array_id", (s.ArrayId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ArrayId: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
+			}
+
+			if err := d.Set("compute_blade", flattenMapComputeBladeRelationship(s.ComputeBlade, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ComputeBlade: %+v", err)
 			}
 
 			if err := d.Set("compute_board", flattenMapComputeBoardRelationship(s.ComputeBoard, d)); err != nil {
-				return err
-			}
-			if err := d.Set("cpu_id", (s.CpuId)); err != nil {
-				return err
-			}
-			if err := d.Set("current_capacity", (s.CurrentCapacity)); err != nil {
-				return err
-			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
-			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
-			}
-			if err := d.Set("error_correction", (s.ErrorCorrection)); err != nil {
-				return err
-			}
-			if err := d.Set("max_capacity", (s.MaxCapacity)); err != nil {
-				return err
-			}
-			if err := d.Set("max_devices", (s.MaxDevices)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_power_state", (s.OperPowerState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ComputeBoard: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("compute_rack_unit", flattenMapComputeRackUnitRelationship(s.ComputeRackUnit, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ComputeRackUnit: %+v", err)
+			}
+			if err := d.Set("cpu_id", (s.CpuId)); err != nil {
+				return fmt.Errorf("error occurred while setting property CpuId: %+v", err)
+			}
+			if err := d.Set("current_capacity", (s.CurrentCapacity)); err != nil {
+				return fmt.Errorf("error occurred while setting property CurrentCapacity: %+v", err)
+			}
+			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
+			}
+			if err := d.Set("dn", (s.Dn)); err != nil {
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
+			}
+			if err := d.Set("error_correction", (s.ErrorCorrection)); err != nil {
+				return fmt.Errorf("error occurred while setting property ErrorCorrection: %+v", err)
+			}
+
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("max_capacity", (s.MaxCapacity)); err != nil {
+				return fmt.Errorf("error occurred while setting property MaxCapacity: %+v", err)
+			}
+			if err := d.Set("max_devices", (s.MaxDevices)); err != nil {
+				return fmt.Errorf("error occurred while setting property MaxDevices: %+v", err)
+			}
+			if err := d.Set("model", (s.Model)); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_power_state", (s.OperPowerState)); err != nil {
+				return fmt.Errorf("error occurred while setting property OperPowerState: %+v", err)
 			}
 
 			if err := d.Set("persistent_memory_units", flattenListMemoryPersistentMemoryUnitRelationship(s.PersistentMemoryUnits, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PersistentMemoryUnits: %+v", err)
 			}
 			if err := d.Set("presence", (s.Presence)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
 			if err := d.Set("units", flattenListMemoryUnitRelationship(s.Units, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Units: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

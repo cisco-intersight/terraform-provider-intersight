@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -31,8 +32,9 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
-						"source": {
+						"nr_source": {
 							Description: "Source of the CDN. It can either be user specified or be the same as the vNIC name.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -67,11 +69,6 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -82,6 +79,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -107,11 +105,6 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -122,6 +115,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -147,11 +141,6 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -162,6 +151,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -173,6 +163,11 @@ func resourceVnicEthIf() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"failover_enabled": {
+				Description: "Setting this to true esnures that the traffic failsover from one uplink to another auotmatically in case of an uplink failure. It is applicable for Cisco VIC adapters only which are connected to Fabric Interconnect cluster. The uplink if specified determines the primary uplink in case of a failover.",
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"lan_connectivity_policy": {
 				Description: "A reference to a vnicLanConnectivityPolicy resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -187,10 +182,41 @@ func resourceVnicEthIf() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"lcp_vnic": {
+				Description: "A reference to a vnicEthIf resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -202,6 +228,85 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"mac_address": {
+				Description: "The MAC address that is assigned to the vnic based on the MAC pool that has been assigned to the LAN Connectivity Policy.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"mac_lease": {
+				Description: "A reference to a macpoolLease resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"mac_pool": {
+				Description: "A reference to a macpoolPool resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -237,86 +342,6 @@ func resourceVnicEthIf() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
-			"organization": {
-				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"placement": {
 				Description: "Placement Settings for the virtual interface.",
 				Type:        schema.TypeList,
@@ -339,11 +364,18 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"pci_link": {
 							Description: "The PCI Link used as transport for the virtual interface. All VIC adapters have a single PCI link except VIC 1385 which has two.",
 							Type:        schema.TypeInt,
 							Optional:    true,
+						},
+						"switch_id": {
+							Description: "The fabric port to which the vnics will be associated.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Default:     "None",
 						},
 						"uplink": {
 							Description: "Adapter port on which the virtual interface will be created.",
@@ -354,6 +386,83 @@ func resourceVnicEthIf() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"profile": {
+				Description: "A reference to a policyAbstractConfigProfile resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"sp_vnics": {
+				Description: "An array of relationships to vnicEthIf resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"standby_vif_id": {
+				Description: "The Standby VIF Id is applicable for failover enabled vNICS. It should be the same as the channel number of the standby vethernet created on switch in order to set up the standby data path.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"tags": {
 				Type:     schema.TypeList,
@@ -391,7 +500,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "Number of usNIC interfaces to be created.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -400,6 +509,7 @@ func resourceVnicEthIf() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"usnic_adapter_policy": {
 							Description: "Ethernet Adapter policy to be associated with the usNICs.",
@@ -410,6 +520,12 @@ func resourceVnicEthIf() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"vif_id": {
+				Description: "The Vif Id should be same as the channel number of the vethernet created on switch in order to set up the data path. The property is applicable only for FI attached servers where a vethernet is created on the switch for every vNIC.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"vmq_settings": {
 				Description: "Virtual Machine Queue Settings for the virtual interface that allow efficient transfer of network traffic to the guest OS.",
@@ -429,8 +545,34 @@ func resourceVnicEthIf() *schema.Resource {
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
+						"multi_queue_support": {
+							Description: "Enables Virtual Machine Multi-Queue feature on the virtual interface. VMMQ allows configuration of multiple I/O queues for a single VM and, thus, distributes traffic across multiple CPU cores in a VM.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"num_interrupts": {
+							Description: "The number of interrupt resources to be allocated. Recommended value is the number of CPU threads or logical processors available in the server.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"num_sub_vnics": {
+							Description: "The number of sub vnics to be created.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"num_vmqs": {
+							Description: "The number of hardware Virtual Machine Queues to be allocated. The number of VMQs per adapter must be one more than the maximum number of VM NICs.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"vmmq_adapter_policy": {
+							Description: "Ethernet Adapter policy to be associated with the subVnics. The Transmit Queue and Receive Queue resource value of VMMQ adapter policy should be greater than or equal to the configured number of sub vnics.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -447,15 +589,21 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicEthIf()
+	var o = models.NewVnicEthIfWithDefaults()
 	if v, ok := d.GetOk("cdn"); ok {
 		p := make([]models.VnicCdn, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicCdnWithDefaults()
 			o.SetClassId("vnic.Cdn")
-			o.SetObjectType("vnic.Cdn")
-			if v, ok := l["source"]; ok {
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["nr_source"]; ok {
 				{
 					x := (v.(string))
 					o.SetSource(x)
@@ -469,134 +617,253 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetCdn(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCdn(x)
+		}
 	}
 
 	o.SetClassId("vnic.EthIf")
 
 	if v, ok := d.GetOk("eth_adapter_policy"); ok {
 		p := make([]models.VnicEthAdapterPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthAdapterPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthAdapterPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthAdapterPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthAdapterPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthAdapterPolicy(x)
+		}
 	}
 
 	if v, ok := d.GetOk("eth_network_policy"); ok {
 		p := make([]models.VnicEthNetworkPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthNetworkPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthNetworkPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthNetworkPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthNetworkPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthNetworkPolicy(x)
+		}
 	}
 
 	if v, ok := d.GetOk("eth_qos_policy"); ok {
 		p := make([]models.VnicEthQosPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthQosPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthQosPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthQosPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthQosPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthQosPolicy(x)
+		}
+	}
+
+	if v, ok := d.GetOkExists("failover_enabled"); ok {
+		x := v.(bool)
+		o.SetFailoverEnabled(x)
 	}
 
 	if v, ok := d.GetOk("lan_connectivity_policy"); ok {
 		p := make([]models.VnicLanConnectivityPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.LanConnectivityPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicLanConnectivityPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicLanConnectivityPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetLanConnectivityPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLanConnectivityPolicy(x)
+		}
+	}
+
+	if v, ok := d.GetOk("lcp_vnic"); ok {
+		p := make([]models.VnicEthIfRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsVnicEthIfRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLcpVnic(x)
+		}
+	}
+
+	if v, ok := d.GetOk("mac_address"); ok {
+		x := (v.(string))
+		o.SetMacAddress(x)
+	}
+
+	if v, ok := d.GetOk("mac_lease"); ok {
+		p := make([]models.MacpoolLeaseRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsMacpoolLeaseRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacLease(x)
+		}
+	}
+
+	if v, ok := d.GetOk("mac_pool"); ok {
+		p := make([]models.MacpoolPoolRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsMacpoolPoolRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPool(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -616,72 +883,11 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 		o.SetOrder(x)
 	}
 
-	if v, ok := d.GetOk("organization"); ok {
-		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
-
 	if v, ok := d.GetOk("placement"); ok {
 		p := make([]models.VnicPlacementSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicPlacementSettingsWithDefaults()
 			o.SetClassId("vnic.PlacementSettings")
 			if v, ok := l["id"]; ok {
@@ -690,11 +896,22 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetId(x)
 				}
 			}
-			o.SetObjectType("vnic.PlacementSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["pci_link"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetPciLink(x)
+				}
+			}
+			if v, ok := l["switch_id"]; ok {
+				{
+					x := (v.(string))
+					o.SetSwitchId(x)
 				}
 			}
 			if v, ok := l["uplink"]; ok {
@@ -705,8 +922,80 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetPlacement(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPlacement(x)
+		}
+	}
+
+	if v, ok := d.GetOk("profile"); ok {
+		p := make([]models.PolicyAbstractConfigProfileRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetProfile(x)
+		}
+	}
+
+	if v, ok := d.GetOk("sp_vnics"); ok {
+		x := make([]models.VnicEthIfRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsVnicEthIfRelationship(o))
+		}
+		if len(x) > 0 {
+			o.SetSpVnics(x)
+		}
+	}
+
+	if v, ok := d.GetOk("standby_vif_id"); ok {
+		x := int64(v.(int))
+		o.SetStandbyVifId(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -729,13 +1018,16 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("usnic_settings"); ok {
 		p := make([]models.VnicUsnicSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicUsnicSettingsWithDefaults()
 			o.SetClassId("vnic.UsnicSettings")
 			if v, ok := l["cos"]; ok {
@@ -744,13 +1036,18 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetCos(x)
 				}
 			}
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.UsnicSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["usnic_adapter_policy"]; ok {
 				{
 					x := (v.(string))
@@ -759,14 +1056,22 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetUsnicSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUsnicSettings(x)
+		}
+	}
+
+	if v, ok := d.GetOk("vif_id"); ok {
+		x := int64(v.(int))
+		o.SetVifId(x)
 	}
 
 	if v, ok := d.GetOk("vmq_settings"); ok {
 		p := make([]models.VnicVmqSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicVmqSettingsWithDefaults()
 			o.SetClassId("vnic.VmqSettings")
 			if v, ok := l["enabled"]; ok {
@@ -775,21 +1080,74 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.VmqSettings")
+			if v, ok := l["multi_queue_support"]; ok {
+				{
+					x := (v.(bool))
+					o.SetMultiQueueSupport(x)
+				}
+			}
+			if v, ok := l["num_interrupts"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumInterrupts(x)
+				}
+			}
+			if v, ok := l["num_sub_vnics"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumSubVnics(x)
+				}
+			}
+			if v, ok := l["num_vmqs"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumVmqs(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["vmmq_adapter_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetVmmqAdapterPolicy(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetVmqSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVmqSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.CreateVnicEthIf(conn.ctx).VnicEthIf(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
 	return resourceVnicEthIfRead(d, meta)
+}
+func detachVnicEthIfProfiles(d *schema.ResourceData, meta interface{}) error {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.Printf("%v", meta)
+	conn := meta.(*Config)
+	var o = models.NewVnicEthIfWithDefaults()
+	o.SetClassId("vnic.EthIf")
+	o.SetObjectType("vnic.EthIf")
+	o.SetProfile(models.PolicyAbstractConfigProfileRelationship{})
+
+	r := conn.ApiClient.VnicApi.UpdateVnicEthIf(conn.ctx, d.Id()).VnicEthIf(*o)
+	_, _, err := r.Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
+	}
+	return err
 }
 
 func resourceVnicEthIfRead(d *schema.ResourceData, meta interface{}) error {
@@ -801,72 +1159,99 @@ func resourceVnicEthIfRead(d *schema.ResourceData, meta interface{}) error {
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("cdn", flattenMapVnicCdn(s.Cdn, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Cdn: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("eth_adapter_policy", flattenMapVnicEthAdapterPolicyRelationship(s.EthAdapterPolicy, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EthAdapterPolicy: %+v", err)
 	}
 
 	if err := d.Set("eth_network_policy", flattenMapVnicEthNetworkPolicyRelationship(s.EthNetworkPolicy, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EthNetworkPolicy: %+v", err)
 	}
 
 	if err := d.Set("eth_qos_policy", flattenMapVnicEthQosPolicyRelationship(s.EthQosPolicy, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EthQosPolicy: %+v", err)
+	}
+
+	if err := d.Set("failover_enabled", (s.FailoverEnabled)); err != nil {
+		return fmt.Errorf("error occurred while setting property FailoverEnabled: %+v", err)
 	}
 
 	if err := d.Set("lan_connectivity_policy", flattenMapVnicLanConnectivityPolicyRelationship(s.LanConnectivityPolicy, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property LanConnectivityPolicy: %+v", err)
+	}
+
+	if err := d.Set("lcp_vnic", flattenMapVnicEthIfRelationship(s.LcpVnic, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property LcpVnic: %+v", err)
+	}
+
+	if err := d.Set("mac_address", (s.MacAddress)); err != nil {
+		return fmt.Errorf("error occurred while setting property MacAddress: %+v", err)
+	}
+
+	if err := d.Set("mac_lease", flattenMapMacpoolLeaseRelationship(s.MacLease, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property MacLease: %+v", err)
+	}
+
+	if err := d.Set("mac_pool", flattenMapMacpoolPoolRelationship(s.MacPool, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property MacPool: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("order", (s.Order)); err != nil {
-		return err
-	}
-
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Order: %+v", err)
 	}
 
 	if err := d.Set("placement", flattenMapVnicPlacementSettings(s.Placement, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Placement: %+v", err)
+	}
+
+	if err := d.Set("profile", flattenMapPolicyAbstractConfigProfileRelationship(s.Profile, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Profile: %+v", err)
+	}
+
+	if err := d.Set("sp_vnics", flattenListVnicEthIfRelationship(s.SpVnics, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property SpVnics: %+v", err)
+	}
+
+	if err := d.Set("standby_vif_id", (s.StandbyVifId)); err != nil {
+		return fmt.Errorf("error occurred while setting property StandbyVifId: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("usnic_settings", flattenMapVnicUsnicSettings(s.UsnicSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property UsnicSettings: %+v", err)
+	}
+
+	if err := d.Set("vif_id", (s.VifId)); err != nil {
+		return fmt.Errorf("error occurred while setting property VifId: %+v", err)
 	}
 
 	if err := d.Set("vmq_settings", flattenMapVnicVmqSettings(s.VmqSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property VmqSettings: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -878,16 +1263,22 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicEthIf()
+	var o = models.NewVnicEthIfWithDefaults()
 	if d.HasChange("cdn") {
 		v := d.Get("cdn")
 		p := make([]models.VnicCdn, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicCdnWithDefaults()
 			o.SetClassId("vnic.Cdn")
-			o.SetObjectType("vnic.Cdn")
-			if v, ok := l["source"]; ok {
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["nr_source"]; ok {
 				{
 					x := (v.(string))
 					o.SetSource(x)
@@ -901,136 +1292,262 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetCdn(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCdn(x)
+		}
 	}
+
+	o.SetClassId("vnic.EthIf")
 
 	if d.HasChange("eth_adapter_policy") {
 		v := d.Get("eth_adapter_policy")
 		p := make([]models.VnicEthAdapterPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthAdapterPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthAdapterPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthAdapterPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthAdapterPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthAdapterPolicy(x)
+		}
 	}
 
 	if d.HasChange("eth_network_policy") {
 		v := d.Get("eth_network_policy")
 		p := make([]models.VnicEthNetworkPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthNetworkPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthNetworkPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthNetworkPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthNetworkPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthNetworkPolicy(x)
+		}
 	}
 
 	if d.HasChange("eth_qos_policy") {
 		v := d.Get("eth_qos_policy")
 		p := make([]models.VnicEthQosPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.EthQosPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicEthQosPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicEthQosPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetEthQosPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetEthQosPolicy(x)
+		}
+	}
+
+	if d.HasChange("failover_enabled") {
+		v := d.Get("failover_enabled")
+		x := (v.(bool))
+		o.SetFailoverEnabled(x)
 	}
 
 	if d.HasChange("lan_connectivity_policy") {
 		v := d.Get("lan_connectivity_policy")
 		p := make([]models.VnicLanConnectivityPolicyRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("vnic.LanConnectivityPolicy")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsVnicLanConnectivityPolicyRelationship())
+			p = append(p, models.MoMoRefAsVnicLanConnectivityPolicyRelationship(o))
 		}
-		x := p[0]
-		o.SetLanConnectivityPolicy(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLanConnectivityPolicy(x)
+		}
+	}
+
+	if d.HasChange("lcp_vnic") {
+		v := d.Get("lcp_vnic")
+		p := make([]models.VnicEthIfRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsVnicEthIfRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetLcpVnic(x)
+		}
+	}
+
+	if d.HasChange("mac_address") {
+		v := d.Get("mac_address")
+		x := (v.(string))
+		o.SetMacAddress(x)
+	}
+
+	if d.HasChange("mac_lease") {
+		v := d.Get("mac_lease")
+		p := make([]models.MacpoolLeaseRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsMacpoolLeaseRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacLease(x)
+		}
+	}
+
+	if d.HasChange("mac_pool") {
+		v := d.Get("mac_pool")
+		p := make([]models.MacpoolPoolRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsMacpoolPoolRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPool(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1045,81 +1562,20 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 		o.SetName(x)
 	}
 
+	o.SetObjectType("vnic.EthIf")
+
 	if d.HasChange("order") {
 		v := d.Get("order")
 		x := int64(v.(int))
 		o.SetOrder(x)
 	}
 
-	if d.HasChange("organization") {
-		v := d.Get("organization")
-		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
-
 	if d.HasChange("placement") {
 		v := d.Get("placement")
 		p := make([]models.VnicPlacementSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicPlacementSettingsWithDefaults()
 			o.SetClassId("vnic.PlacementSettings")
 			if v, ok := l["id"]; ok {
@@ -1128,11 +1584,22 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetId(x)
 				}
 			}
-			o.SetObjectType("vnic.PlacementSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["pci_link"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetPciLink(x)
+				}
+			}
+			if v, ok := l["switch_id"]; ok {
+				{
+					x := (v.(string))
+					o.SetSwitchId(x)
 				}
 			}
 			if v, ok := l["uplink"]; ok {
@@ -1143,8 +1610,83 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetPlacement(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPlacement(x)
+		}
+	}
+
+	if d.HasChange("profile") {
+		v := d.Get("profile")
+		p := make([]models.PolicyAbstractConfigProfileRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetProfile(x)
+		}
+	}
+
+	if d.HasChange("sp_vnics") {
+		v := d.Get("sp_vnics")
+		x := make([]models.VnicEthIfRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsVnicEthIfRelationship(o))
+		}
+		if len(x) > 0 {
+			o.SetSpVnics(x)
+		}
+	}
+
+	if d.HasChange("standby_vif_id") {
+		v := d.Get("standby_vif_id")
+		x := int64(v.(int))
+		o.SetStandbyVifId(x)
 	}
 
 	if d.HasChange("tags") {
@@ -1168,14 +1710,17 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("usnic_settings") {
 		v := d.Get("usnic_settings")
 		p := make([]models.VnicUsnicSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicUsnicSettingsWithDefaults()
 			o.SetClassId("vnic.UsnicSettings")
 			if v, ok := l["cos"]; ok {
@@ -1184,13 +1729,18 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetCos(x)
 				}
 			}
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.UsnicSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["usnic_adapter_policy"]; ok {
 				{
 					x := (v.(string))
@@ -1199,15 +1749,24 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetUsnicSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUsnicSettings(x)
+		}
+	}
+
+	if d.HasChange("vif_id") {
+		v := d.Get("vif_id")
+		x := int64(v.(int))
+		o.SetVifId(x)
 	}
 
 	if d.HasChange("vmq_settings") {
 		v := d.Get("vmq_settings")
 		p := make([]models.VnicVmqSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicVmqSettingsWithDefaults()
 			o.SetClassId("vnic.VmqSettings")
 			if v, ok := l["enabled"]; ok {
@@ -1216,17 +1775,54 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.VmqSettings")
+			if v, ok := l["multi_queue_support"]; ok {
+				{
+					x := (v.(bool))
+					o.SetMultiQueueSupport(x)
+				}
+			}
+			if v, ok := l["num_interrupts"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumInterrupts(x)
+				}
+			}
+			if v, ok := l["num_sub_vnics"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumSubVnics(x)
+				}
+			}
+			if v, ok := l["num_vmqs"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetNumVmqs(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["vmmq_adapter_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetVmmqAdapterPolicy(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetVmqSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVmqSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.UpdateVnicEthIf(conn.ctx, d.Id()).VnicEthIf(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1237,11 +1833,18 @@ func resourceVnicEthIfDelete(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.VnicApi.DeleteVnicEthIf(conn.ctx, d.Id())
-	_, err := r.Execute()
+	if p, ok := d.GetOk("profile"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachVnicEthIfProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
+	}
+	p := conn.ApiClient.VnicApi.DeleteVnicEthIf(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

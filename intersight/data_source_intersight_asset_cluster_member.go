@@ -40,7 +40,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_reason": {
-				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with the cloud.",
+				Description: "If 'connectionStatus' is not equal to Connected, connectionReason provides further details about why the device is not connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -52,7 +52,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 			},
 			"connection_status_last_change_time": {
-				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between the cloud and device connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with the cloud.",
+				Description: "The last time at which the 'connectionStatus' property value changed. If connectionStatus is Connected, this time can be interpreted as the starting time since which a persistent connection has been maintained between Intersight and Device Connector. If connectionStatus is NotConnected, this time can be interpreted as the last time the device connector was connected with Intersight.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -77,11 +77,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -104,7 +99,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				},
 			},
 			"device_external_ip_address": {
-				Description: "The IP Address of the managed device as seen from the cloud at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
+				Description: "The IP Address of the managed device as seen from Intersight at the time of registration.\nThis could be the IP address of the managed device's interface which has a route to the internet or a NAT IP addresss when the managed device is deployed in a private network.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -143,45 +138,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"proxy_app": {
 				Description: "The name of the app which will proxy the messages to the device connector.",
@@ -406,7 +362,7 @@ func dataSourceAssetClusterMemberRead(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewAssetClusterMember()
+	var o = models.NewAssetClusterMemberWithDefaults()
 	if v, ok := d.GetOk("api_version"); ok {
 		x := int64(v.(int))
 		o.SetApiVersion(x)
@@ -476,83 +432,93 @@ func dataSourceAssetClusterMemberRead(d *schema.ResourceData, meta interface{}) 
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.AssetApi.GetAssetClusterMemberList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.AssetApi.GetAssetClusterMemberList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.AssetClusterMemberList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to AssetClusterMember: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewAssetClusterMember()
+			var s = models.NewAssetClusterMemberWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("api_version", (s.ApiVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ApiVersion: %+v", err)
 			}
 			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AppPartitionNumber: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("connection_id", (s.ConnectionId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionId: %+v", err)
 			}
 			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionReason: %+v", err)
 			}
 			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
 
 			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionStatusLastChangeTime: %+v", err)
 			}
 			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectorVersion: %+v", err)
 			}
 
 			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.Device, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Device: %+v", err)
 			}
 			if err := d.Set("device_external_ip_address", (s.DeviceExternalIpAddress)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceExternalIpAddress: %+v", err)
 			}
 			if err := d.Set("leadership", (s.Leadership)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Leadership: %+v", err)
 			}
 			if err := d.Set("locked_leader", (s.LockedLeader)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LockedLeader: %+v", err)
 			}
 			if err := d.Set("member_identity", (s.MemberIdentity)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MemberIdentity: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("parent_cluster_member_identity", (s.ParentClusterMemberIdentity)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ParentClusterMemberIdentity: %+v", err)
 			}
 			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProxyApp: %+v", err)
 			}
 
 			if err := d.Set("sudi", flattenMapAssetSudiInfo(s.Sudi, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Sudi: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

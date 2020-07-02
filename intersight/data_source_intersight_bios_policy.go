@@ -471,17 +471,17 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"lom_port1state": {
-				Description: "BIOS Token for setting LOM Port 1 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 1 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"lom_port2state": {
-				Description: "BIOS Token for setting LOM Port 2 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 2 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"lom_port3state": {
-				Description: "BIOS Token for setting LOM Port 3 OptionRom configuration.",
+				Description: "BIOS Token for setting LOM Port 3 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -584,11 +584,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -702,45 +697,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"pop_support": {
 				Description: "BIOS Token for setting Power ON Password configuration.",
 				Type:        schema.TypeString,
@@ -782,11 +738,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -881,7 +832,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot10state": {
-				Description: "BIOS Token for setting Slot 10 state configuration.",
+				Description: "BIOS Token for setting Slot 10 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -891,7 +842,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot11state": {
-				Description: "BIOS Token for setting Slot 11 state configuration.",
+				Description: "BIOS Token for setting Slot 11 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -901,7 +852,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot12state": {
-				Description: "BIOS Token for setting Slot 12 state configuration.",
+				Description: "BIOS Token for setting Slot 12 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -921,7 +872,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot1state": {
-				Description: "BIOS Token for setting Slot 1 state configuration.",
+				Description: "BIOS Token for setting Slot 1 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -931,7 +882,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot2state": {
-				Description: "BIOS Token for setting Slot 2 state configuration.",
+				Description: "BIOS Token for setting Slot 2 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -941,7 +892,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot3state": {
-				Description: "BIOS Token for setting Slot 3 state configuration.",
+				Description: "BIOS Token for setting Slot 3 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -951,7 +902,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot4state": {
-				Description: "BIOS Token for setting Slot 4 state configuration.",
+				Description: "BIOS Token for setting Slot 4 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -961,7 +912,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot5state": {
-				Description: "BIOS Token for setting Slot 5 state configuration.",
+				Description: "BIOS Token for setting Slot 5 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -971,7 +922,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot6state": {
-				Description: "BIOS Token for setting Slot 6 state configuration.",
+				Description: "BIOS Token for setting Slot 6 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -981,7 +932,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot7state": {
-				Description: "BIOS Token for setting Slot 7 state configuration.",
+				Description: "BIOS Token for setting Slot 7 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -991,7 +942,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot8state": {
-				Description: "BIOS Token for setting Slot 8 state configuration.",
+				Description: "BIOS Token for setting Slot 8 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1001,7 +952,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot9state": {
-				Description: "BIOS Token for setting Slot 9 state configuration.",
+				Description: "BIOS Token for setting Slot 9 State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1091,7 +1042,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot_mezz_state": {
-				Description: "BIOS Token for setting Slot Mezz state configuration.",
+				Description: "BIOS Token for setting Slot Mezz State configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1251,7 +1202,7 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot_rear_nvme1state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 1 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 1 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1261,37 +1212,37 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"slot_rear_nvme2state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 2 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 2 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme3state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 3 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 3 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme4state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 4 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 4 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme5state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 5 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 5 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme6state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 6 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 6 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme7state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 7 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 7 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"slot_rear_nvme8state": {
-				Description: "BIOS Token for setting PCIe Slot:Rear NVME 8 OptionRom configuration.",
+				Description: "BIOS Token for setting PCIe Slot:Rear NVME 8 OptionROM configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1496,7 +1447,7 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewBiosPolicy()
+	var o = models.NewBiosPolicyWithDefaults()
 	if v, ok := d.GetOk("acs_control_gpu1state"); ok {
 		x := (v.(string))
 		o.SetAcsControlGpu1state(x)
@@ -2570,835 +2521,845 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.BiosApi.GetBiosPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.BiosApi.GetBiosPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.BiosPolicyList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to BiosPolicy: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewBiosPolicy()
+			var s = models.NewBiosPolicyWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("acs_control_gpu1state", (s.AcsControlGpu1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu1state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu2state", (s.AcsControlGpu2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu2state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu3state", (s.AcsControlGpu3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu3state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu4state", (s.AcsControlGpu4state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu4state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu5state", (s.AcsControlGpu5state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu5state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu6state", (s.AcsControlGpu6state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu6state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu7state", (s.AcsControlGpu7state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu7state: %+v", err)
 			}
 			if err := d.Set("acs_control_gpu8state", (s.AcsControlGpu8state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlGpu8state: %+v", err)
 			}
 			if err := d.Set("acs_control_slot11state", (s.AcsControlSlot11state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlSlot11state: %+v", err)
 			}
 			if err := d.Set("acs_control_slot12state", (s.AcsControlSlot12state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlSlot12state: %+v", err)
 			}
 			if err := d.Set("acs_control_slot13state", (s.AcsControlSlot13state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlSlot13state: %+v", err)
 			}
 			if err := d.Set("acs_control_slot14state", (s.AcsControlSlot14state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AcsControlSlot14state: %+v", err)
 			}
 			if err := d.Set("adjacent_cache_line_prefetch", (s.AdjacentCacheLinePrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AdjacentCacheLinePrefetch: %+v", err)
 			}
 			if err := d.Set("all_usb_devices", (s.AllUsbDevices)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AllUsbDevices: %+v", err)
 			}
 			if err := d.Set("altitude", (s.Altitude)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Altitude: %+v", err)
 			}
 			if err := d.Set("aspm_support", (s.AspmSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AspmSupport: %+v", err)
 			}
 			if err := d.Set("assert_nmi_on_perr", (s.AssertNmiOnPerr)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AssertNmiOnPerr: %+v", err)
 			}
 			if err := d.Set("assert_nmi_on_serr", (s.AssertNmiOnSerr)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AssertNmiOnSerr: %+v", err)
 			}
 			if err := d.Set("auto_cc_state", (s.AutoCcState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AutoCcState: %+v", err)
 			}
 			if err := d.Set("autonumous_cstate_enable", (s.AutonumousCstateEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AutonumousCstateEnable: %+v", err)
 			}
 			if err := d.Set("baud_rate", (s.BaudRate)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BaudRate: %+v", err)
 			}
 			if err := d.Set("bme_dma_mitigation", (s.BmeDmaMitigation)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BmeDmaMitigation: %+v", err)
 			}
 			if err := d.Set("boot_option_num_retry", (s.BootOptionNumRetry)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BootOptionNumRetry: %+v", err)
 			}
 			if err := d.Set("boot_option_re_cool_down", (s.BootOptionReCoolDown)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BootOptionReCoolDown: %+v", err)
 			}
 			if err := d.Set("boot_option_retry", (s.BootOptionRetry)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BootOptionRetry: %+v", err)
 			}
 			if err := d.Set("boot_performance_mode", (s.BootPerformanceMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BootPerformanceMode: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_cpu_cpb", (s.CbsCmnCpuCpb)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnCpuCpb: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_cpu_gen_downcore_ctrl", (s.CbsCmnCpuGenDowncoreCtrl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnCpuGenDowncoreCtrl: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_cpu_global_cstate_ctrl", (s.CbsCmnCpuGlobalCstateCtrl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnCpuGlobalCstateCtrl: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_cpu_l1stream_hw_prefetcher", (s.CbsCmnCpuL1streamHwPrefetcher)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnCpuL1streamHwPrefetcher: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_cpu_l2stream_hw_prefetcher", (s.CbsCmnCpuL2streamHwPrefetcher)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnCpuL2streamHwPrefetcher: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_determinism_slider", (s.CbsCmnDeterminismSlider)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnDeterminismSlider: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_gnb_nb_iommu", (s.CbsCmnGnbNbIommu)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnGnbNbIommu: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_mem_ctrl_bank_group_swap_ddr4", (s.CbsCmnMemCtrlBankGroupSwapDdr4)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnMemCtrlBankGroupSwapDdr4: %+v", err)
 			}
 			if err := d.Set("cbs_cmn_mem_map_bank_interleave_ddr4", (s.CbsCmnMemMapBankInterleaveDdr4)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmnMemMapBankInterleaveDdr4: %+v", err)
 			}
 			if err := d.Set("cbs_cmnc_tdp_ctl", (s.CbsCmncTdpCtl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsCmncTdpCtl: %+v", err)
 			}
 			if err := d.Set("cbs_df_cmn_mem_intlv", (s.CbsDfCmnMemIntlv)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsDfCmnMemIntlv: %+v", err)
 			}
 			if err := d.Set("cbs_df_cmn_mem_intlv_size", (s.CbsDfCmnMemIntlvSize)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CbsDfCmnMemIntlvSize: %+v", err)
 			}
 			if err := d.Set("cdn_enable", (s.CdnEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CdnEnable: %+v", err)
 			}
 			if err := d.Set("cdn_support", (s.CdnSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CdnSupport: %+v", err)
 			}
 			if err := d.Set("channel_inter_leave", (s.ChannelInterLeave)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ChannelInterLeave: %+v", err)
 			}
 			if err := d.Set("cisco_adaptive_mem_training", (s.CiscoAdaptiveMemTraining)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CiscoAdaptiveMemTraining: %+v", err)
 			}
 			if err := d.Set("cisco_debug_level", (s.CiscoDebugLevel)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CiscoDebugLevel: %+v", err)
 			}
 			if err := d.Set("cisco_oprom_launch_optimization", (s.CiscoOpromLaunchOptimization)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CiscoOpromLaunchOptimization: %+v", err)
 			}
 			if err := d.Set("cke_low_policy", (s.CkeLowPolicy)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CkeLowPolicy: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("closed_loop_therm_throtl", (s.ClosedLoopThermThrotl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClosedLoopThermThrotl: %+v", err)
 			}
 			if err := d.Set("cmci_enable", (s.CmciEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CmciEnable: %+v", err)
 			}
 			if err := d.Set("config_tdp", (s.ConfigTdp)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConfigTdp: %+v", err)
 			}
 			if err := d.Set("console_redirection", (s.ConsoleRedirection)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConsoleRedirection: %+v", err)
 			}
 			if err := d.Set("core_multi_processing", (s.CoreMultiProcessing)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CoreMultiProcessing: %+v", err)
 			}
 			if err := d.Set("cpu_energy_performance", (s.CpuEnergyPerformance)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CpuEnergyPerformance: %+v", err)
 			}
 			if err := d.Set("cpu_frequency_floor", (s.CpuFrequencyFloor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CpuFrequencyFloor: %+v", err)
 			}
 			if err := d.Set("cpu_performance", (s.CpuPerformance)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CpuPerformance: %+v", err)
 			}
 			if err := d.Set("cpu_power_management", (s.CpuPowerManagement)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CpuPowerManagement: %+v", err)
 			}
 			if err := d.Set("dcpmm_firmware_downgrade", (s.DcpmmFirmwareDowngrade)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DcpmmFirmwareDowngrade: %+v", err)
 			}
 			if err := d.Set("demand_scrub", (s.DemandScrub)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DemandScrub: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("direct_cache_access", (s.DirectCacheAccess)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DirectCacheAccess: %+v", err)
 			}
 			if err := d.Set("dram_clock_throttling", (s.DramClockThrottling)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DramClockThrottling: %+v", err)
 			}
 			if err := d.Set("dram_refresh_rate", (s.DramRefreshRate)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DramRefreshRate: %+v", err)
 			}
 			if err := d.Set("energy_efficient_turbo", (s.EnergyEfficientTurbo)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EnergyEfficientTurbo: %+v", err)
 			}
 			if err := d.Set("eng_perf_tuning", (s.EngPerfTuning)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EngPerfTuning: %+v", err)
 			}
 			if err := d.Set("enhanced_intel_speed_step_tech", (s.EnhancedIntelSpeedStepTech)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EnhancedIntelSpeedStepTech: %+v", err)
 			}
 			if err := d.Set("epp_profile", (s.EppProfile)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EppProfile: %+v", err)
 			}
 			if err := d.Set("execute_disable_bit", (s.ExecuteDisableBit)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ExecuteDisableBit: %+v", err)
 			}
 			if err := d.Set("extended_apic", (s.ExtendedApic)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ExtendedApic: %+v", err)
 			}
 			if err := d.Set("flow_control", (s.FlowControl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FlowControl: %+v", err)
 			}
 			if err := d.Set("frb2enable", (s.Frb2enable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Frb2enable: %+v", err)
 			}
 			if err := d.Set("hardware_prefetch", (s.HardwarePrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HardwarePrefetch: %+v", err)
 			}
 			if err := d.Set("hwpm_enable", (s.HwpmEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property HwpmEnable: %+v", err)
 			}
 			if err := d.Set("imc_interleave", (s.ImcInterleave)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ImcInterleave: %+v", err)
 			}
 			if err := d.Set("intel_hyper_threading_tech", (s.IntelHyperThreadingTech)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelHyperThreadingTech: %+v", err)
 			}
 			if err := d.Set("intel_speed_select", (s.IntelSpeedSelect)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelSpeedSelect: %+v", err)
 			}
 			if err := d.Set("intel_turbo_boost_tech", (s.IntelTurboBoostTech)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelTurboBoostTech: %+v", err)
 			}
 			if err := d.Set("intel_virtualization_technology", (s.IntelVirtualizationTechnology)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVirtualizationTechnology: %+v", err)
 			}
 			if err := d.Set("intel_vt_for_directed_io", (s.IntelVtForDirectedIo)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVtForDirectedIo: %+v", err)
 			}
 			if err := d.Set("intel_vtd_coherency_support", (s.IntelVtdCoherencySupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVtdCoherencySupport: %+v", err)
 			}
 			if err := d.Set("intel_vtd_interrupt_remapping", (s.IntelVtdInterruptRemapping)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVtdInterruptRemapping: %+v", err)
 			}
 			if err := d.Set("intel_vtd_pass_through_dma_support", (s.IntelVtdPassThroughDmaSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVtdPassThroughDmaSupport: %+v", err)
 			}
 			if err := d.Set("intel_vtdats_support", (s.IntelVtdatsSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IntelVtdatsSupport: %+v", err)
 			}
 			if err := d.Set("ioh_error_enable", (s.IohErrorEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IohErrorEnable: %+v", err)
 			}
 			if err := d.Set("ioh_resource", (s.IohResource)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IohResource: %+v", err)
 			}
 			if err := d.Set("ip_prefetch", (s.IpPrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IpPrefetch: %+v", err)
 			}
 			if err := d.Set("ipv4pxe", (s.Ipv4pxe)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Ipv4pxe: %+v", err)
 			}
 			if err := d.Set("ipv6pxe", (s.Ipv6pxe)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Ipv6pxe: %+v", err)
 			}
 			if err := d.Set("kti_prefetch", (s.KtiPrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property KtiPrefetch: %+v", err)
 			}
 			if err := d.Set("legacy_os_redirection", (s.LegacyOsRedirection)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LegacyOsRedirection: %+v", err)
 			}
 			if err := d.Set("legacy_usb_support", (s.LegacyUsbSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LegacyUsbSupport: %+v", err)
 			}
 			if err := d.Set("llc_prefetch", (s.LlcPrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LlcPrefetch: %+v", err)
 			}
 			if err := d.Set("lom_port0state", (s.LomPort0state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LomPort0state: %+v", err)
 			}
 			if err := d.Set("lom_port1state", (s.LomPort1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LomPort1state: %+v", err)
 			}
 			if err := d.Set("lom_port2state", (s.LomPort2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LomPort2state: %+v", err)
 			}
 			if err := d.Set("lom_port3state", (s.LomPort3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LomPort3state: %+v", err)
 			}
 			if err := d.Set("lom_ports_all_state", (s.LomPortsAllState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LomPortsAllState: %+v", err)
 			}
 			if err := d.Set("lv_ddr_mode", (s.LvDdrMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LvDdrMode: %+v", err)
 			}
 			if err := d.Set("make_device_non_bootable", (s.MakeDeviceNonBootable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MakeDeviceNonBootable: %+v", err)
 			}
 			if err := d.Set("memory_inter_leave", (s.MemoryInterLeave)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MemoryInterLeave: %+v", err)
 			}
 			if err := d.Set("memory_mapped_io_above4gb", (s.MemoryMappedIoAbove4gb)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MemoryMappedIoAbove4gb: %+v", err)
 			}
 			if err := d.Set("memory_size_limit", (s.MemorySizeLimit)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MemorySizeLimit: %+v", err)
 			}
 			if err := d.Set("mirroring_mode", (s.MirroringMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MirroringMode: %+v", err)
 			}
 			if err := d.Set("mmcfg_base", (s.MmcfgBase)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MmcfgBase: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("network_stack", (s.NetworkStack)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NetworkStack: %+v", err)
 			}
 			if err := d.Set("numa_optimized", (s.NumaOptimized)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property NumaOptimized: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("onboard10gbit_lom", (s.Onboard10gbitLom)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Onboard10gbitLom: %+v", err)
 			}
 			if err := d.Set("onboard_gbit_lom", (s.OnboardGbitLom)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OnboardGbitLom: %+v", err)
 			}
 			if err := d.Set("onboard_scu_storage_support", (s.OnboardScuStorageSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OnboardScuStorageSupport: %+v", err)
 			}
 			if err := d.Set("onboard_scu_storage_sw_stack", (s.OnboardScuStorageSwStack)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OnboardScuStorageSwStack: %+v", err)
 			}
 
 			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 			if err := d.Set("os_boot_watchdog_timer", (s.OsBootWatchdogTimer)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OsBootWatchdogTimer: %+v", err)
 			}
 			if err := d.Set("os_boot_watchdog_timer_policy", (s.OsBootWatchdogTimerPolicy)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OsBootWatchdogTimerPolicy: %+v", err)
 			}
 			if err := d.Set("os_boot_watchdog_timer_timeout", (s.OsBootWatchdogTimerTimeout)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OsBootWatchdogTimerTimeout: %+v", err)
 			}
 			if err := d.Set("out_of_band_mgmt_port", (s.OutOfBandMgmtPort)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OutOfBandMgmtPort: %+v", err)
 			}
 			if err := d.Set("package_cstate_limit", (s.PackageCstateLimit)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PackageCstateLimit: %+v", err)
 			}
 			if err := d.Set("partial_mirror_mode_config", (s.PartialMirrorModeConfig)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorModeConfig: %+v", err)
 			}
 			if err := d.Set("partial_mirror_percent", (s.PartialMirrorPercent)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorPercent: %+v", err)
 			}
 			if err := d.Set("partial_mirror_value1", (s.PartialMirrorValue1)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorValue1: %+v", err)
 			}
 			if err := d.Set("partial_mirror_value2", (s.PartialMirrorValue2)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorValue2: %+v", err)
 			}
 			if err := d.Set("partial_mirror_value3", (s.PartialMirrorValue3)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorValue3: %+v", err)
 			}
 			if err := d.Set("partial_mirror_value4", (s.PartialMirrorValue4)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PartialMirrorValue4: %+v", err)
 			}
 			if err := d.Set("patrol_scrub", (s.PatrolScrub)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PatrolScrub: %+v", err)
 			}
 			if err := d.Set("patrol_scrub_duration", (s.PatrolScrubDuration)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PatrolScrubDuration: %+v", err)
 			}
 			if err := d.Set("pc_ie_ras_support", (s.PcIeRasSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PcIeRasSupport: %+v", err)
 			}
 			if err := d.Set("pc_ie_ssd_hot_plug_support", (s.PcIeSsdHotPlugSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PcIeSsdHotPlugSupport: %+v", err)
 			}
 			if err := d.Set("pch_usb30mode", (s.PchUsb30mode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PchUsb30mode: %+v", err)
 			}
 			if err := d.Set("pci_option_ro_ms", (s.PciOptionRoMs)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PciOptionRoMs: %+v", err)
 			}
 			if err := d.Set("pci_rom_clp", (s.PciRomClp)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PciRomClp: %+v", err)
 			}
 			if err := d.Set("pop_support", (s.PopSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PopSupport: %+v", err)
 			}
 			if err := d.Set("post_error_pause", (s.PostErrorPause)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PostErrorPause: %+v", err)
 			}
 			if err := d.Set("processor_c1e", (s.ProcessorC1e)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProcessorC1e: %+v", err)
 			}
 			if err := d.Set("processor_c3report", (s.ProcessorC3report)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProcessorC3report: %+v", err)
 			}
 			if err := d.Set("processor_c6report", (s.ProcessorC6report)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProcessorC6report: %+v", err)
 			}
 			if err := d.Set("processor_cstate", (s.ProcessorCstate)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ProcessorCstate: %+v", err)
 			}
 
 			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
 			if err := d.Set("psata", (s.Psata)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Psata: %+v", err)
 			}
 			if err := d.Set("pstate_coord_type", (s.PstateCoordType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PstateCoordType: %+v", err)
 			}
 			if err := d.Set("putty_key_pad", (s.PuttyKeyPad)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PuttyKeyPad: %+v", err)
 			}
 			if err := d.Set("pwr_perf_tuning", (s.PwrPerfTuning)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PwrPerfTuning: %+v", err)
 			}
 			if err := d.Set("qpi_link_frequency", (s.QpiLinkFrequency)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property QpiLinkFrequency: %+v", err)
 			}
 			if err := d.Set("qpi_snoop_mode", (s.QpiSnoopMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property QpiSnoopMode: %+v", err)
 			}
 			if err := d.Set("rank_inter_leave", (s.RankInterLeave)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RankInterLeave: %+v", err)
 			}
 			if err := d.Set("redirection_after_post", (s.RedirectionAfterPost)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RedirectionAfterPost: %+v", err)
 			}
 			if err := d.Set("sata_mode_select", (s.SataModeSelect)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SataModeSelect: %+v", err)
 			}
 			if err := d.Set("select_memory_ras_configuration", (s.SelectMemoryRasConfiguration)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SelectMemoryRasConfiguration: %+v", err)
 			}
 			if err := d.Set("select_ppr_type", (s.SelectPprType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SelectPprType: %+v", err)
 			}
 			if err := d.Set("serial_port_aenable", (s.SerialPortAenable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SerialPortAenable: %+v", err)
 			}
 			if err := d.Set("single_pctl_enable", (s.SinglePctlEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SinglePctlEnable: %+v", err)
 			}
 			if err := d.Set("slot10link_speed", (s.Slot10linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot10linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot10state", (s.Slot10state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot10state: %+v", err)
 			}
 			if err := d.Set("slot11link_speed", (s.Slot11linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot11linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot11state", (s.Slot11state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot11state: %+v", err)
 			}
 			if err := d.Set("slot12link_speed", (s.Slot12linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot12linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot12state", (s.Slot12state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot12state: %+v", err)
 			}
 			if err := d.Set("slot13state", (s.Slot13state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot13state: %+v", err)
 			}
 			if err := d.Set("slot14state", (s.Slot14state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot14state: %+v", err)
 			}
 			if err := d.Set("slot1link_speed", (s.Slot1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot1state", (s.Slot1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot1state: %+v", err)
 			}
 			if err := d.Set("slot2link_speed", (s.Slot2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot2linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot2state", (s.Slot2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot2state: %+v", err)
 			}
 			if err := d.Set("slot3link_speed", (s.Slot3linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot3linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot3state", (s.Slot3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot3state: %+v", err)
 			}
 			if err := d.Set("slot4link_speed", (s.Slot4linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot4linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot4state", (s.Slot4state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot4state: %+v", err)
 			}
 			if err := d.Set("slot5link_speed", (s.Slot5linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot5linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot5state", (s.Slot5state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot5state: %+v", err)
 			}
 			if err := d.Set("slot6link_speed", (s.Slot6linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot6linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot6state", (s.Slot6state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot6state: %+v", err)
 			}
 			if err := d.Set("slot7link_speed", (s.Slot7linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot7linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot7state", (s.Slot7state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot7state: %+v", err)
 			}
 			if err := d.Set("slot8link_speed", (s.Slot8linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot8linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot8state", (s.Slot8state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot8state: %+v", err)
 			}
 			if err := d.Set("slot9link_speed", (s.Slot9linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot9linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot9state", (s.Slot9state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Slot9state: %+v", err)
 			}
 			if err := d.Set("slot_flom_link_speed", (s.SlotFlomLinkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotFlomLinkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_front_nvme1link_speed", (s.SlotFrontNvme1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotFrontNvme1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_front_nvme2link_speed", (s.SlotFrontNvme2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotFrontNvme2linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_front_slot5link_speed", (s.SlotFrontSlot5linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotFrontSlot5linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_front_slot6link_speed", (s.SlotFrontSlot6linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotFrontSlot6linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_gpu1state", (s.SlotGpu1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu1state: %+v", err)
 			}
 			if err := d.Set("slot_gpu2state", (s.SlotGpu2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu2state: %+v", err)
 			}
 			if err := d.Set("slot_gpu3state", (s.SlotGpu3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu3state: %+v", err)
 			}
 			if err := d.Set("slot_gpu4state", (s.SlotGpu4state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu4state: %+v", err)
 			}
 			if err := d.Set("slot_gpu5state", (s.SlotGpu5state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu5state: %+v", err)
 			}
 			if err := d.Set("slot_gpu6state", (s.SlotGpu6state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu6state: %+v", err)
 			}
 			if err := d.Set("slot_gpu7state", (s.SlotGpu7state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu7state: %+v", err)
 			}
 			if err := d.Set("slot_gpu8state", (s.SlotGpu8state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotGpu8state: %+v", err)
 			}
 			if err := d.Set("slot_hba_link_speed", (s.SlotHbaLinkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotHbaLinkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_hba_state", (s.SlotHbaState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotHbaState: %+v", err)
 			}
 			if err := d.Set("slot_lom1link", (s.SlotLom1link)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotLom1link: %+v", err)
 			}
 			if err := d.Set("slot_lom2link", (s.SlotLom2link)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotLom2link: %+v", err)
 			}
 			if err := d.Set("slot_mezz_state", (s.SlotMezzState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotMezzState: %+v", err)
 			}
 			if err := d.Set("slot_mlom_link_speed", (s.SlotMlomLinkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotMlomLinkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_mlom_state", (s.SlotMlomState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotMlomState: %+v", err)
 			}
 			if err := d.Set("slot_mraid_link_speed", (s.SlotMraidLinkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotMraidLinkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_mraid_state", (s.SlotMraidState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotMraidState: %+v", err)
 			}
 			if err := d.Set("slot_n10state", (s.SlotN10state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN10state: %+v", err)
 			}
 			if err := d.Set("slot_n11state", (s.SlotN11state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN11state: %+v", err)
 			}
 			if err := d.Set("slot_n12state", (s.SlotN12state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN12state: %+v", err)
 			}
 			if err := d.Set("slot_n13state", (s.SlotN13state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN13state: %+v", err)
 			}
 			if err := d.Set("slot_n14state", (s.SlotN14state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN14state: %+v", err)
 			}
 			if err := d.Set("slot_n15state", (s.SlotN15state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN15state: %+v", err)
 			}
 			if err := d.Set("slot_n16state", (s.SlotN16state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN16state: %+v", err)
 			}
 			if err := d.Set("slot_n17state", (s.SlotN17state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN17state: %+v", err)
 			}
 			if err := d.Set("slot_n18state", (s.SlotN18state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN18state: %+v", err)
 			}
 			if err := d.Set("slot_n19state", (s.SlotN19state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN19state: %+v", err)
 			}
 			if err := d.Set("slot_n1state", (s.SlotN1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN1state: %+v", err)
 			}
 			if err := d.Set("slot_n20state", (s.SlotN20state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN20state: %+v", err)
 			}
 			if err := d.Set("slot_n21state", (s.SlotN21state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN21state: %+v", err)
 			}
 			if err := d.Set("slot_n22state", (s.SlotN22state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN22state: %+v", err)
 			}
 			if err := d.Set("slot_n23state", (s.SlotN23state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN23state: %+v", err)
 			}
 			if err := d.Set("slot_n24state", (s.SlotN24state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN24state: %+v", err)
 			}
 			if err := d.Set("slot_n2state", (s.SlotN2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN2state: %+v", err)
 			}
 			if err := d.Set("slot_n3state", (s.SlotN3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN3state: %+v", err)
 			}
 			if err := d.Set("slot_n4state", (s.SlotN4state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN4state: %+v", err)
 			}
 			if err := d.Set("slot_n5state", (s.SlotN5state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN5state: %+v", err)
 			}
 			if err := d.Set("slot_n6state", (s.SlotN6state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN6state: %+v", err)
 			}
 			if err := d.Set("slot_n7state", (s.SlotN7state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN7state: %+v", err)
 			}
 			if err := d.Set("slot_n8state", (s.SlotN8state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN8state: %+v", err)
 			}
 			if err := d.Set("slot_n9state", (s.SlotN9state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotN9state: %+v", err)
 			}
 			if err := d.Set("slot_raid_link_speed", (s.SlotRaidLinkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRaidLinkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_raid_state", (s.SlotRaidState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRaidState: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme1link_speed", (s.SlotRearNvme1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme1state", (s.SlotRearNvme1state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme1state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme2link_speed", (s.SlotRearNvme2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme2linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme2state", (s.SlotRearNvme2state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme2state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme3state", (s.SlotRearNvme3state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme3state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme4state", (s.SlotRearNvme4state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme4state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme5state", (s.SlotRearNvme5state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme5state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme6state", (s.SlotRearNvme6state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme6state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme7state", (s.SlotRearNvme7state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme7state: %+v", err)
 			}
 			if err := d.Set("slot_rear_nvme8state", (s.SlotRearNvme8state)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRearNvme8state: %+v", err)
 			}
 			if err := d.Set("slot_riser1link_speed", (s.SlotRiser1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser1slot1link_speed", (s.SlotRiser1slot1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser1slot1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser1slot2link_speed", (s.SlotRiser1slot2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser1slot2linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser1slot3link_speed", (s.SlotRiser1slot3linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser1slot3linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser2link_speed", (s.SlotRiser2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser2linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser2slot4link_speed", (s.SlotRiser2slot4linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser2slot4linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser2slot5link_speed", (s.SlotRiser2slot5linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser2slot5linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_riser2slot6link_speed", (s.SlotRiser2slot6linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotRiser2slot6linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_sas_state", (s.SlotSasState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotSasState: %+v", err)
 			}
 			if err := d.Set("slot_ssd_slot1link_speed", (s.SlotSsdSlot1linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotSsdSlot1linkSpeed: %+v", err)
 			}
 			if err := d.Set("slot_ssd_slot2link_speed", (s.SlotSsdSlot2linkSpeed)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SlotSsdSlot2linkSpeed: %+v", err)
 			}
 			if err := d.Set("smee", (s.Smee)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Smee: %+v", err)
 			}
 			if err := d.Set("smt_mode", (s.SmtMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SmtMode: %+v", err)
 			}
 			if err := d.Set("snc", (s.Snc)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Snc: %+v", err)
 			}
 			if err := d.Set("sparing_mode", (s.SparingMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SparingMode: %+v", err)
 			}
 			if err := d.Set("sr_iov", (s.SrIov)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SrIov: %+v", err)
 			}
 			if err := d.Set("streamer_prefetch", (s.StreamerPrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StreamerPrefetch: %+v", err)
 			}
 			if err := d.Set("svm_mode", (s.SvmMode)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SvmMode: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("terminal_type", (s.TerminalType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TerminalType: %+v", err)
 			}
 			if err := d.Set("tpm_control", (s.TpmControl)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TpmControl: %+v", err)
 			}
 			if err := d.Set("tpm_support", (s.TpmSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TpmSupport: %+v", err)
 			}
 			if err := d.Set("txt_support", (s.TxtSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TxtSupport: %+v", err)
 			}
 			if err := d.Set("ucsm_boot_order_rule", (s.UcsmBootOrderRule)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UcsmBootOrderRule: %+v", err)
 			}
 			if err := d.Set("usb_emul6064", (s.UsbEmul6064)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbEmul6064: %+v", err)
 			}
 			if err := d.Set("usb_port_front", (s.UsbPortFront)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortFront: %+v", err)
 			}
 			if err := d.Set("usb_port_internal", (s.UsbPortInternal)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortInternal: %+v", err)
 			}
 			if err := d.Set("usb_port_kvm", (s.UsbPortKvm)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortKvm: %+v", err)
 			}
 			if err := d.Set("usb_port_rear", (s.UsbPortRear)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortRear: %+v", err)
 			}
 			if err := d.Set("usb_port_sd_card", (s.UsbPortSdCard)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortSdCard: %+v", err)
 			}
 			if err := d.Set("usb_port_vmedia", (s.UsbPortVmedia)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbPortVmedia: %+v", err)
 			}
 			if err := d.Set("usb_xhci_support", (s.UsbXhciSupport)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UsbXhciSupport: %+v", err)
 			}
 			if err := d.Set("vga_priority", (s.VgaPriority)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property VgaPriority: %+v", err)
 			}
 			if err := d.Set("vmd_enable", (s.VmdEnable)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property VmdEnable: %+v", err)
 			}
 			if err := d.Set("work_load_config", (s.WorkLoadConfig)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property WorkLoadConfig: %+v", err)
 			}
 			if err := d.Set("xpt_prefetch", (s.XptPrefetch)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property XptPrefetch: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

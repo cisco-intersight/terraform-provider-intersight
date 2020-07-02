@@ -30,13 +30,18 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
-			"download_stage": {
-				Description: "The image download stages. Example:downloading, flashing.",
-				Type:        schema.TypeString,
+			"download_progress": {
+				Description: "The download progress of the file represented as a percentage between 0% and 100%. If progress reporting is not possible a value of -1 is sent.",
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
-			"download_status": {
-				Description: "The download status of the image in the endpoint.",
+			"download_retries": {
+				Description: "The number of retries the plugin attempted before succeeding or failing the download.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
+			"download_stage": {
+				Description: "The image download stages. Example:downloading, flashing.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -77,45 +82,6 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"tags": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -135,7 +101,7 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				},
 			},
 			"upgrade": {
-				Description: "A reference to a firmwareUpgrade resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Description: "A reference to a firmwareUpgradeBase resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -147,11 +113,6 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -174,6 +135,41 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 					},
 				},
 			},
+			"workflow": {
+				Description: "A reference to a workflowWorkflowInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 		},
 	}
 }
@@ -182,7 +178,7 @@ func dataSourceFirmwareUpgradeStatusRead(d *schema.ResourceData, meta interface{
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewFirmwareUpgradeStatus()
+	var o = models.NewFirmwareUpgradeStatusWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -195,13 +191,17 @@ func dataSourceFirmwareUpgradeStatusRead(d *schema.ResourceData, meta interface{
 		x := int64(v.(int))
 		o.SetDownloadPercentage(x)
 	}
+	if v, ok := d.GetOk("download_progress"); ok {
+		x := int64(v.(int))
+		o.SetDownloadProgress(x)
+	}
+	if v, ok := d.GetOk("download_retries"); ok {
+		x := int64(v.(int))
+		o.SetDownloadRetries(x)
+	}
 	if v, ok := d.GetOk("download_stage"); ok {
 		x := (v.(string))
 		o.SetDownloadStage(x)
-	}
-	if v, ok := d.GetOk("download_status"); ok {
-		x := (v.(string))
-		o.SetDownloadStatus(x)
 	}
 	if v, ok := d.GetOk("ep_power_status"); ok {
 		x := (v.(string))
@@ -236,66 +236,83 @@ func dataSourceFirmwareUpgradeStatusRead(d *schema.ResourceData, meta interface{
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.FirmwareApi.GetFirmwareUpgradeStatusList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.FirmwareApi.GetFirmwareUpgradeStatusList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.FirmwareUpgradeStatusList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to FirmwareUpgradeStatus: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewFirmwareUpgradeStatus()
+			var s = models.NewFirmwareUpgradeStatusWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("download_error", (s.DownloadError)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DownloadError: %+v", err)
 			}
 			if err := d.Set("download_percentage", (s.DownloadPercentage)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DownloadPercentage: %+v", err)
+			}
+			if err := d.Set("download_progress", (s.DownloadProgress)); err != nil {
+				return fmt.Errorf("error occurred while setting property DownloadProgress: %+v", err)
+			}
+			if err := d.Set("download_retries", (s.DownloadRetries)); err != nil {
+				return fmt.Errorf("error occurred while setting property DownloadRetries: %+v", err)
 			}
 			if err := d.Set("download_stage", (s.DownloadStage)); err != nil {
-				return err
-			}
-			if err := d.Set("download_status", (s.DownloadStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DownloadStage: %+v", err)
 			}
 			if err := d.Set("ep_power_status", (s.EpPowerStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EpPowerStatus: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("overall_error", (s.OverallError)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OverallError: %+v", err)
 			}
 			if err := d.Set("overall_percentage", (s.OverallPercentage)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property OverallPercentage: %+v", err)
 			}
 			if err := d.Set("overallstatus", (s.Overallstatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Overallstatus: %+v", err)
 			}
 			if err := d.Set("pending_type", (s.PendingType)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PendingType: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("upgrade", flattenMapFirmwareUpgradeRelationship(s.Upgrade, d)); err != nil {
-				return err
+			if err := d.Set("upgrade", flattenMapFirmwareUpgradeBaseRelationship(s.Upgrade, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Upgrade: %+v", err)
+			}
+
+			if err := d.Set("workflow", flattenMapWorkflowWorkflowInfoRelationship(s.Workflow, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Workflow: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

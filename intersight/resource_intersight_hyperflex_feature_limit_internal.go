@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -27,11 +28,6 @@ func resourceHyperflexFeatureLimitInternal() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -42,6 +38,7 @@ func resourceHyperflexFeatureLimitInternal() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -105,6 +102,7 @@ func resourceHyperflexFeatureLimitInternal() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"server_model": {
 										Description: "The supported server models in regex format.",
@@ -125,6 +123,7 @@ func resourceHyperflexFeatureLimitInternal() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"value": {
 							Description: "The application setting value.",
@@ -148,45 +147,6 @@ func resourceHyperflexFeatureLimitInternal() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"tags": {
 				Type:     schema.TypeList,
@@ -214,36 +174,38 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexFeatureLimitInternal()
+	var o = models.NewHyperflexFeatureLimitInternalWithDefaults()
 	if v, ok := d.GetOk("app_catalog"); ok {
 		p := make([]models.HyperflexAppCatalogRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.AppCatalog")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexAppCatalogRelationship())
+			p = append(p, models.MoMoRefAsHyperflexAppCatalogRelationship(o))
 		}
-		x := p[0]
-		o.SetAppCatalog(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAppCatalog(x)
+		}
 	}
 
 	o.SetClassId("hyperflex.FeatureLimitInternal")
@@ -258,8 +220,9 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 			if v, ok := l["constraint"]; ok {
 				{
 					p := make([]models.HyperflexAppSettingConstraint, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewHyperflexAppSettingConstraintWithDefaults()
 						o.SetClassId("hyperflex.AppSettingConstraint")
 						if v, ok := l["hxdp_version"]; ok {
@@ -280,7 +243,12 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 								o.SetMgmtPlatform(x)
 							}
 						}
-						o.SetObjectType("hyperflex.AppSettingConstraint")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["server_model"]; ok {
 							{
 								x := (v.(string))
@@ -289,8 +257,10 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetConstraint(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetConstraint(x)
+					}
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -299,7 +269,12 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitEntry")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["value"]; ok {
 				{
 					x := (v.(string))
@@ -308,7 +283,9 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 			}
 			x = append(x, *o)
 		}
-		o.SetFeatureLimitEntries(x)
+		if len(x) > 0 {
+			o.SetFeatureLimitEntries(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -317,37 +294,6 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 	}
 
 	o.SetObjectType("hyperflex.FeatureLimitInternal")
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
 
 	if v, ok := d.GetOk("tags"); ok {
 		x := make([]models.MoTag, 0)
@@ -369,13 +315,15 @@ func resourceHyperflexFeatureLimitInternalCreate(d *schema.ResourceData, meta in
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.CreateHyperflexFeatureLimitInternal(conn.ctx).HyperflexFeatureLimitInternal(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -391,36 +339,31 @@ func resourceHyperflexFeatureLimitInternalRead(d *schema.ResourceData, meta inte
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("app_catalog", flattenMapHyperflexAppCatalogRelationship(s.AppCatalog, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AppCatalog: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("feature_limit_entries", flattenListHyperflexFeatureLimitEntry(s.FeatureLimitEntries, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FeatureLimitEntries: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -432,38 +375,42 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexFeatureLimitInternal()
+	var o = models.NewHyperflexFeatureLimitInternalWithDefaults()
 	if d.HasChange("app_catalog") {
 		v := d.Get("app_catalog")
 		p := make([]models.HyperflexAppCatalogRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.AppCatalog")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsHyperflexAppCatalogRelationship())
+			p = append(p, models.MoMoRefAsHyperflexAppCatalogRelationship(o))
 		}
-		x := p[0]
-		o.SetAppCatalog(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAppCatalog(x)
+		}
 	}
+
+	o.SetClassId("hyperflex.FeatureLimitInternal")
 
 	if d.HasChange("feature_limit_entries") {
 		v := d.Get("feature_limit_entries")
@@ -476,8 +423,9 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 			if v, ok := l["constraint"]; ok {
 				{
 					p := make([]models.HyperflexAppSettingConstraint, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewHyperflexAppSettingConstraintWithDefaults()
 						o.SetClassId("hyperflex.AppSettingConstraint")
 						if v, ok := l["hxdp_version"]; ok {
@@ -498,7 +446,12 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 								o.SetMgmtPlatform(x)
 							}
 						}
-						o.SetObjectType("hyperflex.AppSettingConstraint")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["server_model"]; ok {
 							{
 								x := (v.(string))
@@ -507,8 +460,10 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetConstraint(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetConstraint(x)
+					}
 				}
 			}
 			if v, ok := l["name"]; ok {
@@ -517,7 +472,12 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.FeatureLimitEntry")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["value"]; ok {
 				{
 					x := (v.(string))
@@ -526,7 +486,9 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 			}
 			x = append(x, *o)
 		}
-		o.SetFeatureLimitEntries(x)
+		if len(x) > 0 {
+			o.SetFeatureLimitEntries(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -535,37 +497,7 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 		o.SetMoid(x)
 	}
 
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
-	}
+	o.SetObjectType("hyperflex.FeatureLimitInternal")
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
@@ -588,13 +520,15 @@ func resourceHyperflexFeatureLimitInternalUpdate(d *schema.ResourceData, meta in
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.UpdateHyperflexFeatureLimitInternal(conn.ctx, d.Id()).HyperflexFeatureLimitInternal(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -605,11 +539,10 @@ func resourceHyperflexFeatureLimitInternalDelete(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.HyperflexApi.DeleteHyperflexFeatureLimitInternal(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexFeatureLimitInternal(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

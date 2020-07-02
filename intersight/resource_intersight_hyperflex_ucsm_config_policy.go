@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -32,11 +33,6 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -47,6 +43,7 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -96,6 +93,7 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"start_addr": {
 							Description: "The start IPv4 address of the range.",
@@ -129,6 +127,7 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"start_addr": {
 							Description: "The start MAC address prefix of a MAC address prefix range in the form of 00:25:B5:XX.",
@@ -171,11 +170,6 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -186,6 +180,7 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -198,45 +193,6 @@ func resourceHyperflexUcsmConfigPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"server_firmware_version": {
 				Description: "The server firmware bundle version used for server components such as CIMC, adapters, BIOS, etc.",
@@ -269,7 +225,7 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexUcsmConfigPolicy()
+	var o = models.NewHyperflexUcsmConfigPolicyWithDefaults()
 	o.SetClassId("hyperflex.UcsmConfigPolicy")
 
 	if v, ok := d.GetOk("cluster_profiles"); ok {
@@ -279,28 +235,29 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexClusterProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		o.SetClusterProfiles(x)
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -310,8 +267,9 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 
 	if v, ok := d.GetOk("kvm_ip_range"); ok {
 		p := make([]models.HyperflexIpAddrRange, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexIpAddrRangeWithDefaults()
 			o.SetClassId("hyperflex.IpAddrRange")
 			if v, ok := l["end_addr"]; ok {
@@ -332,7 +290,12 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 					o.SetNetmask(x)
 				}
 			}
-			o.SetObjectType("hyperflex.IpAddrRange")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
@@ -341,14 +304,17 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetKvmIpRange(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetKvmIpRange(x)
+		}
 	}
 
 	if v, ok := d.GetOk("mac_prefix_range"); ok {
 		p := make([]models.HyperflexMacAddrPrefixRange, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
 			o.SetClassId("hyperflex.MacAddrPrefixRange")
 			if v, ok := l["end_addr"]; ok {
@@ -357,7 +323,12 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 					o.SetEndAddr(x)
 				}
 			}
-			o.SetObjectType("hyperflex.MacAddrPrefixRange")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
@@ -366,8 +337,10 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetMacPrefixRange(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPrefixRange(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -384,64 +357,35 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("server_firmware_version"); ok {
@@ -469,13 +413,15 @@ func resourceHyperflexUcsmConfigPolicyCreate(d *schema.ResourceData, meta interf
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.CreateHyperflexUcsmConfigPolicy(conn.ctx).HyperflexUcsmConfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -491,56 +437,51 @@ func resourceHyperflexUcsmConfigPolicyRead(d *schema.ResourceData, meta interfac
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.KvmIpRange, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property KvmIpRange: %+v", err)
 	}
 
 	if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.MacPrefixRange, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property MacPrefixRange: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("server_firmware_version", (s.ServerFirmwareVersion)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ServerFirmwareVersion: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -552,7 +493,8 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexUcsmConfigPolicy()
+	var o = models.NewHyperflexUcsmConfigPolicyWithDefaults()
+	o.SetClassId("hyperflex.UcsmConfigPolicy")
 
 	if d.HasChange("cluster_profiles") {
 		v := d.Get("cluster_profiles")
@@ -562,28 +504,29 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexClusterProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		o.SetClusterProfiles(x)
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
+		}
 	}
 
 	if d.HasChange("description") {
@@ -595,8 +538,9 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 	if d.HasChange("kvm_ip_range") {
 		v := d.Get("kvm_ip_range")
 		p := make([]models.HyperflexIpAddrRange, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexIpAddrRangeWithDefaults()
 			o.SetClassId("hyperflex.IpAddrRange")
 			if v, ok := l["end_addr"]; ok {
@@ -617,7 +561,12 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 					o.SetNetmask(x)
 				}
 			}
-			o.SetObjectType("hyperflex.IpAddrRange")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
@@ -626,15 +575,18 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetKvmIpRange(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetKvmIpRange(x)
+		}
 	}
 
 	if d.HasChange("mac_prefix_range") {
 		v := d.Get("mac_prefix_range")
 		p := make([]models.HyperflexMacAddrPrefixRange, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
 			o.SetClassId("hyperflex.MacAddrPrefixRange")
 			if v, ok := l["end_addr"]; ok {
@@ -643,7 +595,12 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 					o.SetEndAddr(x)
 				}
 			}
-			o.SetObjectType("hyperflex.MacAddrPrefixRange")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
@@ -652,8 +609,10 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetMacPrefixRange(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPrefixRange(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -668,68 +627,40 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 		o.SetName(x)
 	}
 
+	o.SetObjectType("hyperflex.UcsmConfigPolicy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("server_firmware_version") {
@@ -759,13 +690,15 @@ func resourceHyperflexUcsmConfigPolicyUpdate(d *schema.ResourceData, meta interf
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.UpdateHyperflexUcsmConfigPolicy(conn.ctx, d.Id()).HyperflexUcsmConfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -776,11 +709,10 @@ func resourceHyperflexUcsmConfigPolicyDelete(d *schema.ResourceData, meta interf
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.HyperflexApi.DeleteHyperflexUcsmConfigPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexUcsmConfigPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

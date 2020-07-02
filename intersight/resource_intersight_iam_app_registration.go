@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 	"time"
@@ -30,11 +31,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -45,6 +41,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -114,11 +111,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -129,6 +121,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -160,11 +153,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -175,45 +163,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -263,11 +213,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -278,6 +223,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -322,11 +268,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -337,6 +278,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -356,36 +298,38 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewIamAppRegistration()
+	var o = models.NewIamAppRegistrationWithDefaults()
 	if v, ok := d.GetOk("account"); ok {
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
+		}
 	}
 
 	o.SetClassId("iam.AppRegistration")
@@ -421,7 +365,9 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetGrantTypes(x)
+		if len(x) > 0 {
+			o.SetGrantTypes(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -436,92 +382,64 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.OAuthToken")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsIamOAuthTokenRelationship())
+			x = append(x, models.MoMoRefAsIamOAuthTokenRelationship(o))
 		}
-		o.SetOauthTokens(x)
+		if len(x) > 0 {
+			o.SetOauthTokens(x)
+		}
 	}
 
 	o.SetObjectType("iam.AppRegistration")
 
 	if v, ok := d.GetOk("permission"); ok {
 		p := make([]models.IamPermissionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("iam.Permission")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsIamPermissionRelationship())
-		}
-		x := p[0]
-		o.SetPermission(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsIamPermissionRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPermission(x)
+		}
 	}
 
 	if v, ok := d.GetOk("redirect_uris"); ok {
@@ -530,11 +448,13 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetRedirectUris(x)
+		if len(x) > 0 {
+			o.SetRedirectUris(x)
+		}
 	}
 
-	if v, ok := d.GetOk("renew_client_secret"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("renew_client_secret"); ok {
+		x := v.(bool)
 		o.SetRenewClientSecret(x)
 	}
 
@@ -544,7 +464,9 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetResponseTypes(x)
+		if len(x) > 0 {
+			o.SetResponseTypes(x)
+		}
 	}
 
 	if v, ok := d.GetOk("revocation_timestamp"); ok {
@@ -552,8 +474,8 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		o.SetRevocationTimestamp(x)
 	}
 
-	if v, ok := d.GetOk("revoke"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("revoke"); ok {
+		x := v.(bool)
 		o.SetRevoke(x)
 	}
 
@@ -564,28 +486,29 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Role")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsIamRoleRelationship())
+			x = append(x, models.MoMoRefAsIamRoleRelationship(o))
 		}
-		o.SetRoles(x)
+		if len(x) > 0 {
+			o.SetRoles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -608,44 +531,48 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("user"); ok {
 		p := make([]models.IamUserRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.User")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamUserRelationship())
+			p = append(p, models.MoMoRefAsIamUserRelationship(o))
 		}
-		x := p[0]
-		o.SetUser(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUser(x)
+		}
 	}
 
 	r := conn.ApiClient.IamApi.CreateIamAppRegistration(conn.ctx).IamAppRegistration(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -661,92 +588,87 @@ func resourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) er
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("client_id", (s.ClientId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClientId: %+v", err)
 	}
 
 	if err := d.Set("client_name", (s.ClientName)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClientName: %+v", err)
 	}
 
 	if err := d.Set("client_secret", (s.ClientSecret)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClientSecret: %+v", err)
 	}
 
 	if err := d.Set("client_type", (s.ClientType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClientType: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("grant_types", (s.GrantTypes)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property GrantTypes: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRelationship(s.OauthTokens, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property OauthTokens: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 	}
 
 	if err := d.Set("redirect_uris", (s.RedirectUris)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RedirectUris: %+v", err)
 	}
 
 	if err := d.Set("renew_client_secret", (s.RenewClientSecret)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RenewClientSecret: %+v", err)
 	}
 
 	if err := d.Set("response_types", (s.ResponseTypes)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ResponseTypes: %+v", err)
 	}
 
 	if err := d.Set("revocation_timestamp", (s.RevocationTimestamp).String()); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RevocationTimestamp: %+v", err)
 	}
 
 	if err := d.Set("revoke", (s.Revoke)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Revoke: %+v", err)
 	}
 
 	if err := d.Set("roles", flattenListIamRoleRelationship(s.Roles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Roles: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property User: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -758,38 +680,42 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewIamAppRegistration()
+	var o = models.NewIamAppRegistrationWithDefaults()
 	if d.HasChange("account") {
 		v := d.Get("account")
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
+		}
 	}
+
+	o.SetClassId("iam.AppRegistration")
 
 	if d.HasChange("client_id") {
 		v := d.Get("client_id")
@@ -828,7 +754,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetGrantTypes(x)
+		if len(x) > 0 {
+			o.SetGrantTypes(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -845,92 +773,65 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.OAuthToken")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsIamOAuthTokenRelationship())
+			x = append(x, models.MoMoRefAsIamOAuthTokenRelationship(o))
 		}
-		o.SetOauthTokens(x)
+		if len(x) > 0 {
+			o.SetOauthTokens(x)
+		}
 	}
+
+	o.SetObjectType("iam.AppRegistration")
 
 	if d.HasChange("permission") {
 		v := d.Get("permission")
 		p := make([]models.IamPermissionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("iam.Permission")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsIamPermissionRelationship())
-		}
-		x := p[0]
-		o.SetPermission(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsIamPermissionRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPermission(x)
+		}
 	}
 
 	if d.HasChange("redirect_uris") {
@@ -940,7 +841,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetRedirectUris(x)
+		if len(x) > 0 {
+			o.SetRedirectUris(x)
+		}
 	}
 
 	if d.HasChange("renew_client_secret") {
@@ -956,7 +859,9 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.SetResponseTypes(x)
+		if len(x) > 0 {
+			o.SetResponseTypes(x)
+		}
 	}
 
 	if d.HasChange("revocation_timestamp") {
@@ -979,28 +884,29 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Role")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsIamRoleRelationship())
+			x = append(x, models.MoMoRefAsIamRoleRelationship(o))
 		}
-		o.SetRoles(x)
+		if len(x) > 0 {
+			o.SetRoles(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1024,45 +930,49 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("user") {
 		v := d.Get("user")
 		p := make([]models.IamUserRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.User")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamUserRelationship())
+			p = append(p, models.MoMoRefAsIamUserRelationship(o))
 		}
-		x := p[0]
-		o.SetUser(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUser(x)
+		}
 	}
 
 	r := conn.ApiClient.IamApi.UpdateIamAppRegistration(conn.ctx, d.Id()).IamAppRegistration(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1073,11 +983,10 @@ func resourceIamAppRegistrationDelete(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.IamApi.DeleteIamAppRegistration(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.IamApi.DeleteIamAppRegistration(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

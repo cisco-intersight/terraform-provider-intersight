@@ -15,7 +15,7 @@ func dataSourceGraphicsCard() *schema.Resource {
 		Read: dataSourceGraphicsCardRead,
 		Schema: map[string]*schema.Schema{
 			"card_id": {
-				Description: "It shows the id of graphics card.",
+				Description: "The id of the graphics card.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -25,6 +25,41 @@ func dataSourceGraphicsCard() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"compute_blade": {
+				Description: "A reference to a computeBlade resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"compute_board": {
 				Description: "A reference to a computeBoard resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -39,11 +74,6 @@ func dataSourceGraphicsCard() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -66,16 +96,52 @@ func dataSourceGraphicsCard() *schema.Resource {
 					},
 				},
 			},
+			"compute_rack_unit": {
+				Description: "A reference to a computeRackUnit resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"device_id": {
-				Description: "It shows the device id of grphics card.",
+				Description: "The device id of the graphics card.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -84,13 +150,13 @@ func dataSourceGraphicsCard() *schema.Resource {
 				Computed:    true,
 			},
 			"expander_slot": {
-				Description: "It shows the expander slot inforamtion for the card.",
+				Description: "The expander slot information of the card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"firmware_version": {
-				Description: "It shows current firmware version of graphics card.",
+				Description: "The firmware version of the graphics card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -108,10 +174,40 @@ func dataSourceGraphicsCard() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -135,7 +231,7 @@ func dataSourceGraphicsCard() *schema.Resource {
 				},
 			},
 			"mode": {
-				Description: "It shows the current mode of graphics card.",
+				Description: "The current mode of the graphics card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -153,7 +249,7 @@ func dataSourceGraphicsCard() *schema.Resource {
 				Computed:    true,
 			},
 			"num_gpus": {
-				Description: "It shows number of controllers under each card.",
+				Description: "The number of controllers under each card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -164,67 +260,28 @@ func dataSourceGraphicsCard() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_state": {
-				Description: "It shows the current operational state of graphics card.",
+				Description: "The current operational state of the graphics card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"pci_address": {
-				Description: "It shows the pci address of graphics card.",
+				Description: "The PCI address of the graphics card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"pci_address_list": {
-				Description: "This list contains the pci address of all controllers for corresponding card.",
+				Description: "This list contains the PCI address of all controllers for corresponding card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"pci_slot": {
-				Description: "It shows the pci slot name for grapchics card.",
+				Description: "The PCI slot name of the graphics card.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -239,11 +296,6 @@ func dataSourceGraphicsCard() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -267,15 +319,50 @@ func dataSourceGraphicsCard() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"running_firmware": {
+				Description: "An array of relationships to firmwareRunningFirmware resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"serial": {
 				Description: "This field identifies the serial of the given component.",
@@ -315,7 +402,7 @@ func dataSourceGraphicsCardRead(d *schema.ResourceData, meta interface{}) error 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewGraphicsCard()
+	var o = models.NewGraphicsCardWithDefaults()
 	if v, ok := d.GetOk("card_id"); ok {
 		x := int64(v.(int))
 		o.SetCardId(x)
@@ -401,98 +488,124 @@ func dataSourceGraphicsCardRead(d *schema.ResourceData, meta interface{}) error 
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.GraphicsApi.GetGraphicsCardList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.GraphicsApi.GetGraphicsCardList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.GraphicsCardList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to GraphicsCard: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewGraphicsCard()
+			var s = models.NewGraphicsCardWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("card_id", (s.CardId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CardId: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
+			}
+
+			if err := d.Set("compute_blade", flattenMapComputeBladeRelationship(s.ComputeBlade, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ComputeBlade: %+v", err)
 			}
 
 			if err := d.Set("compute_board", flattenMapComputeBoardRelationship(s.ComputeBoard, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ComputeBoard: %+v", err)
+			}
+
+			if err := d.Set("compute_rack_unit", flattenMapComputeRackUnitRelationship(s.ComputeRackUnit, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ComputeRackUnit: %+v", err)
 			}
 			if err := d.Set("device_id", (s.DeviceId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 			if err := d.Set("expander_slot", (s.ExpanderSlot)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ExpanderSlot: %+v", err)
 			}
 			if err := d.Set("firmware_version", (s.FirmwareVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FirmwareVersion: %+v", err)
 			}
 
 			if err := d.Set("graphics_controllers", flattenListGraphicsControllerRelationship(s.GraphicsControllers, d)); err != nil {
-				return err
-			}
-			if err := d.Set("mode", (s.Mode)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("num_gpus", (s.NumGpus)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
-				return err
-			}
-			if err := d.Set("pci_address", (s.PciAddress)); err != nil {
-				return err
-			}
-			if err := d.Set("pci_address_list", (s.PciAddressList)); err != nil {
-				return err
-			}
-			if err := d.Set("pci_slot", (s.PciSlot)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property GraphicsControllers: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("mode", (s.Mode)); err != nil {
+				return fmt.Errorf("error occurred while setting property Mode: %+v", err)
+			}
+			if err := d.Set("model", (s.Model)); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("num_gpus", (s.NumGpus)); err != nil {
+				return fmt.Errorf("error occurred while setting property NumGpus: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_state", (s.OperState)); err != nil {
+				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
+			}
+			if err := d.Set("pci_address", (s.PciAddress)); err != nil {
+				return fmt.Errorf("error occurred while setting property PciAddress: %+v", err)
+			}
+			if err := d.Set("pci_address_list", (s.PciAddressList)); err != nil {
+				return fmt.Errorf("error occurred while setting property PciAddressList: %+v", err)
+			}
+			if err := d.Set("pci_slot", (s.PciSlot)); err != nil {
+				return fmt.Errorf("error occurred while setting property PciSlot: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
+			}
+
+			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRelationship(s.RunningFirmware, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RunningFirmware: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

@@ -34,11 +34,6 @@ func dataSourceSecurityUnit() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -61,9 +56,10 @@ func dataSourceSecurityUnit() *schema.Resource {
 				},
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -71,47 +67,10 @@ func dataSourceSecurityUnit() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"model": {
-				Description: "This field identifies the model of the given component.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"oper_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"operability": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"part_number": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"pci_slot": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
@@ -121,11 +80,6 @@ func dataSourceSecurityUnit() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -148,15 +102,59 @@ func dataSourceSecurityUnit() *schema.Resource {
 					},
 				},
 			},
+			"model": {
+				Description: "This field identifies the model of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"oper_state": {
+				Description: "Operational state of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"operability": {
+				Description: "Operability state of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"part_number": {
+				Description: "The part number of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"pci_slot": {
+				Description: "PCIe slot of the security unit in the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
 			"power": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Power state of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Security unit presence (equipped) or absence.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -171,11 +169,6 @@ func dataSourceSecurityUnit() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -199,9 +192,10 @@ func dataSourceSecurityUnit() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -234,14 +228,16 @@ func dataSourceSecurityUnit() *schema.Resource {
 				},
 			},
 			"thermal": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Thermal state of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"unit_id": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The unique identifier assigned to the security unit within the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",
@@ -250,14 +246,16 @@ func dataSourceSecurityUnit() *schema.Resource {
 				Computed:    true,
 			},
 			"vid": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The vendor identifier of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"voltage": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The voltage state of the security unit.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 		},
 	}
@@ -267,7 +265,7 @@ func dataSourceSecurityUnitRead(d *schema.ResourceData, meta interface{}) error 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewSecurityUnit()
+	var o = models.NewSecurityUnitWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -353,94 +351,108 @@ func dataSourceSecurityUnitRead(d *schema.ResourceData, meta interface{}) error 
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.SecurityApi.GetSecurityUnitList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.SecurityApi.GetSecurityUnitList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.SecurityUnitList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to SecurityUnit: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewSecurityUnit()
+			var s = models.NewSecurityUnitWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
 			if err := d.Set("compute_board", flattenMapComputeBoardRelationship(s.ComputeBoard, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ComputeBoard: %+v", err)
 			}
 			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
-				return err
-			}
-			if err := d.Set("operability", (s.Operability)); err != nil {
-				return err
-			}
-			if err := d.Set("part_number", (s.PartNumber)); err != nil {
-				return err
-			}
-			if err := d.Set("pci_slot", (s.PciSlot)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
+			}
+			if err := d.Set("model", (s.Model)); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_state", (s.OperState)); err != nil {
+				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
+			}
+			if err := d.Set("operability", (s.Operability)); err != nil {
+				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
+			}
+			if err := d.Set("part_number", (s.PartNumber)); err != nil {
+				return fmt.Errorf("error occurred while setting property PartNumber: %+v", err)
+			}
+			if err := d.Set("pci_slot", (s.PciSlot)); err != nil {
+				return fmt.Errorf("error occurred while setting property PciSlot: %+v", err)
 			}
 			if err := d.Set("power", (s.Power)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Power: %+v", err)
 			}
 			if err := d.Set("presence", (s.Presence)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
 			}
 
 			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("thermal", (s.Thermal)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Thermal: %+v", err)
 			}
 			if err := d.Set("unit_id", (s.UnitId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UnitId: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			if err := d.Set("vid", (s.Vid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 			}
 			if err := d.Set("voltage", (s.Voltage)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Voltage: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

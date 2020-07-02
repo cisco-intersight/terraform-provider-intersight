@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -67,6 +68,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"port_down_timeout": {
 							Description: "The number of milliseconds a remote Fibre Channel port should be offline before informing the SCSI upper layer that the port is unavailable. For a server with a VIC adapter running ESXi, the recommended value is 10000. For a server with a port used to boot a Windows OS from the SAN, the recommended value is 5000 milliseconds.",
@@ -95,6 +97,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"retries": {
 							Description: "The number of times that the system tries to log in to the fabric after the first failure.",
@@ -125,7 +128,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"mode": {
-							Description: "The preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.",
+							Description: "The preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "MSIx",
@@ -134,6 +137,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -186,11 +190,6 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -201,6 +200,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -213,45 +213,6 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"plogi_settings": {
 				Description: "Fibre Channel Plogi Settings.",
@@ -270,6 +231,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"retries": {
 							Description: "The number of times that the system tries to log in to a port after the first failure.",
@@ -304,7 +266,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -314,6 +276,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -338,7 +301,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of SCSI I/O queue resources the system should allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -347,6 +310,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each SCSI I/O queue.",
@@ -389,7 +353,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -399,6 +363,7 @@ func resourceVnicFcAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -418,7 +383,7 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicFcAdapterPolicy()
+	var o = models.NewVnicFcAdapterPolicyWithDefaults()
 	o.SetClassId("vnic.FcAdapterPolicy")
 
 	if v, ok := d.GetOk("description"); ok {
@@ -433,8 +398,9 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("error_recovery_settings"); ok {
 		p := make([]models.VnicFcErrorRecoverySettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcErrorRecoverySettingsWithDefaults()
 			o.SetClassId("vnic.FcErrorRecoverySettings")
 			if v, ok := l["enabled"]; ok {
@@ -461,7 +427,12 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					o.SetLinkDownTimeout(x)
 				}
 			}
-			o.SetObjectType("vnic.FcErrorRecoverySettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["port_down_timeout"]; ok {
 				{
 					x := int64(v.(int))
@@ -470,17 +441,25 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetErrorRecoverySettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetErrorRecoverySettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("flogi_settings"); ok {
 		p := make([]models.VnicFlogiSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFlogiSettingsWithDefaults()
 			o.SetClassId("vnic.FlogiSettings")
-			o.SetObjectType("vnic.FlogiSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["retries"]; ok {
 				{
 					x := int64(v.(int))
@@ -495,14 +474,17 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetFlogiSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFlogiSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("interrupt_settings"); ok {
 		p := make([]models.VnicFcInterruptSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcInterruptSettingsWithDefaults()
 			o.SetClassId("vnic.FcInterruptSettings")
 			if v, ok := l["mode"]; ok {
@@ -511,11 +493,18 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 					o.SetMode(x)
 				}
 			}
-			o.SetObjectType("vnic.FcInterruptSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetInterruptSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetInterruptSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("io_throttle_count"); ok {
@@ -547,73 +536,50 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("plogi_settings"); ok {
 		p := make([]models.VnicPlogiSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicPlogiSettingsWithDefaults()
 			o.SetClassId("vnic.PlogiSettings")
-			o.SetObjectType("vnic.PlogiSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["retries"]; ok {
 				{
 					x := int64(v.(int))
@@ -628,8 +594,10 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetPlogiSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPlogiSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("resource_allocation_timeout"); ok {
@@ -639,17 +607,23 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("rx_queue_settings"); ok {
 		p := make([]models.VnicFcQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcQueueSettingsWithDefaults()
 			o.SetClassId("vnic.FcQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.FcQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -658,23 +632,31 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRxQueueSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("scsi_queue_settings"); ok {
 		p := make([]models.VnicScsiQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicScsiQueueSettingsWithDefaults()
 			o.SetClassId("vnic.ScsiQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.ScsiQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -683,8 +665,10 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetScsiQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetScsiQueueSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -707,22 +691,30 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tx_queue_settings"); ok {
 		p := make([]models.VnicFcQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcQueueSettingsWithDefaults()
 			o.SetClassId("vnic.FcQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.FcQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -731,14 +723,16 @@ func resourceVnicFcAdapterPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTxQueueSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.CreateVnicFcAdapterPolicy(conn.ctx).VnicFcAdapterPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -754,88 +748,83 @@ func resourceVnicFcAdapterPolicyRead(d *schema.ResourceData, meta interface{}) e
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("error_detection_timeout", (s.ErrorDetectionTimeout)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ErrorDetectionTimeout: %+v", err)
 	}
 
 	if err := d.Set("error_recovery_settings", flattenMapVnicFcErrorRecoverySettings(s.ErrorRecoverySettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ErrorRecoverySettings: %+v", err)
 	}
 
 	if err := d.Set("flogi_settings", flattenMapVnicFlogiSettings(s.FlogiSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FlogiSettings: %+v", err)
 	}
 
 	if err := d.Set("interrupt_settings", flattenMapVnicFcInterruptSettings(s.InterruptSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property InterruptSettings: %+v", err)
 	}
 
 	if err := d.Set("io_throttle_count", (s.IoThrottleCount)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property IoThrottleCount: %+v", err)
 	}
 
 	if err := d.Set("lun_count", (s.LunCount)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property LunCount: %+v", err)
 	}
 
 	if err := d.Set("lun_queue_depth", (s.LunQueueDepth)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property LunQueueDepth: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("plogi_settings", flattenMapVnicPlogiSettings(s.PlogiSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property PlogiSettings: %+v", err)
 	}
 
 	if err := d.Set("resource_allocation_timeout", (s.ResourceAllocationTimeout)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ResourceAllocationTimeout: %+v", err)
 	}
 
 	if err := d.Set("rx_queue_settings", flattenMapVnicFcQueueSettings(s.RxQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RxQueueSettings: %+v", err)
 	}
 
 	if err := d.Set("scsi_queue_settings", flattenMapVnicScsiQueueSettings(s.ScsiQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ScsiQueueSettings: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("tx_queue_settings", flattenMapVnicFcQueueSettings(s.TxQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TxQueueSettings: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -847,7 +836,8 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicFcAdapterPolicy()
+	var o = models.NewVnicFcAdapterPolicyWithDefaults()
+	o.SetClassId("vnic.FcAdapterPolicy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
@@ -864,8 +854,9 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 	if d.HasChange("error_recovery_settings") {
 		v := d.Get("error_recovery_settings")
 		p := make([]models.VnicFcErrorRecoverySettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcErrorRecoverySettingsWithDefaults()
 			o.SetClassId("vnic.FcErrorRecoverySettings")
 			if v, ok := l["enabled"]; ok {
@@ -892,7 +883,12 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					o.SetLinkDownTimeout(x)
 				}
 			}
-			o.SetObjectType("vnic.FcErrorRecoverySettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["port_down_timeout"]; ok {
 				{
 					x := int64(v.(int))
@@ -901,18 +897,26 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetErrorRecoverySettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetErrorRecoverySettings(x)
+		}
 	}
 
 	if d.HasChange("flogi_settings") {
 		v := d.Get("flogi_settings")
 		p := make([]models.VnicFlogiSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFlogiSettingsWithDefaults()
 			o.SetClassId("vnic.FlogiSettings")
-			o.SetObjectType("vnic.FlogiSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["retries"]; ok {
 				{
 					x := int64(v.(int))
@@ -927,15 +931,18 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetFlogiSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFlogiSettings(x)
+		}
 	}
 
 	if d.HasChange("interrupt_settings") {
 		v := d.Get("interrupt_settings")
 		p := make([]models.VnicFcInterruptSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcInterruptSettingsWithDefaults()
 			o.SetClassId("vnic.FcInterruptSettings")
 			if v, ok := l["mode"]; ok {
@@ -944,11 +951,18 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 					o.SetMode(x)
 				}
 			}
-			o.SetObjectType("vnic.FcInterruptSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetInterruptSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetInterruptSettings(x)
+		}
 	}
 
 	if d.HasChange("io_throttle_count") {
@@ -981,78 +995,56 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 		o.SetName(x)
 	}
 
+	o.SetObjectType("vnic.FcAdapterPolicy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("plogi_settings") {
 		v := d.Get("plogi_settings")
 		p := make([]models.VnicPlogiSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicPlogiSettingsWithDefaults()
 			o.SetClassId("vnic.PlogiSettings")
-			o.SetObjectType("vnic.PlogiSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["retries"]; ok {
 				{
 					x := int64(v.(int))
@@ -1067,8 +1059,10 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetPlogiSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPlogiSettings(x)
+		}
 	}
 
 	if d.HasChange("resource_allocation_timeout") {
@@ -1080,17 +1074,23 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 	if d.HasChange("rx_queue_settings") {
 		v := d.Get("rx_queue_settings")
 		p := make([]models.VnicFcQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcQueueSettingsWithDefaults()
 			o.SetClassId("vnic.FcQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.FcQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -1099,24 +1099,32 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRxQueueSettings(x)
+		}
 	}
 
 	if d.HasChange("scsi_queue_settings") {
 		v := d.Get("scsi_queue_settings")
 		p := make([]models.VnicScsiQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicScsiQueueSettingsWithDefaults()
 			o.SetClassId("vnic.ScsiQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.ScsiQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -1125,8 +1133,10 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetScsiQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetScsiQueueSettings(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1150,23 +1160,31 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("tx_queue_settings") {
 		v := d.Get("tx_queue_settings")
 		p := make([]models.VnicFcQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicFcQueueSettingsWithDefaults()
 			o.SetClassId("vnic.FcQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.FcQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -1175,14 +1193,16 @@ func resourceVnicFcAdapterPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTxQueueSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.UpdateVnicFcAdapterPolicy(conn.ctx, d.Id()).VnicFcAdapterPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1193,11 +1213,10 @@ func resourceVnicFcAdapterPolicyDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.VnicApi.DeleteVnicFcAdapterPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.VnicApi.DeleteVnicFcAdapterPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

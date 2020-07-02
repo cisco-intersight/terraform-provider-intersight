@@ -76,11 +76,6 @@ func dataSourceIaasDeviceStatus() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -120,45 +115,6 @@ func dataSourceIaasDeviceStatus() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"pod": {
 				Description: "Describes about the pod to which this device belongs to in UCSD.",
 				Type:        schema.TypeString,
@@ -197,7 +153,7 @@ func dataSourceIaasDeviceStatusRead(d *schema.ResourceData, meta interface{}) er
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewIaasDeviceStatus()
+	var o = models.NewIaasDeviceStatusWithDefaults()
 	if v, ok := d.GetOk("account_name"); ok {
 		x := (v.(string))
 		o.SetAccountName(x)
@@ -255,69 +211,79 @@ func dataSourceIaasDeviceStatusRead(d *schema.ResourceData, meta interface{}) er
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.IaasApi.GetIaasDeviceStatusList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.IaasApi.GetIaasDeviceStatusList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.IaasDeviceStatusList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to IaasDeviceStatus: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewIaasDeviceStatus()
+			var s = models.NewIaasDeviceStatusWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("account_name", (s.AccountName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AccountName: %+v", err)
 			}
 			if err := d.Set("account_type", (s.AccountType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AccountType: %+v", err)
 			}
 			if err := d.Set("claim_status", (s.ClaimStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClaimStatus: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
 			if err := d.Set("device_model", (s.DeviceModel)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceModel: %+v", err)
 			}
 			if err := d.Set("device_vendor", (s.DeviceVendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceVendor: %+v", err)
 			}
 			if err := d.Set("device_version", (s.DeviceVersion)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DeviceVersion: %+v", err)
 			}
 
 			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
 			if err := d.Set("ip_address", (s.IpAddress)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IpAddress: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("pod", (s.Pod)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Pod: %+v", err)
 			}
 			if err := d.Set("pod_type", (s.PodType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PodType: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

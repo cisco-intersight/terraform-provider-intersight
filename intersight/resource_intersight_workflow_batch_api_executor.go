@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -45,6 +46,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"outcomes": {
 							Description: "All the possible outcomes of this API are captured here. Outcomes property\nis a collection property of type workflow.Outcome objects.\nThe outcomes can be mapped to the message to be shown. The outcomes are\nevaluated in the order they are given. At the end of the outcomes list,\nan catchall success/fail outcome can be added with condition as 'true'.\nThis is an optional\nproperty and if not specified the task will be marked as success.",
@@ -102,6 +104,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 												"path": {
 													Description: "The content specific path information that identifies the parameter\nvalue within the content. The value is usually a XPath or JSONPath or a\nregular expression in case of text content.",
@@ -123,6 +126,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"parameters": {
 										Type:     schema.TypeList,
@@ -160,6 +164,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 												"path": {
 													Description: "The content specific path information that identifies the parameter\nvalue within the content. The value is usually a XPath or JSONPath or a\nregular expression in case of text content.",
@@ -197,6 +202,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 													Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 												"parameters": {
 													Type:     schema.TypeList,
@@ -234,6 +240,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 																Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 																Type:        schema.TypeString,
 																Optional:    true,
+																Computed:    true,
 															},
 															"path": {
 																Description: "The content specific path information that identifies the parameter\nvalue within the content. The value is usually a XPath or JSONPath or a\nregular expression in case of text content.",
@@ -264,6 +271,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 						"skip_on_condition": {
 							Description: "The skip expression, if provided, allows the batch API executor to skip the\napi execution when the given expression evaluates to true.\nThe expression is given as such a golang template that has to be\nevaluated to a final content true/false. The expression is an optional and in\ncase not provided, the API will always be executed.",
 							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"start_delay": {
+							Description: "The delay in seconds after which the API needs to be executed.\nBy default, the given API is executed immediately. Specifying a start delay adds to the delay to execution.\nStart Delay is not supported for the first API in the Batch and cumulative delay of all the APIs in the Batch should not exceed the task time out.",
+							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"timeout": {
@@ -299,6 +311,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"target_data_type": {
 							Description: "List of property constraints that helps to narrow down task implementations based on target device input.",
@@ -316,6 +329,42 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 				Description: "A detailed description about the batch APIs.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"error_response_handler": {
+				Description: "A reference to a workflowErrorResponseHandler resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -349,44 +398,10 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 					Type: schema.TypeString,
 				}, Optional: true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
+			"retry_from_failed_api": {
+				Description: "When an execution of a nth API in the Batch fails,\nRetry from falied API flag indicates if the execution should start from the nth API or the first API during task retry.\nBy default the value is set to false.",
+				Type:        schema.TypeBool,
 				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"skip_on_condition": {
 				Description: "The skip expression, if provided, allows the batch API executor to skip the\ntask execution when the given expression evaluates to true.\nThe expression is given as such a golang template that has to be\nevaluated to a final content true/false. The expression is an optional and in\ncase not provided, the API will always be executed.",
@@ -424,11 +439,6 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -439,6 +449,7 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -460,7 +471,7 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewWorkflowBatchApiExecutor()
+	var o = models.NewWorkflowBatchApiExecutorWithDefaults()
 	if v, ok := d.GetOk("batch"); ok {
 		x := make([]models.WorkflowApi, 0)
 		s := v.([]interface{})
@@ -486,7 +497,12 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("workflow.Api")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["outcomes"]; ok {
 				{
 					x := v.(map[string]interface{})
@@ -496,8 +512,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			if v, ok := l["response_spec"]; ok {
 				{
 					p := make([]models.ContentGrammar, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewContentGrammarWithDefaults()
 						o.SetClassId("content.Grammar")
 						if v, ok := l["error_parameters"]; ok {
@@ -532,7 +549,12 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.BaseParameter")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["path"]; ok {
 										{
 											x := (v.(string))
@@ -547,10 +569,17 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 									}
 									x = append(x, *o)
 								}
-								o.SetErrorParameters(x)
+								if len(x) > 0 {
+									o.SetErrorParameters(x)
+								}
 							}
 						}
-						o.SetObjectType("content.Grammar")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["parameters"]; ok {
 							{
 								x := make([]models.ContentBaseParameter, 0)
@@ -583,7 +612,12 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.BaseParameter")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["path"]; ok {
 										{
 											x := (v.(string))
@@ -598,7 +632,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 									}
 									x = append(x, *o)
 								}
-								o.SetParameters(x)
+								if len(x) > 0 {
+									o.SetParameters(x)
+								}
 							}
 						}
 						if v, ok := l["types"]; ok {
@@ -615,7 +651,12 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.ComplexType")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["parameters"]; ok {
 										{
 											x := make([]models.ContentBaseParameter, 0)
@@ -648,7 +689,12 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 														o.SetName(x)
 													}
 												}
-												o.SetObjectType("content.BaseParameter")
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
 												if v, ok := l["path"]; ok {
 													{
 														x := (v.(string))
@@ -663,24 +709,36 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 												}
 												x = append(x, *o)
 											}
-											o.SetParameters(x)
+											if len(x) > 0 {
+												o.SetParameters(x)
+											}
 										}
 									}
 									x = append(x, *o)
 								}
-								o.SetTypes(x)
+								if len(x) > 0 {
+									o.SetTypes(x)
+								}
 							}
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetResponseSpec(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetResponseSpec(x)
+					}
 				}
 			}
 			if v, ok := l["skip_on_condition"]; ok {
 				{
 					x := (v.(string))
 					o.SetSkipOnCondition(x)
+				}
+			}
+			if v, ok := l["start_delay"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetStartDelay(x)
 				}
 			}
 			if v, ok := l["timeout"]; ok {
@@ -691,18 +749,26 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			}
 			x = append(x, *o)
 		}
-		o.SetBatch(x)
+		if len(x) > 0 {
+			o.SetBatch(x)
+		}
 	}
 
 	o.SetClassId("workflow.BatchApiExecutor")
 
 	if v, ok := d.GetOk("constraints"); ok {
 		p := make([]models.WorkflowTaskConstraints, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowTaskConstraintsWithDefaults()
 			o.SetClassId("workflow.TaskConstraints")
-			o.SetObjectType("workflow.TaskConstraints")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["target_data_type"]; ok {
 				{
 					x := v.(map[string]interface{})
@@ -711,13 +777,48 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetConstraints(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConstraints(x)
+		}
 	}
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
 		o.SetDescription(x)
+	}
+
+	if v, ok := d.GetOk("error_response_handler"); ok {
+		p := make([]models.WorkflowErrorResponseHandlerRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsWorkflowErrorResponseHandlerRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetErrorResponseHandler(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -742,35 +843,9 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 		o.SetOutput(x)
 	}
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
+	if v, ok := d.GetOkExists("retry_from_failed_api"); ok {
+		x := v.(bool)
+		o.SetRetryFromFailedApi(x)
 	}
 
 	if v, ok := d.GetOk("skip_on_condition"); ok {
@@ -798,44 +873,48 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("task_definition"); ok {
 		p := make([]models.WorkflowTaskDefinitionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("workflow.TaskDefinition")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsWorkflowTaskDefinitionRelationship())
+			p = append(p, models.MoMoRefAsWorkflowTaskDefinitionRelationship(o))
 		}
-		x := p[0]
-		o.SetTaskDefinition(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTaskDefinition(x)
+		}
 	}
 
 	r := conn.ApiClient.WorkflowApi.CreateWorkflowBatchApiExecutor(conn.ctx).WorkflowBatchApiExecutor(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -851,60 +930,63 @@ func resourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interface
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("batch", flattenListWorkflowApi(s.Batch, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Batch: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Constraints: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
+	}
+
+	if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.ErrorResponseHandler, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property ErrorResponseHandler: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("outcomes", (s.Outcomes)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Outcomes: %+v", err)
 	}
 
 	if err := d.Set("output", (s.Output)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Output: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("retry_from_failed_api", (s.RetryFromFailedApi)); err != nil {
+		return fmt.Errorf("error occurred while setting property RetryFromFailedApi: %+v", err)
 	}
 
 	if err := d.Set("skip_on_condition", (s.SkipOnCondition)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property SkipOnCondition: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.TaskDefinition, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TaskDefinition: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -916,7 +998,7 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewWorkflowBatchApiExecutor()
+	var o = models.NewWorkflowBatchApiExecutorWithDefaults()
 	if d.HasChange("batch") {
 		v := d.Get("batch")
 		x := make([]models.WorkflowApi, 0)
@@ -943,7 +1025,12 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("workflow.Api")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["outcomes"]; ok {
 				{
 					x := v.(map[string]interface{})
@@ -953,8 +1040,9 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			if v, ok := l["response_spec"]; ok {
 				{
 					p := make([]models.ContentGrammar, 0, 1)
-					l := (v.([]interface{})[0]).(map[string]interface{})
-					{
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
 						o := models.NewContentGrammarWithDefaults()
 						o.SetClassId("content.Grammar")
 						if v, ok := l["error_parameters"]; ok {
@@ -989,7 +1077,12 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.BaseParameter")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["path"]; ok {
 										{
 											x := (v.(string))
@@ -1004,10 +1097,17 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 									}
 									x = append(x, *o)
 								}
-								o.SetErrorParameters(x)
+								if len(x) > 0 {
+									o.SetErrorParameters(x)
+								}
 							}
 						}
-						o.SetObjectType("content.Grammar")
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
 						if v, ok := l["parameters"]; ok {
 							{
 								x := make([]models.ContentBaseParameter, 0)
@@ -1040,7 +1140,12 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.BaseParameter")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["path"]; ok {
 										{
 											x := (v.(string))
@@ -1055,7 +1160,9 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 									}
 									x = append(x, *o)
 								}
-								o.SetParameters(x)
+								if len(x) > 0 {
+									o.SetParameters(x)
+								}
 							}
 						}
 						if v, ok := l["types"]; ok {
@@ -1072,7 +1179,12 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 											o.SetName(x)
 										}
 									}
-									o.SetObjectType("content.ComplexType")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
 									if v, ok := l["parameters"]; ok {
 										{
 											x := make([]models.ContentBaseParameter, 0)
@@ -1105,7 +1217,12 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 														o.SetName(x)
 													}
 												}
-												o.SetObjectType("content.BaseParameter")
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
 												if v, ok := l["path"]; ok {
 													{
 														x := (v.(string))
@@ -1120,24 +1237,36 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 												}
 												x = append(x, *o)
 											}
-											o.SetParameters(x)
+											if len(x) > 0 {
+												o.SetParameters(x)
+											}
 										}
 									}
 									x = append(x, *o)
 								}
-								o.SetTypes(x)
+								if len(x) > 0 {
+									o.SetTypes(x)
+								}
 							}
 						}
 						p = append(p, *o)
 					}
-					x := p[0]
-					o.SetResponseSpec(x)
+					if len(p) > 0 {
+						x := p[0]
+						o.SetResponseSpec(x)
+					}
 				}
 			}
 			if v, ok := l["skip_on_condition"]; ok {
 				{
 					x := (v.(string))
 					o.SetSkipOnCondition(x)
+				}
+			}
+			if v, ok := l["start_delay"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetStartDelay(x)
 				}
 			}
 			if v, ok := l["timeout"]; ok {
@@ -1148,17 +1277,27 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			}
 			x = append(x, *o)
 		}
-		o.SetBatch(x)
+		if len(x) > 0 {
+			o.SetBatch(x)
+		}
 	}
+
+	o.SetClassId("workflow.BatchApiExecutor")
 
 	if d.HasChange("constraints") {
 		v := d.Get("constraints")
 		p := make([]models.WorkflowTaskConstraints, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowTaskConstraintsWithDefaults()
 			o.SetClassId("workflow.TaskConstraints")
-			o.SetObjectType("workflow.TaskConstraints")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["target_data_type"]; ok {
 				{
 					x := v.(map[string]interface{})
@@ -1167,14 +1306,50 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetConstraints(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetConstraints(x)
+		}
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
 		o.SetDescription(x)
+	}
+
+	if d.HasChange("error_response_handler") {
+		v := d.Get("error_response_handler")
+		p := make([]models.WorkflowErrorResponseHandlerRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsWorkflowErrorResponseHandlerRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetErrorResponseHandler(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1189,6 +1364,8 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		o.SetName(x)
 	}
 
+	o.SetObjectType("workflow.BatchApiExecutor")
+
 	if d.HasChange("outcomes") {
 		v := d.Get("outcomes")
 		x := v.(map[string]interface{})
@@ -1201,36 +1378,10 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		o.SetOutput(x)
 	}
 
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
+	if d.HasChange("retry_from_failed_api") {
+		v := d.Get("retry_from_failed_api")
+		x := (v.(bool))
+		o.SetRetryFromFailedApi(x)
 	}
 
 	if d.HasChange("skip_on_condition") {
@@ -1260,45 +1411,49 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("task_definition") {
 		v := d.Get("task_definition")
 		p := make([]models.WorkflowTaskDefinitionRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("workflow.TaskDefinition")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsWorkflowTaskDefinitionRelationship())
+			p = append(p, models.MoMoRefAsWorkflowTaskDefinitionRelationship(o))
 		}
-		x := p[0]
-		o.SetTaskDefinition(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTaskDefinition(x)
+		}
 	}
 
 	r := conn.ApiClient.WorkflowApi.UpdateWorkflowBatchApiExecutor(conn.ctx, d.Id()).WorkflowBatchApiExecutor(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1309,11 +1464,10 @@ func resourceWorkflowBatchApiExecutorDelete(d *schema.ResourceData, meta interfa
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.WorkflowApi.DeleteWorkflowBatchApiExecutor(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.WorkflowApi.DeleteWorkflowBatchApiExecutor(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -41,6 +42,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -66,8 +68,8 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
-							Description: "The number of completion queue resources to allocate. In general, the number of completion queue resources you should allocate is equal to the number of transmit queue resources plus the number of receive queue resources.",
+						"nr_count": {
+							Description: "The number of completion queue resources to allocate. In general, the number of completion queue resources to allocate is equal to the number of transmit queue resources plus the number of receive queue resources.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -75,6 +77,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each completion queue.",
@@ -90,6 +93,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 			"description": {
 				Description: "Description of the policy.",
 				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"interrupt_scaling": {
+				Description: "Enables Interrupt Scaling on the interface.",
+				Type:        schema.TypeBool,
 				Optional:    true,
 			},
 			"interrupt_settings": {
@@ -111,18 +119,18 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"coalescing_type": {
-							Description: "Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.",
+							Description: "Interrupt Coalescing Type. This can be one of the following:- MIN  — The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE — The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "MIN",
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of interrupt resources to allocate. Typical value is be equal to the number of completion queue resources.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"mode": {
-							Description: "Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.",
+							Description: "Preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "MSIx",
@@ -131,6 +139,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -171,6 +180,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -196,11 +206,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -211,6 +216,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -224,45 +230,6 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"roce_settings": {
 				Description: "Settings for RDMA over Converged Ethernet.",
 				Type:        schema.TypeList,
@@ -275,6 +242,12 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"class_of_service": {
+							Description: "The Class of Service for RoCE on this virtual interface.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Default:     5,
 						},
 						"enabled": {
 							Description: "If enabled sets RDMA over Converged Ethernet (RoCE) on this virtual interface.",
@@ -290,6 +263,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"queue_pairs": {
 							Description: "The number of queue pairs per adapter. Recommended value = integer power of 2.",
@@ -299,6 +273,76 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 						"resource_groups": {
 							Description: "The number of resource groups per adapter. Recommended value = be an integer power of 2 greater than or equal to the number of CPU cores on the system for optimum performance.",
 							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"nr_version": {
+							Description: "Configures RDMA over Converged Ethernet (RoCE) version on the virtual interface. Only RoceV1 is supported onn Cisco VIC models 13xx and only RoceV2 is supported on models 14xx.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Default:     1,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+			},
+			"rss_hash_settings": {
+				Description: "Receive Side Scaling allows the incoming traffic to be spread across multiple CPU cores.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"ipv4_hash": {
+							Description: "When enabled, the IPv4 address is used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"ipv6_ext_hash": {
+							Description: "When enabled, the IPv6 extensions are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"ipv6_hash": {
+							Description: "When enabled, the IPv6 address is used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"tcp_ipv4_hash": {
+							Description: "When enabled, both the IPv4 address and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"tcp_ipv6_ext_hash": {
+							Description: "When enabled, both the IPv6 extensions and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"tcp_ipv6_hash": {
+							Description: "When enabled, both the IPv6 address and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"udp_ipv4_hash": {
+							Description: "When enabled, both the IPv4 address and UDP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"udp_ipv6_hash": {
+							Description: "When enabled, both the IPv6 address and UDP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
 							Optional:    true,
 						},
 					},
@@ -324,7 +368,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -333,6 +377,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -389,6 +434,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"rx_checksum": {
 							Description: "When enabled, the CPU sends all packet checksums to the hardware for validation.",
@@ -418,7 +464,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -427,6 +473,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ring_size": {
 							Description: "The number of descriptors in each queue.",
@@ -437,6 +484,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
+			},
+			"uplink_failback_timeout": {
+				Description: "Uplink Failback Timeout in seconds when uplink failover is enabled for a vNIC. After a vNIC has started using its secondary interface, this setting controls how long the primary interface must be available before the system resumes using the primary interface for the vNIC.",
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"vxlan_settings": {
 				Description: "Virtual Extensible LAN Protocol Settings.",
@@ -460,6 +512,7 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -474,16 +527,17 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicEthAdapterPolicy()
-	if v, ok := d.GetOk("advanced_filter"); ok {
-		x := (v.(bool))
+	var o = models.NewVnicEthAdapterPolicyWithDefaults()
+	if v, ok := d.GetOkExists("advanced_filter"); ok {
+		x := v.(bool)
 		o.SetAdvancedFilter(x)
 	}
 
 	if v, ok := d.GetOk("arfs_settings"); ok {
 		p := make([]models.VnicArfsSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicArfsSettingsWithDefaults()
 			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
@@ -492,28 +546,41 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.ArfsSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetArfsSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetArfsSettings(x)
+		}
 	}
 
 	o.SetClassId("vnic.EthAdapterPolicy")
 
 	if v, ok := d.GetOk("completion_queue_settings"); ok {
 		p := make([]models.VnicCompletionQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicCompletionQueueSettingsWithDefaults()
 			o.SetClassId("vnic.CompletionQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.CompletionQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -522,8 +589,10 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetCompletionQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCompletionQueueSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -531,10 +600,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		o.SetDescription(x)
 	}
 
+	if v, ok := d.GetOkExists("interrupt_scaling"); ok {
+		x := v.(bool)
+		o.SetInterruptScaling(x)
+	}
+
 	if v, ok := d.GetOk("interrupt_settings"); ok {
 		p := make([]models.VnicEthInterruptSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthInterruptSettingsWithDefaults()
 			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
@@ -549,7 +624,7 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetCoalescingType(x)
 				}
 			}
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
@@ -561,11 +636,18 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetMode(x)
 				}
 			}
-			o.SetObjectType("vnic.EthInterruptSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetInterruptSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetInterruptSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -580,8 +662,9 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 
 	if v, ok := d.GetOk("nvgre_settings"); ok {
 		p := make([]models.VnicNvgreSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicNvgreSettingsWithDefaults()
 			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
@@ -590,83 +673,68 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.NvgreSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetNvgreSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetNvgreSettings(x)
+		}
 	}
 
 	o.SetObjectType("vnic.EthAdapterPolicy")
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("roce_settings"); ok {
 		p := make([]models.VnicRoceSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicRoceSettingsWithDefaults()
 			o.SetClassId("vnic.RoceSettings")
+			if v, ok := l["class_of_service"]; ok {
+				{
+					x := int32(v.(int))
+					o.SetClassOfService(x)
+				}
+			}
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
@@ -679,7 +747,12 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetMemoryRegions(x)
 				}
 			}
-			o.SetObjectType("vnic.RoceSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["queue_pairs"]; ok {
 				{
 					x := int64(v.(int))
@@ -692,30 +765,113 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetResourceGroups(x)
 				}
 			}
+			if v, ok := l["nr_version"]; ok {
+				{
+					x := int32(v.(int))
+					o.SetVersion(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRoceSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRoceSettings(x)
+		}
 	}
 
-	if v, ok := d.GetOk("rss_settings"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOk("rss_hash_settings"); ok {
+		p := make([]models.VnicRssHashSettings, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewVnicRssHashSettingsWithDefaults()
+			o.SetClassId("vnic.RssHashSettings")
+			if v, ok := l["ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv4Hash(x)
+				}
+			}
+			if v, ok := l["ipv6_ext_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv6ExtHash(x)
+				}
+			}
+			if v, ok := l["ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv6Hash(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["tcp_ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv4Hash(x)
+				}
+			}
+			if v, ok := l["tcp_ipv6_ext_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv6ExtHash(x)
+				}
+			}
+			if v, ok := l["tcp_ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv6Hash(x)
+				}
+			}
+			if v, ok := l["udp_ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetUdpIpv4Hash(x)
+				}
+			}
+			if v, ok := l["udp_ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetUdpIpv6Hash(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRssHashSettings(x)
+		}
+	}
+
+	if v, ok := d.GetOkExists("rss_settings"); ok {
+		x := v.(bool)
 		o.SetRssSettings(x)
 	}
 
 	if v, ok := d.GetOk("rx_queue_settings"); ok {
 		p := make([]models.VnicEthRxQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthRxQueueSettingsWithDefaults()
 			o.SetClassId("vnic.EthRxQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.EthRxQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -724,8 +880,10 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRxQueueSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -748,13 +906,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tcp_offload_settings"); ok {
 		p := make([]models.VnicTcpOffloadSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicTcpOffloadSettingsWithDefaults()
 			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
@@ -769,7 +930,12 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetLargeSend(x)
 				}
 			}
-			o.SetObjectType("vnic.TcpOffloadSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["rx_checksum"]; ok {
 				{
 					x := (v.(bool))
@@ -784,23 +950,31 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTcpOffloadSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTcpOffloadSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tx_queue_settings"); ok {
 		p := make([]models.VnicEthTxQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthTxQueueSettingsWithDefaults()
 			o.SetClassId("vnic.EthTxQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.EthTxQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -809,14 +983,22 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTxQueueSettings(x)
+		}
+	}
+
+	if v, ok := d.GetOk("uplink_failback_timeout"); ok {
+		x := int64(v.(int))
+		o.SetUplinkFailbackTimeout(x)
 	}
 
 	if v, ok := d.GetOk("vxlan_settings"); ok {
 		p := make([]models.VnicVxlanSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicVxlanSettingsWithDefaults()
 			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
@@ -825,17 +1007,24 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.VxlanSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetVxlanSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVxlanSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.CreateVnicEthAdapterPolicy(conn.ctx).VnicEthAdapterPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -851,84 +1040,91 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("advanced_filter", (s.AdvancedFilter)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AdvancedFilter: %+v", err)
 	}
 
 	if err := d.Set("arfs_settings", flattenMapVnicArfsSettings(s.ArfsSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ArfsSettings: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("completion_queue_settings", flattenMapVnicCompletionQueueSettings(s.CompletionQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property CompletionQueueSettings: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
+	}
+
+	if err := d.Set("interrupt_scaling", (s.InterruptScaling)); err != nil {
+		return fmt.Errorf("error occurred while setting property InterruptScaling: %+v", err)
 	}
 
 	if err := d.Set("interrupt_settings", flattenMapVnicEthInterruptSettings(s.InterruptSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property InterruptSettings: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("nvgre_settings", flattenMapVnicNvgreSettings(s.NvgreSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property NvgreSettings: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("roce_settings", flattenMapVnicRoceSettings(s.RoceSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RoceSettings: %+v", err)
+	}
+
+	if err := d.Set("rss_hash_settings", flattenMapVnicRssHashSettings(s.RssHashSettings, d)); err != nil {
+		return fmt.Errorf("error occurred while setting property RssHashSettings: %+v", err)
 	}
 
 	if err := d.Set("rss_settings", (s.RssSettings)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RssSettings: %+v", err)
 	}
 
 	if err := d.Set("rx_queue_settings", flattenMapVnicEthRxQueueSettings(s.RxQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RxQueueSettings: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("tcp_offload_settings", flattenMapVnicTcpOffloadSettings(s.TcpOffloadSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TcpOffloadSettings: %+v", err)
 	}
 
 	if err := d.Set("tx_queue_settings", flattenMapVnicEthTxQueueSettings(s.TxQueueSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property TxQueueSettings: %+v", err)
+	}
+
+	if err := d.Set("uplink_failback_timeout", (s.UplinkFailbackTimeout)); err != nil {
+		return fmt.Errorf("error occurred while setting property UplinkFailbackTimeout: %+v", err)
 	}
 
 	if err := d.Set("vxlan_settings", flattenMapVnicVxlanSettings(s.VxlanSettings, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property VxlanSettings: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -940,7 +1136,7 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewVnicEthAdapterPolicy()
+	var o = models.NewVnicEthAdapterPolicyWithDefaults()
 	if d.HasChange("advanced_filter") {
 		v := d.Get("advanced_filter")
 		x := (v.(bool))
@@ -950,8 +1146,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 	if d.HasChange("arfs_settings") {
 		v := d.Get("arfs_settings")
 		p := make([]models.VnicArfsSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicArfsSettingsWithDefaults()
 			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
@@ -960,27 +1157,42 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.ArfsSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetArfsSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetArfsSettings(x)
+		}
 	}
+
+	o.SetClassId("vnic.EthAdapterPolicy")
 
 	if d.HasChange("completion_queue_settings") {
 		v := d.Get("completion_queue_settings")
 		p := make([]models.VnicCompletionQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicCompletionQueueSettingsWithDefaults()
 			o.SetClassId("vnic.CompletionQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.CompletionQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -989,8 +1201,10 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetCompletionQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCompletionQueueSettings(x)
+		}
 	}
 
 	if d.HasChange("description") {
@@ -999,11 +1213,18 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		o.SetDescription(x)
 	}
 
+	if d.HasChange("interrupt_scaling") {
+		v := d.Get("interrupt_scaling")
+		x := (v.(bool))
+		o.SetInterruptScaling(x)
+	}
+
 	if d.HasChange("interrupt_settings") {
 		v := d.Get("interrupt_settings")
 		p := make([]models.VnicEthInterruptSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthInterruptSettingsWithDefaults()
 			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
@@ -1018,7 +1239,7 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetCoalescingType(x)
 				}
 			}
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
@@ -1030,11 +1251,18 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetMode(x)
 				}
 			}
-			o.SetObjectType("vnic.EthInterruptSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetInterruptSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetInterruptSettings(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -1052,8 +1280,9 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 	if d.HasChange("nvgre_settings") {
 		v := d.Get("nvgre_settings")
 		p := make([]models.VnicNvgreSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicNvgreSettingsWithDefaults()
 			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
@@ -1062,84 +1291,70 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.NvgreSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetNvgreSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetNvgreSettings(x)
+		}
 	}
+
+	o.SetObjectType("vnic.EthAdapterPolicy")
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("roce_settings") {
 		v := d.Get("roce_settings")
 		p := make([]models.VnicRoceSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicRoceSettingsWithDefaults()
 			o.SetClassId("vnic.RoceSettings")
+			if v, ok := l["class_of_service"]; ok {
+				{
+					x := int32(v.(int))
+					o.SetClassOfService(x)
+				}
+			}
 			if v, ok := l["enabled"]; ok {
 				{
 					x := (v.(bool))
@@ -1152,7 +1367,12 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetMemoryRegions(x)
 				}
 			}
-			o.SetObjectType("vnic.RoceSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["queue_pairs"]; ok {
 				{
 					x := int64(v.(int))
@@ -1165,10 +1385,88 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetResourceGroups(x)
 				}
 			}
+			if v, ok := l["nr_version"]; ok {
+				{
+					x := int32(v.(int))
+					o.SetVersion(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRoceSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRoceSettings(x)
+		}
+	}
+
+	if d.HasChange("rss_hash_settings") {
+		v := d.Get("rss_hash_settings")
+		p := make([]models.VnicRssHashSettings, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewVnicRssHashSettingsWithDefaults()
+			o.SetClassId("vnic.RssHashSettings")
+			if v, ok := l["ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv4Hash(x)
+				}
+			}
+			if v, ok := l["ipv6_ext_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv6ExtHash(x)
+				}
+			}
+			if v, ok := l["ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIpv6Hash(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["tcp_ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv4Hash(x)
+				}
+			}
+			if v, ok := l["tcp_ipv6_ext_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv6ExtHash(x)
+				}
+			}
+			if v, ok := l["tcp_ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetTcpIpv6Hash(x)
+				}
+			}
+			if v, ok := l["udp_ipv4_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetUdpIpv4Hash(x)
+				}
+			}
+			if v, ok := l["udp_ipv6_hash"]; ok {
+				{
+					x := (v.(bool))
+					o.SetUdpIpv6Hash(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRssHashSettings(x)
+		}
 	}
 
 	if d.HasChange("rss_settings") {
@@ -1180,17 +1478,23 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 	if d.HasChange("rx_queue_settings") {
 		v := d.Get("rx_queue_settings")
 		p := make([]models.VnicEthRxQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthRxQueueSettingsWithDefaults()
 			o.SetClassId("vnic.EthRxQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.EthRxQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -1199,8 +1503,10 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetRxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRxQueueSettings(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -1224,14 +1530,17 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("tcp_offload_settings") {
 		v := d.Get("tcp_offload_settings")
 		p := make([]models.VnicTcpOffloadSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicTcpOffloadSettingsWithDefaults()
 			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
@@ -1246,7 +1555,12 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetLargeSend(x)
 				}
 			}
-			o.SetObjectType("vnic.TcpOffloadSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["rx_checksum"]; ok {
 				{
 					x := (v.(bool))
@@ -1261,24 +1575,32 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTcpOffloadSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTcpOffloadSettings(x)
+		}
 	}
 
 	if d.HasChange("tx_queue_settings") {
 		v := d.Get("tx_queue_settings")
 		p := make([]models.VnicEthTxQueueSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthTxQueueSettingsWithDefaults()
 			o.SetClassId("vnic.EthTxQueueSettings")
-			if v, ok := l["count"]; ok {
+			if v, ok := l["nr_count"]; ok {
 				{
 					x := int64(v.(int))
 					o.SetCount(x)
 				}
 			}
-			o.SetObjectType("vnic.EthTxQueueSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["ring_size"]; ok {
 				{
 					x := int64(v.(int))
@@ -1287,15 +1609,24 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetTxQueueSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetTxQueueSettings(x)
+		}
+	}
+
+	if d.HasChange("uplink_failback_timeout") {
+		v := d.Get("uplink_failback_timeout")
+		x := int64(v.(int))
+		o.SetUplinkFailbackTimeout(x)
 	}
 
 	if d.HasChange("vxlan_settings") {
 		v := d.Get("vxlan_settings")
 		p := make([]models.VnicVxlanSettings, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewVnicVxlanSettingsWithDefaults()
 			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
@@ -1304,17 +1635,24 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 					o.SetEnabled(x)
 				}
 			}
-			o.SetObjectType("vnic.VxlanSettings")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetVxlanSettings(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVxlanSettings(x)
+		}
 	}
 
 	r := conn.ApiClient.VnicApi.UpdateVnicEthAdapterPolicy(conn.ctx, d.Id()).VnicEthAdapterPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -1325,11 +1663,10 @@ func resourceVnicEthAdapterPolicyDelete(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.VnicApi.DeleteVnicEthAdapterPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.VnicApi.DeleteVnicEthAdapterPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

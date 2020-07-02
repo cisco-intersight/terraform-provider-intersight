@@ -253,6 +253,11 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"start_delay": {
+							Description: "The delay in seconds after which the API needs to be executed.\nBy default, the given API is executed immediately. Specifying a start delay adds to the delay to execution.\nStart Delay is not supported for the first API in the Batch and cumulative delay of all the APIs in the Batch should not exceed the task time out.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
 						"timeout": {
 							Description: "The duration in seconds by which the API response is expected from the API target.\nIf the end point does not respond for the API request within this timeout\nduration, the task will be marked as failed.",
 							Type:        schema.TypeInt,
@@ -296,28 +301,11 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"moid": {
-				Description: "The unique identifier of this Managed Object instance.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"name": {
-				Description: "Name for the batch API task.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"object_type": {
-				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
+			"error_response_handler": {
+				Description: "A reference to a workflowErrorResponseHandler resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
-				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"class_id": {
@@ -325,11 +313,6 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -351,6 +334,29 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
+			},
+			"moid": {
+				Description: "The unique identifier of this Managed Object instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"name": {
+				Description: "Name for the batch API task.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"object_type": {
+				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"retry_from_failed_api": {
+				Description: "When an execution of a nth API in the Batch fails,\nRetry from falied API flag indicates if the execution should start from the nth API or the first API during task retry.\nBy default the value is set to false.",
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"skip_on_condition": {
 				Description: "The skip expression, if provided, allows the batch API executor to skip the\ntask execution when the given expression evaluates to true.\nThe expression is given as such a golang template that has to be\nevaluated to a final content true/false. The expression is an optional and in\ncase not provided, the API will always be executed.",
@@ -388,11 +394,6 @@ func dataSourceWorkflowBatchApiExecutor() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -423,7 +424,7 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewWorkflowBatchApiExecutor()
+	var o = models.NewWorkflowBatchApiExecutorWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -444,6 +445,10 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 		x := (v.(string))
 		o.SetObjectType(x)
 	}
+	if v, ok := d.GetOk("retry_from_failed_api"); ok {
+		x := (v.(bool))
+		o.SetRetryFromFailedApi(x)
+	}
 	if v, ok := d.GetOk("skip_on_condition"); ok {
 		x := (v.(string))
 		o.SetSkipOnCondition(x)
@@ -453,56 +458,73 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.WorkflowApi.GetWorkflowBatchApiExecutorList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.WorkflowApi.GetWorkflowBatchApiExecutorList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.WorkflowBatchApiExecutorList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to WorkflowBatchApiExecutor: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewWorkflowBatchApiExecutor()
+			var s = models.NewWorkflowBatchApiExecutorWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("batch", flattenListWorkflowApi(s.Batch, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Batch: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
 			if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Constraints: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.ErrorResponseHandler, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ErrorResponseHandler: %+v", err)
+			}
+			if err := d.Set("moid", (s.Moid)); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("name", (s.Name)); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
+			}
+			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("retry_from_failed_api", (s.RetryFromFailedApi)); err != nil {
+				return fmt.Errorf("error occurred while setting property RetryFromFailedApi: %+v", err)
 			}
 			if err := d.Set("skip_on_condition", (s.SkipOnCondition)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SkipOnCondition: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
 			if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.TaskDefinition, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TaskDefinition: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -26,11 +27,6 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -41,6 +37,7 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -112,11 +109,6 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -127,6 +119,7 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -141,7 +134,7 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 				ForceNew:   true,
 			},
 			"password": {
-				Description: "Backup server password.",
+				Description: "Password of Backup server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -149,45 +142,6 @@ func resourceRecoveryBackupConfigPolicy() *schema.Resource {
 				Description: "The file system path where the backup images must be stored. Include the IP address/hostname of the network share location and the complete file system path. For example: 172.29.109.234/var/backups/.",
 				Type:        schema.TypeString,
 				Optional:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"protocol": {
 				Description: "Protocol for transferring the backup image to the network share location.",
@@ -231,7 +185,7 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewRecoveryBackupConfigPolicy()
+	var o = models.NewRecoveryBackupConfigPolicyWithDefaults()
 	if v, ok := d.GetOk("backup_profiles"); ok {
 		x := make([]models.RecoveryBackupProfileRelationship, 0)
 		s := v.([]interface{})
@@ -239,28 +193,29 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("recovery.BackupProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsRecoveryBackupProfileRelationship())
+			x = append(x, models.MoMoRefAsRecoveryBackupProfileRelationship(o))
 		}
-		o.SetBackupProfiles(x)
+		if len(x) > 0 {
+			o.SetBackupProfiles(x)
+		}
 	}
 
 	o.SetClassId("recovery.BackupConfigPolicy")
@@ -275,8 +230,8 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 		o.SetFileNamePrefix(x)
 	}
 
-	if v, ok := d.GetOk("is_password_set"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("is_password_set"); ok {
+		x := v.(bool)
 		o.SetIsPasswordSet(x)
 	}
 
@@ -299,33 +254,35 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("organization.Organization")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p[0]
-		o.SetOrganization(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -336,37 +293,6 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 	if v, ok := d.GetOk("path"); ok {
 		x := (v.(string))
 		o.SetPath(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -399,7 +325,9 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
@@ -410,7 +338,7 @@ func resourceRecoveryBackupConfigPolicyCreate(d *schema.ResourceData, meta inter
 	r := conn.ApiClient.RecoveryApi.CreateRecoveryBackupConfigPolicy(conn.ctx).RecoveryBackupConfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -426,72 +354,67 @@ func resourceRecoveryBackupConfigPolicyRead(d *schema.ResourceData, meta interfa
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("backup_profiles", flattenListRecoveryBackupProfileRelationship(s.BackupProfiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property BackupProfiles: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("file_name_prefix", (s.FileNamePrefix)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property FileNamePrefix: %+v", err)
 	}
 
 	if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 	}
 
 	if err := d.Set("location_type", (s.LocationType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property LocationType: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("path", (s.Path)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Path: %+v", err)
 	}
 
 	if err := d.Set("protocol", (s.Protocol)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 	}
 
 	if err := d.Set("retention_count", (s.RetentionCount)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property RetentionCount: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	if err := d.Set("user_name", (s.UserName)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property UserName: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -503,7 +426,7 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewRecoveryBackupConfigPolicy()
+	var o = models.NewRecoveryBackupConfigPolicyWithDefaults()
 	if d.HasChange("backup_profiles") {
 		v := d.Get("backup_profiles")
 		x := make([]models.RecoveryBackupProfileRelationship, 0)
@@ -512,29 +435,32 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("recovery.BackupProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsRecoveryBackupProfileRelationship())
+			x = append(x, models.MoMoRefAsRecoveryBackupProfileRelationship(o))
 		}
-		o.SetBackupProfiles(x)
+		if len(x) > 0 {
+			o.SetBackupProfiles(x)
+		}
 	}
+
+	o.SetClassId("recovery.BackupConfigPolicy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
@@ -572,36 +498,40 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 		o.SetName(x)
 	}
 
+	o.SetObjectType("recovery.BackupConfigPolicy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("organization.Organization")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p[0]
-		o.SetOrganization(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("password") {
@@ -614,38 +544,6 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 		v := d.Get("path")
 		x := (v.(string))
 		o.SetPath(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
-		s := v.([]interface{})
-		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
-			l := s[i].(map[string]interface{})
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("mo.BaseMo")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			x = append(x, o.AsMoBaseMoRelationship())
-		}
-		o.SetPermissionResources(x)
 	}
 
 	if d.HasChange("protocol") {
@@ -681,7 +579,9 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("user_name") {
@@ -693,7 +593,7 @@ func resourceRecoveryBackupConfigPolicyUpdate(d *schema.ResourceData, meta inter
 	r := conn.ApiClient.RecoveryApi.UpdateRecoveryBackupConfigPolicy(conn.ctx, d.Id()).RecoveryBackupConfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -704,11 +604,10 @@ func resourceRecoveryBackupConfigPolicyDelete(d *schema.ResourceData, meta inter
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.RecoveryApi.DeleteRecoveryBackupConfigPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.RecoveryApi.DeleteRecoveryBackupConfigPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -37,11 +38,6 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -52,6 +48,7 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -131,11 +128,6 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -146,6 +138,7 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -158,45 +151,6 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"preferred_ipv4dns_server": {
 				Description: "IP address of the primary DNS server.",
@@ -220,11 +174,6 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -235,6 +184,7 @@ func resourceNetworkconfigPolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -273,7 +223,7 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewNetworkconfigPolicy()
+	var o = models.NewNetworkconfigPolicyWithDefaults()
 	if v, ok := d.GetOk("alternate_ipv4dns_server"); ok {
 		x := (v.(string))
 		o.SetAlternateIpv4dnsServer(x)
@@ -286,33 +236,35 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("appliance_account"); ok {
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetApplianceAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetApplianceAccount(x)
+		}
 	}
 
 	o.SetClassId("networkconfig.Policy")
@@ -327,23 +279,23 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 		o.SetDynamicDnsDomain(x)
 	}
 
-	if v, ok := d.GetOk("enable_dynamic_dns"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_dynamic_dns"); ok {
+		x := v.(bool)
 		o.SetEnableDynamicDns(x)
 	}
 
-	if v, ok := d.GetOk("enable_ipv4dns_from_dhcp"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_ipv4dns_from_dhcp"); ok {
+		x := v.(bool)
 		o.SetEnableIpv4dnsFromDhcp(x)
 	}
 
-	if v, ok := d.GetOk("enable_ipv6"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_ipv6"); ok {
+		x := v.(bool)
 		o.SetEnableIpv6(x)
 	}
 
-	if v, ok := d.GetOk("enable_ipv6dns_from_dhcp"); ok {
-		x := (v.(bool))
+	if v, ok := d.GetOkExists("enable_ipv6dns_from_dhcp"); ok {
+		x := v.(bool)
 		o.SetEnableIpv6dnsFromDhcp(x)
 	}
 
@@ -361,64 +313,35 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("preferred_ipv4dns_server"); ok {
@@ -438,28 +361,29 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -482,13 +406,15 @@ func resourceNetworkconfigPolicyCreate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.NetworkconfigApi.CreateNetworkconfigPolicy(conn.ctx).NetworkconfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -498,14 +424,15 @@ func detachNetworkconfigPolicyProfiles(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewNetworkconfigPolicy()
-
-	o.Profiles = new([]models.PolicyAbstractConfigProfileRelationship)
+	var o = models.NewNetworkconfigPolicyWithDefaults()
+	o.SetClassId("networkconfig.Policy")
+	o.SetObjectType("networkconfig.Policy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
 	r := conn.ApiClient.NetworkconfigApi.UpdateNetworkconfigPolicy(conn.ctx, d.Id()).NetworkconfigPolicy(*o)
 	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while creating: %s", err.Error())
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
 	return err
 }
@@ -519,84 +446,79 @@ func resourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{}) e
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("alternate_ipv4dns_server", (s.AlternateIpv4dnsServer)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AlternateIpv4dnsServer: %+v", err)
 	}
 
 	if err := d.Set("alternate_ipv6dns_server", (s.AlternateIpv6dnsServer)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AlternateIpv6dnsServer: %+v", err)
 	}
 
 	if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.ApplianceAccount, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ApplianceAccount: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("dynamic_dns_domain", (s.DynamicDnsDomain)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property DynamicDnsDomain: %+v", err)
 	}
 
 	if err := d.Set("enable_dynamic_dns", (s.EnableDynamicDns)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableDynamicDns: %+v", err)
 	}
 
 	if err := d.Set("enable_ipv4dns_from_dhcp", (s.EnableIpv4dnsFromDhcp)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableIpv4dnsFromDhcp: %+v", err)
 	}
 
 	if err := d.Set("enable_ipv6", (s.EnableIpv6)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableIpv6: %+v", err)
 	}
 
 	if err := d.Set("enable_ipv6dns_from_dhcp", (s.EnableIpv6dnsFromDhcp)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property EnableIpv6dnsFromDhcp: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("preferred_ipv4dns_server", (s.PreferredIpv4dnsServer)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property PreferredIpv4dnsServer: %+v", err)
 	}
 
 	if err := d.Set("preferred_ipv6dns_server", (s.PreferredIpv6dnsServer)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property PreferredIpv6dnsServer: %+v", err)
 	}
 
 	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -608,7 +530,7 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewNetworkconfigPolicy()
+	var o = models.NewNetworkconfigPolicyWithDefaults()
 	if d.HasChange("alternate_ipv4dns_server") {
 		v := d.Get("alternate_ipv4dns_server")
 		x := (v.(string))
@@ -624,34 +546,38 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 	if d.HasChange("appliance_account") {
 		v := d.Get("appliance_account")
 		p := make([]models.IamAccountRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("iam.Account")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			p = append(p, o.AsIamAccountRelationship())
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p[0]
-		o.SetApplianceAccount(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetApplianceAccount(x)
+		}
 	}
+
+	o.SetClassId("networkconfig.Policy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
@@ -701,68 +627,40 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 		o.SetName(x)
 	}
 
+	o.SetObjectType("networkconfig.Policy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("preferred_ipv4dns_server") {
@@ -785,28 +683,29 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("policy.AbstractConfigProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsPolicyAbstractConfigProfileRelationship())
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.SetProfiles(x)
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -830,13 +729,15 @@ func resourceNetworkconfigPolicyUpdate(d *schema.ResourceData, meta interface{})
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.NetworkconfigApi.UpdateNetworkconfigPolicy(conn.ctx, d.Id()).NetworkconfigPolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -847,15 +748,18 @@ func resourceNetworkconfigPolicyDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	e := detachNetworkconfigPolicyProfiles(d, meta)
-	if e != nil {
-		return e
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachNetworkconfigPolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
 	}
-
-	r := conn.ApiClient.NetworkconfigApi.DeleteNetworkconfigPolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.NetworkconfigApi.DeleteNetworkconfigPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

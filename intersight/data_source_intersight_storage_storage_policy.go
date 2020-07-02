@@ -37,11 +37,6 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -120,11 +115,6 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -147,45 +137,6 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"profiles": {
 				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
@@ -197,11 +148,6 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -249,7 +195,7 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 				},
 			},
 			"unused_disks_state": {
-				Description: "This is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.",
+				Description: "Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -264,7 +210,7 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"boot_drive": {
-							Description: "This flag enables the use of this virtual drive as a boot drive.",
+							Description: "The flag enables the use of this virtual drive as a boot drive.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
@@ -286,17 +232,17 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"drive_cache": {
-							Description: "This property expect disk cache policy.",
+							Description: "The property expect disk cache policy.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
 						"expand_to_available": {
-							Description: "This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.",
+							Description: "The flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
 						"io_policy": {
-							Description: "This property expects the desired IO mode - direct IO or cached IO.",
+							Description: "Desired IO mode - direct IO or cached IO.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -317,7 +263,7 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"size": {
-							Description: "Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.",
+							Description: "Virtual drive size in MB. Size is mandatory field unless the 'Expand to Available' option is enabled.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -338,7 +284,7 @@ func dataSourceStorageStoragePolicyRead(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewStorageStoragePolicy()
+	var o = models.NewStorageStoragePolicyWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -372,67 +318,77 @@ func dataSourceStorageStoragePolicyRead(d *schema.ResourceData, meta interface{}
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.StorageApi.GetStorageStoragePolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.StorageApi.GetStorageStoragePolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StorageStoragePolicyList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StorageStoragePolicy: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewStorageStoragePolicy()
+			var s = models.NewStorageStoragePolicyWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
 			if err := d.Set("disk_group_policies", flattenListStorageDiskGroupPolicyRelationship(s.DiskGroupPolicies, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DiskGroupPolicies: %+v", err)
 			}
 
 			if err := d.Set("global_hot_spares", flattenListStorageLocalDisk(s.GlobalHotSpares, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property GlobalHotSpares: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
 			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
 			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
 			if err := d.Set("retain_policy_virtual_drives", (s.RetainPolicyVirtualDrives)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RetainPolicyVirtualDrives: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("unused_disks_state", (s.UnusedDisksState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UnusedDisksState: %+v", err)
 			}
 
 			if err := d.Set("virtual_drives", flattenListStorageVirtualDriveConfig(s.VirtualDrives, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property VirtualDrives: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

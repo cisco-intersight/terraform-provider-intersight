@@ -28,11 +28,6 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -207,6 +202,12 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"error_code": {
+				Description: "Error code for Intersight Appliance's software upgrade. In case of failure - this code will help decide if software upgrade can be retried.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"fingerprint": {
 				Description: "Software upgrade manifest's fingerprint.",
 				Type:        schema.TypeString,
@@ -227,11 +228,6 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -252,6 +248,12 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 						},
 					},
 				},
+			},
+			"is_rolling_back": {
+				Description: "Track if software upgrade is upgrading or rolling back.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Computed:    true,
 			},
 			"messages": {
 				Type:     schema.TypeList,
@@ -270,11 +272,14 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
+			"rollback_needed": {
+				Description: "Track if rollback is needed.",
+				Type:        schema.TypeBool,
 				Optional:    true,
-				Computed:    true,
+			},
+			"rollback_phases": {
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"class_id": {
@@ -283,13 +288,32 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
+						"elapsed_time": {
+							Description: "Elapsed time in seconds to complete the current upgrade phase.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
+						},
+						"end_time": {
+							Description: "End date of the software upgrade phase.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
+						"failed": {
+							Description: "Indicates if the upgrade phase has failed or not.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
+						"message": {
+							Description: "Status message set during the upgrade phase.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"name": {
+							Description: "Name of the upgrade phase.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -300,14 +324,21 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+						"start_time": {
+							Description: "Start date of the software upgrade phase.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 					},
 				},
+				Computed: true,
+			},
+			"rollback_status": {
+				Description: "Status of the Intersight Appliance's software rollback status.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"services": {
 				Type:     schema.TypeList,
@@ -354,7 +385,7 @@ func dataSourceApplianceUpgrade() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
-			"version": {
+			"nr_version": {
 				Description: "Software upgrade manifest's version.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -368,7 +399,7 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewApplianceUpgrade()
+	var o = models.NewApplianceUpgradeWithDefaults()
 	if v, ok := d.GetOk("active"); ok {
 		x := (v.(bool))
 		o.SetActive(x)
@@ -393,9 +424,17 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 		x, _ := time.Parse(v.(string), time.RFC1123)
 		o.SetEndTime(x)
 	}
+	if v, ok := d.GetOk("error_code"); ok {
+		x := int64(v.(int))
+		o.SetErrorCode(x)
+	}
 	if v, ok := d.GetOk("fingerprint"); ok {
 		x := (v.(string))
 		o.SetFingerprint(x)
+	}
+	if v, ok := d.GetOk("is_rolling_back"); ok {
+		x := (v.(bool))
+		o.SetIsRollingBack(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -404,6 +443,14 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.SetObjectType(x)
+	}
+	if v, ok := d.GetOk("rollback_needed"); ok {
+		x := (v.(bool))
+		o.SetRollbackNeeded(x)
+	}
+	if v, ok := d.GetOk("rollback_status"); ok {
+		x := (v.(string))
+		o.SetRollbackStatus(x)
 	}
 	if v, ok := d.GetOk("start_time"); ok {
 		x, _ := time.Parse(v.(string), time.RFC1123)
@@ -417,7 +464,7 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 		x := int64(v.(int))
 		o.SetTotalPhases(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -426,92 +473,118 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.ApplianceApi.GetApplianceUpgradeList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.ApplianceApi.GetApplianceUpgradeList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.ApplianceUpgradeList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to ApplianceUpgrade: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewApplianceUpgrade()
+			var s = models.NewApplianceUpgradeWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
 			if err := d.Set("active", (s.Active)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Active: %+v", err)
 			}
 			if err := d.Set("auto_created", (s.AutoCreated)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AutoCreated: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
 			if err := d.Set("completed_phases", flattenListOnpremUpgradePhase(s.CompletedPhases, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CompletedPhases: %+v", err)
 			}
 
 			if err := d.Set("current_phase", flattenMapOnpremUpgradePhase(s.CurrentPhase, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property CurrentPhase: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("elapsed_time", (s.ElapsedTime)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ElapsedTime: %+v", err)
 			}
 
 			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
+			}
+			if err := d.Set("error_code", (s.ErrorCode)); err != nil {
+				return fmt.Errorf("error occurred while setting property ErrorCode: %+v", err)
 			}
 			if err := d.Set("fingerprint", (s.Fingerprint)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Fingerprint: %+v", err)
 			}
 
 			if err := d.Set("image_bundle", flattenMapApplianceImageBundleRelationship(s.ImageBundle, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ImageBundle: %+v", err)
+			}
+			if err := d.Set("is_rolling_back", (s.IsRollingBack)); err != nil {
+				return fmt.Errorf("error occurred while setting property IsRollingBack: %+v", err)
 			}
 			if err := d.Set("messages", (s.Messages)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Messages: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("rollback_needed", (s.RollbackNeeded)); err != nil {
+				return fmt.Errorf("error occurred while setting property RollbackNeeded: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("rollback_phases", flattenListOnpremUpgradePhase(s.RollbackPhases, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RollbackPhases: %+v", err)
+			}
+			if err := d.Set("rollback_status", (s.RollbackStatus)); err != nil {
+				return fmt.Errorf("error occurred while setting property RollbackStatus: %+v", err)
 			}
 			if err := d.Set("services", (s.Services)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Services: %+v", err)
 			}
 
 			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
 			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("total_phases", (s.TotalPhases)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property TotalPhases: %+v", err)
 			}
 			if err := d.Set("ui_packages", (s.UiPackages)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UiPackages: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.Version)); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

@@ -100,45 +100,6 @@ func dataSourceMetaDefinition() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"permission_supported": {
 				Description: "Boolean flag to specify whether instances of this class type can be specified in permissions for instance based access control. Permissions can be created for entire Intersight account or to a subset of resources (instance based access control). In the first release, permissions are supported for entire account or for a subset of organizations.",
 				Type:        schema.TypeBool,
@@ -219,6 +180,18 @@ func dataSourceMetaDefinition() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"export": {
+							Description: "When turned off, the peer MO is not exported when the local MO is exported.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
+						"export_with_peer": {
+							Description: "When turned on, the local MO is exported when the peer is exported.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
 						"name": {
 							Description: "The name of the relationship.",
 							Type:        schema.TypeString,
@@ -265,7 +238,7 @@ func dataSourceMetaDefinition() *schema.Resource {
 					},
 				},
 			},
-			"version": {
+			"nr_version": {
 				Description: "The version of the service that defines the meta-data.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -279,7 +252,7 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewMetaDefinition()
+	var o = models.NewMetaDefinitionWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -324,7 +297,7 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 		x := (v.(string))
 		o.SetRestPath(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -333,77 +306,87 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.MetaApi.GetMetaDefinitionList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.MetaApi.GetMetaDefinitionList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.MetaDefinitionList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to MetaDefinition: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewMetaDefinition()
+			var s = models.NewMetaDefinitionWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("access_privileges", flattenListMetaAccessPrivilege(s.AccessPrivileges, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AccessPrivileges: %+v", err)
 			}
 			if err := d.Set("ancestor_classes", (s.AncestorClasses)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property AncestorClasses: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("is_concrete", (s.IsConcrete)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IsConcrete: %+v", err)
 			}
 			if err := d.Set("meta_type", (s.MetaType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property MetaType: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("namespace", (s.Namespace)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Namespace: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 			if err := d.Set("parent_class", (s.ParentClass)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ParentClass: %+v", err)
 			}
 			if err := d.Set("permission_supported", (s.PermissionSupported)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PermissionSupported: %+v", err)
 			}
 
 			if err := d.Set("properties", flattenListMetaPropDefinition(s.Properties, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Properties: %+v", err)
 			}
 			if err := d.Set("rbac_resource", (s.RbacResource)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RbacResource: %+v", err)
 			}
 
 			if err := d.Set("relationships", flattenListMetaRelationshipDefinition(s.Relationships, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Relationships: %+v", err)
 			}
 			if err := d.Set("rest_path", (s.RestPath)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RestPath: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.Version)); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

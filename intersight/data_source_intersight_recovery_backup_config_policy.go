@@ -26,11 +26,6 @@ func dataSourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -110,11 +105,6 @@ func dataSourceRecoveryBackupConfigPolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -138,7 +128,7 @@ func dataSourceRecoveryBackupConfigPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"password": {
-				Description: "Backup server password.",
+				Description: "Password of Backup server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -146,45 +136,6 @@ func dataSourceRecoveryBackupConfigPolicy() *schema.Resource {
 				Description: "The file system path where the backup images must be stored. Include the IP address/hostname of the network share location and the complete file system path. For example: 172.29.109.234/var/backups/.",
 				Type:        schema.TypeString,
 				Optional:    true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"protocol": {
 				Description: "Protocol for transferring the backup image to the network share location.",
@@ -227,7 +178,7 @@ func dataSourceRecoveryBackupConfigPolicyRead(d *schema.ResourceData, meta inter
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewRecoveryBackupConfigPolicy()
+	var o = models.NewRecoveryBackupConfigPolicyWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -285,70 +236,80 @@ func dataSourceRecoveryBackupConfigPolicyRead(d *schema.ResourceData, meta inter
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.RecoveryApi.GetRecoveryBackupConfigPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.RecoveryApi.GetRecoveryBackupConfigPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.RecoveryBackupConfigPolicyList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to RecoveryBackupConfigPolicy: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewRecoveryBackupConfigPolicy()
+			var s = models.NewRecoveryBackupConfigPolicyWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
 			if err := d.Set("backup_profiles", flattenListRecoveryBackupProfileRelationship(s.BackupProfiles, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BackupProfiles: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 			if err := d.Set("file_name_prefix", (s.FileNamePrefix)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FileNamePrefix: %+v", err)
 			}
 			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
 			if err := d.Set("location_type", (s.LocationType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property LocationType: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
 			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 			if err := d.Set("path", (s.Path)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Path: %+v", err)
 			}
 			if err := d.Set("protocol", (s.Protocol)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 			}
 			if err := d.Set("retention_count", (s.RetentionCount)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RetentionCount: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("user_name", (s.UserName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property UserName: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

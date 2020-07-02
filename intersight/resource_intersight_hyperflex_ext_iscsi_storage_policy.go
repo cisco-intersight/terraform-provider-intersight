@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"fmt"
 	"log"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
@@ -37,11 +38,6 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -52,6 +48,7 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -91,6 +88,7 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"vlan_id": {
 							Description: "The ID of the named VLAN. An ID of 0 means the traffic is untagged.\nThe ID can be any number between 0 and 4095, inclusive.",
@@ -124,6 +122,7 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"vlan_id": {
 							Description: "The ID of the named VLAN. An ID of 0 means the traffic is untagged.\nThe ID can be any number between 0 and 4095, inclusive.",
@@ -166,11 +165,6 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -181,6 +175,7 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
@@ -193,45 +188,6 @@ func resourceHyperflexExtIscsiStoragePolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"tags": {
 				Type:     schema.TypeList,
@@ -259,9 +215,9 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexExtIscsiStoragePolicy()
-	if v, ok := d.GetOk("admin_state"); ok {
-		x := (v.(bool))
+	var o = models.NewHyperflexExtIscsiStoragePolicyWithDefaults()
+	if v, ok := d.GetOkExists("admin_state"); ok {
+		x := v.(bool)
 		o.SetAdminState(x)
 	}
 
@@ -274,28 +230,29 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexClusterProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		o.SetClusterProfiles(x)
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -305,8 +262,9 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 
 	if v, ok := d.GetOk("exta_traffic"); ok {
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -315,7 +273,12 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -324,14 +287,17 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetExtaTraffic(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtaTraffic(x)
+		}
 	}
 
 	if v, ok := d.GetOk("extb_traffic"); ok {
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -340,7 +306,12 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -349,8 +320,10 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetExtbTraffic(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtbTraffic(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -367,64 +340,35 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 
 	if v, ok := d.GetOk("organization"); ok {
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
@@ -447,13 +391,15 @@ func resourceHyperflexExtIscsiStoragePolicyCreate(d *schema.ResourceData, meta i
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.CreateHyperflexExtIscsiStoragePolicy(conn.ctx).HyperflexExtIscsiStoragePolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Panicf("Failed to invoke operation: %v", err)
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -469,56 +415,51 @@ func resourceHyperflexExtIscsiStoragePolicyRead(d *schema.ResourceData, meta int
 	s, _, err := r.Execute()
 
 	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
 	if err := d.Set("admin_state", (s.AdminState)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 	}
 
 	if err := d.Set("class_id", (s.ClassId)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
 	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 	}
 
 	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
 	if err := d.Set("exta_traffic", flattenMapHyperflexNamedVlan(s.ExtaTraffic, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ExtaTraffic: %+v", err)
 	}
 
 	if err := d.Set("extb_traffic", flattenMapHyperflexNamedVlan(s.ExtbTraffic, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ExtbTraffic: %+v", err)
 	}
 
 	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
 	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
 	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
 	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -530,12 +471,14 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewHyperflexExtIscsiStoragePolicy()
+	var o = models.NewHyperflexExtIscsiStoragePolicyWithDefaults()
 	if d.HasChange("admin_state") {
 		v := d.Get("admin_state")
 		x := (v.(bool))
 		o.SetAdminState(x)
 	}
+
+	o.SetClassId("hyperflex.ExtIscsiStoragePolicy")
 
 	if d.HasChange("cluster_profiles") {
 		v := d.Get("cluster_profiles")
@@ -545,28 +488,29 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("hyperflex.ClusterProfile")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsHyperflexClusterProfileRelationship())
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		o.SetClusterProfiles(x)
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
+		}
 	}
 
 	if d.HasChange("description") {
@@ -578,8 +522,9 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 	if d.HasChange("exta_traffic") {
 		v := d.Get("exta_traffic")
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -588,7 +533,12 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -597,15 +547,18 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetExtaTraffic(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtaTraffic(x)
+		}
 	}
 
 	if d.HasChange("extb_traffic") {
 		v := d.Get("extb_traffic")
 		p := make([]models.HyperflexNamedVlan, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
@@ -614,7 +567,12 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 					o.SetName(x)
 				}
 			}
-			o.SetObjectType("hyperflex.NamedVlan")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -623,8 +581,10 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			}
 			p = append(p, *o)
 		}
-		x := p[0]
-		o.SetExtbTraffic(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetExtbTraffic(x)
+		}
 	}
 
 	if d.HasChange("moid") {
@@ -639,68 +599,40 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 		o.SetName(x)
 	}
 
+	o.SetObjectType("hyperflex.ExtIscsiStoragePolicy")
+
 	if d.HasChange("organization") {
 		v := d.Get("organization")
 		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
-		l := (v.([]interface{})[0]).(map[string]interface{})
-		{
-			o := models.NewMoMoRefWithDefaults()
-			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.SetMoid(x)
-				}
-			}
-			o.SetObjectType("organization.Organization")
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.SetSelector(x)
-				}
-			}
-			p = append(p, o.AsOrganizationOrganizationRelationship())
-		}
-		x := p[0]
-		o.SetOrganization(x)
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]models.MoBaseMoRelationship, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
-			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			o.SetClassId("mo.MoRef")
-			if v, ok := l["link"]; ok {
-				{
-					x := (v.(string))
-					o.SetLink(x)
-				}
-			}
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
 					o.SetMoid(x)
 				}
 			}
-			o.SetObjectType("mo.BaseMo")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
 					o.SetSelector(x)
 				}
 			}
-			x = append(x, o.AsMoBaseMoRelationship())
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		o.SetPermissionResources(x)
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("tags") {
@@ -724,13 +656,15 @@ func resourceHyperflexExtIscsiStoragePolicyUpdate(d *schema.ResourceData, meta i
 			}
 			x = append(x, *o)
 		}
-		o.SetTags(x)
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	r := conn.ApiClient.HyperflexApi.UpdateHyperflexExtIscsiStoragePolicy(conn.ctx, d.Id()).HyperflexExtIscsiStoragePolicy(*o)
 	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error occurred while updating: %s", err.Error())
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
 	log.Printf("Moid: %s", result.GetMoid())
 	d.SetId(result.GetMoid())
@@ -741,11 +675,10 @@ func resourceHyperflexExtIscsiStoragePolicyDelete(d *schema.ResourceData, meta i
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	r := conn.ApiClient.HyperflexApi.DeleteHyperflexExtIscsiStoragePolicy(conn.ctx, d.Id())
-	_, err := r.Execute()
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexExtIscsiStoragePolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

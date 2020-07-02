@@ -33,11 +33,6 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -66,10 +61,115 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"component_meta": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"component_label": {
+							Description: "The name of the component in the compressed HSU bundle.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"component_type": {
+							Description: "The type of component image within the distributable.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"description": {
+							Description: "This shows the description of component image within the distributable.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"disruption": {
+							Description: "The type of disruption on each component. For example, host reboot, automatic power cycle, and manual power cycle.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"is_oob_supported": {
+							Description: "If set, the component can be updated through out-of-band management, else, is updated through the booting host service utility.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"model": {
+							Description: "The model of the component image in the distributable.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"oob_manageability": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString}},
+						"packed_version": {
+							Description: "The packaged version of component image within the distributable.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"redfish_url": {
+							Description: "The redfish target for each component.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"vendor": {
+							Description: "The version of the component image in the distributable.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
 			"description": {
 				Description: "User provided description about the file. Cisco provided description for image inventoried from a Cisco repository.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"distributable_metas": {
+				Description: "An array of relationships to firmwareDistributableMeta resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"download_count": {
 				Description: "The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache.",
@@ -88,6 +188,11 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"image_category": {
+				Description: "The category of the distributable. That is, if it is C-Series, B-Series and the like.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"import_action": {
 				Description: "The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source.",
@@ -114,7 +219,6 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Description: "The endpoint model for which this firmware image is applicable.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -133,11 +237,27 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "An array of relationships to moBaseMo resources.",
-				Type:        schema.TypeList,
+			"origin": {
+				Description: "The source of the distributable. If it has been created by the user or system.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"platform_type": {
+				Description: "The platform type of the image.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"recommended_build": {
+				Description: "The build which is recommended by Cisco.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"release": {
+				Description: "A reference to a softwarerepositoryRelease resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"class_id": {
@@ -145,11 +265,6 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"link": {
-							Description: "A URL to an instance of the 'mo.MoRef' class.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
@@ -171,17 +286,7 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 						},
 					},
 				},
-			},
-			"platform_type": {
-				Description: "The platform type of the image.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"recommended_build": {
-				Description: "The build which is recommended by Cisco.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Computed: true,
 			},
 			"release_notes_url": {
 				Description: "The url for the release notes of this image.",
@@ -214,7 +319,7 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"source": {
+			"nr_source": {
 				Description: "Location of the file in an external repository.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
@@ -270,7 +375,7 @@ func dataSourceSoftwareSolutionDistributable() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Vendor provided version for the file.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -283,7 +388,7 @@ func dataSourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o = models.NewSoftwareSolutionDistributable()
+	var o = models.NewSoftwareSolutionDistributableWithDefaults()
 	if v, ok := d.GetOk("bundle_type"); ok {
 		x := (v.(string))
 		o.SetBundleType(x)
@@ -307,6 +412,10 @@ func dataSourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta in
 	if v, ok := d.GetOk("guid"); ok {
 		x := (v.(string))
 		o.SetGuid(x)
+	}
+	if v, ok := d.GetOk("image_category"); ok {
+		x := (v.(string))
+		o.SetImageCategory(x)
 	}
 	if v, ok := d.GetOk("import_action"); ok {
 		x := (v.(string))
@@ -339,6 +448,10 @@ func dataSourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta in
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.SetObjectType(x)
+	}
+	if v, ok := d.GetOk("origin"); ok {
+		x := (v.(string))
+		o.SetOrigin(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
@@ -380,7 +493,7 @@ func dataSourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta in
 		x := (v.(string))
 		o.SetVendor(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
 		o.SetVersion(x)
 	}
@@ -389,112 +502,140 @@ func dataSourceSoftwareSolutionDistributableRead(d *schema.ResourceData, meta in
 	if err != nil {
 		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	result, _, err := conn.ApiClient.SoftwareApi.GetSoftwareSolutionDistributableList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	res, _, err := conn.ApiClient.SoftwareApi.GetSoftwareSolutionDistributableList(conn.ctx).Filter(getRequestParams(data)).Execute()
 	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
+	}
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.SoftwareSolutionDistributableList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to SoftwareSolutionDistributable: %+v", err)
+	}
+	result := s.GetResults()
+	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
 	switch reflect.TypeOf(result).Kind() {
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s = models.NewSoftwareSolutionDistributable()
+			var s = models.NewSoftwareSolutionDistributableWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
-				return err
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 			if err := d.Set("bundle_type", (s.BundleType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property BundleType: %+v", err)
 			}
 
 			if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.Catalog, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
 			if err := d.Set("class_id", (s.ClassId)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
+			}
+
+			if err := d.Set("component_meta", flattenListFirmwareComponentMeta(s.ComponentMeta, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ComponentMeta: %+v", err)
 			}
 			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
+			}
+
+			if err := d.Set("distributable_metas", flattenListFirmwareDistributableMetaRelationship(s.DistributableMetas, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property DistributableMetas: %+v", err)
 			}
 			if err := d.Set("download_count", (s.DownloadCount)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property DownloadCount: %+v", err)
 			}
 			if err := d.Set("file_path", (s.FilePath)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property FilePath: %+v", err)
 			}
 			if err := d.Set("guid", (s.Guid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
+			}
+			if err := d.Set("image_category", (s.ImageCategory)); err != nil {
+				return fmt.Errorf("error occurred while setting property ImageCategory: %+v", err)
 			}
 			if err := d.Set("import_action", (s.ImportAction)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ImportAction: %+v", err)
 			}
 			if err := d.Set("import_state", (s.ImportState)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ImportState: %+v", err)
 			}
 			if err := d.Set("md5sum", (s.Md5sum)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Md5sum: %+v", err)
 			}
 			if err := d.Set("mdfid", (s.Mdfid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Mdfid: %+v", err)
 			}
 			if err := d.Set("model", (s.Model)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
 			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRelationship(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("origin", (s.Origin)); err != nil {
+				return fmt.Errorf("error occurred while setting property Origin: %+v", err)
 			}
 			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
 			if err := d.Set("recommended_build", (s.RecommendedBuild)); err != nil {
-				return err
-			}
-			if err := d.Set("release_notes_url", (s.ReleaseNotesUrl)); err != nil {
-				return err
-			}
-			if err := d.Set("sha512sum", (s.Sha512sum)); err != nil {
-				return err
-			}
-			if err := d.Set("size", (s.Size)); err != nil {
-				return err
-			}
-			if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
-				return err
-			}
-			if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
-				return err
-			}
-			if err := d.Set("solution_name", (s.SolutionName)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property RecommendedBuild: %+v", err)
 			}
 
-			if err := d.Set("source", flattenMapSoftwarerepositoryFileServer(s.Source, d)); err != nil {
-				return err
+			if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.Release, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Release: %+v", err)
+			}
+			if err := d.Set("release_notes_url", (s.ReleaseNotesUrl)); err != nil {
+				return fmt.Errorf("error occurred while setting property ReleaseNotesUrl: %+v", err)
+			}
+			if err := d.Set("sha512sum", (s.Sha512sum)); err != nil {
+				return fmt.Errorf("error occurred while setting property Sha512sum: %+v", err)
+			}
+			if err := d.Set("size", (s.Size)); err != nil {
+				return fmt.Errorf("error occurred while setting property Size: %+v", err)
+			}
+			if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
+				return fmt.Errorf("error occurred while setting property SoftwareAdvisoryUrl: %+v", err)
+			}
+			if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
+				return fmt.Errorf("error occurred while setting property SoftwareTypeId: %+v", err)
+			}
+			if err := d.Set("solution_name", (s.SolutionName)); err != nil {
+				return fmt.Errorf("error occurred while setting property SolutionName: %+v", err)
+			}
+
+			if err := d.Set("nr_source", flattenMapSoftwarerepositoryFileServer(s.Source, d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Source: %+v", err)
 			}
 			if err := d.Set("sub_type", (s.SubType)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SubType: %+v", err)
 			}
 			if err := d.Set("supported_models", (s.SupportedModels)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.Version)); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}
