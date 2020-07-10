@@ -1,25 +1,51 @@
 package intersight
 
 import (
+	"encoding/json"
+	"log"
+	"reflect"
+
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func flattenListAdapterAdapterConfig(p *[]models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAdapterAdapterConfig(p []models.AdapterAdapterConfig, d *schema.ResourceData) []map[string]interface{} {
 	var adapteradapterconfigs []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		adapteradapterconfig := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AdapterAdapterConfig
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapteradapterconfig["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapteradapterconfig["class_id"] = item.ClassId
-		adapteradapterconfig["dce_interface_settings"] = (func(p *[]models.AdapterDceInterfaceSettings, d *schema.ResourceData) []map[string]interface{} {
+		adapteradapterconfig["dce_interface_settings"] = (func(p []models.AdapterDceInterfaceSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterdceinterfacesettingss []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				adapterdceinterfacesettings := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.AdapterDceInterfaceSettings
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					adapterdceinterfacesettings["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				adapterdceinterfacesettings["class_id"] = item.ClassId
 				adapterdceinterfacesettings["fec_mode"] = item.FecMode
 				adapterdceinterfacesettings["interface_id"] = item.InterfaceId
@@ -27,50 +53,86 @@ func flattenListAdapterAdapterConfig(p *[]models.AdapterAdapterConfig, d *schema
 				adapterdceinterfacesettingss = append(adapterdceinterfacesettingss, adapterdceinterfacesettings)
 			}
 			return adapterdceinterfacesettingss
-		})(item.DceInterfaceSettings, d)
-		adapteradapterconfig["eth_settings"] = (func(p *models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
+		})(item.GetDceInterfaceSettings(), d)
+		adapteradapterconfig["eth_settings"] = (func(p models.AdapterEthSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterethsettingss []map[string]interface{}
-			if p == nil {
+			var ret models.AdapterEthSettings
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			adapterethsettings := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.AdapterEthSettings
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				adapterethsettings["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			adapterethsettings["class_id"] = item.ClassId
 			adapterethsettings["lldp_enabled"] = item.LldpEnabled
 			adapterethsettings["object_type"] = item.ObjectType
 
 			adapterethsettingss = append(adapterethsettingss, adapterethsettings)
 			return adapterethsettingss
-		})(item.EthSettings, d)
-		adapteradapterconfig["fc_settings"] = (func(p *models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
+		})(item.GetEthSettings(), d)
+		adapteradapterconfig["fc_settings"] = (func(p models.AdapterFcSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterfcsettingss []map[string]interface{}
-			if p == nil {
+			var ret models.AdapterFcSettings
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			adapterfcsettings := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.AdapterFcSettings
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				adapterfcsettings["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			adapterfcsettings["class_id"] = item.ClassId
 			adapterfcsettings["fip_enabled"] = item.FipEnabled
 			adapterfcsettings["object_type"] = item.ObjectType
 
 			adapterfcsettingss = append(adapterfcsettingss, adapterfcsettings)
 			return adapterfcsettingss
-		})(item.FcSettings, d)
+		})(item.GetFcSettings(), d)
 		adapteradapterconfig["object_type"] = item.ObjectType
-		adapteradapterconfig["port_channel_settings"] = (func(p *models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
+		adapteradapterconfig["port_channel_settings"] = (func(p models.AdapterPortChannelSettings, d *schema.ResourceData) []map[string]interface{} {
 			var adapterportchannelsettingss []map[string]interface{}
-			if p == nil {
+			var ret models.AdapterPortChannelSettings
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			adapterportchannelsettings := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.AdapterPortChannelSettings
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				adapterportchannelsettings["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			adapterportchannelsettings["class_id"] = item.ClassId
 			adapterportchannelsettings["enabled"] = item.Enabled
 			adapterportchannelsettings["object_type"] = item.ObjectType
 
 			adapterportchannelsettingss = append(adapterportchannelsettingss, adapterportchannelsettings)
 			return adapterportchannelsettingss
-		})(item.PortChannelSettings, d)
+		})(item.GetPortChannelSettings(), d)
 		adapteradapterconfig["slot_id"] = item.SlotId
 		adapteradapterconfigs = append(adapteradapterconfigs, adapteradapterconfig)
 	}
@@ -78,12 +140,23 @@ func flattenListAdapterAdapterConfig(p *[]models.AdapterAdapterConfig, d *schema
 }
 func flattenListAdapterExtEthInterfaceRelationship(p []models.AdapterExtEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterextethinterfacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		adapterextethinterfacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapterextethinterfacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapterextethinterfacerelationship["class_id"] = item.ClassId
 		adapterextethinterfacerelationship["moid"] = item.Moid
 		adapterextethinterfacerelationship["object_type"] = item.ObjectType
@@ -94,12 +167,23 @@ func flattenListAdapterExtEthInterfaceRelationship(p []models.AdapterExtEthInter
 }
 func flattenListAdapterHostEthInterfaceRelationship(p []models.AdapterHostEthInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostethinterfacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		adapterhostethinterfacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapterhostethinterfacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapterhostethinterfacerelationship["class_id"] = item.ClassId
 		adapterhostethinterfacerelationship["moid"] = item.Moid
 		adapterhostethinterfacerelationship["object_type"] = item.ObjectType
@@ -110,12 +194,23 @@ func flattenListAdapterHostEthInterfaceRelationship(p []models.AdapterHostEthInt
 }
 func flattenListAdapterHostFcInterfaceRelationship(p []models.AdapterHostFcInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostfcinterfacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		adapterhostfcinterfacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapterhostfcinterfacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapterhostfcinterfacerelationship["class_id"] = item.ClassId
 		adapterhostfcinterfacerelationship["moid"] = item.Moid
 		adapterhostfcinterfacerelationship["object_type"] = item.ObjectType
@@ -126,12 +221,23 @@ func flattenListAdapterHostFcInterfaceRelationship(p []models.AdapterHostFcInter
 }
 func flattenListAdapterHostIscsiInterfaceRelationship(p []models.AdapterHostIscsiInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterhostiscsiinterfacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		adapterhostiscsiinterfacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapterhostiscsiinterfacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapterhostiscsiinterfacerelationship["class_id"] = item.ClassId
 		adapterhostiscsiinterfacerelationship["moid"] = item.Moid
 		adapterhostiscsiinterfacerelationship["object_type"] = item.ObjectType
@@ -142,12 +248,23 @@ func flattenListAdapterHostIscsiInterfaceRelationship(p []models.AdapterHostIscs
 }
 func flattenListAdapterUnitRelationship(p []models.AdapterUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		adapterunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			adapterunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		adapterunitrelationship["class_id"] = item.ClassId
 		adapterunitrelationship["moid"] = item.Moid
 		adapterunitrelationship["object_type"] = item.ObjectType
@@ -158,12 +275,23 @@ func flattenListAdapterUnitRelationship(p []models.AdapterUnitRelationship, d *s
 }
 func flattenListApplianceDataExportPolicyRelationship(p []models.ApplianceDataExportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var appliancedataexportpolicyrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		appliancedataexportpolicyrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			appliancedataexportpolicyrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		appliancedataexportpolicyrelationship["class_id"] = item.ClassId
 		appliancedataexportpolicyrelationship["moid"] = item.Moid
 		appliancedataexportpolicyrelationship["object_type"] = item.ObjectType
@@ -172,13 +300,24 @@ func flattenListApplianceDataExportPolicyRelationship(p []models.ApplianceDataEx
 	}
 	return appliancedataexportpolicyrelationships
 }
-func flattenListApplianceKeyValuePair(p *[]models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
+func flattenListApplianceKeyValuePair(p []models.ApplianceKeyValuePair, d *schema.ResourceData) []map[string]interface{} {
 	var appliancekeyvaluepairs []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		appliancekeyvaluepair := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ApplianceKeyValuePair
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			appliancekeyvaluepair["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		appliancekeyvaluepair["class_id"] = item.ClassId
 		appliancekeyvaluepair["key"] = item.Key
 		appliancekeyvaluepair["object_type"] = item.ObjectType
@@ -189,12 +328,23 @@ func flattenListApplianceKeyValuePair(p *[]models.ApplianceKeyValuePair, d *sche
 }
 func flattenListAssetClusterMemberRelationship(p []models.AssetClusterMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetclustermemberrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		assetclustermemberrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetclustermemberrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetclustermemberrelationship["class_id"] = item.ClassId
 		assetclustermemberrelationship["moid"] = item.Moid
 		assetclustermemberrelationship["object_type"] = item.ObjectType
@@ -203,41 +353,75 @@ func flattenListAssetClusterMemberRelationship(p []models.AssetClusterMemberRela
 	}
 	return assetclustermemberrelationships
 }
-func flattenListAssetConnection(p *[]models.AssetConnection, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAssetConnection(p []models.AssetConnection, d *schema.ResourceData) []map[string]interface{} {
 	var assetconnections []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		assetconnection := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetConnection
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetconnection["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetconnection["class_id"] = item.ClassId
 		assetconnection["object_type"] = item.ObjectType
 		assetconnections = append(assetconnections, assetconnection)
 	}
 	return assetconnections
 }
-func flattenListAssetService(p *[]models.AssetService, d *schema.ResourceData) []map[string]interface{} {
+func flattenListAssetService(p []models.AssetService, d *schema.ResourceData) []map[string]interface{} {
 	var assetservices []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		assetservice := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetService
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetservice["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetservice["class_id"] = item.ClassId
 		assetservice["object_type"] = item.ObjectType
-		assetservice["options"] = (func(p *models.AssetServiceOptions, d *schema.ResourceData) []map[string]interface{} {
+		assetservice["options"] = (func(p models.AssetServiceOptions, d *schema.ResourceData) []map[string]interface{} {
 			var assetserviceoptionss []map[string]interface{}
-			if p == nil {
+			var ret models.AssetServiceOptions
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			assetserviceoptions := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.AssetServiceOptions
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				assetserviceoptions["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			assetserviceoptions["class_id"] = item.ClassId
 			assetserviceoptions["object_type"] = item.ObjectType
 
 			assetserviceoptionss = append(assetserviceoptionss, assetserviceoptions)
 			return assetserviceoptionss
-		})(item.Options, d)
+		})(item.GetOptions(), d)
 		assetservice["status"] = item.Status
 		assetservice["status_error_reason"] = item.StatusErrorReason
 		assetservices = append(assetservices, assetservice)
@@ -246,12 +430,23 @@ func flattenListAssetService(p *[]models.AssetService, d *schema.ResourceData) [
 }
 func flattenListBiosBootDeviceRelationship(p []models.BiosBootDeviceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biosbootdevicerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		biosbootdevicerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			biosbootdevicerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		biosbootdevicerelationship["class_id"] = item.ClassId
 		biosbootdevicerelationship["moid"] = item.Moid
 		biosbootdevicerelationship["object_type"] = item.ObjectType
@@ -262,12 +457,23 @@ func flattenListBiosBootDeviceRelationship(p []models.BiosBootDeviceRelationship
 }
 func flattenListBiosUnitRelationship(p []models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biosunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		biosunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			biosunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		biosunitrelationship["class_id"] = item.ClassId
 		biosunitrelationship["moid"] = item.Moid
 		biosunitrelationship["object_type"] = item.ObjectType
@@ -276,13 +482,24 @@ func flattenListBiosUnitRelationship(p []models.BiosUnitRelationship, d *schema.
 	}
 	return biosunitrelationships
 }
-func flattenListBootDeviceBase(p *[]models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
+func flattenListBootDeviceBase(p []models.BootDeviceBase, d *schema.ResourceData) []map[string]interface{} {
 	var bootdevicebases []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		bootdevicebase := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.BootDeviceBase
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			bootdevicebase["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		bootdevicebase["class_id"] = item.ClassId
 		bootdevicebase["enabled"] = item.Enabled
 		bootdevicebase["name"] = item.Name
@@ -293,12 +510,23 @@ func flattenListBootDeviceBase(p *[]models.BootDeviceBase, d *schema.ResourceDat
 }
 func flattenListCapabilityCapabilityRelationship(p []models.CapabilityCapabilityRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var capabilitycapabilityrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		capabilitycapabilityrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			capabilitycapabilityrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		capabilitycapabilityrelationship["class_id"] = item.ClassId
 		capabilitycapabilityrelationship["moid"] = item.Moid
 		capabilitycapabilityrelationship["object_type"] = item.ObjectType
@@ -307,13 +535,24 @@ func flattenListCapabilityCapabilityRelationship(p []models.CapabilityCapability
 	}
 	return capabilitycapabilityrelationships
 }
-func flattenListCapabilityPortRange(p *[]models.CapabilityPortRange, d *schema.ResourceData) []map[string]interface{} {
+func flattenListCapabilityPortRange(p []models.CapabilityPortRange, d *schema.ResourceData) []map[string]interface{} {
 	var capabilityportranges []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		capabilityportrange := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.CapabilityPortRange
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			capabilityportrange["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		capabilityportrange["class_id"] = item.ClassId
 		capabilityportrange["end_port_id"] = item.EndPortId
 		capabilityportrange["end_slot_id"] = item.EndSlotId
@@ -324,14 +563,52 @@ func flattenListCapabilityPortRange(p *[]models.CapabilityPortRange, d *schema.R
 	}
 	return capabilityportranges
 }
+func flattenListCapabilitySectionRelationship(p []models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitysectionrelationships []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		item := item.MoMoRef
+		capabilitysectionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			capabilitysectionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		capabilitysectionrelationship["class_id"] = item.ClassId
+		capabilitysectionrelationship["moid"] = item.Moid
+		capabilitysectionrelationship["object_type"] = item.ObjectType
+		capabilitysectionrelationship["selector"] = item.Selector
+		capabilitysectionrelationships = append(capabilitysectionrelationships, capabilitysectionrelationship)
+	}
+	return capabilitysectionrelationships
+}
 func flattenListComputeBladeRelationship(p []models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computebladerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		computebladerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			computebladerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		computebladerelationship["class_id"] = item.ClassId
 		computebladerelationship["moid"] = item.Moid
 		computebladerelationship["object_type"] = item.ObjectType
@@ -340,13 +617,24 @@ func flattenListComputeBladeRelationship(p []models.ComputeBladeRelationship, d 
 	}
 	return computebladerelationships
 }
-func flattenListComputeIpAddress(p *[]models.ComputeIpAddress, d *schema.ResourceData) []map[string]interface{} {
+func flattenListComputeIpAddress(p []models.ComputeIpAddress, d *schema.ResourceData) []map[string]interface{} {
 	var computeipaddresss []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		computeipaddress := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ComputeIpAddress
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			computeipaddress["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		computeipaddress["address"] = item.Address
 		computeipaddress["category"] = item.Category
 		computeipaddress["class_id"] = item.ClassId
@@ -366,12 +654,23 @@ func flattenListComputeIpAddress(p *[]models.ComputeIpAddress, d *schema.Resourc
 }
 func flattenListComputeRackUnitRelationship(p []models.ComputeRackUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computerackunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		computerackunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			computerackunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		computerackunitrelationship["class_id"] = item.ClassId
 		computerackunitrelationship["moid"] = item.Moid
 		computerackunitrelationship["object_type"] = item.ObjectType
@@ -382,12 +681,23 @@ func flattenListComputeRackUnitRelationship(p []models.ComputeRackUnitRelationsh
 }
 func flattenListCondHclStatusDetailRelationship(p []models.CondHclStatusDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var condhclstatusdetailrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		condhclstatusdetailrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			condhclstatusdetailrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		condhclstatusdetailrelationship["class_id"] = item.ClassId
 		condhclstatusdetailrelationship["moid"] = item.Moid
 		condhclstatusdetailrelationship["object_type"] = item.ObjectType
@@ -398,12 +708,23 @@ func flattenListCondHclStatusDetailRelationship(p []models.CondHclStatusDetailRe
 }
 func flattenListConfigExportedItemRelationship(p []models.ConfigExportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var configexporteditemrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		configexporteditemrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			configexporteditemrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		configexporteditemrelationship["class_id"] = item.ClassId
 		configexporteditemrelationship["moid"] = item.Moid
 		configexporteditemrelationship["object_type"] = item.ObjectType
@@ -414,12 +735,23 @@ func flattenListConfigExportedItemRelationship(p []models.ConfigExportedItemRela
 }
 func flattenListConfigImportedItemRelationship(p []models.ConfigImportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var configimporteditemrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		configimporteditemrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			configimporteditemrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		configimporteditemrelationship["class_id"] = item.ClassId
 		configimporteditemrelationship["moid"] = item.Moid
 		configimporteditemrelationship["object_type"] = item.ObjectType
@@ -428,13 +760,24 @@ func flattenListConfigImportedItemRelationship(p []models.ConfigImportedItemRela
 	}
 	return configimporteditemrelationships
 }
-func flattenListConfigMoRef(p *[]models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenListConfigMoRef(p []models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
 	var configmorefs []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		configmoref := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ConfigMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			configmoref["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		configmoref["class_id"] = item.ClassId
 		configmoref["moid"] = item.Moid
 		configmoref["object_type"] = item.ObjectType
@@ -442,13 +785,24 @@ func flattenListConfigMoRef(p *[]models.ConfigMoRef, d *schema.ResourceData) []m
 	}
 	return configmorefs
 }
-func flattenListConnectorpackConnectorPackUpdate(p *[]models.ConnectorpackConnectorPackUpdate, d *schema.ResourceData) []map[string]interface{} {
+func flattenListConnectorpackConnectorPackUpdate(p []models.ConnectorpackConnectorPackUpdate, d *schema.ResourceData) []map[string]interface{} {
 	var connectorpackconnectorpackupdates []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		connectorpackconnectorpackupdate := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ConnectorpackConnectorPackUpdate
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			connectorpackconnectorpackupdate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		connectorpackconnectorpackupdate["class_id"] = item.ClassId
 		connectorpackconnectorpackupdate["current_version"] = item.CurrentVersion
 		connectorpackconnectorpackupdate["name"] = item.Name
@@ -458,24 +812,46 @@ func flattenListConnectorpackConnectorPackUpdate(p *[]models.ConnectorpackConnec
 	}
 	return connectorpackconnectorpackupdates
 }
-func flattenListContentComplexType(p *[]models.ContentComplexType, d *schema.ResourceData) []map[string]interface{} {
+func flattenListContentComplexType(p []models.ContentComplexType, d *schema.ResourceData) []map[string]interface{} {
 	var contentcomplextypes []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		contentcomplextype := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ContentComplexType
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			contentcomplextype["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		contentcomplextype["class_id"] = item.ClassId
 		contentcomplextype["name"] = item.Name
 		contentcomplextype["object_type"] = item.ObjectType
-		contentcomplextype["parameters"] = (func(p *[]models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
+		contentcomplextype["parameters"] = (func(p []models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
 			var contentbaseparameters []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				contentbaseparameter := make(map[string]interface{})
+
 				contentbaseparameter["accept_single_value"] = item.AcceptSingleValue
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.ContentBaseParameter
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					contentbaseparameter["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				contentbaseparameter["class_id"] = item.ClassId
 				contentbaseparameter["complex_type"] = item.ComplexType
 				contentbaseparameter["item_type"] = item.ItemType
@@ -486,19 +862,30 @@ func flattenListContentComplexType(p *[]models.ContentComplexType, d *schema.Res
 				contentbaseparameters = append(contentbaseparameters, contentbaseparameter)
 			}
 			return contentbaseparameters
-		})(item.Parameters, d)
+		})(item.GetParameters(), d)
 		contentcomplextypes = append(contentcomplextypes, contentcomplextype)
 	}
 	return contentcomplextypes
 }
-func flattenListContentParameter(p *[]models.ContentParameter, d *schema.ResourceData) []map[string]interface{} {
+func flattenListContentParameter(p []models.ContentParameter, d *schema.ResourceData) []map[string]interface{} {
 	var contentparameters []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		contentparameter := make(map[string]interface{})
+
 		contentparameter["accept_single_value"] = item.AcceptSingleValue
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ContentParameter
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			contentparameter["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		contentparameter["class_id"] = item.ClassId
 		contentparameter["complex_type"] = item.ComplexType
 		contentparameter["item_type"] = item.ItemType
@@ -512,12 +899,23 @@ func flattenListContentParameter(p *[]models.ContentParameter, d *schema.Resourc
 }
 func flattenListEquipmentFanRelationship(p []models.EquipmentFanRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentfanrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentfanrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentfanrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentfanrelationship["class_id"] = item.ClassId
 		equipmentfanrelationship["moid"] = item.Moid
 		equipmentfanrelationship["object_type"] = item.ObjectType
@@ -528,12 +926,23 @@ func flattenListEquipmentFanRelationship(p []models.EquipmentFanRelationship, d 
 }
 func flattenListEquipmentFanModuleRelationship(p []models.EquipmentFanModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentfanmodulerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentfanmodulerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentfanmodulerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentfanmodulerelationship["class_id"] = item.ClassId
 		equipmentfanmodulerelationship["moid"] = item.Moid
 		equipmentfanmodulerelationship["object_type"] = item.ObjectType
@@ -544,12 +953,23 @@ func flattenListEquipmentFanModuleRelationship(p []models.EquipmentFanModuleRela
 }
 func flattenListEquipmentIoCardRelationship(p []models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentiocardrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentiocardrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentiocardrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentiocardrelationship["class_id"] = item.ClassId
 		equipmentiocardrelationship["moid"] = item.Moid
 		equipmentiocardrelationship["object_type"] = item.ObjectType
@@ -558,13 +978,24 @@ func flattenListEquipmentIoCardRelationship(p []models.EquipmentIoCardRelationsh
 	}
 	return equipmentiocardrelationships
 }
-func flattenListEquipmentIoCardIdentity(p *[]models.EquipmentIoCardIdentity, d *schema.ResourceData) []map[string]interface{} {
+func flattenListEquipmentIoCardIdentity(p []models.EquipmentIoCardIdentity, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentiocardidentitys []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		equipmentiocardidentity := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.EquipmentIoCardIdentity
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentiocardidentity["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentiocardidentity["class_id"] = item.ClassId
 		equipmentiocardidentity["io_card_moid"] = item.IoCardMoid
 		equipmentiocardidentity["module_id"] = item.ModuleId
@@ -577,12 +1008,23 @@ func flattenListEquipmentIoCardIdentity(p *[]models.EquipmentIoCardIdentity, d *
 }
 func flattenListEquipmentIoExpanderRelationship(p []models.EquipmentIoExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentioexpanderrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentioexpanderrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentioexpanderrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentioexpanderrelationship["class_id"] = item.ClassId
 		equipmentioexpanderrelationship["moid"] = item.Moid
 		equipmentioexpanderrelationship["object_type"] = item.ObjectType
@@ -593,12 +1035,23 @@ func flattenListEquipmentIoExpanderRelationship(p []models.EquipmentIoExpanderRe
 }
 func flattenListEquipmentPsuRelationship(p []models.EquipmentPsuRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentpsurelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentpsurelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentpsurelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentpsurelationship["class_id"] = item.ClassId
 		equipmentpsurelationship["moid"] = item.Moid
 		equipmentpsurelationship["object_type"] = item.ObjectType
@@ -609,12 +1062,23 @@ func flattenListEquipmentPsuRelationship(p []models.EquipmentPsuRelationship, d 
 }
 func flattenListEquipmentRackEnclosureSlotRelationship(p []models.EquipmentRackEnclosureSlotRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentrackenclosureslotrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentrackenclosureslotrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentrackenclosureslotrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentrackenclosureslotrelationship["class_id"] = item.ClassId
 		equipmentrackenclosureslotrelationship["moid"] = item.Moid
 		equipmentrackenclosureslotrelationship["object_type"] = item.ObjectType
@@ -625,12 +1089,23 @@ func flattenListEquipmentRackEnclosureSlotRelationship(p []models.EquipmentRackE
 }
 func flattenListEquipmentSwitchCardRelationship(p []models.EquipmentSwitchCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentswitchcardrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentswitchcardrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentswitchcardrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentswitchcardrelationship["class_id"] = item.ClassId
 		equipmentswitchcardrelationship["moid"] = item.Moid
 		equipmentswitchcardrelationship["object_type"] = item.ObjectType
@@ -641,12 +1116,23 @@ func flattenListEquipmentSwitchCardRelationship(p []models.EquipmentSwitchCardRe
 }
 func flattenListEquipmentSystemIoControllerRelationship(p []models.EquipmentSystemIoControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentsystemiocontrollerrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmentsystemiocontrollerrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmentsystemiocontrollerrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmentsystemiocontrollerrelationship["class_id"] = item.ClassId
 		equipmentsystemiocontrollerrelationship["moid"] = item.Moid
 		equipmentsystemiocontrollerrelationship["object_type"] = item.ObjectType
@@ -657,12 +1143,23 @@ func flattenListEquipmentSystemIoControllerRelationship(p []models.EquipmentSyst
 }
 func flattenListEquipmentTpmRelationship(p []models.EquipmentTpmRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmenttpmrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		equipmenttpmrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			equipmenttpmrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		equipmenttpmrelationship["class_id"] = item.ClassId
 		equipmenttpmrelationship["moid"] = item.Moid
 		equipmenttpmrelationship["object_type"] = item.ObjectType
@@ -673,12 +1170,23 @@ func flattenListEquipmentTpmRelationship(p []models.EquipmentTpmRelationship, d 
 }
 func flattenListEtherHostPortRelationship(p []models.EtherHostPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var etherhostportrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		etherhostportrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			etherhostportrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		etherhostportrelationship["class_id"] = item.ClassId
 		etherhostportrelationship["moid"] = item.Moid
 		etherhostportrelationship["object_type"] = item.ObjectType
@@ -689,12 +1197,23 @@ func flattenListEtherHostPortRelationship(p []models.EtherHostPortRelationship, 
 }
 func flattenListEtherNetworkPortRelationship(p []models.EtherNetworkPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ethernetworkportrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		ethernetworkportrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			ethernetworkportrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		ethernetworkportrelationship["class_id"] = item.ClassId
 		ethernetworkportrelationship["moid"] = item.Moid
 		ethernetworkportrelationship["object_type"] = item.ObjectType
@@ -705,12 +1224,23 @@ func flattenListEtherNetworkPortRelationship(p []models.EtherNetworkPortRelation
 }
 func flattenListEtherPhysicalPortRelationship(p []models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var etherphysicalportrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		etherphysicalportrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			etherphysicalportrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		etherphysicalportrelationship["class_id"] = item.ClassId
 		etherphysicalportrelationship["moid"] = item.Moid
 		etherphysicalportrelationship["object_type"] = item.ObjectType
@@ -721,12 +1251,23 @@ func flattenListEtherPhysicalPortRelationship(p []models.EtherPhysicalPortRelati
 }
 func flattenListEtherPortChannelRelationship(p []models.EtherPortChannelRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var etherportchannelrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		etherportchannelrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			etherportchannelrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		etherportchannelrelationship["class_id"] = item.ClassId
 		etherportchannelrelationship["moid"] = item.Moid
 		etherportchannelrelationship["object_type"] = item.ObjectType
@@ -737,12 +1278,23 @@ func flattenListEtherPortChannelRelationship(p []models.EtherPortChannelRelation
 }
 func flattenListFabricConfigChangeDetailRelationship(p []models.FabricConfigChangeDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricconfigchangedetailrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fabricconfigchangedetailrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fabricconfigchangedetailrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fabricconfigchangedetailrelationship["class_id"] = item.ClassId
 		fabricconfigchangedetailrelationship["moid"] = item.Moid
 		fabricconfigchangedetailrelationship["object_type"] = item.ObjectType
@@ -753,12 +1305,23 @@ func flattenListFabricConfigChangeDetailRelationship(p []models.FabricConfigChan
 }
 func flattenListFabricConfigResultEntryRelationship(p []models.FabricConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricconfigresultentryrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fabricconfigresultentryrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fabricconfigresultentryrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fabricconfigresultentryrelationship["class_id"] = item.ClassId
 		fabricconfigresultentryrelationship["moid"] = item.Moid
 		fabricconfigresultentryrelationship["object_type"] = item.ObjectType
@@ -767,13 +1330,24 @@ func flattenListFabricConfigResultEntryRelationship(p []models.FabricConfigResul
 	}
 	return fabricconfigresultentryrelationships
 }
-func flattenListFabricPortIdentifier(p *[]models.FabricPortIdentifier, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFabricPortIdentifier(p []models.FabricPortIdentifier, d *schema.ResourceData) []map[string]interface{} {
 	var fabricportidentifiers []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		fabricportidentifier := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FabricPortIdentifier
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fabricportidentifier["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fabricportidentifier["aggregate_port_id"] = item.AggregatePortId
 		fabricportidentifier["class_id"] = item.ClassId
 		fabricportidentifier["object_type"] = item.ObjectType
@@ -783,13 +1357,24 @@ func flattenListFabricPortIdentifier(p *[]models.FabricPortIdentifier, d *schema
 	}
 	return fabricportidentifiers
 }
-func flattenListFabricQosClass(p *[]models.FabricQosClass, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFabricQosClass(p []models.FabricQosClass, d *schema.ResourceData) []map[string]interface{} {
 	var fabricqosclasss []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		fabricqosclass := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FabricQosClass
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fabricqosclass["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fabricqosclass["admin_state"] = item.AdminState
 		fabricqosclass["bandwidth_percent"] = item.BandwidthPercent
 		fabricqosclass["class_id"] = item.ClassId
@@ -806,12 +1391,23 @@ func flattenListFabricQosClass(p *[]models.FabricQosClass, d *schema.ResourceDat
 }
 func flattenListFabricSwitchProfileRelationship(p []models.FabricSwitchProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricswitchprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fabricswitchprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fabricswitchprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fabricswitchprofilerelationship["class_id"] = item.ClassId
 		fabricswitchprofilerelationship["moid"] = item.Moid
 		fabricswitchprofilerelationship["object_type"] = item.ObjectType
@@ -822,12 +1418,23 @@ func flattenListFabricSwitchProfileRelationship(p []models.FabricSwitchProfileRe
 }
 func flattenListFcPhysicalPortRelationship(p []models.FcPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcphysicalportrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fcphysicalportrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fcphysicalportrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fcphysicalportrelationship["class_id"] = item.ClassId
 		fcphysicalportrelationship["moid"] = item.Moid
 		fcphysicalportrelationship["object_type"] = item.ObjectType
@@ -838,12 +1445,23 @@ func flattenListFcPhysicalPortRelationship(p []models.FcPhysicalPortRelationship
 }
 func flattenListFcPortChannelRelationship(p []models.FcPortChannelRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcportchannelrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fcportchannelrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fcportchannelrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fcportchannelrelationship["class_id"] = item.ClassId
 		fcportchannelrelationship["moid"] = item.Moid
 		fcportchannelrelationship["object_type"] = item.ObjectType
@@ -852,13 +1470,24 @@ func flattenListFcPortChannelRelationship(p []models.FcPortChannelRelationship, 
 	}
 	return fcportchannelrelationships
 }
-func flattenListFcpoolBlock(p *[]models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFcpoolBlock(p []models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolblocks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		fcpoolblock := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FcpoolBlock
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fcpoolblock["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fcpoolblock["class_id"] = item.ClassId
 		fcpoolblock["from"] = item.From
 		fcpoolblock["object_type"] = item.ObjectType
@@ -870,12 +1499,23 @@ func flattenListFcpoolBlock(p *[]models.FcpoolBlock, d *schema.ResourceData) []m
 }
 func flattenListFcpoolFcBlockRelationship(p []models.FcpoolFcBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolfcblockrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		fcpoolfcblockrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			fcpoolfcblockrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		fcpoolfcblockrelationship["class_id"] = item.ClassId
 		fcpoolfcblockrelationship["moid"] = item.Moid
 		fcpoolfcblockrelationship["object_type"] = item.ObjectType
@@ -884,13 +1524,24 @@ func flattenListFcpoolFcBlockRelationship(p []models.FcpoolFcBlockRelationship, 
 	}
 	return fcpoolfcblockrelationships
 }
-func flattenListFirmwareBaseImpact(p *[]models.FirmwareBaseImpact, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFirmwareBaseImpact(p []models.FirmwareBaseImpact, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarebaseimpacts []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		firmwarebaseimpact := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareBaseImpact
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarebaseimpact["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarebaseimpact["class_id"] = item.ClassId
 		firmwarebaseimpact["computation_error"] = item.ComputationError
 		firmwarebaseimpact["computation_status_detail"] = item.ComputationStatusDetail
@@ -906,13 +1557,24 @@ func flattenListFirmwareBaseImpact(p *[]models.FirmwareBaseImpact, d *schema.Res
 	}
 	return firmwarebaseimpacts
 }
-func flattenListFirmwareComponentMeta(p *[]models.FirmwareComponentMeta, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFirmwareComponentMeta(p []models.FirmwareComponentMeta, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarecomponentmetas []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		firmwarecomponentmeta := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareComponentMeta
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarecomponentmeta["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarecomponentmeta["class_id"] = item.ClassId
 		firmwarecomponentmeta["component_label"] = item.ComponentLabel
 		firmwarecomponentmeta["component_type"] = item.ComponentType
@@ -931,12 +1593,23 @@ func flattenListFirmwareComponentMeta(p *[]models.FirmwareComponentMeta, d *sche
 }
 func flattenListFirmwareDistributableMetaRelationship(p []models.FirmwareDistributableMetaRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwaredistributablemetarelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		firmwaredistributablemetarelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwaredistributablemetarelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwaredistributablemetarelationship["class_id"] = item.ClassId
 		firmwaredistributablemetarelationship["moid"] = item.Moid
 		firmwaredistributablemetarelationship["object_type"] = item.ObjectType
@@ -945,13 +1618,24 @@ func flattenListFirmwareDistributableMetaRelationship(p []models.FirmwareDistrib
 	}
 	return firmwaredistributablemetarelationships
 }
-func flattenListFirmwareFirmwareInventory(p *[]models.FirmwareFirmwareInventory, d *schema.ResourceData) []map[string]interface{} {
+func flattenListFirmwareFirmwareInventory(p []models.FirmwareFirmwareInventory, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarefirmwareinventorys []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		firmwarefirmwareinventory := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareFirmwareInventory
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarefirmwareinventory["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarefirmwareinventory["category"] = item.Category
 		firmwarefirmwareinventory["class_id"] = item.ClassId
 		firmwarefirmwareinventory["label"] = item.Label
@@ -966,12 +1650,23 @@ func flattenListFirmwareFirmwareInventory(p *[]models.FirmwareFirmwareInventory,
 }
 func flattenListFirmwareRunningFirmwareRelationship(p []models.FirmwareRunningFirmwareRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarerunningfirmwarerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		firmwarerunningfirmwarerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarerunningfirmwarerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarerunningfirmwarerelationship["class_id"] = item.ClassId
 		firmwarerunningfirmwarerelationship["moid"] = item.Moid
 		firmwarerunningfirmwarerelationship["object_type"] = item.ObjectType
@@ -982,12 +1677,23 @@ func flattenListFirmwareRunningFirmwareRelationship(p []models.FirmwareRunningFi
 }
 func flattenListForecastDefinitionRelationship(p []models.ForecastDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var forecastdefinitionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		forecastdefinitionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			forecastdefinitionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		forecastdefinitionrelationship["class_id"] = item.ClassId
 		forecastdefinitionrelationship["moid"] = item.Moid
 		forecastdefinitionrelationship["object_type"] = item.ObjectType
@@ -998,12 +1704,23 @@ func flattenListForecastDefinitionRelationship(p []models.ForecastDefinitionRela
 }
 func flattenListGraphicsCardRelationship(p []models.GraphicsCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var graphicscardrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		graphicscardrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			graphicscardrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		graphicscardrelationship["class_id"] = item.ClassId
 		graphicscardrelationship["moid"] = item.Moid
 		graphicscardrelationship["object_type"] = item.ObjectType
@@ -1014,12 +1731,23 @@ func flattenListGraphicsCardRelationship(p []models.GraphicsCardRelationship, d 
 }
 func flattenListGraphicsControllerRelationship(p []models.GraphicsControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var graphicscontrollerrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		graphicscontrollerrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			graphicscontrollerrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		graphicscontrollerrelationship["class_id"] = item.ClassId
 		graphicscontrollerrelationship["moid"] = item.Moid
 		graphicscontrollerrelationship["object_type"] = item.ObjectType
@@ -1028,13 +1756,24 @@ func flattenListGraphicsControllerRelationship(p []models.GraphicsControllerRela
 	}
 	return graphicscontrollerrelationships
 }
-func flattenListHclConstraint(p *[]models.HclConstraint, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHclConstraint(p []models.HclConstraint, d *schema.ResourceData) []map[string]interface{} {
 	var hclconstraints []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hclconstraint := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HclConstraint
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hclconstraint["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hclconstraint["class_id"] = item.ClassId
 		hclconstraint["constraint_name"] = item.ConstraintName
 		hclconstraint["constraint_value"] = item.ConstraintValue
@@ -1045,12 +1784,23 @@ func flattenListHclConstraint(p *[]models.HclConstraint, d *schema.ResourceData)
 }
 func flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(p []models.HclHyperflexSoftwareCompatibilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hclhyperflexsoftwarecompatibilityinforelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hclhyperflexsoftwarecompatibilityinforelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hclhyperflexsoftwarecompatibilityinforelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hclhyperflexsoftwarecompatibilityinforelationship["class_id"] = item.ClassId
 		hclhyperflexsoftwarecompatibilityinforelationship["moid"] = item.Moid
 		hclhyperflexsoftwarecompatibilityinforelationship["object_type"] = item.ObjectType
@@ -1061,12 +1811,23 @@ func flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(p []models.Hcl
 }
 func flattenListHclOperatingSystemRelationship(p []models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hcloperatingsystemrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hcloperatingsystemrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hcloperatingsystemrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hcloperatingsystemrelationship["class_id"] = item.ClassId
 		hcloperatingsystemrelationship["moid"] = item.Moid
 		hcloperatingsystemrelationship["object_type"] = item.ObjectType
@@ -1077,12 +1838,23 @@ func flattenListHclOperatingSystemRelationship(p []models.HclOperatingSystemRela
 }
 func flattenListHyperflexAlarmRelationship(p []models.HyperflexAlarmRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexalarmrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexalarmrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexalarmrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexalarmrelationship["class_id"] = item.ClassId
 		hyperflexalarmrelationship["moid"] = item.Moid
 		hyperflexalarmrelationship["object_type"] = item.ObjectType
@@ -1093,12 +1865,23 @@ func flattenListHyperflexAlarmRelationship(p []models.HyperflexAlarmRelationship
 }
 func flattenListHyperflexCapabilityInfoRelationship(p []models.HyperflexCapabilityInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexcapabilityinforelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexcapabilityinforelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexcapabilityinforelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexcapabilityinforelationship["class_id"] = item.ClassId
 		hyperflexcapabilityinforelationship["moid"] = item.Moid
 		hyperflexcapabilityinforelationship["object_type"] = item.ObjectType
@@ -1109,12 +1892,23 @@ func flattenListHyperflexCapabilityInfoRelationship(p []models.HyperflexCapabili
 }
 func flattenListHyperflexClusterProfileRelationship(p []models.HyperflexClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexclusterprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexclusterprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexclusterprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexclusterprofilerelationship["class_id"] = item.ClassId
 		hyperflexclusterprofilerelationship["moid"] = item.Moid
 		hyperflexclusterprofilerelationship["object_type"] = item.ObjectType
@@ -1125,12 +1919,23 @@ func flattenListHyperflexClusterProfileRelationship(p []models.HyperflexClusterP
 }
 func flattenListHyperflexConfigResultEntryRelationship(p []models.HyperflexConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexconfigresultentryrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexconfigresultentryrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexconfigresultentryrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexconfigresultentryrelationship["class_id"] = item.ClassId
 		hyperflexconfigresultentryrelationship["moid"] = item.Moid
 		hyperflexconfigresultentryrelationship["object_type"] = item.ObjectType
@@ -1139,21 +1944,44 @@ func flattenListHyperflexConfigResultEntryRelationship(p []models.HyperflexConfi
 	}
 	return hyperflexconfigresultentryrelationships
 }
-func flattenListHyperflexFeatureLimitEntry(p *[]models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexFeatureLimitEntry(p []models.HyperflexFeatureLimitEntry, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexfeaturelimitentrys []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hyperflexfeaturelimitentry := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexFeatureLimitEntry
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexfeaturelimitentry["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexfeaturelimitentry["class_id"] = item.ClassId
-		hyperflexfeaturelimitentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+		hyperflexfeaturelimitentry["constraint"] = (func(p models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
-			if p == nil {
+			var ret models.HyperflexAppSettingConstraint
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			hyperflexappsettingconstraint := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexAppSettingConstraint
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexappsettingconstraint["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			hyperflexappsettingconstraint["class_id"] = item.ClassId
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
@@ -1163,7 +1991,7 @@ func flattenListHyperflexFeatureLimitEntry(p *[]models.HyperflexFeatureLimitEntr
 
 			hyperflexappsettingconstraints = append(hyperflexappsettingconstraints, hyperflexappsettingconstraint)
 			return hyperflexappsettingconstraints
-		})(item.Constraint, d)
+		})(item.GetConstraint(), d)
 		hyperflexfeaturelimitentry["name"] = item.Name
 		hyperflexfeaturelimitentry["object_type"] = item.ObjectType
 		hyperflexfeaturelimitentry["value"] = item.Value
@@ -1171,23 +1999,46 @@ func flattenListHyperflexFeatureLimitEntry(p *[]models.HyperflexFeatureLimitEntr
 	}
 	return hyperflexfeaturelimitentrys
 }
-func flattenListHyperflexHxZoneResiliencyInfoDt(p *[]models.HyperflexHxZoneResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexHxZoneResiliencyInfoDt(p []models.HyperflexHxZoneResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxzoneresiliencyinfodts []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hyperflexhxzoneresiliencyinfodt := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexHxZoneResiliencyInfoDt
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexhxzoneresiliencyinfodt["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexhxzoneresiliencyinfodt["class_id"] = item.ClassId
 		hyperflexhxzoneresiliencyinfodt["name"] = item.Name
 		hyperflexhxzoneresiliencyinfodt["object_type"] = item.ObjectType
-		hyperflexhxzoneresiliencyinfodt["resiliency_info"] = (func(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+		hyperflexhxzoneresiliencyinfodt["resiliency_info"] = (func(p models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexhxresiliencyinfodts []map[string]interface{}
-			if p == nil {
+			var ret models.HyperflexHxResiliencyInfoDt
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			hyperflexhxresiliencyinfodt := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexHxResiliencyInfoDt
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexhxresiliencyinfodt["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			hyperflexhxresiliencyinfodt["class_id"] = item.ClassId
 			hyperflexhxresiliencyinfodt["data_replication_factor"] = item.DataReplicationFactor
 			hyperflexhxresiliencyinfodt["hdd_failures_tolerable"] = item.HddFailuresTolerable
@@ -1200,19 +2051,30 @@ func flattenListHyperflexHxZoneResiliencyInfoDt(p *[]models.HyperflexHxZoneResil
 
 			hyperflexhxresiliencyinfodts = append(hyperflexhxresiliencyinfodts, hyperflexhxresiliencyinfodt)
 			return hyperflexhxresiliencyinfodts
-		})(item.ResiliencyInfo, d)
+		})(item.GetResiliencyInfo(), d)
 		hyperflexhxzoneresiliencyinfodts = append(hyperflexhxzoneresiliencyinfodts, hyperflexhxzoneresiliencyinfodt)
 	}
 	return hyperflexhxzoneresiliencyinfodts
 }
 func flattenListHyperflexHxdpVersionRelationship(p []models.HyperflexHxdpVersionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxdpversionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexhxdpversionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexhxdpversionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexhxdpversionrelationship["class_id"] = item.ClassId
 		hyperflexhxdpversionrelationship["moid"] = item.Moid
 		hyperflexhxdpversionrelationship["object_type"] = item.ObjectType
@@ -1221,13 +2083,24 @@ func flattenListHyperflexHxdpVersionRelationship(p []models.HyperflexHxdpVersion
 	}
 	return hyperflexhxdpversionrelationships
 }
-func flattenListHyperflexNamedVlan(p *[]models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexNamedVlan(p []models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnamedvlans []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hyperflexnamedvlan := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexNamedVlan
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexnamedvlan["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexnamedvlan["class_id"] = item.ClassId
 		hyperflexnamedvlan["name"] = item.Name
 		hyperflexnamedvlan["object_type"] = item.ObjectType
@@ -1238,12 +2111,23 @@ func flattenListHyperflexNamedVlan(p *[]models.HyperflexNamedVlan, d *schema.Res
 }
 func flattenListHyperflexNodeRelationship(p []models.HyperflexNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnoderelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexnoderelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexnoderelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexnoderelationship["class_id"] = item.ClassId
 		hyperflexnoderelationship["moid"] = item.Moid
 		hyperflexnoderelationship["object_type"] = item.ObjectType
@@ -1254,12 +2138,23 @@ func flattenListHyperflexNodeRelationship(p []models.HyperflexNodeRelationship, 
 }
 func flattenListHyperflexNodeProfileRelationship(p []models.HyperflexNodeProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnodeprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		hyperflexnodeprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexnodeprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexnodeprofilerelationship["class_id"] = item.ClassId
 		hyperflexnodeprofilerelationship["moid"] = item.Moid
 		hyperflexnodeprofilerelationship["object_type"] = item.ObjectType
@@ -1268,21 +2163,44 @@ func flattenListHyperflexNodeProfileRelationship(p []models.HyperflexNodeProfile
 	}
 	return hyperflexnodeprofilerelationships
 }
-func flattenListHyperflexServerFirmwareVersionEntry(p *[]models.HyperflexServerFirmwareVersionEntry, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexServerFirmwareVersionEntry(p []models.HyperflexServerFirmwareVersionEntry, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexserverfirmwareversionentrys []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hyperflexserverfirmwareversionentry := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexServerFirmwareVersionEntry
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexserverfirmwareversionentry["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexserverfirmwareversionentry["class_id"] = item.ClassId
-		hyperflexserverfirmwareversionentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+		hyperflexserverfirmwareversionentry["constraint"] = (func(p models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
-			if p == nil {
+			var ret models.HyperflexAppSettingConstraint
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			hyperflexappsettingconstraint := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexAppSettingConstraint
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexappsettingconstraint["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			hyperflexappsettingconstraint["class_id"] = item.ClassId
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
@@ -1292,7 +2210,7 @@ func flattenListHyperflexServerFirmwareVersionEntry(p *[]models.HyperflexServerF
 
 			hyperflexappsettingconstraints = append(hyperflexappsettingconstraints, hyperflexappsettingconstraint)
 			return hyperflexappsettingconstraints
-		})(item.Constraint, d)
+		})(item.GetConstraint(), d)
 		hyperflexserverfirmwareversionentry["label"] = item.Label
 		hyperflexserverfirmwareversionentry["name"] = item.Name
 		hyperflexserverfirmwareversionentry["object_type"] = item.ObjectType
@@ -1301,21 +2219,44 @@ func flattenListHyperflexServerFirmwareVersionEntry(p *[]models.HyperflexServerF
 	}
 	return hyperflexserverfirmwareversionentrys
 }
-func flattenListHyperflexServerModelEntry(p *[]models.HyperflexServerModelEntry, d *schema.ResourceData) []map[string]interface{} {
+func flattenListHyperflexServerModelEntry(p []models.HyperflexServerModelEntry, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexservermodelentrys []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		hyperflexservermodelentry := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexServerModelEntry
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexservermodelentry["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexservermodelentry["class_id"] = item.ClassId
-		hyperflexservermodelentry["constraint"] = (func(p *models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
+		hyperflexservermodelentry["constraint"] = (func(p models.HyperflexAppSettingConstraint, d *schema.ResourceData) []map[string]interface{} {
 			var hyperflexappsettingconstraints []map[string]interface{}
-			if p == nil {
+			var ret models.HyperflexAppSettingConstraint
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			hyperflexappsettingconstraint := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexAppSettingConstraint
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexappsettingconstraint["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			hyperflexappsettingconstraint["class_id"] = item.ClassId
 			hyperflexappsettingconstraint["hxdp_version"] = item.HxdpVersion
 			hyperflexappsettingconstraint["hypervisor_type"] = item.HypervisorType
@@ -1325,7 +2266,7 @@ func flattenListHyperflexServerModelEntry(p *[]models.HyperflexServerModelEntry,
 
 			hyperflexappsettingconstraints = append(hyperflexappsettingconstraints, hyperflexappsettingconstraint)
 			return hyperflexappsettingconstraints
-		})(item.Constraint, d)
+		})(item.GetConstraint(), d)
 		hyperflexservermodelentry["name"] = item.Name
 		hyperflexservermodelentry["object_type"] = item.ObjectType
 		hyperflexservermodelentry["value"] = item.Value
@@ -1333,14 +2274,142 @@ func flattenListHyperflexServerModelEntry(p *[]models.HyperflexServerModelEntry,
 	}
 	return hyperflexservermodelentrys
 }
+func flattenListHyperflexVmDisk(p []models.HyperflexVmDisk, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexvmdisks []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		hyperflexvmdisk := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexVmDisk
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexvmdisk["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		hyperflexvmdisk["boot_order"] = item.BootOrder
+		hyperflexvmdisk["bus"] = item.Bus
+		hyperflexvmdisk["class_id"] = item.ClassId
+		hyperflexvmdisk["name"] = item.Name
+		hyperflexvmdisk["object_type"] = item.ObjectType
+		hyperflexvmdisk["type"] = item.Type
+		hyperflexvmdisk["virtual_disk"] = (func(p models.HyperflexVdiskConfig, d *schema.ResourceData) []map[string]interface{} {
+			var hyperflexvdiskconfigs []map[string]interface{}
+			var ret models.HyperflexVdiskConfig
+			if reflect.DeepEqual(ret, p) {
+				return nil
+			}
+			item := p
+			hyperflexvdiskconfig := make(map[string]interface{})
+
+			hyperflexvdiskconfig["access_mode"] = item.AccessMode
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexVdiskConfig
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexvdiskconfig["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
+			hyperflexvdiskconfig["capacity"] = item.Capacity
+			hyperflexvdiskconfig["class_id"] = item.ClassId
+			hyperflexvdiskconfig["mode"] = item.Mode
+			hyperflexvdiskconfig["name"] = item.Name
+			hyperflexvdiskconfig["object_type"] = item.ObjectType
+			hyperflexvdiskconfig["source_file_path"] = item.SourceFilePath
+			hyperflexvdiskconfig["source_virtual_disk"] = item.SourceVirtualDisk
+			hyperflexvdiskconfig["status"] = (func(p models.HyperflexDiskStatus, d *schema.ResourceData) []map[string]interface{} {
+				var hyperflexdiskstatuss []map[string]interface{}
+				var ret models.HyperflexDiskStatus
+				if reflect.DeepEqual(ret, p) {
+					return nil
+				}
+				item := p
+				hyperflexdiskstatus := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.HyperflexDiskStatus
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					hyperflexdiskstatus["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
+				hyperflexdiskstatus["class_id"] = item.ClassId
+				hyperflexdiskstatus["download_percentage"] = item.DownloadPercentage
+				hyperflexdiskstatus["object_type"] = item.ObjectType
+				hyperflexdiskstatus["state"] = item.State
+				hyperflexdiskstatus["volume_handle"] = item.VolumeHandle
+
+				hyperflexdiskstatuss = append(hyperflexdiskstatuss, hyperflexdiskstatus)
+				return hyperflexdiskstatuss
+			})(item.GetStatus(), d)
+			hyperflexvdiskconfig["uuid"] = item.Uuid
+
+			hyperflexvdiskconfigs = append(hyperflexvdiskconfigs, hyperflexvdiskconfig)
+			return hyperflexvdiskconfigs
+		})(item.GetVirtualDisk(), d)
+		hyperflexvmdisk["virtual_disk_reference"] = item.VirtualDiskReference
+		hyperflexvmdisks = append(hyperflexvmdisks, hyperflexvmdisk)
+	}
+	return hyperflexvmdisks
+}
+func flattenListHyperflexVmInterface(p []models.HyperflexVmInterface, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexvminterfaces []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		hyperflexvminterface := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexVmInterface
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexvminterface["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		hyperflexvminterface["bridge"] = item.Bridge
+		hyperflexvminterface["class_id"] = item.ClassId
+		hyperflexvminterface["ip_address"] = item.IpAddress
+		hyperflexvminterface["mac_address"] = item.MacAddress
+		hyperflexvminterface["model"] = item.Model
+		hyperflexvminterface["object_type"] = item.ObjectType
+		hyperflexvminterfaces = append(hyperflexvminterfaces, hyperflexvminterface)
+	}
+	return hyperflexvminterfaces
+}
 func flattenListIaasConnectorPackRelationship(p []models.IaasConnectorPackRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasconnectorpackrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iaasconnectorpackrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iaasconnectorpackrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iaasconnectorpackrelationship["class_id"] = item.ClassId
 		iaasconnectorpackrelationship["moid"] = item.Moid
 		iaasconnectorpackrelationship["object_type"] = item.ObjectType
@@ -1351,12 +2420,23 @@ func flattenListIaasConnectorPackRelationship(p []models.IaasConnectorPackRelati
 }
 func flattenListIaasDeviceStatusRelationship(p []models.IaasDeviceStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasdevicestatusrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iaasdevicestatusrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iaasdevicestatusrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iaasdevicestatusrelationship["class_id"] = item.ClassId
 		iaasdevicestatusrelationship["moid"] = item.Moid
 		iaasdevicestatusrelationship["object_type"] = item.ObjectType
@@ -1365,13 +2445,24 @@ func flattenListIaasDeviceStatusRelationship(p []models.IaasDeviceStatusRelation
 	}
 	return iaasdevicestatusrelationships
 }
-func flattenListIaasLicenseKeysInfo(p *[]models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIaasLicenseKeysInfo(p []models.IaasLicenseKeysInfo, d *schema.ResourceData) []map[string]interface{} {
 	var iaaslicensekeysinfos []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iaaslicensekeysinfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IaasLicenseKeysInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iaaslicensekeysinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iaaslicensekeysinfo["class_id"] = item.ClassId
 		iaaslicensekeysinfo["nr_count"] = item.Count
 		iaaslicensekeysinfo["expiration_date"] = item.ExpirationDate
@@ -1382,14 +2473,25 @@ func flattenListIaasLicenseKeysInfo(p *[]models.IaasLicenseKeysInfo, d *schema.R
 	}
 	return iaaslicensekeysinfos
 }
-func flattenListIaasLicenseUtilizationInfo(p *[]models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIaasLicenseUtilizationInfo(p []models.IaasLicenseUtilizationInfo, d *schema.ResourceData) []map[string]interface{} {
 	var iaaslicenseutilizationinfos []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iaaslicenseutilizationinfo := make(map[string]interface{})
+
 		iaaslicenseutilizationinfo["actual_used"] = item.ActualUsed
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IaasLicenseUtilizationInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iaaslicenseutilizationinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iaaslicenseutilizationinfo["class_id"] = item.ClassId
 		iaaslicenseutilizationinfo["label"] = item.Label
 		iaaslicenseutilizationinfo["licensed_limit"] = item.LicensedLimit
@@ -1401,12 +2503,23 @@ func flattenListIaasLicenseUtilizationInfo(p *[]models.IaasLicenseUtilizationInf
 }
 func flattenListIaasMostRunTasksRelationship(p []models.IaasMostRunTasksRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasmostruntasksrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iaasmostruntasksrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iaasmostruntasksrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iaasmostruntasksrelationship["class_id"] = item.ClassId
 		iaasmostruntasksrelationship["moid"] = item.Moid
 		iaasmostruntasksrelationship["object_type"] = item.ObjectType
@@ -1415,25 +2528,47 @@ func flattenListIaasMostRunTasksRelationship(p []models.IaasMostRunTasksRelation
 	}
 	return iaasmostruntasksrelationships
 }
-func flattenListIamAccountPermissions(p *[]models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamAccountPermissions(p []models.IamAccountPermissions, d *schema.ResourceData) []map[string]interface{} {
 	var iamaccountpermissionss []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iamaccountpermissions := make(map[string]interface{})
+
 		iamaccountpermissions["account_identifier"] = item.AccountIdentifier
 		iamaccountpermissions["account_name"] = item.AccountName
 		iamaccountpermissions["account_status"] = item.AccountStatus
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IamAccountPermissions
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamaccountpermissions["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamaccountpermissions["class_id"] = item.ClassId
 		iamaccountpermissions["object_type"] = item.ObjectType
-		iamaccountpermissions["permissions"] = (func(p *[]models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
+		iamaccountpermissions["permissions"] = (func(p []models.IamPermissionReference, d *schema.ResourceData) []map[string]interface{} {
 			var iampermissionreferences []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				iampermissionreference := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.IamPermissionReference
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					iampermissionreference["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				iampermissionreference["class_id"] = item.ClassId
 				iampermissionreference["object_type"] = item.ObjectType
 				iampermissionreference["permission_identifier"] = item.PermissionIdentifier
@@ -1441,19 +2576,30 @@ func flattenListIamAccountPermissions(p *[]models.IamAccountPermissions, d *sche
 				iampermissionreferences = append(iampermissionreferences, iampermissionreference)
 			}
 			return iampermissionreferences
-		})(item.Permissions, d)
+		})(item.GetPermissions(), d)
 		iamaccountpermissionss = append(iamaccountpermissionss, iamaccountpermissions)
 	}
 	return iamaccountpermissionss
 }
 func flattenListIamApiKeyRelationship(p []models.IamApiKeyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamapikeyrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamapikeyrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamapikeyrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamapikeyrelationship["class_id"] = item.ClassId
 		iamapikeyrelationship["moid"] = item.Moid
 		iamapikeyrelationship["object_type"] = item.ObjectType
@@ -1464,12 +2610,23 @@ func flattenListIamApiKeyRelationship(p []models.IamApiKeyRelationship, d *schem
 }
 func flattenListIamAppRegistrationRelationship(p []models.IamAppRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamappregistrationrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamappregistrationrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamappregistrationrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamappregistrationrelationship["class_id"] = item.ClassId
 		iamappregistrationrelationship["moid"] = item.Moid
 		iamappregistrationrelationship["object_type"] = item.ObjectType
@@ -1480,12 +2637,23 @@ func flattenListIamAppRegistrationRelationship(p []models.IamAppRegistrationRela
 }
 func flattenListIamDomainGroupRelationship(p []models.IamDomainGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamdomaingrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamdomaingrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamdomaingrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamdomaingrouprelationship["class_id"] = item.ClassId
 		iamdomaingrouprelationship["moid"] = item.Moid
 		iamdomaingrouprelationship["object_type"] = item.ObjectType
@@ -1496,12 +2664,23 @@ func flattenListIamDomainGroupRelationship(p []models.IamDomainGroupRelationship
 }
 func flattenListIamEndPointPrivilegeRelationship(p []models.IamEndPointPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointprivilegerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamendpointprivilegerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamendpointprivilegerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamendpointprivilegerelationship["class_id"] = item.ClassId
 		iamendpointprivilegerelationship["moid"] = item.Moid
 		iamendpointprivilegerelationship["object_type"] = item.ObjectType
@@ -1512,12 +2691,23 @@ func flattenListIamEndPointPrivilegeRelationship(p []models.IamEndPointPrivilege
 }
 func flattenListIamEndPointRoleRelationship(p []models.IamEndPointRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointrolerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamendpointrolerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamendpointrolerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamendpointrolerelationship["class_id"] = item.ClassId
 		iamendpointrolerelationship["moid"] = item.Moid
 		iamendpointrolerelationship["object_type"] = item.ObjectType
@@ -1528,12 +2718,23 @@ func flattenListIamEndPointRoleRelationship(p []models.IamEndPointRoleRelationsh
 }
 func flattenListIamEndPointUserRoleRelationship(p []models.IamEndPointUserRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointuserrolerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamendpointuserrolerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamendpointuserrolerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamendpointuserrolerelationship["class_id"] = item.ClassId
 		iamendpointuserrolerelationship["moid"] = item.Moid
 		iamendpointuserrolerelationship["object_type"] = item.ObjectType
@@ -1542,13 +2743,24 @@ func flattenListIamEndPointUserRoleRelationship(p []models.IamEndPointUserRoleRe
 	}
 	return iamendpointuserrolerelationships
 }
-func flattenListIamFeatureDefinition(p *[]models.IamFeatureDefinition, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamFeatureDefinition(p []models.IamFeatureDefinition, d *schema.ResourceData) []map[string]interface{} {
 	var iamfeaturedefinitions []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iamfeaturedefinition := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IamFeatureDefinition
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamfeaturedefinition["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamfeaturedefinition["class_id"] = item.ClassId
 		iamfeaturedefinition["feature"] = item.Feature
 		iamfeaturedefinition["object_type"] = item.ObjectType
@@ -1556,55 +2768,100 @@ func flattenListIamFeatureDefinition(p *[]models.IamFeatureDefinition, d *schema
 	}
 	return iamfeaturedefinitions
 }
-func flattenListIamGroupPermissionToRoles(p *[]models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamGroupPermissionToRoles(p []models.IamGroupPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
 	var iamgrouppermissiontoroless []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iamgrouppermissiontoroles := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IamGroupPermissionToRoles
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamgrouppermissiontoroles["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamgrouppermissiontoroles["class_id"] = item.ClassId
-		iamgrouppermissiontoroles["group"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+		iamgrouppermissiontoroles["group"] = (func(p models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
-			if p == nil {
+			var ret models.CmrfCmRf
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			cmrfcmrf := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.CmrfCmRf
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				cmrfcmrf["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			cmrfcmrf["class_id"] = item.ClassId
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
 
 			cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			return cmrfcmrfs
-		})(item.Group, d)
+		})(item.GetGroup(), d)
 		iamgrouppermissiontoroles["object_type"] = item.ObjectType
-		iamgrouppermissiontoroles["orgs"] = (func(p *[]models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+		iamgrouppermissiontoroles["orgs"] = (func(p []models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				cmrfcmrf := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.CmrfCmRf
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					cmrfcmrf["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				cmrfcmrf["class_id"] = item.ClassId
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			}
 			return cmrfcmrfs
-		})(item.Orgs, d)
+		})(item.GetOrgs(), d)
 		iamgrouppermissiontoroless = append(iamgrouppermissiontoroless, iamgrouppermissiontoroles)
 	}
 	return iamgrouppermissiontoroless
 }
 func flattenListIamIdpRelationship(p []models.IamIdpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamidprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamidprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamidprelationship["class_id"] = item.ClassId
 		iamidprelationship["moid"] = item.Moid
 		iamidprelationship["object_type"] = item.ObjectType
@@ -1615,12 +2872,23 @@ func flattenListIamIdpRelationship(p []models.IamIdpRelationship, d *schema.Reso
 }
 func flattenListIamIdpReferenceRelationship(p []models.IamIdpReferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidpreferencerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamidpreferencerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamidpreferencerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamidpreferencerelationship["class_id"] = item.ClassId
 		iamidpreferencerelationship["moid"] = item.Moid
 		iamidpreferencerelationship["object_type"] = item.ObjectType
@@ -1631,12 +2899,23 @@ func flattenListIamIdpReferenceRelationship(p []models.IamIdpReferenceRelationsh
 }
 func flattenListIamLdapGroupRelationship(p []models.IamLdapGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapgrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamldapgrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamldapgrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamldapgrouprelationship["class_id"] = item.ClassId
 		iamldapgrouprelationship["moid"] = item.Moid
 		iamldapgrouprelationship["object_type"] = item.ObjectType
@@ -1647,12 +2926,23 @@ func flattenListIamLdapGroupRelationship(p []models.IamLdapGroupRelationship, d 
 }
 func flattenListIamLdapProviderRelationship(p []models.IamLdapProviderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapproviderrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamldapproviderrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamldapproviderrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamldapproviderrelationship["class_id"] = item.ClassId
 		iamldapproviderrelationship["moid"] = item.Moid
 		iamldapproviderrelationship["object_type"] = item.ObjectType
@@ -1663,12 +2953,23 @@ func flattenListIamLdapProviderRelationship(p []models.IamLdapProviderRelationsh
 }
 func flattenListIamOAuthTokenRelationship(p []models.IamOAuthTokenRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamoauthtokenrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamoauthtokenrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamoauthtokenrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamoauthtokenrelationship["class_id"] = item.ClassId
 		iamoauthtokenrelationship["moid"] = item.Moid
 		iamoauthtokenrelationship["object_type"] = item.ObjectType
@@ -1679,12 +2980,23 @@ func flattenListIamOAuthTokenRelationship(p []models.IamOAuthTokenRelationship, 
 }
 func flattenListIamPermissionRelationship(p []models.IamPermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iampermissionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iampermissionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iampermissionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iampermissionrelationship["class_id"] = item.ClassId
 		iampermissionrelationship["moid"] = item.Moid
 		iampermissionrelationship["object_type"] = item.ObjectType
@@ -1693,55 +3005,100 @@ func flattenListIamPermissionRelationship(p []models.IamPermissionRelationship, 
 	}
 	return iampermissionrelationships
 }
-func flattenListIamPermissionToRoles(p *[]models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIamPermissionToRoles(p []models.IamPermissionToRoles, d *schema.ResourceData) []map[string]interface{} {
 	var iampermissiontoroless []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		iampermissiontoroles := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IamPermissionToRoles
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iampermissiontoroles["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iampermissiontoroles["class_id"] = item.ClassId
 		iampermissiontoroles["object_type"] = item.ObjectType
-		iampermissiontoroles["permission"] = (func(p *models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+		iampermissiontoroles["permission"] = (func(p models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
-			if p == nil {
+			var ret models.CmrfCmRf
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			cmrfcmrf := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.CmrfCmRf
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				cmrfcmrf["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			cmrfcmrf["class_id"] = item.ClassId
 			cmrfcmrf["moid"] = item.Moid
 			cmrfcmrf["object_type"] = item.ObjectType
 
 			cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			return cmrfcmrfs
-		})(item.Permission, d)
-		iampermissiontoroles["roles"] = (func(p *[]models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
+		})(item.GetPermission(), d)
+		iampermissiontoroles["roles"] = (func(p []models.CmrfCmRf, d *schema.ResourceData) []map[string]interface{} {
 			var cmrfcmrfs []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				cmrfcmrf := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.CmrfCmRf
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					cmrfcmrf["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				cmrfcmrf["class_id"] = item.ClassId
 				cmrfcmrf["moid"] = item.Moid
 				cmrfcmrf["object_type"] = item.ObjectType
 				cmrfcmrfs = append(cmrfcmrfs, cmrfcmrf)
 			}
 			return cmrfcmrfs
-		})(item.Roles, d)
+		})(item.GetRoles(), d)
 		iampermissiontoroless = append(iampermissiontoroless, iampermissiontoroles)
 	}
 	return iampermissiontoroless
 }
 func flattenListIamPrivilegeRelationship(p []models.IamPrivilegeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamprivilegerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamprivilegerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamprivilegerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamprivilegerelationship["class_id"] = item.ClassId
 		iamprivilegerelationship["moid"] = item.Moid
 		iamprivilegerelationship["object_type"] = item.ObjectType
@@ -1752,12 +3109,23 @@ func flattenListIamPrivilegeRelationship(p []models.IamPrivilegeRelationship, d 
 }
 func flattenListIamPrivilegeSetRelationship(p []models.IamPrivilegeSetRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamprivilegesetrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamprivilegesetrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamprivilegesetrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamprivilegesetrelationship["class_id"] = item.ClassId
 		iamprivilegesetrelationship["moid"] = item.Moid
 		iamprivilegesetrelationship["object_type"] = item.ObjectType
@@ -1768,12 +3136,23 @@ func flattenListIamPrivilegeSetRelationship(p []models.IamPrivilegeSetRelationsh
 }
 func flattenListIamResourcePermissionRelationship(p []models.IamResourcePermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamresourcepermissionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamresourcepermissionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamresourcepermissionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamresourcepermissionrelationship["class_id"] = item.ClassId
 		iamresourcepermissionrelationship["moid"] = item.Moid
 		iamresourcepermissionrelationship["object_type"] = item.ObjectType
@@ -1784,12 +3163,23 @@ func flattenListIamResourcePermissionRelationship(p []models.IamResourcePermissi
 }
 func flattenListIamResourceRolesRelationship(p []models.IamResourceRolesRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamresourcerolesrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamresourcerolesrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamresourcerolesrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamresourcerolesrelationship["class_id"] = item.ClassId
 		iamresourcerolesrelationship["moid"] = item.Moid
 		iamresourcerolesrelationship["object_type"] = item.ObjectType
@@ -1800,12 +3190,23 @@ func flattenListIamResourceRolesRelationship(p []models.IamResourceRolesRelation
 }
 func flattenListIamRoleRelationship(p []models.IamRoleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamrolerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamrolerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamrolerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamrolerelationship["class_id"] = item.ClassId
 		iamrolerelationship["moid"] = item.Moid
 		iamrolerelationship["object_type"] = item.ObjectType
@@ -1816,12 +3217,23 @@ func flattenListIamRoleRelationship(p []models.IamRoleRelationship, d *schema.Re
 }
 func flattenListIamSessionRelationship(p []models.IamSessionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsessionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamsessionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamsessionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamsessionrelationship["class_id"] = item.ClassId
 		iamsessionrelationship["moid"] = item.Moid
 		iamsessionrelationship["object_type"] = item.ObjectType
@@ -1832,12 +3244,23 @@ func flattenListIamSessionRelationship(p []models.IamSessionRelationship, d *sch
 }
 func flattenListIamUserRelationship(p []models.IamUserRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamuserrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamuserrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamuserrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamuserrelationship["class_id"] = item.ClassId
 		iamuserrelationship["moid"] = item.Moid
 		iamuserrelationship["object_type"] = item.ObjectType
@@ -1848,12 +3271,23 @@ func flattenListIamUserRelationship(p []models.IamUserRelationship, d *schema.Re
 }
 func flattenListIamUserGroupRelationship(p []models.IamUserGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamusergrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamusergrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamusergrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamusergrouprelationship["class_id"] = item.ClassId
 		iamusergrouprelationship["moid"] = item.Moid
 		iamusergrouprelationship["object_type"] = item.ObjectType
@@ -1864,12 +3298,23 @@ func flattenListIamUserGroupRelationship(p []models.IamUserGroupRelationship, d 
 }
 func flattenListIamUserPreferenceRelationship(p []models.IamUserPreferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamuserpreferencerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		iamuserpreferencerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			iamuserpreferencerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		iamuserpreferencerelationship["class_id"] = item.ClassId
 		iamuserpreferencerelationship["moid"] = item.Moid
 		iamuserpreferencerelationship["object_type"] = item.ObjectType
@@ -1878,14 +3323,51 @@ func flattenListIamUserPreferenceRelationship(p []models.IamUserPreferenceRelati
 	}
 	return iamuserpreferencerelationships
 }
+func flattenListInfraMetaData(p []models.InfraMetaData, d *schema.ResourceData) []map[string]interface{} {
+	var inframetadatas []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		inframetadata := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.InfraMetaData
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			inframetadata["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		inframetadata["class_id"] = item.ClassId
+		inframetadata["name"] = item.Name
+		inframetadata["object_type"] = item.ObjectType
+		inframetadata["value"] = item.Value
+		inframetadatas = append(inframetadatas, inframetadata)
+	}
+	return inframetadatas
+}
 func flattenListInventoryGenericInventoryRelationship(p []models.InventoryGenericInventoryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		inventorygenericinventoryrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			inventorygenericinventoryrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		inventorygenericinventoryrelationship["class_id"] = item.ClassId
 		inventorygenericinventoryrelationship["moid"] = item.Moid
 		inventorygenericinventoryrelationship["object_type"] = item.ObjectType
@@ -1896,12 +3378,23 @@ func flattenListInventoryGenericInventoryRelationship(p []models.InventoryGeneri
 }
 func flattenListInventoryGenericInventoryHolderRelationship(p []models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryholderrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		inventorygenericinventoryholderrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			inventorygenericinventoryholderrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		inventorygenericinventoryholderrelationship["class_id"] = item.ClassId
 		inventorygenericinventoryholderrelationship["moid"] = item.Moid
 		inventorygenericinventoryholderrelationship["object_type"] = item.ObjectType
@@ -1910,13 +3403,24 @@ func flattenListInventoryGenericInventoryHolderRelationship(p []models.Inventory
 	}
 	return inventorygenericinventoryholderrelationships
 }
-func flattenListIppoolIpBlock(p *[]models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenListIppoolIpBlock(p []models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolipblocks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		ippoolipblock := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.IppoolIpBlock
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			ippoolipblock["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		ippoolipblock["class_id"] = item.ClassId
 		ippoolipblock["from"] = item.From
 		ippoolipblock["object_type"] = item.ObjectType
@@ -1928,12 +3432,23 @@ func flattenListIppoolIpBlock(p *[]models.IppoolIpBlock, d *schema.ResourceData)
 }
 func flattenListIppoolShadowBlockRelationship(p []models.IppoolShadowBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolshadowblockrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		ippoolshadowblockrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			ippoolshadowblockrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		ippoolshadowblockrelationship["class_id"] = item.ClassId
 		ippoolshadowblockrelationship["moid"] = item.Moid
 		ippoolshadowblockrelationship["object_type"] = item.ObjectType
@@ -1944,12 +3459,23 @@ func flattenListIppoolShadowBlockRelationship(p []models.IppoolShadowBlockRelati
 }
 func flattenListIppoolShadowPoolRelationship(p []models.IppoolShadowPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolshadowpoolrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		ippoolshadowpoolrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			ippoolshadowpoolrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		ippoolshadowpoolrelationship["class_id"] = item.ClassId
 		ippoolshadowpoolrelationship["moid"] = item.Moid
 		ippoolshadowpoolrelationship["object_type"] = item.ObjectType
@@ -1960,12 +3486,23 @@ func flattenListIppoolShadowPoolRelationship(p []models.IppoolShadowPoolRelation
 }
 func flattenListLicenseLicenseInfoRelationship(p []models.LicenseLicenseInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var licenselicenseinforelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		licenselicenseinforelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			licenselicenseinforelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		licenselicenseinforelationship["class_id"] = item.ClassId
 		licenselicenseinforelationship["moid"] = item.Moid
 		licenselicenseinforelationship["object_type"] = item.ObjectType
@@ -1974,13 +3511,24 @@ func flattenListLicenseLicenseInfoRelationship(p []models.LicenseLicenseInfoRela
 	}
 	return licenselicenseinforelationships
 }
-func flattenListMacpoolBlock(p *[]models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMacpoolBlock(p []models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolblocks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		macpoolblock := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MacpoolBlock
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			macpoolblock["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		macpoolblock["class_id"] = item.ClassId
 		macpoolblock["from"] = item.From
 		macpoolblock["object_type"] = item.ObjectType
@@ -1992,12 +3540,23 @@ func flattenListMacpoolBlock(p *[]models.MacpoolBlock, d *schema.ResourceData) [
 }
 func flattenListMacpoolIdBlockRelationship(p []models.MacpoolIdBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolidblockrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		macpoolidblockrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			macpoolidblockrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		macpoolidblockrelationship["class_id"] = item.ClassId
 		macpoolidblockrelationship["moid"] = item.Moid
 		macpoolidblockrelationship["object_type"] = item.ObjectType
@@ -2008,12 +3567,23 @@ func flattenListMacpoolIdBlockRelationship(p []models.MacpoolIdBlockRelationship
 }
 func flattenListManagementInterfaceRelationship(p []models.ManagementInterfaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var managementinterfacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		managementinterfacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			managementinterfacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		managementinterfacerelationship["class_id"] = item.ClassId
 		managementinterfacerelationship["moid"] = item.Moid
 		managementinterfacerelationship["object_type"] = item.ObjectType
@@ -2024,12 +3594,23 @@ func flattenListManagementInterfaceRelationship(p []models.ManagementInterfaceRe
 }
 func flattenListMemoryArrayRelationship(p []models.MemoryArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memoryarrayrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memoryarrayrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memoryarrayrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memoryarrayrelationship["class_id"] = item.ClassId
 		memoryarrayrelationship["moid"] = item.Moid
 		memoryarrayrelationship["object_type"] = item.ObjectType
@@ -2038,13 +3619,24 @@ func flattenListMemoryArrayRelationship(p []models.MemoryArrayRelationship, d *s
 	}
 	return memoryarrayrelationships
 }
-func flattenListMemoryPersistentMemoryGoal(p *[]models.MemoryPersistentMemoryGoal, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryGoal(p []models.MemoryPersistentMemoryGoal, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorygoals []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		memorypersistentmemorygoal := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MemoryPersistentMemoryGoal
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemorygoal["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemorygoal["class_id"] = item.ClassId
 		memorypersistentmemorygoal["memory_mode_percentage"] = item.MemoryModePercentage
 		memorypersistentmemorygoal["object_type"] = item.ObjectType
@@ -2054,13 +3646,24 @@ func flattenListMemoryPersistentMemoryGoal(p *[]models.MemoryPersistentMemoryGoa
 	}
 	return memorypersistentmemorygoals
 }
-func flattenListMemoryPersistentMemoryLogicalNamespace(p *[]models.MemoryPersistentMemoryLogicalNamespace, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMemoryPersistentMemoryLogicalNamespace(p []models.MemoryPersistentMemoryLogicalNamespace, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorylogicalnamespaces []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		memorypersistentmemorylogicalnamespace := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MemoryPersistentMemoryLogicalNamespace
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemorylogicalnamespace["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemorylogicalnamespace["capacity"] = item.Capacity
 		memorypersistentmemorylogicalnamespace["class_id"] = item.ClassId
 		memorypersistentmemorylogicalnamespace["mode"] = item.Mode
@@ -2074,12 +3677,23 @@ func flattenListMemoryPersistentMemoryLogicalNamespace(p *[]models.MemoryPersist
 }
 func flattenListMemoryPersistentMemoryNamespaceRelationship(p []models.MemoryPersistentMemoryNamespaceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorynamespacerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memorypersistentmemorynamespacerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemorynamespacerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemorynamespacerelationship["class_id"] = item.ClassId
 		memorypersistentmemorynamespacerelationship["moid"] = item.Moid
 		memorypersistentmemorynamespacerelationship["object_type"] = item.ObjectType
@@ -2090,12 +3704,23 @@ func flattenListMemoryPersistentMemoryNamespaceRelationship(p []models.MemoryPer
 }
 func flattenListMemoryPersistentMemoryNamespaceConfigResultRelationship(p []models.MemoryPersistentMemoryNamespaceConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorynamespaceconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memorypersistentmemorynamespaceconfigresultrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemorynamespaceconfigresultrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemorynamespaceconfigresultrelationship["class_id"] = item.ClassId
 		memorypersistentmemorynamespaceconfigresultrelationship["moid"] = item.Moid
 		memorypersistentmemorynamespaceconfigresultrelationship["object_type"] = item.ObjectType
@@ -2106,12 +3731,23 @@ func flattenListMemoryPersistentMemoryNamespaceConfigResultRelationship(p []mode
 }
 func flattenListMemoryPersistentMemoryRegionRelationship(p []models.MemoryPersistentMemoryRegionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryregionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memorypersistentmemoryregionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemoryregionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemoryregionrelationship["class_id"] = item.ClassId
 		memorypersistentmemoryregionrelationship["moid"] = item.Moid
 		memorypersistentmemoryregionrelationship["object_type"] = item.ObjectType
@@ -2122,12 +3758,23 @@ func flattenListMemoryPersistentMemoryRegionRelationship(p []models.MemoryPersis
 }
 func flattenListMemoryPersistentMemoryUnitRelationship(p []models.MemoryPersistentMemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memorypersistentmemoryunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memorypersistentmemoryunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memorypersistentmemoryunitrelationship["class_id"] = item.ClassId
 		memorypersistentmemoryunitrelationship["moid"] = item.Moid
 		memorypersistentmemoryunitrelationship["object_type"] = item.ObjectType
@@ -2138,12 +3785,23 @@ func flattenListMemoryPersistentMemoryUnitRelationship(p []models.MemoryPersiste
 }
 func flattenListMemoryUnitRelationship(p []models.MemoryUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memoryunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		memoryunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			memoryunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		memoryunitrelationship["class_id"] = item.ClassId
 		memoryunitrelationship["moid"] = item.Moid
 		memoryunitrelationship["object_type"] = item.ObjectType
@@ -2152,13 +3810,24 @@ func flattenListMemoryUnitRelationship(p []models.MemoryUnitRelationship, d *sch
 	}
 	return memoryunitrelationships
 }
-func flattenListMetaAccessPrivilege(p *[]models.MetaAccessPrivilege, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMetaAccessPrivilege(p []models.MetaAccessPrivilege, d *schema.ResourceData) []map[string]interface{} {
 	var metaaccessprivileges []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		metaaccessprivilege := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MetaAccessPrivilege
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			metaaccessprivilege["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		metaaccessprivilege["class_id"] = item.ClassId
 		metaaccessprivilege["method"] = item.Method
 		metaaccessprivilege["object_type"] = item.ObjectType
@@ -2167,13 +3836,24 @@ func flattenListMetaAccessPrivilege(p *[]models.MetaAccessPrivilege, d *schema.R
 	}
 	return metaaccessprivileges
 }
-func flattenListMetaPropDefinition(p *[]models.MetaPropDefinition, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMetaPropDefinition(p []models.MetaPropDefinition, d *schema.ResourceData) []map[string]interface{} {
 	var metapropdefinitions []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		metapropdefinition := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MetaPropDefinition
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			metapropdefinition["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		metapropdefinition["api_access"] = item.ApiAccess
 		metapropdefinition["class_id"] = item.ClassId
 		metapropdefinition["name"] = item.Name
@@ -2184,13 +3864,24 @@ func flattenListMetaPropDefinition(p *[]models.MetaPropDefinition, d *schema.Res
 	}
 	return metapropdefinitions
 }
-func flattenListMetaRelationshipDefinition(p *[]models.MetaRelationshipDefinition, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMetaRelationshipDefinition(p []models.MetaRelationshipDefinition, d *schema.ResourceData) []map[string]interface{} {
 	var metarelationshipdefinitions []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		metarelationshipdefinition := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MetaRelationshipDefinition
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			metarelationshipdefinition["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		metarelationshipdefinition["api_access"] = item.ApiAccess
 		metarelationshipdefinition["class_id"] = item.ClassId
 		metarelationshipdefinition["collection"] = item.Collection
@@ -2203,13 +3894,14 @@ func flattenListMetaRelationshipDefinition(p *[]models.MetaRelationshipDefinitio
 	}
 	return metarelationshipdefinitions
 }
-func flattenListMoTag(p *[]models.MoTag, d *schema.ResourceData) []map[string]interface{} {
+func flattenListMoTag(p []models.MoTag, d *schema.ResourceData) []map[string]interface{} {
 	var motags []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		motag := make(map[string]interface{})
+
 		motag["key"] = item.Key
 		motag["value"] = item.Value
 		motags = append(motags, motag)
@@ -2218,12 +3910,23 @@ func flattenListMoTag(p *[]models.MoTag, d *schema.ResourceData) []map[string]in
 }
 func flattenListNetworkElementRelationship(p []models.NetworkElementRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var networkelementrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		networkelementrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			networkelementrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		networkelementrelationship["class_id"] = item.ClassId
 		networkelementrelationship["moid"] = item.Moid
 		networkelementrelationship["object_type"] = item.ObjectType
@@ -2232,13 +3935,24 @@ func flattenListNetworkElementRelationship(p []models.NetworkElementRelationship
 	}
 	return networkelementrelationships
 }
-func flattenListNiaapiDetail(p *[]models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
+func flattenListNiaapiDetail(p []models.NiaapiDetail, d *schema.ResourceData) []map[string]interface{} {
 	var niaapidetails []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		niaapidetail := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.NiaapiDetail
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			niaapidetail["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		niaapidetail["chksum"] = item.Chksum
 		niaapidetail["class_id"] = item.ClassId
 		niaapidetail["filename"] = item.Filename
@@ -2248,13 +3962,24 @@ func flattenListNiaapiDetail(p *[]models.NiaapiDetail, d *schema.ResourceData) [
 	}
 	return niaapidetails
 }
-func flattenListNiaapiRevisionInfo(p *[]models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenListNiaapiRevisionInfo(p []models.NiaapiRevisionInfo, d *schema.ResourceData) []map[string]interface{} {
 	var niaapirevisioninfos []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		niaapirevisioninfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.NiaapiRevisionInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			niaapirevisioninfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		niaapirevisioninfo["class_id"] = item.ClassId
 		niaapirevisioninfo["date_published"] = item.DatePublished
 		niaapirevisioninfo["object_type"] = item.ObjectType
@@ -2264,13 +3989,52 @@ func flattenListNiaapiRevisionInfo(p *[]models.NiaapiRevisionInfo, d *schema.Res
 	}
 	return niaapirevisioninfos
 }
-func flattenListOnpremImagePackage(p *[]models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
-	var onpremimagepackages []map[string]interface{}
-	if *p == nil {
+func flattenListOauthAccessToken(p []models.OauthAccessToken, d *schema.ResourceData) []map[string]interface{} {
+	var oauthaccesstokens []map[string]interface{}
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
+		oauthaccesstoken := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OauthAccessToken
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			oauthaccesstoken["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		oauthaccesstoken["api_type"] = item.ApiType
+		oauthaccesstoken["class_id"] = item.ClassId
+		oauthaccesstoken["expiry_time"] = item.ExpiryTime
+		oauthaccesstoken["object_type"] = item.ObjectType
+		oauthaccesstoken["status"] = item.Status
+		oauthaccesstoken["token"] = item.Token
+		oauthaccesstokens = append(oauthaccesstokens, oauthaccesstoken)
+	}
+	return oauthaccesstokens
+}
+func flattenListOnpremImagePackage(p []models.OnpremImagePackage, d *schema.ResourceData) []map[string]interface{} {
+	var onpremimagepackages []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
 		onpremimagepackage := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OnpremImagePackage
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			onpremimagepackage["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		onpremimagepackage["class_id"] = item.ClassId
 		onpremimagepackage["file_path"] = item.FilePath
 		onpremimagepackage["file_sha"] = item.FileSha
@@ -2285,13 +4049,24 @@ func flattenListOnpremImagePackage(p *[]models.OnpremImagePackage, d *schema.Res
 	}
 	return onpremimagepackages
 }
-func flattenListOnpremUpgradeNote(p *[]models.OnpremUpgradeNote, d *schema.ResourceData) []map[string]interface{} {
+func flattenListOnpremUpgradeNote(p []models.OnpremUpgradeNote, d *schema.ResourceData) []map[string]interface{} {
 	var onpremupgradenotes []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		onpremupgradenote := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OnpremUpgradeNote
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			onpremupgradenote["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		onpremupgradenote["class_id"] = item.ClassId
 		onpremupgradenote["message"] = item.Message
 		onpremupgradenote["object_type"] = item.ObjectType
@@ -2299,13 +4074,24 @@ func flattenListOnpremUpgradeNote(p *[]models.OnpremUpgradeNote, d *schema.Resou
 	}
 	return onpremupgradenotes
 }
-func flattenListOnpremUpgradePhase(p *[]models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+func flattenListOnpremUpgradePhase(p []models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
 	var onpremupgradephases []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		onpremupgradephase := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OnpremUpgradePhase
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			onpremupgradephase["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		onpremupgradephase["class_id"] = item.ClassId
 		onpremupgradephase["elapsed_time"] = item.ElapsedTime
 		onpremupgradephase["end_time"] = item.EndTime
@@ -2320,12 +4106,23 @@ func flattenListOnpremUpgradePhase(p *[]models.OnpremUpgradePhase, d *schema.Res
 }
 func flattenListOrganizationOrganizationRelationship(p []models.OrganizationOrganizationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var organizationorganizationrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		organizationorganizationrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			organizationorganizationrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		organizationorganizationrelationship["class_id"] = item.ClassId
 		organizationorganizationrelationship["moid"] = item.Moid
 		organizationorganizationrelationship["object_type"] = item.ObjectType
@@ -2336,12 +4133,23 @@ func flattenListOrganizationOrganizationRelationship(p []models.OrganizationOrga
 }
 func flattenListOsConfigurationFileRelationship(p []models.OsConfigurationFileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var osconfigurationfilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		osconfigurationfilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			osconfigurationfilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		osconfigurationfilerelationship["class_id"] = item.ClassId
 		osconfigurationfilerelationship["moid"] = item.Moid
 		osconfigurationfilerelationship["object_type"] = item.ObjectType
@@ -2352,12 +4160,23 @@ func flattenListOsConfigurationFileRelationship(p []models.OsConfigurationFileRe
 }
 func flattenListOsDistributionRelationship(p []models.OsDistributionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var osdistributionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		osdistributionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			osdistributionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		osdistributionrelationship["class_id"] = item.ClassId
 		osdistributionrelationship["moid"] = item.Moid
 		osdistributionrelationship["object_type"] = item.ObjectType
@@ -2366,31 +4185,66 @@ func flattenListOsDistributionRelationship(p []models.OsDistributionRelationship
 	}
 	return osdistributionrelationships
 }
-func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
+func flattenListOsPlaceHolder(p []models.OsPlaceHolder, d *schema.ResourceData) []map[string]interface{} {
 	var osplaceholders []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		osplaceholder := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OsPlaceHolder
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			osplaceholder["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		osplaceholder["class_id"] = item.ClassId
 		osplaceholder["is_value_set"] = item.IsValueSet
 		osplaceholder["object_type"] = item.ObjectType
-		osplaceholder["type"] = (func(p *models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
+		osplaceholder["type"] = (func(p models.WorkflowPrimitiveDataType, d *schema.ResourceData) []map[string]interface{} {
 			var workflowprimitivedatatypes []map[string]interface{}
-			if p == nil {
+			var ret models.WorkflowPrimitiveDataType
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			workflowprimitivedatatype := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.WorkflowPrimitiveDataType
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				workflowprimitivedatatype["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			workflowprimitivedatatype["class_id"] = item.ClassId
-			workflowprimitivedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+			workflowprimitivedatatype["default"] = (func(p models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
-				if p == nil {
+				var ret models.WorkflowDefaultValue
+				if reflect.DeepEqual(ret, p) {
 					return nil
 				}
-				item := *p
+				item := p
 				workflowdefaultvalue := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.WorkflowDefaultValue
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					workflowdefaultvalue["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				workflowdefaultvalue["class_id"] = item.ClassId
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
@@ -2398,34 +4252,69 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 
 				workflowdefaultvalues = append(workflowdefaultvalues, workflowdefaultvalue)
 				return workflowdefaultvalues
-			})(item.Default, d)
+			})(item.GetDefault(), d)
 			workflowprimitivedatatype["description"] = item.Description
 			workflowprimitivedatatype["label"] = item.Label
 			workflowprimitivedatatype["name"] = item.Name
 			workflowprimitivedatatype["object_type"] = item.ObjectType
-			workflowprimitivedatatype["properties"] = (func(p *models.WorkflowPrimitiveDataProperty, d *schema.ResourceData) []map[string]interface{} {
+			workflowprimitivedatatype["properties"] = (func(p models.WorkflowPrimitiveDataProperty, d *schema.ResourceData) []map[string]interface{} {
 				var workflowprimitivedatapropertys []map[string]interface{}
-				if p == nil {
+				var ret models.WorkflowPrimitiveDataProperty
+				if reflect.DeepEqual(ret, p) {
 					return nil
 				}
-				item := *p
+				item := p
 				workflowprimitivedataproperty := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.WorkflowPrimitiveDataProperty
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					workflowprimitivedataproperty["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				workflowprimitivedataproperty["class_id"] = item.ClassId
-				workflowprimitivedataproperty["constraints"] = (func(p *models.WorkflowConstraints, d *schema.ResourceData) []map[string]interface{} {
+				workflowprimitivedataproperty["constraints"] = (func(p models.WorkflowConstraints, d *schema.ResourceData) []map[string]interface{} {
 					var workflowconstraintss []map[string]interface{}
-					if p == nil {
+					var ret models.WorkflowConstraints
+					if reflect.DeepEqual(ret, p) {
 						return nil
 					}
-					item := *p
+					item := p
 					workflowconstraints := make(map[string]interface{})
+
+					j, err := json.Marshal(item.AdditionalProperties)
+					var q models.WorkflowConstraints
+					if err == nil {
+						_ = json.Unmarshal(j, &q)
+						j, _ = json.Marshal(item.AdditionalProperties)
+						workflowconstraints["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+
 					workflowconstraints["class_id"] = item.ClassId
-					workflowconstraints["enum_list"] = (func(p *[]models.WorkflowEnumEntry, d *schema.ResourceData) []map[string]interface{} {
+					workflowconstraints["enum_list"] = (func(p []models.WorkflowEnumEntry, d *schema.ResourceData) []map[string]interface{} {
 						var workflowenumentrys []map[string]interface{}
-						if *p == nil {
+						if len(p) == 0 {
 							return nil
 						}
-						for _, item := range *p {
+						for _, item := range p {
 							workflowenumentry := make(map[string]interface{})
+
+							j, err := json.Marshal(item.AdditionalProperties)
+							var q models.WorkflowEnumEntry
+							if err == nil {
+								_ = json.Unmarshal(j, &q)
+								j, _ = json.Marshal(item.AdditionalProperties)
+								workflowenumentry["additional_properties"] = string(j)
+							} else {
+								log.Printf("Error occured while flattening and json parsing: %s", err)
+							}
+
 							workflowenumentry["class_id"] = item.ClassId
 							workflowenumentry["label"] = item.Label
 							workflowenumentry["object_type"] = item.ObjectType
@@ -2433,7 +4322,7 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 							workflowenumentrys = append(workflowenumentrys, workflowenumentry)
 						}
 						return workflowenumentrys
-					})(item.EnumList, d)
+					})(item.GetEnumList(), d)
 					workflowconstraints["max"] = item.Max
 					workflowconstraints["min"] = item.Min
 					workflowconstraints["object_type"] = item.ObjectType
@@ -2441,14 +4330,25 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 
 					workflowconstraintss = append(workflowconstraintss, workflowconstraints)
 					return workflowconstraintss
-				})(item.Constraints, d)
-				workflowprimitivedataproperty["inventory_selector"] = (func(p *[]models.WorkflowMoReferenceProperty, d *schema.ResourceData) []map[string]interface{} {
+				})(item.GetConstraints(), d)
+				workflowprimitivedataproperty["inventory_selector"] = (func(p []models.WorkflowMoReferenceProperty, d *schema.ResourceData) []map[string]interface{} {
 					var workflowmoreferencepropertys []map[string]interface{}
-					if *p == nil {
+					if len(p) == 0 {
 						return nil
 					}
-					for _, item := range *p {
+					for _, item := range p {
 						workflowmoreferenceproperty := make(map[string]interface{})
+
+						j, err := json.Marshal(item.AdditionalProperties)
+						var q models.WorkflowMoReferenceProperty
+						if err == nil {
+							_ = json.Unmarshal(j, &q)
+							j, _ = json.Marshal(item.AdditionalProperties)
+							workflowmoreferenceproperty["additional_properties"] = string(j)
+						} else {
+							log.Printf("Error occured while flattening and json parsing: %s", err)
+						}
+
 						workflowmoreferenceproperty["class_id"] = item.ClassId
 						workflowmoreferenceproperty["display_attributes"] = item.DisplayAttributes
 						workflowmoreferenceproperty["object_type"] = item.ObjectType
@@ -2457,19 +4357,19 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 						workflowmoreferencepropertys = append(workflowmoreferencepropertys, workflowmoreferenceproperty)
 					}
 					return workflowmoreferencepropertys
-				})(item.InventorySelector, d)
+				})(item.GetInventorySelector(), d)
 				workflowprimitivedataproperty["object_type"] = item.ObjectType
 				workflowprimitivedataproperty["secure"] = item.Secure
 				workflowprimitivedataproperty["type"] = item.Type
 
 				workflowprimitivedatapropertys = append(workflowprimitivedatapropertys, workflowprimitivedataproperty)
 				return workflowprimitivedatapropertys
-			})(item.Properties, d)
+			})(item.GetProperties(), d)
 			workflowprimitivedatatype["required"] = item.Required
 
 			workflowprimitivedatatypes = append(workflowprimitivedatatypes, workflowprimitivedatatype)
 			return workflowprimitivedatatypes
-		})(item.Type, d)
+		})(item.GetType(), d)
 		osplaceholder["value"] = item.Value
 		osplaceholders = append(osplaceholders, osplaceholder)
 	}
@@ -2477,12 +4377,23 @@ func flattenListOsPlaceHolder(p *[]models.OsPlaceHolder, d *schema.ResourceData)
 }
 func flattenListPciCoprocessorCardRelationship(p []models.PciCoprocessorCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcicoprocessorcardrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		pcicoprocessorcardrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pcicoprocessorcardrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pcicoprocessorcardrelationship["class_id"] = item.ClassId
 		pcicoprocessorcardrelationship["moid"] = item.Moid
 		pcicoprocessorcardrelationship["object_type"] = item.ObjectType
@@ -2493,12 +4404,23 @@ func flattenListPciCoprocessorCardRelationship(p []models.PciCoprocessorCardRela
 }
 func flattenListPciDeviceRelationship(p []models.PciDeviceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcidevicerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		pcidevicerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pcidevicerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pcidevicerelationship["class_id"] = item.ClassId
 		pcidevicerelationship["moid"] = item.Moid
 		pcidevicerelationship["object_type"] = item.ObjectType
@@ -2509,12 +4431,23 @@ func flattenListPciDeviceRelationship(p []models.PciDeviceRelationship, d *schem
 }
 func flattenListPciLinkRelationship(p []models.PciLinkRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pcilinkrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		pcilinkrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pcilinkrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pcilinkrelationship["class_id"] = item.ClassId
 		pcilinkrelationship["moid"] = item.Moid
 		pcilinkrelationship["object_type"] = item.ObjectType
@@ -2525,12 +4458,23 @@ func flattenListPciLinkRelationship(p []models.PciLinkRelationship, d *schema.Re
 }
 func flattenListPciSwitchRelationship(p []models.PciSwitchRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pciswitchrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		pciswitchrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pciswitchrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pciswitchrelationship["class_id"] = item.ClassId
 		pciswitchrelationship["moid"] = item.Moid
 		pciswitchrelationship["object_type"] = item.ObjectType
@@ -2541,12 +4485,23 @@ func flattenListPciSwitchRelationship(p []models.PciSwitchRelationship, d *schem
 }
 func flattenListPolicyAbstractConfigProfileRelationship(p []models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var policyabstractconfigprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		policyabstractconfigprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			policyabstractconfigprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		policyabstractconfigprofilerelationship["class_id"] = item.ClassId
 		policyabstractconfigprofilerelationship["moid"] = item.Moid
 		policyabstractconfigprofilerelationship["object_type"] = item.ObjectType
@@ -2555,13 +4510,24 @@ func flattenListPolicyAbstractConfigProfileRelationship(p []models.PolicyAbstrac
 	}
 	return policyabstractconfigprofilerelationships
 }
-func flattenListPolicyinventoryJobInfo(p *[]models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenListPolicyinventoryJobInfo(p []models.PolicyinventoryJobInfo, d *schema.ResourceData) []map[string]interface{} {
 	var policyinventoryjobinfos []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		policyinventoryjobinfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.PolicyinventoryJobInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			policyinventoryjobinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		policyinventoryjobinfo["class_id"] = item.ClassId
 		policyinventoryjobinfo["execution_status"] = item.ExecutionStatus
 		policyinventoryjobinfo["last_scheduled_time"] = item.LastScheduledTime
@@ -2574,12 +4540,23 @@ func flattenListPolicyinventoryJobInfo(p *[]models.PolicyinventoryJobInfo, d *sc
 }
 func flattenListPortGroupRelationship(p []models.PortGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portgrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		portgrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			portgrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		portgrouprelationship["class_id"] = item.ClassId
 		portgrouprelationship["moid"] = item.Moid
 		portgrouprelationship["object_type"] = item.ObjectType
@@ -2590,12 +4567,23 @@ func flattenListPortGroupRelationship(p []models.PortGroupRelationship, d *schem
 }
 func flattenListPortMacBindingRelationship(p []models.PortMacBindingRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portmacbindingrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		portmacbindingrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			portmacbindingrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		portmacbindingrelationship["class_id"] = item.ClassId
 		portmacbindingrelationship["moid"] = item.Moid
 		portmacbindingrelationship["object_type"] = item.ObjectType
@@ -2606,12 +4594,23 @@ func flattenListPortMacBindingRelationship(p []models.PortMacBindingRelationship
 }
 func flattenListPortSubGroupRelationship(p []models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portsubgrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		portsubgrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			portsubgrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		portsubgrouprelationship["class_id"] = item.ClassId
 		portsubgrouprelationship["moid"] = item.Moid
 		portsubgrouprelationship["object_type"] = item.ObjectType
@@ -2622,12 +4621,23 @@ func flattenListPortSubGroupRelationship(p []models.PortSubGroupRelationship, d 
 }
 func flattenListProcessorUnitRelationship(p []models.ProcessorUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var processorunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		processorunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			processorunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		processorunitrelationship["class_id"] = item.ClassId
 		processorunitrelationship["moid"] = item.Moid
 		processorunitrelationship["object_type"] = item.ObjectType
@@ -2638,12 +4648,23 @@ func flattenListProcessorUnitRelationship(p []models.ProcessorUnitRelationship, 
 }
 func flattenListRecoveryBackupProfileRelationship(p []models.RecoveryBackupProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoverybackupprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		recoverybackupprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			recoverybackupprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		recoverybackupprofilerelationship["class_id"] = item.ClassId
 		recoverybackupprofilerelationship["moid"] = item.Moid
 		recoverybackupprofilerelationship["object_type"] = item.ObjectType
@@ -2654,12 +4675,23 @@ func flattenListRecoveryBackupProfileRelationship(p []models.RecoveryBackupProfi
 }
 func flattenListRecoveryConfigResultEntryRelationship(p []models.RecoveryConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryconfigresultentryrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		recoveryconfigresultentryrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			recoveryconfigresultentryrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		recoveryconfigresultentryrelationship["class_id"] = item.ClassId
 		recoveryconfigresultentryrelationship["moid"] = item.Moid
 		recoveryconfigresultentryrelationship["object_type"] = item.ObjectType
@@ -2670,12 +4702,23 @@ func flattenListRecoveryConfigResultEntryRelationship(p []models.RecoveryConfigR
 }
 func flattenListResourceGroupRelationship(p []models.ResourceGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var resourcegrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		resourcegrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			resourcegrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		resourcegrouprelationship["class_id"] = item.ClassId
 		resourcegrouprelationship["moid"] = item.Moid
 		resourcegrouprelationship["object_type"] = item.ObjectType
@@ -2684,13 +4727,24 @@ func flattenListResourceGroupRelationship(p []models.ResourceGroupRelationship, 
 	}
 	return resourcegrouprelationships
 }
-func flattenListResourcePerTypeCombinedSelector(p *[]models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
+func flattenListResourcePerTypeCombinedSelector(p []models.ResourcePerTypeCombinedSelector, d *schema.ResourceData) []map[string]interface{} {
 	var resourcepertypecombinedselectors []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		resourcepertypecombinedselector := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ResourcePerTypeCombinedSelector
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			resourcepertypecombinedselector["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		resourcepertypecombinedselector["class_id"] = item.ClassId
 		resourcepertypecombinedselector["combined_selector"] = item.CombinedSelector
 		resourcepertypecombinedselector["empty_filter"] = item.EmptyFilter
@@ -2700,13 +4754,24 @@ func flattenListResourcePerTypeCombinedSelector(p *[]models.ResourcePerTypeCombi
 	}
 	return resourcepertypecombinedselectors
 }
-func flattenListResourceSelector(p *[]models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
+func flattenListResourceSelector(p []models.ResourceSelector, d *schema.ResourceData) []map[string]interface{} {
 	var resourceselectors []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		resourceselector := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.ResourceSelector
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			resourceselector["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		resourceselector["class_id"] = item.ClassId
 		resourceselector["object_type"] = item.ObjectType
 		resourceselector["selector"] = item.Selector
@@ -2714,41 +4779,74 @@ func flattenListResourceSelector(p *[]models.ResourceSelector, d *schema.Resourc
 	}
 	return resourceselectors
 }
-func flattenListSdcardPartition(p *[]models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSdcardPartition(p []models.SdcardPartition, d *schema.ResourceData) []map[string]interface{} {
 	var sdcardpartitions []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		sdcardpartition := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SdcardPartition
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sdcardpartition["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sdcardpartition["class_id"] = item.ClassId
 		sdcardpartition["object_type"] = item.ObjectType
 		sdcardpartition["type"] = item.Type
-		sdcardpartition["virtual_drives"] = (func(p *[]models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
+		sdcardpartition["virtual_drives"] = (func(p []models.SdcardVirtualDrive, d *schema.ResourceData) []map[string]interface{} {
 			var sdcardvirtualdrives []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				sdcardvirtualdrive := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.SdcardVirtualDrive
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					sdcardvirtualdrive["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				sdcardvirtualdrive["class_id"] = item.ClassId
 				sdcardvirtualdrive["enable"] = item.Enable
 				sdcardvirtualdrive["object_type"] = item.ObjectType
 				sdcardvirtualdrives = append(sdcardvirtualdrives, sdcardvirtualdrive)
 			}
 			return sdcardvirtualdrives
-		})(item.VirtualDrives, d)
+		})(item.GetVirtualDrives(), d)
 		sdcardpartitions = append(sdcardpartitions, sdcardpartition)
 	}
 	return sdcardpartitions
 }
-func flattenListSdwanNetworkConfigurationType(p *[]models.SdwanNetworkConfigurationType, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSdwanNetworkConfigurationType(p []models.SdwanNetworkConfigurationType, d *schema.ResourceData) []map[string]interface{} {
 	var sdwannetworkconfigurationtypes []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		sdwannetworkconfigurationtype := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SdwanNetworkConfigurationType
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sdwannetworkconfigurationtype["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sdwannetworkconfigurationtype["class_id"] = item.ClassId
 		sdwannetworkconfigurationtype["network_type"] = item.NetworkType
 		sdwannetworkconfigurationtype["object_type"] = item.ObjectType
@@ -2760,12 +4858,23 @@ func flattenListSdwanNetworkConfigurationType(p *[]models.SdwanNetworkConfigurat
 }
 func flattenListSdwanProfileRelationship(p []models.SdwanProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanprofilerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		sdwanprofilerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sdwanprofilerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sdwanprofilerelationship["class_id"] = item.ClassId
 		sdwanprofilerelationship["moid"] = item.Moid
 		sdwanprofilerelationship["object_type"] = item.ObjectType
@@ -2776,12 +4885,23 @@ func flattenListSdwanProfileRelationship(p []models.SdwanProfileRelationship, d 
 }
 func flattenListSdwanRouterNodeRelationship(p []models.SdwanRouterNodeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanrouternoderelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		sdwanrouternoderelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sdwanrouternoderelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sdwanrouternoderelationship["class_id"] = item.ClassId
 		sdwanrouternoderelationship["moid"] = item.Moid
 		sdwanrouternoderelationship["object_type"] = item.ObjectType
@@ -2790,13 +4910,24 @@ func flattenListSdwanRouterNodeRelationship(p []models.SdwanRouterNodeRelationsh
 	}
 	return sdwanrouternoderelationships
 }
-func flattenListSdwanTemplateInputsType(p *[]models.SdwanTemplateInputsType, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSdwanTemplateInputsType(p []models.SdwanTemplateInputsType, d *schema.ResourceData) []map[string]interface{} {
 	var sdwantemplateinputstypes []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		sdwantemplateinputstype := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SdwanTemplateInputsType
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sdwantemplateinputstype["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sdwantemplateinputstype["class_id"] = item.ClassId
 		sdwantemplateinputstype["editable"] = item.Editable
 		sdwantemplateinputstype["key"] = item.Key
@@ -2812,12 +4943,23 @@ func flattenListSdwanTemplateInputsType(p *[]models.SdwanTemplateInputsType, d *
 }
 func flattenListSecurityUnitRelationship(p []models.SecurityUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var securityunitrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		securityunitrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			securityunitrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		securityunitrelationship["class_id"] = item.ClassId
 		securityunitrelationship["moid"] = item.Moid
 		securityunitrelationship["object_type"] = item.ObjectType
@@ -2828,12 +4970,23 @@ func flattenListSecurityUnitRelationship(p []models.SecurityUnitRelationship, d 
 }
 func flattenListServerConfigChangeDetailRelationship(p []models.ServerConfigChangeDetailRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigchangedetailrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		serverconfigchangedetailrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			serverconfigchangedetailrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		serverconfigchangedetailrelationship["class_id"] = item.ClassId
 		serverconfigchangedetailrelationship["moid"] = item.Moid
 		serverconfigchangedetailrelationship["object_type"] = item.ObjectType
@@ -2844,12 +4997,23 @@ func flattenListServerConfigChangeDetailRelationship(p []models.ServerConfigChan
 }
 func flattenListServerConfigResultEntryRelationship(p []models.ServerConfigResultEntryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigresultentryrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		serverconfigresultentryrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			serverconfigresultentryrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		serverconfigresultentryrelationship["class_id"] = item.ClassId
 		serverconfigresultentryrelationship["moid"] = item.Moid
 		serverconfigresultentryrelationship["object_type"] = item.ObjectType
@@ -2858,13 +5022,24 @@ func flattenListServerConfigResultEntryRelationship(p []models.ServerConfigResul
 	}
 	return serverconfigresultentryrelationships
 }
-func flattenListSnmpTrap(p *[]models.SnmpTrap, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSnmpTrap(p []models.SnmpTrap, d *schema.ResourceData) []map[string]interface{} {
 	var snmptraps []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		snmptrap := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SnmpTrap
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			snmptrap["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		snmptrap["class_id"] = item.ClassId
 		snmptrap["destination"] = item.Destination
 		snmptrap["enabled"] = item.Enabled
@@ -2877,13 +5052,24 @@ func flattenListSnmpTrap(p *[]models.SnmpTrap, d *schema.ResourceData) []map[str
 	}
 	return snmptraps
 }
-func flattenListSnmpUser(p *[]models.SnmpUser, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSnmpUser(p []models.SnmpUser, d *schema.ResourceData) []map[string]interface{} {
 	var snmpusers []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		snmpuser := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SnmpUser
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			snmpuser["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		auth_password_x := d.Get("snmp_users").([]interface{})
 		auth_password_y := auth_password_x[0].(map[string]interface{})
 		snmpuser["auth_password"] = auth_password_y["auth_password"]
@@ -2902,13 +5088,51 @@ func flattenListSnmpUser(p *[]models.SnmpUser, d *schema.ResourceData) []map[str
 	}
 	return snmpusers
 }
-func flattenListStorageBaseInitiator(p *[]models.StorageBaseInitiator, d *schema.ResourceData) []map[string]interface{} {
-	var storagebaseinitiators []map[string]interface{}
-	if *p == nil {
+func flattenListSoftwareHyperflexDistributableRelationship(p []models.SoftwareHyperflexDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var softwarehyperflexdistributablerelationships []map[string]interface{}
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
+		item := item.MoMoRef
+		softwarehyperflexdistributablerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			softwarehyperflexdistributablerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		softwarehyperflexdistributablerelationship["class_id"] = item.ClassId
+		softwarehyperflexdistributablerelationship["moid"] = item.Moid
+		softwarehyperflexdistributablerelationship["object_type"] = item.ObjectType
+		softwarehyperflexdistributablerelationship["selector"] = item.Selector
+		softwarehyperflexdistributablerelationships = append(softwarehyperflexdistributablerelationships, softwarehyperflexdistributablerelationship)
+	}
+	return softwarehyperflexdistributablerelationships
+}
+func flattenListStorageBaseInitiator(p []models.StorageBaseInitiator, d *schema.ResourceData) []map[string]interface{} {
+	var storagebaseinitiators []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
 		storagebaseinitiator := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.StorageBaseInitiator
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagebaseinitiator["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagebaseinitiator["class_id"] = item.ClassId
 		storagebaseinitiator["iqn"] = item.Iqn
 		storagebaseinitiator["name"] = item.Name
@@ -2921,12 +5145,23 @@ func flattenListStorageBaseInitiator(p *[]models.StorageBaseInitiator, d *schema
 }
 func flattenListStorageControllerRelationship(p []models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagecontrollerrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagecontrollerrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagecontrollerrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagecontrollerrelationship["class_id"] = item.ClassId
 		storagecontrollerrelationship["moid"] = item.Moid
 		storagecontrollerrelationship["object_type"] = item.ObjectType
@@ -2937,12 +5172,23 @@ func flattenListStorageControllerRelationship(p []models.StorageControllerRelati
 }
 func flattenListStorageDiskGroupRelationship(p []models.StorageDiskGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagediskgrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagediskgrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagediskgrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagediskgrouprelationship["class_id"] = item.ClassId
 		storagediskgrouprelationship["moid"] = item.Moid
 		storagediskgrouprelationship["object_type"] = item.ObjectType
@@ -2953,12 +5199,23 @@ func flattenListStorageDiskGroupRelationship(p []models.StorageDiskGroupRelation
 }
 func flattenListStorageDiskGroupPolicyRelationship(p []models.StorageDiskGroupPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagediskgrouppolicyrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagediskgrouppolicyrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagediskgrouppolicyrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagediskgrouppolicyrelationship["class_id"] = item.ClassId
 		storagediskgrouppolicyrelationship["moid"] = item.Moid
 		storagediskgrouppolicyrelationship["object_type"] = item.ObjectType
@@ -2969,12 +5226,23 @@ func flattenListStorageDiskGroupPolicyRelationship(p []models.StorageDiskGroupPo
 }
 func flattenListStorageEnclosureRelationship(p []models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageenclosurerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageenclosurerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageenclosurerelationship["class_id"] = item.ClassId
 		storageenclosurerelationship["moid"] = item.Moid
 		storageenclosurerelationship["object_type"] = item.ObjectType
@@ -2985,12 +5253,23 @@ func flattenListStorageEnclosureRelationship(p []models.StorageEnclosureRelation
 }
 func flattenListStorageEnclosureDiskRelationship(p []models.StorageEnclosureDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurediskrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageenclosurediskrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageenclosurediskrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageenclosurediskrelationship["class_id"] = item.ClassId
 		storageenclosurediskrelationship["moid"] = item.Moid
 		storageenclosurediskrelationship["object_type"] = item.ObjectType
@@ -3001,12 +5280,23 @@ func flattenListStorageEnclosureDiskRelationship(p []models.StorageEnclosureDisk
 }
 func flattenListStorageEnclosureDiskSlotEpRelationship(p []models.StorageEnclosureDiskSlotEpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosuredisksloteprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageenclosuredisksloteprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageenclosuredisksloteprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageenclosuredisksloteprelationship["class_id"] = item.ClassId
 		storageenclosuredisksloteprelationship["moid"] = item.Moid
 		storageenclosuredisksloteprelationship["object_type"] = item.ObjectType
@@ -3017,12 +5307,23 @@ func flattenListStorageEnclosureDiskSlotEpRelationship(p []models.StorageEnclosu
 }
 func flattenListStorageFlexFlashControllerRelationship(p []models.StorageFlexFlashControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashcontrollerrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexflashcontrollerrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexflashcontrollerrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexflashcontrollerrelationship["class_id"] = item.ClassId
 		storageflexflashcontrollerrelationship["moid"] = item.Moid
 		storageflexflashcontrollerrelationship["object_type"] = item.ObjectType
@@ -3033,12 +5334,23 @@ func flattenListStorageFlexFlashControllerRelationship(p []models.StorageFlexFla
 }
 func flattenListStorageFlexFlashControllerPropsRelationship(p []models.StorageFlexFlashControllerPropsRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashcontrollerpropsrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexflashcontrollerpropsrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexflashcontrollerpropsrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexflashcontrollerpropsrelationship["class_id"] = item.ClassId
 		storageflexflashcontrollerpropsrelationship["moid"] = item.Moid
 		storageflexflashcontrollerpropsrelationship["object_type"] = item.ObjectType
@@ -3049,12 +5361,23 @@ func flattenListStorageFlexFlashControllerPropsRelationship(p []models.StorageFl
 }
 func flattenListStorageFlexFlashPhysicalDriveRelationship(p []models.StorageFlexFlashPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashphysicaldriverelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexflashphysicaldriverelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexflashphysicaldriverelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexflashphysicaldriverelationship["class_id"] = item.ClassId
 		storageflexflashphysicaldriverelationship["moid"] = item.Moid
 		storageflexflashphysicaldriverelationship["object_type"] = item.ObjectType
@@ -3065,12 +5388,23 @@ func flattenListStorageFlexFlashPhysicalDriveRelationship(p []models.StorageFlex
 }
 func flattenListStorageFlexFlashVirtualDriveRelationship(p []models.StorageFlexFlashVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashvirtualdriverelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexflashvirtualdriverelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexflashvirtualdriverelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexflashvirtualdriverelationship["class_id"] = item.ClassId
 		storageflexflashvirtualdriverelationship["moid"] = item.Moid
 		storageflexflashvirtualdriverelationship["object_type"] = item.ObjectType
@@ -3081,12 +5415,23 @@ func flattenListStorageFlexFlashVirtualDriveRelationship(p []models.StorageFlexF
 }
 func flattenListStorageFlexUtilControllerRelationship(p []models.StorageFlexUtilControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilcontrollerrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexutilcontrollerrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexutilcontrollerrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexutilcontrollerrelationship["class_id"] = item.ClassId
 		storageflexutilcontrollerrelationship["moid"] = item.Moid
 		storageflexutilcontrollerrelationship["object_type"] = item.ObjectType
@@ -3097,12 +5442,23 @@ func flattenListStorageFlexUtilControllerRelationship(p []models.StorageFlexUtil
 }
 func flattenListStorageFlexUtilPhysicalDriveRelationship(p []models.StorageFlexUtilPhysicalDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilphysicaldriverelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexutilphysicaldriverelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexutilphysicaldriverelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexutilphysicaldriverelationship["class_id"] = item.ClassId
 		storageflexutilphysicaldriverelationship["moid"] = item.Moid
 		storageflexutilphysicaldriverelationship["object_type"] = item.ObjectType
@@ -3113,12 +5469,23 @@ func flattenListStorageFlexUtilPhysicalDriveRelationship(p []models.StorageFlexU
 }
 func flattenListStorageFlexUtilVirtualDriveRelationship(p []models.StorageFlexUtilVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilvirtualdriverelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageflexutilvirtualdriverelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageflexutilvirtualdriverelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageflexutilvirtualdriverelationship["class_id"] = item.ClassId
 		storageflexutilvirtualdriverelationship["moid"] = item.Moid
 		storageflexutilvirtualdriverelationship["object_type"] = item.ObjectType
@@ -3129,12 +5496,23 @@ func flattenListStorageFlexUtilVirtualDriveRelationship(p []models.StorageFlexUt
 }
 func flattenListStorageItemRelationship(p []models.StorageItemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageitemrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storageitemrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storageitemrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storageitemrelationship["class_id"] = item.ClassId
 		storageitemrelationship["moid"] = item.Moid
 		storageitemrelationship["object_type"] = item.ObjectType
@@ -3143,13 +5521,24 @@ func flattenListStorageItemRelationship(p []models.StorageItemRelationship, d *s
 	}
 	return storageitemrelationships
 }
-func flattenListStorageLocalDisk(p *[]models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageLocalDisk(p []models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
 	var storagelocaldisks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		storagelocaldisk := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.StorageLocalDisk
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagelocaldisk["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagelocaldisk["class_id"] = item.ClassId
 		storagelocaldisk["object_type"] = item.ObjectType
 		storagelocaldisk["slot_number"] = item.SlotNumber
@@ -3159,12 +5548,23 @@ func flattenListStorageLocalDisk(p *[]models.StorageLocalDisk, d *schema.Resourc
 }
 func flattenListStoragePhysicalDiskRelationship(p []models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagephysicaldiskrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagephysicaldiskrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagephysicaldiskrelationship["class_id"] = item.ClassId
 		storagephysicaldiskrelationship["moid"] = item.Moid
 		storagephysicaldiskrelationship["object_type"] = item.ObjectType
@@ -3175,12 +5575,23 @@ func flattenListStoragePhysicalDiskRelationship(p []models.StoragePhysicalDiskRe
 }
 func flattenListStoragePhysicalDiskExtensionRelationship(p []models.StoragePhysicalDiskExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskextensionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagephysicaldiskextensionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagephysicaldiskextensionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagephysicaldiskextensionrelationship["class_id"] = item.ClassId
 		storagephysicaldiskextensionrelationship["moid"] = item.Moid
 		storagephysicaldiskextensionrelationship["object_type"] = item.ObjectType
@@ -3191,12 +5602,23 @@ func flattenListStoragePhysicalDiskExtensionRelationship(p []models.StoragePhysi
 }
 func flattenListStoragePhysicalDiskUsageRelationship(p []models.StoragePhysicalDiskUsageRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskusagerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagephysicaldiskusagerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagephysicaldiskusagerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagephysicaldiskusagerelationship["class_id"] = item.ClassId
 		storagephysicaldiskusagerelationship["moid"] = item.Moid
 		storagephysicaldiskusagerelationship["object_type"] = item.ObjectType
@@ -3207,12 +5629,23 @@ func flattenListStoragePhysicalDiskUsageRelationship(p []models.StoragePhysicalD
 }
 func flattenListStoragePureHostRelationship(p []models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagepurehostrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagepurehostrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagepurehostrelationship["class_id"] = item.ClassId
 		storagepurehostrelationship["moid"] = item.Moid
 		storagepurehostrelationship["object_type"] = item.ObjectType
@@ -3223,12 +5656,23 @@ func flattenListStoragePureHostRelationship(p []models.StoragePureHostRelationsh
 }
 func flattenListStoragePureHostGroupRelationship(p []models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostgrouprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagepurehostgrouprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagepurehostgrouprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagepurehostgrouprelationship["class_id"] = item.ClassId
 		storagepurehostgrouprelationship["moid"] = item.Moid
 		storagepurehostgrouprelationship["object_type"] = item.ObjectType
@@ -3237,13 +5681,24 @@ func flattenListStoragePureHostGroupRelationship(p []models.StoragePureHostGroup
 	}
 	return storagepurehostgrouprelationships
 }
-func flattenListStoragePureReplicationBlackout(p *[]models.StoragePureReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStoragePureReplicationBlackout(p []models.StoragePureReplicationBlackout, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurereplicationblackouts []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		storagepurereplicationblackout := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.StoragePureReplicationBlackout
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagepurereplicationblackout["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagepurereplicationblackout["class_id"] = item.ClassId
 		storagepurereplicationblackout["end"] = item.End
 		storagepurereplicationblackout["object_type"] = item.ObjectType
@@ -3254,12 +5709,23 @@ func flattenListStoragePureReplicationBlackout(p *[]models.StoragePureReplicatio
 }
 func flattenListStoragePureVolumeRelationship(p []models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurevolumerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagepurevolumerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagepurevolumerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagepurevolumerelationship["class_id"] = item.ClassId
 		storagepurevolumerelationship["moid"] = item.Moid
 		storagepurevolumerelationship["object_type"] = item.ObjectType
@@ -3270,12 +5736,23 @@ func flattenListStoragePureVolumeRelationship(p []models.StoragePureVolumeRelati
 }
 func flattenListStorageSasExpanderRelationship(p []models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagesasexpanderrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagesasexpanderrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagesasexpanderrelationship["class_id"] = item.ClassId
 		storagesasexpanderrelationship["moid"] = item.Moid
 		storagesasexpanderrelationship["object_type"] = item.ObjectType
@@ -3286,12 +5763,23 @@ func flattenListStorageSasExpanderRelationship(p []models.StorageSasExpanderRela
 }
 func flattenListStorageSasPortRelationship(p []models.StorageSasPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasportrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagesasportrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagesasportrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagesasportrelationship["class_id"] = item.ClassId
 		storagesasportrelationship["moid"] = item.Moid
 		storagesasportrelationship["object_type"] = item.ObjectType
@@ -3302,12 +5790,23 @@ func flattenListStorageSasPortRelationship(p []models.StorageSasPortRelationship
 }
 func flattenListStorageSpanRelationship(p []models.StorageSpanRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagespanrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagespanrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagespanrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagespanrelationship["class_id"] = item.ClassId
 		storagespanrelationship["moid"] = item.Moid
 		storagespanrelationship["object_type"] = item.ObjectType
@@ -3316,28 +5815,50 @@ func flattenListStorageSpanRelationship(p []models.StorageSpanRelationship, d *s
 	}
 	return storagespanrelationships
 }
-func flattenListStorageSpanGroup(p *[]models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageSpanGroup(p []models.StorageSpanGroup, d *schema.ResourceData) []map[string]interface{} {
 	var storagespangroups []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		storagespangroup := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.StorageSpanGroup
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagespangroup["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagespangroup["class_id"] = item.ClassId
-		storagespangroup["disks"] = (func(p *[]models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
+		storagespangroup["disks"] = (func(p []models.StorageLocalDisk, d *schema.ResourceData) []map[string]interface{} {
 			var storagelocaldisks []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				storagelocaldisk := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.StorageLocalDisk
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					storagelocaldisk["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				storagelocaldisk["class_id"] = item.ClassId
 				storagelocaldisk["object_type"] = item.ObjectType
 				storagelocaldisk["slot_number"] = item.SlotNumber
 				storagelocaldisks = append(storagelocaldisks, storagelocaldisk)
 			}
 			return storagelocaldisks
-		})(item.Disks, d)
+		})(item.GetDisks(), d)
 		storagespangroup["object_type"] = item.ObjectType
 		storagespangroups = append(storagespangroups, storagespangroup)
 	}
@@ -3345,12 +5866,23 @@ func flattenListStorageSpanGroup(p *[]models.StorageSpanGroup, d *schema.Resourc
 }
 func flattenListStorageStoragePolicyRelationship(p []models.StorageStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagestoragepolicyrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagestoragepolicyrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagestoragepolicyrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagestoragepolicyrelationship["class_id"] = item.ClassId
 		storagestoragepolicyrelationship["moid"] = item.Moid
 		storagestoragepolicyrelationship["object_type"] = item.ObjectType
@@ -3361,12 +5893,23 @@ func flattenListStorageStoragePolicyRelationship(p []models.StorageStoragePolicy
 }
 func flattenListStorageVdMemberEpRelationship(p []models.StorageVdMemberEpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevdmembereprelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagevdmembereprelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagevdmembereprelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagevdmembereprelationship["class_id"] = item.ClassId
 		storagevdmembereprelationship["moid"] = item.Moid
 		storagevdmembereprelationship["object_type"] = item.ObjectType
@@ -3377,12 +5920,23 @@ func flattenListStorageVdMemberEpRelationship(p []models.StorageVdMemberEpRelati
 }
 func flattenListStorageVirtualDriveRelationship(p []models.StorageVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriverelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagevirtualdriverelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagevirtualdriverelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagevirtualdriverelationship["class_id"] = item.ClassId
 		storagevirtualdriverelationship["moid"] = item.Moid
 		storagevirtualdriverelationship["object_type"] = item.ObjectType
@@ -3391,14 +5945,25 @@ func flattenListStorageVirtualDriveRelationship(p []models.StorageVirtualDriveRe
 	}
 	return storagevirtualdriverelationships
 }
-func flattenListStorageVirtualDriveConfig(p *[]models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
+func flattenListStorageVirtualDriveConfig(p []models.StorageVirtualDriveConfig, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriveconfigs []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		storagevirtualdriveconfig := make(map[string]interface{})
+
 		storagevirtualdriveconfig["access_policy"] = item.AccessPolicy
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.StorageVirtualDriveConfig
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagevirtualdriveconfig["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagevirtualdriveconfig["boot_drive"] = item.BootDrive
 		storagevirtualdriveconfig["class_id"] = item.ClassId
 		storagevirtualdriveconfig["disk_group_name"] = item.DiskGroupName
@@ -3417,12 +5982,23 @@ func flattenListStorageVirtualDriveConfig(p *[]models.StorageVirtualDriveConfig,
 }
 func flattenListStorageVirtualDriveExtensionRelationship(p []models.StorageVirtualDriveExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriveextensionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		storagevirtualdriveextensionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			storagevirtualdriveextensionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		storagevirtualdriveextensionrelationship["class_id"] = item.ClassId
 		storagevirtualdriveextensionrelationship["moid"] = item.Moid
 		storagevirtualdriveextensionrelationship["object_type"] = item.ObjectType
@@ -3431,13 +6007,24 @@ func flattenListStorageVirtualDriveExtensionRelationship(p []models.StorageVirtu
 	}
 	return storagevirtualdriveextensionrelationships
 }
-func flattenListSyslogLocalClientBase(p *[]models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSyslogLocalClientBase(p []models.SyslogLocalClientBase, d *schema.ResourceData) []map[string]interface{} {
 	var sysloglocalclientbases []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		sysloglocalclientbase := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SyslogLocalClientBase
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			sysloglocalclientbase["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		sysloglocalclientbase["class_id"] = item.ClassId
 		sysloglocalclientbase["min_severity"] = item.MinSeverity
 		sysloglocalclientbase["object_type"] = item.ObjectType
@@ -3445,13 +6032,24 @@ func flattenListSyslogLocalClientBase(p *[]models.SyslogLocalClientBase, d *sche
 	}
 	return sysloglocalclientbases
 }
-func flattenListSyslogRemoteClientBase(p *[]models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
+func flattenListSyslogRemoteClientBase(p []models.SyslogRemoteClientBase, d *schema.ResourceData) []map[string]interface{} {
 	var syslogremoteclientbases []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		syslogremoteclientbase := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.SyslogRemoteClientBase
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			syslogremoteclientbase["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		syslogremoteclientbase["class_id"] = item.ClassId
 		syslogremoteclientbase["enabled"] = item.Enabled
 		syslogremoteclientbase["hostname"] = item.Hostname
@@ -3463,23 +6061,45 @@ func flattenListSyslogRemoteClientBase(p *[]models.SyslogRemoteClientBase, d *sc
 	}
 	return syslogremoteclientbases
 }
-func flattenListTamAction(p *[]models.TamAction, d *schema.ResourceData) []map[string]interface{} {
+func flattenListTamAction(p []models.TamAction, d *schema.ResourceData) []map[string]interface{} {
 	var tamactions []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		tamaction := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.TamAction
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			tamaction["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		tamaction["affected_object_type"] = item.AffectedObjectType
 		tamaction["alert_type"] = item.AlertType
 		tamaction["class_id"] = item.ClassId
-		tamaction["identifiers"] = (func(p *[]models.TamIdentifiers, d *schema.ResourceData) []map[string]interface{} {
+		tamaction["identifiers"] = (func(p []models.TamIdentifiers, d *schema.ResourceData) []map[string]interface{} {
 			var tamidentifierss []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				tamidentifiers := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.TamIdentifiers
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					tamidentifiers["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				tamidentifiers["class_id"] = item.ClassId
 				tamidentifiers["name"] = item.Name
 				tamidentifiers["object_type"] = item.ObjectType
@@ -3487,17 +6107,28 @@ func flattenListTamAction(p *[]models.TamAction, d *schema.ResourceData) []map[s
 				tamidentifierss = append(tamidentifierss, tamidentifiers)
 			}
 			return tamidentifierss
-		})(item.Identifiers, d)
+		})(item.GetIdentifiers(), d)
 		tamaction["name"] = item.Name
 		tamaction["object_type"] = item.ObjectType
 		tamaction["operation_type"] = item.OperationType
-		tamaction["queries"] = (func(p *[]models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
+		tamaction["queries"] = (func(p []models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
 			var tamqueryentrys []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				tamqueryentry := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.TamQueryEntry
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					tamqueryentry["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				tamqueryentry["class_id"] = item.ClassId
 				tamqueryentry["name"] = item.Name
 				tamqueryentry["object_type"] = item.ObjectType
@@ -3506,30 +6137,52 @@ func flattenListTamAction(p *[]models.TamAction, d *schema.ResourceData) []map[s
 				tamqueryentrys = append(tamqueryentrys, tamqueryentry)
 			}
 			return tamqueryentrys
-		})(item.Queries, d)
+		})(item.GetQueries(), d)
 		tamaction["type"] = item.Type
 		tamactions = append(tamactions, tamaction)
 	}
 	return tamactions
 }
-func flattenListTamApiDataSource(p *[]models.TamApiDataSource, d *schema.ResourceData) []map[string]interface{} {
+func flattenListTamApiDataSource(p []models.TamApiDataSource, d *schema.ResourceData) []map[string]interface{} {
 	var tamapidatasources []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		tamapidatasource := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.TamApiDataSource
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			tamapidatasource["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		tamapidatasource["class_id"] = item.ClassId
 		tamapidatasource["mo_type"] = item.MoType
 		tamapidatasource["name"] = item.Name
 		tamapidatasource["object_type"] = item.ObjectType
-		tamapidatasource["queries"] = (func(p *[]models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
+		tamapidatasource["queries"] = (func(p []models.TamQueryEntry, d *schema.ResourceData) []map[string]interface{} {
 			var tamqueryentrys []map[string]interface{}
-			if *p == nil {
+			if len(p) == 0 {
 				return nil
 			}
-			for _, item := range *p {
+			for _, item := range p {
 				tamqueryentry := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.TamQueryEntry
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					tamqueryentry["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				tamqueryentry["class_id"] = item.ClassId
 				tamqueryentry["name"] = item.Name
 				tamqueryentry["object_type"] = item.ObjectType
@@ -3538,19 +6191,59 @@ func flattenListTamApiDataSource(p *[]models.TamApiDataSource, d *schema.Resourc
 				tamqueryentrys = append(tamqueryentrys, tamqueryentry)
 			}
 			return tamqueryentrys
-		})(item.Queries, d)
+		})(item.GetQueries(), d)
 		tamapidatasource["type"] = item.Type
 		tamapidatasources = append(tamapidatasources, tamapidatasource)
 	}
 	return tamapidatasources
 }
-func flattenListUcsdConnectorPack(p *[]models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
-	var ucsdconnectorpacks []map[string]interface{}
-	if *p == nil {
+func flattenListTestcryptUser(p []models.TestcryptUser, d *schema.ResourceData) []map[string]interface{} {
+	var testcryptusers []map[string]interface{}
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
+		testcryptuser := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.TestcryptUser
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			testcryptuser["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		testcryptuser["class_id"] = item.ClassId
+		testcryptuser["is_password_set"] = item.IsPasswordSet
+		testcryptuser["object_type"] = item.ObjectType
+		password_x := d.Get("rouser").([]interface{})
+		password_y := password_x[0].(map[string]interface{})
+		testcryptuser["password"] = password_y["password"]
+		testcryptuser["username"] = item.Username
+		testcryptusers = append(testcryptusers, testcryptuser)
+	}
+	return testcryptusers
+}
+func flattenListUcsdConnectorPack(p []models.UcsdConnectorPack, d *schema.ResourceData) []map[string]interface{} {
+	var ucsdconnectorpacks []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
 		ucsdconnectorpack := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.UcsdConnectorPack
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			ucsdconnectorpack["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		ucsdconnectorpack["class_id"] = item.ClassId
 		ucsdconnectorpack["connector_feature"] = item.ConnectorFeature
 		ucsdconnectorpack["dependency_names"] = item.DependencyNames
@@ -3566,12 +6259,23 @@ func flattenListUcsdConnectorPack(p *[]models.UcsdConnectorPack, d *schema.Resou
 }
 func flattenListUuidpoolBlockRelationship(p []models.UuidpoolBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpoolblockrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		uuidpoolblockrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			uuidpoolblockrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		uuidpoolblockrelationship["class_id"] = item.ClassId
 		uuidpoolblockrelationship["moid"] = item.Moid
 		uuidpoolblockrelationship["object_type"] = item.ObjectType
@@ -3580,13 +6284,24 @@ func flattenListUuidpoolBlockRelationship(p []models.UuidpoolBlockRelationship, 
 	}
 	return uuidpoolblockrelationships
 }
-func flattenListUuidpoolUuidBlock(p *[]models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenListUuidpoolUuidBlock(p []models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpooluuidblocks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		uuidpooluuidblock := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.UuidpoolUuidBlock
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			uuidpooluuidblock["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		uuidpooluuidblock["class_id"] = item.ClassId
 		uuidpooluuidblock["from"] = item.From
 		uuidpooluuidblock["object_type"] = item.ObjectType
@@ -3596,14 +6311,110 @@ func flattenListUuidpoolUuidBlock(p *[]models.UuidpoolUuidBlock, d *schema.Resou
 	}
 	return uuidpooluuidblocks
 }
+func flattenListVirtualizationNetworkInterface(p []models.VirtualizationNetworkInterface, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationnetworkinterfaces []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		virtualizationnetworkinterface := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.VirtualizationNetworkInterface
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			virtualizationnetworkinterface["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		virtualizationnetworkinterface["bridge"] = item.Bridge
+		virtualizationnetworkinterface["class_id"] = item.ClassId
+		virtualizationnetworkinterface["mac_address"] = item.MacAddress
+		virtualizationnetworkinterface["object_type"] = item.ObjectType
+		virtualizationnetworkinterfaces = append(virtualizationnetworkinterfaces, virtualizationnetworkinterface)
+	}
+	return virtualizationnetworkinterfaces
+}
+func flattenListVirtualizationVirtualMachineDisk(p []models.VirtualizationVirtualMachineDisk, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationvirtualmachinedisks []map[string]interface{}
+	if len(p) == 0 {
+		return nil
+	}
+	for _, item := range p {
+		virtualizationvirtualmachinedisk := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.VirtualizationVirtualMachineDisk
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			virtualizationvirtualmachinedisk["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
+		virtualizationvirtualmachinedisk["bus"] = item.Bus
+		virtualizationvirtualmachinedisk["class_id"] = item.ClassId
+		virtualizationvirtualmachinedisk["name"] = item.Name
+		virtualizationvirtualmachinedisk["object_type"] = item.ObjectType
+		virtualizationvirtualmachinedisk["order"] = item.Order
+		virtualizationvirtualmachinedisk["type"] = item.Type
+		virtualizationvirtualmachinedisk["virtual_disk"] = (func(p models.VirtualizationVirtualDiskConfig, d *schema.ResourceData) []map[string]interface{} {
+			var virtualizationvirtualdiskconfigs []map[string]interface{}
+			var ret models.VirtualizationVirtualDiskConfig
+			if reflect.DeepEqual(ret, p) {
+				return nil
+			}
+			item := p
+			virtualizationvirtualdiskconfig := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.VirtualizationVirtualDiskConfig
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				virtualizationvirtualdiskconfig["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
+			virtualizationvirtualdiskconfig["capacity"] = item.Capacity
+			virtualizationvirtualdiskconfig["class_id"] = item.ClassId
+			virtualizationvirtualdiskconfig["mode"] = item.Mode
+			virtualizationvirtualdiskconfig["name"] = item.Name
+			virtualizationvirtualdiskconfig["object_type"] = item.ObjectType
+			virtualizationvirtualdiskconfig["source_disk_to_clone"] = item.SourceDiskToClone
+			virtualizationvirtualdiskconfig["source_file_path"] = item.SourceFilePath
+
+			virtualizationvirtualdiskconfigs = append(virtualizationvirtualdiskconfigs, virtualizationvirtualdiskconfig)
+			return virtualizationvirtualdiskconfigs
+		})(item.GetVirtualDisk(), d)
+		virtualizationvirtualmachinedisk["virtual_disk_reference"] = item.VirtualDiskReference
+		virtualizationvirtualmachinedisks = append(virtualizationvirtualmachinedisks, virtualizationvirtualmachinedisk)
+	}
+	return virtualizationvirtualmachinedisks
+}
 func flattenListVirtualizationVmwareDatastoreRelationship(p []models.VirtualizationVmwareDatastoreRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwaredatastorerelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		virtualizationvmwaredatastorerelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			virtualizationvmwaredatastorerelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		virtualizationvmwaredatastorerelationship["class_id"] = item.ClassId
 		virtualizationvmwaredatastorerelationship["moid"] = item.Moid
 		virtualizationvmwaredatastorerelationship["object_type"] = item.ObjectType
@@ -3614,12 +6425,23 @@ func flattenListVirtualizationVmwareDatastoreRelationship(p []models.Virtualizat
 }
 func flattenListVirtualizationVmwareHostRelationship(p []models.VirtualizationVmwareHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarehostrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		virtualizationvmwarehostrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			virtualizationvmwarehostrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		virtualizationvmwarehostrelationship["class_id"] = item.ClassId
 		virtualizationvmwarehostrelationship["moid"] = item.Moid
 		virtualizationvmwarehostrelationship["object_type"] = item.ObjectType
@@ -3628,13 +6450,24 @@ func flattenListVirtualizationVmwareHostRelationship(p []models.VirtualizationVm
 	}
 	return virtualizationvmwarehostrelationships
 }
-func flattenListVmediaMapping(p *[]models.VmediaMapping, d *schema.ResourceData) []map[string]interface{} {
+func flattenListVmediaMapping(p []models.VmediaMapping, d *schema.ResourceData) []map[string]interface{} {
 	var vmediamappings []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		vmediamapping := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.VmediaMapping
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			vmediamapping["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		vmediamapping["authentication_protocol"] = item.AuthenticationProtocol
 		vmediamapping["class_id"] = item.ClassId
 		vmediamapping["device_type"] = item.DeviceType
@@ -3656,12 +6489,23 @@ func flattenListVmediaMapping(p *[]models.VmediaMapping, d *schema.ResourceData)
 }
 func flattenListVnicEthIfRelationship(p []models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethifrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		vnicethifrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			vnicethifrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		vnicethifrelationship["class_id"] = item.ClassId
 		vnicethifrelationship["moid"] = item.Moid
 		vnicethifrelationship["object_type"] = item.ObjectType
@@ -3672,12 +6516,23 @@ func flattenListVnicEthIfRelationship(p []models.VnicEthIfRelationship, d *schem
 }
 func flattenListVnicEthNetworkPolicyRelationship(p []models.VnicEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethnetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		vnicethnetworkpolicyrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			vnicethnetworkpolicyrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		vnicethnetworkpolicyrelationship["class_id"] = item.ClassId
 		vnicethnetworkpolicyrelationship["moid"] = item.Moid
 		vnicethnetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -3688,12 +6543,23 @@ func flattenListVnicEthNetworkPolicyRelationship(p []models.VnicEthNetworkPolicy
 }
 func flattenListVnicFcIfRelationship(p []models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcifrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		vnicfcifrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			vnicfcifrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		vnicfcifrelationship["class_id"] = item.ClassId
 		vnicfcifrelationship["moid"] = item.Moid
 		vnicfcifrelationship["object_type"] = item.ObjectType
@@ -3702,35 +6568,69 @@ func flattenListVnicFcIfRelationship(p []models.VnicFcIfRelationship, d *schema.
 	}
 	return vnicfcifrelationships
 }
-func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowApi(p []models.WorkflowApi, d *schema.ResourceData) []map[string]interface{} {
 	var workflowapis []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowapi := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowApi
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowapi["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowapi["body"] = item.Body
 		workflowapi["class_id"] = item.ClassId
 		workflowapi["content_type"] = item.ContentType
 		workflowapi["name"] = item.Name
 		workflowapi["object_type"] = item.ObjectType
 		workflowapi["outcomes"] = item.Outcomes
-		workflowapi["response_spec"] = (func(p *models.ContentGrammar, d *schema.ResourceData) []map[string]interface{} {
+		workflowapi["response_spec"] = (func(p models.ContentGrammar, d *schema.ResourceData) []map[string]interface{} {
 			var contentgrammars []map[string]interface{}
-			if p == nil {
+			var ret models.ContentGrammar
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			contentgrammar := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.ContentGrammar
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				contentgrammar["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			contentgrammar["class_id"] = item.ClassId
-			contentgrammar["error_parameters"] = (func(p *[]models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
+			contentgrammar["error_parameters"] = (func(p []models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
 				var contentbaseparameters []map[string]interface{}
-				if *p == nil {
+				if len(p) == 0 {
 					return nil
 				}
-				for _, item := range *p {
+				for _, item := range p {
 					contentbaseparameter := make(map[string]interface{})
+
 					contentbaseparameter["accept_single_value"] = item.AcceptSingleValue
+					j, err := json.Marshal(item.AdditionalProperties)
+					var q models.ContentBaseParameter
+					if err == nil {
+						_ = json.Unmarshal(j, &q)
+						j, _ = json.Marshal(item.AdditionalProperties)
+						contentbaseparameter["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+
 					contentbaseparameter["class_id"] = item.ClassId
 					contentbaseparameter["complex_type"] = item.ComplexType
 					contentbaseparameter["item_type"] = item.ItemType
@@ -3741,16 +6641,27 @@ func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []m
 					contentbaseparameters = append(contentbaseparameters, contentbaseparameter)
 				}
 				return contentbaseparameters
-			})(item.ErrorParameters, d)
+			})(item.GetErrorParameters(), d)
 			contentgrammar["object_type"] = item.ObjectType
-			contentgrammar["parameters"] = (func(p *[]models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
+			contentgrammar["parameters"] = (func(p []models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
 				var contentbaseparameters []map[string]interface{}
-				if *p == nil {
+				if len(p) == 0 {
 					return nil
 				}
-				for _, item := range *p {
+				for _, item := range p {
 					contentbaseparameter := make(map[string]interface{})
+
 					contentbaseparameter["accept_single_value"] = item.AcceptSingleValue
+					j, err := json.Marshal(item.AdditionalProperties)
+					var q models.ContentBaseParameter
+					if err == nil {
+						_ = json.Unmarshal(j, &q)
+						j, _ = json.Marshal(item.AdditionalProperties)
+						contentbaseparameter["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+
 					contentbaseparameter["class_id"] = item.ClassId
 					contentbaseparameter["complex_type"] = item.ComplexType
 					contentbaseparameter["item_type"] = item.ItemType
@@ -3761,25 +6672,47 @@ func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []m
 					contentbaseparameters = append(contentbaseparameters, contentbaseparameter)
 				}
 				return contentbaseparameters
-			})(item.Parameters, d)
-			contentgrammar["types"] = (func(p *[]models.ContentComplexType, d *schema.ResourceData) []map[string]interface{} {
+			})(item.GetParameters(), d)
+			contentgrammar["types"] = (func(p []models.ContentComplexType, d *schema.ResourceData) []map[string]interface{} {
 				var contentcomplextypes []map[string]interface{}
-				if *p == nil {
+				if len(p) == 0 {
 					return nil
 				}
-				for _, item := range *p {
+				for _, item := range p {
 					contentcomplextype := make(map[string]interface{})
+
+					j, err := json.Marshal(item.AdditionalProperties)
+					var q models.ContentComplexType
+					if err == nil {
+						_ = json.Unmarshal(j, &q)
+						j, _ = json.Marshal(item.AdditionalProperties)
+						contentcomplextype["additional_properties"] = string(j)
+					} else {
+						log.Printf("Error occured while flattening and json parsing: %s", err)
+					}
+
 					contentcomplextype["class_id"] = item.ClassId
 					contentcomplextype["name"] = item.Name
 					contentcomplextype["object_type"] = item.ObjectType
-					contentcomplextype["parameters"] = (func(p *[]models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
+					contentcomplextype["parameters"] = (func(p []models.ContentBaseParameter, d *schema.ResourceData) []map[string]interface{} {
 						var contentbaseparameters []map[string]interface{}
-						if *p == nil {
+						if len(p) == 0 {
 							return nil
 						}
-						for _, item := range *p {
+						for _, item := range p {
 							contentbaseparameter := make(map[string]interface{})
+
 							contentbaseparameter["accept_single_value"] = item.AcceptSingleValue
+							j, err := json.Marshal(item.AdditionalProperties)
+							var q models.ContentBaseParameter
+							if err == nil {
+								_ = json.Unmarshal(j, &q)
+								j, _ = json.Marshal(item.AdditionalProperties)
+								contentbaseparameter["additional_properties"] = string(j)
+							} else {
+								log.Printf("Error occured while flattening and json parsing: %s", err)
+							}
+
 							contentbaseparameter["class_id"] = item.ClassId
 							contentbaseparameter["complex_type"] = item.ComplexType
 							contentbaseparameter["item_type"] = item.ItemType
@@ -3790,15 +6723,15 @@ func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []m
 							contentbaseparameters = append(contentbaseparameters, contentbaseparameter)
 						}
 						return contentbaseparameters
-					})(item.Parameters, d)
+					})(item.GetParameters(), d)
 					contentcomplextypes = append(contentcomplextypes, contentcomplextype)
 				}
 				return contentcomplextypes
-			})(item.Types, d)
+			})(item.GetTypes(), d)
 
 			contentgrammars = append(contentgrammars, contentgrammar)
 			return contentgrammars
-		})(item.ResponseSpec, d)
+		})(item.GetResponseSpec(), d)
 		workflowapi["skip_on_condition"] = item.SkipOnCondition
 		workflowapi["start_delay"] = item.StartDelay
 		workflowapi["timeout"] = item.Timeout
@@ -3806,21 +6739,44 @@ func flattenListWorkflowApi(p *[]models.WorkflowApi, d *schema.ResourceData) []m
 	}
 	return workflowapis
 }
-func flattenListWorkflowBaseDataType(p *[]models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowBaseDataType(p []models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
 	var workflowbasedatatypes []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowbasedatatype := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowBaseDataType
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowbasedatatype["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowbasedatatype["class_id"] = item.ClassId
-		workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+		workflowbasedatatype["default"] = (func(p models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 			var workflowdefaultvalues []map[string]interface{}
-			if p == nil {
+			var ret models.WorkflowDefaultValue
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			workflowdefaultvalue := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.WorkflowDefaultValue
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				workflowdefaultvalue["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			workflowdefaultvalue["class_id"] = item.ClassId
 			workflowdefaultvalue["object_type"] = item.ObjectType
 			workflowdefaultvalue["override"] = item.Override
@@ -3828,7 +6784,7 @@ func flattenListWorkflowBaseDataType(p *[]models.WorkflowBaseDataType, d *schema
 
 			workflowdefaultvalues = append(workflowdefaultvalues, workflowdefaultvalue)
 			return workflowdefaultvalues
-		})(item.Default, d)
+		})(item.GetDefault(), d)
 		workflowbasedatatype["description"] = item.Description
 		workflowbasedatatype["label"] = item.Label
 		workflowbasedatatype["name"] = item.Name
@@ -3838,14 +6794,25 @@ func flattenListWorkflowBaseDataType(p *[]models.WorkflowBaseDataType, d *schema
 	}
 	return workflowbasedatatypes
 }
-func flattenListWorkflowDynamicWorkflowActionTaskList(p *[]models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowDynamicWorkflowActionTaskList(p []models.WorkflowDynamicWorkflowActionTaskList, d *schema.ResourceData) []map[string]interface{} {
 	var workflowdynamicworkflowactiontasklists []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowdynamicworkflowactiontasklist := make(map[string]interface{})
+
 		workflowdynamicworkflowactiontasklist["action"] = item.Action
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowDynamicWorkflowActionTaskList
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowdynamicworkflowactiontasklist["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowdynamicworkflowactiontasklist["class_id"] = item.ClassId
 		workflowdynamicworkflowactiontasklist["object_type"] = item.ObjectType
 		workflowdynamicworkflowactiontasklist["tasks"] = item.Tasks
@@ -3853,13 +6820,24 @@ func flattenListWorkflowDynamicWorkflowActionTaskList(p *[]models.WorkflowDynami
 	}
 	return workflowdynamicworkflowactiontasklists
 }
-func flattenListWorkflowMessage(p *[]models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowMessage(p []models.WorkflowMessage, d *schema.ResourceData) []map[string]interface{} {
 	var workflowmessages []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowmessage := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowMessage
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowmessage["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowmessage["class_id"] = item.ClassId
 		workflowmessage["message"] = item.Message
 		workflowmessage["object_type"] = item.ObjectType
@@ -3870,12 +6848,23 @@ func flattenListWorkflowMessage(p *[]models.WorkflowMessage, d *schema.ResourceD
 }
 func flattenListWorkflowTaskDefinitionRelationship(p []models.WorkflowTaskDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskdefinitionrelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		workflowtaskdefinitionrelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowtaskdefinitionrelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowtaskdefinitionrelationship["class_id"] = item.ClassId
 		workflowtaskdefinitionrelationship["moid"] = item.Moid
 		workflowtaskdefinitionrelationship["object_type"] = item.ObjectType
@@ -3886,12 +6875,23 @@ func flattenListWorkflowTaskDefinitionRelationship(p []models.WorkflowTaskDefini
 }
 func flattenListWorkflowTaskInfoRelationship(p []models.WorkflowTaskInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskinforelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		workflowtaskinforelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowtaskinforelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowtaskinforelationship["class_id"] = item.ClassId
 		workflowtaskinforelationship["moid"] = item.Moid
 		workflowtaskinforelationship["object_type"] = item.ObjectType
@@ -3900,13 +6900,24 @@ func flattenListWorkflowTaskInfoRelationship(p []models.WorkflowTaskInfoRelation
 	}
 	return workflowtaskinforelationships
 }
-func flattenListWorkflowTaskRetryInfo(p *[]models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowTaskRetryInfo(p []models.WorkflowTaskRetryInfo, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskretryinfos []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowtaskretryinfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowTaskRetryInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowtaskretryinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowtaskretryinfo["class_id"] = item.ClassId
 		workflowtaskretryinfo["object_type"] = item.ObjectType
 		workflowtaskretryinfo["status"] = item.Status
@@ -3917,12 +6928,23 @@ func flattenListWorkflowTaskRetryInfo(p *[]models.WorkflowTaskRetryInfo, d *sche
 }
 func flattenListWorkflowWorkflowInfoRelationship(p []models.WorkflowWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowinforelationships []map[string]interface{}
-	if p == nil {
+	if len(p) == 0 {
 		return nil
 	}
 	for _, item := range p {
 		item := item.MoMoRef
 		workflowworkflowinforelationship := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.MoMoRef
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowworkflowinforelationship["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowworkflowinforelationship["class_id"] = item.ClassId
 		workflowworkflowinforelationship["moid"] = item.Moid
 		workflowworkflowinforelationship["object_type"] = item.ObjectType
@@ -3931,13 +6953,24 @@ func flattenListWorkflowWorkflowInfoRelationship(p []models.WorkflowWorkflowInfo
 	}
 	return workflowworkflowinforelationships
 }
-func flattenListWorkflowWorkflowTask(p *[]models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
+func flattenListWorkflowWorkflowTask(p []models.WorkflowWorkflowTask, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowtasks []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		workflowworkflowtask := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowWorkflowTask
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowworkflowtask["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowworkflowtask["class_id"] = item.ClassId
 		workflowworkflowtask["description"] = item.Description
 		workflowworkflowtask["label"] = item.Label
@@ -3947,21 +6980,44 @@ func flattenListWorkflowWorkflowTask(p *[]models.WorkflowWorkflowTask, d *schema
 	}
 	return workflowworkflowtasks
 }
-func flattenListX509Certificate(p *[]models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+func flattenListX509Certificate(p []models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
 	var x509certificates []map[string]interface{}
-	if *p == nil {
+	if len(p) == 0 {
 		return nil
 	}
-	for _, item := range *p {
+	for _, item := range p {
 		x509certificate := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.X509Certificate
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			x509certificate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		x509certificate["class_id"] = item.ClassId
-		x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+		x509certificate["issuer"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
-			if p == nil {
+			var ret models.PkixDistinguishedName
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			pkixdistinguishedname := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.PkixDistinguishedName
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				pkixdistinguishedname["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			pkixdistinguishedname["class_id"] = item.ClassId
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
@@ -3973,18 +7029,30 @@ func flattenListX509Certificate(p *[]models.X509Certificate, d *schema.ResourceD
 
 			pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 			return pkixdistinguishednames
-		})(item.Issuer, d)
+		})(item.GetIssuer(), d)
 		x509certificate["object_type"] = item.ObjectType
 		x509certificate["pem_certificate"] = item.PemCertificate
 		x509certificate["sha256_fingerprint"] = item.Sha256Fingerprint
 		x509certificate["signature_algorithm"] = item.SignatureAlgorithm
-		x509certificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+		x509certificate["subject"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
-			if p == nil {
+			var ret models.PkixDistinguishedName
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			pkixdistinguishedname := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.PkixDistinguishedName
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				pkixdistinguishedname["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			pkixdistinguishedname["class_id"] = item.ClassId
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
@@ -3996,19 +7064,31 @@ func flattenListX509Certificate(p *[]models.X509Certificate, d *schema.ResourceD
 
 			pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 			return pkixdistinguishednames
-		})(item.Subject, d)
+		})(item.GetSubject(), d)
 		x509certificates = append(x509certificates, x509certificate)
 	}
 	return x509certificates
 }
-func flattenMapAdapterUnitRelationship(p *models.AdapterUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAdapterUnitRelationship(p models.AdapterUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var adapterunitrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AdapterUnitRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	adapterunitrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		adapterunitrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	adapterunitrelationship["class_id"] = item.ClassId
 	adapterunitrelationship["moid"] = item.Moid
 	adapterunitrelationship["object_type"] = item.ObjectType
@@ -4017,14 +7097,26 @@ func flattenMapAdapterUnitRelationship(p *models.AdapterUnitRelationship, d *sch
 	adapterunitrelationships = append(adapterunitrelationships, adapterunitrelationship)
 	return adapterunitrelationships
 }
-func flattenMapApplianceDataExportPolicyRelationship(p *models.ApplianceDataExportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapApplianceDataExportPolicyRelationship(p models.ApplianceDataExportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var appliancedataexportpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ApplianceDataExportPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	appliancedataexportpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		appliancedataexportpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	appliancedataexportpolicyrelationship["class_id"] = item.ClassId
 	appliancedataexportpolicyrelationship["moid"] = item.Moid
 	appliancedataexportpolicyrelationship["object_type"] = item.ObjectType
@@ -4033,14 +7125,26 @@ func flattenMapApplianceDataExportPolicyRelationship(p *models.ApplianceDataExpo
 	appliancedataexportpolicyrelationships = append(appliancedataexportpolicyrelationships, appliancedataexportpolicyrelationship)
 	return appliancedataexportpolicyrelationships
 }
-func flattenMapApplianceImageBundleRelationship(p *models.ApplianceImageBundleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapApplianceImageBundleRelationship(p models.ApplianceImageBundleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var applianceimagebundlerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ApplianceImageBundleRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	applianceimagebundlerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		applianceimagebundlerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	applianceimagebundlerelationship["class_id"] = item.ClassId
 	applianceimagebundlerelationship["moid"] = item.Moid
 	applianceimagebundlerelationship["object_type"] = item.ObjectType
@@ -4049,14 +7153,26 @@ func flattenMapApplianceImageBundleRelationship(p *models.ApplianceImageBundleRe
 	applianceimagebundlerelationships = append(applianceimagebundlerelationships, applianceimagebundlerelationship)
 	return applianceimagebundlerelationships
 }
-func flattenMapAssetClusterMemberRelationship(p *models.AssetClusterMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetClusterMemberRelationship(p models.AssetClusterMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetclustermemberrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AssetClusterMemberRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	assetclustermemberrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetclustermemberrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetclustermemberrelationship["class_id"] = item.ClassId
 	assetclustermemberrelationship["moid"] = item.Moid
 	assetclustermemberrelationship["object_type"] = item.ObjectType
@@ -4065,20 +7181,44 @@ func flattenMapAssetClusterMemberRelationship(p *models.AssetClusterMemberRelati
 	assetclustermemberrelationships = append(assetclustermemberrelationships, assetclustermemberrelationship)
 	return assetclustermemberrelationships
 }
-func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetContractInformation(p models.AssetContractInformation, d *schema.ResourceData) []map[string]interface{} {
 	var assetcontractinformations []map[string]interface{}
-	if p == nil {
+	var ret models.AssetContractInformation
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetcontractinformation := make(map[string]interface{})
-	assetcontractinformation["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetContractInformation
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetcontractinformation["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	assetcontractinformation["bill_to"] = (func(p models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 		var assetaddressinformations []map[string]interface{}
-		if p == nil {
+		var ret models.AssetAddressInformation
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		assetaddressinformation := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetAddressInformation
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetaddressinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
@@ -4092,14 +7232,26 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
-	})(item.BillTo, d)
-	assetcontractinformation["bill_to_global_ultimate"] = (func(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
+	})(item.GetBillTo(), d)
+	assetcontractinformation["bill_to_global_ultimate"] = (func(p models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
 		var assetglobalultimates []map[string]interface{}
-		if p == nil {
+		var ret models.AssetGlobalUltimate
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		assetglobalultimate := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetGlobalUltimate
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetglobalultimate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetglobalultimate["class_id"] = item.ClassId
 		assetglobalultimate["id"] = item.Id
 		assetglobalultimate["name"] = item.Name
@@ -4107,7 +7259,7 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 
 		assetglobalultimates = append(assetglobalultimates, assetglobalultimate)
 		return assetglobalultimates
-	})(item.BillToGlobalUltimate, d)
+	})(item.GetBillToGlobalUltimate(), d)
 	assetcontractinformation["class_id"] = item.ClassId
 	assetcontractinformation["contract_number"] = item.ContractNumber
 	assetcontractinformation["line_status"] = item.LineStatus
@@ -4116,20 +7268,44 @@ func flattenMapAssetContractInformation(p *models.AssetContractInformation, d *s
 	assetcontractinformations = append(assetcontractinformations, assetcontractinformation)
 	return assetcontractinformations
 }
-func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetCustomerInformation(p models.AssetCustomerInformation, d *schema.ResourceData) []map[string]interface{} {
 	var assetcustomerinformations []map[string]interface{}
-	if p == nil {
+	var ret models.AssetCustomerInformation
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetcustomerinformation := make(map[string]interface{})
-	assetcustomerinformation["address"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetCustomerInformation
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetcustomerinformation["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	assetcustomerinformation["address"] = (func(p models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 		var assetaddressinformations []map[string]interface{}
-		if p == nil {
+		var ret models.AssetAddressInformation
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		assetaddressinformation := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetAddressInformation
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetaddressinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
@@ -4143,7 +7319,7 @@ func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *s
 
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
-	})(item.Address, d)
+	})(item.GetAddress(), d)
 	assetcustomerinformation["class_id"] = item.ClassId
 	assetcustomerinformation["id"] = item.Id
 	assetcustomerinformation["name"] = item.Name
@@ -4152,14 +7328,26 @@ func flattenMapAssetCustomerInformation(p *models.AssetCustomerInformation, d *s
 	assetcustomerinformations = append(assetcustomerinformations, assetcustomerinformation)
 	return assetcustomerinformations
 }
-func flattenMapAssetDeviceClaimRelationship(p *models.AssetDeviceClaimRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetDeviceClaimRelationship(p models.AssetDeviceClaimRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetdeviceclaimrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AssetDeviceClaimRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	assetdeviceclaimrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetdeviceclaimrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetdeviceclaimrelationship["class_id"] = item.ClassId
 	assetdeviceclaimrelationship["moid"] = item.Moid
 	assetdeviceclaimrelationship["object_type"] = item.ObjectType
@@ -4168,14 +7356,26 @@ func flattenMapAssetDeviceClaimRelationship(p *models.AssetDeviceClaimRelationsh
 	assetdeviceclaimrelationships = append(assetdeviceclaimrelationships, assetdeviceclaimrelationship)
 	return assetdeviceclaimrelationships
 }
-func flattenMapAssetDeviceConfigurationRelationship(p *models.AssetDeviceConfigurationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetDeviceConfigurationRelationship(p models.AssetDeviceConfigurationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetdeviceconfigurationrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AssetDeviceConfigurationRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	assetdeviceconfigurationrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetdeviceconfigurationrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetdeviceconfigurationrelationship["class_id"] = item.ClassId
 	assetdeviceconfigurationrelationship["moid"] = item.Moid
 	assetdeviceconfigurationrelationship["object_type"] = item.ObjectType
@@ -4184,14 +7384,26 @@ func flattenMapAssetDeviceConfigurationRelationship(p *models.AssetDeviceConfigu
 	assetdeviceconfigurationrelationships = append(assetdeviceconfigurationrelationships, assetdeviceconfigurationrelationship)
 	return assetdeviceconfigurationrelationships
 }
-func flattenMapAssetDeviceConnectionRelationship(p *models.AssetDeviceConnectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetDeviceConnectionRelationship(p models.AssetDeviceConnectionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetdeviceconnectionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AssetDeviceConnectionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	assetdeviceconnectionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetdeviceconnectionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetdeviceconnectionrelationship["class_id"] = item.ClassId
 	assetdeviceconnectionrelationship["moid"] = item.Moid
 	assetdeviceconnectionrelationship["object_type"] = item.ObjectType
@@ -4200,14 +7412,26 @@ func flattenMapAssetDeviceConnectionRelationship(p *models.AssetDeviceConnection
 	assetdeviceconnectionrelationships = append(assetdeviceconnectionrelationships, assetdeviceconnectionrelationship)
 	return assetdeviceconnectionrelationships
 }
-func flattenMapAssetDeviceRegistrationRelationship(p *models.AssetDeviceRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetDeviceRegistrationRelationship(p models.AssetDeviceRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var assetdeviceregistrationrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.AssetDeviceRegistrationRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	assetdeviceregistrationrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetdeviceregistrationrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetdeviceregistrationrelationship["class_id"] = item.ClassId
 	assetdeviceregistrationrelationship["moid"] = item.Moid
 	assetdeviceregistrationrelationship["object_type"] = item.ObjectType
@@ -4216,13 +7440,25 @@ func flattenMapAssetDeviceRegistrationRelationship(p *models.AssetDeviceRegistra
 	assetdeviceregistrationrelationships = append(assetdeviceregistrationrelationships, assetdeviceregistrationrelationship)
 	return assetdeviceregistrationrelationships
 }
-func flattenMapAssetGlobalUltimate(p *models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetGlobalUltimate(p models.AssetGlobalUltimate, d *schema.ResourceData) []map[string]interface{} {
 	var assetglobalultimates []map[string]interface{}
-	if p == nil {
+	var ret models.AssetGlobalUltimate
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetglobalultimate := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetGlobalUltimate
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetglobalultimate["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetglobalultimate["class_id"] = item.ClassId
 	assetglobalultimate["id"] = item.Id
 	assetglobalultimate["name"] = item.Name
@@ -4231,13 +7467,25 @@ func flattenMapAssetGlobalUltimate(p *models.AssetGlobalUltimate, d *schema.Reso
 	assetglobalultimates = append(assetglobalultimates, assetglobalultimate)
 	return assetglobalultimates
 }
-func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetManagedDeviceStatus(p models.AssetManagedDeviceStatus, d *schema.ResourceData) []map[string]interface{} {
 	var assetmanageddevicestatuss []map[string]interface{}
-	if p == nil {
+	var ret models.AssetManagedDeviceStatus
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetmanageddevicestatus := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetManagedDeviceStatus
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetmanageddevicestatus["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetmanageddevicestatus["class_id"] = item.ClassId
 	assetmanageddevicestatus["cloud_port"] = item.CloudPort
 	assetmanageddevicestatus["connection_failure_reason"] = item.ConnectionFailureReason
@@ -4252,13 +7500,25 @@ func flattenMapAssetManagedDeviceStatus(p *models.AssetManagedDeviceStatus, d *s
 	assetmanageddevicestatuss = append(assetmanageddevicestatuss, assetmanageddevicestatus)
 	return assetmanageddevicestatuss
 }
-func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetParentConnectionSignature(p models.AssetParentConnectionSignature, d *schema.ResourceData) []map[string]interface{} {
 	var assetparentconnectionsignatures []map[string]interface{}
-	if p == nil {
+	var ret models.AssetParentConnectionSignature
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetparentconnectionsignature := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetParentConnectionSignature
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetparentconnectionsignature["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetparentconnectionsignature["class_id"] = item.ClassId
 	assetparentconnectionsignature["device_id"] = item.DeviceId
 	assetparentconnectionsignature["node_id"] = item.NodeId
@@ -4267,20 +7527,44 @@ func flattenMapAssetParentConnectionSignature(p *models.AssetParentConnectionSig
 	assetparentconnectionsignatures = append(assetparentconnectionsignatures, assetparentconnectionsignature)
 	return assetparentconnectionsignatures
 }
-func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetProductInformation(p models.AssetProductInformation, d *schema.ResourceData) []map[string]interface{} {
 	var assetproductinformations []map[string]interface{}
-	if p == nil {
+	var ret models.AssetProductInformation
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetproductinformation := make(map[string]interface{})
-	assetproductinformation["bill_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetProductInformation
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetproductinformation["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	assetproductinformation["bill_to"] = (func(p models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 		var assetaddressinformations []map[string]interface{}
-		if p == nil {
+		var ret models.AssetAddressInformation
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		assetaddressinformation := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetAddressInformation
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetaddressinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
@@ -4294,20 +7578,32 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
-	})(item.BillTo, d)
+	})(item.GetBillTo(), d)
 	assetproductinformation["class_id"] = item.ClassId
 	assetproductinformation["description"] = item.Description
 	assetproductinformation["family"] = item.Family
 	assetproductinformation["group"] = item.Group
 	assetproductinformation["number"] = item.Number
 	assetproductinformation["object_type"] = item.ObjectType
-	assetproductinformation["ship_to"] = (func(p *models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
+	assetproductinformation["ship_to"] = (func(p models.AssetAddressInformation, d *schema.ResourceData) []map[string]interface{} {
 		var assetaddressinformations []map[string]interface{}
-		if p == nil {
+		var ret models.AssetAddressInformation
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		assetaddressinformation := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.AssetAddressInformation
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			assetaddressinformation["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		assetaddressinformation["address1"] = item.Address1
 		assetaddressinformation["address2"] = item.Address2
 		assetaddressinformation["city"] = item.City
@@ -4321,40 +7617,76 @@ func flattenMapAssetProductInformation(p *models.AssetProductInformation, d *sch
 
 		assetaddressinformations = append(assetaddressinformations, assetaddressinformation)
 		return assetaddressinformations
-	})(item.ShipTo, d)
+	})(item.GetShipTo(), d)
 	assetproductinformation["sub_type"] = item.SubType
 
 	assetproductinformations = append(assetproductinformations, assetproductinformation)
 	return assetproductinformations
 }
-func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapAssetSudiInfo(p models.AssetSudiInfo, d *schema.ResourceData) []map[string]interface{} {
 	var assetsudiinfos []map[string]interface{}
-	if p == nil {
+	var ret models.AssetSudiInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	assetsudiinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.AssetSudiInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		assetsudiinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	assetsudiinfo["class_id"] = item.ClassId
 	assetsudiinfo["object_type"] = item.ObjectType
 	assetsudiinfo["pid"] = item.Pid
 	assetsudiinfo["serial_number"] = item.SerialNumber
 	assetsudiinfo["signature"] = item.Signature
 	assetsudiinfo["status"] = item.Status
-	assetsudiinfo["sudi_certificate"] = (func(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+	assetsudiinfo["sudi_certificate"] = (func(p models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
 		var x509certificates []map[string]interface{}
-		if p == nil {
+		var ret models.X509Certificate
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		x509certificate := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.X509Certificate
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			x509certificate["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		x509certificate["class_id"] = item.ClassId
-		x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+		x509certificate["issuer"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
-			if p == nil {
+			var ret models.PkixDistinguishedName
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			pkixdistinguishedname := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.PkixDistinguishedName
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				pkixdistinguishedname["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			pkixdistinguishedname["class_id"] = item.ClassId
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
@@ -4366,18 +7698,30 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 
 			pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 			return pkixdistinguishednames
-		})(item.Issuer, d)
+		})(item.GetIssuer(), d)
 		x509certificate["object_type"] = item.ObjectType
 		x509certificate["pem_certificate"] = item.PemCertificate
 		x509certificate["sha256_fingerprint"] = item.Sha256Fingerprint
 		x509certificate["signature_algorithm"] = item.SignatureAlgorithm
-		x509certificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+		x509certificate["subject"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 			var pkixdistinguishednames []map[string]interface{}
-			if p == nil {
+			var ret models.PkixDistinguishedName
+			if reflect.DeepEqual(ret, p) {
 				return nil
 			}
-			item := *p
+			item := p
 			pkixdistinguishedname := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.PkixDistinguishedName
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				pkixdistinguishedname["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			pkixdistinguishedname["class_id"] = item.ClassId
 			pkixdistinguishedname["common_name"] = item.CommonName
 			pkixdistinguishedname["country"] = item.Country
@@ -4389,23 +7733,35 @@ func flattenMapAssetSudiInfo(p *models.AssetSudiInfo, d *schema.ResourceData) []
 
 			pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 			return pkixdistinguishednames
-		})(item.Subject, d)
+		})(item.GetSubject(), d)
 
 		x509certificates = append(x509certificates, x509certificate)
 		return x509certificates
-	})(item.SudiCertificate, d)
+	})(item.GetSudiCertificate(), d)
 
 	assetsudiinfos = append(assetsudiinfos, assetsudiinfo)
 	return assetsudiinfos
 }
-func flattenMapBiosBootModeRelationship(p *models.BiosBootModeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapBiosBootModeRelationship(p models.BiosBootModeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biosbootmoderelationships []map[string]interface{}
-	if p == nil {
+	var ret models.BiosBootModeRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	biosbootmoderelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		biosbootmoderelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	biosbootmoderelationship["class_id"] = item.ClassId
 	biosbootmoderelationship["moid"] = item.Moid
 	biosbootmoderelationship["object_type"] = item.ObjectType
@@ -4414,14 +7770,26 @@ func flattenMapBiosBootModeRelationship(p *models.BiosBootModeRelationship, d *s
 	biosbootmoderelationships = append(biosbootmoderelationships, biosbootmoderelationship)
 	return biosbootmoderelationships
 }
-func flattenMapBiosSystemBootOrderRelationship(p *models.BiosSystemBootOrderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapBiosSystemBootOrderRelationship(p models.BiosSystemBootOrderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biossystembootorderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.BiosSystemBootOrderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	biossystembootorderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		biossystembootorderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	biossystembootorderrelationship["class_id"] = item.ClassId
 	biossystembootorderrelationship["moid"] = item.Moid
 	biossystembootorderrelationship["object_type"] = item.ObjectType
@@ -4430,14 +7798,26 @@ func flattenMapBiosSystemBootOrderRelationship(p *models.BiosSystemBootOrderRela
 	biossystembootorderrelationships = append(biossystembootorderrelationships, biossystembootorderrelationship)
 	return biossystembootorderrelationships
 }
-func flattenMapBiosUnitRelationship(p *models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapBiosUnitRelationship(p models.BiosUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var biosunitrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.BiosUnitRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	biosunitrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		biosunitrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	biosunitrelationship["class_id"] = item.ClassId
 	biosunitrelationship["moid"] = item.Moid
 	biosunitrelationship["object_type"] = item.ObjectType
@@ -4446,14 +7826,26 @@ func flattenMapBiosUnitRelationship(p *models.BiosUnitRelationship, d *schema.Re
 	biosunitrelationships = append(biosunitrelationships, biosunitrelationship)
 	return biosunitrelationships
 }
-func flattenMapBootDeviceBootModeRelationship(p *models.BootDeviceBootModeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapBootDeviceBootModeRelationship(p models.BootDeviceBootModeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var bootdevicebootmoderelationships []map[string]interface{}
-	if p == nil {
+	var ret models.BootDeviceBootModeRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	bootdevicebootmoderelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		bootdevicebootmoderelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	bootdevicebootmoderelationship["class_id"] = item.ClassId
 	bootdevicebootmoderelationship["moid"] = item.Moid
 	bootdevicebootmoderelationship["object_type"] = item.ObjectType
@@ -4462,14 +7854,54 @@ func flattenMapBootDeviceBootModeRelationship(p *models.BootDeviceBootModeRelati
 	bootdevicebootmoderelationships = append(bootdevicebootmoderelationships, bootdevicebootmoderelationship)
 	return bootdevicebootmoderelationships
 }
-func flattenMapCapabilitySectionRelationship(p *models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var capabilitysectionrelationships []map[string]interface{}
-	if p == nil {
+func flattenMapCapabilityCatalogRelationship(p models.CapabilityCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitycatalogrelationships []map[string]interface{}
+	var ret models.CapabilityCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
+	item := x.MoMoRef
+	capabilitycatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		capabilitycatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	capabilitycatalogrelationship["class_id"] = item.ClassId
+	capabilitycatalogrelationship["moid"] = item.Moid
+	capabilitycatalogrelationship["object_type"] = item.ObjectType
+	capabilitycatalogrelationship["selector"] = item.Selector
+
+	capabilitycatalogrelationships = append(capabilitycatalogrelationships, capabilitycatalogrelationship)
+	return capabilitycatalogrelationships
+}
+func flattenMapCapabilitySectionRelationship(p models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var capabilitysectionrelationships []map[string]interface{}
+	var ret models.CapabilitySectionRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
 	item := x.MoMoRef
 	capabilitysectionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		capabilitysectionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	capabilitysectionrelationship["class_id"] = item.ClassId
 	capabilitysectionrelationship["moid"] = item.Moid
 	capabilitysectionrelationship["object_type"] = item.ObjectType
@@ -4478,13 +7910,25 @@ func flattenMapCapabilitySectionRelationship(p *models.CapabilitySectionRelation
 	capabilitysectionrelationships = append(capabilitysectionrelationships, capabilitysectionrelationship)
 	return capabilitysectionrelationships
 }
-func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapCommCredential(p models.CommCredential, d *schema.ResourceData) []map[string]interface{} {
 	var commcredentials []map[string]interface{}
-	if p == nil {
+	var ret models.CommCredential
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	commcredential := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.CommCredential
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		commcredential["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	commcredential["class_id"] = item.ClassId
 	commcredential["is_password_set"] = item.IsPasswordSet
 	commcredential["object_type"] = item.ObjectType
@@ -4496,13 +7940,25 @@ func flattenMapCommCredential(p *models.CommCredential, d *schema.ResourceData) 
 	commcredentials = append(commcredentials, commcredential)
 	return commcredentials
 }
-func flattenMapCommIpV4Interface(p *models.CommIpV4Interface, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapCommIpV4Interface(p models.CommIpV4Interface, d *schema.ResourceData) []map[string]interface{} {
 	var commipv4interfaces []map[string]interface{}
-	if p == nil {
+	var ret models.CommIpV4Interface
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	commipv4interface := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.CommIpV4Interface
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		commipv4interface["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	commipv4interface["class_id"] = item.ClassId
 	commipv4interface["gateway"] = item.Gateway
 	commipv4interface["ip_address"] = item.IpAddress
@@ -4512,14 +7968,26 @@ func flattenMapCommIpV4Interface(p *models.CommIpV4Interface, d *schema.Resource
 	commipv4interfaces = append(commipv4interfaces, commipv4interface)
 	return commipv4interfaces
 }
-func flattenMapComputeBladeRelationship(p *models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeBladeRelationship(p models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computebladerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ComputeBladeRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	computebladerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computebladerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computebladerelationship["class_id"] = item.ClassId
 	computebladerelationship["moid"] = item.Moid
 	computebladerelationship["object_type"] = item.ObjectType
@@ -4528,14 +7996,26 @@ func flattenMapComputeBladeRelationship(p *models.ComputeBladeRelationship, d *s
 	computebladerelationships = append(computebladerelationships, computebladerelationship)
 	return computebladerelationships
 }
-func flattenMapComputeBoardRelationship(p *models.ComputeBoardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeBoardRelationship(p models.ComputeBoardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computeboardrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ComputeBoardRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	computeboardrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computeboardrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computeboardrelationship["class_id"] = item.ClassId
 	computeboardrelationship["moid"] = item.Moid
 	computeboardrelationship["object_type"] = item.ObjectType
@@ -4544,23 +8024,46 @@ func flattenMapComputeBoardRelationship(p *models.ComputeBoardRelationship, d *s
 	computeboardrelationships = append(computeboardrelationships, computeboardrelationship)
 	return computeboardrelationships
 }
-func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemoryOperation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputePersistentMemoryOperation(p models.ComputePersistentMemoryOperation, d *schema.ResourceData) []map[string]interface{} {
 	var computepersistentmemoryoperations []map[string]interface{}
-	if p == nil {
+	var ret models.ComputePersistentMemoryOperation
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	computepersistentmemoryoperation := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ComputePersistentMemoryOperation
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computepersistentmemoryoperation["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computepersistentmemoryoperation["admin_action"] = item.AdminAction
 	computepersistentmemoryoperation["class_id"] = item.ClassId
 	computepersistentmemoryoperation["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
-	computepersistentmemoryoperation["modules"] = (func(p *[]models.ComputePersistentMemoryModule, d *schema.ResourceData) []map[string]interface{} {
+	computepersistentmemoryoperation["modules"] = (func(p []models.ComputePersistentMemoryModule, d *schema.ResourceData) []map[string]interface{} {
 		var computepersistentmemorymodules []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			computepersistentmemorymodule := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.ComputePersistentMemoryModule
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				computepersistentmemorymodule["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			computepersistentmemorymodule["class_id"] = item.ClassId
 			computepersistentmemorymodule["object_type"] = item.ObjectType
 			computepersistentmemorymodule["socket_id"] = item.SocketId
@@ -4568,7 +8071,7 @@ func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemor
 			computepersistentmemorymodules = append(computepersistentmemorymodules, computepersistentmemorymodule)
 		}
 		return computepersistentmemorymodules
-	})(item.Modules, d)
+	})(item.GetModules(), d)
 	computepersistentmemoryoperation["object_type"] = item.ObjectType
 	secure_passphrase_x := d.Get("persistent_memory_operation").([]interface{})
 	secure_passphrase_y := secure_passphrase_x[0].(map[string]interface{})
@@ -4577,14 +8080,26 @@ func flattenMapComputePersistentMemoryOperation(p *models.ComputePersistentMemor
 	computepersistentmemoryoperations = append(computepersistentmemoryoperations, computepersistentmemoryoperation)
 	return computepersistentmemoryoperations
 }
-func flattenMapComputePhysicalRelationship(p *models.ComputePhysicalRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputePhysicalRelationship(p models.ComputePhysicalRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computephysicalrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ComputePhysicalRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	computephysicalrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computephysicalrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computephysicalrelationship["class_id"] = item.ClassId
 	computephysicalrelationship["moid"] = item.Moid
 	computephysicalrelationship["object_type"] = item.ObjectType
@@ -4593,14 +8108,26 @@ func flattenMapComputePhysicalRelationship(p *models.ComputePhysicalRelationship
 	computephysicalrelationships = append(computephysicalrelationships, computephysicalrelationship)
 	return computephysicalrelationships
 }
-func flattenMapComputeRackUnitRelationship(p *models.ComputeRackUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeRackUnitRelationship(p models.ComputeRackUnitRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computerackunitrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ComputeRackUnitRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	computerackunitrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computerackunitrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computerackunitrelationship["class_id"] = item.ClassId
 	computerackunitrelationship["moid"] = item.Moid
 	computerackunitrelationship["object_type"] = item.ObjectType
@@ -4609,13 +8136,25 @@ func flattenMapComputeRackUnitRelationship(p *models.ComputeRackUnitRelationship
 	computerackunitrelationships = append(computerackunitrelationships, computerackunitrelationship)
 	return computerackunitrelationships
 }
-func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapComputeServerConfig(p models.ComputeServerConfig, d *schema.ResourceData) []map[string]interface{} {
 	var computeserverconfigs []map[string]interface{}
-	if p == nil {
+	var ret models.ComputeServerConfig
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	computeserverconfig := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ComputeServerConfig
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		computeserverconfig["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	computeserverconfig["asset_tag"] = item.AssetTag
 	computeserverconfig["class_id"] = item.ClassId
 	computeserverconfig["object_type"] = item.ObjectType
@@ -4624,14 +8163,26 @@ func flattenMapComputeServerConfig(p *models.ComputeServerConfig, d *schema.Reso
 	computeserverconfigs = append(computeserverconfigs, computeserverconfig)
 	return computeserverconfigs
 }
-func flattenMapCondHclStatusRelationship(p *models.CondHclStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapCondHclStatusRelationship(p models.CondHclStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var condhclstatusrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.CondHclStatusRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	condhclstatusrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		condhclstatusrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	condhclstatusrelationship["class_id"] = item.ClassId
 	condhclstatusrelationship["moid"] = item.Moid
 	condhclstatusrelationship["object_type"] = item.ObjectType
@@ -4640,14 +8191,26 @@ func flattenMapCondHclStatusRelationship(p *models.CondHclStatusRelationship, d 
 	condhclstatusrelationships = append(condhclstatusrelationships, condhclstatusrelationship)
 	return condhclstatusrelationships
 }
-func flattenMapConfigExportedItemRelationship(p *models.ConfigExportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConfigExportedItemRelationship(p models.ConfigExportedItemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var configexporteditemrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ConfigExportedItemRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	configexporteditemrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		configexporteditemrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	configexporteditemrelationship["class_id"] = item.ClassId
 	configexporteditemrelationship["moid"] = item.Moid
 	configexporteditemrelationship["object_type"] = item.ObjectType
@@ -4656,14 +8219,26 @@ func flattenMapConfigExportedItemRelationship(p *models.ConfigExportedItemRelati
 	configexporteditemrelationships = append(configexporteditemrelationships, configexporteditemrelationship)
 	return configexporteditemrelationships
 }
-func flattenMapConfigExporterRelationship(p *models.ConfigExporterRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConfigExporterRelationship(p models.ConfigExporterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var configexporterrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ConfigExporterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	configexporterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		configexporterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	configexporterrelationship["class_id"] = item.ClassId
 	configexporterrelationship["moid"] = item.Moid
 	configexporterrelationship["object_type"] = item.ObjectType
@@ -4672,14 +8247,26 @@ func flattenMapConfigExporterRelationship(p *models.ConfigExporterRelationship, 
 	configexporterrelationships = append(configexporterrelationships, configexporterrelationship)
 	return configexporterrelationships
 }
-func flattenMapConfigImporterRelationship(p *models.ConfigImporterRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConfigImporterRelationship(p models.ConfigImporterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var configimporterrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ConfigImporterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	configimporterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		configimporterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	configimporterrelationship["class_id"] = item.ClassId
 	configimporterrelationship["moid"] = item.Moid
 	configimporterrelationship["object_type"] = item.ObjectType
@@ -4688,13 +8275,25 @@ func flattenMapConfigImporterRelationship(p *models.ConfigImporterRelationship, 
 	configimporterrelationships = append(configimporterrelationships, configimporterrelationship)
 	return configimporterrelationships
 }
-func flattenMapConfigMoRef(p *models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConfigMoRef(p models.ConfigMoRef, d *schema.ResourceData) []map[string]interface{} {
 	var configmorefs []map[string]interface{}
-	if p == nil {
+	var ret models.ConfigMoRef
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	configmoref := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ConfigMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		configmoref["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	configmoref["class_id"] = item.ClassId
 	configmoref["moid"] = item.Moid
 	configmoref["object_type"] = item.ObjectType
@@ -4702,13 +8301,25 @@ func flattenMapConfigMoRef(p *models.ConfigMoRef, d *schema.ResourceData) []map[
 	configmorefs = append(configmorefs, configmoref)
 	return configmorefs
 }
-func flattenMapConnectorFileChecksum(p *models.ConnectorFileChecksum, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConnectorFileChecksum(p models.ConnectorFileChecksum, d *schema.ResourceData) []map[string]interface{} {
 	var connectorfilechecksums []map[string]interface{}
-	if p == nil {
+	var ret models.ConnectorFileChecksum
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	connectorfilechecksum := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ConnectorFileChecksum
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		connectorfilechecksum["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	connectorfilechecksum["class_id"] = item.ClassId
 	connectorfilechecksum["hash_algorithm"] = item.HashAlgorithm
 	connectorfilechecksum["object_type"] = item.ObjectType
@@ -4716,27 +8327,51 @@ func flattenMapConnectorFileChecksum(p *models.ConnectorFileChecksum, d *schema.
 	connectorfilechecksums = append(connectorfilechecksums, connectorfilechecksum)
 	return connectorfilechecksums
 }
-func flattenMapConnectorPlatformParamBase(p *models.ConnectorPlatformParamBase, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapConnectorPlatformParamBase(p models.ConnectorPlatformParamBase, d *schema.ResourceData) []map[string]interface{} {
 	var connectorplatformparambases []map[string]interface{}
-	if p == nil {
+	var ret models.ConnectorPlatformParamBase
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	connectorplatformparambase := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ConnectorPlatformParamBase
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		connectorplatformparambase["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	connectorplatformparambase["class_id"] = item.ClassId
 	connectorplatformparambase["object_type"] = item.ObjectType
 
 	connectorplatformparambases = append(connectorplatformparambases, connectorplatformparambase)
 	return connectorplatformparambases
 }
-func flattenMapEquipmentChassisRelationship(p *models.EquipmentChassisRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentChassisRelationship(p models.EquipmentChassisRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentchassisrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentChassisRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentchassisrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentchassisrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentchassisrelationship["class_id"] = item.ClassId
 	equipmentchassisrelationship["moid"] = item.Moid
 	equipmentchassisrelationship["object_type"] = item.ObjectType
@@ -4745,14 +8380,26 @@ func flattenMapEquipmentChassisRelationship(p *models.EquipmentChassisRelationsh
 	equipmentchassisrelationships = append(equipmentchassisrelationships, equipmentchassisrelationship)
 	return equipmentchassisrelationships
 }
-func flattenMapEquipmentFanModuleRelationship(p *models.EquipmentFanModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentFanModuleRelationship(p models.EquipmentFanModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentfanmodulerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentFanModuleRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentfanmodulerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentfanmodulerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentfanmodulerelationship["class_id"] = item.ClassId
 	equipmentfanmodulerelationship["moid"] = item.Moid
 	equipmentfanmodulerelationship["object_type"] = item.ObjectType
@@ -4761,14 +8408,26 @@ func flattenMapEquipmentFanModuleRelationship(p *models.EquipmentFanModuleRelati
 	equipmentfanmodulerelationships = append(equipmentfanmodulerelationships, equipmentfanmodulerelationship)
 	return equipmentfanmodulerelationships
 }
-func flattenMapEquipmentFexRelationship(p *models.EquipmentFexRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentFexRelationship(p models.EquipmentFexRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentfexrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentFexRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentfexrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentfexrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentfexrelationship["class_id"] = item.ClassId
 	equipmentfexrelationship["moid"] = item.Moid
 	equipmentfexrelationship["object_type"] = item.ObjectType
@@ -4777,14 +8436,26 @@ func flattenMapEquipmentFexRelationship(p *models.EquipmentFexRelationship, d *s
 	equipmentfexrelationships = append(equipmentfexrelationships, equipmentfexrelationship)
 	return equipmentfexrelationships
 }
-func flattenMapEquipmentIoCardRelationship(p *models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentIoCardRelationship(p models.EquipmentIoCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentiocardrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentIoCardRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentiocardrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentiocardrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentiocardrelationship["class_id"] = item.ClassId
 	equipmentiocardrelationship["moid"] = item.Moid
 	equipmentiocardrelationship["object_type"] = item.ObjectType
@@ -4793,14 +8464,26 @@ func flattenMapEquipmentIoCardRelationship(p *models.EquipmentIoCardRelationship
 	equipmentiocardrelationships = append(equipmentiocardrelationships, equipmentiocardrelationship)
 	return equipmentiocardrelationships
 }
-func flattenMapEquipmentIoCardBaseRelationship(p *models.EquipmentIoCardBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentIoCardBaseRelationship(p models.EquipmentIoCardBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentiocardbaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentIoCardBaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentiocardbaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentiocardbaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentiocardbaserelationship["class_id"] = item.ClassId
 	equipmentiocardbaserelationship["moid"] = item.Moid
 	equipmentiocardbaserelationship["object_type"] = item.ObjectType
@@ -4809,14 +8492,26 @@ func flattenMapEquipmentIoCardBaseRelationship(p *models.EquipmentIoCardBaseRela
 	equipmentiocardbaserelationships = append(equipmentiocardbaserelationships, equipmentiocardbaserelationship)
 	return equipmentiocardbaserelationships
 }
-func flattenMapEquipmentLocatorLedRelationship(p *models.EquipmentLocatorLedRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentLocatorLedRelationship(p models.EquipmentLocatorLedRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentlocatorledrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentLocatorLedRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentlocatorledrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentlocatorledrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentlocatorledrelationship["class_id"] = item.ClassId
 	equipmentlocatorledrelationship["moid"] = item.Moid
 	equipmentlocatorledrelationship["object_type"] = item.ObjectType
@@ -4825,14 +8520,26 @@ func flattenMapEquipmentLocatorLedRelationship(p *models.EquipmentLocatorLedRela
 	equipmentlocatorledrelationships = append(equipmentlocatorledrelationships, equipmentlocatorledrelationship)
 	return equipmentlocatorledrelationships
 }
-func flattenMapEquipmentPhysicalIdentityRelationship(p *models.EquipmentPhysicalIdentityRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentPhysicalIdentityRelationship(p models.EquipmentPhysicalIdentityRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentphysicalidentityrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentPhysicalIdentityRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentphysicalidentityrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentphysicalidentityrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentphysicalidentityrelationship["class_id"] = item.ClassId
 	equipmentphysicalidentityrelationship["moid"] = item.Moid
 	equipmentphysicalidentityrelationship["object_type"] = item.ObjectType
@@ -4841,14 +8548,26 @@ func flattenMapEquipmentPhysicalIdentityRelationship(p *models.EquipmentPhysical
 	equipmentphysicalidentityrelationships = append(equipmentphysicalidentityrelationships, equipmentphysicalidentityrelationship)
 	return equipmentphysicalidentityrelationships
 }
-func flattenMapEquipmentPsuControlRelationship(p *models.EquipmentPsuControlRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentPsuControlRelationship(p models.EquipmentPsuControlRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentpsucontrolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentPsuControlRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentpsucontrolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentpsucontrolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentpsucontrolrelationship["class_id"] = item.ClassId
 	equipmentpsucontrolrelationship["moid"] = item.Moid
 	equipmentpsucontrolrelationship["object_type"] = item.ObjectType
@@ -4857,14 +8576,26 @@ func flattenMapEquipmentPsuControlRelationship(p *models.EquipmentPsuControlRela
 	equipmentpsucontrolrelationships = append(equipmentpsucontrolrelationships, equipmentpsucontrolrelationship)
 	return equipmentpsucontrolrelationships
 }
-func flattenMapEquipmentRackEnclosureRelationship(p *models.EquipmentRackEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentRackEnclosureRelationship(p models.EquipmentRackEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentrackenclosurerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentRackEnclosureRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentrackenclosurerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentrackenclosurerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentrackenclosurerelationship["class_id"] = item.ClassId
 	equipmentrackenclosurerelationship["moid"] = item.Moid
 	equipmentrackenclosurerelationship["object_type"] = item.ObjectType
@@ -4873,14 +8604,26 @@ func flattenMapEquipmentRackEnclosureRelationship(p *models.EquipmentRackEnclosu
 	equipmentrackenclosurerelationships = append(equipmentrackenclosurerelationships, equipmentrackenclosurerelationship)
 	return equipmentrackenclosurerelationships
 }
-func flattenMapEquipmentRackEnclosureSlotRelationship(p *models.EquipmentRackEnclosureSlotRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentRackEnclosureSlotRelationship(p models.EquipmentRackEnclosureSlotRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentrackenclosureslotrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentRackEnclosureSlotRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentrackenclosureslotrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentrackenclosureslotrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentrackenclosureslotrelationship["class_id"] = item.ClassId
 	equipmentrackenclosureslotrelationship["moid"] = item.Moid
 	equipmentrackenclosureslotrelationship["object_type"] = item.ObjectType
@@ -4889,14 +8632,26 @@ func flattenMapEquipmentRackEnclosureSlotRelationship(p *models.EquipmentRackEnc
 	equipmentrackenclosureslotrelationships = append(equipmentrackenclosureslotrelationships, equipmentrackenclosureslotrelationship)
 	return equipmentrackenclosureslotrelationships
 }
-func flattenMapEquipmentSharedIoModuleRelationship(p *models.EquipmentSharedIoModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentSharedIoModuleRelationship(p models.EquipmentSharedIoModuleRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentsharediomodulerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentSharedIoModuleRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentsharediomodulerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentsharediomodulerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentsharediomodulerelationship["class_id"] = item.ClassId
 	equipmentsharediomodulerelationship["moid"] = item.Moid
 	equipmentsharediomodulerelationship["object_type"] = item.ObjectType
@@ -4905,14 +8660,26 @@ func flattenMapEquipmentSharedIoModuleRelationship(p *models.EquipmentSharedIoMo
 	equipmentsharediomodulerelationships = append(equipmentsharediomodulerelationships, equipmentsharediomodulerelationship)
 	return equipmentsharediomodulerelationships
 }
-func flattenMapEquipmentSwitchCardRelationship(p *models.EquipmentSwitchCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentSwitchCardRelationship(p models.EquipmentSwitchCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentswitchcardrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentSwitchCardRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentswitchcardrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentswitchcardrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentswitchcardrelationship["class_id"] = item.ClassId
 	equipmentswitchcardrelationship["moid"] = item.Moid
 	equipmentswitchcardrelationship["object_type"] = item.ObjectType
@@ -4921,14 +8688,26 @@ func flattenMapEquipmentSwitchCardRelationship(p *models.EquipmentSwitchCardRela
 	equipmentswitchcardrelationships = append(equipmentswitchcardrelationships, equipmentswitchcardrelationship)
 	return equipmentswitchcardrelationships
 }
-func flattenMapEquipmentSystemIoControllerRelationship(p *models.EquipmentSystemIoControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEquipmentSystemIoControllerRelationship(p models.EquipmentSystemIoControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var equipmentsystemiocontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EquipmentSystemIoControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	equipmentsystemiocontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		equipmentsystemiocontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	equipmentsystemiocontrollerrelationship["class_id"] = item.ClassId
 	equipmentsystemiocontrollerrelationship["moid"] = item.Moid
 	equipmentsystemiocontrollerrelationship["object_type"] = item.ObjectType
@@ -4937,14 +8716,26 @@ func flattenMapEquipmentSystemIoControllerRelationship(p *models.EquipmentSystem
 	equipmentsystemiocontrollerrelationships = append(equipmentsystemiocontrollerrelationships, equipmentsystemiocontrollerrelationship)
 	return equipmentsystemiocontrollerrelationships
 }
-func flattenMapEtherPhysicalPortRelationship(p *models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEtherPhysicalPortRelationship(p models.EtherPhysicalPortRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var etherphysicalportrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EtherPhysicalPortRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	etherphysicalportrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		etherphysicalportrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	etherphysicalportrelationship["class_id"] = item.ClassId
 	etherphysicalportrelationship["moid"] = item.Moid
 	etherphysicalportrelationship["object_type"] = item.ObjectType
@@ -4953,14 +8744,26 @@ func flattenMapEtherPhysicalPortRelationship(p *models.EtherPhysicalPortRelation
 	etherphysicalportrelationships = append(etherphysicalportrelationships, etherphysicalportrelationship)
 	return etherphysicalportrelationships
 }
-func flattenMapEtherPhysicalPortBaseRelationship(p *models.EtherPhysicalPortBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapEtherPhysicalPortBaseRelationship(p models.EtherPhysicalPortBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var etherphysicalportbaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.EtherPhysicalPortBaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	etherphysicalportbaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		etherphysicalportbaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	etherphysicalportbaserelationship["class_id"] = item.ClassId
 	etherphysicalportbaserelationship["moid"] = item.Moid
 	etherphysicalportbaserelationship["object_type"] = item.ObjectType
@@ -4969,14 +8772,26 @@ func flattenMapEtherPhysicalPortBaseRelationship(p *models.EtherPhysicalPortBase
 	etherphysicalportbaserelationships = append(etherphysicalportbaserelationships, etherphysicalportbaserelationship)
 	return etherphysicalportbaserelationships
 }
-func flattenMapFabricConfigResultRelationship(p *models.FabricConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricConfigResultRelationship(p models.FabricConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricConfigResultRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricconfigresultrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricconfigresultrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricconfigresultrelationship["class_id"] = item.ClassId
 	fabricconfigresultrelationship["moid"] = item.Moid
 	fabricconfigresultrelationship["object_type"] = item.ObjectType
@@ -4985,14 +8800,26 @@ func flattenMapFabricConfigResultRelationship(p *models.FabricConfigResultRelati
 	fabricconfigresultrelationships = append(fabricconfigresultrelationships, fabricconfigresultrelationship)
 	return fabricconfigresultrelationships
 }
-func flattenMapFabricEthNetworkPolicyRelationship(p *models.FabricEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricEthNetworkPolicyRelationship(p models.FabricEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricethnetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricEthNetworkPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricethnetworkpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricethnetworkpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricethnetworkpolicyrelationship["class_id"] = item.ClassId
 	fabricethnetworkpolicyrelationship["moid"] = item.Moid
 	fabricethnetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -5001,14 +8828,26 @@ func flattenMapFabricEthNetworkPolicyRelationship(p *models.FabricEthNetworkPoli
 	fabricethnetworkpolicyrelationships = append(fabricethnetworkpolicyrelationships, fabricethnetworkpolicyrelationship)
 	return fabricethnetworkpolicyrelationships
 }
-func flattenMapFabricFcNetworkPolicyRelationship(p *models.FabricFcNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricFcNetworkPolicyRelationship(p models.FabricFcNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricfcnetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricFcNetworkPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricfcnetworkpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricfcnetworkpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricfcnetworkpolicyrelationship["class_id"] = item.ClassId
 	fabricfcnetworkpolicyrelationship["moid"] = item.Moid
 	fabricfcnetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -5017,13 +8856,25 @@ func flattenMapFabricFcNetworkPolicyRelationship(p *models.FabricFcNetworkPolicy
 	fabricfcnetworkpolicyrelationships = append(fabricfcnetworkpolicyrelationships, fabricfcnetworkpolicyrelationship)
 	return fabricfcnetworkpolicyrelationships
 }
-func flattenMapFabricLldpSettings(p *models.FabricLldpSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricLldpSettings(p models.FabricLldpSettings, d *schema.ResourceData) []map[string]interface{} {
 	var fabriclldpsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.FabricLldpSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	fabriclldpsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.FabricLldpSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabriclldpsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabriclldpsettings["class_id"] = item.ClassId
 	fabriclldpsettings["object_type"] = item.ObjectType
 	fabriclldpsettings["receive_enabled"] = item.ReceiveEnabled
@@ -5032,14 +8883,26 @@ func flattenMapFabricLldpSettings(p *models.FabricLldpSettings, d *schema.Resour
 	fabriclldpsettingss = append(fabriclldpsettingss, fabriclldpsettings)
 	return fabriclldpsettingss
 }
-func flattenMapFabricPortPolicyRelationship(p *models.FabricPortPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricPortPolicyRelationship(p models.FabricPortPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricportpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricPortPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricportpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricportpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricportpolicyrelationship["class_id"] = item.ClassId
 	fabricportpolicyrelationship["moid"] = item.Moid
 	fabricportpolicyrelationship["object_type"] = item.ObjectType
@@ -5048,14 +8911,26 @@ func flattenMapFabricPortPolicyRelationship(p *models.FabricPortPolicyRelationsh
 	fabricportpolicyrelationships = append(fabricportpolicyrelationships, fabricportpolicyrelationship)
 	return fabricportpolicyrelationships
 }
-func flattenMapFabricSwitchClusterProfileRelationship(p *models.FabricSwitchClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricSwitchClusterProfileRelationship(p models.FabricSwitchClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricswitchclusterprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricSwitchClusterProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricswitchclusterprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricswitchclusterprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricswitchclusterprofilerelationship["class_id"] = item.ClassId
 	fabricswitchclusterprofilerelationship["moid"] = item.Moid
 	fabricswitchclusterprofilerelationship["object_type"] = item.ObjectType
@@ -5064,14 +8939,26 @@ func flattenMapFabricSwitchClusterProfileRelationship(p *models.FabricSwitchClus
 	fabricswitchclusterprofilerelationships = append(fabricswitchclusterprofilerelationships, fabricswitchclusterprofilerelationship)
 	return fabricswitchclusterprofilerelationships
 }
-func flattenMapFabricSwitchProfileRelationship(p *models.FabricSwitchProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFabricSwitchProfileRelationship(p models.FabricSwitchProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fabricswitchprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FabricSwitchProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fabricswitchprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fabricswitchprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fabricswitchprofilerelationship["class_id"] = item.ClassId
 	fabricswitchprofilerelationship["moid"] = item.Moid
 	fabricswitchprofilerelationship["object_type"] = item.ObjectType
@@ -5080,13 +8967,25 @@ func flattenMapFabricSwitchProfileRelationship(p *models.FabricSwitchProfileRela
 	fabricswitchprofilerelationships = append(fabricswitchprofilerelationships, fabricswitchprofilerelationship)
 	return fabricswitchprofilerelationships
 }
-func flattenMapFcpoolBlock(p *models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolBlock(p models.FcpoolBlock, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolblocks []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolBlock
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	fcpoolblock := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.FcpoolBlock
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpoolblock["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpoolblock["class_id"] = item.ClassId
 	fcpoolblock["from"] = item.From
 	fcpoolblock["object_type"] = item.ObjectType
@@ -5096,14 +8995,26 @@ func flattenMapFcpoolBlock(p *models.FcpoolBlock, d *schema.ResourceData) []map[
 	fcpoolblocks = append(fcpoolblocks, fcpoolblock)
 	return fcpoolblocks
 }
-func flattenMapFcpoolFcBlockRelationship(p *models.FcpoolFcBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolFcBlockRelationship(p models.FcpoolFcBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolfcblockrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolFcBlockRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fcpoolfcblockrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpoolfcblockrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpoolfcblockrelationship["class_id"] = item.ClassId
 	fcpoolfcblockrelationship["moid"] = item.Moid
 	fcpoolfcblockrelationship["object_type"] = item.ObjectType
@@ -5112,14 +9023,26 @@ func flattenMapFcpoolFcBlockRelationship(p *models.FcpoolFcBlockRelationship, d 
 	fcpoolfcblockrelationships = append(fcpoolfcblockrelationships, fcpoolfcblockrelationship)
 	return fcpoolfcblockrelationships
 }
-func flattenMapFcpoolLeaseRelationship(p *models.FcpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolLeaseRelationship(p models.FcpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolleaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolLeaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fcpoolleaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpoolleaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpoolleaserelationship["class_id"] = item.ClassId
 	fcpoolleaserelationship["moid"] = item.Moid
 	fcpoolleaserelationship["object_type"] = item.ObjectType
@@ -5128,14 +9051,26 @@ func flattenMapFcpoolLeaseRelationship(p *models.FcpoolLeaseRelationship, d *sch
 	fcpoolleaserelationships = append(fcpoolleaserelationships, fcpoolleaserelationship)
 	return fcpoolleaserelationships
 }
-func flattenMapFcpoolPoolRelationship(p *models.FcpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolPoolRelationship(p models.FcpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolpoolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolPoolRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fcpoolpoolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpoolpoolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpoolpoolrelationship["class_id"] = item.ClassId
 	fcpoolpoolrelationship["moid"] = item.Moid
 	fcpoolpoolrelationship["object_type"] = item.ObjectType
@@ -5144,14 +9079,26 @@ func flattenMapFcpoolPoolRelationship(p *models.FcpoolPoolRelationship, d *schem
 	fcpoolpoolrelationships = append(fcpoolpoolrelationships, fcpoolpoolrelationship)
 	return fcpoolpoolrelationships
 }
-func flattenMapFcpoolPoolMemberRelationship(p *models.FcpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolPoolMemberRelationship(p models.FcpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpoolpoolmemberrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolPoolMemberRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fcpoolpoolmemberrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpoolpoolmemberrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpoolpoolmemberrelationship["class_id"] = item.ClassId
 	fcpoolpoolmemberrelationship["moid"] = item.Moid
 	fcpoolpoolmemberrelationship["object_type"] = item.ObjectType
@@ -5160,14 +9107,26 @@ func flattenMapFcpoolPoolMemberRelationship(p *models.FcpoolPoolMemberRelationsh
 	fcpoolpoolmemberrelationships = append(fcpoolpoolmemberrelationships, fcpoolpoolmemberrelationship)
 	return fcpoolpoolmemberrelationships
 }
-func flattenMapFcpoolUniverseRelationship(p *models.FcpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFcpoolUniverseRelationship(p models.FcpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var fcpooluniverserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FcpoolUniverseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	fcpooluniverserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		fcpooluniverserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	fcpooluniverserelationship["class_id"] = item.ClassId
 	fcpooluniverserelationship["moid"] = item.Moid
 	fcpooluniverserelationship["object_type"] = item.ObjectType
@@ -5176,21 +9135,45 @@ func flattenMapFcpoolUniverseRelationship(p *models.FcpoolUniverseRelationship, 
 	fcpooluniverserelationships = append(fcpooluniverserelationships, fcpooluniverserelationship)
 	return fcpooluniverserelationships
 }
-func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareDirectDownload(p models.FirmwareDirectDownload, d *schema.ResourceData) []map[string]interface{} {
 	var firmwaredirectdownloads []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareDirectDownload
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	firmwaredirectdownload := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.FirmwareDirectDownload
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwaredirectdownload["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwaredirectdownload["class_id"] = item.ClassId
-	firmwaredirectdownload["http_server"] = (func(p *models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
+	firmwaredirectdownload["http_server"] = (func(p models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarehttpservers []map[string]interface{}
-		if p == nil {
+		var ret models.FirmwareHttpServer
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		firmwarehttpserver := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareHttpServer
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarehttpserver["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarehttpserver["class_id"] = item.ClassId
 		firmwarehttpserver["location_link"] = item.LocationLink
 		firmwarehttpserver["mount_options"] = item.MountOptions
@@ -5198,7 +9181,7 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 
 		firmwarehttpservers = append(firmwarehttpservers, firmwarehttpserver)
 		return firmwarehttpservers
-	})(item.HttpServer, d)
+	})(item.GetHttpServer(), d)
 	firmwaredirectdownload["image_source"] = item.ImageSource
 	firmwaredirectdownload["is_password_set"] = item.IsPasswordSet
 	firmwaredirectdownload["object_type"] = item.ObjectType
@@ -5211,14 +9194,26 @@ func flattenMapFirmwareDirectDownload(p *models.FirmwareDirectDownload, d *schem
 	firmwaredirectdownloads = append(firmwaredirectdownloads, firmwaredirectdownload)
 	return firmwaredirectdownloads
 }
-func flattenMapFirmwareDistributableRelationship(p *models.FirmwareDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareDistributableRelationship(p models.FirmwareDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwaredistributablerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareDistributableRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwaredistributablerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwaredistributablerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwaredistributablerelationship["class_id"] = item.ClassId
 	firmwaredistributablerelationship["moid"] = item.Moid
 	firmwaredistributablerelationship["object_type"] = item.ObjectType
@@ -5227,20 +9222,44 @@ func flattenMapFirmwareDistributableRelationship(p *models.FirmwareDistributable
 	firmwaredistributablerelationships = append(firmwaredistributablerelationships, firmwaredistributablerelationship)
 	return firmwaredistributablerelationships
 }
-func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareNetworkShare(p models.FirmwareNetworkShare, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarenetworkshares []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareNetworkShare
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	firmwarenetworkshare := make(map[string]interface{})
-	firmwarenetworkshare["cifs_server"] = (func(p *models.FirmwareCifsServer, d *schema.ResourceData) []map[string]interface{} {
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.FirmwareNetworkShare
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwarenetworkshare["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	firmwarenetworkshare["cifs_server"] = (func(p models.FirmwareCifsServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarecifsservers []map[string]interface{}
-		if p == nil {
+		var ret models.FirmwareCifsServer
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		firmwarecifsserver := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareCifsServer
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarecifsserver["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarecifsserver["class_id"] = item.ClassId
 		firmwarecifsserver["file_location"] = item.FileLocation
 		firmwarecifsserver["mount_options"] = item.MountOptions
@@ -5251,15 +9270,27 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 
 		firmwarecifsservers = append(firmwarecifsservers, firmwarecifsserver)
 		return firmwarecifsservers
-	})(item.CifsServer, d)
+	})(item.GetCifsServer(), d)
 	firmwarenetworkshare["class_id"] = item.ClassId
-	firmwarenetworkshare["http_server"] = (func(p *models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
+	firmwarenetworkshare["http_server"] = (func(p models.FirmwareHttpServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarehttpservers []map[string]interface{}
-		if p == nil {
+		var ret models.FirmwareHttpServer
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		firmwarehttpserver := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareHttpServer
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarehttpserver["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarehttpserver["class_id"] = item.ClassId
 		firmwarehttpserver["location_link"] = item.LocationLink
 		firmwarehttpserver["mount_options"] = item.MountOptions
@@ -5267,16 +9298,28 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 
 		firmwarehttpservers = append(firmwarehttpservers, firmwarehttpserver)
 		return firmwarehttpservers
-	})(item.HttpServer, d)
+	})(item.GetHttpServer(), d)
 	firmwarenetworkshare["is_password_set"] = item.IsPasswordSet
 	firmwarenetworkshare["map_type"] = item.MapType
-	firmwarenetworkshare["nfs_server"] = (func(p *models.FirmwareNfsServer, d *schema.ResourceData) []map[string]interface{} {
+	firmwarenetworkshare["nfs_server"] = (func(p models.FirmwareNfsServer, d *schema.ResourceData) []map[string]interface{} {
 		var firmwarenfsservers []map[string]interface{}
-		if p == nil {
+		var ret models.FirmwareNfsServer
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		firmwarenfsserver := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.FirmwareNfsServer
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			firmwarenfsserver["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		firmwarenfsserver["class_id"] = item.ClassId
 		firmwarenfsserver["file_location"] = item.FileLocation
 		firmwarenfsserver["mount_options"] = item.MountOptions
@@ -5287,7 +9330,7 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 
 		firmwarenfsservers = append(firmwarenfsservers, firmwarenfsserver)
 		return firmwarenfsservers
-	})(item.NfsServer, d)
+	})(item.GetNfsServer(), d)
 	firmwarenetworkshare["object_type"] = item.ObjectType
 	password_x := d.Get("network_share").([]interface{})
 	password_y := password_x[0].(map[string]interface{})
@@ -5298,14 +9341,26 @@ func flattenMapFirmwareNetworkShare(p *models.FirmwareNetworkShare, d *schema.Re
 	firmwarenetworkshares = append(firmwarenetworkshares, firmwarenetworkshare)
 	return firmwarenetworkshares
 }
-func flattenMapFirmwareRunningFirmwareRelationship(p *models.FirmwareRunningFirmwareRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareRunningFirmwareRelationship(p models.FirmwareRunningFirmwareRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwarerunningfirmwarerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareRunningFirmwareRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwarerunningfirmwarerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwarerunningfirmwarerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwarerunningfirmwarerelationship["class_id"] = item.ClassId
 	firmwarerunningfirmwarerelationship["moid"] = item.Moid
 	firmwarerunningfirmwarerelationship["object_type"] = item.ObjectType
@@ -5314,14 +9369,26 @@ func flattenMapFirmwareRunningFirmwareRelationship(p *models.FirmwareRunningFirm
 	firmwarerunningfirmwarerelationships = append(firmwarerunningfirmwarerelationships, firmwarerunningfirmwarerelationship)
 	return firmwarerunningfirmwarerelationships
 }
-func flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(p *models.FirmwareServerConfigurationUtilityDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(p models.FirmwareServerConfigurationUtilityDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwareserverconfigurationutilitydistributablerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareServerConfigurationUtilityDistributableRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwareserverconfigurationutilitydistributablerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwareserverconfigurationutilitydistributablerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwareserverconfigurationutilitydistributablerelationship["class_id"] = item.ClassId
 	firmwareserverconfigurationutilitydistributablerelationship["moid"] = item.Moid
 	firmwareserverconfigurationutilitydistributablerelationship["object_type"] = item.ObjectType
@@ -5330,14 +9397,26 @@ func flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(p *mo
 	firmwareserverconfigurationutilitydistributablerelationships = append(firmwareserverconfigurationutilitydistributablerelationships, firmwareserverconfigurationutilitydistributablerelationship)
 	return firmwareserverconfigurationutilitydistributablerelationships
 }
-func flattenMapFirmwareUpgradeBaseRelationship(p *models.FirmwareUpgradeBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareUpgradeBaseRelationship(p models.FirmwareUpgradeBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwareupgradebaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareUpgradeBaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwareupgradebaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwareupgradebaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwareupgradebaserelationship["class_id"] = item.ClassId
 	firmwareupgradebaserelationship["moid"] = item.Moid
 	firmwareupgradebaserelationship["object_type"] = item.ObjectType
@@ -5346,14 +9425,26 @@ func flattenMapFirmwareUpgradeBaseRelationship(p *models.FirmwareUpgradeBaseRela
 	firmwareupgradebaserelationships = append(firmwareupgradebaserelationships, firmwareupgradebaserelationship)
 	return firmwareupgradebaserelationships
 }
-func flattenMapFirmwareUpgradeImpactStatusRelationship(p *models.FirmwareUpgradeImpactStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareUpgradeImpactStatusRelationship(p models.FirmwareUpgradeImpactStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwareupgradeimpactstatusrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareUpgradeImpactStatusRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwareupgradeimpactstatusrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwareupgradeimpactstatusrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwareupgradeimpactstatusrelationship["class_id"] = item.ClassId
 	firmwareupgradeimpactstatusrelationship["moid"] = item.Moid
 	firmwareupgradeimpactstatusrelationship["object_type"] = item.ObjectType
@@ -5362,14 +9453,26 @@ func flattenMapFirmwareUpgradeImpactStatusRelationship(p *models.FirmwareUpgrade
 	firmwareupgradeimpactstatusrelationships = append(firmwareupgradeimpactstatusrelationships, firmwareupgradeimpactstatusrelationship)
 	return firmwareupgradeimpactstatusrelationships
 }
-func flattenMapFirmwareUpgradeStatusRelationship(p *models.FirmwareUpgradeStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapFirmwareUpgradeStatusRelationship(p models.FirmwareUpgradeStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var firmwareupgradestatusrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.FirmwareUpgradeStatusRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	firmwareupgradestatusrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		firmwareupgradestatusrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	firmwareupgradestatusrelationship["class_id"] = item.ClassId
 	firmwareupgradestatusrelationship["moid"] = item.Moid
 	firmwareupgradestatusrelationship["object_type"] = item.ObjectType
@@ -5378,14 +9481,26 @@ func flattenMapFirmwareUpgradeStatusRelationship(p *models.FirmwareUpgradeStatus
 	firmwareupgradestatusrelationships = append(firmwareupgradestatusrelationships, firmwareupgradestatusrelationship)
 	return firmwareupgradestatusrelationships
 }
-func flattenMapForecastCatalogRelationship(p *models.ForecastCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastCatalogRelationship(p models.ForecastCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var forecastcatalogrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ForecastCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	forecastcatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		forecastcatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	forecastcatalogrelationship["class_id"] = item.ClassId
 	forecastcatalogrelationship["moid"] = item.Moid
 	forecastcatalogrelationship["object_type"] = item.ObjectType
@@ -5394,14 +9509,26 @@ func flattenMapForecastCatalogRelationship(p *models.ForecastCatalogRelationship
 	forecastcatalogrelationships = append(forecastcatalogrelationships, forecastcatalogrelationship)
 	return forecastcatalogrelationships
 }
-func flattenMapForecastDefinitionRelationship(p *models.ForecastDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastDefinitionRelationship(p models.ForecastDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var forecastdefinitionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ForecastDefinitionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	forecastdefinitionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		forecastdefinitionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	forecastdefinitionrelationship["class_id"] = item.ClassId
 	forecastdefinitionrelationship["moid"] = item.Moid
 	forecastdefinitionrelationship["object_type"] = item.ObjectType
@@ -5410,14 +9537,26 @@ func flattenMapForecastDefinitionRelationship(p *models.ForecastDefinitionRelati
 	forecastdefinitionrelationships = append(forecastdefinitionrelationships, forecastdefinitionrelationship)
 	return forecastdefinitionrelationships
 }
-func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapForecastModel(p models.ForecastModel, d *schema.ResourceData) []map[string]interface{} {
 	var forecastmodels []map[string]interface{}
-	if p == nil {
+	var ret models.ForecastModel
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	forecastmodel := make(map[string]interface{})
+
 	forecastmodel["accuracy"] = item.Accuracy
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.ForecastModel
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		forecastmodel["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	forecastmodel["class_id"] = item.ClassId
 	forecastmodel["model_data"] = item.ModelData
 	forecastmodel["model_type"] = item.ModelType
@@ -5426,14 +9565,26 @@ func flattenMapForecastModel(p *models.ForecastModel, d *schema.ResourceData) []
 	forecastmodels = append(forecastmodels, forecastmodel)
 	return forecastmodels
 }
-func flattenMapGraphicsCardRelationship(p *models.GraphicsCardRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapGraphicsCardRelationship(p models.GraphicsCardRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var graphicscardrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.GraphicsCardRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	graphicscardrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		graphicscardrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	graphicscardrelationship["class_id"] = item.ClassId
 	graphicscardrelationship["moid"] = item.Moid
 	graphicscardrelationship["object_type"] = item.ObjectType
@@ -5442,14 +9593,26 @@ func flattenMapGraphicsCardRelationship(p *models.GraphicsCardRelationship, d *s
 	graphicscardrelationships = append(graphicscardrelationships, graphicscardrelationship)
 	return graphicscardrelationships
 }
-func flattenMapHclOperatingSystemRelationship(p *models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHclOperatingSystemRelationship(p models.HclOperatingSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hcloperatingsystemrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HclOperatingSystemRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hcloperatingsystemrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hcloperatingsystemrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hcloperatingsystemrelationship["class_id"] = item.ClassId
 	hcloperatingsystemrelationship["moid"] = item.Moid
 	hcloperatingsystemrelationship["object_type"] = item.ObjectType
@@ -5458,14 +9621,26 @@ func flattenMapHclOperatingSystemRelationship(p *models.HclOperatingSystemRelati
 	hcloperatingsystemrelationships = append(hcloperatingsystemrelationships, hcloperatingsystemrelationship)
 	return hcloperatingsystemrelationships
 }
-func flattenMapHclOperatingSystemVendorRelationship(p *models.HclOperatingSystemVendorRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHclOperatingSystemVendorRelationship(p models.HclOperatingSystemVendorRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hcloperatingsystemvendorrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HclOperatingSystemVendorRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hcloperatingsystemvendorrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hcloperatingsystemvendorrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hcloperatingsystemvendorrelationship["class_id"] = item.ClassId
 	hcloperatingsystemvendorrelationship["moid"] = item.Moid
 	hcloperatingsystemvendorrelationship["object_type"] = item.ObjectType
@@ -5474,14 +9649,26 @@ func flattenMapHclOperatingSystemVendorRelationship(p *models.HclOperatingSystem
 	hcloperatingsystemvendorrelationships = append(hcloperatingsystemvendorrelationships, hcloperatingsystemvendorrelationship)
 	return hcloperatingsystemvendorrelationships
 }
-func flattenMapHyperflexAppCatalogRelationship(p *models.HyperflexAppCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexAppCatalogRelationship(p models.HyperflexAppCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexappcatalogrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexAppCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexappcatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexappcatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexappcatalogrelationship["class_id"] = item.ClassId
 	hyperflexappcatalogrelationship["moid"] = item.Moid
 	hyperflexappcatalogrelationship["object_type"] = item.ObjectType
@@ -5490,14 +9677,26 @@ func flattenMapHyperflexAppCatalogRelationship(p *models.HyperflexAppCatalogRela
 	hyperflexappcatalogrelationships = append(hyperflexappcatalogrelationships, hyperflexappcatalogrelationship)
 	return hyperflexappcatalogrelationships
 }
-func flattenMapHyperflexAutoSupportPolicyRelationship(p *models.HyperflexAutoSupportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexAutoSupportPolicyRelationship(p models.HyperflexAutoSupportPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexautosupportpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexAutoSupportPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexautosupportpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexautosupportpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexautosupportpolicyrelationship["class_id"] = item.ClassId
 	hyperflexautosupportpolicyrelationship["moid"] = item.Moid
 	hyperflexautosupportpolicyrelationship["object_type"] = item.ObjectType
@@ -5506,14 +9705,54 @@ func flattenMapHyperflexAutoSupportPolicyRelationship(p *models.HyperflexAutoSup
 	hyperflexautosupportpolicyrelationships = append(hyperflexautosupportpolicyrelationships, hyperflexautosupportpolicyrelationship)
 	return hyperflexautosupportpolicyrelationships
 }
-func flattenMapHyperflexClusterRelationship(p *models.HyperflexClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexclusterrelationships []map[string]interface{}
-	if p == nil {
+func flattenMapHyperflexCiscoHypervisorManagerRelationship(p models.HyperflexCiscoHypervisorManagerRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexciscohypervisormanagerrelationships []map[string]interface{}
+	var ret models.HyperflexCiscoHypervisorManagerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
+	item := x.MoMoRef
+	hyperflexciscohypervisormanagerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexciscohypervisormanagerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	hyperflexciscohypervisormanagerrelationship["class_id"] = item.ClassId
+	hyperflexciscohypervisormanagerrelationship["moid"] = item.Moid
+	hyperflexciscohypervisormanagerrelationship["object_type"] = item.ObjectType
+	hyperflexciscohypervisormanagerrelationship["selector"] = item.Selector
+
+	hyperflexciscohypervisormanagerrelationships = append(hyperflexciscohypervisormanagerrelationships, hyperflexciscohypervisormanagerrelationship)
+	return hyperflexciscohypervisormanagerrelationships
+}
+func flattenMapHyperflexClusterRelationship(p models.HyperflexClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexclusterrelationships []map[string]interface{}
+	var ret models.HyperflexClusterRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
 	item := x.MoMoRef
 	hyperflexclusterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexclusterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexclusterrelationship["class_id"] = item.ClassId
 	hyperflexclusterrelationship["moid"] = item.Moid
 	hyperflexclusterrelationship["object_type"] = item.ObjectType
@@ -5522,14 +9761,26 @@ func flattenMapHyperflexClusterRelationship(p *models.HyperflexClusterRelationsh
 	hyperflexclusterrelationships = append(hyperflexclusterrelationships, hyperflexclusterrelationship)
 	return hyperflexclusterrelationships
 }
-func flattenMapHyperflexClusterNetworkPolicyRelationship(p *models.HyperflexClusterNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterNetworkPolicyRelationship(p models.HyperflexClusterNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexclusternetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexClusterNetworkPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexclusternetworkpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexclusternetworkpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexclusternetworkpolicyrelationship["class_id"] = item.ClassId
 	hyperflexclusternetworkpolicyrelationship["moid"] = item.Moid
 	hyperflexclusternetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -5538,14 +9789,26 @@ func flattenMapHyperflexClusterNetworkPolicyRelationship(p *models.HyperflexClus
 	hyperflexclusternetworkpolicyrelationships = append(hyperflexclusternetworkpolicyrelationships, hyperflexclusternetworkpolicyrelationship)
 	return hyperflexclusternetworkpolicyrelationships
 }
-func flattenMapHyperflexClusterProfileRelationship(p *models.HyperflexClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterProfileRelationship(p models.HyperflexClusterProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexclusterprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexClusterProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexclusterprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexclusterprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexclusterprofilerelationship["class_id"] = item.ClassId
 	hyperflexclusterprofilerelationship["moid"] = item.Moid
 	hyperflexclusterprofilerelationship["object_type"] = item.ObjectType
@@ -5554,14 +9817,26 @@ func flattenMapHyperflexClusterProfileRelationship(p *models.HyperflexClusterPro
 	hyperflexclusterprofilerelationships = append(hyperflexclusterprofilerelationships, hyperflexclusterprofilerelationship)
 	return hyperflexclusterprofilerelationships
 }
-func flattenMapHyperflexClusterStoragePolicyRelationship(p *models.HyperflexClusterStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexClusterStoragePolicyRelationship(p models.HyperflexClusterStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexclusterstoragepolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexClusterStoragePolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexclusterstoragepolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexclusterstoragepolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexclusterstoragepolicyrelationship["class_id"] = item.ClassId
 	hyperflexclusterstoragepolicyrelationship["moid"] = item.Moid
 	hyperflexclusterstoragepolicyrelationship["object_type"] = item.ObjectType
@@ -5570,14 +9845,26 @@ func flattenMapHyperflexClusterStoragePolicyRelationship(p *models.HyperflexClus
 	hyperflexclusterstoragepolicyrelationships = append(hyperflexclusterstoragepolicyrelationships, hyperflexclusterstoragepolicyrelationship)
 	return hyperflexclusterstoragepolicyrelationships
 }
-func flattenMapHyperflexConfigResultRelationship(p *models.HyperflexConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexConfigResultRelationship(p models.HyperflexConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexConfigResultRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexconfigresultrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexconfigresultrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexconfigresultrelationship["class_id"] = item.ClassId
 	hyperflexconfigresultrelationship["moid"] = item.Moid
 	hyperflexconfigresultrelationship["object_type"] = item.ObjectType
@@ -5586,14 +9873,54 @@ func flattenMapHyperflexConfigResultRelationship(p *models.HyperflexConfigResult
 	hyperflexconfigresultrelationships = append(hyperflexconfigresultrelationships, hyperflexconfigresultrelationship)
 	return hyperflexconfigresultrelationships
 }
-func flattenMapHyperflexExtFcStoragePolicyRelationship(p *models.HyperflexExtFcStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexextfcstoragepolicyrelationships []map[string]interface{}
-	if p == nil {
+func flattenMapHyperflexDiskStatus(p models.HyperflexDiskStatus, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexdiskstatuss []map[string]interface{}
+	var ret models.HyperflexDiskStatus
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	item := p
+	hyperflexdiskstatus := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexDiskStatus
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexdiskstatus["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	hyperflexdiskstatus["class_id"] = item.ClassId
+	hyperflexdiskstatus["download_percentage"] = item.DownloadPercentage
+	hyperflexdiskstatus["object_type"] = item.ObjectType
+	hyperflexdiskstatus["state"] = item.State
+	hyperflexdiskstatus["volume_handle"] = item.VolumeHandle
+
+	hyperflexdiskstatuss = append(hyperflexdiskstatuss, hyperflexdiskstatus)
+	return hyperflexdiskstatuss
+}
+func flattenMapHyperflexExtFcStoragePolicyRelationship(p models.HyperflexExtFcStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexextfcstoragepolicyrelationships []map[string]interface{}
+	var ret models.HyperflexExtFcStoragePolicyRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
 	item := x.MoMoRef
 	hyperflexextfcstoragepolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexextfcstoragepolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexextfcstoragepolicyrelationship["class_id"] = item.ClassId
 	hyperflexextfcstoragepolicyrelationship["moid"] = item.Moid
 	hyperflexextfcstoragepolicyrelationship["object_type"] = item.ObjectType
@@ -5602,14 +9929,26 @@ func flattenMapHyperflexExtFcStoragePolicyRelationship(p *models.HyperflexExtFcS
 	hyperflexextfcstoragepolicyrelationships = append(hyperflexextfcstoragepolicyrelationships, hyperflexextfcstoragepolicyrelationship)
 	return hyperflexextfcstoragepolicyrelationships
 }
-func flattenMapHyperflexExtIscsiStoragePolicyRelationship(p *models.HyperflexExtIscsiStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexExtIscsiStoragePolicyRelationship(p models.HyperflexExtIscsiStoragePolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexextiscsistoragepolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexExtIscsiStoragePolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexextiscsistoragepolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexextiscsistoragepolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexextiscsistoragepolicyrelationship["class_id"] = item.ClassId
 	hyperflexextiscsistoragepolicyrelationship["moid"] = item.Moid
 	hyperflexextiscsistoragepolicyrelationship["object_type"] = item.ObjectType
@@ -5618,14 +9957,26 @@ func flattenMapHyperflexExtIscsiStoragePolicyRelationship(p *models.HyperflexExt
 	hyperflexextiscsistoragepolicyrelationships = append(hyperflexextiscsistoragepolicyrelationships, hyperflexextiscsistoragepolicyrelationship)
 	return hyperflexextiscsistoragepolicyrelationships
 }
-func flattenMapHyperflexFeatureLimitExternalRelationship(p *models.HyperflexFeatureLimitExternalRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexFeatureLimitExternalRelationship(p models.HyperflexFeatureLimitExternalRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexfeaturelimitexternalrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexFeatureLimitExternalRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexfeaturelimitexternalrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexfeaturelimitexternalrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexfeaturelimitexternalrelationship["class_id"] = item.ClassId
 	hyperflexfeaturelimitexternalrelationship["moid"] = item.Moid
 	hyperflexfeaturelimitexternalrelationship["object_type"] = item.ObjectType
@@ -5634,14 +9985,26 @@ func flattenMapHyperflexFeatureLimitExternalRelationship(p *models.HyperflexFeat
 	hyperflexfeaturelimitexternalrelationships = append(hyperflexfeaturelimitexternalrelationships, hyperflexfeaturelimitexternalrelationship)
 	return hyperflexfeaturelimitexternalrelationships
 }
-func flattenMapHyperflexFeatureLimitInternalRelationship(p *models.HyperflexFeatureLimitInternalRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexFeatureLimitInternalRelationship(p models.HyperflexFeatureLimitInternalRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexfeaturelimitinternalrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexFeatureLimitInternalRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexfeaturelimitinternalrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexfeaturelimitinternalrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexfeaturelimitinternalrelationship["class_id"] = item.ClassId
 	hyperflexfeaturelimitinternalrelationship["moid"] = item.Moid
 	hyperflexfeaturelimitinternalrelationship["object_type"] = item.ObjectType
@@ -5650,14 +10013,26 @@ func flattenMapHyperflexFeatureLimitInternalRelationship(p *models.HyperflexFeat
 	hyperflexfeaturelimitinternalrelationships = append(hyperflexfeaturelimitinternalrelationships, hyperflexfeaturelimitinternalrelationship)
 	return hyperflexfeaturelimitinternalrelationships
 }
-func flattenMapHyperflexHealthRelationship(p *models.HyperflexHealthRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexHealthRelationship(p models.HyperflexHealthRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhealthrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexHealthRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexhealthrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhealthrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexhealthrelationship["class_id"] = item.ClassId
 	hyperflexhealthrelationship["moid"] = item.Moid
 	hyperflexhealthrelationship["object_type"] = item.ObjectType
@@ -5666,13 +10041,25 @@ func flattenMapHyperflexHealthRelationship(p *models.HyperflexHealthRelationship
 	hyperflexhealthrelationships = append(hyperflexhealthrelationships, hyperflexhealthrelationship)
 	return hyperflexhealthrelationships
 }
-func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexHxNetworkAddressDt(p models.HyperflexHxNetworkAddressDt, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxnetworkaddressdts []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexHxNetworkAddressDt
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexhxnetworkaddressdt := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexHxNetworkAddressDt
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxnetworkaddressdt["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexhxnetworkaddressdt["address"] = item.Address
 	hyperflexhxnetworkaddressdt["class_id"] = item.ClassId
 	hyperflexhxnetworkaddressdt["fqdn"] = item.Fqdn
@@ -5682,13 +10069,25 @@ func flattenMapHyperflexHxNetworkAddressDt(p *models.HyperflexHxNetworkAddressDt
 	hyperflexhxnetworkaddressdts = append(hyperflexhxnetworkaddressdts, hyperflexhxnetworkaddressdt)
 	return hyperflexhxnetworkaddressdts
 }
-func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexHxResiliencyInfoDt(p models.HyperflexHxResiliencyInfoDt, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxresiliencyinfodts []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexHxResiliencyInfoDt
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexhxresiliencyinfodt := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexHxResiliencyInfoDt
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxresiliencyinfodt["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexhxresiliencyinfodt["class_id"] = item.ClassId
 	hyperflexhxresiliencyinfodt["data_replication_factor"] = item.DataReplicationFactor
 	hyperflexhxresiliencyinfodt["hdd_failures_tolerable"] = item.HddFailuresTolerable
@@ -5702,21 +10101,44 @@ func flattenMapHyperflexHxResiliencyInfoDt(p *models.HyperflexHxResiliencyInfoDt
 	hyperflexhxresiliencyinfodts = append(hyperflexhxresiliencyinfodts, hyperflexhxresiliencyinfodt)
 	return hyperflexhxresiliencyinfodts
 }
-func flattenMapHyperflexHxUuIdDt(p *models.HyperflexHxUuIdDt, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexHxUuIdDt(p models.HyperflexHxUuIdDt, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexhxuuiddts []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexHxUuIdDt
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexhxuuiddt := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexHxUuIdDt
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxuuiddt["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexhxuuiddt["class_id"] = item.ClassId
-	hyperflexhxuuiddt["links"] = (func(p *[]models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
+	hyperflexhxuuiddt["links"] = (func(p []models.HyperflexHxLinkDt, d *schema.ResourceData) []map[string]interface{} {
 		var hyperflexhxlinkdts []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			hyperflexhxlinkdt := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.HyperflexHxLinkDt
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				hyperflexhxlinkdt["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			hyperflexhxlinkdt["class_id"] = item.ClassId
 			hyperflexhxlinkdt["comments"] = item.Comments
 			hyperflexhxlinkdt["href"] = item.Href
@@ -5726,20 +10148,116 @@ func flattenMapHyperflexHxUuIdDt(p *models.HyperflexHxUuIdDt, d *schema.Resource
 			hyperflexhxlinkdts = append(hyperflexhxlinkdts, hyperflexhxlinkdt)
 		}
 		return hyperflexhxlinkdts
-	})(item.Links, d)
+	})(item.GetLinks(), d)
 	hyperflexhxuuiddt["object_type"] = item.ObjectType
 	hyperflexhxuuiddt["uuid"] = item.Uuid
 
 	hyperflexhxuuiddts = append(hyperflexhxuuiddts, hyperflexhxuuiddt)
 	return hyperflexhxuuiddts
 }
-func flattenMapHyperflexIpAddrRange(p *models.HyperflexIpAddrRange, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexipaddrranges []map[string]interface{}
-	if p == nil {
+func flattenMapHyperflexHxapClusterRelationship(p models.HyperflexHxapClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexhxapclusterrelationships []map[string]interface{}
+	var ret models.HyperflexHxapClusterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	x := p
+	item := x.MoMoRef
+	hyperflexhxapclusterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxapclusterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	hyperflexhxapclusterrelationship["class_id"] = item.ClassId
+	hyperflexhxapclusterrelationship["moid"] = item.Moid
+	hyperflexhxapclusterrelationship["object_type"] = item.ObjectType
+	hyperflexhxapclusterrelationship["selector"] = item.Selector
+
+	hyperflexhxapclusterrelationships = append(hyperflexhxapclusterrelationships, hyperflexhxapclusterrelationship)
+	return hyperflexhxapclusterrelationships
+}
+func flattenMapHyperflexHxapHostRelationship(p models.HyperflexHxapHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexhxaphostrelationships []map[string]interface{}
+	var ret models.HyperflexHxapHostRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	hyperflexhxaphostrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxaphostrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	hyperflexhxaphostrelationship["class_id"] = item.ClassId
+	hyperflexhxaphostrelationship["moid"] = item.Moid
+	hyperflexhxaphostrelationship["object_type"] = item.ObjectType
+	hyperflexhxaphostrelationship["selector"] = item.Selector
+
+	hyperflexhxaphostrelationships = append(hyperflexhxaphostrelationships, hyperflexhxaphostrelationship)
+	return hyperflexhxaphostrelationships
+}
+func flattenMapHyperflexHxapVirtualMachineRelationship(p models.HyperflexHxapVirtualMachineRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexhxapvirtualmachinerelationships []map[string]interface{}
+	var ret models.HyperflexHxapVirtualMachineRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	hyperflexhxapvirtualmachinerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexhxapvirtualmachinerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	hyperflexhxapvirtualmachinerelationship["class_id"] = item.ClassId
+	hyperflexhxapvirtualmachinerelationship["moid"] = item.Moid
+	hyperflexhxapvirtualmachinerelationship["object_type"] = item.ObjectType
+	hyperflexhxapvirtualmachinerelationship["selector"] = item.Selector
+
+	hyperflexhxapvirtualmachinerelationships = append(hyperflexhxapvirtualmachinerelationships, hyperflexhxapvirtualmachinerelationship)
+	return hyperflexhxapvirtualmachinerelationships
+}
+func flattenMapHyperflexIpAddrRange(p models.HyperflexIpAddrRange, d *schema.ResourceData) []map[string]interface{} {
+	var hyperflexipaddrranges []map[string]interface{}
+	var ret models.HyperflexIpAddrRange
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	item := p
 	hyperflexipaddrrange := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexIpAddrRange
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexipaddrrange["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexipaddrrange["class_id"] = item.ClassId
 	hyperflexipaddrrange["end_addr"] = item.EndAddr
 	hyperflexipaddrrange["gateway"] = item.Gateway
@@ -5750,14 +10268,26 @@ func flattenMapHyperflexIpAddrRange(p *models.HyperflexIpAddrRange, d *schema.Re
 	hyperflexipaddrranges = append(hyperflexipaddrranges, hyperflexipaddrrange)
 	return hyperflexipaddrranges
 }
-func flattenMapHyperflexLocalCredentialPolicyRelationship(p *models.HyperflexLocalCredentialPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexLocalCredentialPolicyRelationship(p models.HyperflexLocalCredentialPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexlocalcredentialpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexLocalCredentialPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexlocalcredentialpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexlocalcredentialpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexlocalcredentialpolicyrelationship["class_id"] = item.ClassId
 	hyperflexlocalcredentialpolicyrelationship["moid"] = item.Moid
 	hyperflexlocalcredentialpolicyrelationship["object_type"] = item.ObjectType
@@ -5766,13 +10296,25 @@ func flattenMapHyperflexLocalCredentialPolicyRelationship(p *models.HyperflexLoc
 	hyperflexlocalcredentialpolicyrelationships = append(hyperflexlocalcredentialpolicyrelationships, hyperflexlocalcredentialpolicyrelationship)
 	return hyperflexlocalcredentialpolicyrelationships
 }
-func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexLogicalAvailabilityZone(p models.HyperflexLogicalAvailabilityZone, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexlogicalavailabilityzones []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexLogicalAvailabilityZone
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexlogicalavailabilityzone := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexLogicalAvailabilityZone
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexlogicalavailabilityzone["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexlogicalavailabilityzone["auto_config"] = item.AutoConfig
 	hyperflexlogicalavailabilityzone["class_id"] = item.ClassId
 	hyperflexlogicalavailabilityzone["object_type"] = item.ObjectType
@@ -5780,13 +10322,25 @@ func flattenMapHyperflexLogicalAvailabilityZone(p *models.HyperflexLogicalAvaila
 	hyperflexlogicalavailabilityzones = append(hyperflexlogicalavailabilityzones, hyperflexlogicalavailabilityzone)
 	return hyperflexlogicalavailabilityzones
 }
-func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexMacAddrPrefixRange(p models.HyperflexMacAddrPrefixRange, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexmacaddrprefixranges []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexMacAddrPrefixRange
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexmacaddrprefixrange := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexMacAddrPrefixRange
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexmacaddrprefixrange["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexmacaddrprefixrange["class_id"] = item.ClassId
 	hyperflexmacaddrprefixrange["end_addr"] = item.EndAddr
 	hyperflexmacaddrprefixrange["object_type"] = item.ObjectType
@@ -5795,13 +10349,25 @@ func flattenMapHyperflexMacAddrPrefixRange(p *models.HyperflexMacAddrPrefixRange
 	hyperflexmacaddrprefixranges = append(hyperflexmacaddrprefixranges, hyperflexmacaddrprefixrange)
 	return hyperflexmacaddrprefixranges
 }
-func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexNamedVlan(p models.HyperflexNamedVlan, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnamedvlans []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexNamedVlan
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexnamedvlan := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexNamedVlan
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexnamedvlan["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexnamedvlan["class_id"] = item.ClassId
 	hyperflexnamedvlan["name"] = item.Name
 	hyperflexnamedvlan["object_type"] = item.ObjectType
@@ -5810,13 +10376,25 @@ func flattenMapHyperflexNamedVlan(p *models.HyperflexNamedVlan, d *schema.Resour
 	hyperflexnamedvlans = append(hyperflexnamedvlans, hyperflexnamedvlan)
 	return hyperflexnamedvlans
 }
-func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexNamedVsan(p models.HyperflexNamedVsan, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnamedvsans []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexNamedVsan
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexnamedvsan := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexNamedVsan
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexnamedvsan["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexnamedvsan["class_id"] = item.ClassId
 	hyperflexnamedvsan["name"] = item.Name
 	hyperflexnamedvsan["object_type"] = item.ObjectType
@@ -5825,14 +10403,26 @@ func flattenMapHyperflexNamedVsan(p *models.HyperflexNamedVsan, d *schema.Resour
 	hyperflexnamedvsans = append(hyperflexnamedvsans, hyperflexnamedvsan)
 	return hyperflexnamedvsans
 }
-func flattenMapHyperflexNodeConfigPolicyRelationship(p *models.HyperflexNodeConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexNodeConfigPolicyRelationship(p models.HyperflexNodeConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexnodeconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexNodeConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexnodeconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexnodeconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexnodeconfigpolicyrelationship["class_id"] = item.ClassId
 	hyperflexnodeconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexnodeconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -5841,14 +10431,26 @@ func flattenMapHyperflexNodeConfigPolicyRelationship(p *models.HyperflexNodeConf
 	hyperflexnodeconfigpolicyrelationships = append(hyperflexnodeconfigpolicyrelationships, hyperflexnodeconfigpolicyrelationship)
 	return hyperflexnodeconfigpolicyrelationships
 }
-func flattenMapHyperflexProxySettingPolicyRelationship(p *models.HyperflexProxySettingPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexProxySettingPolicyRelationship(p models.HyperflexProxySettingPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexproxysettingpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexProxySettingPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexproxysettingpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexproxysettingpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexproxysettingpolicyrelationship["class_id"] = item.ClassId
 	hyperflexproxysettingpolicyrelationship["moid"] = item.Moid
 	hyperflexproxysettingpolicyrelationship["object_type"] = item.ObjectType
@@ -5857,14 +10459,26 @@ func flattenMapHyperflexProxySettingPolicyRelationship(p *models.HyperflexProxyS
 	hyperflexproxysettingpolicyrelationships = append(hyperflexproxysettingpolicyrelationships, hyperflexproxysettingpolicyrelationship)
 	return hyperflexproxysettingpolicyrelationships
 }
-func flattenMapHyperflexServerFirmwareVersionRelationship(p *models.HyperflexServerFirmwareVersionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexServerFirmwareVersionRelationship(p models.HyperflexServerFirmwareVersionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexserverfirmwareversionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexServerFirmwareVersionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexserverfirmwareversionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexserverfirmwareversionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexserverfirmwareversionrelationship["class_id"] = item.ClassId
 	hyperflexserverfirmwareversionrelationship["moid"] = item.Moid
 	hyperflexserverfirmwareversionrelationship["object_type"] = item.ObjectType
@@ -5873,14 +10487,26 @@ func flattenMapHyperflexServerFirmwareVersionRelationship(p *models.HyperflexSer
 	hyperflexserverfirmwareversionrelationships = append(hyperflexserverfirmwareversionrelationships, hyperflexserverfirmwareversionrelationship)
 	return hyperflexserverfirmwareversionrelationships
 }
-func flattenMapHyperflexServerModelRelationship(p *models.HyperflexServerModelRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexServerModelRelationship(p models.HyperflexServerModelRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexservermodelrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexServerModelRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexservermodelrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexservermodelrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexservermodelrelationship["class_id"] = item.ClassId
 	hyperflexservermodelrelationship["moid"] = item.Moid
 	hyperflexservermodelrelationship["object_type"] = item.ObjectType
@@ -5889,14 +10515,26 @@ func flattenMapHyperflexServerModelRelationship(p *models.HyperflexServerModelRe
 	hyperflexservermodelrelationships = append(hyperflexservermodelrelationships, hyperflexservermodelrelationship)
 	return hyperflexservermodelrelationships
 }
-func flattenMapHyperflexSoftwareVersionPolicyRelationship(p *models.HyperflexSoftwareVersionPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexSoftwareVersionPolicyRelationship(p models.HyperflexSoftwareVersionPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexsoftwareversionpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexSoftwareVersionPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexsoftwareversionpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexsoftwareversionpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexsoftwareversionpolicyrelationship["class_id"] = item.ClassId
 	hyperflexsoftwareversionpolicyrelationship["moid"] = item.Moid
 	hyperflexsoftwareversionpolicyrelationship["object_type"] = item.ObjectType
@@ -5905,14 +10543,26 @@ func flattenMapHyperflexSoftwareVersionPolicyRelationship(p *models.HyperflexSof
 	hyperflexsoftwareversionpolicyrelationships = append(hyperflexsoftwareversionpolicyrelationships, hyperflexsoftwareversionpolicyrelationship)
 	return hyperflexsoftwareversionpolicyrelationships
 }
-func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexSummary(p models.HyperflexSummary, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexsummarys []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexSummary
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexsummary := make(map[string]interface{})
+
 	hyperflexsummary["active_nodes"] = item.ActiveNodes
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexSummary
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexsummary["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexsummary["address"] = item.Address
 	hyperflexsummary["boottime"] = item.Boottime
 	hyperflexsummary["class_id"] = item.ClassId
@@ -5923,13 +10573,25 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 	hyperflexsummary["deduplication_savings"] = item.DeduplicationSavings
 	hyperflexsummary["downtime"] = item.Downtime
 	hyperflexsummary["free_capacity"] = item.FreeCapacity
-	hyperflexsummary["healing_info"] = (func(p *models.HyperflexStPlatformClusterHealingInfo, d *schema.ResourceData) []map[string]interface{} {
+	hyperflexsummary["healing_info"] = (func(p models.HyperflexStPlatformClusterHealingInfo, d *schema.ResourceData) []map[string]interface{} {
 		var hyperflexstplatformclusterhealinginfos []map[string]interface{}
-		if p == nil {
+		var ret models.HyperflexStPlatformClusterHealingInfo
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		hyperflexstplatformclusterhealinginfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexStPlatformClusterHealingInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexstplatformclusterhealinginfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexstplatformclusterhealinginfo["class_id"] = item.ClassId
 		hyperflexstplatformclusterhealinginfo["estimated_completion_time_in_seconds"] = item.EstimatedCompletionTimeInSeconds
 		hyperflexstplatformclusterhealinginfo["in_progress"] = item.InProgress
@@ -5941,18 +10603,30 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 
 		hyperflexstplatformclusterhealinginfos = append(hyperflexstplatformclusterhealinginfos, hyperflexstplatformclusterhealinginfo)
 		return hyperflexstplatformclusterhealinginfos
-	})(item.HealingInfo, d)
+	})(item.GetHealingInfo(), d)
 	hyperflexsummary["name"] = item.Name
 	hyperflexsummary["object_type"] = item.ObjectType
 	hyperflexsummary["resiliency_details"] = item.ResiliencyDetails
 	hyperflexsummary["resiliency_details_size"] = item.ResiliencyDetailsSize
-	hyperflexsummary["resiliency_info"] = (func(p *models.HyperflexStPlatformClusterResiliencyInfo, d *schema.ResourceData) []map[string]interface{} {
+	hyperflexsummary["resiliency_info"] = (func(p models.HyperflexStPlatformClusterResiliencyInfo, d *schema.ResourceData) []map[string]interface{} {
 		var hyperflexstplatformclusterresiliencyinfos []map[string]interface{}
-		if p == nil {
+		var ret models.HyperflexStPlatformClusterResiliencyInfo
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		hyperflexstplatformclusterresiliencyinfo := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.HyperflexStPlatformClusterResiliencyInfo
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			hyperflexstplatformclusterresiliencyinfo["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		hyperflexstplatformclusterresiliencyinfo["class_id"] = item.ClassId
 		hyperflexstplatformclusterresiliencyinfo["hdd_failures_tolerable"] = item.HddFailuresTolerable
 		hyperflexstplatformclusterresiliencyinfo["messages"] = item.Messages
@@ -5965,7 +10639,7 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 
 		hyperflexstplatformclusterresiliencyinfos = append(hyperflexstplatformclusterresiliencyinfos, hyperflexstplatformclusterresiliencyinfo)
 		return hyperflexstplatformclusterresiliencyinfos
-	})(item.ResiliencyInfo, d)
+	})(item.GetResiliencyInfo(), d)
 	hyperflexsummary["space_status"] = item.SpaceStatus
 	hyperflexsummary["state"] = item.State
 	hyperflexsummary["total_capacity"] = item.TotalCapacity
@@ -5976,14 +10650,26 @@ func flattenMapHyperflexSummary(p *models.HyperflexSummary, d *schema.ResourceDa
 	hyperflexsummarys = append(hyperflexsummarys, hyperflexsummary)
 	return hyperflexsummarys
 }
-func flattenMapHyperflexSysConfigPolicyRelationship(p *models.HyperflexSysConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexSysConfigPolicyRelationship(p models.HyperflexSysConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexsysconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexSysConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexsysconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexsysconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexsysconfigpolicyrelationship["class_id"] = item.ClassId
 	hyperflexsysconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexsysconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -5992,14 +10678,26 @@ func flattenMapHyperflexSysConfigPolicyRelationship(p *models.HyperflexSysConfig
 	hyperflexsysconfigpolicyrelationships = append(hyperflexsysconfigpolicyrelationships, hyperflexsysconfigpolicyrelationship)
 	return hyperflexsysconfigpolicyrelationships
 }
-func flattenMapHyperflexUcsmConfigPolicyRelationship(p *models.HyperflexUcsmConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexUcsmConfigPolicyRelationship(p models.HyperflexUcsmConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexucsmconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexUcsmConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexucsmconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexucsmconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexucsmconfigpolicyrelationship["class_id"] = item.ClassId
 	hyperflexucsmconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexucsmconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -6008,14 +10706,26 @@ func flattenMapHyperflexUcsmConfigPolicyRelationship(p *models.HyperflexUcsmConf
 	hyperflexucsmconfigpolicyrelationships = append(hyperflexucsmconfigpolicyrelationships, hyperflexucsmconfigpolicyrelationship)
 	return hyperflexucsmconfigpolicyrelationships
 }
-func flattenMapHyperflexVcenterConfigPolicyRelationship(p *models.HyperflexVcenterConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexVcenterConfigPolicyRelationship(p models.HyperflexVcenterConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexvcenterconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexVcenterConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	hyperflexvcenterconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexvcenterconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexvcenterconfigpolicyrelationship["class_id"] = item.ClassId
 	hyperflexvcenterconfigpolicyrelationship["moid"] = item.Moid
 	hyperflexvcenterconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -6024,13 +10734,25 @@ func flattenMapHyperflexVcenterConfigPolicyRelationship(p *models.HyperflexVcent
 	hyperflexvcenterconfigpolicyrelationships = append(hyperflexvcenterconfigpolicyrelationships, hyperflexvcenterconfigpolicyrelationship)
 	return hyperflexvcenterconfigpolicyrelationships
 }
-func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapHyperflexWwxnPrefixRange(p models.HyperflexWwxnPrefixRange, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexwwxnprefixranges []map[string]interface{}
-	if p == nil {
+	var ret models.HyperflexWwxnPrefixRange
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	hyperflexwwxnprefixrange := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.HyperflexWwxnPrefixRange
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		hyperflexwwxnprefixrange["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	hyperflexwwxnprefixrange["class_id"] = item.ClassId
 	hyperflexwwxnprefixrange["end_addr"] = item.EndAddr
 	hyperflexwwxnprefixrange["object_type"] = item.ObjectType
@@ -6039,14 +10761,26 @@ func flattenMapHyperflexWwxnPrefixRange(p *models.HyperflexWwxnPrefixRange, d *s
 	hyperflexwwxnprefixranges = append(hyperflexwwxnprefixranges, hyperflexwwxnprefixrange)
 	return hyperflexwwxnprefixranges
 }
-func flattenMapIaasLicenseInfoRelationship(p *models.IaasLicenseInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIaasLicenseInfoRelationship(p models.IaasLicenseInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaaslicenseinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IaasLicenseInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iaaslicenseinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iaaslicenseinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iaaslicenseinforelationship["class_id"] = item.ClassId
 	iaaslicenseinforelationship["moid"] = item.Moid
 	iaaslicenseinforelationship["object_type"] = item.ObjectType
@@ -6055,14 +10789,26 @@ func flattenMapIaasLicenseInfoRelationship(p *models.IaasLicenseInfoRelationship
 	iaaslicenseinforelationships = append(iaaslicenseinforelationships, iaaslicenseinforelationship)
 	return iaaslicenseinforelationships
 }
-func flattenMapIaasUcsdInfoRelationship(p *models.IaasUcsdInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIaasUcsdInfoRelationship(p models.IaasUcsdInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasucsdinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IaasUcsdInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iaasucsdinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iaasucsdinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iaasucsdinforelationship["class_id"] = item.ClassId
 	iaasucsdinforelationship["moid"] = item.Moid
 	iaasucsdinforelationship["object_type"] = item.ObjectType
@@ -6071,14 +10817,26 @@ func flattenMapIaasUcsdInfoRelationship(p *models.IaasUcsdInfoRelationship, d *s
 	iaasucsdinforelationships = append(iaasucsdinforelationships, iaasucsdinforelationship)
 	return iaasucsdinforelationships
 }
-func flattenMapIaasUcsdManagedInfraRelationship(p *models.IaasUcsdManagedInfraRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIaasUcsdManagedInfraRelationship(p models.IaasUcsdManagedInfraRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iaasucsdmanagedinfrarelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IaasUcsdManagedInfraRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iaasucsdmanagedinfrarelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iaasucsdmanagedinfrarelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iaasucsdmanagedinfrarelationship["class_id"] = item.ClassId
 	iaasucsdmanagedinfrarelationship["moid"] = item.Moid
 	iaasucsdmanagedinfrarelationship["object_type"] = item.ObjectType
@@ -6087,14 +10845,26 @@ func flattenMapIaasUcsdManagedInfraRelationship(p *models.IaasUcsdManagedInfraRe
 	iaasucsdmanagedinfrarelationships = append(iaasucsdmanagedinfrarelationships, iaasucsdmanagedinfrarelationship)
 	return iaasucsdmanagedinfrarelationships
 }
-func flattenMapIamAccountRelationship(p *models.IamAccountRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamAccountRelationship(p models.IamAccountRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamaccountrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamAccountRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamaccountrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamaccountrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamaccountrelationship["class_id"] = item.ClassId
 	iamaccountrelationship["moid"] = item.Moid
 	iamaccountrelationship["object_type"] = item.ObjectType
@@ -6103,14 +10873,26 @@ func flattenMapIamAccountRelationship(p *models.IamAccountRelationship, d *schem
 	iamaccountrelationships = append(iamaccountrelationships, iamaccountrelationship)
 	return iamaccountrelationships
 }
-func flattenMapIamAppRegistrationRelationship(p *models.IamAppRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamAppRegistrationRelationship(p models.IamAppRegistrationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamappregistrationrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamAppRegistrationRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamappregistrationrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamappregistrationrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamappregistrationrelationship["class_id"] = item.ClassId
 	iamappregistrationrelationship["moid"] = item.Moid
 	iamappregistrationrelationship["object_type"] = item.ObjectType
@@ -6119,14 +10901,26 @@ func flattenMapIamAppRegistrationRelationship(p *models.IamAppRegistrationRelati
 	iamappregistrationrelationships = append(iamappregistrationrelationships, iamappregistrationrelationship)
 	return iamappregistrationrelationships
 }
-func flattenMapIamCertificateRelationship(p *models.IamCertificateRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamCertificateRelationship(p models.IamCertificateRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamcertificaterelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamCertificateRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamcertificaterelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamcertificaterelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamcertificaterelationship["class_id"] = item.ClassId
 	iamcertificaterelationship["moid"] = item.Moid
 	iamcertificaterelationship["object_type"] = item.ObjectType
@@ -6135,14 +10929,26 @@ func flattenMapIamCertificateRelationship(p *models.IamCertificateRelationship, 
 	iamcertificaterelationships = append(iamcertificaterelationships, iamcertificaterelationship)
 	return iamcertificaterelationships
 }
-func flattenMapIamCertificateRequestRelationship(p *models.IamCertificateRequestRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamCertificateRequestRelationship(p models.IamCertificateRequestRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamcertificaterequestrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamCertificateRequestRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamcertificaterequestrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamcertificaterequestrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamcertificaterequestrelationship["class_id"] = item.ClassId
 	iamcertificaterequestrelationship["moid"] = item.Moid
 	iamcertificaterequestrelationship["object_type"] = item.ObjectType
@@ -6151,13 +10957,25 @@ func flattenMapIamCertificateRequestRelationship(p *models.IamCertificateRequest
 	iamcertificaterequestrelationships = append(iamcertificaterequestrelationships, iamcertificaterequestrelationship)
 	return iamcertificaterequestrelationships
 }
-func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamClientMeta(p models.IamClientMeta, d *schema.ResourceData) []map[string]interface{} {
 	var iamclientmetas []map[string]interface{}
-	if p == nil {
+	var ret models.IamClientMeta
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	iamclientmeta := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IamClientMeta
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamclientmeta["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamclientmeta["class_id"] = item.ClassId
 	iamclientmeta["device_model"] = item.DeviceModel
 	iamclientmeta["object_type"] = item.ObjectType
@@ -6166,14 +10984,26 @@ func flattenMapIamClientMeta(p *models.IamClientMeta, d *schema.ResourceData) []
 	iamclientmetas = append(iamclientmetas, iamclientmeta)
 	return iamclientmetas
 }
-func flattenMapIamDomainGroupRelationship(p *models.IamDomainGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamDomainGroupRelationship(p models.IamDomainGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamdomaingrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamDomainGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamdomaingrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamdomaingrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamdomaingrouprelationship["class_id"] = item.ClassId
 	iamdomaingrouprelationship["moid"] = item.Moid
 	iamdomaingrouprelationship["object_type"] = item.ObjectType
@@ -6182,13 +11012,25 @@ func flattenMapIamDomainGroupRelationship(p *models.IamDomainGroupRelationship, 
 	iamdomaingrouprelationships = append(iamdomaingrouprelationships, iamdomaingrouprelationship)
 	return iamdomaingrouprelationships
 }
-func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointPasswordProperties(p models.IamEndPointPasswordProperties, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointpasswordpropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.IamEndPointPasswordProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	iamendpointpasswordproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IamEndPointPasswordProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamendpointpasswordproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamendpointpasswordproperties["class_id"] = item.ClassId
 	iamendpointpasswordproperties["enable_password_expiry"] = item.EnablePasswordExpiry
 	iamendpointpasswordproperties["enforce_strong_password"] = item.EnforceStrongPassword
@@ -6202,14 +11044,26 @@ func flattenMapIamEndPointPasswordProperties(p *models.IamEndPointPasswordProper
 	iamendpointpasswordpropertiess = append(iamendpointpasswordpropertiess, iamendpointpasswordproperties)
 	return iamendpointpasswordpropertiess
 }
-func flattenMapIamEndPointUserRelationship(p *models.IamEndPointUserRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserRelationship(p models.IamEndPointUserRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointuserrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamEndPointUserRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamendpointuserrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamendpointuserrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamendpointuserrelationship["class_id"] = item.ClassId
 	iamendpointuserrelationship["moid"] = item.Moid
 	iamendpointuserrelationship["object_type"] = item.ObjectType
@@ -6218,14 +11072,26 @@ func flattenMapIamEndPointUserRelationship(p *models.IamEndPointUserRelationship
 	iamendpointuserrelationships = append(iamendpointuserrelationships, iamendpointuserrelationship)
 	return iamendpointuserrelationships
 }
-func flattenMapIamEndPointUserPolicyRelationship(p *models.IamEndPointUserPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamEndPointUserPolicyRelationship(p models.IamEndPointUserPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamendpointuserpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamEndPointUserPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamendpointuserpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamendpointuserpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamendpointuserpolicyrelationship["class_id"] = item.ClassId
 	iamendpointuserpolicyrelationship["moid"] = item.Moid
 	iamendpointuserpolicyrelationship["object_type"] = item.ObjectType
@@ -6234,14 +11100,26 @@ func flattenMapIamEndPointUserPolicyRelationship(p *models.IamEndPointUserPolicy
 	iamendpointuserpolicyrelationships = append(iamendpointuserpolicyrelationships, iamendpointuserpolicyrelationship)
 	return iamendpointuserpolicyrelationships
 }
-func flattenMapIamIdpRelationship(p *models.IamIdpRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamIdpRelationship(p models.IamIdpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamIdpRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamidprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamidprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamidprelationship["class_id"] = item.ClassId
 	iamidprelationship["moid"] = item.Moid
 	iamidprelationship["object_type"] = item.ObjectType
@@ -6250,14 +11128,26 @@ func flattenMapIamIdpRelationship(p *models.IamIdpRelationship, d *schema.Resour
 	iamidprelationships = append(iamidprelationships, iamidprelationship)
 	return iamidprelationships
 }
-func flattenMapIamIdpReferenceRelationship(p *models.IamIdpReferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamIdpReferenceRelationship(p models.IamIdpReferenceRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamidpreferencerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamIdpReferenceRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamidpreferencerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamidpreferencerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamidpreferencerelationship["class_id"] = item.ClassId
 	iamidpreferencerelationship["moid"] = item.Moid
 	iamidpreferencerelationship["object_type"] = item.ObjectType
@@ -6266,13 +11156,25 @@ func flattenMapIamIdpReferenceRelationship(p *models.IamIdpReferenceRelationship
 	iamidpreferencerelationships = append(iamidpreferencerelationships, iamidpreferencerelationship)
 	return iamidpreferencerelationships
 }
-func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLdapBaseProperties(p models.IamLdapBaseProperties, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapbasepropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.IamLdapBaseProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	iamldapbaseproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IamLdapBaseProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamldapbaseproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamldapbaseproperties["attribute"] = item.Attribute
 	iamldapbaseproperties["base_dn"] = item.BaseDn
 	iamldapbaseproperties["bind_dn"] = item.BindDn
@@ -6294,13 +11196,25 @@ func flattenMapIamLdapBaseProperties(p *models.IamLdapBaseProperties, d *schema.
 	iamldapbasepropertiess = append(iamldapbasepropertiess, iamldapbaseproperties)
 	return iamldapbasepropertiess
 }
-func flattenMapIamLdapDnsParameters(p *models.IamLdapDnsParameters, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLdapDnsParameters(p models.IamLdapDnsParameters, d *schema.ResourceData) []map[string]interface{} {
 	var iamldapdnsparameterss []map[string]interface{}
-	if p == nil {
+	var ret models.IamLdapDnsParameters
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	iamldapdnsparameters := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IamLdapDnsParameters
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamldapdnsparameters["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamldapdnsparameters["class_id"] = item.ClassId
 	iamldapdnsparameters["object_type"] = item.ObjectType
 	iamldapdnsparameters["search_domain"] = item.SearchDomain
@@ -6310,14 +11224,26 @@ func flattenMapIamLdapDnsParameters(p *models.IamLdapDnsParameters, d *schema.Re
 	iamldapdnsparameterss = append(iamldapdnsparameterss, iamldapdnsparameters)
 	return iamldapdnsparameterss
 }
-func flattenMapIamLdapPolicyRelationship(p *models.IamLdapPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLdapPolicyRelationship(p models.IamLdapPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamldappolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamLdapPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamldappolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamldappolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamldappolicyrelationship["class_id"] = item.ClassId
 	iamldappolicyrelationship["moid"] = item.Moid
 	iamldappolicyrelationship["object_type"] = item.ObjectType
@@ -6326,14 +11252,26 @@ func flattenMapIamLdapPolicyRelationship(p *models.IamLdapPolicyRelationship, d 
 	iamldappolicyrelationships = append(iamldappolicyrelationships, iamldappolicyrelationship)
 	return iamldappolicyrelationships
 }
-func flattenMapIamLocalUserPasswordRelationship(p *models.IamLocalUserPasswordRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamLocalUserPasswordRelationship(p models.IamLocalUserPasswordRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamlocaluserpasswordrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamLocalUserPasswordRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamlocaluserpasswordrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamlocaluserpasswordrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamlocaluserpasswordrelationship["class_id"] = item.ClassId
 	iamlocaluserpasswordrelationship["moid"] = item.Moid
 	iamlocaluserpasswordrelationship["object_type"] = item.ObjectType
@@ -6342,14 +11280,26 @@ func flattenMapIamLocalUserPasswordRelationship(p *models.IamLocalUserPasswordRe
 	iamlocaluserpasswordrelationships = append(iamlocaluserpasswordrelationships, iamlocaluserpasswordrelationship)
 	return iamlocaluserpasswordrelationships
 }
-func flattenMapIamPermissionRelationship(p *models.IamPermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamPermissionRelationship(p models.IamPermissionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iampermissionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamPermissionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iampermissionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iampermissionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iampermissionrelationship["class_id"] = item.ClassId
 	iampermissionrelationship["moid"] = item.Moid
 	iampermissionrelationship["object_type"] = item.ObjectType
@@ -6358,14 +11308,26 @@ func flattenMapIamPermissionRelationship(p *models.IamPermissionRelationship, d 
 	iampermissionrelationships = append(iampermissionrelationships, iampermissionrelationship)
 	return iampermissionrelationships
 }
-func flattenMapIamPrivateKeySpecRelationship(p *models.IamPrivateKeySpecRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamPrivateKeySpecRelationship(p models.IamPrivateKeySpecRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamprivatekeyspecrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamPrivateKeySpecRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamprivatekeyspecrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamprivatekeyspecrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamprivatekeyspecrelationship["class_id"] = item.ClassId
 	iamprivatekeyspecrelationship["moid"] = item.Moid
 	iamprivatekeyspecrelationship["object_type"] = item.ObjectType
@@ -6374,14 +11336,26 @@ func flattenMapIamPrivateKeySpecRelationship(p *models.IamPrivateKeySpecRelation
 	iamprivatekeyspecrelationships = append(iamprivatekeyspecrelationships, iamprivatekeyspecrelationship)
 	return iamprivatekeyspecrelationships
 }
-func flattenMapIamQualifierRelationship(p *models.IamQualifierRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamQualifierRelationship(p models.IamQualifierRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamqualifierrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamQualifierRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamqualifierrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamqualifierrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamqualifierrelationship["class_id"] = item.ClassId
 	iamqualifierrelationship["moid"] = item.Moid
 	iamqualifierrelationship["object_type"] = item.ObjectType
@@ -6390,14 +11364,26 @@ func flattenMapIamQualifierRelationship(p *models.IamQualifierRelationship, d *s
 	iamqualifierrelationships = append(iamqualifierrelationships, iamqualifierrelationship)
 	return iamqualifierrelationships
 }
-func flattenMapIamResourceLimitsRelationship(p *models.IamResourceLimitsRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamResourceLimitsRelationship(p models.IamResourceLimitsRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamresourcelimitsrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamResourceLimitsRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamresourcelimitsrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamresourcelimitsrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamresourcelimitsrelationship["class_id"] = item.ClassId
 	iamresourcelimitsrelationship["moid"] = item.Moid
 	iamresourcelimitsrelationship["object_type"] = item.ObjectType
@@ -6406,14 +11392,26 @@ func flattenMapIamResourceLimitsRelationship(p *models.IamResourceLimitsRelation
 	iamresourcelimitsrelationships = append(iamresourcelimitsrelationships, iamresourcelimitsrelationship)
 	return iamresourcelimitsrelationships
 }
-func flattenMapIamSecurityHolderRelationship(p *models.IamSecurityHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamSecurityHolderRelationship(p models.IamSecurityHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsecurityholderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamSecurityHolderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamsecurityholderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamsecurityholderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamsecurityholderrelationship["class_id"] = item.ClassId
 	iamsecurityholderrelationship["moid"] = item.Moid
 	iamsecurityholderrelationship["object_type"] = item.ObjectType
@@ -6422,14 +11420,26 @@ func flattenMapIamSecurityHolderRelationship(p *models.IamSecurityHolderRelation
 	iamsecurityholderrelationships = append(iamsecurityholderrelationships, iamsecurityholderrelationship)
 	return iamsecurityholderrelationships
 }
-func flattenMapIamServiceProviderRelationship(p *models.IamServiceProviderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamServiceProviderRelationship(p models.IamServiceProviderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamserviceproviderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamServiceProviderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamserviceproviderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamserviceproviderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamserviceproviderrelationship["class_id"] = item.ClassId
 	iamserviceproviderrelationship["moid"] = item.Moid
 	iamserviceproviderrelationship["object_type"] = item.ObjectType
@@ -6438,14 +11448,26 @@ func flattenMapIamServiceProviderRelationship(p *models.IamServiceProviderRelati
 	iamserviceproviderrelationships = append(iamserviceproviderrelationships, iamserviceproviderrelationship)
 	return iamserviceproviderrelationships
 }
-func flattenMapIamSessionRelationship(p *models.IamSessionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamSessionRelationship(p models.IamSessionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsessionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamSessionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamsessionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamsessionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamsessionrelationship["class_id"] = item.ClassId
 	iamsessionrelationship["moid"] = item.Moid
 	iamsessionrelationship["object_type"] = item.ObjectType
@@ -6454,14 +11476,26 @@ func flattenMapIamSessionRelationship(p *models.IamSessionRelationship, d *schem
 	iamsessionrelationships = append(iamsessionrelationships, iamsessionrelationship)
 	return iamsessionrelationships
 }
-func flattenMapIamSessionLimitsRelationship(p *models.IamSessionLimitsRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamSessionLimitsRelationship(p models.IamSessionLimitsRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsessionlimitsrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamSessionLimitsRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamsessionlimitsrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamsessionlimitsrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamsessionlimitsrelationship["class_id"] = item.ClassId
 	iamsessionlimitsrelationship["moid"] = item.Moid
 	iamsessionlimitsrelationship["object_type"] = item.ObjectType
@@ -6470,14 +11504,26 @@ func flattenMapIamSessionLimitsRelationship(p *models.IamSessionLimitsRelationsh
 	iamsessionlimitsrelationships = append(iamsessionlimitsrelationships, iamsessionlimitsrelationship)
 	return iamsessionlimitsrelationships
 }
-func flattenMapIamSystemRelationship(p *models.IamSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamSystemRelationship(p models.IamSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamsystemrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamSystemRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamsystemrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamsystemrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamsystemrelationship["class_id"] = item.ClassId
 	iamsystemrelationship["moid"] = item.Moid
 	iamsystemrelationship["object_type"] = item.ObjectType
@@ -6486,14 +11532,26 @@ func flattenMapIamSystemRelationship(p *models.IamSystemRelationship, d *schema.
 	iamsystemrelationships = append(iamsystemrelationships, iamsystemrelationship)
 	return iamsystemrelationships
 }
-func flattenMapIamUserRelationship(p *models.IamUserRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamUserRelationship(p models.IamUserRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamuserrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamUserRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamuserrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamuserrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamuserrelationship["class_id"] = item.ClassId
 	iamuserrelationship["moid"] = item.Moid
 	iamuserrelationship["object_type"] = item.ObjectType
@@ -6502,14 +11560,26 @@ func flattenMapIamUserRelationship(p *models.IamUserRelationship, d *schema.Reso
 	iamuserrelationships = append(iamuserrelationships, iamuserrelationship)
 	return iamuserrelationships
 }
-func flattenMapIamUserGroupRelationship(p *models.IamUserGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIamUserGroupRelationship(p models.IamUserGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var iamusergrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IamUserGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	iamusergrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		iamusergrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	iamusergrouprelationship["class_id"] = item.ClassId
 	iamusergrouprelationship["moid"] = item.Moid
 	iamusergrouprelationship["object_type"] = item.ObjectType
@@ -6518,13 +11588,25 @@ func flattenMapIamUserGroupRelationship(p *models.IamUserGroupRelationship, d *s
 	iamusergrouprelationships = append(iamusergrouprelationships, iamusergrouprelationship)
 	return iamusergrouprelationships
 }
-func flattenMapInfraHardwareInfo(p *models.InfraHardwareInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInfraHardwareInfo(p models.InfraHardwareInfo, d *schema.ResourceData) []map[string]interface{} {
 	var infrahardwareinfos []map[string]interface{}
-	if p == nil {
+	var ret models.InfraHardwareInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	infrahardwareinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.InfraHardwareInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		infrahardwareinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	infrahardwareinfo["class_id"] = item.ClassId
 	infrahardwareinfo["cpu_cores"] = item.CpuCores
 	infrahardwareinfo["cpu_speed"] = item.CpuSpeed
@@ -6534,14 +11616,26 @@ func flattenMapInfraHardwareInfo(p *models.InfraHardwareInfo, d *schema.Resource
 	infrahardwareinfos = append(infrahardwareinfos, infrahardwareinfo)
 	return infrahardwareinfos
 }
-func flattenMapInventoryBaseRelationship(p *models.InventoryBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryBaseRelationship(p models.InventoryBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorybaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.InventoryBaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	inventorybaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		inventorybaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	inventorybaserelationship["class_id"] = item.ClassId
 	inventorybaserelationship["moid"] = item.Moid
 	inventorybaserelationship["object_type"] = item.ObjectType
@@ -6550,14 +11644,26 @@ func flattenMapInventoryBaseRelationship(p *models.InventoryBaseRelationship, d 
 	inventorybaserelationships = append(inventorybaserelationships, inventorybaserelationship)
 	return inventorybaserelationships
 }
-func flattenMapInventoryDeviceInfoRelationship(p *models.InventoryDeviceInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryDeviceInfoRelationship(p models.InventoryDeviceInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorydeviceinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.InventoryDeviceInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	inventorydeviceinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		inventorydeviceinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	inventorydeviceinforelationship["class_id"] = item.ClassId
 	inventorydeviceinforelationship["moid"] = item.Moid
 	inventorydeviceinforelationship["object_type"] = item.ObjectType
@@ -6566,13 +11672,25 @@ func flattenMapInventoryDeviceInfoRelationship(p *models.InventoryDeviceInfoRela
 	inventorydeviceinforelationships = append(inventorydeviceinforelationships, inventorydeviceinforelationship)
 	return inventorydeviceinforelationships
 }
-func flattenMapInventoryEpInfo(p *models.InventoryEpInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryEpInfo(p models.InventoryEpInfo, d *schema.ResourceData) []map[string]interface{} {
 	var inventoryepinfos []map[string]interface{}
-	if p == nil {
+	var ret models.InventoryEpInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	inventoryepinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.InventoryEpInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		inventoryepinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	inventoryepinfo["class_id"] = item.ClassId
 	inventoryepinfo["connection_status"] = item.ConnectionStatus
 	inventoryepinfo["ep_type"] = item.EpType
@@ -6588,14 +11706,26 @@ func flattenMapInventoryEpInfo(p *models.InventoryEpInfo, d *schema.ResourceData
 	inventoryepinfos = append(inventoryepinfos, inventoryepinfo)
 	return inventoryepinfos
 }
-func flattenMapInventoryGenericInventoryHolderRelationship(p *models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryGenericInventoryHolderRelationship(p models.InventoryGenericInventoryHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventorygenericinventoryholderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.InventoryGenericInventoryHolderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	inventorygenericinventoryholderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		inventorygenericinventoryholderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	inventorygenericinventoryholderrelationship["class_id"] = item.ClassId
 	inventorygenericinventoryholderrelationship["moid"] = item.Moid
 	inventorygenericinventoryholderrelationship["object_type"] = item.ObjectType
@@ -6604,14 +11734,26 @@ func flattenMapInventoryGenericInventoryHolderRelationship(p *models.InventoryGe
 	inventorygenericinventoryholderrelationships = append(inventorygenericinventoryholderrelationships, inventorygenericinventoryholderrelationship)
 	return inventorygenericinventoryholderrelationships
 }
-func flattenMapInventoryUemConnectionRelationship(p *models.InventoryUemConnectionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapInventoryUemConnectionRelationship(p models.InventoryUemConnectionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var inventoryuemconnectionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.InventoryUemConnectionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	inventoryuemconnectionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		inventoryuemconnectionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	inventoryuemconnectionrelationship["class_id"] = item.ClassId
 	inventoryuemconnectionrelationship["moid"] = item.Moid
 	inventoryuemconnectionrelationship["object_type"] = item.ObjectType
@@ -6620,13 +11762,25 @@ func flattenMapInventoryUemConnectionRelationship(p *models.InventoryUemConnecti
 	inventoryuemconnectionrelationships = append(inventoryuemconnectionrelationships, inventoryuemconnectionrelationship)
 	return inventoryuemconnectionrelationships
 }
-func flattenMapIppoolIpBlock(p *models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolIpBlock(p models.IppoolIpBlock, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolipblocks []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolIpBlock
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	ippoolipblock := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IppoolIpBlock
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolipblock["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolipblock["class_id"] = item.ClassId
 	ippoolipblock["from"] = item.From
 	ippoolipblock["object_type"] = item.ObjectType
@@ -6636,14 +11790,26 @@ func flattenMapIppoolIpBlock(p *models.IppoolIpBlock, d *schema.ResourceData) []
 	ippoolipblocks = append(ippoolipblocks, ippoolipblock)
 	return ippoolipblocks
 }
-func flattenMapIppoolIpLeaseRelationship(p *models.IppoolIpLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolIpLeaseRelationship(p models.IppoolIpLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolipleaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolIpLeaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippoolipleaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolipleaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolipleaserelationship["class_id"] = item.ClassId
 	ippoolipleaserelationship["moid"] = item.Moid
 	ippoolipleaserelationship["object_type"] = item.ObjectType
@@ -6652,13 +11818,25 @@ func flattenMapIppoolIpLeaseRelationship(p *models.IppoolIpLeaseRelationship, d 
 	ippoolipleaserelationships = append(ippoolipleaserelationships, ippoolipleaserelationship)
 	return ippoolipleaserelationships
 }
-func flattenMapIppoolIpV4Config(p *models.IppoolIpV4Config, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolIpV4Config(p models.IppoolIpV4Config, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolipv4configs []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolIpV4Config
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	ippoolipv4config := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.IppoolIpV4Config
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolipv4config["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolipv4config["class_id"] = item.ClassId
 	ippoolipv4config["gateway"] = item.Gateway
 	ippoolipv4config["netmask"] = item.Netmask
@@ -6669,14 +11847,26 @@ func flattenMapIppoolIpV4Config(p *models.IppoolIpV4Config, d *schema.ResourceDa
 	ippoolipv4configs = append(ippoolipv4configs, ippoolipv4config)
 	return ippoolipv4configs
 }
-func flattenMapIppoolPoolRelationship(p *models.IppoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolPoolRelationship(p models.IppoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolpoolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolPoolRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippoolpoolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolpoolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolpoolrelationship["class_id"] = item.ClassId
 	ippoolpoolrelationship["moid"] = item.Moid
 	ippoolpoolrelationship["object_type"] = item.ObjectType
@@ -6685,14 +11875,26 @@ func flattenMapIppoolPoolRelationship(p *models.IppoolPoolRelationship, d *schem
 	ippoolpoolrelationships = append(ippoolpoolrelationships, ippoolpoolrelationship)
 	return ippoolpoolrelationships
 }
-func flattenMapIppoolPoolMemberRelationship(p *models.IppoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolPoolMemberRelationship(p models.IppoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolpoolmemberrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolPoolMemberRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippoolpoolmemberrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolpoolmemberrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolpoolmemberrelationship["class_id"] = item.ClassId
 	ippoolpoolmemberrelationship["moid"] = item.Moid
 	ippoolpoolmemberrelationship["object_type"] = item.ObjectType
@@ -6701,14 +11903,26 @@ func flattenMapIppoolPoolMemberRelationship(p *models.IppoolPoolMemberRelationsh
 	ippoolpoolmemberrelationships = append(ippoolpoolmemberrelationships, ippoolpoolmemberrelationship)
 	return ippoolpoolmemberrelationships
 }
-func flattenMapIppoolShadowBlockRelationship(p *models.IppoolShadowBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolShadowBlockRelationship(p models.IppoolShadowBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolshadowblockrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolShadowBlockRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippoolshadowblockrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolshadowblockrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolshadowblockrelationship["class_id"] = item.ClassId
 	ippoolshadowblockrelationship["moid"] = item.Moid
 	ippoolshadowblockrelationship["object_type"] = item.ObjectType
@@ -6717,14 +11931,26 @@ func flattenMapIppoolShadowBlockRelationship(p *models.IppoolShadowBlockRelation
 	ippoolshadowblockrelationships = append(ippoolshadowblockrelationships, ippoolshadowblockrelationship)
 	return ippoolshadowblockrelationships
 }
-func flattenMapIppoolShadowPoolRelationship(p *models.IppoolShadowPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolShadowPoolRelationship(p models.IppoolShadowPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippoolshadowpoolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolShadowPoolRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippoolshadowpoolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippoolshadowpoolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippoolshadowpoolrelationship["class_id"] = item.ClassId
 	ippoolshadowpoolrelationship["moid"] = item.Moid
 	ippoolshadowpoolrelationship["object_type"] = item.ObjectType
@@ -6733,14 +11959,26 @@ func flattenMapIppoolShadowPoolRelationship(p *models.IppoolShadowPoolRelationsh
 	ippoolshadowpoolrelationships = append(ippoolshadowpoolrelationships, ippoolshadowpoolrelationship)
 	return ippoolshadowpoolrelationships
 }
-func flattenMapIppoolUniverseRelationship(p *models.IppoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapIppoolUniverseRelationship(p models.IppoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var ippooluniverserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.IppoolUniverseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	ippooluniverserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		ippooluniverserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	ippooluniverserelationship["class_id"] = item.ClassId
 	ippooluniverserelationship["moid"] = item.Moid
 	ippooluniverserelationship["object_type"] = item.ObjectType
@@ -6749,14 +11987,26 @@ func flattenMapIppoolUniverseRelationship(p *models.IppoolUniverseRelationship, 
 	ippooluniverserelationships = append(ippooluniverserelationships, ippooluniverserelationship)
 	return ippooluniverserelationships
 }
-func flattenMapLicenseAccountLicenseDataRelationship(p *models.LicenseAccountLicenseDataRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapLicenseAccountLicenseDataRelationship(p models.LicenseAccountLicenseDataRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var licenseaccountlicensedatarelationships []map[string]interface{}
-	if p == nil {
+	var ret models.LicenseAccountLicenseDataRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	licenseaccountlicensedatarelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		licenseaccountlicensedatarelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	licenseaccountlicensedatarelationship["class_id"] = item.ClassId
 	licenseaccountlicensedatarelationship["moid"] = item.Moid
 	licenseaccountlicensedatarelationship["object_type"] = item.ObjectType
@@ -6765,14 +12015,26 @@ func flattenMapLicenseAccountLicenseDataRelationship(p *models.LicenseAccountLic
 	licenseaccountlicensedatarelationships = append(licenseaccountlicensedatarelationships, licenseaccountlicensedatarelationship)
 	return licenseaccountlicensedatarelationships
 }
-func flattenMapLicenseCustomerOpRelationship(p *models.LicenseCustomerOpRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapLicenseCustomerOpRelationship(p models.LicenseCustomerOpRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var licensecustomeroprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.LicenseCustomerOpRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	licensecustomeroprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		licensecustomeroprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	licensecustomeroprelationship["class_id"] = item.ClassId
 	licensecustomeroprelationship["moid"] = item.Moid
 	licensecustomeroprelationship["object_type"] = item.ObjectType
@@ -6781,14 +12043,26 @@ func flattenMapLicenseCustomerOpRelationship(p *models.LicenseCustomerOpRelation
 	licensecustomeroprelationships = append(licensecustomeroprelationships, licensecustomeroprelationship)
 	return licensecustomeroprelationships
 }
-func flattenMapLicenseSmartlicenseTokenRelationship(p *models.LicenseSmartlicenseTokenRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapLicenseSmartlicenseTokenRelationship(p models.LicenseSmartlicenseTokenRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var licensesmartlicensetokenrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.LicenseSmartlicenseTokenRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	licensesmartlicensetokenrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		licensesmartlicensetokenrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	licensesmartlicensetokenrelationship["class_id"] = item.ClassId
 	licensesmartlicensetokenrelationship["moid"] = item.Moid
 	licensesmartlicensetokenrelationship["object_type"] = item.ObjectType
@@ -6797,13 +12071,25 @@ func flattenMapLicenseSmartlicenseTokenRelationship(p *models.LicenseSmartlicens
 	licensesmartlicensetokenrelationships = append(licensesmartlicensetokenrelationships, licensesmartlicensetokenrelationship)
 	return licensesmartlicensetokenrelationships
 }
-func flattenMapMacpoolBlock(p *models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolBlock(p models.MacpoolBlock, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolblocks []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolBlock
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	macpoolblock := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MacpoolBlock
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpoolblock["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpoolblock["class_id"] = item.ClassId
 	macpoolblock["from"] = item.From
 	macpoolblock["object_type"] = item.ObjectType
@@ -6813,14 +12099,26 @@ func flattenMapMacpoolBlock(p *models.MacpoolBlock, d *schema.ResourceData) []ma
 	macpoolblocks = append(macpoolblocks, macpoolblock)
 	return macpoolblocks
 }
-func flattenMapMacpoolIdBlockRelationship(p *models.MacpoolIdBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolIdBlockRelationship(p models.MacpoolIdBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolidblockrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolIdBlockRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	macpoolidblockrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpoolidblockrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpoolidblockrelationship["class_id"] = item.ClassId
 	macpoolidblockrelationship["moid"] = item.Moid
 	macpoolidblockrelationship["object_type"] = item.ObjectType
@@ -6829,14 +12127,26 @@ func flattenMapMacpoolIdBlockRelationship(p *models.MacpoolIdBlockRelationship, 
 	macpoolidblockrelationships = append(macpoolidblockrelationships, macpoolidblockrelationship)
 	return macpoolidblockrelationships
 }
-func flattenMapMacpoolLeaseRelationship(p *models.MacpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolLeaseRelationship(p models.MacpoolLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolleaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolLeaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	macpoolleaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpoolleaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpoolleaserelationship["class_id"] = item.ClassId
 	macpoolleaserelationship["moid"] = item.Moid
 	macpoolleaserelationship["object_type"] = item.ObjectType
@@ -6845,14 +12155,26 @@ func flattenMapMacpoolLeaseRelationship(p *models.MacpoolLeaseRelationship, d *s
 	macpoolleaserelationships = append(macpoolleaserelationships, macpoolleaserelationship)
 	return macpoolleaserelationships
 }
-func flattenMapMacpoolPoolRelationship(p *models.MacpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolPoolRelationship(p models.MacpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolpoolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolPoolRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	macpoolpoolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpoolpoolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpoolpoolrelationship["class_id"] = item.ClassId
 	macpoolpoolrelationship["moid"] = item.Moid
 	macpoolpoolrelationship["object_type"] = item.ObjectType
@@ -6861,14 +12183,26 @@ func flattenMapMacpoolPoolRelationship(p *models.MacpoolPoolRelationship, d *sch
 	macpoolpoolrelationships = append(macpoolpoolrelationships, macpoolpoolrelationship)
 	return macpoolpoolrelationships
 }
-func flattenMapMacpoolPoolMemberRelationship(p *models.MacpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolPoolMemberRelationship(p models.MacpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpoolpoolmemberrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolPoolMemberRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	macpoolpoolmemberrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpoolpoolmemberrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpoolpoolmemberrelationship["class_id"] = item.ClassId
 	macpoolpoolmemberrelationship["moid"] = item.Moid
 	macpoolpoolmemberrelationship["object_type"] = item.ObjectType
@@ -6877,14 +12211,26 @@ func flattenMapMacpoolPoolMemberRelationship(p *models.MacpoolPoolMemberRelation
 	macpoolpoolmemberrelationships = append(macpoolpoolmemberrelationships, macpoolpoolmemberrelationship)
 	return macpoolpoolmemberrelationships
 }
-func flattenMapMacpoolUniverseRelationship(p *models.MacpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMacpoolUniverseRelationship(p models.MacpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var macpooluniverserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MacpoolUniverseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	macpooluniverserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		macpooluniverserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	macpooluniverserelationship["class_id"] = item.ClassId
 	macpooluniverserelationship["moid"] = item.Moid
 	macpooluniverserelationship["object_type"] = item.ObjectType
@@ -6893,14 +12239,26 @@ func flattenMapMacpoolUniverseRelationship(p *models.MacpoolUniverseRelationship
 	macpooluniverserelationships = append(macpooluniverserelationships, macpooluniverserelationship)
 	return macpooluniverserelationships
 }
-func flattenMapManagementControllerRelationship(p *models.ManagementControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapManagementControllerRelationship(p models.ManagementControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var managementcontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ManagementControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	managementcontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		managementcontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	managementcontrollerrelationship["class_id"] = item.ClassId
 	managementcontrollerrelationship["moid"] = item.Moid
 	managementcontrollerrelationship["object_type"] = item.ObjectType
@@ -6909,14 +12267,26 @@ func flattenMapManagementControllerRelationship(p *models.ManagementControllerRe
 	managementcontrollerrelationships = append(managementcontrollerrelationships, managementcontrollerrelationship)
 	return managementcontrollerrelationships
 }
-func flattenMapManagementEntityRelationship(p *models.ManagementEntityRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapManagementEntityRelationship(p models.ManagementEntityRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var managemententityrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ManagementEntityRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	managemententityrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		managemententityrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	managemententityrelationship["class_id"] = item.ClassId
 	managemententityrelationship["moid"] = item.Moid
 	managemententityrelationship["object_type"] = item.ObjectType
@@ -6925,14 +12295,26 @@ func flattenMapManagementEntityRelationship(p *models.ManagementEntityRelationsh
 	managemententityrelationships = append(managemententityrelationships, managemententityrelationship)
 	return managemententityrelationships
 }
-func flattenMapMemoryArrayRelationship(p *models.MemoryArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMemoryArrayRelationship(p models.MemoryArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memoryarrayrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MemoryArrayRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	memoryarrayrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		memoryarrayrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	memoryarrayrelationship["class_id"] = item.ClassId
 	memoryarrayrelationship["moid"] = item.Moid
 	memoryarrayrelationship["object_type"] = item.ObjectType
@@ -6941,14 +12323,26 @@ func flattenMapMemoryArrayRelationship(p *models.MemoryArrayRelationship, d *sch
 	memoryarrayrelationships = append(memoryarrayrelationships, memoryarrayrelationship)
 	return memoryarrayrelationships
 }
-func flattenMapMemoryPersistentMemoryConfigResultRelationship(p *models.MemoryPersistentMemoryConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMemoryPersistentMemoryConfigResultRelationship(p models.MemoryPersistentMemoryConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MemoryPersistentMemoryConfigResultRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	memorypersistentmemoryconfigresultrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		memorypersistentmemoryconfigresultrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	memorypersistentmemoryconfigresultrelationship["class_id"] = item.ClassId
 	memorypersistentmemoryconfigresultrelationship["moid"] = item.Moid
 	memorypersistentmemoryconfigresultrelationship["object_type"] = item.ObjectType
@@ -6957,14 +12351,26 @@ func flattenMapMemoryPersistentMemoryConfigResultRelationship(p *models.MemoryPe
 	memorypersistentmemoryconfigresultrelationships = append(memorypersistentmemoryconfigresultrelationships, memorypersistentmemoryconfigresultrelationship)
 	return memorypersistentmemoryconfigresultrelationships
 }
-func flattenMapMemoryPersistentMemoryConfigurationRelationship(p *models.MemoryPersistentMemoryConfigurationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMemoryPersistentMemoryConfigurationRelationship(p models.MemoryPersistentMemoryConfigurationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryconfigurationrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MemoryPersistentMemoryConfigurationRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	memorypersistentmemoryconfigurationrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		memorypersistentmemoryconfigurationrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	memorypersistentmemoryconfigurationrelationship["class_id"] = item.ClassId
 	memorypersistentmemoryconfigurationrelationship["moid"] = item.Moid
 	memorypersistentmemoryconfigurationrelationship["object_type"] = item.ObjectType
@@ -6973,13 +12379,25 @@ func flattenMapMemoryPersistentMemoryConfigurationRelationship(p *models.MemoryP
 	memorypersistentmemoryconfigurationrelationships = append(memorypersistentmemoryconfigurationrelationships, memorypersistentmemoryconfigurationrelationship)
 	return memorypersistentmemoryconfigurationrelationships
 }
-func flattenMapMemoryPersistentMemoryLocalSecurity(p *models.MemoryPersistentMemoryLocalSecurity, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMemoryPersistentMemoryLocalSecurity(p models.MemoryPersistentMemoryLocalSecurity, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemorylocalsecuritys []map[string]interface{}
-	if p == nil {
+	var ret models.MemoryPersistentMemoryLocalSecurity
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	memorypersistentmemorylocalsecurity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MemoryPersistentMemoryLocalSecurity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		memorypersistentmemorylocalsecurity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	memorypersistentmemorylocalsecurity["class_id"] = item.ClassId
 	memorypersistentmemorylocalsecurity["enabled"] = item.Enabled
 	memorypersistentmemorylocalsecurity["is_secure_passphrase_set"] = item.IsSecurePassphraseSet
@@ -6991,14 +12409,26 @@ func flattenMapMemoryPersistentMemoryLocalSecurity(p *models.MemoryPersistentMem
 	memorypersistentmemorylocalsecuritys = append(memorypersistentmemorylocalsecuritys, memorypersistentmemorylocalsecurity)
 	return memorypersistentmemorylocalsecuritys
 }
-func flattenMapMemoryPersistentMemoryRegionRelationship(p *models.MemoryPersistentMemoryRegionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMemoryPersistentMemoryRegionRelationship(p models.MemoryPersistentMemoryRegionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var memorypersistentmemoryregionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MemoryPersistentMemoryRegionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	memorypersistentmemoryregionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		memorypersistentmemoryregionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	memorypersistentmemoryregionrelationship["class_id"] = item.ClassId
 	memorypersistentmemoryregionrelationship["moid"] = item.Moid
 	memorypersistentmemoryregionrelationship["object_type"] = item.ObjectType
@@ -7007,14 +12437,26 @@ func flattenMapMemoryPersistentMemoryRegionRelationship(p *models.MemoryPersiste
 	memorypersistentmemoryregionrelationships = append(memorypersistentmemoryregionrelationships, memorypersistentmemoryregionrelationship)
 	return memorypersistentmemoryregionrelationships
 }
-func flattenMapMoBaseMoRelationship(p *models.MoBaseMoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapMoBaseMoRelationship(p models.MoBaseMoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var mobasemorelationships []map[string]interface{}
-	if p == nil {
+	var ret models.MoBaseMoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	mobasemorelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		mobasemorelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	mobasemorelationship["class_id"] = item.ClassId
 	mobasemorelationship["moid"] = item.Moid
 	mobasemorelationship["object_type"] = item.ObjectType
@@ -7023,14 +12465,26 @@ func flattenMapMoBaseMoRelationship(p *models.MoBaseMoRelationship, d *schema.Re
 	mobasemorelationships = append(mobasemorelationships, mobasemorelationship)
 	return mobasemorelationships
 }
-func flattenMapNetworkElementRelationship(p *models.NetworkElementRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNetworkElementRelationship(p models.NetworkElementRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var networkelementrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.NetworkElementRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	networkelementrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		networkelementrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	networkelementrelationship["class_id"] = item.ClassId
 	networkelementrelationship["moid"] = item.Moid
 	networkelementrelationship["object_type"] = item.ObjectType
@@ -7039,14 +12493,26 @@ func flattenMapNetworkElementRelationship(p *models.NetworkElementRelationship, 
 	networkelementrelationships = append(networkelementrelationships, networkelementrelationship)
 	return networkelementrelationships
 }
-func flattenMapNetworkFcZoneInfoRelationship(p *models.NetworkFcZoneInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNetworkFcZoneInfoRelationship(p models.NetworkFcZoneInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var networkfczoneinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.NetworkFcZoneInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	networkfczoneinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		networkfczoneinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	networkfczoneinforelationship["class_id"] = item.ClassId
 	networkfczoneinforelationship["moid"] = item.Moid
 	networkfczoneinforelationship["object_type"] = item.ObjectType
@@ -7055,14 +12521,26 @@ func flattenMapNetworkFcZoneInfoRelationship(p *models.NetworkFcZoneInfoRelation
 	networkfczoneinforelationships = append(networkfczoneinforelationships, networkfczoneinforelationship)
 	return networkfczoneinforelationships
 }
-func flattenMapNetworkVlanPortInfoRelationship(p *models.NetworkVlanPortInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNetworkVlanPortInfoRelationship(p models.NetworkVlanPortInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var networkvlanportinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.NetworkVlanPortInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	networkvlanportinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		networkvlanportinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	networkvlanportinforelationship["class_id"] = item.ClassId
 	networkvlanportinforelationship["moid"] = item.Moid
 	networkvlanportinforelationship["object_type"] = item.ObjectType
@@ -7071,13 +12549,25 @@ func flattenMapNetworkVlanPortInfoRelationship(p *models.NetworkVlanPortInfoRela
 	networkvlanportinforelationships = append(networkvlanportinforelationships, networkvlanportinforelationship)
 	return networkvlanportinforelationships
 }
-func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiaapiNewReleaseDetail(p models.NiaapiNewReleaseDetail, d *schema.ResourceData) []map[string]interface{} {
 	var niaapinewreleasedetails []map[string]interface{}
-	if p == nil {
+	var ret models.NiaapiNewReleaseDetail
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	niaapinewreleasedetail := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.NiaapiNewReleaseDetail
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		niaapinewreleasedetail["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	niaapinewreleasedetail["class_id"] = item.ClassId
 	niaapinewreleasedetail["description"] = item.Description
 	niaapinewreleasedetail["link"] = item.Link
@@ -7092,22 +12582,46 @@ func flattenMapNiaapiNewReleaseDetail(p *models.NiaapiNewReleaseDetail, d *schem
 	niaapinewreleasedetails = append(niaapinewreleasedetails, niaapinewreleasedetail)
 	return niaapinewreleasedetails
 }
-func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiaapiVersionRegexPlatform(p models.NiaapiVersionRegexPlatform, d *schema.ResourceData) []map[string]interface{} {
 	var niaapiversionregexplatforms []map[string]interface{}
-	if p == nil {
+	var ret models.NiaapiVersionRegexPlatform
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	niaapiversionregexplatform := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.NiaapiVersionRegexPlatform
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		niaapiversionregexplatform["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	niaapiversionregexplatform["anyllregex"] = item.Anyllregex
 	niaapiversionregexplatform["class_id"] = item.ClassId
-	niaapiversionregexplatform["currentlltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+	niaapiversionregexplatform["currentlltrain"] = (func(p models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 		var niaapisoftwareregexs []map[string]interface{}
-		if p == nil {
+		var ret models.NiaapiSoftwareRegex
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		niaapisoftwareregex := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.NiaapiSoftwareRegex
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			niaapisoftwareregex["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		niaapisoftwareregex["class_id"] = item.ClassId
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
@@ -7115,14 +12629,26 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 
 		niaapisoftwareregexs = append(niaapisoftwareregexs, niaapisoftwareregex)
 		return niaapisoftwareregexs
-	})(item.Currentlltrain, d)
-	niaapiversionregexplatform["latestsltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+	})(item.GetCurrentlltrain(), d)
+	niaapiversionregexplatform["latestsltrain"] = (func(p models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 		var niaapisoftwareregexs []map[string]interface{}
-		if p == nil {
+		var ret models.NiaapiSoftwareRegex
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		niaapisoftwareregex := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.NiaapiSoftwareRegex
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			niaapisoftwareregex["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		niaapisoftwareregex["class_id"] = item.ClassId
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
@@ -7130,15 +12656,26 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 
 		niaapisoftwareregexs = append(niaapisoftwareregexs, niaapisoftwareregex)
 		return niaapisoftwareregexs
-	})(item.Latestsltrain, d)
+	})(item.GetLatestsltrain(), d)
 	niaapiversionregexplatform["object_type"] = item.ObjectType
-	niaapiversionregexplatform["sltrain"] = (func(p *[]models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+	niaapiversionregexplatform["sltrain"] = (func(p []models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 		var niaapisoftwareregexs []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			niaapisoftwareregex := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.NiaapiSoftwareRegex
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				niaapisoftwareregex["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			niaapisoftwareregex["class_id"] = item.ClassId
 			niaapisoftwareregex["object_type"] = item.ObjectType
 			niaapisoftwareregex["regex"] = item.Regex
@@ -7146,14 +12683,26 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 			niaapisoftwareregexs = append(niaapisoftwareregexs, niaapisoftwareregex)
 		}
 		return niaapisoftwareregexs
-	})(item.Sltrain, d)
-	niaapiversionregexplatform["upcominglltrain"] = (func(p *models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
+	})(item.GetSltrain(), d)
+	niaapiversionregexplatform["upcominglltrain"] = (func(p models.NiaapiSoftwareRegex, d *schema.ResourceData) []map[string]interface{} {
 		var niaapisoftwareregexs []map[string]interface{}
-		if p == nil {
+		var ret models.NiaapiSoftwareRegex
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		niaapisoftwareregex := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.NiaapiSoftwareRegex
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			niaapisoftwareregex["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		niaapisoftwareregex["class_id"] = item.ClassId
 		niaapisoftwareregex["object_type"] = item.ObjectType
 		niaapisoftwareregex["regex"] = item.Regex
@@ -7161,18 +12710,30 @@ func flattenMapNiaapiVersionRegexPlatform(p *models.NiaapiVersionRegexPlatform, 
 
 		niaapisoftwareregexs = append(niaapisoftwareregexs, niaapisoftwareregex)
 		return niaapisoftwareregexs
-	})(item.Upcominglltrain, d)
+	})(item.GetUpcominglltrain(), d)
 
 	niaapiversionregexplatforms = append(niaapiversionregexplatforms, niaapiversionregexplatform)
 	return niaapiversionregexplatforms
 }
-func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiatelemetryDiskinfo(p models.NiatelemetryDiskinfo, d *schema.ResourceData) []map[string]interface{} {
 	var niatelemetrydiskinfos []map[string]interface{}
-	if p == nil {
+	var ret models.NiatelemetryDiskinfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	niatelemetrydiskinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.NiatelemetryDiskinfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		niatelemetrydiskinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	niatelemetrydiskinfo["class_id"] = item.ClassId
 	niatelemetrydiskinfo["free"] = item.Free
 	niatelemetrydiskinfo["name"] = item.Name
@@ -7183,14 +12744,26 @@ func flattenMapNiatelemetryDiskinfo(p *models.NiatelemetryDiskinfo, d *schema.Re
 	niatelemetrydiskinfos = append(niatelemetrydiskinfos, niatelemetrydiskinfo)
 	return niatelemetrydiskinfos
 }
-func flattenMapNiatelemetryNiaInventoryRelationship(p *models.NiatelemetryNiaInventoryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiatelemetryNiaInventoryRelationship(p models.NiatelemetryNiaInventoryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var niatelemetryniainventoryrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.NiatelemetryNiaInventoryRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	niatelemetryniainventoryrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		niatelemetryniainventoryrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	niatelemetryniainventoryrelationship["class_id"] = item.ClassId
 	niatelemetryniainventoryrelationship["moid"] = item.Moid
 	niatelemetryniainventoryrelationship["object_type"] = item.ObjectType
@@ -7199,14 +12772,26 @@ func flattenMapNiatelemetryNiaInventoryRelationship(p *models.NiatelemetryNiaInv
 	niatelemetryniainventoryrelationships = append(niatelemetryniainventoryrelationships, niatelemetryniainventoryrelationship)
 	return niatelemetryniainventoryrelationships
 }
-func flattenMapNiatelemetryNiaLicenseStateRelationship(p *models.NiatelemetryNiaLicenseStateRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapNiatelemetryNiaLicenseStateRelationship(p models.NiatelemetryNiaLicenseStateRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var niatelemetrynialicensestaterelationships []map[string]interface{}
-	if p == nil {
+	var ret models.NiatelemetryNiaLicenseStateRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	niatelemetrynialicensestaterelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		niatelemetrynialicensestaterelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	niatelemetrynialicensestaterelationship["class_id"] = item.ClassId
 	niatelemetrynialicensestaterelationship["moid"] = item.Moid
 	niatelemetrynialicensestaterelationship["object_type"] = item.ObjectType
@@ -7215,13 +12800,25 @@ func flattenMapNiatelemetryNiaLicenseStateRelationship(p *models.NiatelemetryNia
 	niatelemetrynialicensestaterelationships = append(niatelemetrynialicensestaterelationships, niatelemetrynialicensestaterelationship)
 	return niatelemetrynialicensestaterelationships
 }
-func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOnpremSchedule(p models.OnpremSchedule, d *schema.ResourceData) []map[string]interface{} {
 	var onpremschedules []map[string]interface{}
-	if p == nil {
+	var ret models.OnpremSchedule
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	onpremschedule := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.OnpremSchedule
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		onpremschedule["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	onpremschedule["class_id"] = item.ClassId
 	onpremschedule["day_of_month"] = item.DayOfMonth
 	onpremschedule["day_of_week"] = item.DayOfWeek
@@ -7235,13 +12832,25 @@ func flattenMapOnpremSchedule(p *models.OnpremSchedule, d *schema.ResourceData) 
 	onpremschedules = append(onpremschedules, onpremschedule)
 	return onpremschedules
 }
-func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOnpremUpgradePhase(p models.OnpremUpgradePhase, d *schema.ResourceData) []map[string]interface{} {
 	var onpremupgradephases []map[string]interface{}
-	if p == nil {
+	var ret models.OnpremUpgradePhase
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	onpremupgradephase := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.OnpremUpgradePhase
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		onpremupgradephase["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	onpremupgradephase["class_id"] = item.ClassId
 	onpremupgradephase["elapsed_time"] = item.ElapsedTime
 	onpremupgradephase["end_time"] = item.EndTime
@@ -7254,14 +12863,26 @@ func flattenMapOnpremUpgradePhase(p *models.OnpremUpgradePhase, d *schema.Resour
 	onpremupgradephases = append(onpremupgradephases, onpremupgradephase)
 	return onpremupgradephases
 }
-func flattenMapOrganizationOrganizationRelationship(p *models.OrganizationOrganizationRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOrganizationOrganizationRelationship(p models.OrganizationOrganizationRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var organizationorganizationrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.OrganizationOrganizationRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	organizationorganizationrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		organizationorganizationrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	organizationorganizationrelationship["class_id"] = item.ClassId
 	organizationorganizationrelationship["moid"] = item.Moid
 	organizationorganizationrelationship["object_type"] = item.ObjectType
@@ -7270,32 +12891,56 @@ func flattenMapOrganizationOrganizationRelationship(p *models.OrganizationOrgani
 	organizationorganizationrelationships = append(organizationorganizationrelationships, organizationorganizationrelationship)
 	return organizationorganizationrelationships
 }
-func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOsAnswers(p models.OsAnswers, d *schema.ResourceData) []map[string]interface{} {
 	var osanswerss []map[string]interface{}
-	if p == nil {
+	var ret models.OsAnswers
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	osanswers := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.OsAnswers
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		osanswers["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	answer_file_x := d.Get("answers").([]interface{})
 	answer_file_y := answer_file_x[0].(map[string]interface{})
 	osanswers["answer_file"] = answer_file_y["answer_file"]
 	osanswers["class_id"] = item.ClassId
 	osanswers["hostname"] = item.Hostname
 	osanswers["ip_config_type"] = item.IpConfigType
-	osanswers["ip_configuration"] = (func(p *models.OsIpConfiguration, d *schema.ResourceData) []map[string]interface{} {
+	osanswers["ip_configuration"] = (func(p models.OsIpConfiguration, d *schema.ResourceData) []map[string]interface{} {
 		var osipconfigurations []map[string]interface{}
-		if p == nil {
+		var ret models.OsIpConfiguration
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		osipconfiguration := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.OsIpConfiguration
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			osipconfiguration["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		osipconfiguration["class_id"] = item.ClassId
 		osipconfiguration["object_type"] = item.ObjectType
 
 		osipconfigurations = append(osipconfigurations, osipconfiguration)
 		return osipconfigurations
-	})(item.IpConfiguration, d)
+	})(item.GetIpConfiguration(), d)
 	osanswers["is_answer_file_set"] = item.IsAnswerFileSet
 	osanswers["is_root_password_crypted"] = item.IsRootPasswordCrypted
 	osanswers["is_root_password_set"] = item.IsRootPasswordSet
@@ -7310,14 +12955,26 @@ func flattenMapOsAnswers(p *models.OsAnswers, d *schema.ResourceData) []map[stri
 	osanswerss = append(osanswerss, osanswers)
 	return osanswerss
 }
-func flattenMapOsCatalogRelationship(p *models.OsCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOsCatalogRelationship(p models.OsCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var oscatalogrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.OsCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	oscatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		oscatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	oscatalogrelationship["class_id"] = item.ClassId
 	oscatalogrelationship["moid"] = item.Moid
 	oscatalogrelationship["object_type"] = item.ObjectType
@@ -7326,14 +12983,26 @@ func flattenMapOsCatalogRelationship(p *models.OsCatalogRelationship, d *schema.
 	oscatalogrelationships = append(oscatalogrelationships, oscatalogrelationship)
 	return oscatalogrelationships
 }
-func flattenMapOsConfigurationFileRelationship(p *models.OsConfigurationFileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOsConfigurationFileRelationship(p models.OsConfigurationFileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var osconfigurationfilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.OsConfigurationFileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	osconfigurationfilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		osconfigurationfilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	osconfigurationfilerelationship["class_id"] = item.ClassId
 	osconfigurationfilerelationship["moid"] = item.Moid
 	osconfigurationfilerelationship["object_type"] = item.ObjectType
@@ -7342,27 +13011,51 @@ func flattenMapOsConfigurationFileRelationship(p *models.OsConfigurationFileRela
 	osconfigurationfilerelationships = append(osconfigurationfilerelationships, osconfigurationfilerelationship)
 	return osconfigurationfilerelationships
 }
-func flattenMapOsOperatingSystemParameters(p *models.OsOperatingSystemParameters, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapOsOperatingSystemParameters(p models.OsOperatingSystemParameters, d *schema.ResourceData) []map[string]interface{} {
 	var osoperatingsystemparameterss []map[string]interface{}
-	if p == nil {
+	var ret models.OsOperatingSystemParameters
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	osoperatingsystemparameters := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.OsOperatingSystemParameters
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		osoperatingsystemparameters["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	osoperatingsystemparameters["class_id"] = item.ClassId
 	osoperatingsystemparameters["object_type"] = item.ObjectType
 
 	osoperatingsystemparameterss = append(osoperatingsystemparameterss, osoperatingsystemparameters)
 	return osoperatingsystemparameterss
 }
-func flattenMapPciSwitchRelationship(p *models.PciSwitchRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPciSwitchRelationship(p models.PciSwitchRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var pciswitchrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PciSwitchRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	pciswitchrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		pciswitchrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	pciswitchrelationship["class_id"] = item.ClassId
 	pciswitchrelationship["moid"] = item.Moid
 	pciswitchrelationship["object_type"] = item.ObjectType
@@ -7371,13 +13064,25 @@ func flattenMapPciSwitchRelationship(p *models.PciSwitchRelationship, d *schema.
 	pciswitchrelationships = append(pciswitchrelationships, pciswitchrelationship)
 	return pciswitchrelationships
 }
-func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPkixDistinguishedName(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 	var pkixdistinguishednames []map[string]interface{}
-	if p == nil {
+	var ret models.PkixDistinguishedName
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	pkixdistinguishedname := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PkixDistinguishedName
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		pkixdistinguishedname["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	pkixdistinguishedname["class_id"] = item.ClassId
 	pkixdistinguishedname["common_name"] = item.CommonName
 	pkixdistinguishedname["country"] = item.Country
@@ -7390,13 +13095,25 @@ func flattenMapPkixDistinguishedName(p *models.PkixDistinguishedName, d *schema.
 	pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 	return pkixdistinguishednames
 }
-func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPkixKeyGenerationSpec(p models.PkixKeyGenerationSpec, d *schema.ResourceData) []map[string]interface{} {
 	var pkixkeygenerationspecs []map[string]interface{}
-	if p == nil {
+	var ret models.PkixKeyGenerationSpec
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	pkixkeygenerationspec := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PkixKeyGenerationSpec
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		pkixkeygenerationspec["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	pkixkeygenerationspec["class_id"] = item.ClassId
 	pkixkeygenerationspec["name"] = item.Name
 	pkixkeygenerationspec["object_type"] = item.ObjectType
@@ -7404,13 +13121,25 @@ func flattenMapPkixKeyGenerationSpec(p *models.PkixKeyGenerationSpec, d *schema.
 	pkixkeygenerationspecs = append(pkixkeygenerationspecs, pkixkeygenerationspec)
 	return pkixkeygenerationspecs
 }
-func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPkixSubjectAlternateName(p models.PkixSubjectAlternateName, d *schema.ResourceData) []map[string]interface{} {
 	var pkixsubjectalternatenames []map[string]interface{}
-	if p == nil {
+	var ret models.PkixSubjectAlternateName
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	pkixsubjectalternatename := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PkixSubjectAlternateName
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		pkixsubjectalternatename["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	pkixsubjectalternatename["class_id"] = item.ClassId
 	pkixsubjectalternatename["dns_name"] = item.DnsName
 	pkixsubjectalternatename["email_address"] = item.EmailAddress
@@ -7421,14 +13150,26 @@ func flattenMapPkixSubjectAlternateName(p *models.PkixSubjectAlternateName, d *s
 	pkixsubjectalternatenames = append(pkixsubjectalternatenames, pkixsubjectalternatename)
 	return pkixsubjectalternatenames
 }
-func flattenMapPolicyAbstractConfigProfileRelationship(p *models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPolicyAbstractConfigProfileRelationship(p models.PolicyAbstractConfigProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var policyabstractconfigprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PolicyAbstractConfigProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	policyabstractconfigprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		policyabstractconfigprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	policyabstractconfigprofilerelationship["class_id"] = item.ClassId
 	policyabstractconfigprofilerelationship["moid"] = item.Moid
 	policyabstractconfigprofilerelationship["object_type"] = item.ObjectType
@@ -7437,14 +13178,26 @@ func flattenMapPolicyAbstractConfigProfileRelationship(p *models.PolicyAbstractC
 	policyabstractconfigprofilerelationships = append(policyabstractconfigprofilerelationships, policyabstractconfigprofilerelationship)
 	return policyabstractconfigprofilerelationships
 }
-func flattenMapPolicyAbstractProfileRelationship(p *models.PolicyAbstractProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPolicyAbstractProfileRelationship(p models.PolicyAbstractProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var policyabstractprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PolicyAbstractProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	policyabstractprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		policyabstractprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	policyabstractprofilerelationship["class_id"] = item.ClassId
 	policyabstractprofilerelationship["moid"] = item.Moid
 	policyabstractprofilerelationship["object_type"] = item.ObjectType
@@ -7453,13 +13206,25 @@ func flattenMapPolicyAbstractProfileRelationship(p *models.PolicyAbstractProfile
 	policyabstractprofilerelationships = append(policyabstractprofilerelationships, policyabstractprofilerelationship)
 	return policyabstractprofilerelationships
 }
-func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPolicyConfigChange(p models.PolicyConfigChange, d *schema.ResourceData) []map[string]interface{} {
 	var policyconfigchanges []map[string]interface{}
-	if p == nil {
+	var ret models.PolicyConfigChange
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	policyconfigchange := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PolicyConfigChange
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		policyconfigchange["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	policyconfigchange["changes"] = item.Changes
 	policyconfigchange["class_id"] = item.ClassId
 	policyconfigchange["disruptions"] = item.Disruptions
@@ -7468,13 +13233,25 @@ func flattenMapPolicyConfigChange(p *models.PolicyConfigChange, d *schema.Resour
 	policyconfigchanges = append(policyconfigchanges, policyconfigchange)
 	return policyconfigchanges
 }
-func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPolicyConfigContext(p models.PolicyConfigContext, d *schema.ResourceData) []map[string]interface{} {
 	var policyconfigcontexts []map[string]interface{}
-	if p == nil {
+	var ret models.PolicyConfigContext
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	policyconfigcontext := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PolicyConfigContext
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		policyconfigcontext["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	policyconfigcontext["class_id"] = item.ClassId
 	policyconfigcontext["config_state"] = item.ConfigState
 	policyconfigcontext["control_action"] = item.ControlAction
@@ -7485,13 +13262,25 @@ func flattenMapPolicyConfigContext(p *models.PolicyConfigContext, d *schema.Reso
 	policyconfigcontexts = append(policyconfigcontexts, policyconfigcontext)
 	return policyconfigcontexts
 }
-func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPolicyConfigResultContext(p models.PolicyConfigResultContext, d *schema.ResourceData) []map[string]interface{} {
 	var policyconfigresultcontexts []map[string]interface{}
-	if p == nil {
+	var ret models.PolicyConfigResultContext
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	policyconfigresultcontext := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.PolicyConfigResultContext
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		policyconfigresultcontext["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	policyconfigresultcontext["class_id"] = item.ClassId
 	policyconfigresultcontext["entity_data"] = item.EntityData
 	policyconfigresultcontext["entity_moid"] = item.EntityMoid
@@ -7502,14 +13291,26 @@ func flattenMapPolicyConfigResultContext(p *models.PolicyConfigResultContext, d 
 	policyconfigresultcontexts = append(policyconfigresultcontexts, policyconfigresultcontext)
 	return policyconfigresultcontexts
 }
-func flattenMapPortGroupRelationship(p *models.PortGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPortGroupRelationship(p models.PortGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portgrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PortGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	portgrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		portgrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	portgrouprelationship["class_id"] = item.ClassId
 	portgrouprelationship["moid"] = item.Moid
 	portgrouprelationship["object_type"] = item.ObjectType
@@ -7518,14 +13319,26 @@ func flattenMapPortGroupRelationship(p *models.PortGroupRelationship, d *schema.
 	portgrouprelationships = append(portgrouprelationships, portgrouprelationship)
 	return portgrouprelationships
 }
-func flattenMapPortInterfaceBaseRelationship(p *models.PortInterfaceBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPortInterfaceBaseRelationship(p models.PortInterfaceBaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portinterfacebaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PortInterfaceBaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	portinterfacebaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		portinterfacebaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	portinterfacebaserelationship["class_id"] = item.ClassId
 	portinterfacebaserelationship["moid"] = item.Moid
 	portinterfacebaserelationship["object_type"] = item.ObjectType
@@ -7534,14 +13347,26 @@ func flattenMapPortInterfaceBaseRelationship(p *models.PortInterfaceBaseRelation
 	portinterfacebaserelationships = append(portinterfacebaserelationships, portinterfacebaserelationship)
 	return portinterfacebaserelationships
 }
-func flattenMapPortSubGroupRelationship(p *models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapPortSubGroupRelationship(p models.PortSubGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var portsubgrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.PortSubGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	portsubgrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		portsubgrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	portsubgrouprelationship["class_id"] = item.ClassId
 	portsubgrouprelationship["moid"] = item.Moid
 	portsubgrouprelationship["object_type"] = item.ObjectType
@@ -7550,14 +13375,26 @@ func flattenMapPortSubGroupRelationship(p *models.PortSubGroupRelationship, d *s
 	portsubgrouprelationships = append(portsubgrouprelationships, portsubgrouprelationship)
 	return portsubgrouprelationships
 }
-func flattenMapRecoveryAbstractBackupInfoRelationship(p *models.RecoveryAbstractBackupInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryAbstractBackupInfoRelationship(p models.RecoveryAbstractBackupInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryabstractbackupinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryAbstractBackupInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	recoveryabstractbackupinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoveryabstractbackupinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoveryabstractbackupinforelationship["class_id"] = item.ClassId
 	recoveryabstractbackupinforelationship["moid"] = item.Moid
 	recoveryabstractbackupinforelationship["object_type"] = item.ObjectType
@@ -7566,14 +13403,26 @@ func flattenMapRecoveryAbstractBackupInfoRelationship(p *models.RecoveryAbstract
 	recoveryabstractbackupinforelationships = append(recoveryabstractbackupinforelationships, recoveryabstractbackupinforelationship)
 	return recoveryabstractbackupinforelationships
 }
-func flattenMapRecoveryBackupConfigPolicyRelationship(p *models.RecoveryBackupConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryBackupConfigPolicyRelationship(p models.RecoveryBackupConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoverybackupconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryBackupConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	recoverybackupconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoverybackupconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoverybackupconfigpolicyrelationship["class_id"] = item.ClassId
 	recoverybackupconfigpolicyrelationship["moid"] = item.Moid
 	recoverybackupconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -7582,14 +13431,26 @@ func flattenMapRecoveryBackupConfigPolicyRelationship(p *models.RecoveryBackupCo
 	recoverybackupconfigpolicyrelationships = append(recoverybackupconfigpolicyrelationships, recoverybackupconfigpolicyrelationship)
 	return recoverybackupconfigpolicyrelationships
 }
-func flattenMapRecoveryBackupProfileRelationship(p *models.RecoveryBackupProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryBackupProfileRelationship(p models.RecoveryBackupProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoverybackupprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryBackupProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	recoverybackupprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoverybackupprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoverybackupprofilerelationship["class_id"] = item.ClassId
 	recoverybackupprofilerelationship["moid"] = item.Moid
 	recoverybackupprofilerelationship["object_type"] = item.ObjectType
@@ -7598,13 +13459,25 @@ func flattenMapRecoveryBackupProfileRelationship(p *models.RecoveryBackupProfile
 	recoverybackupprofilerelationships = append(recoverybackupprofilerelationships, recoverybackupprofilerelationship)
 	return recoverybackupprofilerelationships
 }
-func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryBackupSchedule(p models.RecoveryBackupSchedule, d *schema.ResourceData) []map[string]interface{} {
 	var recoverybackupschedules []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryBackupSchedule
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	recoverybackupschedule := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.RecoveryBackupSchedule
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoverybackupschedule["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoverybackupschedule["class_id"] = item.ClassId
 	recoverybackupschedule["execution_time"] = item.ExecutionTime
 	recoverybackupschedule["frequency_unit"] = item.FrequencyUnit
@@ -7614,27 +13487,51 @@ func flattenMapRecoveryBackupSchedule(p *models.RecoveryBackupSchedule, d *schem
 	recoverybackupschedules = append(recoverybackupschedules, recoverybackupschedule)
 	return recoverybackupschedules
 }
-func flattenMapRecoveryConfigParams(p *models.RecoveryConfigParams, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryConfigParams(p models.RecoveryConfigParams, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryconfigparamss []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryConfigParams
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	recoveryconfigparams := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.RecoveryConfigParams
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoveryconfigparams["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoveryconfigparams["class_id"] = item.ClassId
 	recoveryconfigparams["object_type"] = item.ObjectType
 
 	recoveryconfigparamss = append(recoveryconfigparamss, recoveryconfigparams)
 	return recoveryconfigparamss
 }
-func flattenMapRecoveryConfigResultRelationship(p *models.RecoveryConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryConfigResultRelationship(p models.RecoveryConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryConfigResultRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	recoveryconfigresultrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoveryconfigresultrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoveryconfigresultrelationship["class_id"] = item.ClassId
 	recoveryconfigresultrelationship["moid"] = item.Moid
 	recoveryconfigresultrelationship["object_type"] = item.ObjectType
@@ -7643,14 +13540,26 @@ func flattenMapRecoveryConfigResultRelationship(p *models.RecoveryConfigResultRe
 	recoveryconfigresultrelationships = append(recoveryconfigresultrelationships, recoveryconfigresultrelationship)
 	return recoveryconfigresultrelationships
 }
-func flattenMapRecoveryScheduleConfigPolicyRelationship(p *models.RecoveryScheduleConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapRecoveryScheduleConfigPolicyRelationship(p models.RecoveryScheduleConfigPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var recoveryscheduleconfigpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.RecoveryScheduleConfigPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	recoveryscheduleconfigpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		recoveryscheduleconfigpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	recoveryscheduleconfigpolicyrelationship["class_id"] = item.ClassId
 	recoveryscheduleconfigpolicyrelationship["moid"] = item.Moid
 	recoveryscheduleconfigpolicyrelationship["object_type"] = item.ObjectType
@@ -7659,14 +13568,26 @@ func flattenMapRecoveryScheduleConfigPolicyRelationship(p *models.RecoverySchedu
 	recoveryscheduleconfigpolicyrelationships = append(recoveryscheduleconfigpolicyrelationships, recoveryscheduleconfigpolicyrelationship)
 	return recoveryscheduleconfigpolicyrelationships
 }
-func flattenMapResourceGroupRelationship(p *models.ResourceGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapResourceGroupRelationship(p models.ResourceGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var resourcegrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ResourceGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	resourcegrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		resourcegrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	resourcegrouprelationship["class_id"] = item.ClassId
 	resourcegrouprelationship["moid"] = item.Moid
 	resourcegrouprelationship["object_type"] = item.ObjectType
@@ -7675,14 +13596,26 @@ func flattenMapResourceGroupRelationship(p *models.ResourceGroupRelationship, d 
 	resourcegrouprelationships = append(resourcegrouprelationships, resourcegrouprelationship)
 	return resourcegrouprelationships
 }
-func flattenMapResourceMembershipHolderRelationship(p *models.ResourceMembershipHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapResourceMembershipHolderRelationship(p models.ResourceMembershipHolderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var resourcemembershipholderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ResourceMembershipHolderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	resourcemembershipholderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		resourcemembershipholderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	resourcemembershipholderrelationship["class_id"] = item.ClassId
 	resourcemembershipholderrelationship["moid"] = item.Moid
 	resourcemembershipholderrelationship["object_type"] = item.ObjectType
@@ -7691,14 +13624,26 @@ func flattenMapResourceMembershipHolderRelationship(p *models.ResourceMembership
 	resourcemembershipholderrelationships = append(resourcemembershipholderrelationships, resourcemembershipholderrelationship)
 	return resourcemembershipholderrelationships
 }
-func flattenMapSdwanProfileRelationship(p *models.SdwanProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSdwanProfileRelationship(p models.SdwanProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SdwanProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	sdwanprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		sdwanprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	sdwanprofilerelationship["class_id"] = item.ClassId
 	sdwanprofilerelationship["moid"] = item.Moid
 	sdwanprofilerelationship["object_type"] = item.ObjectType
@@ -7707,14 +13652,26 @@ func flattenMapSdwanProfileRelationship(p *models.SdwanProfileRelationship, d *s
 	sdwanprofilerelationships = append(sdwanprofilerelationships, sdwanprofilerelationship)
 	return sdwanprofilerelationships
 }
-func flattenMapSdwanRouterPolicyRelationship(p *models.SdwanRouterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSdwanRouterPolicyRelationship(p models.SdwanRouterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanrouterpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SdwanRouterPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	sdwanrouterpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		sdwanrouterpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	sdwanrouterpolicyrelationship["class_id"] = item.ClassId
 	sdwanrouterpolicyrelationship["moid"] = item.Moid
 	sdwanrouterpolicyrelationship["object_type"] = item.ObjectType
@@ -7723,14 +13680,26 @@ func flattenMapSdwanRouterPolicyRelationship(p *models.SdwanRouterPolicyRelation
 	sdwanrouterpolicyrelationships = append(sdwanrouterpolicyrelationships, sdwanrouterpolicyrelationship)
 	return sdwanrouterpolicyrelationships
 }
-func flattenMapSdwanVmanageAccountPolicyRelationship(p *models.SdwanVmanageAccountPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSdwanVmanageAccountPolicyRelationship(p models.SdwanVmanageAccountPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var sdwanvmanageaccountpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SdwanVmanageAccountPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	sdwanvmanageaccountpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		sdwanvmanageaccountpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	sdwanvmanageaccountpolicyrelationship["class_id"] = item.ClassId
 	sdwanvmanageaccountpolicyrelationship["moid"] = item.Moid
 	sdwanvmanageaccountpolicyrelationship["object_type"] = item.ObjectType
@@ -7739,14 +13708,26 @@ func flattenMapSdwanVmanageAccountPolicyRelationship(p *models.SdwanVmanageAccou
 	sdwanvmanageaccountpolicyrelationships = append(sdwanvmanageaccountpolicyrelationships, sdwanvmanageaccountpolicyrelationship)
 	return sdwanvmanageaccountpolicyrelationships
 }
-func flattenMapServerConfigResultRelationship(p *models.ServerConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapServerConfigResultRelationship(p models.ServerConfigResultRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverconfigresultrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ServerConfigResultRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	serverconfigresultrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		serverconfigresultrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	serverconfigresultrelationship["class_id"] = item.ClassId
 	serverconfigresultrelationship["moid"] = item.Moid
 	serverconfigresultrelationship["object_type"] = item.ObjectType
@@ -7755,14 +13736,26 @@ func flattenMapServerConfigResultRelationship(p *models.ServerConfigResultRelati
 	serverconfigresultrelationships = append(serverconfigresultrelationships, serverconfigresultrelationship)
 	return serverconfigresultrelationships
 }
-func flattenMapServerProfileRelationship(p *models.ServerProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapServerProfileRelationship(p models.ServerProfileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var serverprofilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.ServerProfileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	serverprofilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		serverprofilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	serverprofilerelationship["class_id"] = item.ClassId
 	serverprofilerelationship["moid"] = item.Moid
 	serverprofilerelationship["object_type"] = item.ObjectType
@@ -7771,14 +13764,26 @@ func flattenMapServerProfileRelationship(p *models.ServerProfileRelationship, d 
 	serverprofilerelationships = append(serverprofilerelationships, serverprofilerelationship)
 	return serverprofilerelationships
 }
-func flattenMapSoftwareHyperflexDistributableRelationship(p *models.SoftwareHyperflexDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwareHyperflexDistributableRelationship(p models.SoftwareHyperflexDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwarehyperflexdistributablerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwareHyperflexDistributableRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwarehyperflexdistributablerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarehyperflexdistributablerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarehyperflexdistributablerelationship["class_id"] = item.ClassId
 	softwarehyperflexdistributablerelationship["moid"] = item.Moid
 	softwarehyperflexdistributablerelationship["object_type"] = item.ObjectType
@@ -7787,14 +13792,26 @@ func flattenMapSoftwareHyperflexDistributableRelationship(p *models.SoftwareHype
 	softwarehyperflexdistributablerelationships = append(softwarehyperflexdistributablerelationships, softwarehyperflexdistributablerelationship)
 	return softwarehyperflexdistributablerelationships
 }
-func flattenMapSoftwareSolutionDistributableRelationship(p *models.SoftwareSolutionDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwareSolutionDistributableRelationship(p models.SoftwareSolutionDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwaresolutiondistributablerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwareSolutionDistributableRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwaresolutiondistributablerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwaresolutiondistributablerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwaresolutiondistributablerelationship["class_id"] = item.ClassId
 	softwaresolutiondistributablerelationship["moid"] = item.Moid
 	softwaresolutiondistributablerelationship["object_type"] = item.ObjectType
@@ -7803,14 +13820,26 @@ func flattenMapSoftwareSolutionDistributableRelationship(p *models.SoftwareSolut
 	softwaresolutiondistributablerelationships = append(softwaresolutiondistributablerelationships, softwaresolutiondistributablerelationship)
 	return softwaresolutiondistributablerelationships
 }
-func flattenMapSoftwarerepositoryCatalogRelationship(p *models.SoftwarerepositoryCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwarerepositoryCatalogRelationship(p models.SoftwarerepositoryCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositorycatalogrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwarerepositoryCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwarerepositorycatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarerepositorycatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarerepositorycatalogrelationship["class_id"] = item.ClassId
 	softwarerepositorycatalogrelationship["moid"] = item.Moid
 	softwarerepositorycatalogrelationship["object_type"] = item.ObjectType
@@ -7819,14 +13848,26 @@ func flattenMapSoftwarerepositoryCatalogRelationship(p *models.Softwarerepositor
 	softwarerepositorycatalogrelationships = append(softwarerepositorycatalogrelationships, softwarerepositorycatalogrelationship)
 	return softwarerepositorycatalogrelationships
 }
-func flattenMapSoftwarerepositoryFileRelationship(p *models.SoftwarerepositoryFileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwarerepositoryFileRelationship(p models.SoftwarerepositoryFileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositoryfilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwarerepositoryFileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwarerepositoryfilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarerepositoryfilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarerepositoryfilerelationship["class_id"] = item.ClassId
 	softwarerepositoryfilerelationship["moid"] = item.Moid
 	softwarerepositoryfilerelationship["object_type"] = item.ObjectType
@@ -7835,27 +13876,51 @@ func flattenMapSoftwarerepositoryFileRelationship(p *models.SoftwarerepositoryFi
 	softwarerepositoryfilerelationships = append(softwarerepositoryfilerelationships, softwarerepositoryfilerelationship)
 	return softwarerepositoryfilerelationships
 }
-func flattenMapSoftwarerepositoryFileServer(p *models.SoftwarerepositoryFileServer, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwarerepositoryFileServer(p models.SoftwarerepositoryFileServer, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositoryfileservers []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwarerepositoryFileServer
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	softwarerepositoryfileserver := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.SoftwarerepositoryFileServer
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarerepositoryfileserver["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarerepositoryfileserver["class_id"] = item.ClassId
 	softwarerepositoryfileserver["object_type"] = item.ObjectType
 
 	softwarerepositoryfileservers = append(softwarerepositoryfileservers, softwarerepositoryfileserver)
 	return softwarerepositoryfileservers
 }
-func flattenMapSoftwarerepositoryOperatingSystemFileRelationship(p *models.SoftwarerepositoryOperatingSystemFileRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwarerepositoryOperatingSystemFileRelationship(p models.SoftwarerepositoryOperatingSystemFileRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositoryoperatingsystemfilerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwarerepositoryOperatingSystemFileRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwarerepositoryoperatingsystemfilerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarerepositoryoperatingsystemfilerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarerepositoryoperatingsystemfilerelationship["class_id"] = item.ClassId
 	softwarerepositoryoperatingsystemfilerelationship["moid"] = item.Moid
 	softwarerepositoryoperatingsystemfilerelationship["object_type"] = item.ObjectType
@@ -7864,14 +13929,26 @@ func flattenMapSoftwarerepositoryOperatingSystemFileRelationship(p *models.Softw
 	softwarerepositoryoperatingsystemfilerelationships = append(softwarerepositoryoperatingsystemfilerelationships, softwarerepositoryoperatingsystemfilerelationship)
 	return softwarerepositoryoperatingsystemfilerelationships
 }
-func flattenMapSoftwarerepositoryReleaseRelationship(p *models.SoftwarerepositoryReleaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapSoftwarerepositoryReleaseRelationship(p models.SoftwarerepositoryReleaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var softwarerepositoryreleaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.SoftwarerepositoryReleaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	softwarerepositoryreleaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		softwarerepositoryreleaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	softwarerepositoryreleaserelationship["class_id"] = item.ClassId
 	softwarerepositoryreleaserelationship["moid"] = item.Moid
 	softwarerepositoryreleaserelationship["object_type"] = item.ObjectType
@@ -7880,13 +13957,25 @@ func flattenMapSoftwarerepositoryReleaseRelationship(p *models.Softwarerepositor
 	softwarerepositoryreleaserelationships = append(softwarerepositoryreleaserelationships, softwarerepositoryreleaserelationship)
 	return softwarerepositoryreleaserelationships
 }
-func flattenMapStorageBaseCapacity(p *models.StorageBaseCapacity, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageBaseCapacity(p models.StorageBaseCapacity, d *schema.ResourceData) []map[string]interface{} {
 	var storagebasecapacitys []map[string]interface{}
-	if p == nil {
+	var ret models.StorageBaseCapacity
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	storagebasecapacity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.StorageBaseCapacity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagebasecapacity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagebasecapacity["available"] = item.Available
 	storagebasecapacity["class_id"] = item.ClassId
 	storagebasecapacity["free"] = item.Free
@@ -7897,14 +13986,26 @@ func flattenMapStorageBaseCapacity(p *models.StorageBaseCapacity, d *schema.Reso
 	storagebasecapacitys = append(storagebasecapacitys, storagebasecapacity)
 	return storagebasecapacitys
 }
-func flattenMapStorageControllerRelationship(p *models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageControllerRelationship(p models.StorageControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagecontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagecontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagecontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagecontrollerrelationship["class_id"] = item.ClassId
 	storagecontrollerrelationship["moid"] = item.Moid
 	storagecontrollerrelationship["object_type"] = item.ObjectType
@@ -7913,14 +14014,26 @@ func flattenMapStorageControllerRelationship(p *models.StorageControllerRelation
 	storagecontrollerrelationships = append(storagecontrollerrelationships, storagecontrollerrelationship)
 	return storagecontrollerrelationships
 }
-func flattenMapStorageDiskGroupRelationship(p *models.StorageDiskGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageDiskGroupRelationship(p models.StorageDiskGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagediskgrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageDiskGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagediskgrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagediskgrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagediskgrouprelationship["class_id"] = item.ClassId
 	storagediskgrouprelationship["moid"] = item.Moid
 	storagediskgrouprelationship["object_type"] = item.ObjectType
@@ -7929,14 +14042,26 @@ func flattenMapStorageDiskGroupRelationship(p *models.StorageDiskGroupRelationsh
 	storagediskgrouprelationships = append(storagediskgrouprelationships, storagediskgrouprelationship)
 	return storagediskgrouprelationships
 }
-func flattenMapStorageEnclosureRelationship(p *models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageEnclosureRelationship(p models.StorageEnclosureRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageenclosurerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageEnclosureRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storageenclosurerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storageenclosurerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storageenclosurerelationship["class_id"] = item.ClassId
 	storageenclosurerelationship["moid"] = item.Moid
 	storageenclosurerelationship["object_type"] = item.ObjectType
@@ -7945,14 +14070,26 @@ func flattenMapStorageEnclosureRelationship(p *models.StorageEnclosureRelationsh
 	storageenclosurerelationships = append(storageenclosurerelationships, storageenclosurerelationship)
 	return storageenclosurerelationships
 }
-func flattenMapStorageFlexFlashControllerRelationship(p *models.StorageFlexFlashControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageFlexFlashControllerRelationship(p models.StorageFlexFlashControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexflashcontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageFlexFlashControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storageflexflashcontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storageflexflashcontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storageflexflashcontrollerrelationship["class_id"] = item.ClassId
 	storageflexflashcontrollerrelationship["moid"] = item.Moid
 	storageflexflashcontrollerrelationship["object_type"] = item.ObjectType
@@ -7961,14 +14098,26 @@ func flattenMapStorageFlexFlashControllerRelationship(p *models.StorageFlexFlash
 	storageflexflashcontrollerrelationships = append(storageflexflashcontrollerrelationships, storageflexflashcontrollerrelationship)
 	return storageflexflashcontrollerrelationships
 }
-func flattenMapStorageFlexUtilControllerRelationship(p *models.StorageFlexUtilControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageFlexUtilControllerRelationship(p models.StorageFlexUtilControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storageflexutilcontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageFlexUtilControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storageflexutilcontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storageflexutilcontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storageflexutilcontrollerrelationship["class_id"] = item.ClassId
 	storageflexutilcontrollerrelationship["moid"] = item.Moid
 	storageflexutilcontrollerrelationship["object_type"] = item.ObjectType
@@ -7977,14 +14126,26 @@ func flattenMapStorageFlexUtilControllerRelationship(p *models.StorageFlexUtilCo
 	storageflexutilcontrollerrelationships = append(storageflexutilcontrollerrelationships, storageflexutilcontrollerrelationship)
 	return storageflexutilcontrollerrelationships
 }
-func flattenMapStoragePhysicalDiskRelationship(p *models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePhysicalDiskRelationship(p models.StoragePhysicalDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagephysicaldiskrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePhysicalDiskRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagephysicaldiskrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagephysicaldiskrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagephysicaldiskrelationship["class_id"] = item.ClassId
 	storagephysicaldiskrelationship["moid"] = item.Moid
 	storagephysicaldiskrelationship["object_type"] = item.ObjectType
@@ -7993,14 +14154,26 @@ func flattenMapStoragePhysicalDiskRelationship(p *models.StoragePhysicalDiskRela
 	storagephysicaldiskrelationships = append(storagephysicaldiskrelationships, storagephysicaldiskrelationship)
 	return storagephysicaldiskrelationships
 }
-func flattenMapStoragePureArrayRelationship(p *models.StoragePureArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureArrayRelationship(p models.StoragePureArrayRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurearrayrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureArrayRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepurearrayrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurearrayrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurearrayrelationship["class_id"] = item.ClassId
 	storagepurearrayrelationship["moid"] = item.Moid
 	storagepurearrayrelationship["object_type"] = item.ObjectType
@@ -8009,14 +14182,26 @@ func flattenMapStoragePureArrayRelationship(p *models.StoragePureArrayRelationsh
 	storagepurearrayrelationships = append(storagepurearrayrelationships, storagepurearrayrelationship)
 	return storagepurearrayrelationships
 }
-func flattenMapStoragePureControllerRelationship(p *models.StoragePureControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureControllerRelationship(p models.StoragePureControllerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurecontrollerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureControllerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepurecontrollerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurecontrollerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurecontrollerrelationship["class_id"] = item.ClassId
 	storagepurecontrollerrelationship["moid"] = item.Moid
 	storagepurecontrollerrelationship["object_type"] = item.ObjectType
@@ -8025,14 +14210,26 @@ func flattenMapStoragePureControllerRelationship(p *models.StoragePureController
 	storagepurecontrollerrelationships = append(storagepurecontrollerrelationships, storagepurecontrollerrelationship)
 	return storagepurecontrollerrelationships
 }
-func flattenMapStoragePureHostRelationship(p *models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureHostRelationship(p models.StoragePureHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureHostRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepurehostrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurehostrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurehostrelationship["class_id"] = item.ClassId
 	storagepurehostrelationship["moid"] = item.Moid
 	storagepurehostrelationship["object_type"] = item.ObjectType
@@ -8041,14 +14238,26 @@ func flattenMapStoragePureHostRelationship(p *models.StoragePureHostRelationship
 	storagepurehostrelationships = append(storagepurehostrelationships, storagepurehostrelationship)
 	return storagepurehostrelationships
 }
-func flattenMapStoragePureHostGroupRelationship(p *models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureHostGroupRelationship(p models.StoragePureHostGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostgrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureHostGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepurehostgrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurehostgrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurehostgrouprelationship["class_id"] = item.ClassId
 	storagepurehostgrouprelationship["moid"] = item.Moid
 	storagepurehostgrouprelationship["object_type"] = item.ObjectType
@@ -8057,13 +14266,25 @@ func flattenMapStoragePureHostGroupRelationship(p *models.StoragePureHostGroupRe
 	storagepurehostgrouprelationships = append(storagepurehostgrouprelationships, storagepurehostgrouprelationship)
 	return storagepurehostgrouprelationships
 }
-func flattenMapStoragePureHostUtilization(p *models.StoragePureHostUtilization, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureHostUtilization(p models.StoragePureHostUtilization, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurehostutilizations []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureHostUtilization
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	storagepurehostutilization := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.StoragePureHostUtilization
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurehostutilization["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurehostutilization["available"] = item.Available
 	storagepurehostutilization["class_id"] = item.ClassId
 	storagepurehostutilization["data_reduction"] = item.DataReduction
@@ -8079,14 +14300,26 @@ func flattenMapStoragePureHostUtilization(p *models.StoragePureHostUtilization, 
 	storagepurehostutilizations = append(storagepurehostutilizations, storagepurehostutilization)
 	return storagepurehostutilizations
 }
-func flattenMapStoragePureProtectionGroupRelationship(p *models.StoragePureProtectionGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureProtectionGroupRelationship(p models.StoragePureProtectionGroupRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepureprotectiongrouprelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureProtectionGroupRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepureprotectiongrouprelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepureprotectiongrouprelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepureprotectiongrouprelationship["class_id"] = item.ClassId
 	storagepureprotectiongrouprelationship["moid"] = item.Moid
 	storagepureprotectiongrouprelationship["object_type"] = item.ObjectType
@@ -8095,14 +14328,26 @@ func flattenMapStoragePureProtectionGroupRelationship(p *models.StoragePureProte
 	storagepureprotectiongrouprelationships = append(storagepureprotectiongrouprelationships, storagepureprotectiongrouprelationship)
 	return storagepureprotectiongrouprelationships
 }
-func flattenMapStoragePureProtectionGroupSnapshotRelationship(p *models.StoragePureProtectionGroupSnapshotRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureProtectionGroupSnapshotRelationship(p models.StoragePureProtectionGroupSnapshotRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepureprotectiongroupsnapshotrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureProtectionGroupSnapshotRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepureprotectiongroupsnapshotrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepureprotectiongroupsnapshotrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepureprotectiongroupsnapshotrelationship["class_id"] = item.ClassId
 	storagepureprotectiongroupsnapshotrelationship["moid"] = item.Moid
 	storagepureprotectiongroupsnapshotrelationship["object_type"] = item.ObjectType
@@ -8111,14 +14356,26 @@ func flattenMapStoragePureProtectionGroupSnapshotRelationship(p *models.StorageP
 	storagepureprotectiongroupsnapshotrelationships = append(storagepureprotectiongroupsnapshotrelationships, storagepureprotectiongroupsnapshotrelationship)
 	return storagepureprotectiongroupsnapshotrelationships
 }
-func flattenMapStoragePureVolumeRelationship(p *models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStoragePureVolumeRelationship(p models.StoragePureVolumeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagepurevolumerelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StoragePureVolumeRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagepurevolumerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagepurevolumerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagepurevolumerelationship["class_id"] = item.ClassId
 	storagepurevolumerelationship["moid"] = item.Moid
 	storagepurevolumerelationship["object_type"] = item.ObjectType
@@ -8127,14 +14384,26 @@ func flattenMapStoragePureVolumeRelationship(p *models.StoragePureVolumeRelation
 	storagepurevolumerelationships = append(storagepurevolumerelationships, storagepurevolumerelationship)
 	return storagepurevolumerelationships
 }
-func flattenMapStorageSasExpanderRelationship(p *models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageSasExpanderRelationship(p models.StorageSasExpanderRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagesasexpanderrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageSasExpanderRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagesasexpanderrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagesasexpanderrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagesasexpanderrelationship["class_id"] = item.ClassId
 	storagesasexpanderrelationship["moid"] = item.Moid
 	storagesasexpanderrelationship["object_type"] = item.ObjectType
@@ -8143,14 +14412,26 @@ func flattenMapStorageSasExpanderRelationship(p *models.StorageSasExpanderRelati
 	storagesasexpanderrelationships = append(storagesasexpanderrelationships, storagesasexpanderrelationship)
 	return storagesasexpanderrelationships
 }
-func flattenMapStorageVirtualDriveRelationship(p *models.StorageVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageVirtualDriveRelationship(p models.StorageVirtualDriveRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriverelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageVirtualDriveRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagevirtualdriverelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagevirtualdriverelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagevirtualdriverelationship["class_id"] = item.ClassId
 	storagevirtualdriverelationship["moid"] = item.Moid
 	storagevirtualdriverelationship["object_type"] = item.ObjectType
@@ -8159,14 +14440,26 @@ func flattenMapStorageVirtualDriveRelationship(p *models.StorageVirtualDriveRela
 	storagevirtualdriverelationships = append(storagevirtualdriverelationships, storagevirtualdriverelationship)
 	return storagevirtualdriverelationships
 }
-func flattenMapStorageVirtualDriveExtensionRelationship(p *models.StorageVirtualDriveExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapStorageVirtualDriveExtensionRelationship(p models.StorageVirtualDriveExtensionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var storagevirtualdriveextensionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.StorageVirtualDriveExtensionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	storagevirtualdriveextensionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		storagevirtualdriveextensionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	storagevirtualdriveextensionrelationship["class_id"] = item.ClassId
 	storagevirtualdriveextensionrelationship["moid"] = item.Moid
 	storagevirtualdriveextensionrelationship["object_type"] = item.ObjectType
@@ -8175,14 +14468,26 @@ func flattenMapStorageVirtualDriveExtensionRelationship(p *models.StorageVirtual
 	storagevirtualdriveextensionrelationships = append(storagevirtualdriveextensionrelationships, storagevirtualdriveextensionrelationship)
 	return storagevirtualdriveextensionrelationships
 }
-func flattenMapTamBaseAdvisoryRelationship(p *models.TamBaseAdvisoryRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapTamBaseAdvisoryRelationship(p models.TamBaseAdvisoryRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var tambaseadvisoryrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.TamBaseAdvisoryRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	tambaseadvisoryrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		tambaseadvisoryrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	tambaseadvisoryrelationship["class_id"] = item.ClassId
 	tambaseadvisoryrelationship["moid"] = item.Moid
 	tambaseadvisoryrelationship["object_type"] = item.ObjectType
@@ -8191,13 +14496,25 @@ func flattenMapTamBaseAdvisoryRelationship(p *models.TamBaseAdvisoryRelationship
 	tambaseadvisoryrelationships = append(tambaseadvisoryrelationships, tambaseadvisoryrelationship)
 	return tambaseadvisoryrelationships
 }
-func flattenMapTamBaseAdvisoryDetails(p *models.TamBaseAdvisoryDetails, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapTamBaseAdvisoryDetails(p models.TamBaseAdvisoryDetails, d *schema.ResourceData) []map[string]interface{} {
 	var tambaseadvisorydetailss []map[string]interface{}
-	if p == nil {
+	var ret models.TamBaseAdvisoryDetails
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	tambaseadvisorydetails := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.TamBaseAdvisoryDetails
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		tambaseadvisorydetails["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	tambaseadvisorydetails["class_id"] = item.ClassId
 	tambaseadvisorydetails["description"] = item.Description
 	tambaseadvisorydetails["object_type"] = item.ObjectType
@@ -8205,27 +14522,80 @@ func flattenMapTamBaseAdvisoryDetails(p *models.TamBaseAdvisoryDetails, d *schem
 	tambaseadvisorydetailss = append(tambaseadvisorydetailss, tambaseadvisorydetails)
 	return tambaseadvisorydetailss
 }
-func flattenMapTamSeverity(p *models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapTamSeverity(p models.TamSeverity, d *schema.ResourceData) []map[string]interface{} {
 	var tamseveritys []map[string]interface{}
-	if p == nil {
+	var ret models.TamSeverity
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	tamseverity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.TamSeverity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		tamseverity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	tamseverity["class_id"] = item.ClassId
 	tamseverity["object_type"] = item.ObjectType
 
 	tamseveritys = append(tamseveritys, tamseverity)
 	return tamseveritys
 }
-func flattenMapTechsupportmanagementTechSupportBundleRelationship(p *models.TechsupportmanagementTechSupportBundleRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var techsupportmanagementtechsupportbundlerelationships []map[string]interface{}
-	if p == nil {
+func flattenMapTaskFileDownloadInfo(p models.TaskFileDownloadInfo, d *schema.ResourceData) []map[string]interface{} {
+	var taskfiledownloadinfos []map[string]interface{}
+	var ret models.TaskFileDownloadInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	item := p
+	taskfiledownloadinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.TaskFileDownloadInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		taskfiledownloadinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	taskfiledownloadinfo["class_id"] = item.ClassId
+	taskfiledownloadinfo["contents"] = item.Contents
+	taskfiledownloadinfo["object_type"] = item.ObjectType
+	taskfiledownloadinfo["path"] = item.Path
+	taskfiledownloadinfo["nr_source"] = item.Source
+	taskfiledownloadinfo["type"] = item.Type
+
+	taskfiledownloadinfos = append(taskfiledownloadinfos, taskfiledownloadinfo)
+	return taskfiledownloadinfos
+}
+func flattenMapTechsupportmanagementTechSupportBundleRelationship(p models.TechsupportmanagementTechSupportBundleRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var techsupportmanagementtechsupportbundlerelationships []map[string]interface{}
+	var ret models.TechsupportmanagementTechSupportBundleRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
 	item := x.MoMoRef
 	techsupportmanagementtechsupportbundlerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		techsupportmanagementtechsupportbundlerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	techsupportmanagementtechsupportbundlerelationship["class_id"] = item.ClassId
 	techsupportmanagementtechsupportbundlerelationship["moid"] = item.Moid
 	techsupportmanagementtechsupportbundlerelationship["object_type"] = item.ObjectType
@@ -8234,14 +14604,26 @@ func flattenMapTechsupportmanagementTechSupportBundleRelationship(p *models.Tech
 	techsupportmanagementtechsupportbundlerelationships = append(techsupportmanagementtechsupportbundlerelationships, techsupportmanagementtechsupportbundlerelationship)
 	return techsupportmanagementtechsupportbundlerelationships
 }
-func flattenMapTechsupportmanagementTechSupportStatusRelationship(p *models.TechsupportmanagementTechSupportStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapTechsupportmanagementTechSupportStatusRelationship(p models.TechsupportmanagementTechSupportStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var techsupportmanagementtechsupportstatusrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.TechsupportmanagementTechSupportStatusRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	techsupportmanagementtechsupportstatusrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		techsupportmanagementtechsupportstatusrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	techsupportmanagementtechsupportstatusrelationship["class_id"] = item.ClassId
 	techsupportmanagementtechsupportstatusrelationship["moid"] = item.Moid
 	techsupportmanagementtechsupportstatusrelationship["object_type"] = item.ObjectType
@@ -8250,14 +14632,56 @@ func flattenMapTechsupportmanagementTechSupportStatusRelationship(p *models.Tech
 	techsupportmanagementtechsupportstatusrelationships = append(techsupportmanagementtechsupportstatusrelationships, techsupportmanagementtechsupportstatusrelationship)
 	return techsupportmanagementtechsupportstatusrelationships
 }
-func flattenMapTopSystemRelationship(p *models.TopSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var topsystemrelationships []map[string]interface{}
-	if p == nil {
+func flattenMapTestcryptUser(p models.TestcryptUser, d *schema.ResourceData) []map[string]interface{} {
+	var testcryptusers []map[string]interface{}
+	var ret models.TestcryptUser
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	item := p
+	testcryptuser := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.TestcryptUser
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		testcryptuser["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	testcryptuser["class_id"] = item.ClassId
+	testcryptuser["is_password_set"] = item.IsPasswordSet
+	testcryptuser["object_type"] = item.ObjectType
+	password_x := d.Get("admin").([]interface{})
+	password_y := password_x[0].(map[string]interface{})
+	testcryptuser["password"] = password_y["password"]
+	testcryptuser["username"] = item.Username
+
+	testcryptusers = append(testcryptusers, testcryptuser)
+	return testcryptusers
+}
+func flattenMapTopSystemRelationship(p models.TopSystemRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var topsystemrelationships []map[string]interface{}
+	var ret models.TopSystemRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
 	item := x.MoMoRef
 	topsystemrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		topsystemrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	topsystemrelationship["class_id"] = item.ClassId
 	topsystemrelationship["moid"] = item.Moid
 	topsystemrelationship["object_type"] = item.ObjectType
@@ -8266,14 +14690,26 @@ func flattenMapTopSystemRelationship(p *models.TopSystemRelationship, d *schema.
 	topsystemrelationships = append(topsystemrelationships, topsystemrelationship)
 	return topsystemrelationships
 }
-func flattenMapUuidpoolBlockRelationship(p *models.UuidpoolBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolBlockRelationship(p models.UuidpoolBlockRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpoolblockrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolBlockRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	uuidpoolblockrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpoolblockrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpoolblockrelationship["class_id"] = item.ClassId
 	uuidpoolblockrelationship["moid"] = item.Moid
 	uuidpoolblockrelationship["object_type"] = item.ObjectType
@@ -8282,14 +14718,26 @@ func flattenMapUuidpoolBlockRelationship(p *models.UuidpoolBlockRelationship, d 
 	uuidpoolblockrelationships = append(uuidpoolblockrelationships, uuidpoolblockrelationship)
 	return uuidpoolblockrelationships
 }
-func flattenMapUuidpoolPoolRelationship(p *models.UuidpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolPoolRelationship(p models.UuidpoolPoolRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpoolpoolrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolPoolRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	uuidpoolpoolrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpoolpoolrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpoolpoolrelationship["class_id"] = item.ClassId
 	uuidpoolpoolrelationship["moid"] = item.Moid
 	uuidpoolpoolrelationship["object_type"] = item.ObjectType
@@ -8298,14 +14746,26 @@ func flattenMapUuidpoolPoolRelationship(p *models.UuidpoolPoolRelationship, d *s
 	uuidpoolpoolrelationships = append(uuidpoolpoolrelationships, uuidpoolpoolrelationship)
 	return uuidpoolpoolrelationships
 }
-func flattenMapUuidpoolPoolMemberRelationship(p *models.UuidpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolPoolMemberRelationship(p models.UuidpoolPoolMemberRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpoolpoolmemberrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolPoolMemberRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	uuidpoolpoolmemberrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpoolpoolmemberrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpoolpoolmemberrelationship["class_id"] = item.ClassId
 	uuidpoolpoolmemberrelationship["moid"] = item.Moid
 	uuidpoolpoolmemberrelationship["object_type"] = item.ObjectType
@@ -8314,14 +14774,26 @@ func flattenMapUuidpoolPoolMemberRelationship(p *models.UuidpoolPoolMemberRelati
 	uuidpoolpoolmemberrelationships = append(uuidpoolpoolmemberrelationships, uuidpoolpoolmemberrelationship)
 	return uuidpoolpoolmemberrelationships
 }
-func flattenMapUuidpoolUniverseRelationship(p *models.UuidpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolUniverseRelationship(p models.UuidpoolUniverseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpooluniverserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolUniverseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	uuidpooluniverserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpooluniverserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpooluniverserelationship["class_id"] = item.ClassId
 	uuidpooluniverserelationship["moid"] = item.Moid
 	uuidpooluniverserelationship["object_type"] = item.ObjectType
@@ -8330,13 +14802,25 @@ func flattenMapUuidpoolUniverseRelationship(p *models.UuidpoolUniverseRelationsh
 	uuidpooluniverserelationships = append(uuidpooluniverserelationships, uuidpooluniverserelationship)
 	return uuidpooluniverserelationships
 }
-func flattenMapUuidpoolUuidBlock(p *models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolUuidBlock(p models.UuidpoolUuidBlock, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpooluuidblocks []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolUuidBlock
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	uuidpooluuidblock := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.UuidpoolUuidBlock
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpooluuidblock["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpooluuidblock["class_id"] = item.ClassId
 	uuidpooluuidblock["from"] = item.From
 	uuidpooluuidblock["object_type"] = item.ObjectType
@@ -8346,14 +14830,26 @@ func flattenMapUuidpoolUuidBlock(p *models.UuidpoolUuidBlock, d *schema.Resource
 	uuidpooluuidblocks = append(uuidpooluuidblocks, uuidpooluuidblock)
 	return uuidpooluuidblocks
 }
-func flattenMapUuidpoolUuidLeaseRelationship(p *models.UuidpoolUuidLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapUuidpoolUuidLeaseRelationship(p models.UuidpoolUuidLeaseRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var uuidpooluuidleaserelationships []map[string]interface{}
-	if p == nil {
+	var ret models.UuidpoolUuidLeaseRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	uuidpooluuidleaserelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		uuidpooluuidleaserelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	uuidpooluuidleaserelationship["class_id"] = item.ClassId
 	uuidpooluuidleaserelationship["moid"] = item.Moid
 	uuidpooluuidleaserelationship["object_type"] = item.ObjectType
@@ -8362,13 +14858,195 @@ func flattenMapUuidpoolUuidLeaseRelationship(p *models.UuidpoolUuidLeaseRelation
 	uuidpooluuidleaserelationships = append(uuidpooluuidleaserelationships, uuidpooluuidleaserelationship)
 	return uuidpooluuidleaserelationships
 }
-func flattenMapVirtualizationComputeCapacity(p *models.VirtualizationComputeCapacity, d *schema.ResourceData) []map[string]interface{} {
-	var virtualizationcomputecapacitys []map[string]interface{}
-	if p == nil {
+func flattenMapVirtualizationActionInfo(p models.VirtualizationActionInfo, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationactioninfos []map[string]interface{}
+	var ret models.VirtualizationActionInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
+	virtualizationactioninfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationActionInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationactioninfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationactioninfo["class_id"] = item.ClassId
+	virtualizationactioninfo["failure_reason"] = item.FailureReason
+	virtualizationactioninfo["name"] = item.Name
+	virtualizationactioninfo["object_type"] = item.ObjectType
+	virtualizationactioninfo["status"] = item.Status
+
+	virtualizationactioninfos = append(virtualizationactioninfos, virtualizationactioninfo)
+	return virtualizationactioninfos
+}
+func flattenMapVirtualizationBaseClusterRelationship(p models.VirtualizationBaseClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationbaseclusterrelationships []map[string]interface{}
+	var ret models.VirtualizationBaseClusterRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	virtualizationbaseclusterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationbaseclusterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationbaseclusterrelationship["class_id"] = item.ClassId
+	virtualizationbaseclusterrelationship["moid"] = item.Moid
+	virtualizationbaseclusterrelationship["object_type"] = item.ObjectType
+	virtualizationbaseclusterrelationship["selector"] = item.Selector
+
+	virtualizationbaseclusterrelationships = append(virtualizationbaseclusterrelationships, virtualizationbaseclusterrelationship)
+	return virtualizationbaseclusterrelationships
+}
+func flattenMapVirtualizationBaseHostRelationship(p models.VirtualizationBaseHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationbasehostrelationships []map[string]interface{}
+	var ret models.VirtualizationBaseHostRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	virtualizationbasehostrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationbasehostrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationbasehostrelationship["class_id"] = item.ClassId
+	virtualizationbasehostrelationship["moid"] = item.Moid
+	virtualizationbasehostrelationship["object_type"] = item.ObjectType
+	virtualizationbasehostrelationship["selector"] = item.Selector
+
+	virtualizationbasehostrelationships = append(virtualizationbasehostrelationships, virtualizationbasehostrelationship)
+	return virtualizationbasehostrelationships
+}
+func flattenMapVirtualizationBaseVirtualDiskRelationship(p models.VirtualizationBaseVirtualDiskRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationbasevirtualdiskrelationships []map[string]interface{}
+	var ret models.VirtualizationBaseVirtualDiskRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	virtualizationbasevirtualdiskrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationbasevirtualdiskrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationbasevirtualdiskrelationship["class_id"] = item.ClassId
+	virtualizationbasevirtualdiskrelationship["moid"] = item.Moid
+	virtualizationbasevirtualdiskrelationship["object_type"] = item.ObjectType
+	virtualizationbasevirtualdiskrelationship["selector"] = item.Selector
+
+	virtualizationbasevirtualdiskrelationships = append(virtualizationbasevirtualdiskrelationships, virtualizationbasevirtualdiskrelationship)
+	return virtualizationbasevirtualdiskrelationships
+}
+func flattenMapVirtualizationBaseVirtualMachineRelationship(p models.VirtualizationBaseVirtualMachineRelationship, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationbasevirtualmachinerelationships []map[string]interface{}
+	var ret models.VirtualizationBaseVirtualMachineRelationship
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	x := p
+	item := x.MoMoRef
+	virtualizationbasevirtualmachinerelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationbasevirtualmachinerelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationbasevirtualmachinerelationship["class_id"] = item.ClassId
+	virtualizationbasevirtualmachinerelationship["moid"] = item.Moid
+	virtualizationbasevirtualmachinerelationship["object_type"] = item.ObjectType
+	virtualizationbasevirtualmachinerelationship["selector"] = item.Selector
+
+	virtualizationbasevirtualmachinerelationships = append(virtualizationbasevirtualmachinerelationships, virtualizationbasevirtualmachinerelationship)
+	return virtualizationbasevirtualmachinerelationships
+}
+func flattenMapVirtualizationCloudInitConfig(p models.VirtualizationCloudInitConfig, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationcloudinitconfigs []map[string]interface{}
+	var ret models.VirtualizationCloudInitConfig
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	item := p
+	virtualizationcloudinitconfig := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationCloudInitConfig
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationcloudinitconfig["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
+	virtualizationcloudinitconfig["class_id"] = item.ClassId
+	virtualizationcloudinitconfig["config_type"] = item.ConfigType
+	virtualizationcloudinitconfig["network_data"] = item.NetworkData
+	virtualizationcloudinitconfig["network_data_base64_encoded"] = item.NetworkDataBase64Encoded
+	virtualizationcloudinitconfig["object_type"] = item.ObjectType
+	virtualizationcloudinitconfig["user_data"] = item.UserData
+	virtualizationcloudinitconfig["user_data_base64_encoded"] = item.UserDataBase64Encoded
+
+	virtualizationcloudinitconfigs = append(virtualizationcloudinitconfigs, virtualizationcloudinitconfig)
+	return virtualizationcloudinitconfigs
+}
+func flattenMapVirtualizationComputeCapacity(p models.VirtualizationComputeCapacity, d *schema.ResourceData) []map[string]interface{} {
+	var virtualizationcomputecapacitys []map[string]interface{}
+	var ret models.VirtualizationComputeCapacity
+	if reflect.DeepEqual(ret, p) {
+		return nil
+	}
+	item := p
 	virtualizationcomputecapacity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationComputeCapacity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationcomputecapacity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationcomputecapacity["capacity"] = item.Capacity
 	virtualizationcomputecapacity["class_id"] = item.ClassId
 	virtualizationcomputecapacity["free"] = item.Free
@@ -8378,13 +15056,25 @@ func flattenMapVirtualizationComputeCapacity(p *models.VirtualizationComputeCapa
 	virtualizationcomputecapacitys = append(virtualizationcomputecapacitys, virtualizationcomputecapacity)
 	return virtualizationcomputecapacitys
 }
-func flattenMapVirtualizationCpuInfo(p *models.VirtualizationCpuInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationCpuInfo(p models.VirtualizationCpuInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationcpuinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationCpuInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationcpuinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationCpuInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationcpuinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationcpuinfo["class_id"] = item.ClassId
 	virtualizationcpuinfo["cores"] = item.Cores
 	virtualizationcpuinfo["description"] = item.Description
@@ -8396,13 +15086,25 @@ func flattenMapVirtualizationCpuInfo(p *models.VirtualizationCpuInfo, d *schema.
 	virtualizationcpuinfos = append(virtualizationcpuinfos, virtualizationcpuinfo)
 	return virtualizationcpuinfos
 }
-func flattenMapVirtualizationGuestInfo(p *models.VirtualizationGuestInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationGuestInfo(p models.VirtualizationGuestInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationguestinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationGuestInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationguestinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationGuestInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationguestinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationguestinfo["class_id"] = item.ClassId
 	virtualizationguestinfo["hostname"] = item.Hostname
 	virtualizationguestinfo["ip_address"] = item.IpAddress
@@ -8413,13 +15115,25 @@ func flattenMapVirtualizationGuestInfo(p *models.VirtualizationGuestInfo, d *sch
 	virtualizationguestinfos = append(virtualizationguestinfos, virtualizationguestinfo)
 	return virtualizationguestinfos
 }
-func flattenMapVirtualizationMemoryCapacity(p *models.VirtualizationMemoryCapacity, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationMemoryCapacity(p models.VirtualizationMemoryCapacity, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationmemorycapacitys []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationMemoryCapacity
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationmemorycapacity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationMemoryCapacity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationmemorycapacity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationmemorycapacity["capacity"] = item.Capacity
 	virtualizationmemorycapacity["class_id"] = item.ClassId
 	virtualizationmemorycapacity["free"] = item.Free
@@ -8429,13 +15143,25 @@ func flattenMapVirtualizationMemoryCapacity(p *models.VirtualizationMemoryCapaci
 	virtualizationmemorycapacitys = append(virtualizationmemorycapacitys, virtualizationmemorycapacity)
 	return virtualizationmemorycapacitys
 }
-func flattenMapVirtualizationProductInfo(p *models.VirtualizationProductInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationProductInfo(p models.VirtualizationProductInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationproductinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationProductInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationproductinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationProductInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationproductinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationproductinfo["class_id"] = item.ClassId
 	virtualizationproductinfo["object_type"] = item.ObjectType
 	virtualizationproductinfo["product_name"] = item.ProductName
@@ -8446,13 +15172,25 @@ func flattenMapVirtualizationProductInfo(p *models.VirtualizationProductInfo, d 
 	virtualizationproductinfos = append(virtualizationproductinfos, virtualizationproductinfo)
 	return virtualizationproductinfos
 }
-func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapacity, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationStorageCapacity(p models.VirtualizationStorageCapacity, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationstoragecapacitys []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationStorageCapacity
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationstoragecapacity := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationStorageCapacity
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationstoragecapacity["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationstoragecapacity["capacity"] = item.Capacity
 	virtualizationstoragecapacity["class_id"] = item.ClassId
 	virtualizationstoragecapacity["free"] = item.Free
@@ -8462,14 +15200,26 @@ func flattenMapVirtualizationStorageCapacity(p *models.VirtualizationStorageCapa
 	virtualizationstoragecapacitys = append(virtualizationstoragecapacitys, virtualizationstoragecapacity)
 	return virtualizationstoragecapacitys
 }
-func flattenMapVirtualizationVmwareClusterRelationship(p *models.VirtualizationVmwareClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareClusterRelationship(p models.VirtualizationVmwareClusterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwareclusterrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareClusterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	virtualizationvmwareclusterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwareclusterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwareclusterrelationship["class_id"] = item.ClassId
 	virtualizationvmwareclusterrelationship["moid"] = item.Moid
 	virtualizationvmwareclusterrelationship["object_type"] = item.ObjectType
@@ -8478,14 +15228,26 @@ func flattenMapVirtualizationVmwareClusterRelationship(p *models.VirtualizationV
 	virtualizationvmwareclusterrelationships = append(virtualizationvmwareclusterrelationships, virtualizationvmwareclusterrelationship)
 	return virtualizationvmwareclusterrelationships
 }
-func flattenMapVirtualizationVmwareDatacenterRelationship(p *models.VirtualizationVmwareDatacenterRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareDatacenterRelationship(p models.VirtualizationVmwareDatacenterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwaredatacenterrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareDatacenterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	virtualizationvmwaredatacenterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwaredatacenterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwaredatacenterrelationship["class_id"] = item.ClassId
 	virtualizationvmwaredatacenterrelationship["moid"] = item.Moid
 	virtualizationvmwaredatacenterrelationship["object_type"] = item.ObjectType
@@ -8494,14 +15256,26 @@ func flattenMapVirtualizationVmwareDatacenterRelationship(p *models.Virtualizati
 	virtualizationvmwaredatacenterrelationships = append(virtualizationvmwaredatacenterrelationships, virtualizationvmwaredatacenterrelationship)
 	return virtualizationvmwaredatacenterrelationships
 }
-func flattenMapVirtualizationVmwareHostRelationship(p *models.VirtualizationVmwareHostRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareHostRelationship(p models.VirtualizationVmwareHostRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarehostrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareHostRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	virtualizationvmwarehostrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarehostrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarehostrelationship["class_id"] = item.ClassId
 	virtualizationvmwarehostrelationship["moid"] = item.Moid
 	virtualizationvmwarehostrelationship["object_type"] = item.ObjectType
@@ -8510,13 +15284,25 @@ func flattenMapVirtualizationVmwareHostRelationship(p *models.VirtualizationVmwa
 	virtualizationvmwarehostrelationships = append(virtualizationvmwarehostrelationships, virtualizationvmwarehostrelationship)
 	return virtualizationvmwarehostrelationships
 }
-func flattenMapVirtualizationVmwareRemoteDisplayInfo(p *models.VirtualizationVmwareRemoteDisplayInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareRemoteDisplayInfo(p models.VirtualizationVmwareRemoteDisplayInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwareremotedisplayinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareRemoteDisplayInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwareremotedisplayinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareRemoteDisplayInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwareremotedisplayinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwareremotedisplayinfo["class_id"] = item.ClassId
 	virtualizationvmwareremotedisplayinfo["object_type"] = item.ObjectType
 	virtualizationvmwareremotedisplayinfo["remote_display_password"] = item.RemoteDisplayPassword
@@ -8526,13 +15312,25 @@ func flattenMapVirtualizationVmwareRemoteDisplayInfo(p *models.VirtualizationVmw
 	virtualizationvmwareremotedisplayinfos = append(virtualizationvmwareremotedisplayinfos, virtualizationvmwareremotedisplayinfo)
 	return virtualizationvmwareremotedisplayinfos
 }
-func flattenMapVirtualizationVmwareResourceConsumption(p *models.VirtualizationVmwareResourceConsumption, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareResourceConsumption(p models.VirtualizationVmwareResourceConsumption, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwareresourceconsumptions []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareResourceConsumption
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwareresourceconsumption := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareResourceConsumption
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwareresourceconsumption["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwareresourceconsumption["class_id"] = item.ClassId
 	virtualizationvmwareresourceconsumption["cpu_consumed"] = item.CpuConsumed
 	virtualizationvmwareresourceconsumption["memory_consumed"] = item.MemoryConsumed
@@ -8541,14 +15339,26 @@ func flattenMapVirtualizationVmwareResourceConsumption(p *models.VirtualizationV
 	virtualizationvmwareresourceconsumptions = append(virtualizationvmwareresourceconsumptions, virtualizationvmwareresourceconsumption)
 	return virtualizationvmwareresourceconsumptions
 }
-func flattenMapVirtualizationVmwareVcenterRelationship(p *models.VirtualizationVmwareVcenterRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareVcenterRelationship(p models.VirtualizationVmwareVcenterRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevcenterrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareVcenterRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	virtualizationvmwarevcenterrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarevcenterrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarevcenterrelationship["class_id"] = item.ClassId
 	virtualizationvmwarevcenterrelationship["moid"] = item.Moid
 	virtualizationvmwarevcenterrelationship["object_type"] = item.ObjectType
@@ -8557,13 +15367,25 @@ func flattenMapVirtualizationVmwareVcenterRelationship(p *models.VirtualizationV
 	virtualizationvmwarevcenterrelationships = append(virtualizationvmwarevcenterrelationships, virtualizationvmwarevcenterrelationship)
 	return virtualizationvmwarevcenterrelationships
 }
-func flattenMapVirtualizationVmwareVmCpuShareInfo(p *models.VirtualizationVmwareVmCpuShareInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareVmCpuShareInfo(p models.VirtualizationVmwareVmCpuShareInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevmcpushareinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareVmCpuShareInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwarevmcpushareinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareVmCpuShareInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarevmcpushareinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarevmcpushareinfo["class_id"] = item.ClassId
 	virtualizationvmwarevmcpushareinfo["cpu_limit"] = item.CpuLimit
 	virtualizationvmwarevmcpushareinfo["cpu_overhead_limit"] = item.CpuOverheadLimit
@@ -8574,13 +15396,25 @@ func flattenMapVirtualizationVmwareVmCpuShareInfo(p *models.VirtualizationVmware
 	virtualizationvmwarevmcpushareinfos = append(virtualizationvmwarevmcpushareinfos, virtualizationvmwarevmcpushareinfo)
 	return virtualizationvmwarevmcpushareinfos
 }
-func flattenMapVirtualizationVmwareVmCpuSocketInfo(p *models.VirtualizationVmwareVmCpuSocketInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareVmCpuSocketInfo(p models.VirtualizationVmwareVmCpuSocketInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevmcpusocketinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareVmCpuSocketInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwarevmcpusocketinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareVmCpuSocketInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarevmcpusocketinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarevmcpusocketinfo["class_id"] = item.ClassId
 	virtualizationvmwarevmcpusocketinfo["cores_per_socket"] = item.CoresPerSocket
 	virtualizationvmwarevmcpusocketinfo["num_cpus"] = item.NumCpus
@@ -8590,13 +15424,25 @@ func flattenMapVirtualizationVmwareVmCpuSocketInfo(p *models.VirtualizationVmwar
 	virtualizationvmwarevmcpusocketinfos = append(virtualizationvmwarevmcpusocketinfos, virtualizationvmwarevmcpusocketinfo)
 	return virtualizationvmwarevmcpusocketinfos
 }
-func flattenMapVirtualizationVmwareVmDiskCommitInfo(p *models.VirtualizationVmwareVmDiskCommitInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareVmDiskCommitInfo(p models.VirtualizationVmwareVmDiskCommitInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevmdiskcommitinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareVmDiskCommitInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwarevmdiskcommitinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareVmDiskCommitInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarevmdiskcommitinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarevmdiskcommitinfo["class_id"] = item.ClassId
 	virtualizationvmwarevmdiskcommitinfo["committed_disk"] = item.CommittedDisk
 	virtualizationvmwarevmdiskcommitinfo["object_type"] = item.ObjectType
@@ -8606,13 +15452,25 @@ func flattenMapVirtualizationVmwareVmDiskCommitInfo(p *models.VirtualizationVmwa
 	virtualizationvmwarevmdiskcommitinfos = append(virtualizationvmwarevmdiskcommitinfos, virtualizationvmwarevmdiskcommitinfo)
 	return virtualizationvmwarevmdiskcommitinfos
 }
-func flattenMapVirtualizationVmwareVmMemoryShareInfo(p *models.VirtualizationVmwareVmMemoryShareInfo, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVirtualizationVmwareVmMemoryShareInfo(p models.VirtualizationVmwareVmMemoryShareInfo, d *schema.ResourceData) []map[string]interface{} {
 	var virtualizationvmwarevmmemoryshareinfos []map[string]interface{}
-	if p == nil {
+	var ret models.VirtualizationVmwareVmMemoryShareInfo
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	virtualizationvmwarevmmemoryshareinfo := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VirtualizationVmwareVmMemoryShareInfo
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		virtualizationvmwarevmmemoryshareinfo["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	virtualizationvmwarevmmemoryshareinfo["class_id"] = item.ClassId
 	virtualizationvmwarevmmemoryshareinfo["mem_limit"] = item.MemLimit
 	virtualizationvmwarevmmemoryshareinfo["mem_overhead_limit"] = item.MemOverheadLimit
@@ -8623,13 +15481,25 @@ func flattenMapVirtualizationVmwareVmMemoryShareInfo(p *models.VirtualizationVmw
 	virtualizationvmwarevmmemoryshareinfos = append(virtualizationvmwarevmmemoryshareinfos, virtualizationvmwarevmmemoryshareinfo)
 	return virtualizationvmwarevmmemoryshareinfos
 }
-func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicArfsSettings(p models.VnicArfsSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicarfssettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicArfsSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicarfssettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicArfsSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicarfssettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicarfssettings["class_id"] = item.ClassId
 	vnicarfssettings["enabled"] = item.Enabled
 	vnicarfssettings["object_type"] = item.ObjectType
@@ -8637,13 +15507,25 @@ func flattenMapVnicArfsSettings(p *models.VnicArfsSettings, d *schema.ResourceDa
 	vnicarfssettingss = append(vnicarfssettingss, vnicarfssettings)
 	return vnicarfssettingss
 }
-func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicCdn(p models.VnicCdn, d *schema.ResourceData) []map[string]interface{} {
 	var vniccdns []map[string]interface{}
-	if p == nil {
+	var ret models.VnicCdn
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vniccdn := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicCdn
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vniccdn["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vniccdn["class_id"] = item.ClassId
 	vniccdn["object_type"] = item.ObjectType
 	vniccdn["nr_source"] = item.Source
@@ -8652,13 +15534,25 @@ func flattenMapVnicCdn(p *models.VnicCdn, d *schema.ResourceData) []map[string]i
 	vniccdns = append(vniccdns, vniccdn)
 	return vniccdns
 }
-func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicCompletionQueueSettings(p models.VnicCompletionQueueSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vniccompletionqueuesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicCompletionQueueSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vniccompletionqueuesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicCompletionQueueSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vniccompletionqueuesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vniccompletionqueuesettings["class_id"] = item.ClassId
 	vniccompletionqueuesettings["nr_count"] = item.Count
 	vniccompletionqueuesettings["object_type"] = item.ObjectType
@@ -8667,14 +15561,26 @@ func flattenMapVnicCompletionQueueSettings(p *models.VnicCompletionQueueSettings
 	vniccompletionqueuesettingss = append(vniccompletionqueuesettingss, vniccompletionqueuesettings)
 	return vniccompletionqueuesettingss
 }
-func flattenMapVnicEthAdapterPolicyRelationship(p *models.VnicEthAdapterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthAdapterPolicyRelationship(p models.VnicEthAdapterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethadapterpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthAdapterPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicethadapterpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethadapterpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethadapterpolicyrelationship["class_id"] = item.ClassId
 	vnicethadapterpolicyrelationship["moid"] = item.Moid
 	vnicethadapterpolicyrelationship["object_type"] = item.ObjectType
@@ -8683,14 +15589,26 @@ func flattenMapVnicEthAdapterPolicyRelationship(p *models.VnicEthAdapterPolicyRe
 	vnicethadapterpolicyrelationships = append(vnicethadapterpolicyrelationships, vnicethadapterpolicyrelationship)
 	return vnicethadapterpolicyrelationships
 }
-func flattenMapVnicEthIfRelationship(p *models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthIfRelationship(p models.VnicEthIfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethifrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthIfRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicethifrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethifrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethifrelationship["class_id"] = item.ClassId
 	vnicethifrelationship["moid"] = item.Moid
 	vnicethifrelationship["object_type"] = item.ObjectType
@@ -8699,13 +15617,25 @@ func flattenMapVnicEthIfRelationship(p *models.VnicEthIfRelationship, d *schema.
 	vnicethifrelationships = append(vnicethifrelationships, vnicethifrelationship)
 	return vnicethifrelationships
 }
-func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthInterruptSettings(p models.VnicEthInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethinterruptsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthInterruptSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicethinterruptsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicEthInterruptSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethinterruptsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethinterruptsettings["class_id"] = item.ClassId
 	vnicethinterruptsettings["coalescing_time"] = item.CoalescingTime
 	vnicethinterruptsettings["coalescing_type"] = item.CoalescingType
@@ -8716,14 +15646,26 @@ func flattenMapVnicEthInterruptSettings(p *models.VnicEthInterruptSettings, d *s
 	vnicethinterruptsettingss = append(vnicethinterruptsettingss, vnicethinterruptsettings)
 	return vnicethinterruptsettingss
 }
-func flattenMapVnicEthNetworkPolicyRelationship(p *models.VnicEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthNetworkPolicyRelationship(p models.VnicEthNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethnetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthNetworkPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicethnetworkpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethnetworkpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethnetworkpolicyrelationship["class_id"] = item.ClassId
 	vnicethnetworkpolicyrelationship["moid"] = item.Moid
 	vnicethnetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -8732,14 +15674,26 @@ func flattenMapVnicEthNetworkPolicyRelationship(p *models.VnicEthNetworkPolicyRe
 	vnicethnetworkpolicyrelationships = append(vnicethnetworkpolicyrelationships, vnicethnetworkpolicyrelationship)
 	return vnicethnetworkpolicyrelationships
 }
-func flattenMapVnicEthQosPolicyRelationship(p *models.VnicEthQosPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthQosPolicyRelationship(p models.VnicEthQosPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethqospolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthQosPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicethqospolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethqospolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethqospolicyrelationship["class_id"] = item.ClassId
 	vnicethqospolicyrelationship["moid"] = item.Moid
 	vnicethqospolicyrelationship["object_type"] = item.ObjectType
@@ -8748,13 +15702,25 @@ func flattenMapVnicEthQosPolicyRelationship(p *models.VnicEthQosPolicyRelationsh
 	vnicethqospolicyrelationships = append(vnicethqospolicyrelationships, vnicethqospolicyrelationship)
 	return vnicethqospolicyrelationships
 }
-func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthRxQueueSettings(p models.VnicEthRxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethrxqueuesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthRxQueueSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicethrxqueuesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicEthRxQueueSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethrxqueuesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethrxqueuesettings["class_id"] = item.ClassId
 	vnicethrxqueuesettings["nr_count"] = item.Count
 	vnicethrxqueuesettings["object_type"] = item.ObjectType
@@ -8763,13 +15729,25 @@ func flattenMapVnicEthRxQueueSettings(p *models.VnicEthRxQueueSettings, d *schem
 	vnicethrxqueuesettingss = append(vnicethrxqueuesettingss, vnicethrxqueuesettings)
 	return vnicethrxqueuesettingss
 }
-func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicEthTxQueueSettings(p models.VnicEthTxQueueSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicethtxqueuesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicEthTxQueueSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicethtxqueuesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicEthTxQueueSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicethtxqueuesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicethtxqueuesettings["class_id"] = item.ClassId
 	vnicethtxqueuesettings["nr_count"] = item.Count
 	vnicethtxqueuesettings["object_type"] = item.ObjectType
@@ -8778,14 +15756,26 @@ func flattenMapVnicEthTxQueueSettings(p *models.VnicEthTxQueueSettings, d *schem
 	vnicethtxqueuesettingss = append(vnicethtxqueuesettingss, vnicethtxqueuesettings)
 	return vnicethtxqueuesettingss
 }
-func flattenMapVnicFcAdapterPolicyRelationship(p *models.VnicFcAdapterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcAdapterPolicyRelationship(p models.VnicFcAdapterPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcadapterpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcAdapterPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicfcadapterpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcadapterpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcadapterpolicyrelationship["class_id"] = item.ClassId
 	vnicfcadapterpolicyrelationship["moid"] = item.Moid
 	vnicfcadapterpolicyrelationship["object_type"] = item.ObjectType
@@ -8794,13 +15784,25 @@ func flattenMapVnicFcAdapterPolicyRelationship(p *models.VnicFcAdapterPolicyRela
 	vnicfcadapterpolicyrelationships = append(vnicfcadapterpolicyrelationships, vnicfcadapterpolicyrelationship)
 	return vnicfcadapterpolicyrelationships
 }
-func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcErrorRecoverySettings(p models.VnicFcErrorRecoverySettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcerrorrecoverysettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcErrorRecoverySettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicfcerrorrecoverysettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicFcErrorRecoverySettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcerrorrecoverysettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcerrorrecoverysettings["class_id"] = item.ClassId
 	vnicfcerrorrecoverysettings["enabled"] = item.Enabled
 	vnicfcerrorrecoverysettings["io_retry_count"] = item.IoRetryCount
@@ -8812,14 +15814,26 @@ func flattenMapVnicFcErrorRecoverySettings(p *models.VnicFcErrorRecoverySettings
 	vnicfcerrorrecoverysettingss = append(vnicfcerrorrecoverysettingss, vnicfcerrorrecoverysettings)
 	return vnicfcerrorrecoverysettingss
 }
-func flattenMapVnicFcIfRelationship(p *models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcIfRelationship(p models.VnicFcIfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcifrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcIfRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicfcifrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcifrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcifrelationship["class_id"] = item.ClassId
 	vnicfcifrelationship["moid"] = item.Moid
 	vnicfcifrelationship["object_type"] = item.ObjectType
@@ -8828,13 +15842,25 @@ func flattenMapVnicFcIfRelationship(p *models.VnicFcIfRelationship, d *schema.Re
 	vnicfcifrelationships = append(vnicfcifrelationships, vnicfcifrelationship)
 	return vnicfcifrelationships
 }
-func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcInterruptSettings(p models.VnicFcInterruptSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcinterruptsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcInterruptSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicfcinterruptsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicFcInterruptSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcinterruptsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcinterruptsettings["class_id"] = item.ClassId
 	vnicfcinterruptsettings["mode"] = item.Mode
 	vnicfcinterruptsettings["object_type"] = item.ObjectType
@@ -8842,14 +15868,26 @@ func flattenMapVnicFcInterruptSettings(p *models.VnicFcInterruptSettings, d *sch
 	vnicfcinterruptsettingss = append(vnicfcinterruptsettingss, vnicfcinterruptsettings)
 	return vnicfcinterruptsettingss
 }
-func flattenMapVnicFcNetworkPolicyRelationship(p *models.VnicFcNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcNetworkPolicyRelationship(p models.VnicFcNetworkPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcnetworkpolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcNetworkPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicfcnetworkpolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcnetworkpolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcnetworkpolicyrelationship["class_id"] = item.ClassId
 	vnicfcnetworkpolicyrelationship["moid"] = item.Moid
 	vnicfcnetworkpolicyrelationship["object_type"] = item.ObjectType
@@ -8858,14 +15896,26 @@ func flattenMapVnicFcNetworkPolicyRelationship(p *models.VnicFcNetworkPolicyRela
 	vnicfcnetworkpolicyrelationships = append(vnicfcnetworkpolicyrelationships, vnicfcnetworkpolicyrelationship)
 	return vnicfcnetworkpolicyrelationships
 }
-func flattenMapVnicFcQosPolicyRelationship(p *models.VnicFcQosPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcQosPolicyRelationship(p models.VnicFcQosPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcqospolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcQosPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicfcqospolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcqospolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcqospolicyrelationship["class_id"] = item.ClassId
 	vnicfcqospolicyrelationship["moid"] = item.Moid
 	vnicfcqospolicyrelationship["object_type"] = item.ObjectType
@@ -8874,13 +15924,25 @@ func flattenMapVnicFcQosPolicyRelationship(p *models.VnicFcQosPolicyRelationship
 	vnicfcqospolicyrelationships = append(vnicfcqospolicyrelationships, vnicfcqospolicyrelationship)
 	return vnicfcqospolicyrelationships
 }
-func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFcQueueSettings(p models.VnicFcQueueSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicfcqueuesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFcQueueSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicfcqueuesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicFcQueueSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicfcqueuesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicfcqueuesettings["class_id"] = item.ClassId
 	vnicfcqueuesettings["nr_count"] = item.Count
 	vnicfcqueuesettings["object_type"] = item.ObjectType
@@ -8889,13 +15951,25 @@ func flattenMapVnicFcQueueSettings(p *models.VnicFcQueueSettings, d *schema.Reso
 	vnicfcqueuesettingss = append(vnicfcqueuesettingss, vnicfcqueuesettings)
 	return vnicfcqueuesettingss
 }
-func flattenMapVnicFlogiSettings(p *models.VnicFlogiSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicFlogiSettings(p models.VnicFlogiSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicflogisettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicFlogiSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicflogisettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicFlogiSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicflogisettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicflogisettings["class_id"] = item.ClassId
 	vnicflogisettings["object_type"] = item.ObjectType
 	vnicflogisettings["retries"] = item.Retries
@@ -8904,14 +15978,26 @@ func flattenMapVnicFlogiSettings(p *models.VnicFlogiSettings, d *schema.Resource
 	vnicflogisettingss = append(vnicflogisettingss, vnicflogisettings)
 	return vnicflogisettingss
 }
-func flattenMapVnicLanConnectivityPolicyRelationship(p *models.VnicLanConnectivityPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicLanConnectivityPolicyRelationship(p models.VnicLanConnectivityPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vniclanconnectivitypolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicLanConnectivityPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vniclanconnectivitypolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vniclanconnectivitypolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vniclanconnectivitypolicyrelationship["class_id"] = item.ClassId
 	vniclanconnectivitypolicyrelationship["moid"] = item.Moid
 	vniclanconnectivitypolicyrelationship["object_type"] = item.ObjectType
@@ -8920,13 +16006,25 @@ func flattenMapVnicLanConnectivityPolicyRelationship(p *models.VnicLanConnectivi
 	vniclanconnectivitypolicyrelationships = append(vniclanconnectivitypolicyrelationships, vniclanconnectivitypolicyrelationship)
 	return vniclanconnectivitypolicyrelationships
 }
-func flattenMapVnicNvgreSettings(p *models.VnicNvgreSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicNvgreSettings(p models.VnicNvgreSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicnvgresettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicNvgreSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicnvgresettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicNvgreSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicnvgresettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicnvgresettings["class_id"] = item.ClassId
 	vnicnvgresettings["enabled"] = item.Enabled
 	vnicnvgresettings["object_type"] = item.ObjectType
@@ -8934,13 +16032,25 @@ func flattenMapVnicNvgreSettings(p *models.VnicNvgreSettings, d *schema.Resource
 	vnicnvgresettingss = append(vnicnvgresettingss, vnicnvgresettings)
 	return vnicnvgresettingss
 }
-func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicPlacementSettings(p models.VnicPlacementSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicplacementsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicPlacementSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicplacementsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicPlacementSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicplacementsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicplacementsettings["class_id"] = item.ClassId
 	vnicplacementsettings["id"] = item.Id
 	vnicplacementsettings["object_type"] = item.ObjectType
@@ -8951,13 +16061,25 @@ func flattenMapVnicPlacementSettings(p *models.VnicPlacementSettings, d *schema.
 	vnicplacementsettingss = append(vnicplacementsettingss, vnicplacementsettings)
 	return vnicplacementsettingss
 }
-func flattenMapVnicPlogiSettings(p *models.VnicPlogiSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicPlogiSettings(p models.VnicPlogiSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicplogisettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicPlogiSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicplogisettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicPlogiSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicplogisettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicplogisettings["class_id"] = item.ClassId
 	vnicplogisettings["object_type"] = item.ObjectType
 	vnicplogisettings["retries"] = item.Retries
@@ -8966,13 +16088,25 @@ func flattenMapVnicPlogiSettings(p *models.VnicPlogiSettings, d *schema.Resource
 	vnicplogisettingss = append(vnicplogisettingss, vnicplogisettings)
 	return vnicplogisettingss
 }
-func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicRoceSettings(p models.VnicRoceSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicrocesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicRoceSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicrocesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicRoceSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicrocesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicrocesettings["class_id"] = item.ClassId
 	vnicrocesettings["class_of_service"] = item.ClassOfService
 	vnicrocesettings["enabled"] = item.Enabled
@@ -8985,13 +16119,25 @@ func flattenMapVnicRoceSettings(p *models.VnicRoceSettings, d *schema.ResourceDa
 	vnicrocesettingss = append(vnicrocesettingss, vnicrocesettings)
 	return vnicrocesettingss
 }
-func flattenMapVnicRssHashSettings(p *models.VnicRssHashSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicRssHashSettings(p models.VnicRssHashSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicrsshashsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicRssHashSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicrsshashsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicRssHashSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicrsshashsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicrsshashsettings["class_id"] = item.ClassId
 	vnicrsshashsettings["ipv4_hash"] = item.Ipv4Hash
 	vnicrsshashsettings["ipv6_ext_hash"] = item.Ipv6ExtHash
@@ -9006,14 +16152,26 @@ func flattenMapVnicRssHashSettings(p *models.VnicRssHashSettings, d *schema.Reso
 	vnicrsshashsettingss = append(vnicrsshashsettingss, vnicrsshashsettings)
 	return vnicrsshashsettingss
 }
-func flattenMapVnicSanConnectivityPolicyRelationship(p *models.VnicSanConnectivityPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicSanConnectivityPolicyRelationship(p models.VnicSanConnectivityPolicyRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vnicsanconnectivitypolicyrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VnicSanConnectivityPolicyRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vnicsanconnectivitypolicyrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicsanconnectivitypolicyrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicsanconnectivitypolicyrelationship["class_id"] = item.ClassId
 	vnicsanconnectivitypolicyrelationship["moid"] = item.Moid
 	vnicsanconnectivitypolicyrelationship["object_type"] = item.ObjectType
@@ -9022,13 +16180,25 @@ func flattenMapVnicSanConnectivityPolicyRelationship(p *models.VnicSanConnectivi
 	vnicsanconnectivitypolicyrelationships = append(vnicsanconnectivitypolicyrelationships, vnicsanconnectivitypolicyrelationship)
 	return vnicsanconnectivitypolicyrelationships
 }
-func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicScsiQueueSettings(p models.VnicScsiQueueSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicscsiqueuesettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicScsiQueueSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicscsiqueuesettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicScsiQueueSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicscsiqueuesettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicscsiqueuesettings["class_id"] = item.ClassId
 	vnicscsiqueuesettings["nr_count"] = item.Count
 	vnicscsiqueuesettings["object_type"] = item.ObjectType
@@ -9037,13 +16207,25 @@ func flattenMapVnicScsiQueueSettings(p *models.VnicScsiQueueSettings, d *schema.
 	vnicscsiqueuesettingss = append(vnicscsiqueuesettingss, vnicscsiqueuesettings)
 	return vnicscsiqueuesettingss
 }
-func flattenMapVnicTcpOffloadSettings(p *models.VnicTcpOffloadSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicTcpOffloadSettings(p models.VnicTcpOffloadSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnictcpoffloadsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicTcpOffloadSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnictcpoffloadsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicTcpOffloadSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnictcpoffloadsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnictcpoffloadsettings["class_id"] = item.ClassId
 	vnictcpoffloadsettings["large_receive"] = item.LargeReceive
 	vnictcpoffloadsettings["large_send"] = item.LargeSend
@@ -9054,13 +16236,25 @@ func flattenMapVnicTcpOffloadSettings(p *models.VnicTcpOffloadSettings, d *schem
 	vnictcpoffloadsettingss = append(vnictcpoffloadsettingss, vnictcpoffloadsettings)
 	return vnictcpoffloadsettingss
 }
-func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicUsnicSettings(p models.VnicUsnicSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicusnicsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicUsnicSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicusnicsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicUsnicSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicusnicsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicusnicsettings["class_id"] = item.ClassId
 	vnicusnicsettings["cos"] = item.Cos
 	vnicusnicsettings["nr_count"] = item.Count
@@ -9070,13 +16264,25 @@ func flattenMapVnicUsnicSettings(p *models.VnicUsnicSettings, d *schema.Resource
 	vnicusnicsettingss = append(vnicusnicsettingss, vnicusnicsettings)
 	return vnicusnicsettingss
 }
-func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicVlanSettings(p models.VnicVlanSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicvlansettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicVlanSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicvlansettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicVlanSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicvlansettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicvlansettings["allowed_vlans"] = item.AllowedVlans
 	vnicvlansettings["class_id"] = item.ClassId
 	vnicvlansettings["default_vlan"] = item.DefaultVlan
@@ -9086,13 +16292,25 @@ func flattenMapVnicVlanSettings(p *models.VnicVlanSettings, d *schema.ResourceDa
 	vnicvlansettingss = append(vnicvlansettingss, vnicvlansettings)
 	return vnicvlansettingss
 }
-func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicVmqSettings(p models.VnicVmqSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicvmqsettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicVmqSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicvmqsettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicVmqSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicvmqsettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicvmqsettings["class_id"] = item.ClassId
 	vnicvmqsettings["enabled"] = item.Enabled
 	vnicvmqsettings["multi_queue_support"] = item.MultiQueueSupport
@@ -9105,13 +16323,25 @@ func flattenMapVnicVmqSettings(p *models.VnicVmqSettings, d *schema.ResourceData
 	vnicvmqsettingss = append(vnicvmqsettingss, vnicvmqsettings)
 	return vnicvmqsettingss
 }
-func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicVsanSettings(p models.VnicVsanSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicvsansettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicVsanSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicvsansettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicVsanSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicvsansettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicvsansettings["class_id"] = item.ClassId
 	vnicvsansettings["id"] = item.Id
 	vnicvsansettings["object_type"] = item.ObjectType
@@ -9119,13 +16349,25 @@ func flattenMapVnicVsanSettings(p *models.VnicVsanSettings, d *schema.ResourceDa
 	vnicvsansettingss = append(vnicvsansettingss, vnicvsansettings)
 	return vnicvsansettingss
 }
-func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVnicVxlanSettings(p models.VnicVxlanSettings, d *schema.ResourceData) []map[string]interface{} {
 	var vnicvxlansettingss []map[string]interface{}
-	if p == nil {
+	var ret models.VnicVxlanSettings
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	vnicvxlansettings := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.VnicVxlanSettings
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vnicvxlansettings["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vnicvxlansettings["class_id"] = item.ClassId
 	vnicvxlansettings["enabled"] = item.Enabled
 	vnicvxlansettings["object_type"] = item.ObjectType
@@ -9133,14 +16375,26 @@ func flattenMapVnicVxlanSettings(p *models.VnicVxlanSettings, d *schema.Resource
 	vnicvxlansettingss = append(vnicvxlansettingss, vnicvxlansettings)
 	return vnicvxlansettingss
 }
-func flattenMapVrfVrfRelationship(p *models.VrfVrfRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapVrfVrfRelationship(p models.VrfVrfRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var vrfvrfrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.VrfVrfRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	vrfvrfrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		vrfvrfrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	vrfvrfrelationship["class_id"] = item.ClassId
 	vrfvrfrelationship["moid"] = item.Moid
 	vrfvrfrelationship["object_type"] = item.ObjectType
@@ -9149,14 +16403,26 @@ func flattenMapVrfVrfRelationship(p *models.VrfVrfRelationship, d *schema.Resour
 	vrfvrfrelationships = append(vrfvrfrelationships, vrfvrfrelationship)
 	return vrfvrfrelationships
 }
-func flattenMapWorkflowCatalogRelationship(p *models.WorkflowCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowCatalogRelationship(p models.WorkflowCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowcatalogrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowCatalogRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowcatalogrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowcatalogrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowcatalogrelationship["class_id"] = item.ClassId
 	workflowcatalogrelationship["moid"] = item.Moid
 	workflowcatalogrelationship["object_type"] = item.ObjectType
@@ -9165,14 +16431,26 @@ func flattenMapWorkflowCatalogRelationship(p *models.WorkflowCatalogRelationship
 	workflowcatalogrelationships = append(workflowcatalogrelationships, workflowcatalogrelationship)
 	return workflowcatalogrelationships
 }
-func flattenMapWorkflowErrorResponseHandlerRelationship(p *models.WorkflowErrorResponseHandlerRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowErrorResponseHandlerRelationship(p models.WorkflowErrorResponseHandlerRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowerrorresponsehandlerrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowErrorResponseHandlerRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowerrorresponsehandlerrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowerrorresponsehandlerrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowerrorresponsehandlerrelationship["class_id"] = item.ClassId
 	workflowerrorresponsehandlerrelationship["moid"] = item.Moid
 	workflowerrorresponsehandlerrelationship["object_type"] = item.ObjectType
@@ -9181,29 +16459,53 @@ func flattenMapWorkflowErrorResponseHandlerRelationship(p *models.WorkflowErrorR
 	workflowerrorresponsehandlerrelationships = append(workflowerrorresponsehandlerrelationships, workflowerrorresponsehandlerrelationship)
 	return workflowerrorresponsehandlerrelationships
 }
-func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowInternalProperties(p models.WorkflowInternalProperties, d *schema.ResourceData) []map[string]interface{} {
 	var workflowinternalpropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowInternalProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowinternalproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowInternalProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowinternalproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowinternalproperties["base_task_type"] = item.BaseTaskType
 	workflowinternalproperties["class_id"] = item.ClassId
-	workflowinternalproperties["constraints"] = (func(p *models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
+	workflowinternalproperties["constraints"] = (func(p models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
 		var workflowtaskconstraintss []map[string]interface{}
-		if p == nil {
+		var ret models.WorkflowTaskConstraints
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		workflowtaskconstraints := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.WorkflowTaskConstraints
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			workflowtaskconstraints["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		workflowtaskconstraints["class_id"] = item.ClassId
 		workflowtaskconstraints["object_type"] = item.ObjectType
 		workflowtaskconstraints["target_data_type"] = item.TargetDataType
 
 		workflowtaskconstraintss = append(workflowtaskconstraintss, workflowtaskconstraints)
 		return workflowtaskconstraintss
-	})(item.Constraints, d)
+	})(item.GetConstraints(), d)
 	workflowinternalproperties["internal"] = item.Internal
 	workflowinternalproperties["object_type"] = item.ObjectType
 	workflowinternalproperties["owner"] = item.Owner
@@ -9211,14 +16513,26 @@ func flattenMapWorkflowInternalProperties(p *models.WorkflowInternalProperties, 
 	workflowinternalpropertiess = append(workflowinternalpropertiess, workflowinternalproperties)
 	return workflowinternalpropertiess
 }
-func flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(p *models.WorkflowPendingDynamicWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(p models.WorkflowPendingDynamicWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowpendingdynamicworkflowinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowPendingDynamicWorkflowInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowpendingdynamicworkflowinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowpendingdynamicworkflowinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowpendingdynamicworkflowinforelationship["class_id"] = item.ClassId
 	workflowpendingdynamicworkflowinforelationship["moid"] = item.Moid
 	workflowpendingdynamicworkflowinforelationship["object_type"] = item.ObjectType
@@ -9227,30 +16541,65 @@ func flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(p *models.Workflow
 	workflowpendingdynamicworkflowinforelationships = append(workflowpendingdynamicworkflowinforelationships, workflowpendingdynamicworkflowinforelationship)
 	return workflowpendingdynamicworkflowinforelationships
 }
-func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowProperties(p models.WorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
 	var workflowpropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowproperties["class_id"] = item.ClassId
 	workflowproperties["external_meta"] = item.ExternalMeta
-	workflowproperties["input_definition"] = (func(p *[]models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+	workflowproperties["input_definition"] = (func(p []models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
 		var workflowbasedatatypes []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			workflowbasedatatype := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.WorkflowBaseDataType
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				workflowbasedatatype["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			workflowbasedatatype["class_id"] = item.ClassId
-			workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+			workflowbasedatatype["default"] = (func(p models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
-				if p == nil {
+				var ret models.WorkflowDefaultValue
+				if reflect.DeepEqual(ret, p) {
 					return nil
 				}
-				item := *p
+				item := p
 				workflowdefaultvalue := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.WorkflowDefaultValue
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					workflowdefaultvalue["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				workflowdefaultvalue["class_id"] = item.ClassId
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
@@ -9258,7 +16607,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 
 				workflowdefaultvalues = append(workflowdefaultvalues, workflowdefaultvalue)
 				return workflowdefaultvalues
-			})(item.Default, d)
+			})(item.GetDefault(), d)
 			workflowbasedatatype["description"] = item.Description
 			workflowbasedatatype["label"] = item.Label
 			workflowbasedatatype["name"] = item.Name
@@ -9267,23 +16616,46 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 			workflowbasedatatypes = append(workflowbasedatatypes, workflowbasedatatype)
 		}
 		return workflowbasedatatypes
-	})(item.InputDefinition, d)
+	})(item.GetInputDefinition(), d)
 	workflowproperties["object_type"] = item.ObjectType
-	workflowproperties["output_definition"] = (func(p *[]models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
+	workflowproperties["output_definition"] = (func(p []models.WorkflowBaseDataType, d *schema.ResourceData) []map[string]interface{} {
 		var workflowbasedatatypes []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			workflowbasedatatype := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.WorkflowBaseDataType
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				workflowbasedatatype["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			workflowbasedatatype["class_id"] = item.ClassId
-			workflowbasedatatype["default"] = (func(p *models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
+			workflowbasedatatype["default"] = (func(p models.WorkflowDefaultValue, d *schema.ResourceData) []map[string]interface{} {
 				var workflowdefaultvalues []map[string]interface{}
-				if p == nil {
+				var ret models.WorkflowDefaultValue
+				if reflect.DeepEqual(ret, p) {
 					return nil
 				}
-				item := *p
+				item := p
 				workflowdefaultvalue := make(map[string]interface{})
+
+				j, err := json.Marshal(item.AdditionalProperties)
+				var q models.WorkflowDefaultValue
+				if err == nil {
+					_ = json.Unmarshal(j, &q)
+					j, _ = json.Marshal(item.AdditionalProperties)
+					workflowdefaultvalue["additional_properties"] = string(j)
+				} else {
+					log.Printf("Error occured while flattening and json parsing: %s", err)
+				}
+
 				workflowdefaultvalue["class_id"] = item.ClassId
 				workflowdefaultvalue["object_type"] = item.ObjectType
 				workflowdefaultvalue["override"] = item.Override
@@ -9291,7 +16663,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 
 				workflowdefaultvalues = append(workflowdefaultvalues, workflowdefaultvalue)
 				return workflowdefaultvalues
-			})(item.Default, d)
+			})(item.GetDefault(), d)
 			workflowbasedatatype["description"] = item.Description
 			workflowbasedatatype["label"] = item.Label
 			workflowbasedatatype["name"] = item.Name
@@ -9300,7 +16672,7 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 			workflowbasedatatypes = append(workflowbasedatatypes, workflowbasedatatype)
 		}
 		return workflowbasedatatypes
-	})(item.OutputDefinition, d)
+	})(item.GetOutputDefinition(), d)
 	workflowproperties["retry_count"] = item.RetryCount
 	workflowproperties["retry_delay"] = item.RetryDelay
 	workflowproperties["retry_policy"] = item.RetryPolicy
@@ -9311,13 +16683,25 @@ func flattenMapWorkflowProperties(p *models.WorkflowProperties, d *schema.Resour
 	workflowpropertiess = append(workflowpropertiess, workflowproperties)
 	return workflowpropertiess
 }
-func flattenMapWorkflowTaskConstraints(p *models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowTaskConstraints(p models.WorkflowTaskConstraints, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskconstraintss []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowTaskConstraints
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowtaskconstraints := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowTaskConstraints
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowtaskconstraints["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowtaskconstraints["class_id"] = item.ClassId
 	workflowtaskconstraints["object_type"] = item.ObjectType
 	workflowtaskconstraints["target_data_type"] = item.TargetDataType
@@ -9325,14 +16709,26 @@ func flattenMapWorkflowTaskConstraints(p *models.WorkflowTaskConstraints, d *sch
 	workflowtaskconstraintss = append(workflowtaskconstraintss, workflowtaskconstraints)
 	return workflowtaskconstraintss
 }
-func flattenMapWorkflowTaskDefinitionRelationship(p *models.WorkflowTaskDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowTaskDefinitionRelationship(p models.WorkflowTaskDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskdefinitionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowTaskDefinitionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowtaskdefinitionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowtaskdefinitionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowtaskdefinitionrelationship["class_id"] = item.ClassId
 	workflowtaskdefinitionrelationship["moid"] = item.Moid
 	workflowtaskdefinitionrelationship["object_type"] = item.ObjectType
@@ -9341,14 +16737,26 @@ func flattenMapWorkflowTaskDefinitionRelationship(p *models.WorkflowTaskDefiniti
 	workflowtaskdefinitionrelationships = append(workflowtaskdefinitionrelationships, workflowtaskdefinitionrelationship)
 	return workflowtaskdefinitionrelationships
 }
-func flattenMapWorkflowTaskInfoRelationship(p *models.WorkflowTaskInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowTaskInfoRelationship(p models.WorkflowTaskInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowtaskinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowTaskInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowtaskinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowtaskinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowtaskinforelationship["class_id"] = item.ClassId
 	workflowtaskinforelationship["moid"] = item.Moid
 	workflowtaskinforelationship["object_type"] = item.ObjectType
@@ -9357,23 +16765,46 @@ func flattenMapWorkflowTaskInfoRelationship(p *models.WorkflowTaskInfoRelationsh
 	workflowtaskinforelationships = append(workflowtaskinforelationships, workflowtaskinforelationship)
 	return workflowtaskinforelationships
 }
-func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowValidationInformation(p models.WorkflowValidationInformation, d *schema.ResourceData) []map[string]interface{} {
 	var workflowvalidationinformations []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowValidationInformation
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowvalidationinformation := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowValidationInformation
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowvalidationinformation["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowvalidationinformation["class_id"] = item.ClassId
 	workflowvalidationinformation["object_type"] = item.ObjectType
 	workflowvalidationinformation["state"] = item.State
-	workflowvalidationinformation["validation_error"] = (func(p *[]models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
+	workflowvalidationinformation["validation_error"] = (func(p []models.WorkflowValidationError, d *schema.ResourceData) []map[string]interface{} {
 		var workflowvalidationerrors []map[string]interface{}
-		if *p == nil {
+		if len(p) == 0 {
 			return nil
 		}
-		for _, item := range *p {
+		for _, item := range p {
 			workflowvalidationerror := make(map[string]interface{})
+
+			j, err := json.Marshal(item.AdditionalProperties)
+			var q models.WorkflowValidationError
+			if err == nil {
+				_ = json.Unmarshal(j, &q)
+				j, _ = json.Marshal(item.AdditionalProperties)
+				workflowvalidationerror["additional_properties"] = string(j)
+			} else {
+				log.Printf("Error occured while flattening and json parsing: %s", err)
+			}
+
 			workflowvalidationerror["class_id"] = item.ClassId
 			workflowvalidationerror["error_log"] = item.ErrorLog
 			workflowvalidationerror["field"] = item.Field
@@ -9383,19 +16814,31 @@ func flattenMapWorkflowValidationInformation(p *models.WorkflowValidationInforma
 			workflowvalidationerrors = append(workflowvalidationerrors, workflowvalidationerror)
 		}
 		return workflowvalidationerrors
-	})(item.ValidationError, d)
+	})(item.GetValidationError(), d)
 
 	workflowvalidationinformations = append(workflowvalidationinformations, workflowvalidationinformation)
 	return workflowvalidationinformations
 }
-func flattenMapWorkflowWorkflowDefinitionRelationship(p *models.WorkflowWorkflowDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowWorkflowDefinitionRelationship(p models.WorkflowWorkflowDefinitionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowdefinitionrelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowWorkflowDefinitionRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowworkflowdefinitionrelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowworkflowdefinitionrelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowworkflowdefinitionrelationship["class_id"] = item.ClassId
 	workflowworkflowdefinitionrelationship["moid"] = item.Moid
 	workflowworkflowdefinitionrelationship["object_type"] = item.ObjectType
@@ -9404,14 +16847,26 @@ func flattenMapWorkflowWorkflowDefinitionRelationship(p *models.WorkflowWorkflow
 	workflowworkflowdefinitionrelationships = append(workflowworkflowdefinitionrelationships, workflowworkflowdefinitionrelationship)
 	return workflowworkflowdefinitionrelationships
 }
-func flattenMapWorkflowWorkflowInfoRelationship(p *models.WorkflowWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowWorkflowInfoRelationship(p models.WorkflowWorkflowInfoRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowinforelationships []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowWorkflowInfoRelationship
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	x := *p
+	x := p
 	item := x.MoMoRef
 	workflowworkflowinforelationship := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.MoMoRef
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowworkflowinforelationship["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowworkflowinforelationship["class_id"] = item.ClassId
 	workflowworkflowinforelationship["moid"] = item.Moid
 	workflowworkflowinforelationship["object_type"] = item.ObjectType
@@ -9420,13 +16875,25 @@ func flattenMapWorkflowWorkflowInfoRelationship(p *models.WorkflowWorkflowInfoRe
 	workflowworkflowinforelationships = append(workflowworkflowinforelationships, workflowworkflowinforelationship)
 	return workflowworkflowinforelationships
 }
-func flattenMapWorkflowWorkflowInfoProperties(p *models.WorkflowWorkflowInfoProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowWorkflowInfoProperties(p models.WorkflowWorkflowInfoProperties, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowinfopropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowWorkflowInfoProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowworkflowinfoproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowWorkflowInfoProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowworkflowinfoproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowworkflowinfoproperties["class_id"] = item.ClassId
 	workflowworkflowinfoproperties["object_type"] = item.ObjectType
 	workflowworkflowinfoproperties["retryable"] = item.Retryable
@@ -9434,13 +16901,25 @@ func flattenMapWorkflowWorkflowInfoProperties(p *models.WorkflowWorkflowInfoProp
 	workflowworkflowinfopropertiess = append(workflowworkflowinfopropertiess, workflowworkflowinfoproperties)
 	return workflowworkflowinfopropertiess
 }
-func flattenMapWorkflowWorkflowProperties(p *models.WorkflowWorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapWorkflowWorkflowProperties(p models.WorkflowWorkflowProperties, d *schema.ResourceData) []map[string]interface{} {
 	var workflowworkflowpropertiess []map[string]interface{}
-	if p == nil {
+	var ret models.WorkflowWorkflowProperties
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	workflowworkflowproperties := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.WorkflowWorkflowProperties
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		workflowworkflowproperties["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	workflowworkflowproperties["class_id"] = item.ClassId
 	workflowworkflowproperties["external_meta"] = item.ExternalMeta
 	workflowworkflowproperties["object_type"] = item.ObjectType
@@ -9450,21 +16929,45 @@ func flattenMapWorkflowWorkflowProperties(p *models.WorkflowWorkflowProperties, 
 	workflowworkflowpropertiess = append(workflowworkflowpropertiess, workflowworkflowproperties)
 	return workflowworkflowpropertiess
 }
-func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
+func flattenMapX509Certificate(p models.X509Certificate, d *schema.ResourceData) []map[string]interface{} {
 	var x509certificates []map[string]interface{}
-	if p == nil {
+	var ret models.X509Certificate
+	if reflect.DeepEqual(ret, p) {
 		return nil
 	}
-	item := *p
+	item := p
 	x509certificate := make(map[string]interface{})
+
+	j, err := json.Marshal(item.AdditionalProperties)
+	var q models.X509Certificate
+	if err == nil {
+		_ = json.Unmarshal(j, &q)
+		j, _ = json.Marshal(item.AdditionalProperties)
+		x509certificate["additional_properties"] = string(j)
+	} else {
+		log.Printf("Error occured while flattening and json parsing: %s", err)
+	}
+
 	x509certificate["class_id"] = item.ClassId
-	x509certificate["issuer"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+	x509certificate["issuer"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 		var pkixdistinguishednames []map[string]interface{}
-		if p == nil {
+		var ret models.PkixDistinguishedName
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		pkixdistinguishedname := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.PkixDistinguishedName
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pkixdistinguishedname["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pkixdistinguishedname["class_id"] = item.ClassId
 		pkixdistinguishedname["common_name"] = item.CommonName
 		pkixdistinguishedname["country"] = item.Country
@@ -9476,18 +16979,30 @@ func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData
 
 		pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 		return pkixdistinguishednames
-	})(item.Issuer, d)
+	})(item.GetIssuer(), d)
 	x509certificate["object_type"] = item.ObjectType
 	x509certificate["pem_certificate"] = item.PemCertificate
 	x509certificate["sha256_fingerprint"] = item.Sha256Fingerprint
 	x509certificate["signature_algorithm"] = item.SignatureAlgorithm
-	x509certificate["subject"] = (func(p *models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
+	x509certificate["subject"] = (func(p models.PkixDistinguishedName, d *schema.ResourceData) []map[string]interface{} {
 		var pkixdistinguishednames []map[string]interface{}
-		if p == nil {
+		var ret models.PkixDistinguishedName
+		if reflect.DeepEqual(ret, p) {
 			return nil
 		}
-		item := *p
+		item := p
 		pkixdistinguishedname := make(map[string]interface{})
+
+		j, err := json.Marshal(item.AdditionalProperties)
+		var q models.PkixDistinguishedName
+		if err == nil {
+			_ = json.Unmarshal(j, &q)
+			j, _ = json.Marshal(item.AdditionalProperties)
+			pkixdistinguishedname["additional_properties"] = string(j)
+		} else {
+			log.Printf("Error occured while flattening and json parsing: %s", err)
+		}
+
 		pkixdistinguishedname["class_id"] = item.ClassId
 		pkixdistinguishedname["common_name"] = item.CommonName
 		pkixdistinguishedname["country"] = item.Country
@@ -9499,7 +17014,7 @@ func flattenMapX509Certificate(p *models.X509Certificate, d *schema.ResourceData
 
 		pkixdistinguishednames = append(pkixdistinguishednames, pkixdistinguishedname)
 		return pkixdistinguishednames
-	})(item.Subject, d)
+	})(item.GetSubject(), d)
 
 	x509certificates = append(x509certificates, x509certificate)
 	return x509certificates

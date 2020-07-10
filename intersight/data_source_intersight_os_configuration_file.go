@@ -436,37 +436,37 @@ func dataSourceOsConfigurationFileRead(d *schema.ResourceData, meta interface{})
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.Distributions, d)); err != nil {
+			if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.GetDistributions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Distributions: %+v", err)
 			}
-			if err := d.Set("file_content", (s.FileContent)); err != nil {
+			if err := d.Set("file_content", (s.GetFileContent())); err != nil {
 				return fmt.Errorf("error occurred while setting property FileContent: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("placeholders", flattenListOsPlaceHolder(s.Placeholders, d)); err != nil {
+			if err := d.Set("placeholders", flattenListOsPlaceHolder(s.GetPlaceholders(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Placeholders: %+v", err)
 			}
-			if err := d.Set("supported", (s.Supported)); err != nil {
+			if err := d.Set("supported", (s.GetSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property Supported: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

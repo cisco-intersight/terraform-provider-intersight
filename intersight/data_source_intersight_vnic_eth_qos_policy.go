@@ -192,39 +192,39 @@ func dataSourceVnicEthQosPolicyRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("cos", (s.Cos)); err != nil {
+			if err := d.Set("cos", (s.GetCos())); err != nil {
 				return fmt.Errorf("error occurred while setting property Cos: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("mtu", (s.Mtu)); err != nil {
+			if err := d.Set("mtu", (s.GetMtu())); err != nil {
 				return fmt.Errorf("error occurred while setting property Mtu: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("rate_limit", (s.RateLimit)); err != nil {
+			if err := d.Set("rate_limit", (s.GetRateLimit())); err != nil {
 				return fmt.Errorf("error occurred while setting property RateLimit: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("trust_host_cos", (s.TrustHostCos)); err != nil {
+			if err := d.Set("trust_host_cos", (s.GetTrustHostCos())); err != nil {
 				return fmt.Errorf("error occurred while setting property TrustHostCos: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -285,55 +285,55 @@ func dataSourceStoragePureArrayRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
+			if err := d.Set("model", (s.GetModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
 				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
-			if err := d.Set("storage_utilization", flattenMapStorageBaseCapacity(s.StorageUtilization, d)); err != nil {
+			if err := d.Set("storage_utilization", flattenMapStorageBaseCapacity(s.GetStorageUtilization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageUtilization: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

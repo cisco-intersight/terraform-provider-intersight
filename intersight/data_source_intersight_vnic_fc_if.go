@@ -516,75 +516,75 @@ func dataSourceVnicFcIfRead(d *schema.ResourceData, meta interface{}) error {
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("fc_adapter_policy", flattenMapVnicFcAdapterPolicyRelationship(s.FcAdapterPolicy, d)); err != nil {
+			if err := d.Set("fc_adapter_policy", flattenMapVnicFcAdapterPolicyRelationship(s.GetFcAdapterPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FcAdapterPolicy: %+v", err)
 			}
 
-			if err := d.Set("fc_network_policy", flattenMapVnicFcNetworkPolicyRelationship(s.FcNetworkPolicy, d)); err != nil {
+			if err := d.Set("fc_network_policy", flattenMapVnicFcNetworkPolicyRelationship(s.GetFcNetworkPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FcNetworkPolicy: %+v", err)
 			}
 
-			if err := d.Set("fc_qos_policy", flattenMapVnicFcQosPolicyRelationship(s.FcQosPolicy, d)); err != nil {
+			if err := d.Set("fc_qos_policy", flattenMapVnicFcQosPolicyRelationship(s.GetFcQosPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FcQosPolicy: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("order", (s.Order)); err != nil {
+			if err := d.Set("order", (s.GetOrder())); err != nil {
 				return fmt.Errorf("error occurred while setting property Order: %+v", err)
 			}
-			if err := d.Set("persistent_bindings", (s.PersistentBindings)); err != nil {
+			if err := d.Set("persistent_bindings", (s.GetPersistentBindings())); err != nil {
 				return fmt.Errorf("error occurred while setting property PersistentBindings: %+v", err)
 			}
 
-			if err := d.Set("placement", flattenMapVnicPlacementSettings(s.Placement, d)); err != nil {
+			if err := d.Set("placement", flattenMapVnicPlacementSettings(s.GetPlacement(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Placement: %+v", err)
 			}
 
-			if err := d.Set("profile", flattenMapPolicyAbstractConfigProfileRelationship(s.Profile, d)); err != nil {
+			if err := d.Set("profile", flattenMapPolicyAbstractConfigProfileRelationship(s.GetProfile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profile: %+v", err)
 			}
 
-			if err := d.Set("san_connectivity_policy", flattenMapVnicSanConnectivityPolicyRelationship(s.SanConnectivityPolicy, d)); err != nil {
+			if err := d.Set("san_connectivity_policy", flattenMapVnicSanConnectivityPolicyRelationship(s.GetSanConnectivityPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SanConnectivityPolicy: %+v", err)
 			}
 
-			if err := d.Set("scp_vhba", flattenMapVnicFcIfRelationship(s.ScpVhba, d)); err != nil {
+			if err := d.Set("scp_vhba", flattenMapVnicFcIfRelationship(s.GetScpVhba(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ScpVhba: %+v", err)
 			}
 
-			if err := d.Set("sp_vhbas", flattenListVnicFcIfRelationship(s.SpVhbas, d)); err != nil {
+			if err := d.Set("sp_vhbas", flattenListVnicFcIfRelationship(s.GetSpVhbas(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SpVhbas: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
-			if err := d.Set("vif_id", (s.VifId)); err != nil {
+			if err := d.Set("vif_id", (s.GetVifId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VifId: %+v", err)
 			}
-			if err := d.Set("wwpn", (s.Wwpn)); err != nil {
+			if err := d.Set("wwpn", (s.GetWwpn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Wwpn: %+v", err)
 			}
 
-			if err := d.Set("wwpn_lease", flattenMapFcpoolLeaseRelationship(s.WwpnLease, d)); err != nil {
+			if err := d.Set("wwpn_lease", flattenMapFcpoolLeaseRelationship(s.GetWwpnLease(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WwpnLease: %+v", err)
 			}
 
-			if err := d.Set("wwpn_pool", flattenMapFcpoolPoolRelationship(s.WwpnPool, d)); err != nil {
+			if err := d.Set("wwpn_pool", flattenMapFcpoolPoolRelationship(s.GetWwpnPool(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WwpnPool: %+v", err)
 			}
 			d.SetId(s.GetMoid())

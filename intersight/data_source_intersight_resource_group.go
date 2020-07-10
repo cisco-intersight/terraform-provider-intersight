@@ -256,38 +256,38 @@ func dataSourceResourceGroupRead(d *schema.ResourceData, meta interface{}) error
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organizations", flattenListOrganizationOrganizationRelationship(s.Organizations, d)); err != nil {
+			if err := d.Set("organizations", flattenListOrganizationOrganizationRelationship(s.GetOrganizations(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organizations: %+v", err)
 			}
 
-			if err := d.Set("per_type_combined_selector", flattenListResourcePerTypeCombinedSelector(s.PerTypeCombinedSelector, d)); err != nil {
+			if err := d.Set("per_type_combined_selector", flattenListResourcePerTypeCombinedSelector(s.GetPerTypeCombinedSelector(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PerTypeCombinedSelector: %+v", err)
 			}
-			if err := d.Set("qualifier", (s.Qualifier)); err != nil {
+			if err := d.Set("qualifier", (s.GetQualifier())); err != nil {
 				return fmt.Errorf("error occurred while setting property Qualifier: %+v", err)
 			}
 
-			if err := d.Set("selectors", flattenListResourceSelector(s.Selectors, d)); err != nil {
+			if err := d.Set("selectors", flattenListResourceSelector(s.GetSelectors(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Selectors: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

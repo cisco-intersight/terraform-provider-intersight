@@ -183,28 +183,28 @@ func dataSourceIamUserPreferenceRead(d *schema.ResourceData, meta interface{}) e
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("idp", flattenMapIamIdpRelationship(s.Idp, d)); err != nil {
+			if err := d.Set("idp", flattenMapIamIdpRelationship(s.GetIdp(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Idp: %+v", err)
 			}
 
-			if err := d.Set("idp_reference", flattenMapIamIdpReferenceRelationship(s.IdpReference, d)); err != nil {
+			if err := d.Set("idp_reference", flattenMapIamIdpReferenceRelationship(s.GetIdpReference(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property IdpReference: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("user_unique_identifier", (s.UserUniqueIdentifier)); err != nil {
+			if err := d.Set("user_unique_identifier", (s.GetUserUniqueIdentifier())); err != nil {
 				return fmt.Errorf("error occurred while setting property UserUniqueIdentifier: %+v", err)
 			}
 			d.SetId(s.GetMoid())

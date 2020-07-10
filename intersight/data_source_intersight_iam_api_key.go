@@ -238,41 +238,41 @@ func dataSourceIamApiKeyRead(d *schema.ResourceData, meta interface{}) error {
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("hash_algorithm", (s.HashAlgorithm)); err != nil {
+			if err := d.Set("hash_algorithm", (s.GetHashAlgorithm())); err != nil {
 				return fmt.Errorf("error occurred while setting property HashAlgorithm: %+v", err)
 			}
 
-			if err := d.Set("key_spec", flattenMapPkixKeyGenerationSpec(s.KeySpec, d)); err != nil {
+			if err := d.Set("key_spec", flattenMapPkixKeyGenerationSpec(s.GetKeySpec(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property KeySpec: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
+			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 			}
-			if err := d.Set("private_key", (s.PrivateKey)); err != nil {
+			if err := d.Set("private_key", (s.GetPrivateKey())); err != nil {
 				return fmt.Errorf("error occurred while setting property PrivateKey: %+v", err)
 			}
-			if err := d.Set("purpose", (s.Purpose)); err != nil {
+			if err := d.Set("purpose", (s.GetPurpose())); err != nil {
 				return fmt.Errorf("error occurred while setting property Purpose: %+v", err)
 			}
-			if err := d.Set("signing_algorithm", (s.SigningAlgorithm)); err != nil {
+			if err := d.Set("signing_algorithm", (s.GetSigningAlgorithm())); err != nil {
 				return fmt.Errorf("error occurred while setting property SigningAlgorithm: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.GetUser(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property User: %+v", err)
 			}
 			d.SetId(s.GetMoid())

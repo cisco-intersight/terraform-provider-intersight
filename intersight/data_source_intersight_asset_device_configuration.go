@@ -156,27 +156,27 @@ func dataSourceAssetDeviceConfigurationRead(d *schema.ResourceData, meta interfa
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.Device, d)); err != nil {
+			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Device: %+v", err)
 			}
-			if err := d.Set("local_configuration_locked", (s.LocalConfigurationLocked)); err != nil {
+			if err := d.Set("local_configuration_locked", (s.GetLocalConfigurationLocked())); err != nil {
 				return fmt.Errorf("error occurred while setting property LocalConfigurationLocked: %+v", err)
 			}
-			if err := d.Set("log_level", (s.LogLevel)); err != nil {
+			if err := d.Set("log_level", (s.GetLogLevel())); err != nil {
 				return fmt.Errorf("error occurred while setting property LogLevel: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -211,45 +211,45 @@ func dataSourceNiaapiApicFieldNoticeRead(d *schema.ResourceData, meta interface{
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("bugid", (s.Bugid)); err != nil {
+			if err := d.Set("bugid", (s.GetBugid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Bugid: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("field_notice_desc", (s.FieldNoticeDesc)); err != nil {
+			if err := d.Set("field_notice_desc", (s.GetFieldNoticeDesc())); err != nil {
 				return fmt.Errorf("error occurred while setting property FieldNoticeDesc: %+v", err)
 			}
-			if err := d.Set("field_notice_id", (s.FieldNoticeId)); err != nil {
+			if err := d.Set("field_notice_id", (s.GetFieldNoticeId())); err != nil {
 				return fmt.Errorf("error occurred while setting property FieldNoticeId: %+v", err)
 			}
-			if err := d.Set("field_notice_url", (s.FieldNoticeUrl)); err != nil {
+			if err := d.Set("field_notice_url", (s.GetFieldNoticeUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property FieldNoticeUrl: %+v", err)
 			}
-			if err := d.Set("headline", (s.Headline)); err != nil {
+			if err := d.Set("headline", (s.GetHeadline())); err != nil {
 				return fmt.Errorf("error occurred while setting property Headline: %+v", err)
 			}
-			if err := d.Set("hwpid", (s.Hwpid)); err != nil {
+			if err := d.Set("hwpid", (s.GetHwpid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hwpid: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("revision_info", flattenListNiaapiRevisionInfo(s.RevisionInfo, d)); err != nil {
+			if err := d.Set("revision_info", flattenListNiaapiRevisionInfo(s.GetRevisionInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RevisionInfo: %+v", err)
 			}
-			if err := d.Set("sw_release", (s.SwRelease)); err != nil {
+			if err := d.Set("sw_release", (s.GetSwRelease())); err != nil {
 				return fmt.Errorf("error occurred while setting property SwRelease: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("workaround_url", (s.WorkaroundUrl)); err != nil {
+			if err := d.Set("workaround_url", (s.GetWorkaroundUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkaroundUrl: %+v", err)
 			}
 			d.SetId(s.GetMoid())

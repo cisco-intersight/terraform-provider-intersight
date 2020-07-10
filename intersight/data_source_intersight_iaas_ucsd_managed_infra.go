@@ -248,54 +248,54 @@ func dataSourceIaasUcsdManagedInfraRead(d *schema.ResourceData, meta interface{}
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("advanced_catalog_count", (s.AdvancedCatalogCount)); err != nil {
+			if err := d.Set("advanced_catalog_count", (s.GetAdvancedCatalogCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdvancedCatalogCount: %+v", err)
 			}
-			if err := d.Set("bm_catalog_count", (s.BmCatalogCount)); err != nil {
+			if err := d.Set("bm_catalog_count", (s.GetBmCatalogCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property BmCatalogCount: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("container_catalog_count", (s.ContainerCatalogCount)); err != nil {
+			if err := d.Set("container_catalog_count", (s.GetContainerCatalogCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ContainerCatalogCount: %+v", err)
 			}
-			if err := d.Set("esxi_host_count", (s.EsxiHostCount)); err != nil {
+			if err := d.Set("esxi_host_count", (s.GetEsxiHostCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property EsxiHostCount: %+v", err)
 			}
-			if err := d.Set("external_group_count", (s.ExternalGroupCount)); err != nil {
+			if err := d.Set("external_group_count", (s.GetExternalGroupCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ExternalGroupCount: %+v", err)
 			}
 
-			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
+			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.GetGuid(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("hyperv_host_count", (s.HypervHostCount)); err != nil {
+			if err := d.Set("hyperv_host_count", (s.GetHypervHostCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervHostCount: %+v", err)
 			}
-			if err := d.Set("local_group_count", (s.LocalGroupCount)); err != nil {
+			if err := d.Set("local_group_count", (s.GetLocalGroupCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property LocalGroupCount: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("standard_catalog_count", (s.StandardCatalogCount)); err != nil {
+			if err := d.Set("standard_catalog_count", (s.GetStandardCatalogCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property StandardCatalogCount: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("user_count", (s.UserCount)); err != nil {
+			if err := d.Set("user_count", (s.GetUserCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property UserCount: %+v", err)
 			}
-			if err := d.Set("vdc_count", (s.VdcCount)); err != nil {
+			if err := d.Set("vdc_count", (s.GetVdcCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property VdcCount: %+v", err)
 			}
-			if err := d.Set("vm_count", (s.VmCount)); err != nil {
+			if err := d.Set("vm_count", (s.GetVmCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property VmCount: %+v", err)
 			}
 			d.SetId(s.GetMoid())

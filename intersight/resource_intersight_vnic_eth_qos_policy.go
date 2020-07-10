@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -61,6 +62,11 @@ func resourceVnicEthQosPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -163,6 +169,16 @@ func resourceVnicEthQosPolicyCreate(d *schema.ResourceData, meta interface{}) er
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -247,47 +263,47 @@ func resourceVnicEthQosPolicyRead(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("cos", (s.Cos)); err != nil {
+	if err := d.Set("cos", (s.GetCos())); err != nil {
 		return fmt.Errorf("error occurred while setting property Cos: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("mtu", (s.Mtu)); err != nil {
+	if err := d.Set("mtu", (s.GetMtu())); err != nil {
 		return fmt.Errorf("error occurred while setting property Mtu: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("rate_limit", (s.RateLimit)); err != nil {
+	if err := d.Set("rate_limit", (s.GetRateLimit())); err != nil {
 		return fmt.Errorf("error occurred while setting property RateLimit: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("trust_host_cos", (s.TrustHostCos)); err != nil {
+	if err := d.Set("trust_host_cos", (s.GetTrustHostCos())); err != nil {
 		return fmt.Errorf("error occurred while setting property TrustHostCos: %+v", err)
 	}
 
@@ -342,6 +358,16 @@ func resourceVnicEthQosPolicyUpdate(d *schema.ResourceData, meta interface{}) er
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

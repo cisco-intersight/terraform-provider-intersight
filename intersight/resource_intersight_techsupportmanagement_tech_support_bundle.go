@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -36,6 +37,12 @@ func resourceTechsupportmanagementTechSupportBundle() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -103,6 +110,12 @@ func resourceTechsupportmanagementTechSupportBundle() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -164,6 +177,12 @@ func resourceTechsupportmanagementTechSupportBundle() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -206,6 +225,12 @@ func resourceTechsupportmanagementTechSupportBundle() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -261,6 +286,16 @@ func resourceTechsupportmanagementTechSupportBundleCreate(d *schema.ResourceData
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -311,6 +346,16 @@ func resourceTechsupportmanagementTechSupportBundleCreate(d *schema.ResourceData
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewConnectorPlatformParamBaseWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("connector.PlatformParamBase")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -367,6 +412,16 @@ func resourceTechsupportmanagementTechSupportBundleCreate(d *schema.ResourceData
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -400,6 +455,16 @@ func resourceTechsupportmanagementTechSupportBundleCreate(d *schema.ResourceData
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -449,55 +514,55 @@ func resourceTechsupportmanagementTechSupportBundleRead(d *schema.ResourceData, 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("device_identifier", (s.DeviceIdentifier)); err != nil {
+	if err := d.Set("device_identifier", (s.GetDeviceIdentifier())); err != nil {
 		return fmt.Errorf("error occurred while setting property DeviceIdentifier: %+v", err)
 	}
 
-	if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.DeviceRegistration, d)); err != nil {
+	if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.GetDeviceRegistration(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property DeviceRegistration: %+v", err)
 	}
 
-	if err := d.Set("device_type", (s.DeviceType)); err != nil {
+	if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
 		return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("pid", (s.Pid)); err != nil {
+	if err := d.Set("pid", (s.GetPid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 	}
 
-	if err := d.Set("platform_param", flattenMapConnectorPlatformParamBase(s.PlatformParam, d)); err != nil {
+	if err := d.Set("platform_param", flattenMapConnectorPlatformParamBase(s.GetPlatformParam(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property PlatformParam: %+v", err)
 	}
 
-	if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+	if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 		return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 	}
 
-	if err := d.Set("serial", (s.Serial)); err != nil {
+	if err := d.Set("serial", (s.GetSerial())); err != nil {
 		return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("target_resource", flattenMapMoBaseMoRelationship(s.TargetResource, d)); err != nil {
+	if err := d.Set("target_resource", flattenMapMoBaseMoRelationship(s.GetTargetResource(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TargetResource: %+v", err)
 	}
 
-	if err := d.Set("tech_support_status", flattenMapTechsupportmanagementTechSupportStatusRelationship(s.TechSupportStatus, d)); err != nil {
+	if err := d.Set("tech_support_status", flattenMapTechsupportmanagementTechSupportStatusRelationship(s.GetTechSupportStatus(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TechSupportStatus: %+v", err)
 	}
 

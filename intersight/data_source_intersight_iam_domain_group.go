@@ -199,38 +199,38 @@ func dataSourceIamDomainGroupRead(d *schema.ResourceData, meta interface{}) erro
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("partition1", (s.Partition1)); err != nil {
+			if err := d.Set("partition1", (s.GetPartition1())); err != nil {
 				return fmt.Errorf("error occurred while setting property Partition1: %+v", err)
 			}
-			if err := d.Set("partition2", (s.Partition2)); err != nil {
+			if err := d.Set("partition2", (s.GetPartition2())); err != nil {
 				return fmt.Errorf("error occurred while setting property Partition2: %+v", err)
 			}
-			if err := d.Set("partition3", (s.Partition3)); err != nil {
+			if err := d.Set("partition3", (s.GetPartition3())); err != nil {
 				return fmt.Errorf("error occurred while setting property Partition3: %+v", err)
 			}
-			if err := d.Set("partition_key", (s.PartitionKey)); err != nil {
+			if err := d.Set("partition_key", (s.GetPartitionKey())); err != nil {
 				return fmt.Errorf("error occurred while setting property PartitionKey: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("usage", (s.Usage)); err != nil {
+			if err := d.Set("usage", (s.GetUsage())); err != nil {
 				return fmt.Errorf("error occurred while setting property Usage: %+v", err)
 			}
 			d.SetId(s.GetMoid())

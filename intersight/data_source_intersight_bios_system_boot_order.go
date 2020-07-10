@@ -238,37 +238,37 @@ func dataSourceBiosSystemBootOrderRead(d *schema.ResourceData, meta interface{})
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("bios_unit", flattenMapBiosUnitRelationship(s.BiosUnit, d)); err != nil {
+			if err := d.Set("bios_unit", flattenMapBiosUnitRelationship(s.GetBiosUnit(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BiosUnit: %+v", err)
 			}
 
-			if err := d.Set("boot_devices", flattenListBiosBootDeviceRelationship(s.BootDevices, d)); err != nil {
+			if err := d.Set("boot_devices", flattenListBiosBootDeviceRelationship(s.GetBootDevices(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BootDevices: %+v", err)
 			}
-			if err := d.Set("boot_mode", (s.BootMode)); err != nil {
+			if err := d.Set("boot_mode", (s.GetBootMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property BootMode: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("secure_boot", (s.SecureBoot)); err != nil {
+			if err := d.Set("secure_boot", (s.GetSecureBoot())); err != nil {
 				return fmt.Errorf("error occurred while setting property SecureBoot: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

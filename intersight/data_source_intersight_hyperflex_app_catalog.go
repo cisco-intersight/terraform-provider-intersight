@@ -354,48 +354,48 @@ func dataSourceHyperflexAppCatalogRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("feature_limit_external", flattenMapHyperflexFeatureLimitExternalRelationship(s.FeatureLimitExternal, d)); err != nil {
+			if err := d.Set("feature_limit_external", flattenMapHyperflexFeatureLimitExternalRelationship(s.GetFeatureLimitExternal(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FeatureLimitExternal: %+v", err)
 			}
 
-			if err := d.Set("feature_limit_internal", flattenMapHyperflexFeatureLimitInternalRelationship(s.FeatureLimitInternal, d)); err != nil {
+			if err := d.Set("feature_limit_internal", flattenMapHyperflexFeatureLimitInternalRelationship(s.GetFeatureLimitInternal(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FeatureLimitInternal: %+v", err)
 			}
 
-			if err := d.Set("hxdp_versions", flattenListHyperflexHxdpVersionRelationship(s.HxdpVersions, d)); err != nil {
+			if err := d.Set("hxdp_versions", flattenListHyperflexHxdpVersionRelationship(s.GetHxdpVersions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpVersions: %+v", err)
 			}
 
-			if err := d.Set("hyperflex_capability_infos", flattenListHyperflexCapabilityInfoRelationship(s.HyperflexCapabilityInfos, d)); err != nil {
+			if err := d.Set("hyperflex_capability_infos", flattenListHyperflexCapabilityInfoRelationship(s.GetHyperflexCapabilityInfos(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HyperflexCapabilityInfos: %+v", err)
 			}
 
-			if err := d.Set("hyperflex_software_compatibility_infos", flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(s.HyperflexSoftwareCompatibilityInfos, d)); err != nil {
+			if err := d.Set("hyperflex_software_compatibility_infos", flattenListHclHyperflexSoftwareCompatibilityInfoRelationship(s.GetHyperflexSoftwareCompatibilityInfos(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HyperflexSoftwareCompatibilityInfos: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("server_firmware_version", flattenMapHyperflexServerFirmwareVersionRelationship(s.ServerFirmwareVersion, d)); err != nil {
+			if err := d.Set("server_firmware_version", flattenMapHyperflexServerFirmwareVersionRelationship(s.GetServerFirmwareVersion(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerFirmwareVersion: %+v", err)
 			}
 
-			if err := d.Set("server_model", flattenMapHyperflexServerModelRelationship(s.ServerModel, d)); err != nil {
+			if err := d.Set("server_model", flattenMapHyperflexServerModelRelationship(s.GetServerModel(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerModel: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

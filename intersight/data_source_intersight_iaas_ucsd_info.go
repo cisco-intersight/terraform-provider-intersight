@@ -411,72 +411,72 @@ func dataSourceIaasUcsdInfoRead(d *schema.ResourceData, meta interface{}) error 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("connector_pack", flattenListIaasConnectorPackRelationship(s.ConnectorPack, d)); err != nil {
+			if err := d.Set("connector_pack", flattenListIaasConnectorPackRelationship(s.GetConnectorPack(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectorPack: %+v", err)
 			}
-			if err := d.Set("device_id", (s.DeviceId)); err != nil {
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
 
-			if err := d.Set("device_status", flattenListIaasDeviceStatusRelationship(s.DeviceStatus, d)); err != nil {
+			if err := d.Set("device_status", flattenListIaasDeviceStatusRelationship(s.GetDeviceStatus(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceStatus: %+v", err)
 			}
-			if err := d.Set("guid", (s.Guid)); err != nil {
+			if err := d.Set("guid", (s.GetGuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("host_name", (s.HostName)); err != nil {
+			if err := d.Set("host_name", (s.GetHostName())); err != nil {
 				return fmt.Errorf("error occurred while setting property HostName: %+v", err)
 			}
-			if err := d.Set("ip", (s.Ip)); err != nil {
+			if err := d.Set("ip", (s.GetIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ip: %+v", err)
 			}
 
-			if err := d.Set("last_backup", (s.LastBackup).String()); err != nil {
+			if err := d.Set("last_backup", (s.GetLastBackup()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastBackup: %+v", err)
 			}
 
-			if err := d.Set("license_info", flattenMapIaasLicenseInfoRelationship(s.LicenseInfo, d)); err != nil {
+			if err := d.Set("license_info", flattenMapIaasLicenseInfoRelationship(s.GetLicenseInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseInfo: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 
-			if err := d.Set("most_run_tasks", flattenListIaasMostRunTasksRelationship(s.MostRunTasks, d)); err != nil {
+			if err := d.Set("most_run_tasks", flattenListIaasMostRunTasksRelationship(s.GetMostRunTasks(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property MostRunTasks: %+v", err)
 			}
-			if err := d.Set("node_type", (s.NodeType)); err != nil {
+			if err := d.Set("node_type", (s.GetNodeType())); err != nil {
 				return fmt.Errorf("error occurred while setting property NodeType: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("product_name", (s.ProductName)); err != nil {
+			if err := d.Set("product_name", (s.GetProductName())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductName: %+v", err)
 			}
-			if err := d.Set("product_vendor", (s.ProductVendor)); err != nil {
+			if err := d.Set("product_vendor", (s.GetProductVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductVendor: %+v", err)
 			}
-			if err := d.Set("product_version", (s.ProductVersion)); err != nil {
+			if err := d.Set("product_version", (s.GetProductVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductVersion: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("ucsd_managed_infra", flattenMapIaasUcsdManagedInfraRelationship(s.UcsdManagedInfra, d)); err != nil {
+			if err := d.Set("ucsd_managed_infra", flattenMapIaasUcsdManagedInfraRelationship(s.GetUcsdManagedInfra(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UcsdManagedInfra: %+v", err)
 			}
 			d.SetId(s.GetMoid())

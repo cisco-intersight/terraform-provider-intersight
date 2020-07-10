@@ -484,61 +484,61 @@ func dataSourceWorkflowWorkflowDefinitionRead(d *schema.ResourceData, meta inter
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("catalog", flattenMapWorkflowCatalogRelationship(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapWorkflowCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("default_version", (s.DefaultVersion)); err != nil {
+			if err := d.Set("default_version", (s.GetDefaultVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property DefaultVersion: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("input_definition", flattenListWorkflowBaseDataType(s.InputDefinition, d)); err != nil {
+			if err := d.Set("input_definition", flattenListWorkflowBaseDataType(s.GetInputDefinition(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InputDefinition: %+v", err)
 			}
-			if err := d.Set("label", (s.Label)); err != nil {
+			if err := d.Set("label", (s.GetLabel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Label: %+v", err)
 			}
-			if err := d.Set("license_entitlement", (s.LicenseEntitlement)); err != nil {
+			if err := d.Set("license_entitlement", (s.GetLicenseEntitlement())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseEntitlement: %+v", err)
 			}
-			if err := d.Set("max_task_count", (s.MaxTaskCount)); err != nil {
+			if err := d.Set("max_task_count", (s.GetMaxTaskCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxTaskCount: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("output_definition", flattenListWorkflowBaseDataType(s.OutputDefinition, d)); err != nil {
+			if err := d.Set("output_definition", flattenListWorkflowBaseDataType(s.GetOutputDefinition(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property OutputDefinition: %+v", err)
 			}
 
-			if err := d.Set("properties", flattenMapWorkflowWorkflowProperties(s.Properties, d)); err != nil {
+			if err := d.Set("properties", flattenMapWorkflowWorkflowProperties(s.GetProperties(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Properties: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("tasks", flattenListWorkflowWorkflowTask(s.Tasks, d)); err != nil {
+			if err := d.Set("tasks", flattenListWorkflowWorkflowTask(s.GetTasks(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tasks: %+v", err)
 			}
 
-			if err := d.Set("validation_information", flattenMapWorkflowValidationInformation(s.ValidationInformation, d)); err != nil {
+			if err := d.Set("validation_information", flattenMapWorkflowValidationInformation(s.GetValidationInformation(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ValidationInformation: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

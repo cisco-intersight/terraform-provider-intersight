@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -76,6 +77,11 @@ func resourceCapabilityEquipmentPhysicalDef() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -202,6 +208,16 @@ func resourceCapabilityEquipmentPhysicalDefCreate(d *schema.ResourceData, meta i
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -296,67 +312,67 @@ func resourceCapabilityEquipmentPhysicalDefRead(d *schema.ResourceData, meta int
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("depth", (s.Depth)); err != nil {
+	if err := d.Set("depth", (s.GetDepth())); err != nil {
 		return fmt.Errorf("error occurred while setting property Depth: %+v", err)
 	}
 
-	if err := d.Set("height", (s.Height)); err != nil {
+	if err := d.Set("height", (s.GetHeight())); err != nil {
 		return fmt.Errorf("error occurred while setting property Height: %+v", err)
 	}
 
-	if err := d.Set("max_power", (s.MaxPower)); err != nil {
+	if err := d.Set("max_power", (s.GetMaxPower())); err != nil {
 		return fmt.Errorf("error occurred while setting property MaxPower: %+v", err)
 	}
 
-	if err := d.Set("min_power", (s.MinPower)); err != nil {
+	if err := d.Set("min_power", (s.GetMinPower())); err != nil {
 		return fmt.Errorf("error occurred while setting property MinPower: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("nominal_power", (s.NominalPower)); err != nil {
+	if err := d.Set("nominal_power", (s.GetNominalPower())); err != nil {
 		return fmt.Errorf("error occurred while setting property NominalPower: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("pid", (s.Pid)); err != nil {
+	if err := d.Set("pid", (s.GetPid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 	}
 
-	if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.Section, d)); err != nil {
+	if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Section: %+v", err)
 	}
 
-	if err := d.Set("sku", (s.Sku)); err != nil {
+	if err := d.Set("sku", (s.GetSku())); err != nil {
 		return fmt.Errorf("error occurred while setting property Sku: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("vid", (s.Vid)); err != nil {
+	if err := d.Set("vid", (s.GetVid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 	}
 
-	if err := d.Set("weight", (s.Weight)); err != nil {
+	if err := d.Set("weight", (s.GetWeight())); err != nil {
 		return fmt.Errorf("error occurred while setting property Weight: %+v", err)
 	}
 
-	if err := d.Set("width", (s.Width)); err != nil {
+	if err := d.Set("width", (s.GetWidth())); err != nil {
 		return fmt.Errorf("error occurred while setting property Width: %+v", err)
 	}
 
@@ -429,6 +445,16 @@ func resourceCapabilityEquipmentPhysicalDefUpdate(d *schema.ResourceData, meta i
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

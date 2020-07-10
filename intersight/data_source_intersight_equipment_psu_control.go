@@ -348,71 +348,71 @@ func dataSourceEquipmentPsuControlRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("cluster_state", (s.ClusterState)); err != nil {
+			if err := d.Set("cluster_state", (s.GetClusterState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterState: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("equipment_chassis", flattenMapEquipmentChassisRelationship(s.EquipmentChassis, d)); err != nil {
+			if err := d.Set("equipment_chassis", flattenMapEquipmentChassisRelationship(s.GetEquipmentChassis(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EquipmentChassis: %+v", err)
 			}
-			if err := d.Set("input_power_state", (s.InputPowerState)); err != nil {
+			if err := d.Set("input_power_state", (s.GetInputPowerState())); err != nil {
 				return fmt.Errorf("error occurred while setting property InputPowerState: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
+			if err := d.Set("model", (s.GetModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_qualifier", (s.OperQualifier)); err != nil {
+			if err := d.Set("oper_qualifier", (s.GetOperQualifier())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperQualifier: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("output_power_state", (s.OutputPowerState)); err != nil {
+			if err := d.Set("output_power_state", (s.GetOutputPowerState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OutputPowerState: %+v", err)
 			}
-			if err := d.Set("redundancy", (s.Redundancy)); err != nil {
+			if err := d.Set("redundancy", (s.GetRedundancy())); err != nil {
 				return fmt.Errorf("error occurred while setting property Redundancy: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
 				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			d.SetId(s.GetMoid())

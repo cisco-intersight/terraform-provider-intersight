@@ -403,67 +403,67 @@ func dataSourceHyperflexNodeRead(d *schema.ResourceData, meta interface{}) error
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("build_number", (s.BuildNumber)); err != nil {
+			if err := d.Set("build_number", (s.GetBuildNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property BuildNumber: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.Cluster, d)); err != nil {
+			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.GetCluster(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Cluster: %+v", err)
 			}
 
-			if err := d.Set("cluster_member", flattenMapAssetClusterMemberRelationship(s.ClusterMember, d)); err != nil {
+			if err := d.Set("cluster_member", flattenMapAssetClusterMemberRelationship(s.GetClusterMember(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterMember: %+v", err)
 			}
-			if err := d.Set("display_version", (s.DisplayVersion)); err != nil {
+			if err := d.Set("display_version", (s.GetDisplayVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property DisplayVersion: %+v", err)
 			}
-			if err := d.Set("host_name", (s.HostName)); err != nil {
+			if err := d.Set("host_name", (s.GetHostName())); err != nil {
 				return fmt.Errorf("error occurred while setting property HostName: %+v", err)
 			}
-			if err := d.Set("hypervisor", (s.Hypervisor)); err != nil {
+			if err := d.Set("hypervisor", (s.GetHypervisor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hypervisor: %+v", err)
 			}
 
-			if err := d.Set("identity", flattenMapHyperflexHxUuIdDt(s.Identity, d)); err != nil {
+			if err := d.Set("identity", flattenMapHyperflexHxUuIdDt(s.GetIdentity(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Identity: %+v", err)
 			}
 
-			if err := d.Set("ip", flattenMapHyperflexHxNetworkAddressDt(s.Ip, d)); err != nil {
+			if err := d.Set("ip", flattenMapHyperflexHxNetworkAddressDt(s.GetIp(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Ip: %+v", err)
 			}
-			if err := d.Set("lockdown", (s.Lockdown)); err != nil {
+			if err := d.Set("lockdown", (s.GetLockdown())); err != nil {
 				return fmt.Errorf("error occurred while setting property Lockdown: %+v", err)
 			}
-			if err := d.Set("model_number", (s.ModelNumber)); err != nil {
+			if err := d.Set("model_number", (s.GetModelNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property ModelNumber: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("physical_server", flattenMapComputePhysicalRelationship(s.PhysicalServer, d)); err != nil {
+			if err := d.Set("physical_server", flattenMapComputePhysicalRelationship(s.GetPhysicalServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PhysicalServer: %+v", err)
 			}
-			if err := d.Set("role", (s.Role)); err != nil {
+			if err := d.Set("role", (s.GetRole())); err != nil {
 				return fmt.Errorf("error occurred while setting property Role: %+v", err)
 			}
-			if err := d.Set("serial_number", (s.SerialNumber)); err != nil {
+			if err := d.Set("serial_number", (s.GetSerialNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property SerialNumber: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

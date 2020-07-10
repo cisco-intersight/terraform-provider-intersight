@@ -320,98 +320,98 @@ func dataSourceNiaapiDcnmHweolRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("affected_pids", (s.AffectedPids)); err != nil {
+			if err := d.Set("affected_pids", (s.GetAffectedPids())); err != nil {
 				return fmt.Errorf("error occurred while setting property AffectedPids: %+v", err)
 			}
 
-			if err := d.Set("announcement_date", (s.AnnouncementDate).String()); err != nil {
+			if err := d.Set("announcement_date", (s.GetAnnouncementDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property AnnouncementDate: %+v", err)
 			}
-			if err := d.Set("announcement_date_epoch", (s.AnnouncementDateEpoch)); err != nil {
+			if err := d.Set("announcement_date_epoch", (s.GetAnnouncementDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property AnnouncementDateEpoch: %+v", err)
 			}
-			if err := d.Set("bulletin_no", (s.BulletinNo)); err != nil {
+			if err := d.Set("bulletin_no", (s.GetBulletinNo())); err != nil {
 				return fmt.Errorf("error occurred while setting property BulletinNo: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("endof_new_service_attachment_date", (s.EndofNewServiceAttachmentDate).String()); err != nil {
+			if err := d.Set("endof_new_service_attachment_date", (s.GetEndofNewServiceAttachmentDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofNewServiceAttachmentDate: %+v", err)
 			}
-			if err := d.Set("endof_new_service_attachment_date_epoch", (s.EndofNewServiceAttachmentDateEpoch)); err != nil {
+			if err := d.Set("endof_new_service_attachment_date_epoch", (s.GetEndofNewServiceAttachmentDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofNewServiceAttachmentDateEpoch: %+v", err)
 			}
 
-			if err := d.Set("endof_routine_failure_analysis_date", (s.EndofRoutineFailureAnalysisDate).String()); err != nil {
+			if err := d.Set("endof_routine_failure_analysis_date", (s.GetEndofRoutineFailureAnalysisDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofRoutineFailureAnalysisDate: %+v", err)
 			}
-			if err := d.Set("endof_routine_failure_analysis_date_epoch", (s.EndofRoutineFailureAnalysisDateEpoch)); err != nil {
+			if err := d.Set("endof_routine_failure_analysis_date_epoch", (s.GetEndofRoutineFailureAnalysisDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofRoutineFailureAnalysisDateEpoch: %+v", err)
 			}
 
-			if err := d.Set("endof_sale_date", (s.EndofSaleDate).String()); err != nil {
+			if err := d.Set("endof_sale_date", (s.GetEndofSaleDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSaleDate: %+v", err)
 			}
-			if err := d.Set("endof_sale_date_epoch", (s.EndofSaleDateEpoch)); err != nil {
+			if err := d.Set("endof_sale_date_epoch", (s.GetEndofSaleDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSaleDateEpoch: %+v", err)
 			}
 
-			if err := d.Set("endof_security_support", (s.EndofSecuritySupport).String()); err != nil {
+			if err := d.Set("endof_security_support", (s.GetEndofSecuritySupport()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSecuritySupport: %+v", err)
 			}
-			if err := d.Set("endof_security_support_epoch", (s.EndofSecuritySupportEpoch)); err != nil {
+			if err := d.Set("endof_security_support_epoch", (s.GetEndofSecuritySupportEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSecuritySupportEpoch: %+v", err)
 			}
 
-			if err := d.Set("endof_service_contract_renewal_date", (s.EndofServiceContractRenewalDate).String()); err != nil {
+			if err := d.Set("endof_service_contract_renewal_date", (s.GetEndofServiceContractRenewalDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofServiceContractRenewalDate: %+v", err)
 			}
-			if err := d.Set("endof_service_contract_renewal_date_epoch", (s.EndofServiceContractRenewalDateEpoch)); err != nil {
+			if err := d.Set("endof_service_contract_renewal_date_epoch", (s.GetEndofServiceContractRenewalDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofServiceContractRenewalDateEpoch: %+v", err)
 			}
 
-			if err := d.Set("endof_sw_maintenance_date", (s.EndofSwMaintenanceDate).String()); err != nil {
+			if err := d.Set("endof_sw_maintenance_date", (s.GetEndofSwMaintenanceDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSwMaintenanceDate: %+v", err)
 			}
-			if err := d.Set("endof_sw_maintenance_date_epoch", (s.EndofSwMaintenanceDateEpoch)); err != nil {
+			if err := d.Set("endof_sw_maintenance_date_epoch", (s.GetEndofSwMaintenanceDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property EndofSwMaintenanceDateEpoch: %+v", err)
 			}
-			if err := d.Set("hardware_eol_url", (s.HardwareEolUrl)); err != nil {
+			if err := d.Set("hardware_eol_url", (s.GetHardwareEolUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property HardwareEolUrl: %+v", err)
 			}
-			if err := d.Set("headline", (s.Headline)); err != nil {
+			if err := d.Set("headline", (s.GetHeadline())); err != nil {
 				return fmt.Errorf("error occurred while setting property Headline: %+v", err)
 			}
 
-			if err := d.Set("last_dateof_support", (s.LastDateofSupport).String()); err != nil {
+			if err := d.Set("last_dateof_support", (s.GetLastDateofSupport()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastDateofSupport: %+v", err)
 			}
-			if err := d.Set("last_dateof_support_epoch", (s.LastDateofSupportEpoch)); err != nil {
+			if err := d.Set("last_dateof_support_epoch", (s.GetLastDateofSupportEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property LastDateofSupportEpoch: %+v", err)
 			}
 
-			if err := d.Set("last_ship_date", (s.LastShipDate).String()); err != nil {
+			if err := d.Set("last_ship_date", (s.GetLastShipDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastShipDate: %+v", err)
 			}
-			if err := d.Set("last_ship_date_epoch", (s.LastShipDateEpoch)); err != nil {
+			if err := d.Set("last_ship_date_epoch", (s.GetLastShipDateEpoch())); err != nil {
 				return fmt.Errorf("error occurred while setting property LastShipDateEpoch: %+v", err)
 			}
-			if err := d.Set("migration_url", (s.MigrationUrl)); err != nil {
+			if err := d.Set("migration_url", (s.GetMigrationUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property MigrationUrl: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

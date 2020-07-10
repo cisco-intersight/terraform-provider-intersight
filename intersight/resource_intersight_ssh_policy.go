@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -56,6 +57,11 @@ func resourceSshPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -97,6 +103,11 @@ func resourceSshPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -188,6 +199,16 @@ func resourceSshPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -226,6 +247,16 @@ func resourceSshPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -320,47 +351,47 @@ func resourceSshPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("enabled", (s.Enabled)); err != nil {
+	if err := d.Set("enabled", (s.GetEnabled())); err != nil {
 		return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("port", (s.Port)); err != nil {
+	if err := d.Set("port", (s.GetPort())); err != nil {
 		return fmt.Errorf("error occurred while setting property Port: %+v", err)
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("timeout", (s.Timeout)); err != nil {
+	if err := d.Set("timeout", (s.GetTimeout())); err != nil {
 		return fmt.Errorf("error occurred while setting property Timeout: %+v", err)
 	}
 
@@ -409,6 +440,16 @@ func resourceSshPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -449,6 +490,16 @@ func resourceSshPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

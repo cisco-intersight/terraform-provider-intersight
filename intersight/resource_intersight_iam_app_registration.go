@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -25,6 +26,11 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -105,6 +111,11 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -147,6 +158,11 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -207,6 +223,11 @@ func resourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -262,6 +283,11 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -305,6 +331,16 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -381,6 +417,16 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -415,6 +461,16 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -485,6 +541,16 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -542,6 +608,16 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -591,83 +667,83 @@ func resourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) er
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("client_id", (s.ClientId)); err != nil {
+	if err := d.Set("client_id", (s.GetClientId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClientId: %+v", err)
 	}
 
-	if err := d.Set("client_name", (s.ClientName)); err != nil {
+	if err := d.Set("client_name", (s.GetClientName())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClientName: %+v", err)
 	}
 
-	if err := d.Set("client_secret", (s.ClientSecret)); err != nil {
+	if err := d.Set("client_secret", (s.GetClientSecret())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClientSecret: %+v", err)
 	}
 
-	if err := d.Set("client_type", (s.ClientType)); err != nil {
+	if err := d.Set("client_type", (s.GetClientType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClientType: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("grant_types", (s.GrantTypes)); err != nil {
+	if err := d.Set("grant_types", (s.GetGrantTypes())); err != nil {
 		return fmt.Errorf("error occurred while setting property GrantTypes: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRelationship(s.OauthTokens, d)); err != nil {
+	if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRelationship(s.GetOauthTokens(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property OauthTokens: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
+	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 	}
 
-	if err := d.Set("redirect_uris", (s.RedirectUris)); err != nil {
+	if err := d.Set("redirect_uris", (s.GetRedirectUris())); err != nil {
 		return fmt.Errorf("error occurred while setting property RedirectUris: %+v", err)
 	}
 
-	if err := d.Set("renew_client_secret", (s.RenewClientSecret)); err != nil {
+	if err := d.Set("renew_client_secret", (s.GetRenewClientSecret())); err != nil {
 		return fmt.Errorf("error occurred while setting property RenewClientSecret: %+v", err)
 	}
 
-	if err := d.Set("response_types", (s.ResponseTypes)); err != nil {
+	if err := d.Set("response_types", (s.GetResponseTypes())); err != nil {
 		return fmt.Errorf("error occurred while setting property ResponseTypes: %+v", err)
 	}
 
-	if err := d.Set("revocation_timestamp", (s.RevocationTimestamp).String()); err != nil {
+	if err := d.Set("revocation_timestamp", (s.GetRevocationTimestamp()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property RevocationTimestamp: %+v", err)
 	}
 
-	if err := d.Set("revoke", (s.Revoke)); err != nil {
+	if err := d.Set("revoke", (s.GetRevoke())); err != nil {
 		return fmt.Errorf("error occurred while setting property Revoke: %+v", err)
 	}
 
-	if err := d.Set("roles", flattenListIamRoleRelationship(s.Roles, d)); err != nil {
+	if err := d.Set("roles", flattenListIamRoleRelationship(s.GetRoles(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Roles: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
+	if err := d.Set("user", flattenMapIamUserRelationship(s.GetUser(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property User: %+v", err)
 	}
 
@@ -688,6 +764,16 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -772,6 +858,16 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -807,6 +903,16 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -883,6 +989,16 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -942,6 +1058,16 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

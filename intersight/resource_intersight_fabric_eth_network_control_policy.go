@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -44,6 +45,11 @@ func resourceFabricEthNetworkControlPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -71,7 +77,7 @@ func resourceFabricEthNetworkControlPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
-			"mac_register_mode": {
+			"mac_registration_mode": {
 				Description: "Determines the MAC addresses that have to be registered with the switch.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -95,6 +101,11 @@ func resourceFabricEthNetworkControlPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -137,6 +148,11 @@ func resourceFabricEthNetworkControlPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -223,6 +239,16 @@ func resourceFabricEthNetworkControlPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewFabricLldpSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("fabric.LldpSettings")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -250,9 +276,9 @@ func resourceFabricEthNetworkControlPolicyCreate(d *schema.ResourceData, meta in
 		}
 	}
 
-	if v, ok := d.GetOk("mac_register_mode"); ok {
+	if v, ok := d.GetOk("mac_registration_mode"); ok {
 		x := (v.(string))
-		o.SetMacRegisterMode(x)
+		o.SetMacRegistrationMode(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
@@ -271,6 +297,16 @@ func resourceFabricEthNetworkControlPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -305,6 +341,16 @@ func resourceFabricEthNetworkControlPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -384,55 +430,55 @@ func resourceFabricEthNetworkControlPolicyRead(d *schema.ResourceData, meta inte
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("cdp_enabled", (s.CdpEnabled)); err != nil {
+	if err := d.Set("cdp_enabled", (s.GetCdpEnabled())); err != nil {
 		return fmt.Errorf("error occurred while setting property CdpEnabled: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("forge_mac", (s.ForgeMac)); err != nil {
+	if err := d.Set("forge_mac", (s.GetForgeMac())); err != nil {
 		return fmt.Errorf("error occurred while setting property ForgeMac: %+v", err)
 	}
 
-	if err := d.Set("lldp_settings", flattenMapFabricLldpSettings(s.LldpSettings, d)); err != nil {
+	if err := d.Set("lldp_settings", flattenMapFabricLldpSettings(s.GetLldpSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property LldpSettings: %+v", err)
 	}
 
-	if err := d.Set("mac_register_mode", (s.MacRegisterMode)); err != nil {
-		return fmt.Errorf("error occurred while setting property MacRegisterMode: %+v", err)
+	if err := d.Set("mac_registration_mode", (s.GetMacRegistrationMode())); err != nil {
+		return fmt.Errorf("error occurred while setting property MacRegistrationMode: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("network_policy", flattenListVnicEthNetworkPolicyRelationship(s.NetworkPolicy, d)); err != nil {
+	if err := d.Set("network_policy", flattenListVnicEthNetworkPolicyRelationship(s.GetNetworkPolicy(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property NetworkPolicy: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("uplink_fail_action", (s.UplinkFailAction)); err != nil {
+	if err := d.Set("uplink_fail_action", (s.GetUplinkFailAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property UplinkFailAction: %+v", err)
 	}
 
@@ -473,6 +519,16 @@ func resourceFabricEthNetworkControlPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewFabricLldpSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("fabric.LldpSettings")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -500,10 +556,10 @@ func resourceFabricEthNetworkControlPolicyUpdate(d *schema.ResourceData, meta in
 		}
 	}
 
-	if d.HasChange("mac_register_mode") {
-		v := d.Get("mac_register_mode")
+	if d.HasChange("mac_registration_mode") {
+		v := d.Get("mac_registration_mode")
 		x := (v.(string))
-		o.SetMacRegisterMode(x)
+		o.SetMacRegistrationMode(x)
 	}
 
 	if d.HasChange("moid") {
@@ -525,6 +581,16 @@ func resourceFabricEthNetworkControlPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -560,6 +626,16 @@ func resourceFabricEthNetworkControlPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

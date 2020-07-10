@@ -634,65 +634,65 @@ func dataSourceFirmwareUpgradeRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.Device, d)); err != nil {
+			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Device: %+v", err)
 			}
 
-			if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.DirectDownload, d)); err != nil {
+			if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.GetDirectDownload(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DirectDownload: %+v", err)
 			}
 
-			if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.Distributable, d)); err != nil {
+			if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.GetDistributable(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Distributable: %+v", err)
 			}
-			if err := d.Set("exclude_component_list", (s.ExcludeComponentList)); err != nil {
+			if err := d.Set("exclude_component_list", (s.GetExcludeComponentList())); err != nil {
 				return fmt.Errorf("error occurred while setting property ExcludeComponentList: %+v", err)
 			}
 
-			if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.FileServer, d)); err != nil {
+			if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.GetFileServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FileServer: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 
-			if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.NetworkShare, d)); err != nil {
+			if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.GetNetworkShare(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property NetworkShare: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.Release, d)); err != nil {
+			if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.GetRelease(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Release: %+v", err)
 			}
 
-			if err := d.Set("server", flattenMapComputePhysicalRelationship(s.Server, d)); err != nil {
+			if err := d.Set("server", flattenMapComputePhysicalRelationship(s.GetServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Server: %+v", err)
 			}
-			if err := d.Set("skip_estimate_impact", (s.SkipEstimateImpact)); err != nil {
+			if err := d.Set("skip_estimate_impact", (s.GetSkipEstimateImpact())); err != nil {
 				return fmt.Errorf("error occurred while setting property SkipEstimateImpact: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("upgrade_impact", flattenMapFirmwareUpgradeImpactStatusRelationship(s.UpgradeImpact, d)); err != nil {
+			if err := d.Set("upgrade_impact", flattenMapFirmwareUpgradeImpactStatusRelationship(s.GetUpgradeImpact(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UpgradeImpact: %+v", err)
 			}
 
-			if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRelationship(s.UpgradeStatus, d)); err != nil {
+			if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRelationship(s.GetUpgradeStatus(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UpgradeStatus: %+v", err)
 			}
-			if err := d.Set("upgrade_type", (s.UpgradeType)); err != nil {
+			if err := d.Set("upgrade_type", (s.GetUpgradeType())); err != nil {
 				return fmt.Errorf("error occurred while setting property UpgradeType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

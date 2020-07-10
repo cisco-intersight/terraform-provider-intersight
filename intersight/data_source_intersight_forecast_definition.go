@@ -198,39 +198,39 @@ func dataSourceForecastDefinitionRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("alert_threshold_in_percentage", (s.AlertThresholdInPercentage)); err != nil {
+			if err := d.Set("alert_threshold_in_percentage", (s.GetAlertThresholdInPercentage())); err != nil {
 				return fmt.Errorf("error occurred while setting property AlertThresholdInPercentage: %+v", err)
 			}
 
-			if err := d.Set("catalog", flattenMapForecastCatalogRelationship(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapForecastCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("data_source", (s.DataSource)); err != nil {
+			if err := d.Set("data_source", (s.GetDataSource())); err != nil {
 				return fmt.Errorf("error occurred while setting property DataSource: %+v", err)
 			}
-			if err := d.Set("metric_name", (s.MetricName)); err != nil {
+			if err := d.Set("metric_name", (s.GetMetricName())); err != nil {
 				return fmt.Errorf("error occurred while setting property MetricName: %+v", err)
 			}
-			if err := d.Set("min_num_of_days_of_data", (s.MinNumOfDaysOfData)); err != nil {
+			if err := d.Set("min_num_of_days_of_data", (s.GetMinNumOfDaysOfData())); err != nil {
 				return fmt.Errorf("error occurred while setting property MinNumOfDaysOfData: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("num_of_days_of_historical_data", (s.NumOfDaysOfHistoricalData)); err != nil {
+			if err := d.Set("num_of_days_of_historical_data", (s.GetNumOfDaysOfHistoricalData())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumOfDaysOfHistoricalData: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

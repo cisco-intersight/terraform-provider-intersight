@@ -245,46 +245,46 @@ func dataSourceHyperflexVcenterConfigPolicyRead(d *schema.ResourceData, meta int
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
+			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 			}
-			if err := d.Set("data_center", (s.DataCenter)); err != nil {
+			if err := d.Set("data_center", (s.GetDataCenter())); err != nil {
 				return fmt.Errorf("error occurred while setting property DataCenter: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("hostname", (s.Hostname)); err != nil {
+			if err := d.Set("hostname", (s.GetHostname())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hostname: %+v", err)
 			}
-			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+			if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("sso_url", (s.SsoUrl)); err != nil {
+			if err := d.Set("sso_url", (s.GetSsoUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property SsoUrl: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("username", (s.Username)); err != nil {
+			if err := d.Set("username", (s.GetUsername())); err != nil {
 				return fmt.Errorf("error occurred while setting property Username: %+v", err)
 			}
 			d.SetId(s.GetMoid())

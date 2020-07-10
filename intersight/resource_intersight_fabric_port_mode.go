@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -57,6 +58,11 @@ func resourceFabricPortMode() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -148,6 +154,16 @@ func resourceFabricPortModeCreate(d *schema.ResourceData, meta interface{}) erro
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -227,39 +243,39 @@ func resourceFabricPortModeRead(d *schema.ResourceData, meta interface{}) error 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("custom_mode", (s.CustomMode)); err != nil {
+	if err := d.Set("custom_mode", (s.GetCustomMode())); err != nil {
 		return fmt.Errorf("error occurred while setting property CustomMode: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("port_id_end", (s.PortIdEnd)); err != nil {
+	if err := d.Set("port_id_end", (s.GetPortIdEnd())); err != nil {
 		return fmt.Errorf("error occurred while setting property PortIdEnd: %+v", err)
 	}
 
-	if err := d.Set("port_id_start", (s.PortIdStart)); err != nil {
+	if err := d.Set("port_id_start", (s.GetPortIdStart())); err != nil {
 		return fmt.Errorf("error occurred while setting property PortIdStart: %+v", err)
 	}
 
-	if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.PortPolicy, d)); err != nil {
+	if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.GetPortPolicy(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property PortPolicy: %+v", err)
 	}
 
-	if err := d.Set("slot_id", (s.SlotId)); err != nil {
+	if err := d.Set("slot_id", (s.GetSlotId())); err != nil {
 		return fmt.Errorf("error occurred while setting property SlotId: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
@@ -308,6 +324,16 @@ func resourceFabricPortModeUpdate(d *schema.ResourceData, meta interface{}) erro
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

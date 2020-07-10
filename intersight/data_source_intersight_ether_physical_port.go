@@ -524,103 +524,103 @@ func dataSourceEtherPhysicalPortRead(d *schema.ResourceData, meta interface{}) e
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("acknowledged_peer_interface", flattenMapPortInterfaceBaseRelationship(s.AcknowledgedPeerInterface, d)); err != nil {
+			if err := d.Set("acknowledged_peer_interface", flattenMapPortInterfaceBaseRelationship(s.GetAcknowledgedPeerInterface(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedPeerInterface: %+v", err)
 			}
-			if err := d.Set("admin_speed", (s.AdminSpeed)); err != nil {
+			if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 			}
-			if err := d.Set("admin_state", (s.AdminState)); err != nil {
+			if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 			}
-			if err := d.Set("aggregate_port_id", (s.AggregatePortId)); err != nil {
+			if err := d.Set("aggregate_port_id", (s.GetAggregatePortId())); err != nil {
 				return fmt.Errorf("error occurred while setting property AggregatePortId: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("license_grace", (s.LicenseGrace)); err != nil {
+			if err := d.Set("license_grace", (s.GetLicenseGrace())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseGrace: %+v", err)
 			}
-			if err := d.Set("license_state", (s.LicenseState)); err != nil {
+			if err := d.Set("license_state", (s.GetLicenseState())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseState: %+v", err)
 			}
-			if err := d.Set("mac_address", (s.MacAddress)); err != nil {
+			if err := d.Set("mac_address", (s.GetMacAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property MacAddress: %+v", err)
 			}
-			if err := d.Set("mode", (s.Mode)); err != nil {
+			if err := d.Set("mode", (s.GetMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property Mode: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_speed", (s.OperSpeed)); err != nil {
+			if err := d.Set("oper_speed", (s.GetOperSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperSpeed: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("oper_state_qual", (s.OperStateQual)); err != nil {
+			if err := d.Set("oper_state_qual", (s.GetOperStateQual())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperStateQual: %+v", err)
 			}
-			if err := d.Set("peer_dn", (s.PeerDn)); err != nil {
+			if err := d.Set("peer_dn", (s.GetPeerDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property PeerDn: %+v", err)
 			}
 
-			if err := d.Set("peer_interface", flattenMapPortInterfaceBaseRelationship(s.PeerInterface, d)); err != nil {
+			if err := d.Set("peer_interface", flattenMapPortInterfaceBaseRelationship(s.GetPeerInterface(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PeerInterface: %+v", err)
 			}
-			if err := d.Set("port_channel_id", (s.PortChannelId)); err != nil {
+			if err := d.Set("port_channel_id", (s.GetPortChannelId())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortChannelId: %+v", err)
 			}
 
-			if err := d.Set("port_group", flattenMapPortGroupRelationship(s.PortGroup, d)); err != nil {
+			if err := d.Set("port_group", flattenMapPortGroupRelationship(s.GetPortGroup(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortGroup: %+v", err)
 			}
-			if err := d.Set("port_id", (s.PortId)); err != nil {
+			if err := d.Set("port_id", (s.GetPortId())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortId: %+v", err)
 			}
 
-			if err := d.Set("port_sub_group", flattenMapPortSubGroupRelationship(s.PortSubGroup, d)); err != nil {
+			if err := d.Set("port_sub_group", flattenMapPortSubGroupRelationship(s.GetPortSubGroup(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortSubGroup: %+v", err)
 			}
-			if err := d.Set("port_type", (s.PortType)); err != nil {
+			if err := d.Set("port_type", (s.GetPortType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("role", (s.Role)); err != nil {
+			if err := d.Set("role", (s.GetRole())); err != nil {
 				return fmt.Errorf("error occurred while setting property Role: %+v", err)
 			}
-			if err := d.Set("slot_id", (s.SlotId)); err != nil {
+			if err := d.Set("slot_id", (s.GetSlotId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SlotId: %+v", err)
 			}
-			if err := d.Set("switch_id", (s.SwitchId)); err != nil {
+			if err := d.Set("switch_id", (s.GetSwitchId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SwitchId: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("transceiver_type", (s.TransceiverType)); err != nil {
+			if err := d.Set("transceiver_type", (s.GetTransceiverType())); err != nil {
 				return fmt.Errorf("error occurred while setting property TransceiverType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

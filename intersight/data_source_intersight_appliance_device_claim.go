@@ -234,47 +234,47 @@ func dataSourceApplianceDeviceClaimRead(d *schema.ResourceData, meta interface{}
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_id", (s.DeviceId)); err != nil {
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
-			if err := d.Set("hostname", (s.Hostname)); err != nil {
+			if err := d.Set("hostname", (s.GetHostname())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hostname: %+v", err)
 			}
-			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+			if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
-			if err := d.Set("message", (s.Message)); err != nil {
+			if err := d.Set("message", (s.GetMessage())); err != nil {
 				return fmt.Errorf("error occurred while setting property Message: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
-			if err := d.Set("request_id", (s.RequestId)); err != nil {
+			if err := d.Set("request_id", (s.GetRequestId())); err != nil {
 				return fmt.Errorf("error occurred while setting property RequestId: %+v", err)
 			}
-			if err := d.Set("security_token", (s.SecurityToken)); err != nil {
+			if err := d.Set("security_token", (s.GetSecurityToken())); err != nil {
 				return fmt.Errorf("error occurred while setting property SecurityToken: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("username", (s.Username)); err != nil {
+			if err := d.Set("username", (s.GetUsername())); err != nil {
 				return fmt.Errorf("error occurred while setting property Username: %+v", err)
 			}
 			d.SetId(s.GetMoid())

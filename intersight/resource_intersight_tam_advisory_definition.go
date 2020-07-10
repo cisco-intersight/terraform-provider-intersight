@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -21,6 +22,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"affected_object_type": {
 							Description: "Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).",
 							Type:        schema.TypeString,
@@ -43,6 +49,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -92,6 +103,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -142,6 +158,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -174,6 +195,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -201,6 +227,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -295,6 +326,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -337,6 +373,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -409,6 +450,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			o := models.NewTamActionWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["affected_object_type"]; ok {
 				{
 					x := (v.(string))
@@ -429,6 +480,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamIdentifiersWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.Identifiers")
 						if v, ok := l["name"]; ok {
 							{
@@ -480,6 +541,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamQueryEntryWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.QueryEntry")
 						if v, ok := l["name"]; ok {
 							{
@@ -531,6 +602,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewTamBaseAdvisoryDetailsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.BaseAdvisoryDetails")
 			if v, ok := l["description"]; ok {
 				{
@@ -563,6 +644,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			o := models.NewTamApiDataSourceWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.ApiDataSource")
 			if v, ok := l["mo_type"]; ok {
 				{
@@ -589,6 +680,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamQueryEntryWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.QueryEntry")
 						if v, ok := l["name"]; ok {
 							{
@@ -674,6 +775,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -712,6 +823,16 @@ func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewTamSeverityWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.Severity")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -794,83 +915,83 @@ func resourceTamAdvisoryDefinitionRead(d *schema.ResourceData, meta interface{})
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("actions", flattenListTamAction(s.Actions, d)); err != nil {
+	if err := d.Set("actions", flattenListTamAction(s.GetActions(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Actions: %+v", err)
 	}
 
-	if err := d.Set("advisory_details", flattenMapTamBaseAdvisoryDetails(s.AdvisoryDetails, d)); err != nil {
+	if err := d.Set("advisory_details", flattenMapTamBaseAdvisoryDetails(s.GetAdvisoryDetails(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property AdvisoryDetails: %+v", err)
 	}
 
-	if err := d.Set("advisory_id", (s.AdvisoryId)); err != nil {
+	if err := d.Set("advisory_id", (s.GetAdvisoryId())); err != nil {
 		return fmt.Errorf("error occurred while setting property AdvisoryId: %+v", err)
 	}
 
-	if err := d.Set("api_data_sources", flattenListTamApiDataSource(s.ApiDataSources, d)); err != nil {
+	if err := d.Set("api_data_sources", flattenListTamApiDataSource(s.GetApiDataSources(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ApiDataSources: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("date_published", (s.DatePublished).String()); err != nil {
+	if err := d.Set("date_published", (s.GetDatePublished()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property DatePublished: %+v", err)
 	}
 
-	if err := d.Set("date_updated", (s.DateUpdated).String()); err != nil {
+	if err := d.Set("date_updated", (s.GetDateUpdated()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property DateUpdated: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("external_url", (s.ExternalUrl)); err != nil {
+	if err := d.Set("external_url", (s.GetExternalUrl())); err != nil {
 		return fmt.Errorf("error occurred while setting property ExternalUrl: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("recommendation", (s.Recommendation)); err != nil {
+	if err := d.Set("recommendation", (s.GetRecommendation())); err != nil {
 		return fmt.Errorf("error occurred while setting property Recommendation: %+v", err)
 	}
 
-	if err := d.Set("severity", flattenMapTamSeverity(s.Severity, d)); err != nil {
+	if err := d.Set("severity", flattenMapTamSeverity(s.GetSeverity(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 	}
 
-	if err := d.Set("state", (s.State)); err != nil {
+	if err := d.Set("state", (s.GetState())); err != nil {
 		return fmt.Errorf("error occurred while setting property State: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("type", (s.Type)); err != nil {
+	if err := d.Set("type", (s.GetType())); err != nil {
 		return fmt.Errorf("error occurred while setting property Type: %+v", err)
 	}
 
-	if err := d.Set("nr_version", (s.Version)); err != nil {
+	if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 		return fmt.Errorf("error occurred while setting property Version: %+v", err)
 	}
 
-	if err := d.Set("workaround", (s.Workaround)); err != nil {
+	if err := d.Set("workaround", (s.GetWorkaround())); err != nil {
 		return fmt.Errorf("error occurred while setting property Workaround: %+v", err)
 	}
 
@@ -891,6 +1012,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			o := models.NewTamActionWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["affected_object_type"]; ok {
 				{
 					x := (v.(string))
@@ -911,6 +1042,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamIdentifiersWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.Identifiers")
 						if v, ok := l["name"]; ok {
 							{
@@ -962,6 +1103,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamQueryEntryWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.QueryEntry")
 						if v, ok := l["name"]; ok {
 							{
@@ -1014,6 +1165,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewTamBaseAdvisoryDetailsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.BaseAdvisoryDetails")
 			if v, ok := l["description"]; ok {
 				{
@@ -1048,6 +1209,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			o := models.NewTamApiDataSourceWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.ApiDataSource")
 			if v, ok := l["mo_type"]; ok {
 				{
@@ -1074,6 +1245,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 					for i := 0; i < len(s); i++ {
 						o := models.NewTamQueryEntryWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("tam.QueryEntry")
 						if v, ok := l["name"]; ok {
 							{
@@ -1166,6 +1347,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1206,6 +1397,16 @@ func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewTamSeverityWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("tam.Severity")
 			if v, ok := l["object_type"]; ok {
 				{

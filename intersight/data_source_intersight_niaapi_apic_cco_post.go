@@ -203,34 +203,34 @@ func dataSourceNiaapiApicCcoPostRead(d *schema.ResourceData, meta interface{}) e
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("post_date", (s.PostDate).String()); err != nil {
+			if err := d.Set("post_date", (s.GetPostDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property PostDate: %+v", err)
 			}
 
-			if err := d.Set("post_detail", flattenMapNiaapiNewReleaseDetail(s.PostDetail, d)); err != nil {
+			if err := d.Set("post_detail", flattenMapNiaapiNewReleaseDetail(s.GetPostDetail(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PostDetail: %+v", err)
 			}
-			if err := d.Set("post_type", (s.PostType)); err != nil {
+			if err := d.Set("post_type", (s.GetPostType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PostType: %+v", err)
 			}
-			if err := d.Set("postid", (s.Postid)); err != nil {
+			if err := d.Set("postid", (s.GetPostid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Postid: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
 				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

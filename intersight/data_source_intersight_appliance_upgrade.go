@@ -501,89 +501,89 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("active", (s.Active)); err != nil {
+			if err := d.Set("active", (s.GetActive())); err != nil {
 				return fmt.Errorf("error occurred while setting property Active: %+v", err)
 			}
-			if err := d.Set("auto_created", (s.AutoCreated)); err != nil {
+			if err := d.Set("auto_created", (s.GetAutoCreated())); err != nil {
 				return fmt.Errorf("error occurred while setting property AutoCreated: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("completed_phases", flattenListOnpremUpgradePhase(s.CompletedPhases, d)); err != nil {
+			if err := d.Set("completed_phases", flattenListOnpremUpgradePhase(s.GetCompletedPhases(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property CompletedPhases: %+v", err)
 			}
 
-			if err := d.Set("current_phase", flattenMapOnpremUpgradePhase(s.CurrentPhase, d)); err != nil {
+			if err := d.Set("current_phase", flattenMapOnpremUpgradePhase(s.GetCurrentPhase(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property CurrentPhase: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("elapsed_time", (s.ElapsedTime)); err != nil {
+			if err := d.Set("elapsed_time", (s.GetElapsedTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property ElapsedTime: %+v", err)
 			}
 
-			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+			if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 			}
-			if err := d.Set("error_code", (s.ErrorCode)); err != nil {
+			if err := d.Set("error_code", (s.GetErrorCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorCode: %+v", err)
 			}
-			if err := d.Set("fingerprint", (s.Fingerprint)); err != nil {
+			if err := d.Set("fingerprint", (s.GetFingerprint())); err != nil {
 				return fmt.Errorf("error occurred while setting property Fingerprint: %+v", err)
 			}
 
-			if err := d.Set("image_bundle", flattenMapApplianceImageBundleRelationship(s.ImageBundle, d)); err != nil {
+			if err := d.Set("image_bundle", flattenMapApplianceImageBundleRelationship(s.GetImageBundle(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ImageBundle: %+v", err)
 			}
-			if err := d.Set("is_rolling_back", (s.IsRollingBack)); err != nil {
+			if err := d.Set("is_rolling_back", (s.GetIsRollingBack())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsRollingBack: %+v", err)
 			}
-			if err := d.Set("messages", (s.Messages)); err != nil {
+			if err := d.Set("messages", (s.GetMessages())); err != nil {
 				return fmt.Errorf("error occurred while setting property Messages: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("rollback_needed", (s.RollbackNeeded)); err != nil {
+			if err := d.Set("rollback_needed", (s.GetRollbackNeeded())); err != nil {
 				return fmt.Errorf("error occurred while setting property RollbackNeeded: %+v", err)
 			}
 
-			if err := d.Set("rollback_phases", flattenListOnpremUpgradePhase(s.RollbackPhases, d)); err != nil {
+			if err := d.Set("rollback_phases", flattenListOnpremUpgradePhase(s.GetRollbackPhases(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RollbackPhases: %+v", err)
 			}
-			if err := d.Set("rollback_status", (s.RollbackStatus)); err != nil {
+			if err := d.Set("rollback_status", (s.GetRollbackStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property RollbackStatus: %+v", err)
 			}
-			if err := d.Set("services", (s.Services)); err != nil {
+			if err := d.Set("services", (s.GetServices())); err != nil {
 				return fmt.Errorf("error occurred while setting property Services: %+v", err)
 			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("total_phases", (s.TotalPhases)); err != nil {
+			if err := d.Set("total_phases", (s.GetTotalPhases())); err != nil {
 				return fmt.Errorf("error occurred while setting property TotalPhases: %+v", err)
 			}
-			if err := d.Set("ui_packages", (s.UiPackages)); err != nil {
+			if err := d.Set("ui_packages", (s.GetUiPackages())); err != nil {
 				return fmt.Errorf("error occurred while setting property UiPackages: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

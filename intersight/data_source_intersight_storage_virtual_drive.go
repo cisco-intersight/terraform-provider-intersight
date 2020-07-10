@@ -676,144 +676,144 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("access_policy", (s.AccessPolicy)); err != nil {
+			if err := d.Set("access_policy", (s.GetAccessPolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessPolicy: %+v", err)
 			}
-			if err := d.Set("actual_write_cache_policy", (s.ActualWriteCachePolicy)); err != nil {
+			if err := d.Set("actual_write_cache_policy", (s.GetActualWriteCachePolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property ActualWriteCachePolicy: %+v", err)
 			}
-			if err := d.Set("available_size", (s.AvailableSize)); err != nil {
+			if err := d.Set("available_size", (s.GetAvailableSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property AvailableSize: %+v", err)
 			}
-			if err := d.Set("block_size", (s.BlockSize)); err != nil {
+			if err := d.Set("block_size", (s.GetBlockSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property BlockSize: %+v", err)
 			}
-			if err := d.Set("bootable", (s.Bootable)); err != nil {
+			if err := d.Set("bootable", (s.GetBootable())); err != nil {
 				return fmt.Errorf("error occurred while setting property Bootable: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("config_state", (s.ConfigState)); err != nil {
+			if err := d.Set("config_state", (s.GetConfigState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigState: %+v", err)
 			}
-			if err := d.Set("configured_write_cache_policy", (s.ConfiguredWriteCachePolicy)); err != nil {
+			if err := d.Set("configured_write_cache_policy", (s.GetConfiguredWriteCachePolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfiguredWriteCachePolicy: %+v", err)
 			}
-			if err := d.Set("connection_protocol", (s.ConnectionProtocol)); err != nil {
+			if err := d.Set("connection_protocol", (s.GetConnectionProtocol())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionProtocol: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
 
-			if err := d.Set("disk_group", flattenMapStorageDiskGroupRelationship(s.DiskGroup, d)); err != nil {
+			if err := d.Set("disk_group", flattenMapStorageDiskGroupRelationship(s.GetDiskGroup(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DiskGroup: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("drive_cache", (s.DriveCache)); err != nil {
+			if err := d.Set("drive_cache", (s.GetDriveCache())); err != nil {
 				return fmt.Errorf("error occurred while setting property DriveCache: %+v", err)
 			}
-			if err := d.Set("drive_security", (s.DriveSecurity)); err != nil {
+			if err := d.Set("drive_security", (s.GetDriveSecurity())); err != nil {
 				return fmt.Errorf("error occurred while setting property DriveSecurity: %+v", err)
 			}
-			if err := d.Set("drive_state", (s.DriveState)); err != nil {
+			if err := d.Set("drive_state", (s.GetDriveState())); err != nil {
 				return fmt.Errorf("error occurred while setting property DriveState: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("io_policy", (s.IoPolicy)); err != nil {
+			if err := d.Set("io_policy", (s.GetIoPolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property IoPolicy: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
+			if err := d.Set("model", (s.GetModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("num_blocks", (s.NumBlocks)); err != nil {
+			if err := d.Set("num_blocks", (s.GetNumBlocks())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumBlocks: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("operability", (s.Operability)); err != nil {
+			if err := d.Set("operability", (s.GetOperability())); err != nil {
 				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
 			}
-			if err := d.Set("physical_block_size", (s.PhysicalBlockSize)); err != nil {
+			if err := d.Set("physical_block_size", (s.GetPhysicalBlockSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property PhysicalBlockSize: %+v", err)
 			}
 
-			if err := d.Set("physical_disk_usages", flattenListStoragePhysicalDiskUsageRelationship(s.PhysicalDiskUsages, d)); err != nil {
+			if err := d.Set("physical_disk_usages", flattenListStoragePhysicalDiskUsageRelationship(s.GetPhysicalDiskUsages(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PhysicalDiskUsages: %+v", err)
 			}
-			if err := d.Set("presence", (s.Presence)); err != nil {
+			if err := d.Set("presence", (s.GetPresence())); err != nil {
 				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
 			}
-			if err := d.Set("read_policy", (s.ReadPolicy)); err != nil {
+			if err := d.Set("read_policy", (s.GetReadPolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property ReadPolicy: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
 				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("security_flags", (s.SecurityFlags)); err != nil {
+			if err := d.Set("security_flags", (s.GetSecurityFlags())); err != nil {
 				return fmt.Errorf("error occurred while setting property SecurityFlags: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
-			if err := d.Set("size", (s.Size)); err != nil {
+			if err := d.Set("size", (s.GetSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property Size: %+v", err)
 			}
 
-			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.StorageController, d)); err != nil {
+			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.GetStorageController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageController: %+v", err)
 			}
-			if err := d.Set("strip_size", (s.StripSize)); err != nil {
+			if err := d.Set("strip_size", (s.GetStripSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property StripSize: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
 
-			if err := d.Set("vd_member_eps", flattenListStorageVdMemberEpRelationship(s.VdMemberEps, d)); err != nil {
+			if err := d.Set("vd_member_eps", flattenListStorageVdMemberEpRelationship(s.GetVdMemberEps(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property VdMemberEps: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("vendor_uuid", (s.VendorUuid)); err != nil {
+			if err := d.Set("vendor_uuid", (s.GetVendorUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property VendorUuid: %+v", err)
 			}
 
-			if err := d.Set("virtual_drive_extension", flattenMapStorageVirtualDriveExtensionRelationship(s.VirtualDriveExtension, d)); err != nil {
+			if err := d.Set("virtual_drive_extension", flattenMapStorageVirtualDriveExtensionRelationship(s.GetVirtualDriveExtension(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualDriveExtension: %+v", err)
 			}
-			if err := d.Set("virtual_drive_id", (s.VirtualDriveId)); err != nil {
+			if err := d.Set("virtual_drive_id", (s.GetVirtualDriveId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualDriveId: %+v", err)
 			}
 			d.SetId(s.GetMoid())

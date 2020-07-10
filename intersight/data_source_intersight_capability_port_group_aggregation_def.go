@@ -174,33 +174,33 @@ func dataSourceCapabilityPortGroupAggregationDefRead(d *schema.ResourceData, met
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("aggregation_cap", (s.AggregationCap)); err != nil {
+			if err := d.Set("aggregation_cap", (s.GetAggregationCap())); err != nil {
 				return fmt.Errorf("error occurred while setting property AggregationCap: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("hw40_g_port_group_cap", (s.Hw40GPortGroupCap)); err != nil {
+			if err := d.Set("hw40_g_port_group_cap", (s.GetHw40GPortGroupCap())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hw40GPortGroupCap: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pgtype", (s.Pgtype)); err != nil {
+			if err := d.Set("pgtype", (s.GetPgtype())); err != nil {
 				return fmt.Errorf("error occurred while setting property Pgtype: %+v", err)
 			}
 
-			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.Section, d)); err != nil {
+			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Section: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

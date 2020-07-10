@@ -272,49 +272,49 @@ func dataSourceHyperflexNodeProfileRead(d *schema.ResourceData, meta interface{}
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("assigned_server", flattenMapComputeRackUnitRelationship(s.AssignedServer, d)); err != nil {
+			if err := d.Set("assigned_server", flattenMapComputeRackUnitRelationship(s.GetAssignedServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AssignedServer: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_profile", flattenMapHyperflexClusterProfileRelationship(s.ClusterProfile, d)); err != nil {
+			if err := d.Set("cluster_profile", flattenMapHyperflexClusterProfileRelationship(s.GetClusterProfile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterProfile: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("hxdp_data_ip", (s.HxdpDataIp)); err != nil {
+			if err := d.Set("hxdp_data_ip", (s.GetHxdpDataIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpDataIp: %+v", err)
 			}
-			if err := d.Set("hxdp_mgmt_ip", (s.HxdpMgmtIp)); err != nil {
+			if err := d.Set("hxdp_mgmt_ip", (s.GetHxdpMgmtIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpMgmtIp: %+v", err)
 			}
-			if err := d.Set("hypervisor_data_ip", (s.HypervisorDataIp)); err != nil {
+			if err := d.Set("hypervisor_data_ip", (s.GetHypervisorDataIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorDataIp: %+v", err)
 			}
-			if err := d.Set("hypervisor_mgmt_ip", (s.HypervisorMgmtIp)); err != nil {
+			if err := d.Set("hypervisor_mgmt_ip", (s.GetHypervisorMgmtIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorMgmtIp: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.SrcTemplate, d)); err != nil {
+			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.GetSrcTemplate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SrcTemplate: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
 			d.SetId(s.GetMoid())

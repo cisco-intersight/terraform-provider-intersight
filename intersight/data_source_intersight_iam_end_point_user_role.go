@@ -245,38 +245,38 @@ func dataSourceIamEndPointUserRoleRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("change_password", (s.ChangePassword)); err != nil {
+			if err := d.Set("change_password", (s.GetChangePassword())); err != nil {
 				return fmt.Errorf("error occurred while setting property ChangePassword: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("enabled", (s.Enabled)); err != nil {
+			if err := d.Set("enabled", (s.GetEnabled())); err != nil {
 				return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 			}
 
-			if err := d.Set("end_point_role", flattenListIamEndPointRoleRelationship(s.EndPointRole, d)); err != nil {
+			if err := d.Set("end_point_role", flattenListIamEndPointRoleRelationship(s.GetEndPointRole(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndPointRole: %+v", err)
 			}
 
-			if err := d.Set("end_point_user", flattenMapIamEndPointUserRelationship(s.EndPointUser, d)); err != nil {
+			if err := d.Set("end_point_user", flattenMapIamEndPointUserRelationship(s.GetEndPointUser(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndPointUser: %+v", err)
 			}
 
-			if err := d.Set("end_point_user_policy", flattenMapIamEndPointUserPolicyRelationship(s.EndPointUserPolicy, d)); err != nil {
+			if err := d.Set("end_point_user_policy", flattenMapIamEndPointUserPolicyRelationship(s.GetEndPointUserPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndPointUserPolicy: %+v", err)
 			}
-			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+			if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

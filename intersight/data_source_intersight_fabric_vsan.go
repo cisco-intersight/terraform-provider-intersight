@@ -183,36 +183,36 @@ func dataSourceFabricVsanRead(d *schema.ResourceData, meta interface{}) error {
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("default_zoning", (s.DefaultZoning)); err != nil {
+			if err := d.Set("default_zoning", (s.GetDefaultZoning())); err != nil {
 				return fmt.Errorf("error occurred while setting property DefaultZoning: %+v", err)
 			}
 
-			if err := d.Set("fc_network_policy", flattenMapFabricFcNetworkPolicyRelationship(s.FcNetworkPolicy, d)); err != nil {
+			if err := d.Set("fc_network_policy", flattenMapFabricFcNetworkPolicyRelationship(s.GetFcNetworkPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FcNetworkPolicy: %+v", err)
 			}
-			if err := d.Set("fc_zone_sharing_mode", (s.FcZoneSharingMode)); err != nil {
+			if err := d.Set("fc_zone_sharing_mode", (s.GetFcZoneSharingMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property FcZoneSharingMode: %+v", err)
 			}
-			if err := d.Set("fcoe_vlan", (s.FcoeVlan)); err != nil {
+			if err := d.Set("fcoe_vlan", (s.GetFcoeVlan())); err != nil {
 				return fmt.Errorf("error occurred while setting property FcoeVlan: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vsan_id", (s.VsanId)); err != nil {
+			if err := d.Set("vsan_id", (s.GetVsanId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VsanId: %+v", err)
 			}
 			d.SetId(s.GetMoid())

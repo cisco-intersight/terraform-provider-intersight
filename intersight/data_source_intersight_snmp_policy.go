@@ -376,63 +376,63 @@ func dataSourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("access_community_string", (s.AccessCommunityString)); err != nil {
+			if err := d.Set("access_community_string", (s.GetAccessCommunityString())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessCommunityString: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("community_access", (s.CommunityAccess)); err != nil {
+			if err := d.Set("community_access", (s.GetCommunityAccess())); err != nil {
 				return fmt.Errorf("error occurred while setting property CommunityAccess: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("enabled", (s.Enabled)); err != nil {
+			if err := d.Set("enabled", (s.GetEnabled())); err != nil {
 				return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 			}
-			if err := d.Set("engine_id", (s.EngineId)); err != nil {
+			if err := d.Set("engine_id", (s.GetEngineId())); err != nil {
 				return fmt.Errorf("error occurred while setting property EngineId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
-			if err := d.Set("snmp_port", (s.SnmpPort)); err != nil {
+			if err := d.Set("snmp_port", (s.GetSnmpPort())); err != nil {
 				return fmt.Errorf("error occurred while setting property SnmpPort: %+v", err)
 			}
 
-			if err := d.Set("snmp_traps", flattenListSnmpTrap(s.SnmpTraps, d)); err != nil {
+			if err := d.Set("snmp_traps", flattenListSnmpTrap(s.GetSnmpTraps(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SnmpTraps: %+v", err)
 			}
 
-			if err := d.Set("snmp_users", flattenListSnmpUser(s.SnmpUsers, d)); err != nil {
+			if err := d.Set("snmp_users", flattenListSnmpUser(s.GetSnmpUsers(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SnmpUsers: %+v", err)
 			}
-			if err := d.Set("sys_contact", (s.SysContact)); err != nil {
+			if err := d.Set("sys_contact", (s.GetSysContact())); err != nil {
 				return fmt.Errorf("error occurred while setting property SysContact: %+v", err)
 			}
-			if err := d.Set("sys_location", (s.SysLocation)); err != nil {
+			if err := d.Set("sys_location", (s.GetSysLocation())); err != nil {
 				return fmt.Errorf("error occurred while setting property SysLocation: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("trap_community", (s.TrapCommunity)); err != nil {
+			if err := d.Set("trap_community", (s.GetTrapCommunity())); err != nil {
 				return fmt.Errorf("error occurred while setting property TrapCommunity: %+v", err)
 			}
 			d.SetId(s.GetMoid())

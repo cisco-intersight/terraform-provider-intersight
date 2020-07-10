@@ -297,46 +297,46 @@ func dataSourceIamSessionRead(d *schema.ResourceData, meta interface{}) error {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account_permissions", flattenListIamAccountPermissions(s.AccountPermissions, d)); err != nil {
+			if err := d.Set("account_permissions", flattenListIamAccountPermissions(s.GetAccountPermissions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountPermissions: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("client_ip_address", (s.ClientIpAddress)); err != nil {
+			if err := d.Set("client_ip_address", (s.GetClientIpAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClientIpAddress: %+v", err)
 			}
 
-			if err := d.Set("expiration", (s.Expiration).String()); err != nil {
+			if err := d.Set("expiration", (s.GetExpiration()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property Expiration: %+v", err)
 			}
 
-			if err := d.Set("idle_time_expiration", (s.IdleTimeExpiration).String()); err != nil {
+			if err := d.Set("idle_time_expiration", (s.GetIdleTimeExpiration()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property IdleTimeExpiration: %+v", err)
 			}
-			if err := d.Set("last_login_client", (s.LastLoginClient)); err != nil {
+			if err := d.Set("last_login_client", (s.GetLastLoginClient())); err != nil {
 				return fmt.Errorf("error occurred while setting property LastLoginClient: %+v", err)
 			}
 
-			if err := d.Set("last_login_time", (s.LastLoginTime).String()); err != nil {
+			if err := d.Set("last_login_time", (s.GetLastLoginTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastLoginTime: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
+			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.GetUser(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property User: %+v", err)
 			}
 			d.SetId(s.GetMoid())

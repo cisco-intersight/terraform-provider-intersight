@@ -193,39 +193,39 @@ func dataSourceIaasConnectorPackRead(d *schema.ResourceData, meta interface{}) e
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("complete_version", (s.CompleteVersion)); err != nil {
+			if err := d.Set("complete_version", (s.GetCompleteVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property CompleteVersion: %+v", err)
 			}
-			if err := d.Set("dependency_names", (s.DependencyNames)); err != nil {
+			if err := d.Set("dependency_names", (s.GetDependencyNames())); err != nil {
 				return fmt.Errorf("error occurred while setting property DependencyNames: %+v", err)
 			}
-			if err := d.Set("downloaded_version", (s.DownloadedVersion)); err != nil {
+			if err := d.Set("downloaded_version", (s.GetDownloadedVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property DownloadedVersion: %+v", err)
 			}
 
-			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
+			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.GetGuid(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("state", (s.State)); err != nil {
+			if err := d.Set("state", (s.GetState())); err != nil {
 				return fmt.Errorf("error occurred while setting property State: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -40,7 +40,7 @@ func dataSourceWorkflowTaskInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"inst_id": {
-				Description: "The current running task instance Id.",
+				Description: "The instance ID of the task running in the workflow engine.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -110,6 +110,12 @@ func dataSourceWorkflowTaskInfo() *schema.Resource {
 			"retry_count": {
 				Description: "A counter for number of retries.",
 				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
+			"running_inst_id": {
+				Description: "The instance ID of the task that is currently being executed. When retrying a workflow with failed tasks, the task in workflow engine will have a new instance ID, but the task may still be in-progress. In this case, the task instId reflects the instance ID in the workflow engine, while runningInstId reflects the instance ID of the instance that is currently being executed.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -335,6 +341,10 @@ func dataSourceWorkflowTaskInfoRead(d *schema.ResourceData, meta interface{}) er
 		x := int64(v.(int))
 		o.SetRetryCount(x)
 	}
+	if v, ok := d.GetOk("running_inst_id"); ok {
+		x := (v.(string))
+		o.SetRunningInstId(x)
+	}
 	if v, ok := d.GetOk("start_time"); ok {
 		x, _ := time.Parse(v.(string), time.RFC1123)
 		o.SetStartTime(x)
@@ -375,72 +385,75 @@ func dataSourceWorkflowTaskInfoRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+			if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 			}
-			if err := d.Set("failure_reason", (s.FailureReason)); err != nil {
+			if err := d.Set("failure_reason", (s.GetFailureReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property FailureReason: %+v", err)
 			}
-			if err := d.Set("inst_id", (s.InstId)); err != nil {
+			if err := d.Set("inst_id", (s.GetInstId())); err != nil {
 				return fmt.Errorf("error occurred while setting property InstId: %+v", err)
 			}
-			if err := d.Set("internal", (s.Internal)); err != nil {
+			if err := d.Set("internal", (s.GetInternal())); err != nil {
 				return fmt.Errorf("error occurred while setting property Internal: %+v", err)
 			}
-			if err := d.Set("label", (s.Label)); err != nil {
+			if err := d.Set("label", (s.GetLabel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Label: %+v", err)
 			}
 
-			if err := d.Set("message", flattenListWorkflowMessage(s.Message, d)); err != nil {
+			if err := d.Set("message", flattenListWorkflowMessage(s.GetMessage(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Message: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("ref_name", (s.RefName)); err != nil {
+			if err := d.Set("ref_name", (s.GetRefName())); err != nil {
 				return fmt.Errorf("error occurred while setting property RefName: %+v", err)
 			}
-			if err := d.Set("retry_count", (s.RetryCount)); err != nil {
+			if err := d.Set("retry_count", (s.GetRetryCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property RetryCount: %+v", err)
 			}
+			if err := d.Set("running_inst_id", (s.GetRunningInstId())); err != nil {
+				return fmt.Errorf("error occurred while setting property RunningInstId: %+v", err)
+			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("sub_workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.SubWorkflowInfo, d)); err != nil {
+			if err := d.Set("sub_workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.GetSubWorkflowInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SubWorkflowInfo: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.TaskDefinition, d)); err != nil {
+			if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.GetTaskDefinition(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskDefinition: %+v", err)
 			}
 
-			if err := d.Set("task_inst_id_list", flattenListWorkflowTaskRetryInfo(s.TaskInstIdList, d)); err != nil {
+			if err := d.Set("task_inst_id_list", flattenListWorkflowTaskRetryInfo(s.GetTaskInstIdList(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskInstIdList: %+v", err)
 			}
 
-			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.WorkflowInfo, d)); err != nil {
+			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.GetWorkflowInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkflowInfo: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -238,51 +238,51 @@ func dataSourceIaasDeviceStatusRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("account_name", (s.AccountName)); err != nil {
+			if err := d.Set("account_name", (s.GetAccountName())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountName: %+v", err)
 			}
-			if err := d.Set("account_type", (s.AccountType)); err != nil {
+			if err := d.Set("account_type", (s.GetAccountType())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountType: %+v", err)
 			}
-			if err := d.Set("claim_status", (s.ClaimStatus)); err != nil {
+			if err := d.Set("claim_status", (s.GetClaimStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClaimStatus: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+			if err := d.Set("connection_status", (s.GetConnectionStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
-			if err := d.Set("device_model", (s.DeviceModel)); err != nil {
+			if err := d.Set("device_model", (s.GetDeviceModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceModel: %+v", err)
 			}
-			if err := d.Set("device_vendor", (s.DeviceVendor)); err != nil {
+			if err := d.Set("device_vendor", (s.GetDeviceVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceVendor: %+v", err)
 			}
-			if err := d.Set("device_version", (s.DeviceVersion)); err != nil {
+			if err := d.Set("device_version", (s.GetDeviceVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceVersion: %+v", err)
 			}
 
-			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
+			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.GetGuid(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("ip_address", (s.IpAddress)); err != nil {
+			if err := d.Set("ip_address", (s.GetIpAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property IpAddress: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pod", (s.Pod)); err != nil {
+			if err := d.Set("pod", (s.GetPod())); err != nil {
 				return fmt.Errorf("error occurred while setting property Pod: %+v", err)
 			}
-			if err := d.Set("pod_type", (s.PodType)); err != nil {
+			if err := d.Set("pod_type", (s.GetPodType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PodType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

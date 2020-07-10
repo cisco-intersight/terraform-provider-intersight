@@ -471,132 +471,132 @@ func dataSourceNiatelemetryNiaFeatureUsageRead(d *schema.ResourceData, meta inte
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("apic_count", (s.ApicCount)); err != nil {
+			if err := d.Set("apic_count", (s.GetApicCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ApicCount: %+v", err)
 			}
-			if err := d.Set("app_center_count", (s.AppCenterCount)); err != nil {
+			if err := d.Set("app_center_count", (s.GetAppCenterCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property AppCenterCount: %+v", err)
 			}
-			if err := d.Set("ave", (s.Ave)); err != nil {
+			if err := d.Set("ave", (s.GetAve())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ave: %+v", err)
 			}
-			if err := d.Set("bd_count", (s.BdCount)); err != nil {
+			if err := d.Set("bd_count", (s.GetBdCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property BdCount: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("consistency_checker_app", (s.ConsistencyCheckerApp)); err != nil {
+			if err := d.Set("consistency_checker_app", (s.GetConsistencyCheckerApp())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConsistencyCheckerApp: %+v", err)
 			}
-			if err := d.Set("contract_count", (s.ContractCount)); err != nil {
+			if err := d.Set("contract_count", (s.GetContractCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ContractCount: %+v", err)
 			}
-			if err := d.Set("dns_count", (s.DnsCount)); err != nil {
+			if err := d.Set("dns_count", (s.GetDnsCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property DnsCount: %+v", err)
 			}
-			if err := d.Set("eigrp_count", (s.EigrpCount)); err != nil {
+			if err := d.Set("eigrp_count", (s.GetEigrpCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property EigrpCount: %+v", err)
 			}
-			if err := d.Set("epg_count", (s.EpgCount)); err != nil {
+			if err := d.Set("epg_count", (s.GetEpgCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property EpgCount: %+v", err)
 			}
-			if err := d.Set("hsrp_count", (s.HsrpCount)); err != nil {
+			if err := d.Set("hsrp_count", (s.GetHsrpCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property HsrpCount: %+v", err)
 			}
-			if err := d.Set("ibgp_count", (s.IbgpCount)); err != nil {
+			if err := d.Set("ibgp_count", (s.GetIbgpCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property IbgpCount: %+v", err)
 			}
-			if err := d.Set("igmp_access_list_count", (s.IgmpAccessListCount)); err != nil {
+			if err := d.Set("igmp_access_list_count", (s.GetIgmpAccessListCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property IgmpAccessListCount: %+v", err)
 			}
-			if err := d.Set("igmp_snoop", (s.IgmpSnoop)); err != nil {
+			if err := d.Set("igmp_snoop", (s.GetIgmpSnoop())); err != nil {
 				return fmt.Errorf("error occurred while setting property IgmpSnoop: %+v", err)
 			}
-			if err := d.Set("ip_epg_count", (s.IpEpgCount)); err != nil {
+			if err := d.Set("ip_epg_count", (s.GetIpEpgCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property IpEpgCount: %+v", err)
 			}
-			if err := d.Set("isis_count", (s.IsisCount)); err != nil {
+			if err := d.Set("isis_count", (s.GetIsisCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsisCount: %+v", err)
 			}
-			if err := d.Set("l2_multicast", (s.L2Multicast)); err != nil {
+			if err := d.Set("l2_multicast", (s.GetL2Multicast())); err != nil {
 				return fmt.Errorf("error occurred while setting property L2Multicast: %+v", err)
 			}
-			if err := d.Set("leaf_count", (s.LeafCount)); err != nil {
+			if err := d.Set("leaf_count", (s.GetLeafCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property LeafCount: %+v", err)
 			}
-			if err := d.Set("maintenance_mode_count", (s.MaintenanceModeCount)); err != nil {
+			if err := d.Set("maintenance_mode_count", (s.GetMaintenanceModeCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaintenanceModeCount: %+v", err)
 			}
-			if err := d.Set("management_over_v6_count", (s.ManagementOverV6Count)); err != nil {
+			if err := d.Set("management_over_v6_count", (s.GetManagementOverV6Count())); err != nil {
 				return fmt.Errorf("error occurred while setting property ManagementOverV6Count: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("nir", (s.Nir)); err != nil {
+			if err := d.Set("nir", (s.GetNir())); err != nil {
 				return fmt.Errorf("error occurred while setting property Nir: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("opflex_kubernetes_count", (s.OpflexKubernetesCount)); err != nil {
+			if err := d.Set("opflex_kubernetes_count", (s.GetOpflexKubernetesCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property OpflexKubernetesCount: %+v", err)
 			}
-			if err := d.Set("ospf_count", (s.OspfCount)); err != nil {
+			if err := d.Set("ospf_count", (s.GetOspfCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property OspfCount: %+v", err)
 			}
-			if err := d.Set("poe_count", (s.PoeCount)); err != nil {
+			if err := d.Set("poe_count", (s.GetPoeCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property PoeCount: %+v", err)
 			}
-			if err := d.Set("qin_vni_tunnel_count", (s.QinVniTunnelCount)); err != nil {
+			if err := d.Set("qin_vni_tunnel_count", (s.GetQinVniTunnelCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property QinVniTunnelCount: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("remote_leaf_count", (s.RemoteLeafCount)); err != nil {
+			if err := d.Set("remote_leaf_count", (s.GetRemoteLeafCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property RemoteLeafCount: %+v", err)
 			}
-			if err := d.Set("scvmm_count", (s.ScvmmCount)); err != nil {
+			if err := d.Set("scvmm_count", (s.GetScvmmCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ScvmmCount: %+v", err)
 			}
-			if err := d.Set("shared_l3_out_count", (s.SharedL3OutCount)); err != nil {
+			if err := d.Set("shared_l3_out_count", (s.GetSharedL3OutCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property SharedL3OutCount: %+v", err)
 			}
-			if err := d.Set("smart_call_home", (s.SmartCallHome)); err != nil {
+			if err := d.Set("smart_call_home", (s.GetSmartCallHome())); err != nil {
 				return fmt.Errorf("error occurred while setting property SmartCallHome: %+v", err)
 			}
-			if err := d.Set("snmp", (s.Snmp)); err != nil {
+			if err := d.Set("snmp", (s.GetSnmp())); err != nil {
 				return fmt.Errorf("error occurred while setting property Snmp: %+v", err)
 			}
-			if err := d.Set("spine_count", (s.SpineCount)); err != nil {
+			if err := d.Set("spine_count", (s.GetSpineCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property SpineCount: %+v", err)
 			}
-			if err := d.Set("ssh_over_v6_count", (s.SshOverV6Count)); err != nil {
+			if err := d.Set("ssh_over_v6_count", (s.GetSshOverV6Count())); err != nil {
 				return fmt.Errorf("error occurred while setting property SshOverV6Count: %+v", err)
 			}
-			if err := d.Set("syslog_over_v6_count", (s.SyslogOverV6Count)); err != nil {
+			if err := d.Set("syslog_over_v6_count", (s.GetSyslogOverV6Count())); err != nil {
 				return fmt.Errorf("error occurred while setting property SyslogOverV6Count: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("tenant_count", (s.TenantCount)); err != nil {
+			if err := d.Set("tenant_count", (s.GetTenantCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property TenantCount: %+v", err)
 			}
-			if err := d.Set("tier_two_leaf_count", (s.TierTwoLeafCount)); err != nil {
+			if err := d.Set("tier_two_leaf_count", (s.GetTierTwoLeafCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property TierTwoLeafCount: %+v", err)
 			}
-			if err := d.Set("twamp", (s.Twamp)); err != nil {
+			if err := d.Set("twamp", (s.GetTwamp())); err != nil {
 				return fmt.Errorf("error occurred while setting property Twamp: %+v", err)
 			}
-			if err := d.Set("useg", (s.Useg)); err != nil {
+			if err := d.Set("useg", (s.GetUseg())); err != nil {
 				return fmt.Errorf("error occurred while setting property Useg: %+v", err)
 			}
-			if err := d.Set("vpod_count", (s.VpodCount)); err != nil {
+			if err := d.Set("vpod_count", (s.GetVpodCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property VpodCount: %+v", err)
 			}
 			d.SetId(s.GetMoid())

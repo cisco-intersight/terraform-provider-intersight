@@ -249,43 +249,43 @@ func dataSourceNtpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.ApplianceAccount, d)); err != nil {
+			if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.GetApplianceAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ApplianceAccount: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("enabled", (s.Enabled)); err != nil {
+			if err := d.Set("enabled", (s.GetEnabled())); err != nil {
 				return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("ntp_servers", (s.NtpServers)); err != nil {
+			if err := d.Set("ntp_servers", (s.GetNtpServers())); err != nil {
 				return fmt.Errorf("error occurred while setting property NtpServers: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("timezone", (s.Timezone)); err != nil {
+			if err := d.Set("timezone", (s.GetTimezone())); err != nil {
 				return fmt.Errorf("error occurred while setting property Timezone: %+v", err)
 			}
 			d.SetId(s.GetMoid())

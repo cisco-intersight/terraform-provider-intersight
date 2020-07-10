@@ -840,100 +840,100 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("contract", flattenMapAssetContractInformation(s.Contract, d)); err != nil {
+			if err := d.Set("contract", flattenMapAssetContractInformation(s.GetContract(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Contract: %+v", err)
 			}
-			if err := d.Set("contract_status", (s.ContractStatus)); err != nil {
+			if err := d.Set("contract_status", (s.GetContractStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ContractStatus: %+v", err)
 			}
-			if err := d.Set("covered_product_line_end_date", (s.CoveredProductLineEndDate)); err != nil {
+			if err := d.Set("covered_product_line_end_date", (s.GetCoveredProductLineEndDate())); err != nil {
 				return fmt.Errorf("error occurred while setting property CoveredProductLineEndDate: %+v", err)
 			}
-			if err := d.Set("device_id", (s.DeviceId)); err != nil {
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
-			if err := d.Set("device_type", (s.DeviceType)); err != nil {
+			if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 			}
 
-			if err := d.Set("end_customer", flattenMapAssetCustomerInformation(s.EndCustomer, d)); err != nil {
+			if err := d.Set("end_customer", flattenMapAssetCustomerInformation(s.GetEndCustomer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndCustomer: %+v", err)
 			}
 
-			if err := d.Set("end_user_global_ultimate", flattenMapAssetGlobalUltimate(s.EndUserGlobalUltimate, d)); err != nil {
+			if err := d.Set("end_user_global_ultimate", flattenMapAssetGlobalUltimate(s.GetEndUserGlobalUltimate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndUserGlobalUltimate: %+v", err)
 			}
-			if err := d.Set("is_valid", (s.IsValid)); err != nil {
+			if err := d.Set("is_valid", (s.GetIsValid())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsValid: %+v", err)
 			}
-			if err := d.Set("item_type", (s.ItemType)); err != nil {
+			if err := d.Set("item_type", (s.GetItemType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ItemType: %+v", err)
 			}
-			if err := d.Set("maintenance_purchase_order_number", (s.MaintenancePurchaseOrderNumber)); err != nil {
+			if err := d.Set("maintenance_purchase_order_number", (s.GetMaintenancePurchaseOrderNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaintenancePurchaseOrderNumber: %+v", err)
 			}
-			if err := d.Set("maintenance_sales_order_number", (s.MaintenanceSalesOrderNumber)); err != nil {
+			if err := d.Set("maintenance_sales_order_number", (s.GetMaintenanceSalesOrderNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaintenanceSalesOrderNumber: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
 
-			if err := d.Set("product", flattenMapAssetProductInformation(s.Product, d)); err != nil {
+			if err := d.Set("product", flattenMapAssetProductInformation(s.GetProduct(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Product: %+v", err)
 			}
-			if err := d.Set("purchase_order_number", (s.PurchaseOrderNumber)); err != nil {
+			if err := d.Set("purchase_order_number", (s.GetPurchaseOrderNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property PurchaseOrderNumber: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("reseller_global_ultimate", flattenMapAssetGlobalUltimate(s.ResellerGlobalUltimate, d)); err != nil {
+			if err := d.Set("reseller_global_ultimate", flattenMapAssetGlobalUltimate(s.GetResellerGlobalUltimate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ResellerGlobalUltimate: %+v", err)
 			}
-			if err := d.Set("sales_order_number", (s.SalesOrderNumber)); err != nil {
+			if err := d.Set("sales_order_number", (s.GetSalesOrderNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property SalesOrderNumber: %+v", err)
 			}
-			if err := d.Set("service_description", (s.ServiceDescription)); err != nil {
+			if err := d.Set("service_description", (s.GetServiceDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceDescription: %+v", err)
 			}
 
-			if err := d.Set("service_end_date", (s.ServiceEndDate).String()); err != nil {
+			if err := d.Set("service_end_date", (s.GetServiceEndDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceEndDate: %+v", err)
 			}
-			if err := d.Set("service_level", (s.ServiceLevel)); err != nil {
+			if err := d.Set("service_level", (s.GetServiceLevel())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceLevel: %+v", err)
 			}
-			if err := d.Set("service_sku", (s.ServiceSku)); err != nil {
+			if err := d.Set("service_sku", (s.GetServiceSku())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceSku: %+v", err)
 			}
 
-			if err := d.Set("service_start_date", (s.ServiceStartDate).String()); err != nil {
+			if err := d.Set("service_start_date", (s.GetServiceStartDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceStartDate: %+v", err)
 			}
-			if err := d.Set("state_contract", (s.StateContract)); err != nil {
+			if err := d.Set("state_contract", (s.GetStateContract())); err != nil {
 				return fmt.Errorf("error occurred while setting property StateContract: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("warranty_end_date", (s.WarrantyEndDate)); err != nil {
+			if err := d.Set("warranty_end_date", (s.GetWarrantyEndDate())); err != nil {
 				return fmt.Errorf("error occurred while setting property WarrantyEndDate: %+v", err)
 			}
-			if err := d.Set("warranty_type", (s.WarrantyType)); err != nil {
+			if err := d.Set("warranty_type", (s.GetWarrantyType())); err != nil {
 				return fmt.Errorf("error occurred while setting property WarrantyType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

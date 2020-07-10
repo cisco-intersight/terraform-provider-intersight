@@ -309,55 +309,55 @@ func dataSourceTechsupportmanagementTechSupportStatusRead(d *schema.ResourceData
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_member", flattenMapAssetClusterMemberRelationship(s.ClusterMember, d)); err != nil {
+			if err := d.Set("cluster_member", flattenMapAssetClusterMemberRelationship(s.GetClusterMember(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterMember: %+v", err)
 			}
 
-			if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.DeviceRegistration, d)); err != nil {
+			if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.GetDeviceRegistration(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceRegistration: %+v", err)
 			}
-			if err := d.Set("file_name", (s.FileName)); err != nil {
+			if err := d.Set("file_name", (s.GetFileName())); err != nil {
 				return fmt.Errorf("error occurred while setting property FileName: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("origin_resource", flattenMapMoBaseMoRelationship(s.OriginResource, d)); err != nil {
+			if err := d.Set("origin_resource", flattenMapMoBaseMoRelationship(s.GetOriginResource(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property OriginResource: %+v", err)
 			}
-			if err := d.Set("reason", (s.Reason)); err != nil {
+			if err := d.Set("reason", (s.GetReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property Reason: %+v", err)
 			}
-			if err := d.Set("relay_reason", (s.RelayReason)); err != nil {
+			if err := d.Set("relay_reason", (s.GetRelayReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property RelayReason: %+v", err)
 			}
-			if err := d.Set("relay_status", (s.RelayStatus)); err != nil {
+			if err := d.Set("relay_status", (s.GetRelayStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property RelayStatus: %+v", err)
 			}
 
-			if err := d.Set("request_ts", (s.RequestTs).String()); err != nil {
+			if err := d.Set("request_ts", (s.GetRequestTs()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property RequestTs: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("tech_support_request", flattenMapTechsupportmanagementTechSupportBundleRelationship(s.TechSupportRequest, d)); err != nil {
+			if err := d.Set("tech_support_request", flattenMapTechsupportmanagementTechSupportBundleRelationship(s.GetTechSupportRequest(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TechSupportRequest: %+v", err)
 			}
-			if err := d.Set("techsupport_download_url", (s.TechsupportDownloadUrl)); err != nil {
+			if err := d.Set("techsupport_download_url", (s.GetTechsupportDownloadUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property TechsupportDownloadUrl: %+v", err)
 			}
 			d.SetId(s.GetMoid())

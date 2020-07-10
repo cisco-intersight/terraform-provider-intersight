@@ -182,28 +182,28 @@ func dataSourceConnectorpackConnectorPackUpgradeRead(d *schema.ResourceData, met
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("connector_pack_op_type", (s.ConnectorPackOpType)); err != nil {
+			if err := d.Set("connector_pack_op_type", (s.GetConnectorPackOpType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectorPackOpType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("ucsd_info", flattenMapIaasUcsdInfoRelationship(s.UcsdInfo, d)); err != nil {
+			if err := d.Set("ucsd_info", flattenMapIaasUcsdInfoRelationship(s.GetUcsdInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UcsdInfo: %+v", err)
 			}
 
-			if err := d.Set("workflow", flattenMapWorkflowWorkflowInfoRelationship(s.Workflow, d)); err != nil {
+			if err := d.Set("workflow", flattenMapWorkflowWorkflowInfoRelationship(s.GetWorkflow(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Workflow: %+v", err)
 			}
 			d.SetId(s.GetMoid())

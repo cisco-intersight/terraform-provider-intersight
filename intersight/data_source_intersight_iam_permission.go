@@ -362,50 +362,50 @@ func dataSourceIamPermissionRead(d *schema.ResourceData, meta interface{}) error
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("end_point_roles", flattenListIamEndPointRoleRelationship(s.EndPointRoles, d)); err != nil {
+			if err := d.Set("end_point_roles", flattenListIamEndPointRoleRelationship(s.GetEndPointRoles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EndPointRoles: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("resource_roles", flattenListIamResourceRolesRelationship(s.ResourceRoles, d)); err != nil {
+			if err := d.Set("resource_roles", flattenListIamResourceRolesRelationship(s.GetResourceRoles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ResourceRoles: %+v", err)
 			}
 
-			if err := d.Set("roles", flattenListIamRoleRelationship(s.Roles, d)); err != nil {
+			if err := d.Set("roles", flattenListIamRoleRelationship(s.GetRoles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Roles: %+v", err)
 			}
 
-			if err := d.Set("session_limits", flattenMapIamSessionLimitsRelationship(s.SessionLimits, d)); err != nil {
+			if err := d.Set("session_limits", flattenMapIamSessionLimitsRelationship(s.GetSessionLimits(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SessionLimits: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("user_groups", flattenListIamUserGroupRelationship(s.UserGroups, d)); err != nil {
+			if err := d.Set("user_groups", flattenListIamUserGroupRelationship(s.GetUserGroups(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UserGroups: %+v", err)
 			}
 
-			if err := d.Set("users", flattenListIamUserRelationship(s.Users, d)); err != nil {
+			if err := d.Set("users", flattenListIamUserRelationship(s.GetUsers(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Users: %+v", err)
 			}
 			d.SetId(s.GetMoid())

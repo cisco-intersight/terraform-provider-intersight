@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -29,6 +30,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -75,6 +81,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -160,6 +171,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -200,11 +216,6 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-			},
-			"image_category": {
-				Description: "The category of the distributable. That is, if it is C-Series, B-Series and the like.",
-				Type:        schema.TypeString,
-				Optional:    true,
 			},
 			"import_action": {
 				Description: "The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source.",
@@ -252,12 +263,6 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"origin": {
-				Description: "The source of the distributable. If it has been created by the user or system.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Default:     "System",
-			},
 			"osname": {
 				Description: "The operating system name to which this driver is compatible.",
 				Type:        schema.TypeString,
@@ -286,6 +291,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -349,6 +359,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -419,6 +434,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -459,6 +484,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewFirmwareComponentMetaWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("firmware.ComponentMeta")
 			if v, ok := l["component_label"]; ok {
 				{
@@ -555,6 +590,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -589,11 +634,6 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 	if v, ok := d.GetOk("guid"); ok {
 		x := (v.(string))
 		o.SetGuid(x)
-	}
-
-	if v, ok := d.GetOk("image_category"); ok {
-		x := (v.(string))
-		o.SetImageCategory(x)
 	}
 
 	if v, ok := d.GetOk("import_action"); ok {
@@ -633,11 +673,6 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 
 	o.SetObjectType("firmware.DriverDistributable")
 
-	if v, ok := d.GetOk("origin"); ok {
-		x := (v.(string))
-		o.SetOrigin(x)
-	}
-
 	if v, ok := d.GetOk("osname"); ok {
 		x := (v.(string))
 		o.SetOsname(x)
@@ -664,6 +699,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -722,6 +767,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("softwarerepository.FileServer")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -805,143 +860,135 @@ func resourceFirmwareDriverDistributableRead(d *schema.ResourceData, meta interf
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("bundle_type", (s.BundleType)); err != nil {
+	if err := d.Set("bundle_type", (s.GetBundleType())); err != nil {
 		return fmt.Errorf("error occurred while setting property BundleType: %+v", err)
 	}
 
-	if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.Catalog, d)); err != nil {
+	if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.GetCatalog(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 	}
 
-	if err := d.Set("category", (s.Category)); err != nil {
+	if err := d.Set("category", (s.GetCategory())); err != nil {
 		return fmt.Errorf("error occurred while setting property Category: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("component_meta", flattenListFirmwareComponentMeta(s.ComponentMeta, d)); err != nil {
+	if err := d.Set("component_meta", flattenListFirmwareComponentMeta(s.GetComponentMeta(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ComponentMeta: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("directory", (s.Directory)); err != nil {
+	if err := d.Set("directory", (s.GetDirectory())); err != nil {
 		return fmt.Errorf("error occurred while setting property Directory: %+v", err)
 	}
 
-	if err := d.Set("distributable_metas", flattenListFirmwareDistributableMetaRelationship(s.DistributableMetas, d)); err != nil {
+	if err := d.Set("distributable_metas", flattenListFirmwareDistributableMetaRelationship(s.GetDistributableMetas(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property DistributableMetas: %+v", err)
 	}
 
-	if err := d.Set("download_count", (s.DownloadCount)); err != nil {
+	if err := d.Set("download_count", (s.GetDownloadCount())); err != nil {
 		return fmt.Errorf("error occurred while setting property DownloadCount: %+v", err)
 	}
 
-	if err := d.Set("guid", (s.Guid)); err != nil {
+	if err := d.Set("guid", (s.GetGuid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 	}
 
-	if err := d.Set("image_category", (s.ImageCategory)); err != nil {
-		return fmt.Errorf("error occurred while setting property ImageCategory: %+v", err)
-	}
-
-	if err := d.Set("import_action", (s.ImportAction)); err != nil {
+	if err := d.Set("import_action", (s.GetImportAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property ImportAction: %+v", err)
 	}
 
-	if err := d.Set("import_state", (s.ImportState)); err != nil {
+	if err := d.Set("import_state", (s.GetImportState())); err != nil {
 		return fmt.Errorf("error occurred while setting property ImportState: %+v", err)
 	}
 
-	if err := d.Set("md5sum", (s.Md5sum)); err != nil {
+	if err := d.Set("md5sum", (s.GetMd5sum())); err != nil {
 		return fmt.Errorf("error occurred while setting property Md5sum: %+v", err)
 	}
 
-	if err := d.Set("mdfid", (s.Mdfid)); err != nil {
+	if err := d.Set("mdfid", (s.GetMdfid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Mdfid: %+v", err)
 	}
 
-	if err := d.Set("model", (s.Model)); err != nil {
+	if err := d.Set("model", (s.GetModel())); err != nil {
 		return fmt.Errorf("error occurred while setting property Model: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("origin", (s.Origin)); err != nil {
-		return fmt.Errorf("error occurred while setting property Origin: %+v", err)
-	}
-
-	if err := d.Set("osname", (s.Osname)); err != nil {
+	if err := d.Set("osname", (s.GetOsname())); err != nil {
 		return fmt.Errorf("error occurred while setting property Osname: %+v", err)
 	}
 
-	if err := d.Set("osversion", (s.Osversion)); err != nil {
+	if err := d.Set("osversion", (s.GetOsversion())); err != nil {
 		return fmt.Errorf("error occurred while setting property Osversion: %+v", err)
 	}
 
-	if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+	if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 		return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 	}
 
-	if err := d.Set("recommended_build", (s.RecommendedBuild)); err != nil {
+	if err := d.Set("recommended_build", (s.GetRecommendedBuild())); err != nil {
 		return fmt.Errorf("error occurred while setting property RecommendedBuild: %+v", err)
 	}
 
-	if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.Release, d)); err != nil {
+	if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.GetRelease(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Release: %+v", err)
 	}
 
-	if err := d.Set("release_notes_url", (s.ReleaseNotesUrl)); err != nil {
+	if err := d.Set("release_notes_url", (s.GetReleaseNotesUrl())); err != nil {
 		return fmt.Errorf("error occurred while setting property ReleaseNotesUrl: %+v", err)
 	}
 
-	if err := d.Set("sha512sum", (s.Sha512sum)); err != nil {
+	if err := d.Set("sha512sum", (s.GetSha512sum())); err != nil {
 		return fmt.Errorf("error occurred while setting property Sha512sum: %+v", err)
 	}
 
-	if err := d.Set("size", (s.Size)); err != nil {
+	if err := d.Set("size", (s.GetSize())); err != nil {
 		return fmt.Errorf("error occurred while setting property Size: %+v", err)
 	}
 
-	if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
+	if err := d.Set("software_advisory_url", (s.GetSoftwareAdvisoryUrl())); err != nil {
 		return fmt.Errorf("error occurred while setting property SoftwareAdvisoryUrl: %+v", err)
 	}
 
-	if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
+	if err := d.Set("software_type_id", (s.GetSoftwareTypeId())); err != nil {
 		return fmt.Errorf("error occurred while setting property SoftwareTypeId: %+v", err)
 	}
 
-	if err := d.Set("nr_source", flattenMapSoftwarerepositoryFileServer(s.Source, d)); err != nil {
+	if err := d.Set("nr_source", flattenMapSoftwarerepositoryFileServer(s.GetSource(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Source: %+v", err)
 	}
 
-	if err := d.Set("supported_models", (s.SupportedModels)); err != nil {
+	if err := d.Set("supported_models", (s.GetSupportedModels())); err != nil {
 		return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("vendor", (s.Vendor)); err != nil {
+	if err := d.Set("vendor", (s.GetVendor())); err != nil {
 		return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 	}
 
-	if err := d.Set("nr_version", (s.Version)); err != nil {
+	if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 		return fmt.Errorf("error occurred while setting property Version: %+v", err)
 	}
 
@@ -968,6 +1015,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1010,6 +1067,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewFirmwareComponentMetaWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("firmware.ComponentMeta")
 			if v, ok := l["component_label"]; ok {
 				{
@@ -1109,6 +1176,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1145,12 +1222,6 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		v := d.Get("guid")
 		x := (v.(string))
 		o.SetGuid(x)
-	}
-
-	if d.HasChange("image_category") {
-		v := d.Get("image_category")
-		x := (v.(string))
-		o.SetImageCategory(x)
 	}
 
 	if d.HasChange("import_action") {
@@ -1197,12 +1268,6 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 
 	o.SetObjectType("firmware.DriverDistributable")
 
-	if d.HasChange("origin") {
-		v := d.Get("origin")
-		x := (v.(string))
-		o.SetOrigin(x)
-	}
-
 	if d.HasChange("osname") {
 		v := d.Get("osname")
 		x := (v.(string))
@@ -1234,6 +1299,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1298,6 +1373,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("softwarerepository.FileServer")
 			if v, ok := l["object_type"]; ok {
 				{

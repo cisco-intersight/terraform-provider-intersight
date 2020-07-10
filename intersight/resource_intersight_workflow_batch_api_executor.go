@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -20,6 +21,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"body": {
 							Description: "The optional request body that is sent as part of this API request.\nThe request body can contain a golang template that can be populated with task input\nparameters and previous API output parameters.",
 							Type:        schema.TypeString,
@@ -62,6 +68,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -77,6 +88,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 													Description: "The flag that allows single values in content to be extracted as a\nsingle element collection in case the parameter is of Collection type.\nThis flag is applicable for parameters of type Collection only.",
 													Type:        schema.TypeBool,
 													Optional:    true,
+												},
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
 												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -138,6 +154,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 													Type:        schema.TypeBool,
 													Optional:    true,
 												},
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -187,6 +208,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -213,6 +239,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 																Description: "The flag that allows single values in content to be extracted as a\nsingle element collection in case the parameter is of Collection type.\nThis flag is applicable for parameters of type Collection only.",
 																Type:        schema.TypeBool,
 																Optional:    true,
+															},
+															"additional_properties": {
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: SuppressDiffAdditionProps,
 															},
 															"class_id": {
 																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -301,6 +332,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -337,6 +373,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -433,6 +474,11 @@ func resourceWorkflowBatchApiExecutor() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -478,6 +524,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			o := models.NewWorkflowApiWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["body"]; ok {
 				{
 					x := (v.(string))
@@ -516,6 +572,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewContentGrammarWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("content.Grammar")
 						if v, ok := l["error_parameters"]; ok {
 							{
@@ -528,6 +594,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 										{
 											x := (v.(bool))
 											o.SetAcceptSingleValue(x)
+										}
+									}
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
 										}
 									}
 									o.SetClassId("content.BaseParameter")
@@ -593,6 +669,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 											o.SetAcceptSingleValue(x)
 										}
 									}
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("content.BaseParameter")
 									if v, ok := l["complex_type"]; ok {
 										{
@@ -644,6 +730,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 								for i := 0; i < len(s); i++ {
 									o := models.NewContentComplexTypeWithDefaults()
 									l := s[i].(map[string]interface{})
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("content.ComplexType")
 									if v, ok := l["name"]; ok {
 										{
@@ -668,6 +764,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 													{
 														x := (v.(bool))
 														o.SetAcceptSingleValue(x)
+													}
+												}
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
 													}
 												}
 												o.SetClassId("content.BaseParameter")
@@ -762,6 +868,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowTaskConstraintsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.TaskConstraints")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -794,6 +910,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -884,6 +1010,16 @@ func resourceWorkflowBatchApiExecutorCreate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -933,59 +1069,59 @@ func resourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interface
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("batch", flattenListWorkflowApi(s.Batch, d)); err != nil {
+	if err := d.Set("batch", flattenListWorkflowApi(s.GetBatch(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Batch: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
+	if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.GetConstraints(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Constraints: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.ErrorResponseHandler, d)); err != nil {
+	if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.GetErrorResponseHandler(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ErrorResponseHandler: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("outcomes", (s.Outcomes)); err != nil {
+	if err := d.Set("outcomes", (s.GetOutcomes())); err != nil {
 		return fmt.Errorf("error occurred while setting property Outcomes: %+v", err)
 	}
 
-	if err := d.Set("output", (s.Output)); err != nil {
+	if err := d.Set("output", (s.GetOutput())); err != nil {
 		return fmt.Errorf("error occurred while setting property Output: %+v", err)
 	}
 
-	if err := d.Set("retry_from_failed_api", (s.RetryFromFailedApi)); err != nil {
+	if err := d.Set("retry_from_failed_api", (s.GetRetryFromFailedApi())); err != nil {
 		return fmt.Errorf("error occurred while setting property RetryFromFailedApi: %+v", err)
 	}
 
-	if err := d.Set("skip_on_condition", (s.SkipOnCondition)); err != nil {
+	if err := d.Set("skip_on_condition", (s.GetSkipOnCondition())); err != nil {
 		return fmt.Errorf("error occurred while setting property SkipOnCondition: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.TaskDefinition, d)); err != nil {
+	if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.GetTaskDefinition(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TaskDefinition: %+v", err)
 	}
 
@@ -1006,6 +1142,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			o := models.NewWorkflowApiWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["body"]; ok {
 				{
 					x := (v.(string))
@@ -1044,6 +1190,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewContentGrammarWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("content.Grammar")
 						if v, ok := l["error_parameters"]; ok {
 							{
@@ -1056,6 +1212,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 										{
 											x := (v.(bool))
 											o.SetAcceptSingleValue(x)
+										}
+									}
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
 										}
 									}
 									o.SetClassId("content.BaseParameter")
@@ -1121,6 +1287,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 											o.SetAcceptSingleValue(x)
 										}
 									}
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("content.BaseParameter")
 									if v, ok := l["complex_type"]; ok {
 										{
@@ -1172,6 +1348,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 								for i := 0; i < len(s); i++ {
 									o := models.NewContentComplexTypeWithDefaults()
 									l := s[i].(map[string]interface{})
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("content.ComplexType")
 									if v, ok := l["name"]; ok {
 										{
@@ -1196,6 +1382,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 													{
 														x := (v.(bool))
 														o.SetAcceptSingleValue(x)
+													}
+												}
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
 													}
 												}
 												o.SetClassId("content.BaseParameter")
@@ -1291,6 +1487,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowTaskConstraintsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.TaskConstraints")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -1325,6 +1531,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1423,6 +1639,16 @@ func resourceWorkflowBatchApiExecutorUpdate(d *schema.ResourceData, meta interfa
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

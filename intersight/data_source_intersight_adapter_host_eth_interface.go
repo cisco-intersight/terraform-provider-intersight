@@ -438,84 +438,84 @@ func dataSourceAdapterHostEthInterfaceRead(d *schema.ResourceData, meta interfac
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("acknowledged_peer_interface", flattenMapEtherPhysicalPortBaseRelationship(s.AcknowledgedPeerInterface, d)); err != nil {
+			if err := d.Set("acknowledged_peer_interface", flattenMapEtherPhysicalPortBaseRelationship(s.GetAcknowledgedPeerInterface(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedPeerInterface: %+v", err)
 			}
 
-			if err := d.Set("adapter_unit", flattenMapAdapterUnitRelationship(s.AdapterUnit, d)); err != nil {
+			if err := d.Set("adapter_unit", flattenMapAdapterUnitRelationship(s.GetAdapterUnit(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdapterUnit: %+v", err)
 			}
-			if err := d.Set("admin_state", (s.AdminState)); err != nil {
+			if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("ep_dn", (s.EpDn)); err != nil {
+			if err := d.Set("ep_dn", (s.GetEpDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property EpDn: %+v", err)
 			}
-			if err := d.Set("host_eth_interface_id", (s.HostEthInterfaceId)); err != nil {
+			if err := d.Set("host_eth_interface_id", (s.GetHostEthInterfaceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property HostEthInterfaceId: %+v", err)
 			}
-			if err := d.Set("interface_type", (s.InterfaceType)); err != nil {
+			if err := d.Set("interface_type", (s.GetInterfaceType())); err != nil {
 				return fmt.Errorf("error occurred while setting property InterfaceType: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("mac_address", (s.MacAddress)); err != nil {
+			if err := d.Set("mac_address", (s.GetMacAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property MacAddress: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("operability", (s.Operability)); err != nil {
+			if err := d.Set("operability", (s.GetOperability())); err != nil {
 				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
 			}
-			if err := d.Set("original_mac_address", (s.OriginalMacAddress)); err != nil {
+			if err := d.Set("original_mac_address", (s.GetOriginalMacAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property OriginalMacAddress: %+v", err)
 			}
-			if err := d.Set("pci_addr", (s.PciAddr)); err != nil {
+			if err := d.Set("pci_addr", (s.GetPciAddr())); err != nil {
 				return fmt.Errorf("error occurred while setting property PciAddr: %+v", err)
 			}
-			if err := d.Set("peer_dn", (s.PeerDn)); err != nil {
+			if err := d.Set("peer_dn", (s.GetPeerDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property PeerDn: %+v", err)
 			}
 
-			if err := d.Set("peer_interface", flattenMapEtherPhysicalPortBaseRelationship(s.PeerInterface, d)); err != nil {
+			if err := d.Set("peer_interface", flattenMapEtherPhysicalPortBaseRelationship(s.GetPeerInterface(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PeerInterface: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("virtualization_preference", (s.VirtualizationPreference)); err != nil {
+			if err := d.Set("virtualization_preference", (s.GetVirtualizationPreference())); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualizationPreference: %+v", err)
 			}
-			if err := d.Set("vnic_dn", (s.VnicDn)); err != nil {
+			if err := d.Set("vnic_dn", (s.GetVnicDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property VnicDn: %+v", err)
 			}
 			d.SetId(s.GetMoid())

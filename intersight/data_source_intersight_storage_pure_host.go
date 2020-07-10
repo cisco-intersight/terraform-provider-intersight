@@ -406,52 +406,52 @@ func dataSourceStoragePureHostRead(d *schema.ResourceData, meta interface{}) err
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("array", flattenMapStoragePureArrayRelationship(s.Array, d)); err != nil {
+			if err := d.Set("array", flattenMapStoragePureArrayRelationship(s.GetArray(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Array: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("host_group", flattenMapStoragePureHostGroupRelationship(s.HostGroup, d)); err != nil {
+			if err := d.Set("host_group", flattenMapStoragePureHostGroupRelationship(s.GetHostGroup(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HostGroup: %+v", err)
 			}
-			if err := d.Set("host_group_name", (s.HostGroupName)); err != nil {
+			if err := d.Set("host_group_name", (s.GetHostGroupName())); err != nil {
 				return fmt.Errorf("error occurred while setting property HostGroupName: %+v", err)
 			}
 
-			if err := d.Set("initiators", flattenListStorageBaseInitiator(s.Initiators, d)); err != nil {
+			if err := d.Set("initiators", flattenListStorageBaseInitiator(s.GetInitiators(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Initiators: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("os_type", (s.OsType)); err != nil {
+			if err := d.Set("os_type", (s.GetOsType())); err != nil {
 				return fmt.Errorf("error occurred while setting property OsType: %+v", err)
 			}
 
-			if err := d.Set("protection_group", flattenMapStoragePureProtectionGroupRelationship(s.ProtectionGroup, d)); err != nil {
+			if err := d.Set("protection_group", flattenMapStoragePureProtectionGroupRelationship(s.GetProtectionGroup(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ProtectionGroup: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("storage_utilization", flattenMapStoragePureHostUtilization(s.StorageUtilization, d)); err != nil {
+			if err := d.Set("storage_utilization", flattenMapStoragePureHostUtilization(s.GetStorageUtilization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageUtilization: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

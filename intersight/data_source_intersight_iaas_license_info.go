@@ -248,35 +248,35 @@ func dataSourceIaasLicenseInfoRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
+			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.GetGuid(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("license_expiration_date", (s.LicenseExpirationDate)); err != nil {
+			if err := d.Set("license_expiration_date", (s.GetLicenseExpirationDate())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseExpirationDate: %+v", err)
 			}
 
-			if err := d.Set("license_keys_info", flattenListIaasLicenseKeysInfo(s.LicenseKeysInfo, d)); err != nil {
+			if err := d.Set("license_keys_info", flattenListIaasLicenseKeysInfo(s.GetLicenseKeysInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseKeysInfo: %+v", err)
 			}
-			if err := d.Set("license_type", (s.LicenseType)); err != nil {
+			if err := d.Set("license_type", (s.GetLicenseType())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseType: %+v", err)
 			}
 
-			if err := d.Set("license_utilization_info", flattenListIaasLicenseUtilizationInfo(s.LicenseUtilizationInfo, d)); err != nil {
+			if err := d.Set("license_utilization_info", flattenListIaasLicenseUtilizationInfo(s.GetLicenseUtilizationInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseUtilizationInfo: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

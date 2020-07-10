@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -28,6 +29,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -63,6 +69,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -105,6 +116,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -141,6 +157,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -177,6 +198,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -224,6 +250,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -269,6 +300,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -305,6 +341,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -347,6 +388,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -412,6 +458,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -447,6 +498,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -489,6 +545,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -526,6 +587,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -567,6 +633,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -602,6 +673,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -638,6 +714,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -674,6 +755,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -708,6 +794,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -768,6 +859,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -804,6 +900,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -858,6 +959,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -891,6 +1002,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -926,6 +1047,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -959,6 +1090,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -992,6 +1133,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewPolicyConfigContextWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("policy.ConfigContext")
 			if v, ok := l["config_state"]; ok {
 				{
@@ -1037,6 +1188,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1080,6 +1241,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1113,6 +1284,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1151,6 +1332,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1209,6 +1400,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1242,6 +1443,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1276,6 +1487,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1309,6 +1530,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1347,6 +1578,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1379,6 +1620,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1412,6 +1663,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1445,6 +1706,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -1478,6 +1749,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1541,6 +1822,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1574,6 +1865,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1628,143 +1929,143 @@ func resourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interface{
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("action", (s.Action)); err != nil {
+	if err := d.Set("action", (s.GetAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property Action: %+v", err)
 	}
 
-	if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.AssociatedCluster, d)); err != nil {
+	if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.GetAssociatedCluster(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property AssociatedCluster: %+v", err)
 	}
 
-	if err := d.Set("auto_support", flattenMapHyperflexAutoSupportPolicyRelationship(s.AutoSupport, d)); err != nil {
+	if err := d.Set("auto_support", flattenMapHyperflexAutoSupportPolicyRelationship(s.GetAutoSupport(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property AutoSupport: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("cluster_network", flattenMapHyperflexClusterNetworkPolicyRelationship(s.ClusterNetwork, d)); err != nil {
+	if err := d.Set("cluster_network", flattenMapHyperflexClusterNetworkPolicyRelationship(s.GetClusterNetwork(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ClusterNetwork: %+v", err)
 	}
 
-	if err := d.Set("cluster_storage", flattenMapHyperflexClusterStoragePolicyRelationship(s.ClusterStorage, d)); err != nil {
+	if err := d.Set("cluster_storage", flattenMapHyperflexClusterStoragePolicyRelationship(s.GetClusterStorage(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ClusterStorage: %+v", err)
 	}
 
-	if err := d.Set("config_context", flattenMapPolicyConfigContext(s.ConfigContext, d)); err != nil {
+	if err := d.Set("config_context", flattenMapPolicyConfigContext(s.GetConfigContext(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ConfigContext: %+v", err)
 	}
 
-	if err := d.Set("config_result", flattenMapHyperflexConfigResultRelationship(s.ConfigResult, d)); err != nil {
+	if err := d.Set("config_result", flattenMapHyperflexConfigResultRelationship(s.GetConfigResult(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ConfigResult: %+v", err)
 	}
 
-	if err := d.Set("data_ip_address", (s.DataIpAddress)); err != nil {
+	if err := d.Set("data_ip_address", (s.GetDataIpAddress())); err != nil {
 		return fmt.Errorf("error occurred while setting property DataIpAddress: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("ext_fc_storage", flattenMapHyperflexExtFcStoragePolicyRelationship(s.ExtFcStorage, d)); err != nil {
+	if err := d.Set("ext_fc_storage", flattenMapHyperflexExtFcStoragePolicyRelationship(s.GetExtFcStorage(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ExtFcStorage: %+v", err)
 	}
 
-	if err := d.Set("ext_iscsi_storage", flattenMapHyperflexExtIscsiStoragePolicyRelationship(s.ExtIscsiStorage, d)); err != nil {
+	if err := d.Set("ext_iscsi_storage", flattenMapHyperflexExtIscsiStoragePolicyRelationship(s.GetExtIscsiStorage(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ExtIscsiStorage: %+v", err)
 	}
 
-	if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
+	if err := d.Set("hypervisor_type", (s.GetHypervisorType())); err != nil {
 		return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 	}
 
-	if err := d.Set("local_credential", flattenMapHyperflexLocalCredentialPolicyRelationship(s.LocalCredential, d)); err != nil {
+	if err := d.Set("local_credential", flattenMapHyperflexLocalCredentialPolicyRelationship(s.GetLocalCredential(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property LocalCredential: %+v", err)
 	}
 
-	if err := d.Set("mac_address_prefix", (s.MacAddressPrefix)); err != nil {
+	if err := d.Set("mac_address_prefix", (s.GetMacAddressPrefix())); err != nil {
 		return fmt.Errorf("error occurred while setting property MacAddressPrefix: %+v", err)
 	}
 
-	if err := d.Set("mgmt_ip_address", (s.MgmtIpAddress)); err != nil {
+	if err := d.Set("mgmt_ip_address", (s.GetMgmtIpAddress())); err != nil {
 		return fmt.Errorf("error occurred while setting property MgmtIpAddress: %+v", err)
 	}
 
-	if err := d.Set("mgmt_platform", (s.MgmtPlatform)); err != nil {
+	if err := d.Set("mgmt_platform", (s.GetMgmtPlatform())); err != nil {
 		return fmt.Errorf("error occurred while setting property MgmtPlatform: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("node_config", flattenMapHyperflexNodeConfigPolicyRelationship(s.NodeConfig, d)); err != nil {
+	if err := d.Set("node_config", flattenMapHyperflexNodeConfigPolicyRelationship(s.GetNodeConfig(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property NodeConfig: %+v", err)
 	}
 
-	if err := d.Set("node_profile_config", flattenListHyperflexNodeProfileRelationship(s.NodeProfileConfig, d)); err != nil {
+	if err := d.Set("node_profile_config", flattenListHyperflexNodeProfileRelationship(s.GetNodeProfileConfig(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property NodeProfileConfig: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("proxy_setting", flattenMapHyperflexProxySettingPolicyRelationship(s.ProxySetting, d)); err != nil {
+	if err := d.Set("proxy_setting", flattenMapHyperflexProxySettingPolicyRelationship(s.GetProxySetting(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ProxySetting: %+v", err)
 	}
 
-	if err := d.Set("replication", (s.Replication)); err != nil {
+	if err := d.Set("replication", (s.GetReplication())); err != nil {
 		return fmt.Errorf("error occurred while setting property Replication: %+v", err)
 	}
 
-	if err := d.Set("running_workflows", flattenListWorkflowWorkflowInfoRelationship(s.RunningWorkflows, d)); err != nil {
+	if err := d.Set("running_workflows", flattenListWorkflowWorkflowInfoRelationship(s.GetRunningWorkflows(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property RunningWorkflows: %+v", err)
 	}
 
-	if err := d.Set("software_version", flattenMapHyperflexSoftwareVersionPolicyRelationship(s.SoftwareVersion, d)); err != nil {
+	if err := d.Set("software_version", flattenMapHyperflexSoftwareVersionPolicyRelationship(s.GetSoftwareVersion(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property SoftwareVersion: %+v", err)
 	}
 
-	if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.SrcTemplate, d)); err != nil {
+	if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.GetSrcTemplate(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property SrcTemplate: %+v", err)
 	}
 
-	if err := d.Set("storage_data_vlan", flattenMapHyperflexNamedVlan(s.StorageDataVlan, d)); err != nil {
+	if err := d.Set("storage_data_vlan", flattenMapHyperflexNamedVlan(s.GetStorageDataVlan(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property StorageDataVlan: %+v", err)
 	}
 
-	if err := d.Set("sys_config", flattenMapHyperflexSysConfigPolicyRelationship(s.SysConfig, d)); err != nil {
+	if err := d.Set("sys_config", flattenMapHyperflexSysConfigPolicyRelationship(s.GetSysConfig(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property SysConfig: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("type", (s.Type)); err != nil {
+	if err := d.Set("type", (s.GetType())); err != nil {
 		return fmt.Errorf("error occurred while setting property Type: %+v", err)
 	}
 
-	if err := d.Set("ucsm_config", flattenMapHyperflexUcsmConfigPolicyRelationship(s.UcsmConfig, d)); err != nil {
+	if err := d.Set("ucsm_config", flattenMapHyperflexUcsmConfigPolicyRelationship(s.GetUcsmConfig(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property UcsmConfig: %+v", err)
 	}
 
-	if err := d.Set("vcenter_config", flattenMapHyperflexVcenterConfigPolicyRelationship(s.VcenterConfig, d)); err != nil {
+	if err := d.Set("vcenter_config", flattenMapHyperflexVcenterConfigPolicyRelationship(s.GetVcenterConfig(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property VcenterConfig: %+v", err)
 	}
 
-	if err := d.Set("wwxn_prefix", (s.WwxnPrefix)); err != nil {
+	if err := d.Set("wwxn_prefix", (s.GetWwxnPrefix())); err != nil {
 		return fmt.Errorf("error occurred while setting property WwxnPrefix: %+v", err)
 	}
 
@@ -1791,6 +2092,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1825,6 +2136,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1861,6 +2182,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1895,6 +2226,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1929,6 +2270,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewPolicyConfigContextWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("policy.ConfigContext")
 			if v, ok := l["config_state"]; ok {
 				{
@@ -1975,6 +2326,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2021,6 +2382,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2055,6 +2426,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2095,6 +2476,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2159,6 +2550,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2193,6 +2594,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2228,6 +2639,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2262,6 +2683,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2302,6 +2733,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2335,6 +2776,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2369,6 +2820,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2403,6 +2864,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -2437,6 +2908,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2503,6 +2984,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -2537,6 +3028,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

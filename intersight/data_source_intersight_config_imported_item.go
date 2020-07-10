@@ -237,46 +237,46 @@ func dataSourceConfigImportedItemRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("importer", flattenMapConfigImporterRelationship(s.Importer, d)); err != nil {
+			if err := d.Set("importer", flattenMapConfigImporterRelationship(s.GetImporter(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Importer: %+v", err)
 			}
-			if err := d.Set("is_shared", (s.IsShared)); err != nil {
+			if err := d.Set("is_shared", (s.GetIsShared())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsShared: %+v", err)
 			}
-			if err := d.Set("is_updated", (s.IsUpdated)); err != nil {
+			if err := d.Set("is_updated", (s.GetIsUpdated())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsUpdated: %+v", err)
 			}
 
-			if err := d.Set("item", flattenMapConfigMoRef(s.Item, d)); err != nil {
+			if err := d.Set("item", flattenMapConfigMoRef(s.GetItem(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Item: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("new_moid", (s.NewMoid)); err != nil {
+			if err := d.Set("new_moid", (s.GetNewMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property NewMoid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("service_version", (s.ServiceVersion)); err != nil {
+			if err := d.Set("service_version", (s.GetServiceVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServiceVersion: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("status_message", (s.StatusMessage)); err != nil {
+			if err := d.Set("status_message", (s.GetStatusMessage())); err != nil {
 				return fmt.Errorf("error occurred while setting property StatusMessage: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

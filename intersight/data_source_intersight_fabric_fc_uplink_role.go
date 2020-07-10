@@ -192,39 +192,39 @@ func dataSourceFabricFcUplinkRoleRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("admin_speed", (s.AdminSpeed)); err != nil {
+			if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 			}
-			if err := d.Set("aggregate_port_id", (s.AggregatePortId)); err != nil {
+			if err := d.Set("aggregate_port_id", (s.GetAggregatePortId())); err != nil {
 				return fmt.Errorf("error occurred while setting property AggregatePortId: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("fill_pattern", (s.FillPattern)); err != nil {
+			if err := d.Set("fill_pattern", (s.GetFillPattern())); err != nil {
 				return fmt.Errorf("error occurred while setting property FillPattern: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("port_id", (s.PortId)); err != nil {
+			if err := d.Set("port_id", (s.GetPortId())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortId: %+v", err)
 			}
 
-			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.PortPolicy, d)); err != nil {
+			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.GetPortPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortPolicy: %+v", err)
 			}
-			if err := d.Set("slot_id", (s.SlotId)); err != nil {
+			if err := d.Set("slot_id", (s.GetSlotId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SlotId: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vsan_id", (s.VsanId)); err != nil {
+			if err := d.Set("vsan_id", (s.GetVsanId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VsanId: %+v", err)
 			}
 			d.SetId(s.GetMoid())

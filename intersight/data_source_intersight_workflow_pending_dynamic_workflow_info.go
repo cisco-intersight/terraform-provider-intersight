@@ -214,43 +214,43 @@ func dataSourceWorkflowPendingDynamicWorkflowInfoRead(d *schema.ResourceData, me
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pending_services", (s.PendingServices)); err != nil {
+			if err := d.Set("pending_services", (s.GetPendingServices())); err != nil {
 				return fmt.Errorf("error occurred while setting property PendingServices: %+v", err)
 			}
-			if err := d.Set("src", (s.Src)); err != nil {
+			if err := d.Set("src", (s.GetSrc())); err != nil {
 				return fmt.Errorf("error occurred while setting property Src: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("wait_on_duplicate", (s.WaitOnDuplicate)); err != nil {
+			if err := d.Set("wait_on_duplicate", (s.GetWaitOnDuplicate())); err != nil {
 				return fmt.Errorf("error occurred while setting property WaitOnDuplicate: %+v", err)
 			}
 
-			if err := d.Set("workflow_action_task_lists", flattenListWorkflowDynamicWorkflowActionTaskList(s.WorkflowActionTaskLists, d)); err != nil {
+			if err := d.Set("workflow_action_task_lists", flattenListWorkflowDynamicWorkflowActionTaskList(s.GetWorkflowActionTaskLists(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkflowActionTaskLists: %+v", err)
 			}
 
-			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.WorkflowInfo, d)); err != nil {
+			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.GetWorkflowInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkflowInfo: %+v", err)
 			}
-			if err := d.Set("workflow_key", (s.WorkflowKey)); err != nil {
+			if err := d.Set("workflow_key", (s.GetWorkflowKey())); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkflowKey: %+v", err)
 			}
 			d.SetId(s.GetMoid())

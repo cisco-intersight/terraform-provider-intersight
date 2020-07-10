@@ -165,30 +165,30 @@ func dataSourceFabricVlanRead(d *schema.ResourceData, meta interface{}) error {
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("eth_network_policy", flattenMapFabricEthNetworkPolicyRelationship(s.EthNetworkPolicy, d)); err != nil {
+			if err := d.Set("eth_network_policy", flattenMapFabricEthNetworkPolicyRelationship(s.GetEthNetworkPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property EthNetworkPolicy: %+v", err)
 			}
-			if err := d.Set("is_native", (s.IsNative)); err != nil {
+			if err := d.Set("is_native", (s.GetIsNative())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsNative: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vlan_id", (s.VlanId)); err != nil {
+			if err := d.Set("vlan_id", (s.GetVlanId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VlanId: %+v", err)
 			}
 			d.SetId(s.GetMoid())

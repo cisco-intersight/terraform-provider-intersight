@@ -273,66 +273,66 @@ func dataSourceHyperflexAlarmRead(d *schema.ResourceData, meta interface{}) erro
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("acknowledged", (s.Acknowledged)); err != nil {
+			if err := d.Set("acknowledged", (s.GetAcknowledged())); err != nil {
 				return fmt.Errorf("error occurred while setting property Acknowledged: %+v", err)
 			}
-			if err := d.Set("acknowledged_by", (s.AcknowledgedBy)); err != nil {
+			if err := d.Set("acknowledged_by", (s.GetAcknowledgedBy())); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedBy: %+v", err)
 			}
-			if err := d.Set("acknowledged_time", (s.AcknowledgedTime)); err != nil {
+			if err := d.Set("acknowledged_time", (s.GetAcknowledgedTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedTime: %+v", err)
 			}
-			if err := d.Set("acknowledged_time_as_utc", (s.AcknowledgedTimeAsUtc)); err != nil {
+			if err := d.Set("acknowledged_time_as_utc", (s.GetAcknowledgedTimeAsUtc())); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedTimeAsUtc: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.Cluster, d)); err != nil {
+			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.GetCluster(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Cluster: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("entity_data", (s.EntityData)); err != nil {
+			if err := d.Set("entity_data", (s.GetEntityData())); err != nil {
 				return fmt.Errorf("error occurred while setting property EntityData: %+v", err)
 			}
-			if err := d.Set("entity_name", (s.EntityName)); err != nil {
+			if err := d.Set("entity_name", (s.GetEntityName())); err != nil {
 				return fmt.Errorf("error occurred while setting property EntityName: %+v", err)
 			}
-			if err := d.Set("entity_type", (s.EntityType)); err != nil {
+			if err := d.Set("entity_type", (s.GetEntityType())); err != nil {
 				return fmt.Errorf("error occurred while setting property EntityType: %+v", err)
 			}
-			if err := d.Set("entity_uu_id", (s.EntityUuId)); err != nil {
+			if err := d.Set("entity_uu_id", (s.GetEntityUuId())); err != nil {
 				return fmt.Errorf("error occurred while setting property EntityUuId: %+v", err)
 			}
-			if err := d.Set("message", (s.Message)); err != nil {
+			if err := d.Set("message", (s.GetMessage())); err != nil {
 				return fmt.Errorf("error occurred while setting property Message: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("triggered_time", (s.TriggeredTime)); err != nil {
+			if err := d.Set("triggered_time", (s.GetTriggeredTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property TriggeredTime: %+v", err)
 			}
-			if err := d.Set("triggered_time_as_utc", (s.TriggeredTimeAsUtc)); err != nil {
+			if err := d.Set("triggered_time_as_utc", (s.GetTriggeredTimeAsUtc())); err != nil {
 				return fmt.Errorf("error occurred while setting property TriggeredTimeAsUtc: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
 			d.SetId(s.GetMoid())

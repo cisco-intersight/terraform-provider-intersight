@@ -197,12 +197,12 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Computed:    true,
 						},
 						"cpu_cores": {
-							Description: "The number of CPU cores on this hardware platform.",
+							Description: "The number of cpu cores on this hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"cpu_speed": {
-							Description: "Speed of CPU in MHz, as reported by the hardware platform.",
+							Description: "Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -626,105 +626,105 @@ func dataSourceVirtualizationVmwareHostRead(d *schema.ResourceData, meta interfa
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("boot_time", (s.BootTime).String()); err != nil {
+			if err := d.Set("boot_time", (s.GetBootTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property BootTime: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRelationship(s.Cluster, d)); err != nil {
+			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRelationship(s.GetCluster(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Cluster: %+v", err)
 			}
-			if err := d.Set("connection_state", (s.ConnectionState)); err != nil {
+			if err := d.Set("connection_state", (s.GetConnectionState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionState: %+v", err)
 			}
 
-			if err := d.Set("cpu_info", flattenMapVirtualizationCpuInfo(s.CpuInfo, d)); err != nil {
+			if err := d.Set("cpu_info", flattenMapVirtualizationCpuInfo(s.GetCpuInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property CpuInfo: %+v", err)
 			}
 
-			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRelationship(s.Datacenter, d)); err != nil {
+			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRelationship(s.GetDatacenter(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Datacenter: %+v", err)
 			}
 
-			if err := d.Set("datastores", flattenListVirtualizationVmwareDatastoreRelationship(s.Datastores, d)); err != nil {
+			if err := d.Set("datastores", flattenListVirtualizationVmwareDatastoreRelationship(s.GetDatastores(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Datastores: %+v", err)
 			}
 
-			if err := d.Set("hardware_info", flattenMapInfraHardwareInfo(s.HardwareInfo, d)); err != nil {
+			if err := d.Set("hardware_info", flattenMapInfraHardwareInfo(s.GetHardwareInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HardwareInfo: %+v", err)
 			}
-			if err := d.Set("hw_power_state", (s.HwPowerState)); err != nil {
+			if err := d.Set("hw_power_state", (s.GetHwPowerState())); err != nil {
 				return fmt.Errorf("error occurred while setting property HwPowerState: %+v", err)
 			}
-			if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
+			if err := d.Set("hypervisor_type", (s.GetHypervisorType())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 			}
-			if err := d.Set("identity", (s.Identity)); err != nil {
+			if err := d.Set("identity", (s.GetIdentity())); err != nil {
 				return fmt.Errorf("error occurred while setting property Identity: %+v", err)
 			}
-			if err := d.Set("maintenance_mode", (s.MaintenanceMode)); err != nil {
+			if err := d.Set("maintenance_mode", (s.GetMaintenanceMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaintenanceMode: %+v", err)
 			}
 
-			if err := d.Set("memory_capacity", flattenMapVirtualizationMemoryCapacity(s.MemoryCapacity, d)); err != nil {
+			if err := d.Set("memory_capacity", flattenMapVirtualizationMemoryCapacity(s.GetMemoryCapacity(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property MemoryCapacity: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
+			if err := d.Set("model", (s.GetModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("network_adapter_count", (s.NetworkAdapterCount)); err != nil {
+			if err := d.Set("network_adapter_count", (s.GetNetworkAdapterCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property NetworkAdapterCount: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("processor_capacity", flattenMapVirtualizationComputeCapacity(s.ProcessorCapacity, d)); err != nil {
+			if err := d.Set("processor_capacity", flattenMapVirtualizationComputeCapacity(s.GetProcessorCapacity(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ProcessorCapacity: %+v", err)
 			}
 
-			if err := d.Set("product_info", flattenMapVirtualizationProductInfo(s.ProductInfo, d)); err != nil {
+			if err := d.Set("product_info", flattenMapVirtualizationProductInfo(s.GetProductInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductInfo: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("resource_consumed", flattenMapVirtualizationVmwareResourceConsumption(s.ResourceConsumed, d)); err != nil {
+			if err := d.Set("resource_consumed", flattenMapVirtualizationVmwareResourceConsumption(s.GetResourceConsumed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ResourceConsumed: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("storage_adapter_count", (s.StorageAdapterCount)); err != nil {
+			if err := d.Set("storage_adapter_count", (s.GetStorageAdapterCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageAdapterCount: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("up_time", (s.UpTime)); err != nil {
+			if err := d.Set("up_time", (s.GetUpTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property UpTime: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
-			if err := d.Set("vcenter_host_id", (s.VcenterHostId)); err != nil {
+			if err := d.Set("vcenter_host_id", (s.GetVcenterHostId())); err != nil {
 				return fmt.Errorf("error occurred while setting property VcenterHostId: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
 			d.SetId(s.GetMoid())

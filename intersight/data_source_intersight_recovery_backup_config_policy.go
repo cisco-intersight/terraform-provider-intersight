@@ -264,51 +264,51 @@ func dataSourceRecoveryBackupConfigPolicyRead(d *schema.ResourceData, meta inter
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("backup_profiles", flattenListRecoveryBackupProfileRelationship(s.BackupProfiles, d)); err != nil {
+			if err := d.Set("backup_profiles", flattenListRecoveryBackupProfileRelationship(s.GetBackupProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupProfiles: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("file_name_prefix", (s.FileNamePrefix)); err != nil {
+			if err := d.Set("file_name_prefix", (s.GetFileNamePrefix())); err != nil {
 				return fmt.Errorf("error occurred while setting property FileNamePrefix: %+v", err)
 			}
-			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+			if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
-			if err := d.Set("location_type", (s.LocationType)); err != nil {
+			if err := d.Set("location_type", (s.GetLocationType())); err != nil {
 				return fmt.Errorf("error occurred while setting property LocationType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("path", (s.Path)); err != nil {
+			if err := d.Set("path", (s.GetPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property Path: %+v", err)
 			}
-			if err := d.Set("protocol", (s.Protocol)); err != nil {
+			if err := d.Set("protocol", (s.GetProtocol())); err != nil {
 				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 			}
-			if err := d.Set("retention_count", (s.RetentionCount)); err != nil {
+			if err := d.Set("retention_count", (s.GetRetentionCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property RetentionCount: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("user_name", (s.UserName)); err != nil {
+			if err := d.Set("user_name", (s.GetUserName())); err != nil {
 				return fmt.Errorf("error occurred while setting property UserName: %+v", err)
 			}
 			d.SetId(s.GetMoid())

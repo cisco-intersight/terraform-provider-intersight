@@ -327,55 +327,55 @@ func dataSourceHyperflexSoftwareVersionPolicyRead(d *schema.ResourceData, meta i
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
+			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("hxdp_version", (s.HxdpVersion)); err != nil {
+			if err := d.Set("hxdp_version", (s.GetHxdpVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpVersion: %+v", err)
 			}
 
-			if err := d.Set("hxdp_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.HxdpVersionInfo, d)); err != nil {
+			if err := d.Set("hxdp_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.GetHxdpVersionInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpVersionInfo: %+v", err)
 			}
-			if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+			if err := d.Set("hypervisor_version", (s.GetHypervisorVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorVersion: %+v", err)
 			}
 
-			if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.HypervisorVersionInfo, d)); err != nil {
+			if err := d.Set("hypervisor_version_info", flattenMapSoftwareHyperflexDistributableRelationship(s.GetHypervisorVersionInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorVersionInfo: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("server_firmware_version", (s.ServerFirmwareVersion)); err != nil {
+			if err := d.Set("server_firmware_version", (s.GetServerFirmwareVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerFirmwareVersion: %+v", err)
 			}
 
-			if err := d.Set("server_firmware_version_info", flattenMapFirmwareDistributableRelationship(s.ServerFirmwareVersionInfo, d)); err != nil {
+			if err := d.Set("server_firmware_version_info", flattenMapFirmwareDistributableRelationship(s.GetServerFirmwareVersionInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerFirmwareVersionInfo: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("upgrade_types", (s.UpgradeTypes)); err != nil {
+			if err := d.Set("upgrade_types", (s.GetUpgradeTypes())); err != nil {
 				return fmt.Errorf("error occurred while setting property UpgradeTypes: %+v", err)
 			}
 			d.SetId(s.GetMoid())

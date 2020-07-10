@@ -371,80 +371,80 @@ func dataSourceManagementInterfaceRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("gateway", (s.Gateway)); err != nil {
+			if err := d.Set("gateway", (s.GetGateway())); err != nil {
 				return fmt.Errorf("error occurred while setting property Gateway: %+v", err)
 			}
-			if err := d.Set("host_name", (s.HostName)); err != nil {
+			if err := d.Set("host_name", (s.GetHostName())); err != nil {
 				return fmt.Errorf("error occurred while setting property HostName: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("ip_address", (s.IpAddress)); err != nil {
+			if err := d.Set("ip_address", (s.GetIpAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property IpAddress: %+v", err)
 			}
-			if err := d.Set("ipv4_address", (s.Ipv4Address)); err != nil {
+			if err := d.Set("ipv4_address", (s.GetIpv4Address())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv4Address: %+v", err)
 			}
-			if err := d.Set("ipv4_gateway", (s.Ipv4Gateway)); err != nil {
+			if err := d.Set("ipv4_gateway", (s.GetIpv4Gateway())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv4Gateway: %+v", err)
 			}
-			if err := d.Set("ipv4_mask", (s.Ipv4Mask)); err != nil {
+			if err := d.Set("ipv4_mask", (s.GetIpv4Mask())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv4Mask: %+v", err)
 			}
-			if err := d.Set("ipv6_address", (s.Ipv6Address)); err != nil {
+			if err := d.Set("ipv6_address", (s.GetIpv6Address())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv6Address: %+v", err)
 			}
-			if err := d.Set("ipv6_gateway", (s.Ipv6Gateway)); err != nil {
+			if err := d.Set("ipv6_gateway", (s.GetIpv6Gateway())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv6Gateway: %+v", err)
 			}
-			if err := d.Set("ipv6_prefix", (s.Ipv6Prefix)); err != nil {
+			if err := d.Set("ipv6_prefix", (s.GetIpv6Prefix())); err != nil {
 				return fmt.Errorf("error occurred while setting property Ipv6Prefix: %+v", err)
 			}
-			if err := d.Set("mac_address", (s.MacAddress)); err != nil {
+			if err := d.Set("mac_address", (s.GetMacAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property MacAddress: %+v", err)
 			}
 
-			if err := d.Set("management_controller", flattenMapManagementControllerRelationship(s.ManagementController, d)); err != nil {
+			if err := d.Set("management_controller", flattenMapManagementControllerRelationship(s.GetManagementController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ManagementController: %+v", err)
 			}
-			if err := d.Set("mask", (s.Mask)); err != nil {
+			if err := d.Set("mask", (s.GetMask())); err != nil {
 				return fmt.Errorf("error occurred while setting property Mask: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("switch_id", (s.SwitchId)); err != nil {
+			if err := d.Set("switch_id", (s.GetSwitchId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SwitchId: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uem_conn_status", (s.UemConnStatus)); err != nil {
+			if err := d.Set("uem_conn_status", (s.GetUemConnStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property UemConnStatus: %+v", err)
 			}
-			if err := d.Set("virtual_host_name", (s.VirtualHostName)); err != nil {
+			if err := d.Set("virtual_host_name", (s.GetVirtualHostName())); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualHostName: %+v", err)
 			}
 			d.SetId(s.GetMoid())

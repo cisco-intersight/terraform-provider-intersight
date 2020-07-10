@@ -204,37 +204,37 @@ func dataSourceServerConfigChangeDetailRead(d *schema.ResourceData, meta interfa
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("changes", (s.Changes)); err != nil {
+			if err := d.Set("changes", (s.GetChanges())); err != nil {
 				return fmt.Errorf("error occurred while setting property Changes: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("config_change_context", flattenMapPolicyConfigResultContext(s.ConfigChangeContext, d)); err != nil {
+			if err := d.Set("config_change_context", flattenMapPolicyConfigResultContext(s.GetConfigChangeContext(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigChangeContext: %+v", err)
 			}
-			if err := d.Set("config_change_flag", (s.ConfigChangeFlag)); err != nil {
+			if err := d.Set("config_change_flag", (s.GetConfigChangeFlag())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigChangeFlag: %+v", err)
 			}
-			if err := d.Set("disruptions", (s.Disruptions)); err != nil {
+			if err := d.Set("disruptions", (s.GetDisruptions())); err != nil {
 				return fmt.Errorf("error occurred while setting property Disruptions: %+v", err)
 			}
-			if err := d.Set("mod_status", (s.ModStatus)); err != nil {
+			if err := d.Set("mod_status", (s.GetModStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ModStatus: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("profile", flattenMapServerProfileRelationship(s.Profile, d)); err != nil {
+			if err := d.Set("profile", flattenMapServerProfileRelationship(s.GetProfile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profile: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -27,6 +28,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -73,6 +79,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -117,6 +128,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -151,6 +167,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -203,6 +224,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -264,6 +290,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -296,6 +327,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -340,6 +376,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -382,6 +428,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexIpAddrRangeWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.IpAddrRange")
 			if v, ok := l["end_addr"]; ok {
 				{
@@ -427,6 +483,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.MacAddrPrefixRange")
 			if v, ok := l["end_addr"]; ok {
 				{
@@ -460,6 +526,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -505,6 +581,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -568,6 +654,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -601,6 +697,16 @@ func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -649,63 +755,63 @@ func resourceHyperflexClusterNetworkPolicyRead(d *schema.ResourceData, meta inte
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
+	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("jumbo_frame", (s.JumboFrame)); err != nil {
+	if err := d.Set("jumbo_frame", (s.GetJumboFrame())); err != nil {
 		return fmt.Errorf("error occurred while setting property JumboFrame: %+v", err)
 	}
 
-	if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.KvmIpRange, d)); err != nil {
+	if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.GetKvmIpRange(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property KvmIpRange: %+v", err)
 	}
 
-	if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.MacPrefixRange, d)); err != nil {
+	if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.GetMacPrefixRange(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property MacPrefixRange: %+v", err)
 	}
 
-	if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.MgmtVlan, d)); err != nil {
+	if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.GetMgmtVlan(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property MgmtVlan: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("uplink_speed", (s.UplinkSpeed)); err != nil {
+	if err := d.Set("uplink_speed", (s.GetUplinkSpeed())); err != nil {
 		return fmt.Errorf("error occurred while setting property UplinkSpeed: %+v", err)
 	}
 
-	if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.VmMigrationVlan, d)); err != nil {
+	if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.GetVmMigrationVlan(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property VmMigrationVlan: %+v", err)
 	}
 
-	if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.VmNetworkVlans, d)); err != nil {
+	if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.GetVmNetworkVlans(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property VmNetworkVlans: %+v", err)
 	}
 
@@ -728,6 +834,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -773,6 +889,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexIpAddrRangeWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.IpAddrRange")
 			if v, ok := l["end_addr"]; ok {
 				{
@@ -819,6 +945,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.MacAddrPrefixRange")
 			if v, ok := l["end_addr"]; ok {
 				{
@@ -853,6 +989,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -901,6 +1047,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -967,6 +1123,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
@@ -1001,6 +1167,16 @@ func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta in
 		for i := 0; i < len(s); i++ {
 			o := models.NewHyperflexNamedVlanWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{

@@ -244,36 +244,36 @@ func dataSourceWorkflowCustomDataTypeDefinitionRead(d *schema.ResourceData, meta
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("catalog", flattenMapWorkflowCatalogRelationship(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapWorkflowCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("composite_type", (s.CompositeType)); err != nil {
+			if err := d.Set("composite_type", (s.GetCompositeType())); err != nil {
 				return fmt.Errorf("error occurred while setting property CompositeType: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("label", (s.Label)); err != nil {
+			if err := d.Set("label", (s.GetLabel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Label: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("type_definition", flattenListWorkflowBaseDataType(s.TypeDefinition, d)); err != nil {
+			if err := d.Set("type_definition", flattenListWorkflowBaseDataType(s.GetTypeDefinition(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TypeDefinition: %+v", err)
 			}
 			d.SetId(s.GetMoid())

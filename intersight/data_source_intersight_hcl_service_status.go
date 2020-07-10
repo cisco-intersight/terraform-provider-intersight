@@ -149,33 +149,33 @@ func dataSourceHclServiceStatusRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("exemption_file_version", (s.ExemptionFileVersion)); err != nil {
+			if err := d.Set("exemption_file_version", (s.GetExemptionFileVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ExemptionFileVersion: %+v", err)
 			}
-			if err := d.Set("identity", (s.Identity)); err != nil {
+			if err := d.Set("identity", (s.GetIdentity())); err != nil {
 				return fmt.Errorf("error occurred while setting property Identity: %+v", err)
 			}
 
-			if err := d.Set("last_hcl_data_modified_time", (s.LastHclDataModifiedTime).String()); err != nil {
+			if err := d.Set("last_hcl_data_modified_time", (s.GetLastHclDataModifiedTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastHclDataModifiedTime: %+v", err)
 			}
-			if err := d.Set("last_imported_data_checksum", (s.LastImportedDataChecksum)); err != nil {
+			if err := d.Set("last_imported_data_checksum", (s.GetLastImportedDataChecksum())); err != nil {
 				return fmt.Errorf("error occurred while setting property LastImportedDataChecksum: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

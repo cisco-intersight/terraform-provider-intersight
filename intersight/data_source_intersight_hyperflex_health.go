@@ -323,44 +323,44 @@ func dataSourceHyperflexHealthRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("arbitration_service_state", (s.ArbitrationServiceState)); err != nil {
+			if err := d.Set("arbitration_service_state", (s.GetArbitrationServiceState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ArbitrationServiceState: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.Cluster, d)); err != nil {
+			if err := d.Set("cluster", flattenMapHyperflexClusterRelationship(s.GetCluster(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Cluster: %+v", err)
 			}
-			if err := d.Set("data_replication_compliance", (s.DataReplicationCompliance)); err != nil {
+			if err := d.Set("data_replication_compliance", (s.GetDataReplicationCompliance())); err != nil {
 				return fmt.Errorf("error occurred while setting property DataReplicationCompliance: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("resiliency_details", flattenMapHyperflexHxResiliencyInfoDt(s.ResiliencyDetails, d)); err != nil {
+			if err := d.Set("resiliency_details", flattenMapHyperflexHxResiliencyInfoDt(s.GetResiliencyDetails(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ResiliencyDetails: %+v", err)
 			}
-			if err := d.Set("state", (s.State)); err != nil {
+			if err := d.Set("state", (s.GetState())); err != nil {
 				return fmt.Errorf("error occurred while setting property State: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
-			if err := d.Set("zk_health", (s.ZkHealth)); err != nil {
+			if err := d.Set("zk_health", (s.GetZkHealth())); err != nil {
 				return fmt.Errorf("error occurred while setting property ZkHealth: %+v", err)
 			}
 
-			if err := d.Set("zone_resiliency_list", flattenListHyperflexHxZoneResiliencyInfoDt(s.ZoneResiliencyList, d)); err != nil {
+			if err := d.Set("zone_resiliency_list", flattenListHyperflexHxZoneResiliencyInfoDt(s.GetZoneResiliencyList(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ZoneResiliencyList: %+v", err)
 			}
 			d.SetId(s.GetMoid())

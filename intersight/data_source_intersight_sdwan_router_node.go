@@ -328,46 +328,46 @@ func dataSourceSdwanRouterNodeRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_template", (s.DeviceTemplate)); err != nil {
+			if err := d.Set("device_template", (s.GetDeviceTemplate())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceTemplate: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 
-			if err := d.Set("network_configuration", flattenListSdwanNetworkConfigurationType(s.NetworkConfiguration, d)); err != nil {
+			if err := d.Set("network_configuration", flattenListSdwanNetworkConfigurationType(s.GetNetworkConfiguration(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property NetworkConfiguration: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("profile", flattenMapSdwanProfileRelationship(s.Profile, d)); err != nil {
+			if err := d.Set("profile", flattenMapSdwanProfileRelationship(s.GetProfile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profile: %+v", err)
 			}
 
-			if err := d.Set("server_node", flattenMapAssetDeviceRegistrationRelationship(s.ServerNode, d)); err != nil {
+			if err := d.Set("server_node", flattenMapAssetDeviceRegistrationRelationship(s.GetServerNode(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerNode: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("template_inputs", flattenListSdwanTemplateInputsType(s.TemplateInputs, d)); err != nil {
+			if err := d.Set("template_inputs", flattenListSdwanTemplateInputsType(s.GetTemplateInputs(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TemplateInputs: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
 			d.SetId(s.GetMoid())

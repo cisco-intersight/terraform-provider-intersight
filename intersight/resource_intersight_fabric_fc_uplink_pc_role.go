@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -58,6 +59,11 @@ func resourceFabricFcUplinkPcRole() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -92,6 +98,11 @@ func resourceFabricFcUplinkPcRole() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"aggregate_port_id": {
 							Description: "Breakout port Identifier of the Switch Interface.",
 							Type:        schema.TypeInt,
@@ -186,6 +197,16 @@ func resourceFabricFcUplinkPcRoleCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -219,6 +240,16 @@ func resourceFabricFcUplinkPcRoleCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewFabricPortIdentifierWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["aggregate_port_id"]; ok {
 				{
 					x := int64(v.(int))
@@ -303,43 +334,43 @@ func resourceFabricFcUplinkPcRoleRead(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("admin_speed", (s.AdminSpeed)); err != nil {
+	if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 		return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("fill_pattern", (s.FillPattern)); err != nil {
+	if err := d.Set("fill_pattern", (s.GetFillPattern())); err != nil {
 		return fmt.Errorf("error occurred while setting property FillPattern: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("pc_id", (s.PcId)); err != nil {
+	if err := d.Set("pc_id", (s.GetPcId())); err != nil {
 		return fmt.Errorf("error occurred while setting property PcId: %+v", err)
 	}
 
-	if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.PortPolicy, d)); err != nil {
+	if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.GetPortPolicy(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property PortPolicy: %+v", err)
 	}
 
-	if err := d.Set("ports", flattenListFabricPortIdentifier(s.Ports, d)); err != nil {
+	if err := d.Set("ports", flattenListFabricPortIdentifier(s.GetPorts(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Ports: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("vsan_id", (s.VsanId)); err != nil {
+	if err := d.Set("vsan_id", (s.GetVsanId())); err != nil {
 		return fmt.Errorf("error occurred while setting property VsanId: %+v", err)
 	}
 
@@ -388,6 +419,16 @@ func resourceFabricFcUplinkPcRoleUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -422,6 +463,16 @@ func resourceFabricFcUplinkPcRoleUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewFabricPortIdentifierWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["aggregate_port_id"]; ok {
 				{
 					x := int64(v.(int))

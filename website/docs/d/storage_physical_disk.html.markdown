@@ -32,7 +32,7 @@ The following arguments can be used to get data of already created objects in In
 * `num_blocks`:(string) The number of blocks present on the physical disk. 
 * `object_type`:(string) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
 * `oper_power_state`:(string) Operational power of the physical disk. 
-* `oper_qualifier_reason`:(string)
+* `oper_qualifier_reason`:(string) This reason for the operational status of the disk. 
 * `operability`:(string) This field identifies the disk operability of the disk. 
 * `physical_block_size`:(string) The block size of the installed physical disk. 
 * `pid`:(string) This field identifies the Product ID for physicalDisk. 

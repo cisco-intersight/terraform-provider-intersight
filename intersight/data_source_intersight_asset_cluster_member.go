@@ -459,65 +459,65 @@ func dataSourceAssetClusterMemberRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("api_version", (s.ApiVersion)); err != nil {
+			if err := d.Set("api_version", (s.GetApiVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ApiVersion: %+v", err)
 			}
-			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
+			if err := d.Set("app_partition_number", (s.GetAppPartitionNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property AppPartitionNumber: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("connection_id", (s.ConnectionId)); err != nil {
+			if err := d.Set("connection_id", (s.GetConnectionId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionId: %+v", err)
 			}
-			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
+			if err := d.Set("connection_reason", (s.GetConnectionReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionReason: %+v", err)
 			}
-			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+			if err := d.Set("connection_status", (s.GetConnectionStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
 
-			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
+			if err := d.Set("connection_status_last_change_time", (s.GetConnectionStatusLastChangeTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionStatusLastChangeTime: %+v", err)
 			}
-			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
+			if err := d.Set("connector_version", (s.GetConnectorVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectorVersion: %+v", err)
 			}
 
-			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.Device, d)); err != nil {
+			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Device: %+v", err)
 			}
-			if err := d.Set("device_external_ip_address", (s.DeviceExternalIpAddress)); err != nil {
+			if err := d.Set("device_external_ip_address", (s.GetDeviceExternalIpAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceExternalIpAddress: %+v", err)
 			}
-			if err := d.Set("leadership", (s.Leadership)); err != nil {
+			if err := d.Set("leadership", (s.GetLeadership())); err != nil {
 				return fmt.Errorf("error occurred while setting property Leadership: %+v", err)
 			}
-			if err := d.Set("locked_leader", (s.LockedLeader)); err != nil {
+			if err := d.Set("locked_leader", (s.GetLockedLeader())); err != nil {
 				return fmt.Errorf("error occurred while setting property LockedLeader: %+v", err)
 			}
-			if err := d.Set("member_identity", (s.MemberIdentity)); err != nil {
+			if err := d.Set("member_identity", (s.GetMemberIdentity())); err != nil {
 				return fmt.Errorf("error occurred while setting property MemberIdentity: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("parent_cluster_member_identity", (s.ParentClusterMemberIdentity)); err != nil {
+			if err := d.Set("parent_cluster_member_identity", (s.GetParentClusterMemberIdentity())); err != nil {
 				return fmt.Errorf("error occurred while setting property ParentClusterMemberIdentity: %+v", err)
 			}
-			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
+			if err := d.Set("proxy_app", (s.GetProxyApp())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProxyApp: %+v", err)
 			}
 
-			if err := d.Set("sudi", flattenMapAssetSudiInfo(s.Sudi, d)); err != nil {
+			if err := d.Set("sudi", flattenMapAssetSudiInfo(s.GetSudi(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Sudi: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

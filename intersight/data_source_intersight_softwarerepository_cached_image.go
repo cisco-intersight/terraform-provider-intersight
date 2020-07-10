@@ -294,60 +294,60 @@ func dataSourceSoftwarerepositoryCachedImageRead(d *schema.ResourceData, meta in
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("action", (s.Action)); err != nil {
+			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
-			if err := d.Set("cache_state", (s.CacheState)); err != nil {
+			if err := d.Set("cache_state", (s.GetCacheState())); err != nil {
 				return fmt.Errorf("error occurred while setting property CacheState: %+v", err)
 			}
 
-			if err := d.Set("cached_time", (s.CachedTime).String()); err != nil {
+			if err := d.Set("cached_time", (s.GetCachedTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property CachedTime: %+v", err)
 			}
 
-			if err := d.Set("checksum", flattenMapConnectorFileChecksum(s.Checksum, d)); err != nil {
+			if err := d.Set("checksum", flattenMapConnectorFileChecksum(s.GetChecksum(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Checksum: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("download_progress", (s.DownloadProgress)); err != nil {
+			if err := d.Set("download_progress", (s.GetDownloadProgress())); err != nil {
 				return fmt.Errorf("error occurred while setting property DownloadProgress: %+v", err)
 			}
-			if err := d.Set("download_retries", (s.DownloadRetries)); err != nil {
+			if err := d.Set("download_retries", (s.GetDownloadRetries())); err != nil {
 				return fmt.Errorf("error occurred while setting property DownloadRetries: %+v", err)
 			}
 
-			if err := d.Set("file", flattenMapSoftwarerepositoryFileRelationship(s.File, d)); err != nil {
+			if err := d.Set("file", flattenMapSoftwarerepositoryFileRelationship(s.GetFile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property File: %+v", err)
 			}
-			if err := d.Set("md5sum", (s.Md5sum)); err != nil {
+			if err := d.Set("md5sum", (s.GetMd5sum())); err != nil {
 				return fmt.Errorf("error occurred while setting property Md5sum: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 
-			if err := d.Set("network_element", flattenMapNetworkElementRelationship(s.NetworkElement, d)); err != nil {
+			if err := d.Set("network_element", flattenMapNetworkElementRelationship(s.GetNetworkElement(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property NetworkElement: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("original_sha512sum", (s.OriginalSha512sum)); err != nil {
+			if err := d.Set("original_sha512sum", (s.GetOriginalSha512sum())); err != nil {
 				return fmt.Errorf("error occurred while setting property OriginalSha512sum: %+v", err)
 			}
-			if err := d.Set("path", (s.Path)); err != nil {
+			if err := d.Set("path", (s.GetPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property Path: %+v", err)
 			}
-			if err := d.Set("registered_workflows", (s.RegisteredWorkflows)); err != nil {
+			if err := d.Set("registered_workflows", (s.GetRegisteredWorkflows())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredWorkflows: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("used_count", (s.UsedCount)); err != nil {
+			if err := d.Set("used_count", (s.GetUsedCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property UsedCount: %+v", err)
 			}
 			d.SetId(s.GetMoid())

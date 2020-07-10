@@ -14,15 +14,40 @@ func dataSourceIppoolIpLease() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceIppoolIpLeaseRead,
 		Schema: map[string]*schema.Schema{
-			"assigned_to_moid": {
-				Description: "Moid of the entity/server profile that owns this ID.",
-				Type:        schema.TypeString,
+			"assigned_to_entity": {
+				Description: "A reference to a moBaseMo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
-			},
-			"assigned_to_type": {
-				Description: "Type of the entity that owns this ID.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -262,14 +287,6 @@ func dataSourceIppoolIpLeaseRead(d *schema.ResourceData, meta interface{}) error
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIppoolIpLeaseWithDefaults()
-	if v, ok := d.GetOk("assigned_to_moid"); ok {
-		x := (v.(string))
-		o.SetAssignedToMoid(x)
-	}
-	if v, ok := d.GetOk("assigned_to_type"); ok {
-		x := (v.(string))
-		o.SetAssignedToType(x)
-	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
@@ -318,46 +335,44 @@ func dataSourceIppoolIpLeaseRead(d *schema.ResourceData, meta interface{}) error
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("assigned_to_moid", (s.AssignedToMoid)); err != nil {
-				return fmt.Errorf("error occurred while setting property AssignedToMoid: %+v", err)
+
+			if err := d.Set("assigned_to_entity", flattenMapMoBaseMoRelationship(s.GetAssignedToEntity(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property AssignedToEntity: %+v", err)
 			}
-			if err := d.Set("assigned_to_type", (s.AssignedToType)); err != nil {
-				return fmt.Errorf("error occurred while setting property AssignedToType: %+v", err)
-			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("ip_v4_address", (s.IpV4Address)); err != nil {
+			if err := d.Set("ip_v4_address", (s.GetIpV4Address())); err != nil {
 				return fmt.Errorf("error occurred while setting property IpV4Address: %+v", err)
 			}
 
-			if err := d.Set("ip_v4_config", flattenMapIppoolIpV4Config(s.IpV4Config, d)); err != nil {
+			if err := d.Set("ip_v4_config", flattenMapIppoolIpV4Config(s.GetIpV4Config(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property IpV4Config: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("pool", flattenMapIppoolPoolRelationship(s.Pool, d)); err != nil {
+			if err := d.Set("pool", flattenMapIppoolPoolRelationship(s.GetPool(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Pool: %+v", err)
 			}
 
-			if err := d.Set("pool_member", flattenMapIppoolPoolMemberRelationship(s.PoolMember, d)); err != nil {
+			if err := d.Set("pool_member", flattenMapIppoolPoolMemberRelationship(s.GetPoolMember(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PoolMember: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("universe", flattenMapIppoolUniverseRelationship(s.Universe, d)); err != nil {
+			if err := d.Set("universe", flattenMapIppoolUniverseRelationship(s.GetUniverse(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Universe: %+v", err)
 			}
 
-			if err := d.Set("vrf", flattenMapVrfVrfRelationship(s.Vrf, d)); err != nil {
+			if err := d.Set("vrf", flattenMapVrfVrfRelationship(s.GetVrf(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Vrf: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -357,55 +357,55 @@ func dataSourceIamIdpRead(d *schema.ResourceData, meta interface{}) error {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("domain_name", (s.DomainName)); err != nil {
+			if err := d.Set("domain_name", (s.GetDomainName())); err != nil {
 				return fmt.Errorf("error occurred while setting property DomainName: %+v", err)
 			}
-			if err := d.Set("idp_entity_id", (s.IdpEntityId)); err != nil {
+			if err := d.Set("idp_entity_id", (s.GetIdpEntityId())); err != nil {
 				return fmt.Errorf("error occurred while setting property IdpEntityId: %+v", err)
 			}
 
-			if err := d.Set("ldap_policy", flattenMapIamLdapPolicyRelationship(s.LdapPolicy, d)); err != nil {
+			if err := d.Set("ldap_policy", flattenMapIamLdapPolicyRelationship(s.GetLdapPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LdapPolicy: %+v", err)
 			}
-			if err := d.Set("metadata", (s.Metadata)); err != nil {
+			if err := d.Set("metadata", (s.GetMetadata())); err != nil {
 				return fmt.Errorf("error occurred while setting property Metadata: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("system", flattenMapIamSystemRelationship(s.System, d)); err != nil {
+			if err := d.Set("system", flattenMapIamSystemRelationship(s.GetSystem(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property System: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
 
-			if err := d.Set("user_preferences", flattenListIamUserPreferenceRelationship(s.UserPreferences, d)); err != nil {
+			if err := d.Set("user_preferences", flattenListIamUserPreferenceRelationship(s.GetUserPreferences(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UserPreferences: %+v", err)
 			}
 
-			if err := d.Set("usergroups", flattenListIamUserGroupRelationship(s.Usergroups, d)); err != nil {
+			if err := d.Set("usergroups", flattenListIamUserGroupRelationship(s.GetUsergroups(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Usergroups: %+v", err)
 			}
 
-			if err := d.Set("users", flattenListIamUserRelationship(s.Users, d)); err != nil {
+			if err := d.Set("users", flattenListIamUserRelationship(s.GetUsers(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Users: %+v", err)
 			}
 			d.SetId(s.GetMoid())

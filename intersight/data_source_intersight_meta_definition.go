@@ -334,58 +334,58 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("access_privileges", flattenListMetaAccessPrivilege(s.AccessPrivileges, d)); err != nil {
+			if err := d.Set("access_privileges", flattenListMetaAccessPrivilege(s.GetAccessPrivileges(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessPrivileges: %+v", err)
 			}
-			if err := d.Set("ancestor_classes", (s.AncestorClasses)); err != nil {
+			if err := d.Set("ancestor_classes", (s.GetAncestorClasses())); err != nil {
 				return fmt.Errorf("error occurred while setting property AncestorClasses: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("is_concrete", (s.IsConcrete)); err != nil {
+			if err := d.Set("is_concrete", (s.GetIsConcrete())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsConcrete: %+v", err)
 			}
-			if err := d.Set("meta_type", (s.MetaType)); err != nil {
+			if err := d.Set("meta_type", (s.GetMetaType())); err != nil {
 				return fmt.Errorf("error occurred while setting property MetaType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("namespace", (s.Namespace)); err != nil {
+			if err := d.Set("namespace", (s.GetNamespace())); err != nil {
 				return fmt.Errorf("error occurred while setting property Namespace: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("parent_class", (s.ParentClass)); err != nil {
+			if err := d.Set("parent_class", (s.GetParentClass())); err != nil {
 				return fmt.Errorf("error occurred while setting property ParentClass: %+v", err)
 			}
-			if err := d.Set("permission_supported", (s.PermissionSupported)); err != nil {
+			if err := d.Set("permission_supported", (s.GetPermissionSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property PermissionSupported: %+v", err)
 			}
 
-			if err := d.Set("properties", flattenListMetaPropDefinition(s.Properties, d)); err != nil {
+			if err := d.Set("properties", flattenListMetaPropDefinition(s.GetProperties(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Properties: %+v", err)
 			}
-			if err := d.Set("rbac_resource", (s.RbacResource)); err != nil {
+			if err := d.Set("rbac_resource", (s.GetRbacResource())); err != nil {
 				return fmt.Errorf("error occurred while setting property RbacResource: %+v", err)
 			}
 
-			if err := d.Set("relationships", flattenListMetaRelationshipDefinition(s.Relationships, d)); err != nil {
+			if err := d.Set("relationships", flattenListMetaRelationshipDefinition(s.GetRelationships(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Relationships: %+v", err)
 			}
-			if err := d.Set("rest_path", (s.RestPath)); err != nil {
+			if err := d.Set("rest_path", (s.GetRestPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property RestPath: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

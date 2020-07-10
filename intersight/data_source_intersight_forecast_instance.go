@@ -266,47 +266,47 @@ func dataSourceForecastInstanceRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("alt_model", (s.AltModel)); err != nil {
+			if err := d.Set("alt_model", (s.GetAltModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property AltModel: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_id", (s.DeviceId)); err != nil {
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
 
-			if err := d.Set("forecast_def", flattenMapForecastDefinitionRelationship(s.ForecastDef, d)); err != nil {
+			if err := d.Set("forecast_def", flattenMapForecastDefinitionRelationship(s.GetForecastDef(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ForecastDef: %+v", err)
 			}
-			if err := d.Set("full_cap_days", (s.FullCapDays)); err != nil {
+			if err := d.Set("full_cap_days", (s.GetFullCapDays())); err != nil {
 				return fmt.Errorf("error occurred while setting property FullCapDays: %+v", err)
 			}
-			if err := d.Set("metric_name", (s.MetricName)); err != nil {
+			if err := d.Set("metric_name", (s.GetMetricName())); err != nil {
 				return fmt.Errorf("error occurred while setting property MetricName: %+v", err)
 			}
-			if err := d.Set("min_days_for_forecast", (s.MinDaysForForecast)); err != nil {
+			if err := d.Set("min_days_for_forecast", (s.GetMinDaysForForecast())); err != nil {
 				return fmt.Errorf("error occurred while setting property MinDaysForForecast: %+v", err)
 			}
 
-			if err := d.Set("model", flattenMapForecastModel(s.Model, d)); err != nil {
+			if err := d.Set("model", flattenMapForecastModel(s.GetModel(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("threshold_days", (s.ThresholdDays)); err != nil {
+			if err := d.Set("threshold_days", (s.GetThresholdDays())); err != nil {
 				return fmt.Errorf("error occurred while setting property ThresholdDays: %+v", err)
 			}
 			d.SetId(s.GetMoid())

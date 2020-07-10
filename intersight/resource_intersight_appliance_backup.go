@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -23,6 +24,12 @@ func resourceApplianceBackup() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -198,6 +205,16 @@ func resourceApplianceBackupCreate(d *schema.ResourceData, meta interface{}) err
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -352,71 +369,71 @@ func resourceApplianceBackupRead(d *schema.ResourceData, meta interface{}) error
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("elapsed_time", (s.ElapsedTime)); err != nil {
+	if err := d.Set("elapsed_time", (s.GetElapsedTime())); err != nil {
 		return fmt.Errorf("error occurred while setting property ElapsedTime: %+v", err)
 	}
 
-	if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+	if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 	}
 
-	if err := d.Set("filename", (s.Filename)); err != nil {
+	if err := d.Set("filename", (s.GetFilename())); err != nil {
 		return fmt.Errorf("error occurred while setting property Filename: %+v", err)
 	}
 
-	if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+	if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 		return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 	}
 
-	if err := d.Set("messages", (s.Messages)); err != nil {
+	if err := d.Set("messages", (s.GetMessages())); err != nil {
 		return fmt.Errorf("error occurred while setting property Messages: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("protocol", (s.Protocol)); err != nil {
+	if err := d.Set("protocol", (s.GetProtocol())); err != nil {
 		return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 	}
 
-	if err := d.Set("remote_host", (s.RemoteHost)); err != nil {
+	if err := d.Set("remote_host", (s.GetRemoteHost())); err != nil {
 		return fmt.Errorf("error occurred while setting property RemoteHost: %+v", err)
 	}
 
-	if err := d.Set("remote_path", (s.RemotePath)); err != nil {
+	if err := d.Set("remote_path", (s.GetRemotePath())); err != nil {
 		return fmt.Errorf("error occurred while setting property RemotePath: %+v", err)
 	}
 
-	if err := d.Set("remote_port", (s.RemotePort)); err != nil {
+	if err := d.Set("remote_port", (s.GetRemotePort())); err != nil {
 		return fmt.Errorf("error occurred while setting property RemotePort: %+v", err)
 	}
 
-	if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+	if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 	}
 
-	if err := d.Set("status", (s.Status)); err != nil {
+	if err := d.Set("status", (s.GetStatus())); err != nil {
 		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("username", (s.Username)); err != nil {
+	if err := d.Set("username", (s.GetUsername())); err != nil {
 		return fmt.Errorf("error occurred while setting property Username: %+v", err)
 	}
 

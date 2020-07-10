@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -22,6 +23,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -64,6 +70,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -104,6 +115,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -186,6 +202,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -222,6 +243,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -306,6 +332,11 @@ func resourceAssetManagedDevice() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -349,6 +380,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -384,6 +425,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewCommCredentialWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("comm.Credential")
 			if v, ok := l["is_password_set"]; ok {
 				{
@@ -423,6 +474,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -493,6 +554,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -526,6 +597,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewAssetManagedDeviceStatusWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("asset.ManagedDeviceStatus")
 			if v, ok := l["cloud_port"]; ok {
 				{
@@ -620,6 +701,16 @@ func resourceAssetManagedDeviceCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -669,67 +760,67 @@ func resourceAssetManagedDeviceRead(d *schema.ResourceData, meta interface{}) er
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("credential", flattenMapCommCredential(s.Credential, d)); err != nil {
+	if err := d.Set("credential", flattenMapCommCredential(s.GetCredential(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Credential: %+v", err)
 	}
 
-	if err := d.Set("device_connector_manager", flattenMapAssetDeviceRegistrationRelationship(s.DeviceConnectorManager, d)); err != nil {
+	if err := d.Set("device_connector_manager", flattenMapAssetDeviceRegistrationRelationship(s.GetDeviceConnectorManager(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property DeviceConnectorManager: %+v", err)
 	}
 
-	if err := d.Set("device_type", (s.DeviceType)); err != nil {
+	if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
 		return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 	}
 
-	if err := d.Set("ignore_cert", (s.IgnoreCert)); err != nil {
+	if err := d.Set("ignore_cert", (s.GetIgnoreCert())); err != nil {
 		return fmt.Errorf("error occurred while setting property IgnoreCert: %+v", err)
 	}
 
-	if err := d.Set("is_enabled", (s.IsEnabled)); err != nil {
+	if err := d.Set("is_enabled", (s.GetIsEnabled())); err != nil {
 		return fmt.Errorf("error occurred while setting property IsEnabled: %+v", err)
 	}
 
-	if err := d.Set("management_address", (s.ManagementAddress)); err != nil {
+	if err := d.Set("management_address", (s.GetManagementAddress())); err != nil {
 		return fmt.Errorf("error occurred while setting property ManagementAddress: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("port", (s.Port)); err != nil {
+	if err := d.Set("port", (s.GetPort())); err != nil {
 		return fmt.Errorf("error occurred while setting property Port: %+v", err)
 	}
 
-	if err := d.Set("protocol", (s.Protocol)); err != nil {
+	if err := d.Set("protocol", (s.GetProtocol())); err != nil {
 		return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 	}
 
-	if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+	if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 	}
 
-	if err := d.Set("status", flattenMapAssetManagedDeviceStatus(s.Status, d)); err != nil {
+	if err := d.Set("status", flattenMapAssetManagedDeviceStatus(s.GetStatus(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.WorkflowInfo, d)); err != nil {
+	if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.GetWorkflowInfo(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property WorkflowInfo: %+v", err)
 	}
 
@@ -750,6 +841,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -786,6 +887,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewCommCredentialWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("comm.Credential")
 			if v, ok := l["is_password_set"]; ok {
 				{
@@ -826,6 +937,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -904,6 +1025,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -938,6 +1069,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewAssetManagedDeviceStatusWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("asset.ManagedDeviceStatus")
 			if v, ok := l["cloud_port"]; ok {
 				{
@@ -1034,6 +1175,16 @@ func resourceAssetManagedDeviceUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

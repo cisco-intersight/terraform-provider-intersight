@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -31,6 +32,11 @@ func resourceMemoryPersistentMemoryPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -73,6 +79,11 @@ func resourceMemoryPersistentMemoryPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -111,6 +122,11 @@ func resourceMemoryPersistentMemoryPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"capacity": {
 							Description: "Capacity of this Namespace that is created or modified.",
 							Type:        schema.TypeInt,
@@ -188,6 +204,11 @@ func resourceMemoryPersistentMemoryPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -224,6 +245,11 @@ func resourceMemoryPersistentMemoryPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -298,6 +324,16 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMemoryPersistentMemoryGoalWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("memory.PersistentMemoryGoal")
 			if v, ok := l["memory_mode_percentage"]; ok {
 				{
@@ -336,6 +372,16 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMemoryPersistentMemoryLocalSecurityWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("memory.PersistentMemoryLocalSecurity")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -375,6 +421,16 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMemoryPersistentMemoryLogicalNamespaceWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["capacity"]; ok {
 				{
 					x := int32(v.(int))
@@ -442,6 +498,16 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -475,6 +541,16 @@ func resourceMemoryPersistentMemoryPolicyCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -569,55 +645,55 @@ func resourceMemoryPersistentMemoryPolicyRead(d *schema.ResourceData, meta inter
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("goals", flattenListMemoryPersistentMemoryGoal(s.Goals, d)); err != nil {
+	if err := d.Set("goals", flattenListMemoryPersistentMemoryGoal(s.GetGoals(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Goals: %+v", err)
 	}
 
-	if err := d.Set("local_security", flattenMapMemoryPersistentMemoryLocalSecurity(s.LocalSecurity, d)); err != nil {
+	if err := d.Set("local_security", flattenMapMemoryPersistentMemoryLocalSecurity(s.GetLocalSecurity(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property LocalSecurity: %+v", err)
 	}
 
-	if err := d.Set("logical_namespaces", flattenListMemoryPersistentMemoryLogicalNamespace(s.LogicalNamespaces, d)); err != nil {
+	if err := d.Set("logical_namespaces", flattenListMemoryPersistentMemoryLogicalNamespace(s.GetLogicalNamespaces(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property LogicalNamespaces: %+v", err)
 	}
 
-	if err := d.Set("management_mode", (s.ManagementMode)); err != nil {
+	if err := d.Set("management_mode", (s.GetManagementMode())); err != nil {
 		return fmt.Errorf("error occurred while setting property ManagementMode: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
-	if err := d.Set("retain_namespaces", (s.RetainNamespaces)); err != nil {
+	if err := d.Set("retain_namespaces", (s.GetRetainNamespaces())); err != nil {
 		return fmt.Errorf("error occurred while setting property RetainNamespaces: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
@@ -646,6 +722,16 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMemoryPersistentMemoryGoalWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("memory.PersistentMemoryGoal")
 			if v, ok := l["memory_mode_percentage"]; ok {
 				{
@@ -685,6 +771,16 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMemoryPersistentMemoryLocalSecurityWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("memory.PersistentMemoryLocalSecurity")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -725,6 +821,16 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMemoryPersistentMemoryLogicalNamespaceWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["capacity"]; ok {
 				{
 					x := int32(v.(int))
@@ -796,6 +902,16 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -830,6 +946,16 @@ func resourceMemoryPersistentMemoryPolicyUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

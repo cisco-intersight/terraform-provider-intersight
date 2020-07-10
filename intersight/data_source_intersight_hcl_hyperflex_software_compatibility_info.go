@@ -206,36 +206,36 @@ func dataSourceHclHyperflexSoftwareCompatibilityInfoRead(d *schema.ResourceData,
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("app_catalog", flattenMapHyperflexAppCatalogRelationship(s.AppCatalog, d)); err != nil {
+			if err := d.Set("app_catalog", flattenMapHyperflexAppCatalogRelationship(s.GetAppCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AppCatalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("constraints", flattenListHclConstraint(s.Constraints, d)); err != nil {
+			if err := d.Set("constraints", flattenListHclConstraint(s.GetConstraints(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Constraints: %+v", err)
 			}
-			if err := d.Set("hxdp_version", (s.HxdpVersion)); err != nil {
+			if err := d.Set("hxdp_version", (s.GetHxdpVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpVersion: %+v", err)
 			}
-			if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
+			if err := d.Set("hypervisor_type", (s.GetHypervisorType())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 			}
-			if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+			if err := d.Set("hypervisor_version", (s.GetHypervisorVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorVersion: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("server_fw_version", (s.ServerFwVersion)); err != nil {
+			if err := d.Set("server_fw_version", (s.GetServerFwVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerFwVersion: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

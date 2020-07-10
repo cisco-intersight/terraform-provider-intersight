@@ -178,33 +178,33 @@ func dataSourceIaasMostRunTasksRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.Guid, d)); err != nil {
+			if err := d.Set("guid", flattenMapIaasUcsdInfoRelationship(s.GetGuid(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("task_category", (s.TaskCategory)); err != nil {
+			if err := d.Set("task_category", (s.GetTaskCategory())); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskCategory: %+v", err)
 			}
-			if err := d.Set("task_execution_count", (s.TaskExecutionCount)); err != nil {
+			if err := d.Set("task_execution_count", (s.GetTaskExecutionCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskExecutionCount: %+v", err)
 			}
-			if err := d.Set("task_name", (s.TaskName)); err != nil {
+			if err := d.Set("task_name", (s.GetTaskName())); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskName: %+v", err)
 			}
-			if err := d.Set("task_type", (s.TaskType)); err != nil {
+			if err := d.Set("task_type", (s.GetTaskType())); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -697,61 +697,61 @@ func dataSourceOsInstallRead(d *schema.ResourceData, meta interface{}) error {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("additional_parameters", flattenListOsPlaceHolder(s.AdditionalParameters, d)); err != nil {
+			if err := d.Set("additional_parameters", flattenListOsPlaceHolder(s.GetAdditionalParameters(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdditionalParameters: %+v", err)
 			}
 
-			if err := d.Set("answers", flattenMapOsAnswers(s.Answers, d)); err != nil {
+			if err := d.Set("answers", flattenMapOsAnswers(s.GetAnswers(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Answers: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("configuration_file", flattenMapOsConfigurationFileRelationship(s.ConfigurationFile, d)); err != nil {
+			if err := d.Set("configuration_file", flattenMapOsConfigurationFileRelationship(s.GetConfigurationFile(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigurationFile: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("image", flattenMapSoftwarerepositoryOperatingSystemFileRelationship(s.Image, d)); err != nil {
+			if err := d.Set("image", flattenMapSoftwarerepositoryOperatingSystemFileRelationship(s.GetImage(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Image: %+v", err)
 			}
-			if err := d.Set("install_method", (s.InstallMethod)); err != nil {
+			if err := d.Set("install_method", (s.GetInstallMethod())); err != nil {
 				return fmt.Errorf("error occurred while setting property InstallMethod: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("operating_system_parameters", flattenMapOsOperatingSystemParameters(s.OperatingSystemParameters, d)); err != nil {
+			if err := d.Set("operating_system_parameters", flattenMapOsOperatingSystemParameters(s.GetOperatingSystemParameters(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property OperatingSystemParameters: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("osdu_image", flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(s.OsduImage, d)); err != nil {
+			if err := d.Set("osdu_image", flattenMapFirmwareServerConfigurationUtilityDistributableRelationship(s.GetOsduImage(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property OsduImage: %+v", err)
 			}
 
-			if err := d.Set("server", flattenMapComputePhysicalRelationship(s.Server, d)); err != nil {
+			if err := d.Set("server", flattenMapComputePhysicalRelationship(s.GetServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Server: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.WorkflowInfo, d)); err != nil {
+			if err := d.Set("workflow_info", flattenMapWorkflowWorkflowInfoRelationship(s.GetWorkflowInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property WorkflowInfo: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -403,60 +403,60 @@ func dataSourceRecoveryBackupProfileRead(d *schema.ResourceData, meta interface{
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("action", (s.Action)); err != nil {
+			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
 
-			if err := d.Set("backup_config", flattenMapRecoveryBackupConfigPolicyRelationship(s.BackupConfig, d)); err != nil {
+			if err := d.Set("backup_config", flattenMapRecoveryBackupConfigPolicyRelationship(s.GetBackupConfig(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupConfig: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("config_context", flattenMapPolicyConfigContext(s.ConfigContext, d)); err != nil {
+			if err := d.Set("config_context", flattenMapPolicyConfigContext(s.GetConfigContext(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigContext: %+v", err)
 			}
 
-			if err := d.Set("config_result", flattenMapRecoveryConfigResultRelationship(s.ConfigResult, d)); err != nil {
+			if err := d.Set("config_result", flattenMapRecoveryConfigResultRelationship(s.GetConfigResult(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigResult: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("device_id", flattenMapAssetDeviceRegistrationRelationship(s.DeviceId, d)); err != nil {
+			if err := d.Set("device_id", flattenMapAssetDeviceRegistrationRelationship(s.GetDeviceId(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
-			if err := d.Set("enabled", (s.Enabled)); err != nil {
+			if err := d.Set("enabled", (s.GetEnabled())); err != nil {
 				return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("schedule_config", flattenMapRecoveryScheduleConfigPolicyRelationship(s.ScheduleConfig, d)); err != nil {
+			if err := d.Set("schedule_config", flattenMapRecoveryScheduleConfigPolicyRelationship(s.GetScheduleConfig(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ScheduleConfig: %+v", err)
 			}
 
-			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.SrcTemplate, d)); err != nil {
+			if err := d.Set("src_template", flattenMapPolicyAbstractProfileRelationship(s.GetSrcTemplate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SrcTemplate: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
 			d.SetId(s.GetMoid())

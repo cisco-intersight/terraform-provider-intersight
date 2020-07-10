@@ -1,8 +1,10 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"reflect"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -21,6 +23,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -70,6 +78,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -110,6 +124,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -124,6 +144,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+										ForceNew:         true,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -209,6 +235,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -243,6 +275,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
+			"exclude_component_list": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString}, ForceNew: true,
+			},
 			"file_server": {
 				Description: "Location of the image in user software repository.",
 				Type:        schema.TypeList,
@@ -250,6 +288,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -284,6 +328,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"cifs_server": {
 							Description: "CIFS file server option for network share upgrade.",
 							Type:        schema.TypeList,
@@ -291,6 +341,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+										ForceNew:         true,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -359,6 +415,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+										ForceNew:         true,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -412,6 +474,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+										ForceNew:         true,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -511,6 +579,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -587,6 +661,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -628,6 +708,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -683,6 +769,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -718,6 +814,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -751,6 +857,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewFirmwareDirectDownloadWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("firmware.DirectDownload")
 			if v, ok := l["http_server"]; ok {
 				{
@@ -759,6 +875,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewFirmwareHttpServerWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("firmware.HttpServer")
 						if v, ok := l["location_link"]; ok {
 							{
@@ -836,6 +962,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -863,12 +999,33 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		}
 	}
 
+	if v, ok := d.GetOk("exclude_component_list"); ok {
+		x := make([]string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			x = append(x, y.Index(i).Interface().(string))
+		}
+		if len(x) > 0 {
+			o.SetExcludeComponentList(x)
+		}
+	}
+
 	if v, ok := d.GetOk("file_server"); ok {
 		p := make([]models.SoftwarerepositoryFileServer, 0, 1)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("softwarerepository.FileServer")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -895,6 +1052,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewFirmwareNetworkShareWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["cifs_server"]; ok {
 				{
 					p := make([]models.FirmwareCifsServer, 0, 1)
@@ -902,6 +1069,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewFirmwareCifsServerWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("firmware.CifsServer")
 						if v, ok := l["file_location"]; ok {
 							{
@@ -955,6 +1132,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewFirmwareHttpServerWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("firmware.HttpServer")
 						if v, ok := l["location_link"]; ok {
 							{
@@ -1001,6 +1188,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewFirmwareNfsServerWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("firmware.NfsServer")
 						if v, ok := l["file_location"]; ok {
 							{
@@ -1086,6 +1283,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1154,6 +1361,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1187,6 +1404,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1241,67 +1468,71 @@ func resourceFirmwareChassisUpgradeRead(d *schema.ResourceData, meta interface{}
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("chassis", flattenMapEquipmentChassisRelationship(s.Chassis, d)); err != nil {
+	if err := d.Set("chassis", flattenMapEquipmentChassisRelationship(s.GetChassis(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Chassis: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.Device, d)); err != nil {
+	if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Device: %+v", err)
 	}
 
-	if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.DirectDownload, d)); err != nil {
+	if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.GetDirectDownload(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property DirectDownload: %+v", err)
 	}
 
-	if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.Distributable, d)); err != nil {
+	if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.GetDistributable(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Distributable: %+v", err)
 	}
 
-	if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.FileServer, d)); err != nil {
+	if err := d.Set("exclude_component_list", (s.GetExcludeComponentList())); err != nil {
+		return fmt.Errorf("error occurred while setting property ExcludeComponentList: %+v", err)
+	}
+
+	if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.GetFileServer(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property FileServer: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.NetworkShare, d)); err != nil {
+	if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.GetNetworkShare(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property NetworkShare: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.Release, d)); err != nil {
+	if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.GetRelease(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Release: %+v", err)
 	}
 
-	if err := d.Set("skip_estimate_impact", (s.SkipEstimateImpact)); err != nil {
+	if err := d.Set("skip_estimate_impact", (s.GetSkipEstimateImpact())); err != nil {
 		return fmt.Errorf("error occurred while setting property SkipEstimateImpact: %+v", err)
 	}
 
-	if err := d.Set("status", (s.Status)); err != nil {
+	if err := d.Set("status", (s.GetStatus())); err != nil {
 		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("upgrade_impact", flattenMapFirmwareUpgradeImpactStatusRelationship(s.UpgradeImpact, d)); err != nil {
+	if err := d.Set("upgrade_impact", flattenMapFirmwareUpgradeImpactStatusRelationship(s.GetUpgradeImpact(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property UpgradeImpact: %+v", err)
 	}
 
-	if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRelationship(s.UpgradeStatus, d)); err != nil {
+	if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRelationship(s.GetUpgradeStatus(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property UpgradeStatus: %+v", err)
 	}
 
-	if err := d.Set("upgrade_type", (s.UpgradeType)); err != nil {
+	if err := d.Set("upgrade_type", (s.GetUpgradeType())); err != nil {
 		return fmt.Errorf("error occurred while setting property UpgradeType: %+v", err)
 	}
 

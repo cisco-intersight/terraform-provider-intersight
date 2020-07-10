@@ -232,37 +232,37 @@ func dataSourceFirmwareUpgradeImpactStatusRead(d *schema.ResourceData, meta inte
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("components", (s.Components)); err != nil {
+			if err := d.Set("components", (s.GetComponents())); err != nil {
 				return fmt.Errorf("error occurred while setting property Components: %+v", err)
 			}
-			if err := d.Set("computation_state", (s.ComputationState)); err != nil {
+			if err := d.Set("computation_state", (s.GetComputationState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ComputationState: %+v", err)
 			}
-			if err := d.Set("exclude_components", (s.ExcludeComponents)); err != nil {
+			if err := d.Set("exclude_components", (s.GetExcludeComponents())); err != nil {
 				return fmt.Errorf("error occurred while setting property ExcludeComponents: %+v", err)
 			}
 
-			if err := d.Set("impacts", flattenListFirmwareBaseImpact(s.Impacts, d)); err != nil {
+			if err := d.Set("impacts", flattenListFirmwareBaseImpact(s.GetImpacts(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Impacts: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("summary", (s.Summary)); err != nil {
+			if err := d.Set("summary", (s.GetSummary())); err != nil {
 				return fmt.Errorf("error occurred while setting property Summary: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("upgrade", flattenMapFirmwareUpgradeBaseRelationship(s.Upgrade, d)); err != nil {
+			if err := d.Set("upgrade", flattenMapFirmwareUpgradeBaseRelationship(s.GetUpgrade(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Upgrade: %+v", err)
 			}
 			d.SetId(s.GetMoid())

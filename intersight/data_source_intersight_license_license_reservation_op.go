@@ -206,41 +206,41 @@ func dataSourceLicenseLicenseReservationOpRead(d *schema.ResourceData, meta inte
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("auth_code", (s.AuthCode)); err != nil {
+			if err := d.Set("auth_code", (s.GetAuthCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property AuthCode: %+v", err)
 			}
-			if err := d.Set("auth_code_installed", (s.AuthCodeInstalled)); err != nil {
+			if err := d.Set("auth_code_installed", (s.GetAuthCodeInstalled())); err != nil {
 				return fmt.Errorf("error occurred while setting property AuthCodeInstalled: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("confirm_code", (s.ConfirmCode)); err != nil {
+			if err := d.Set("confirm_code", (s.GetConfirmCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfirmCode: %+v", err)
 			}
-			if err := d.Set("generate_request_code", (s.GenerateRequestCode)); err != nil {
+			if err := d.Set("generate_request_code", (s.GetGenerateRequestCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property GenerateRequestCode: %+v", err)
 			}
-			if err := d.Set("generate_return_code", (s.GenerateReturnCode)); err != nil {
+			if err := d.Set("generate_return_code", (s.GetGenerateReturnCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property GenerateReturnCode: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("request_code", (s.RequestCode)); err != nil {
+			if err := d.Set("request_code", (s.GetRequestCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property RequestCode: %+v", err)
 			}
-			if err := d.Set("return_code", (s.ReturnCode)); err != nil {
+			if err := d.Set("return_code", (s.GetReturnCode())); err != nil {
 				return fmt.Errorf("error occurred while setting property ReturnCode: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

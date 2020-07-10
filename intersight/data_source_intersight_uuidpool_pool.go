@@ -265,47 +265,47 @@ func dataSourceUuidpoolPoolRead(d *schema.ResourceData, meta interface{}) error 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("assigned", (s.Assigned)); err != nil {
+			if err := d.Set("assigned", (s.GetAssigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property Assigned: %+v", err)
 			}
-			if err := d.Set("assignment_order", (s.AssignmentOrder)); err != nil {
+			if err := d.Set("assignment_order", (s.GetAssignmentOrder())); err != nil {
 				return fmt.Errorf("error occurred while setting property AssignmentOrder: %+v", err)
 			}
 
-			if err := d.Set("block_heads", flattenListUuidpoolBlockRelationship(s.BlockHeads, d)); err != nil {
+			if err := d.Set("block_heads", flattenListUuidpoolBlockRelationship(s.GetBlockHeads(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BlockHeads: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("prefix", (s.Prefix)); err != nil {
+			if err := d.Set("prefix", (s.GetPrefix())); err != nil {
 				return fmt.Errorf("error occurred while setting property Prefix: %+v", err)
 			}
-			if err := d.Set("size", (s.Size)); err != nil {
+			if err := d.Set("size", (s.GetSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property Size: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("uuid_suffix_blocks", flattenListUuidpoolUuidBlock(s.UuidSuffixBlocks, d)); err != nil {
+			if err := d.Set("uuid_suffix_blocks", flattenListUuidpoolUuidBlock(s.GetUuidSuffixBlocks(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UuidSuffixBlocks: %+v", err)
 			}
 			d.SetId(s.GetMoid())

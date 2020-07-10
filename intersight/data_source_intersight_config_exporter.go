@@ -238,41 +238,41 @@ func dataSourceConfigExporterRead(d *schema.ResourceData, meta interface{}) erro
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("download_path", (s.DownloadPath)); err != nil {
+			if err := d.Set("download_path", (s.GetDownloadPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property DownloadPath: %+v", err)
 			}
 
-			if err := d.Set("exported_items", flattenListConfigExportedItemRelationship(s.ExportedItems, d)); err != nil {
+			if err := d.Set("exported_items", flattenListConfigExportedItemRelationship(s.GetExportedItems(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ExportedItems: %+v", err)
 			}
 
-			if err := d.Set("items", flattenListConfigMoRef(s.Items, d)); err != nil {
+			if err := d.Set("items", flattenListConfigMoRef(s.GetItems(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Items: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("status_message", (s.StatusMessage)); err != nil {
+			if err := d.Set("status_message", (s.GetStatusMessage())); err != nil {
 				return fmt.Errorf("error occurred while setting property StatusMessage: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

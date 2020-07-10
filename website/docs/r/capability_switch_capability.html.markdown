@@ -16,6 +16,8 @@ The following arguments are supported:
 * `fan_modules_supported`:(bool) Fan Modules support on this switch. 
 * `fc_end_host_mode_reserved_vsans`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -41,6 +43,8 @@ This complex property has following sub-properties:
 * `pid`:(string) Product Identifier for a Switch/Fabric-Interconnect. 
 * `ports_supporting100g_speed`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -49,6 +53,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting10g_speed`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -57,6 +63,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting1g_speed`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -65,6 +73,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting25g_speed`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -73,6 +83,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting40g_speed`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -81,6 +93,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting_breakout`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -89,6 +103,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting_fcoe`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -97,6 +113,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `ports_supporting_server_role`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -105,6 +123,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `reserved_vsans`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 
@@ -113,6 +133,8 @@ This complex property has following sub-properties:
   + `start_slot_id`:(int) Starting Slot ID in this range of ports. 
 * `section`:(Array with Maximum of one item) - A reference to a capabilitySection resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `moid`:(string)(Computed) The Moid of the referenced REST resource. 
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 
@@ -125,6 +147,8 @@ This complex property has following sub-properties:
   + `value`:(string) The string representation of a tag value. 
 * `unified_ports`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `end_port_id`:(int) Ending Port ID in this range of ports. 
   + `end_slot_id`:(int) Ending Slot ID in this range of ports. 

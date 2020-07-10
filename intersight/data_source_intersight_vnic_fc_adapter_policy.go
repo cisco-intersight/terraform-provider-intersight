@@ -444,70 +444,70 @@ func dataSourceVnicFcAdapterPolicyRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("error_detection_timeout", (s.ErrorDetectionTimeout)); err != nil {
+			if err := d.Set("error_detection_timeout", (s.GetErrorDetectionTimeout())); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorDetectionTimeout: %+v", err)
 			}
 
-			if err := d.Set("error_recovery_settings", flattenMapVnicFcErrorRecoverySettings(s.ErrorRecoverySettings, d)); err != nil {
+			if err := d.Set("error_recovery_settings", flattenMapVnicFcErrorRecoverySettings(s.GetErrorRecoverySettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorRecoverySettings: %+v", err)
 			}
 
-			if err := d.Set("flogi_settings", flattenMapVnicFlogiSettings(s.FlogiSettings, d)); err != nil {
+			if err := d.Set("flogi_settings", flattenMapVnicFlogiSettings(s.GetFlogiSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FlogiSettings: %+v", err)
 			}
 
-			if err := d.Set("interrupt_settings", flattenMapVnicFcInterruptSettings(s.InterruptSettings, d)); err != nil {
+			if err := d.Set("interrupt_settings", flattenMapVnicFcInterruptSettings(s.GetInterruptSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InterruptSettings: %+v", err)
 			}
-			if err := d.Set("io_throttle_count", (s.IoThrottleCount)); err != nil {
+			if err := d.Set("io_throttle_count", (s.GetIoThrottleCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property IoThrottleCount: %+v", err)
 			}
-			if err := d.Set("lun_count", (s.LunCount)); err != nil {
+			if err := d.Set("lun_count", (s.GetLunCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property LunCount: %+v", err)
 			}
-			if err := d.Set("lun_queue_depth", (s.LunQueueDepth)); err != nil {
+			if err := d.Set("lun_queue_depth", (s.GetLunQueueDepth())); err != nil {
 				return fmt.Errorf("error occurred while setting property LunQueueDepth: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("plogi_settings", flattenMapVnicPlogiSettings(s.PlogiSettings, d)); err != nil {
+			if err := d.Set("plogi_settings", flattenMapVnicPlogiSettings(s.GetPlogiSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PlogiSettings: %+v", err)
 			}
-			if err := d.Set("resource_allocation_timeout", (s.ResourceAllocationTimeout)); err != nil {
+			if err := d.Set("resource_allocation_timeout", (s.GetResourceAllocationTimeout())); err != nil {
 				return fmt.Errorf("error occurred while setting property ResourceAllocationTimeout: %+v", err)
 			}
 
-			if err := d.Set("rx_queue_settings", flattenMapVnicFcQueueSettings(s.RxQueueSettings, d)); err != nil {
+			if err := d.Set("rx_queue_settings", flattenMapVnicFcQueueSettings(s.GetRxQueueSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RxQueueSettings: %+v", err)
 			}
 
-			if err := d.Set("scsi_queue_settings", flattenMapVnicScsiQueueSettings(s.ScsiQueueSettings, d)); err != nil {
+			if err := d.Set("scsi_queue_settings", flattenMapVnicScsiQueueSettings(s.GetScsiQueueSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ScsiQueueSettings: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("tx_queue_settings", flattenMapVnicFcQueueSettings(s.TxQueueSettings, d)); err != nil {
+			if err := d.Set("tx_queue_settings", flattenMapVnicFcQueueSettings(s.GetTxQueueSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TxQueueSettings: %+v", err)
 			}
 			d.SetId(s.GetMoid())

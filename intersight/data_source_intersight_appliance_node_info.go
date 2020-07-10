@@ -171,30 +171,30 @@ func dataSourceApplianceNodeInfoRead(d *schema.ResourceData, meta interface{}) e
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("hostname", (s.Hostname)); err != nil {
+			if err := d.Set("hostname", (s.GetHostname())); err != nil {
 				return fmt.Errorf("error occurred while setting property Hostname: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("node_id", (s.NodeId)); err != nil {
+			if err := d.Set("node_id", (s.GetNodeId())); err != nil {
 				return fmt.Errorf("error occurred while setting property NodeId: %+v", err)
 			}
 
-			if err := d.Set("node_ip_v4_config", flattenMapCommIpV4Interface(s.NodeIpV4Config, d)); err != nil {
+			if err := d.Set("node_ip_v4_config", flattenMapCommIpV4Interface(s.GetNodeIpV4Config(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property NodeIpV4Config: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("operational_status", (s.OperationalStatus)); err != nil {
+			if err := d.Set("operational_status", (s.GetOperationalStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperationalStatus: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

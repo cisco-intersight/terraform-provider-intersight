@@ -234,38 +234,38 @@ func dataSourceApplianceUpgradePolicyRead(d *schema.ResourceData, meta interface
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("auto_upgrade", (s.AutoUpgrade)); err != nil {
+			if err := d.Set("auto_upgrade", (s.GetAutoUpgrade())); err != nil {
 				return fmt.Errorf("error occurred while setting property AutoUpgrade: %+v", err)
 			}
-			if err := d.Set("blackout_dates_enabled", (s.BlackoutDatesEnabled)); err != nil {
+			if err := d.Set("blackout_dates_enabled", (s.GetBlackoutDatesEnabled())); err != nil {
 				return fmt.Errorf("error occurred while setting property BlackoutDatesEnabled: %+v", err)
 			}
 
-			if err := d.Set("blackout_end_date", (s.BlackoutEndDate).String()); err != nil {
+			if err := d.Set("blackout_end_date", (s.GetBlackoutEndDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property BlackoutEndDate: %+v", err)
 			}
 
-			if err := d.Set("blackout_start_date", (s.BlackoutStartDate).String()); err != nil {
+			if err := d.Set("blackout_start_date", (s.GetBlackoutStartDate()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property BlackoutStartDate: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("schedule", flattenMapOnpremSchedule(s.Schedule, d)); err != nil {
+			if err := d.Set("schedule", flattenMapOnpremSchedule(s.GetSchedule(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Schedule: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -228,43 +228,43 @@ func dataSourceConfigImporterRead(d *schema.ResourceData, meta interface{}) erro
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("import_path", (s.ImportPath)); err != nil {
+			if err := d.Set("import_path", (s.GetImportPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportPath: %+v", err)
 			}
-			if err := d.Set("import_source", (s.ImportSource)); err != nil {
+			if err := d.Set("import_source", (s.GetImportSource())); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportSource: %+v", err)
 			}
 
-			if err := d.Set("imported_items", flattenListConfigImportedItemRelationship(s.ImportedItems, d)); err != nil {
+			if err := d.Set("imported_items", flattenListConfigImportedItemRelationship(s.GetImportedItems(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportedItems: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("skip_integrity_checks", (s.SkipIntegrityChecks)); err != nil {
+			if err := d.Set("skip_integrity_checks", (s.GetSkipIntegrityChecks())); err != nil {
 				return fmt.Errorf("error occurred while setting property SkipIntegrityChecks: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("status_message", (s.StatusMessage)); err != nil {
+			if err := d.Set("status_message", (s.GetStatusMessage())); err != nil {
 				return fmt.Errorf("error occurred while setting property StatusMessage: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

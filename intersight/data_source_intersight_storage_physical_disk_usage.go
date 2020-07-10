@@ -133,9 +133,10 @@ func dataSourceStoragePhysicalDiskUsage() *schema.Resource {
 				Computed:    true,
 			},
 			"span": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The span of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"starting_block": {
 				Description: "The starting block id of the virtual drive within the physical drive.",
@@ -262,52 +263,52 @@ func dataSourceStoragePhysicalDiskUsageRead(d *schema.ResourceData, meta interfa
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("number_of_blocks", (s.NumberOfBlocks)); err != nil {
+			if err := d.Set("number_of_blocks", (s.GetNumberOfBlocks())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumberOfBlocks: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("physical_drive", (s.PhysicalDrive)); err != nil {
+			if err := d.Set("physical_drive", (s.GetPhysicalDrive())); err != nil {
 				return fmt.Errorf("error occurred while setting property PhysicalDrive: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("span", (s.Span)); err != nil {
+			if err := d.Set("span", (s.GetSpan())); err != nil {
 				return fmt.Errorf("error occurred while setting property Span: %+v", err)
 			}
-			if err := d.Set("starting_block", (s.StartingBlock)); err != nil {
+			if err := d.Set("starting_block", (s.GetStartingBlock())); err != nil {
 				return fmt.Errorf("error occurred while setting property StartingBlock: %+v", err)
 			}
-			if err := d.Set("state", (s.State)); err != nil {
+			if err := d.Set("state", (s.GetState())); err != nil {
 				return fmt.Errorf("error occurred while setting property State: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("virtual_drive", (s.VirtualDrive)); err != nil {
+			if err := d.Set("virtual_drive", (s.GetVirtualDrive())); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualDrive: %+v", err)
 			}
 			d.SetId(s.GetMoid())

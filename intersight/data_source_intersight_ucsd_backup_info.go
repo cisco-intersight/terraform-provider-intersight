@@ -348,69 +348,69 @@ func dataSourceUcsdBackupInfoRead(d *schema.ResourceData, meta interface{}) erro
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("backup_file_name", (s.BackupFileName)); err != nil {
+			if err := d.Set("backup_file_name", (s.GetBackupFileName())); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupFileName: %+v", err)
 			}
-			if err := d.Set("backup_location", (s.BackupLocation)); err != nil {
+			if err := d.Set("backup_location", (s.GetBackupLocation())); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupLocation: %+v", err)
 			}
-			if err := d.Set("backup_server_ip", (s.BackupServerIp)); err != nil {
+			if err := d.Set("backup_server_ip", (s.GetBackupServerIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupServerIp: %+v", err)
 			}
-			if err := d.Set("backup_size", (s.BackupSize)); err != nil {
+			if err := d.Set("backup_size", (s.GetBackupSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupSize: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("connectors", flattenListUcsdConnectorPack(s.Connectors, d)); err != nil {
+			if err := d.Set("connectors", flattenListUcsdConnectorPack(s.GetConnectors(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Connectors: %+v", err)
 			}
-			if err := d.Set("duration", (s.Duration)); err != nil {
+			if err := d.Set("duration", (s.GetDuration())); err != nil {
 				return fmt.Errorf("error occurred while setting property Duration: %+v", err)
 			}
-			if err := d.Set("failure_reason", (s.FailureReason)); err != nil {
+			if err := d.Set("failure_reason", (s.GetFailureReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property FailureReason: %+v", err)
 			}
-			if err := d.Set("is_purged", (s.IsPurged)); err != nil {
+			if err := d.Set("is_purged", (s.GetIsPurged())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPurged: %+v", err)
 			}
 
-			if err := d.Set("last_modified", (s.LastModified).String()); err != nil {
+			if err := d.Set("last_modified", (s.GetLastModified()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastModified: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("percentage_completion", (s.PercentageCompletion)); err != nil {
+			if err := d.Set("percentage_completion", (s.GetPercentageCompletion())); err != nil {
 				return fmt.Errorf("error occurred while setting property PercentageCompletion: %+v", err)
 			}
-			if err := d.Set("product_version", (s.ProductVersion)); err != nil {
+			if err := d.Set("product_version", (s.GetProductVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductVersion: %+v", err)
 			}
-			if err := d.Set("protocol", (s.Protocol)); err != nil {
+			if err := d.Set("protocol", (s.GetProtocol())); err != nil {
 				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("stage_completion", (s.StageCompletion)); err != nil {
+			if err := d.Set("stage_completion", (s.GetStageCompletion())); err != nil {
 				return fmt.Errorf("error occurred while setting property StageCompletion: %+v", err)
 			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

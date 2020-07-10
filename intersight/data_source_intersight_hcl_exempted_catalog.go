@@ -189,47 +189,47 @@ func dataSourceHclExemptedCatalogRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("comments", (s.Comments)); err != nil {
+			if err := d.Set("comments", (s.GetComments())); err != nil {
 				return fmt.Errorf("error occurred while setting property Comments: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("os_vendor", (s.OsVendor)); err != nil {
+			if err := d.Set("os_vendor", (s.GetOsVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property OsVendor: %+v", err)
 			}
-			if err := d.Set("os_version", (s.OsVersion)); err != nil {
+			if err := d.Set("os_version", (s.GetOsVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property OsVersion: %+v", err)
 			}
-			if err := d.Set("processor_name", (s.ProcessorName)); err != nil {
+			if err := d.Set("processor_name", (s.GetProcessorName())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProcessorName: %+v", err)
 			}
-			if err := d.Set("product_models", (s.ProductModels)); err != nil {
+			if err := d.Set("product_models", (s.GetProductModels())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductModels: %+v", err)
 			}
-			if err := d.Set("product_type", (s.ProductType)); err != nil {
+			if err := d.Set("product_type", (s.GetProductType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductType: %+v", err)
 			}
-			if err := d.Set("server_pid", (s.ServerPid)); err != nil {
+			if err := d.Set("server_pid", (s.GetServerPid())); err != nil {
 				return fmt.Errorf("error occurred while setting property ServerPid: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("ucs_version", (s.UcsVersion)); err != nil {
+			if err := d.Set("ucs_version", (s.GetUcsVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property UcsVersion: %+v", err)
 			}
-			if err := d.Set("version_type", (s.VersionType)); err != nil {
+			if err := d.Set("version_type", (s.GetVersionType())); err != nil {
 				return fmt.Errorf("error occurred while setting property VersionType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

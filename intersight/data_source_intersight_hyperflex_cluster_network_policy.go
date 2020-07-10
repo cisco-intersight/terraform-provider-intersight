@@ -381,57 +381,57 @@ func dataSourceHyperflexClusterNetworkPolicyRead(d *schema.ResourceData, meta in
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
+			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("jumbo_frame", (s.JumboFrame)); err != nil {
+			if err := d.Set("jumbo_frame", (s.GetJumboFrame())); err != nil {
 				return fmt.Errorf("error occurred while setting property JumboFrame: %+v", err)
 			}
 
-			if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.KvmIpRange, d)); err != nil {
+			if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.GetKvmIpRange(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property KvmIpRange: %+v", err)
 			}
 
-			if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.MacPrefixRange, d)); err != nil {
+			if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.GetMacPrefixRange(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property MacPrefixRange: %+v", err)
 			}
 
-			if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.MgmtVlan, d)); err != nil {
+			if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.GetMgmtVlan(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property MgmtVlan: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uplink_speed", (s.UplinkSpeed)); err != nil {
+			if err := d.Set("uplink_speed", (s.GetUplinkSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property UplinkSpeed: %+v", err)
 			}
 
-			if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.VmMigrationVlan, d)); err != nil {
+			if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.GetVmMigrationVlan(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property VmMigrationVlan: %+v", err)
 			}
 
-			if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.VmNetworkVlans, d)); err != nil {
+			if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.GetVmNetworkVlans(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property VmNetworkVlans: %+v", err)
 			}
 			d.SetId(s.GetMoid())

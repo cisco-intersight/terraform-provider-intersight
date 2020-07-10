@@ -201,34 +201,34 @@ func dataSourceFabricFcoeUplinkPcRoleRead(d *schema.ResourceData, meta interface
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("admin_speed", (s.AdminSpeed)); err != nil {
+			if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pc_id", (s.PcId)); err != nil {
+			if err := d.Set("pc_id", (s.GetPcId())); err != nil {
 				return fmt.Errorf("error occurred while setting property PcId: %+v", err)
 			}
 
-			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.PortPolicy, d)); err != nil {
+			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.GetPortPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortPolicy: %+v", err)
 			}
 
-			if err := d.Set("ports", flattenListFabricPortIdentifier(s.Ports, d)); err != nil {
+			if err := d.Set("ports", flattenListFabricPortIdentifier(s.GetPorts(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Ports: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("udld_admin_state", (s.UdldAdminState)); err != nil {
+			if err := d.Set("udld_admin_state", (s.GetUdldAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property UdldAdminState: %+v", err)
 			}
 			d.SetId(s.GetMoid())

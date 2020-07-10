@@ -220,51 +220,51 @@ func dataSourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("category", (s.Category)); err != nil {
+			if err := d.Set("category", (s.GetCategory())); err != nil {
 				return fmt.Errorf("error occurred while setting property Category: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("file_type", (s.FileType)); err != nil {
+			if err := d.Set("file_type", (s.GetFileType())); err != nil {
 				return fmt.Errorf("error occurred while setting property FileType: %+v", err)
 			}
-			if err := d.Set("mdf_id", (s.MdfId)); err != nil {
+			if err := d.Set("mdf_id", (s.GetMdfId())); err != nil {
 				return fmt.Errorf("error occurred while setting property MdfId: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("regex_pattern", (s.RegexPattern)); err != nil {
+			if err := d.Set("regex_pattern", (s.GetRegexPattern())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegexPattern: %+v", err)
 			}
 
-			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.Section, d)); err != nil {
+			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Section: %+v", err)
 			}
-			if err := d.Set("nr_source", (s.Source)); err != nil {
+			if err := d.Set("nr_source", (s.GetSource())); err != nil {
 				return fmt.Errorf("error occurred while setting property Source: %+v", err)
 			}
-			if err := d.Set("supported_models", (s.SupportedModels)); err != nil {
+			if err := d.Set("supported_models", (s.GetSupportedModels())); err != nil {
 				return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
 			}
-			if err := d.Set("sw_id", (s.SwId)); err != nil {
+			if err := d.Set("sw_id", (s.GetSwId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SwId: %+v", err)
 			}
-			if err := d.Set("tag_types", (s.TagTypes)); err != nil {
+			if err := d.Set("tag_types", (s.GetTagTypes())); err != nil {
 				return fmt.Errorf("error occurred while setting property TagTypes: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

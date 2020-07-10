@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -22,6 +23,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -69,6 +76,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -134,6 +147,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -161,6 +180,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+										ForceNew:         true,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -175,6 +200,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 										Optional:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+													ForceNew:         true,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -241,6 +272,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 										Optional:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+													ForceNew:         true,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -255,6 +292,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 													Optional:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
+															"additional_properties": {
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: SuppressDiffAdditionProps,
+																ForceNew:         true,
+															},
 															"class_id": {
 																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 																Type:        schema.TypeString,
@@ -267,6 +310,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 																Optional: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
+																		"additional_properties": {
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: SuppressDiffAdditionProps,
+																			ForceNew:         true,
+																		},
 																		"class_id": {
 																			Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 																			Type:        schema.TypeString,
@@ -335,6 +384,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 													Optional: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
+															"additional_properties": {
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: SuppressDiffAdditionProps,
+																ForceNew:         true,
+															},
 															"class_id": {
 																Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 																Type:        schema.TypeString,
@@ -468,6 +523,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -503,6 +568,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -552,6 +627,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewOsPlaceHolderWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("os.PlaceHolder")
 			if v, ok := l["is_value_set"]; ok {
 				{
@@ -572,6 +657,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 					for i := 0; i < len(s); i++ {
 						l := s[i].(map[string]interface{})
 						o := models.NewWorkflowPrimitiveDataTypeWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("workflow.PrimitiveDataType")
 						if v, ok := l["default"]; ok {
 							{
@@ -580,6 +675,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 								for i := 0; i < len(s); i++ {
 									l := s[i].(map[string]interface{})
 									o := models.NewWorkflowDefaultValueWithDefaults()
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("workflow.DefaultValue")
 									if v, ok := l["object_type"]; ok {
 										{
@@ -638,6 +743,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 								for i := 0; i < len(s); i++ {
 									l := s[i].(map[string]interface{})
 									o := models.NewWorkflowPrimitiveDataPropertyWithDefaults()
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
 									o.SetClassId("workflow.PrimitiveDataProperty")
 									if v, ok := l["constraints"]; ok {
 										{
@@ -646,6 +761,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 											for i := 0; i < len(s); i++ {
 												l := s[i].(map[string]interface{})
 												o := models.NewWorkflowConstraintsWithDefaults()
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
+													}
+												}
 												o.SetClassId("workflow.Constraints")
 												if v, ok := l["enum_list"]; ok {
 													{
@@ -654,6 +779,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 														for i := 0; i < len(s); i++ {
 															o := models.NewWorkflowEnumEntryWithDefaults()
 															l := s[i].(map[string]interface{})
+															if v, ok := l["additional_properties"]; ok {
+																{
+																	x := []byte(v.(string))
+																	var x1 interface{}
+																	err := json.Unmarshal(x, &x1)
+																	if err == nil && x1 != nil {
+																		o.AdditionalProperties = x1.(map[string]interface{})
+																	}
+																}
+															}
 															o.SetClassId("workflow.EnumEntry")
 															if v, ok := l["label"]; ok {
 																{
@@ -719,6 +854,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 											for i := 0; i < len(s); i++ {
 												o := models.NewWorkflowMoReferencePropertyWithDefaults()
 												l := s[i].(map[string]interface{})
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
+													}
+												}
 												o.SetClassId("workflow.MoReferenceProperty")
 												if v, ok := l["display_attributes"]; ok {
 													{
@@ -862,43 +1007,43 @@ func resourceOsConfigurationFileRead(d *schema.ResourceData, meta interface{}) e
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.Catalog, d)); err != nil {
+	if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.GetCatalog(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.Distributions, d)); err != nil {
+	if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.GetDistributions(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Distributions: %+v", err)
 	}
 
-	if err := d.Set("file_content", (s.FileContent)); err != nil {
+	if err := d.Set("file_content", (s.GetFileContent())); err != nil {
 		return fmt.Errorf("error occurred while setting property FileContent: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("placeholders", flattenListOsPlaceHolder(s.Placeholders, d)); err != nil {
+	if err := d.Set("placeholders", flattenListOsPlaceHolder(s.GetPlaceholders(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Placeholders: %+v", err)
 	}
 
-	if err := d.Set("supported", (s.Supported)); err != nil {
+	if err := d.Set("supported", (s.GetSupported())); err != nil {
 		return fmt.Errorf("error occurred while setting property Supported: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 

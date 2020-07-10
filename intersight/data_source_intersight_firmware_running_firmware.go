@@ -523,77 +523,77 @@ func dataSourceFirmwareRunningFirmwareRead(d *schema.ResourceData, meta interfac
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("bios_unit", flattenMapBiosUnitRelationship(s.BiosUnit, d)); err != nil {
+			if err := d.Set("bios_unit", flattenMapBiosUnitRelationship(s.GetBiosUnit(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BiosUnit: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("component", (s.Component)); err != nil {
+			if err := d.Set("component", (s.GetComponent())); err != nil {
 				return fmt.Errorf("error occurred while setting property Component: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("graphics_card", flattenMapGraphicsCardRelationship(s.GraphicsCard, d)); err != nil {
+			if err := d.Set("graphics_card", flattenMapGraphicsCardRelationship(s.GetGraphicsCard(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property GraphicsCard: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
 
-			if err := d.Set("management_controller", flattenMapManagementControllerRelationship(s.ManagementController, d)); err != nil {
+			if err := d.Set("management_controller", flattenMapManagementControllerRelationship(s.GetManagementController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ManagementController: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 
-			if err := d.Set("network_elements", flattenListNetworkElementRelationship(s.NetworkElements, d)); err != nil {
+			if err := d.Set("network_elements", flattenListNetworkElementRelationship(s.GetNetworkElements(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property NetworkElements: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("package_version", (s.PackageVersion)); err != nil {
+			if err := d.Set("package_version", (s.GetPackageVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property PackageVersion: %+v", err)
 			}
 
-			if err := d.Set("pci_switch", flattenMapPciSwitchRelationship(s.PciSwitch, d)); err != nil {
+			if err := d.Set("pci_switch", flattenMapPciSwitchRelationship(s.GetPciSwitch(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PciSwitch: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
-			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.StorageController, d)); err != nil {
+			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.GetStorageController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageController: %+v", err)
 			}
 
-			if err := d.Set("storage_flex_flash_controller", flattenMapStorageFlexFlashControllerRelationship(s.StorageFlexFlashController, d)); err != nil {
+			if err := d.Set("storage_flex_flash_controller", flattenMapStorageFlexFlashControllerRelationship(s.GetStorageFlexFlashController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageFlexFlashController: %+v", err)
 			}
 
-			if err := d.Set("storage_physical_disk", flattenMapStoragePhysicalDiskRelationship(s.StoragePhysicalDisk, d)); err != nil {
+			if err := d.Set("storage_physical_disk", flattenMapStoragePhysicalDiskRelationship(s.GetStoragePhysicalDisk(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StoragePhysicalDisk: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

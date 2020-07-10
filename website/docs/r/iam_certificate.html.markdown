@@ -13,9 +13,13 @@ Holds a certificate, signed by a CAcert.
 The following arguments are supported:
 * `certificate`:(Array with Maximum of one item) - User-input pem-encoded certificate, signed by a CAcert. 
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `issuer`:(Array with Maximum of one item) -(Computed) The X.509 distinguished name of the issuer of this certificate. 
 This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
     + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
     + `common_name`:(string)(Computed) A required component that identifies a person or an object. 
     + `country`:
@@ -35,6 +39,8 @@ This complex property has following sub-properties:
   + `signature_algorithm`:(string)(Computed) Signature algorithm, as specified in [RFC 5280](https://tools.ietf.org/html/rfc5280). 
   + `subject`:(Array with Maximum of one item) -(Computed) The X.509 distinguished name of the subject of this certificate. 
 This complex property has following sub-properties:
+    + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
     + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
     + `common_name`:(string)(Computed) A required component that identifies a person or an object. 
     + `country`:
@@ -50,6 +56,8 @@ This complex property has following sub-properties:
                 (Array of schema.TypeString) -
 * `certificate_request`:(Array with Maximum of one item) - A reference to a iamCertificateRequest resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `moid`:(string)(Computed) The Moid of the referenced REST resource. 
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 

@@ -309,58 +309,58 @@ func dataSourceStoragePurePortRead(d *schema.ResourceData, meta interface{}) err
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("array", flattenMapStoragePureArrayRelationship(s.Array, d)); err != nil {
+			if err := d.Set("array", flattenMapStoragePureArrayRelationship(s.GetArray(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Array: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("controller", flattenMapStoragePureControllerRelationship(s.Controller, d)); err != nil {
+			if err := d.Set("controller", flattenMapStoragePureControllerRelationship(s.GetController(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Controller: %+v", err)
 			}
-			if err := d.Set("failover", (s.Failover)); err != nil {
+			if err := d.Set("failover", (s.GetFailover())); err != nil {
 				return fmt.Errorf("error occurred while setting property Failover: %+v", err)
 			}
-			if err := d.Set("iqn", (s.Iqn)); err != nil {
+			if err := d.Set("iqn", (s.GetIqn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Iqn: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("portal", (s.Portal)); err != nil {
+			if err := d.Set("portal", (s.GetPortal())); err != nil {
 				return fmt.Errorf("error occurred while setting property Portal: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("speed", (s.Speed)); err != nil {
+			if err := d.Set("speed", (s.GetSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property Speed: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
+			if err := d.Set("type", (s.GetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property Type: %+v", err)
 			}
-			if err := d.Set("wwn", (s.Wwn)); err != nil {
+			if err := d.Set("wwn", (s.GetWwn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Wwn: %+v", err)
 			}
-			if err := d.Set("wwnn", (s.Wwnn)); err != nil {
+			if err := d.Set("wwnn", (s.GetWwnn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Wwnn: %+v", err)
 			}
-			if err := d.Set("wwpn", (s.Wwpn)); err != nil {
+			if err := d.Set("wwpn", (s.GetWwpn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Wwpn: %+v", err)
 			}
 			d.SetId(s.GetMoid())

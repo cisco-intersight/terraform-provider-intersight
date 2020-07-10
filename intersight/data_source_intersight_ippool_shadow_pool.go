@@ -380,64 +380,64 @@ func dataSourceIppoolShadowPoolRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("assigned", (s.Assigned)); err != nil {
+			if err := d.Set("assigned", (s.GetAssigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property Assigned: %+v", err)
 			}
-			if err := d.Set("assignment_order", (s.AssignmentOrder)); err != nil {
+			if err := d.Set("assignment_order", (s.GetAssignmentOrder())); err != nil {
 				return fmt.Errorf("error occurred while setting property AssignmentOrder: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("ip_v4_blocks", flattenListIppoolIpBlock(s.IpV4Blocks, d)); err != nil {
+			if err := d.Set("ip_v4_blocks", flattenListIppoolIpBlock(s.GetIpV4Blocks(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property IpV4Blocks: %+v", err)
 			}
 
-			if err := d.Set("ip_v4_config", flattenMapIppoolIpV4Config(s.IpV4Config, d)); err != nil {
+			if err := d.Set("ip_v4_config", flattenMapIppoolIpV4Config(s.GetIpV4Config(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property IpV4Config: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("pool", flattenMapIppoolPoolRelationship(s.Pool, d)); err != nil {
+			if err := d.Set("pool", flattenMapIppoolPoolRelationship(s.GetPool(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Pool: %+v", err)
 			}
-			if err := d.Set("size", (s.Size)); err != nil {
+			if err := d.Set("size", (s.GetSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property Size: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("v4_assigned", (s.V4Assigned)); err != nil {
+			if err := d.Set("v4_assigned", (s.GetV4Assigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property V4Assigned: %+v", err)
 			}
 
-			if err := d.Set("v4_block_heads", flattenListIppoolShadowBlockRelationship(s.V4BlockHeads, d)); err != nil {
+			if err := d.Set("v4_block_heads", flattenListIppoolShadowBlockRelationship(s.GetV4BlockHeads(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property V4BlockHeads: %+v", err)
 			}
-			if err := d.Set("v4_size", (s.V4Size)); err != nil {
+			if err := d.Set("v4_size", (s.GetV4Size())); err != nil {
 				return fmt.Errorf("error occurred while setting property V4Size: %+v", err)
 			}
-			if err := d.Set("v6_assigned", (s.V6Assigned)); err != nil {
+			if err := d.Set("v6_assigned", (s.GetV6Assigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property V6Assigned: %+v", err)
 			}
-			if err := d.Set("v6_size", (s.V6Size)); err != nil {
+			if err := d.Set("v6_size", (s.GetV6Size())); err != nil {
 				return fmt.Errorf("error occurred while setting property V6Size: %+v", err)
 			}
 
-			if err := d.Set("vrf", flattenMapVrfVrfRelationship(s.Vrf, d)); err != nil {
+			if err := d.Set("vrf", flattenMapVrfVrfRelationship(s.GetVrf(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Vrf: %+v", err)
 			}
 			d.SetId(s.GetMoid())

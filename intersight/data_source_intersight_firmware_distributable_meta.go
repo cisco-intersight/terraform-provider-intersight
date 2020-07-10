@@ -171,41 +171,41 @@ func dataSourceFirmwareDistributableMetaRead(d *schema.ResourceData, meta interf
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("bucket_name", (s.BucketName)); err != nil {
+			if err := d.Set("bucket_name", (s.GetBucketName())); err != nil {
 				return fmt.Errorf("error occurred while setting property BucketName: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("file_type", (s.FileType)); err != nil {
+			if err := d.Set("file_type", (s.GetFileType())); err != nil {
 				return fmt.Errorf("error occurred while setting property FileType: %+v", err)
 			}
-			if err := d.Set("from_version", (s.FromVersion)); err != nil {
+			if err := d.Set("from_version", (s.GetFromVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property FromVersion: %+v", err)
 			}
-			if err := d.Set("mdfid", (s.Mdfid)); err != nil {
+			if err := d.Set("mdfid", (s.GetMdfid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Mdfid: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("software_type_id", (s.SoftwareTypeId)); err != nil {
+			if err := d.Set("software_type_id", (s.GetSoftwareTypeId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SoftwareTypeId: %+v", err)
 			}
-			if err := d.Set("nr_source", (s.Source)); err != nil {
+			if err := d.Set("nr_source", (s.GetSource())); err != nil {
 				return fmt.Errorf("error occurred while setting property Source: %+v", err)
 			}
-			if err := d.Set("supported_models", (s.SupportedModels)); err != nil {
+			if err := d.Set("supported_models", (s.GetSupportedModels())); err != nil {
 				return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("to_version", (s.ToVersion)); err != nil {
+			if err := d.Set("to_version", (s.GetToVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ToVersion: %+v", err)
 			}
 			d.SetId(s.GetMoid())

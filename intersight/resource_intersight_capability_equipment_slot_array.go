@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -96,6 +97,11 @@ func resourceCapabilityEquipmentSlotArray() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -267,6 +273,16 @@ func resourceCapabilityEquipmentSlotArrayCreate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -386,103 +402,103 @@ func resourceCapabilityEquipmentSlotArrayRead(d *schema.ResourceData, meta inter
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("first_index", (s.FirstIndex)); err != nil {
+	if err := d.Set("first_index", (s.GetFirstIndex())); err != nil {
 		return fmt.Errorf("error occurred while setting property FirstIndex: %+v", err)
 	}
 
-	if err := d.Set("height", (s.Height)); err != nil {
+	if err := d.Set("height", (s.GetHeight())); err != nil {
 		return fmt.Errorf("error occurred while setting property Height: %+v", err)
 	}
 
-	if err := d.Set("horizontal_start_offset", (s.HorizontalStartOffset)); err != nil {
+	if err := d.Set("horizontal_start_offset", (s.GetHorizontalStartOffset())); err != nil {
 		return fmt.Errorf("error occurred while setting property HorizontalStartOffset: %+v", err)
 	}
 
-	if err := d.Set("inline_group_separation", (s.InlineGroupSeparation)); err != nil {
+	if err := d.Set("inline_group_separation", (s.GetInlineGroupSeparation())); err != nil {
 		return fmt.Errorf("error occurred while setting property InlineGroupSeparation: %+v", err)
 	}
 
-	if err := d.Set("inline_group_size", (s.InlineGroupSize)); err != nil {
+	if err := d.Set("inline_group_size", (s.GetInlineGroupSize())); err != nil {
 		return fmt.Errorf("error occurred while setting property InlineGroupSize: %+v", err)
 	}
 
-	if err := d.Set("inline_offset", (s.InlineOffset)); err != nil {
+	if err := d.Set("inline_offset", (s.GetInlineOffset())); err != nil {
 		return fmt.Errorf("error occurred while setting property InlineOffset: %+v", err)
 	}
 
-	if err := d.Set("location", (s.Location)); err != nil {
+	if err := d.Set("location", (s.GetLocation())); err != nil {
 		return fmt.Errorf("error occurred while setting property Location: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("number_of_slots", (s.NumberOfSlots)); err != nil {
+	if err := d.Set("number_of_slots", (s.GetNumberOfSlots())); err != nil {
 		return fmt.Errorf("error occurred while setting property NumberOfSlots: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("orientation", (s.Orientation)); err != nil {
+	if err := d.Set("orientation", (s.GetOrientation())); err != nil {
 		return fmt.Errorf("error occurred while setting property Orientation: %+v", err)
 	}
 
-	if err := d.Set("pid", (s.Pid)); err != nil {
+	if err := d.Set("pid", (s.GetPid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 	}
 
-	if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.Section, d)); err != nil {
+	if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Section: %+v", err)
 	}
 
-	if err := d.Set("selector", (s.Selector)); err != nil {
+	if err := d.Set("selector", (s.GetSelector())); err != nil {
 		return fmt.Errorf("error occurred while setting property Selector: %+v", err)
 	}
 
-	if err := d.Set("sku", (s.Sku)); err != nil {
+	if err := d.Set("sku", (s.GetSku())); err != nil {
 		return fmt.Errorf("error occurred while setting property Sku: %+v", err)
 	}
 
-	if err := d.Set("slots_per_line", (s.SlotsPerLine)); err != nil {
+	if err := d.Set("slots_per_line", (s.GetSlotsPerLine())); err != nil {
 		return fmt.Errorf("error occurred while setting property SlotsPerLine: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("transverse_group_separation", (s.TransverseGroupSeparation)); err != nil {
+	if err := d.Set("transverse_group_separation", (s.GetTransverseGroupSeparation())); err != nil {
 		return fmt.Errorf("error occurred while setting property TransverseGroupSeparation: %+v", err)
 	}
 
-	if err := d.Set("transverse_group_size", (s.TransverseGroupSize)); err != nil {
+	if err := d.Set("transverse_group_size", (s.GetTransverseGroupSize())); err != nil {
 		return fmt.Errorf("error occurred while setting property TransverseGroupSize: %+v", err)
 	}
 
-	if err := d.Set("transverse_offset", (s.TransverseOffset)); err != nil {
+	if err := d.Set("transverse_offset", (s.GetTransverseOffset())); err != nil {
 		return fmt.Errorf("error occurred while setting property TransverseOffset: %+v", err)
 	}
 
-	if err := d.Set("vertical_start_offset", (s.VerticalStartOffset)); err != nil {
+	if err := d.Set("vertical_start_offset", (s.GetVerticalStartOffset())); err != nil {
 		return fmt.Errorf("error occurred while setting property VerticalStartOffset: %+v", err)
 	}
 
-	if err := d.Set("vid", (s.Vid)); err != nil {
+	if err := d.Set("vid", (s.GetVid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 	}
 
-	if err := d.Set("width", (s.Width)); err != nil {
+	if err := d.Set("width", (s.GetWidth())); err != nil {
 		return fmt.Errorf("error occurred while setting property Width: %+v", err)
 	}
 
@@ -579,6 +595,16 @@ func resourceCapabilityEquipmentSlotArrayUpdate(d *schema.ResourceData, meta int
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

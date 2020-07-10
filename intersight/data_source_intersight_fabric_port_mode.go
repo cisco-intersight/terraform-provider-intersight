@@ -174,33 +174,33 @@ func dataSourceFabricPortModeRead(d *schema.ResourceData, meta interface{}) erro
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("custom_mode", (s.CustomMode)); err != nil {
+			if err := d.Set("custom_mode", (s.GetCustomMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property CustomMode: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("port_id_end", (s.PortIdEnd)); err != nil {
+			if err := d.Set("port_id_end", (s.GetPortIdEnd())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortIdEnd: %+v", err)
 			}
-			if err := d.Set("port_id_start", (s.PortIdStart)); err != nil {
+			if err := d.Set("port_id_start", (s.GetPortIdStart())); err != nil {
 				return fmt.Errorf("error occurred while setting property PortIdStart: %+v", err)
 			}
 
-			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.PortPolicy, d)); err != nil {
+			if err := d.Set("port_policy", flattenMapFabricPortPolicyRelationship(s.GetPortPolicy(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortPolicy: %+v", err)
 			}
-			if err := d.Set("slot_id", (s.SlotId)); err != nil {
+			if err := d.Set("slot_id", (s.GetSlotId())); err != nil {
 				return fmt.Errorf("error occurred while setting property SlotId: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

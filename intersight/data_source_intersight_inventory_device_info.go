@@ -233,40 +233,40 @@ func dataSourceInventoryDeviceInfoRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("config_state", (s.ConfigState)); err != nil {
+			if err := d.Set("config_state", (s.GetConfigState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigState: %+v", err)
 			}
-			if err := d.Set("control_action", (s.ControlAction)); err != nil {
+			if err := d.Set("control_action", (s.GetControlAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property ControlAction: %+v", err)
 			}
-			if err := d.Set("error_state", (s.ErrorState)); err != nil {
+			if err := d.Set("error_state", (s.GetErrorState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorState: %+v", err)
 			}
 
-			if err := d.Set("job_info", flattenListPolicyinventoryJobInfo(s.JobInfo, d)); err != nil {
+			if err := d.Set("job_info", flattenListPolicyinventoryJobInfo(s.GetJobInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property JobInfo: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("profile_mo_id", (s.ProfileMoId)); err != nil {
+			if err := d.Set("profile_mo_id", (s.GetProfileMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProfileMoId: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

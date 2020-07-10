@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -26,6 +27,11 @@ func resourceStorageDiskGroupPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -78,6 +84,11 @@ func resourceStorageDiskGroupPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -119,6 +130,11 @@ func resourceStorageDiskGroupPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -130,6 +146,11 @@ func resourceStorageDiskGroupPolicy() *schema.Resource {
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -169,6 +190,11 @@ func resourceStorageDiskGroupPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -238,6 +264,16 @@ func resourceStorageDiskGroupPolicyCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewStorageLocalDiskWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("storage.LocalDisk")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -281,6 +317,16 @@ func resourceStorageDiskGroupPolicyCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -319,6 +365,16 @@ func resourceStorageDiskGroupPolicyCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewStorageSpanGroupWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("storage.SpanGroup")
 			if v, ok := l["disks"]; ok {
 				{
@@ -327,6 +383,16 @@ func resourceStorageDiskGroupPolicyCreate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						o := models.NewStorageLocalDiskWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("storage.LocalDisk")
 						if v, ok := l["object_type"]; ok {
 							{
@@ -366,6 +432,16 @@ func resourceStorageDiskGroupPolicyCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -444,51 +520,51 @@ func resourceStorageDiskGroupPolicyRead(d *schema.ResourceData, meta interface{}
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("dedicated_hot_spares", flattenListStorageLocalDisk(s.DedicatedHotSpares, d)); err != nil {
+	if err := d.Set("dedicated_hot_spares", flattenListStorageLocalDisk(s.GetDedicatedHotSpares(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property DedicatedHotSpares: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("raid_level", (s.RaidLevel)); err != nil {
+	if err := d.Set("raid_level", (s.GetRaidLevel())); err != nil {
 		return fmt.Errorf("error occurred while setting property RaidLevel: %+v", err)
 	}
 
-	if err := d.Set("span_groups", flattenListStorageSpanGroup(s.SpanGroups, d)); err != nil {
+	if err := d.Set("span_groups", flattenListStorageSpanGroup(s.GetSpanGroups(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property SpanGroups: %+v", err)
 	}
 
-	if err := d.Set("storage_policies", flattenListStorageStoragePolicyRelationship(s.StoragePolicies, d)); err != nil {
+	if err := d.Set("storage_policies", flattenListStorageStoragePolicyRelationship(s.GetStoragePolicies(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property StoragePolicies: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("use_jbods", (s.UseJbods)); err != nil {
+	if err := d.Set("use_jbods", (s.GetUseJbods())); err != nil {
 		return fmt.Errorf("error occurred while setting property UseJbods: %+v", err)
 	}
 
@@ -511,6 +587,16 @@ func resourceStorageDiskGroupPolicyUpdate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewStorageLocalDiskWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("storage.LocalDisk")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -558,6 +644,16 @@ func resourceStorageDiskGroupPolicyUpdate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -598,6 +694,16 @@ func resourceStorageDiskGroupPolicyUpdate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewStorageSpanGroupWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("storage.SpanGroup")
 			if v, ok := l["disks"]; ok {
 				{
@@ -606,6 +712,16 @@ func resourceStorageDiskGroupPolicyUpdate(d *schema.ResourceData, meta interface
 					for i := 0; i < len(s); i++ {
 						o := models.NewStorageLocalDiskWithDefaults()
 						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
 						o.SetClassId("storage.LocalDisk")
 						if v, ok := l["object_type"]; ok {
 							{
@@ -646,6 +762,16 @@ func resourceStorageDiskGroupPolicyUpdate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

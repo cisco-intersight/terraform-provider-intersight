@@ -377,67 +377,67 @@ func dataSourceMemoryPersistentMemoryConfigurationRead(d *schema.ResourceData, m
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("compute_board", flattenMapComputeBoardRelationship(s.ComputeBoard, d)); err != nil {
+			if err := d.Set("compute_board", flattenMapComputeBoardRelationship(s.GetComputeBoard(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ComputeBoard: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("memory_capacity", (s.MemoryCapacity)); err != nil {
+			if err := d.Set("memory_capacity", (s.GetMemoryCapacity())); err != nil {
 				return fmt.Errorf("error occurred while setting property MemoryCapacity: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("num_of_modules", (s.NumOfModules)); err != nil {
+			if err := d.Set("num_of_modules", (s.GetNumOfModules())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumOfModules: %+v", err)
 			}
-			if err := d.Set("num_of_regions", (s.NumOfRegions)); err != nil {
+			if err := d.Set("num_of_regions", (s.GetNumOfRegions())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumOfRegions: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("persistent_memory_capacity", (s.PersistentMemoryCapacity)); err != nil {
+			if err := d.Set("persistent_memory_capacity", (s.GetPersistentMemoryCapacity())); err != nil {
 				return fmt.Errorf("error occurred while setting property PersistentMemoryCapacity: %+v", err)
 			}
 
-			if err := d.Set("persistent_memory_config_result", flattenMapMemoryPersistentMemoryConfigResultRelationship(s.PersistentMemoryConfigResult, d)); err != nil {
+			if err := d.Set("persistent_memory_config_result", flattenMapMemoryPersistentMemoryConfigResultRelationship(s.GetPersistentMemoryConfigResult(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PersistentMemoryConfigResult: %+v", err)
 			}
 
-			if err := d.Set("persistent_memory_regions", flattenListMemoryPersistentMemoryRegionRelationship(s.PersistentMemoryRegions, d)); err != nil {
+			if err := d.Set("persistent_memory_regions", flattenListMemoryPersistentMemoryRegionRelationship(s.GetPersistentMemoryRegions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PersistentMemoryRegions: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("reserved_capacity", (s.ReservedCapacity)); err != nil {
+			if err := d.Set("reserved_capacity", (s.GetReservedCapacity())); err != nil {
 				return fmt.Errorf("error occurred while setting property ReservedCapacity: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("security_state", (s.SecurityState)); err != nil {
+			if err := d.Set("security_state", (s.GetSecurityState())); err != nil {
 				return fmt.Errorf("error occurred while setting property SecurityState: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("total_capacity", (s.TotalCapacity)); err != nil {
+			if err := d.Set("total_capacity", (s.GetTotalCapacity())); err != nil {
 				return fmt.Errorf("error occurred while setting property TotalCapacity: %+v", err)
 			}
 			d.SetId(s.GetMoid())

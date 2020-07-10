@@ -278,48 +278,48 @@ func dataSourceTechsupportmanagementTechSupportBundleRead(d *schema.ResourceData
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_identifier", (s.DeviceIdentifier)); err != nil {
+			if err := d.Set("device_identifier", (s.GetDeviceIdentifier())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceIdentifier: %+v", err)
 			}
 
-			if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.DeviceRegistration, d)); err != nil {
+			if err := d.Set("device_registration", flattenMapAssetDeviceRegistrationRelationship(s.GetDeviceRegistration(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceRegistration: %+v", err)
 			}
-			if err := d.Set("device_type", (s.DeviceType)); err != nil {
+			if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pid", (s.Pid)); err != nil {
+			if err := d.Set("pid", (s.GetPid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 			}
 
-			if err := d.Set("platform_param", flattenMapConnectorPlatformParamBase(s.PlatformParam, d)); err != nil {
+			if err := d.Set("platform_param", flattenMapConnectorPlatformParamBase(s.GetPlatformParam(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformParam: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("target_resource", flattenMapMoBaseMoRelationship(s.TargetResource, d)); err != nil {
+			if err := d.Set("target_resource", flattenMapMoBaseMoRelationship(s.GetTargetResource(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TargetResource: %+v", err)
 			}
 
-			if err := d.Set("tech_support_status", flattenMapTechsupportmanagementTechSupportStatusRelationship(s.TechSupportStatus, d)); err != nil {
+			if err := d.Set("tech_support_status", flattenMapTechsupportmanagementTechSupportStatusRelationship(s.GetTechSupportStatus(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TechSupportStatus: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -292,56 +292,56 @@ func dataSourceAaaAuditRecordRead(d *schema.ResourceData, meta interface{}) erro
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("email", (s.Email)); err != nil {
+			if err := d.Set("email", (s.GetEmail())); err != nil {
 				return fmt.Errorf("error occurred while setting property Email: %+v", err)
 			}
-			if err := d.Set("event", (s.Event)); err != nil {
+			if err := d.Set("event", (s.GetEvent())); err != nil {
 				return fmt.Errorf("error occurred while setting property Event: %+v", err)
 			}
-			if err := d.Set("inst_id", (s.InstId)); err != nil {
+			if err := d.Set("inst_id", (s.GetInstId())); err != nil {
 				return fmt.Errorf("error occurred while setting property InstId: %+v", err)
 			}
-			if err := d.Set("mo_type", (s.MoType)); err != nil {
+			if err := d.Set("mo_type", (s.GetMoType())); err != nil {
 				return fmt.Errorf("error occurred while setting property MoType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_moid", (s.ObjectMoid)); err != nil {
+			if err := d.Set("object_moid", (s.GetObjectMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectMoid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("sessions", flattenMapIamSessionRelationship(s.Sessions, d)); err != nil {
+			if err := d.Set("sessions", flattenMapIamSessionRelationship(s.GetSessions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Sessions: %+v", err)
 			}
-			if err := d.Set("source_ip", (s.SourceIp)); err != nil {
+			if err := d.Set("source_ip", (s.GetSourceIp())); err != nil {
 				return fmt.Errorf("error occurred while setting property SourceIp: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("timestamp", (s.Timestamp).String()); err != nil {
+			if err := d.Set("timestamp", (s.GetTimestamp()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property Timestamp: %+v", err)
 			}
-			if err := d.Set("trace_id", (s.TraceId)); err != nil {
+			if err := d.Set("trace_id", (s.GetTraceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property TraceId: %+v", err)
 			}
 
-			if err := d.Set("user", flattenMapIamUserRelationship(s.User, d)); err != nil {
+			if err := d.Set("user", flattenMapIamUserRelationship(s.GetUser(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property User: %+v", err)
 			}
-			if err := d.Set("user_id_or_email", (s.UserIdOrEmail)); err != nil {
+			if err := d.Set("user_id_or_email", (s.GetUserIdOrEmail())); err != nil {
 				return fmt.Errorf("error occurred while setting property UserIdOrEmail: %+v", err)
 			}
 			d.SetId(s.GetMoid())

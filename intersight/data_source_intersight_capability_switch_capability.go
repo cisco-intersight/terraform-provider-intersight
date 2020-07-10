@@ -787,131 +787,131 @@ func dataSourceCapabilitySwitchCapabilityRead(d *schema.ResourceData, meta inter
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("dynamic_vifs_supported", (s.DynamicVifsSupported)); err != nil {
+			if err := d.Set("dynamic_vifs_supported", (s.GetDynamicVifsSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property DynamicVifsSupported: %+v", err)
 			}
-			if err := d.Set("fan_modules_supported", (s.FanModulesSupported)); err != nil {
+			if err := d.Set("fan_modules_supported", (s.GetFanModulesSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property FanModulesSupported: %+v", err)
 			}
 
-			if err := d.Set("fc_end_host_mode_reserved_vsans", flattenListCapabilityPortRange(s.FcEndHostModeReservedVsans, d)); err != nil {
+			if err := d.Set("fc_end_host_mode_reserved_vsans", flattenListCapabilityPortRange(s.GetFcEndHostModeReservedVsans(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property FcEndHostModeReservedVsans: %+v", err)
 			}
-			if err := d.Set("fc_uplink_ports_auto_negotiation_supported", (s.FcUplinkPortsAutoNegotiationSupported)); err != nil {
+			if err := d.Set("fc_uplink_ports_auto_negotiation_supported", (s.GetFcUplinkPortsAutoNegotiationSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property FcUplinkPortsAutoNegotiationSupported: %+v", err)
 			}
-			if err := d.Set("locator_beacon_supported", (s.LocatorBeaconSupported)); err != nil {
+			if err := d.Set("locator_beacon_supported", (s.GetLocatorBeaconSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property LocatorBeaconSupported: %+v", err)
 			}
-			if err := d.Set("max_active_span_sessions", (s.MaxActiveSpanSessions)); err != nil {
+			if err := d.Set("max_active_span_sessions", (s.GetMaxActiveSpanSessions())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxActiveSpanSessions: %+v", err)
 			}
-			if err := d.Set("max_ethernet_port_channel_members", (s.MaxEthernetPortChannelMembers)); err != nil {
+			if err := d.Set("max_ethernet_port_channel_members", (s.GetMaxEthernetPortChannelMembers())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxEthernetPortChannelMembers: %+v", err)
 			}
-			if err := d.Set("max_ethernet_port_channels", (s.MaxEthernetPortChannels)); err != nil {
+			if err := d.Set("max_ethernet_port_channels", (s.GetMaxEthernetPortChannels())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxEthernetPortChannels: %+v", err)
 			}
-			if err := d.Set("max_ethernet_uplink_ports", (s.MaxEthernetUplinkPorts)); err != nil {
+			if err := d.Set("max_ethernet_uplink_ports", (s.GetMaxEthernetUplinkPorts())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxEthernetUplinkPorts: %+v", err)
 			}
-			if err := d.Set("max_fc_fcoe_port_channels", (s.MaxFcFcoePortChannels)); err != nil {
+			if err := d.Set("max_fc_fcoe_port_channels", (s.GetMaxFcFcoePortChannels())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxFcFcoePortChannels: %+v", err)
 			}
-			if err := d.Set("max_fc_port_channel_members", (s.MaxFcPortChannelMembers)); err != nil {
+			if err := d.Set("max_fc_port_channel_members", (s.GetMaxFcPortChannelMembers())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxFcPortChannelMembers: %+v", err)
 			}
-			if err := d.Set("max_fcoe_port_channel_members", (s.MaxFcoePortChannelMembers)); err != nil {
+			if err := d.Set("max_fcoe_port_channel_members", (s.GetMaxFcoePortChannelMembers())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxFcoePortChannelMembers: %+v", err)
 			}
-			if err := d.Set("max_ports", (s.MaxPorts)); err != nil {
+			if err := d.Set("max_ports", (s.GetMaxPorts())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxPorts: %+v", err)
 			}
-			if err := d.Set("max_slots", (s.MaxSlots)); err != nil {
+			if err := d.Set("max_slots", (s.GetMaxSlots())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxSlots: %+v", err)
 			}
-			if err := d.Set("max_vsans_supported", (s.MaxVsansSupported)); err != nil {
+			if err := d.Set("max_vsans_supported", (s.GetMaxVsansSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaxVsansSupported: %+v", err)
 			}
-			if err := d.Set("min_active_fans", (s.MinActiveFans)); err != nil {
+			if err := d.Set("min_active_fans", (s.GetMinActiveFans())); err != nil {
 				return fmt.Errorf("error occurred while setting property MinActiveFans: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("pid", (s.Pid)); err != nil {
+			if err := d.Set("pid", (s.GetPid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting100g_speed", flattenListCapabilityPortRange(s.PortsSupporting100gSpeed, d)); err != nil {
+			if err := d.Set("ports_supporting100g_speed", flattenListCapabilityPortRange(s.GetPortsSupporting100gSpeed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupporting100gSpeed: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting10g_speed", flattenListCapabilityPortRange(s.PortsSupporting10gSpeed, d)); err != nil {
+			if err := d.Set("ports_supporting10g_speed", flattenListCapabilityPortRange(s.GetPortsSupporting10gSpeed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupporting10gSpeed: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting1g_speed", flattenListCapabilityPortRange(s.PortsSupporting1gSpeed, d)); err != nil {
+			if err := d.Set("ports_supporting1g_speed", flattenListCapabilityPortRange(s.GetPortsSupporting1gSpeed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupporting1gSpeed: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting25g_speed", flattenListCapabilityPortRange(s.PortsSupporting25gSpeed, d)); err != nil {
+			if err := d.Set("ports_supporting25g_speed", flattenListCapabilityPortRange(s.GetPortsSupporting25gSpeed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupporting25gSpeed: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting40g_speed", flattenListCapabilityPortRange(s.PortsSupporting40gSpeed, d)); err != nil {
+			if err := d.Set("ports_supporting40g_speed", flattenListCapabilityPortRange(s.GetPortsSupporting40gSpeed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupporting40gSpeed: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting_breakout", flattenListCapabilityPortRange(s.PortsSupportingBreakout, d)); err != nil {
+			if err := d.Set("ports_supporting_breakout", flattenListCapabilityPortRange(s.GetPortsSupportingBreakout(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupportingBreakout: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting_fcoe", flattenListCapabilityPortRange(s.PortsSupportingFcoe, d)); err != nil {
+			if err := d.Set("ports_supporting_fcoe", flattenListCapabilityPortRange(s.GetPortsSupportingFcoe(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupportingFcoe: %+v", err)
 			}
 
-			if err := d.Set("ports_supporting_server_role", flattenListCapabilityPortRange(s.PortsSupportingServerRole, d)); err != nil {
+			if err := d.Set("ports_supporting_server_role", flattenListCapabilityPortRange(s.GetPortsSupportingServerRole(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PortsSupportingServerRole: %+v", err)
 			}
 
-			if err := d.Set("reserved_vsans", flattenListCapabilityPortRange(s.ReservedVsans, d)); err != nil {
+			if err := d.Set("reserved_vsans", flattenListCapabilityPortRange(s.GetReservedVsans(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ReservedVsans: %+v", err)
 			}
 
-			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.Section, d)); err != nil {
+			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Section: %+v", err)
 			}
-			if err := d.Set("sereno_netflow_supported", (s.SerenoNetflowSupported)); err != nil {
+			if err := d.Set("sereno_netflow_supported", (s.GetSerenoNetflowSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property SerenoNetflowSupported: %+v", err)
 			}
-			if err := d.Set("sku", (s.Sku)); err != nil {
+			if err := d.Set("sku", (s.GetSku())); err != nil {
 				return fmt.Errorf("error occurred while setting property Sku: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("unified_ports", flattenListCapabilityPortRange(s.UnifiedPorts, d)); err != nil {
+			if err := d.Set("unified_ports", flattenListCapabilityPortRange(s.GetUnifiedPorts(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property UnifiedPorts: %+v", err)
 			}
-			if err := d.Set("unified_rule", (s.UnifiedRule)); err != nil {
+			if err := d.Set("unified_rule", (s.GetUnifiedRule())); err != nil {
 				return fmt.Errorf("error occurred while setting property UnifiedRule: %+v", err)
 			}
-			if err := d.Set("vid", (s.Vid)); err != nil {
+			if err := d.Set("vid", (s.GetVid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 			}
-			if err := d.Set("vp_compression_supported", (s.VpCompressionSupported)); err != nil {
+			if err := d.Set("vp_compression_supported", (s.GetVpCompressionSupported())); err != nil {
 				return fmt.Errorf("error occurred while setting property VpCompressionSupported: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -306,62 +306,62 @@ func dataSourceNetworkconfigPolicyRead(d *schema.ResourceData, meta interface{})
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("alternate_ipv4dns_server", (s.AlternateIpv4dnsServer)); err != nil {
+			if err := d.Set("alternate_ipv4dns_server", (s.GetAlternateIpv4dnsServer())); err != nil {
 				return fmt.Errorf("error occurred while setting property AlternateIpv4dnsServer: %+v", err)
 			}
-			if err := d.Set("alternate_ipv6dns_server", (s.AlternateIpv6dnsServer)); err != nil {
+			if err := d.Set("alternate_ipv6dns_server", (s.GetAlternateIpv6dnsServer())); err != nil {
 				return fmt.Errorf("error occurred while setting property AlternateIpv6dnsServer: %+v", err)
 			}
 
-			if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.ApplianceAccount, d)); err != nil {
+			if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.GetApplianceAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ApplianceAccount: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("dynamic_dns_domain", (s.DynamicDnsDomain)); err != nil {
+			if err := d.Set("dynamic_dns_domain", (s.GetDynamicDnsDomain())); err != nil {
 				return fmt.Errorf("error occurred while setting property DynamicDnsDomain: %+v", err)
 			}
-			if err := d.Set("enable_dynamic_dns", (s.EnableDynamicDns)); err != nil {
+			if err := d.Set("enable_dynamic_dns", (s.GetEnableDynamicDns())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnableDynamicDns: %+v", err)
 			}
-			if err := d.Set("enable_ipv4dns_from_dhcp", (s.EnableIpv4dnsFromDhcp)); err != nil {
+			if err := d.Set("enable_ipv4dns_from_dhcp", (s.GetEnableIpv4dnsFromDhcp())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnableIpv4dnsFromDhcp: %+v", err)
 			}
-			if err := d.Set("enable_ipv6", (s.EnableIpv6)); err != nil {
+			if err := d.Set("enable_ipv6", (s.GetEnableIpv6())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnableIpv6: %+v", err)
 			}
-			if err := d.Set("enable_ipv6dns_from_dhcp", (s.EnableIpv6dnsFromDhcp)); err != nil {
+			if err := d.Set("enable_ipv6dns_from_dhcp", (s.GetEnableIpv6dnsFromDhcp())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnableIpv6dnsFromDhcp: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
-			if err := d.Set("preferred_ipv4dns_server", (s.PreferredIpv4dnsServer)); err != nil {
+			if err := d.Set("preferred_ipv4dns_server", (s.GetPreferredIpv4dnsServer())); err != nil {
 				return fmt.Errorf("error occurred while setting property PreferredIpv4dnsServer: %+v", err)
 			}
-			if err := d.Set("preferred_ipv6dns_server", (s.PreferredIpv6dnsServer)); err != nil {
+			if err := d.Set("preferred_ipv6dns_server", (s.GetPreferredIpv6dnsServer())); err != nil {
 				return fmt.Errorf("error occurred while setting property PreferredIpv6dnsServer: %+v", err)
 			}
 
-			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

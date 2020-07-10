@@ -345,49 +345,49 @@ func dataSourceStorageStoragePolicyRead(d *schema.ResourceData, meta interface{}
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("disk_group_policies", flattenListStorageDiskGroupPolicyRelationship(s.DiskGroupPolicies, d)); err != nil {
+			if err := d.Set("disk_group_policies", flattenListStorageDiskGroupPolicyRelationship(s.GetDiskGroupPolicies(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property DiskGroupPolicies: %+v", err)
 			}
 
-			if err := d.Set("global_hot_spares", flattenListStorageLocalDisk(s.GlobalHotSpares, d)); err != nil {
+			if err := d.Set("global_hot_spares", flattenListStorageLocalDisk(s.GetGlobalHotSpares(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property GlobalHotSpares: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.Profiles, d)); err != nil {
+			if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 			}
-			if err := d.Set("retain_policy_virtual_drives", (s.RetainPolicyVirtualDrives)); err != nil {
+			if err := d.Set("retain_policy_virtual_drives", (s.GetRetainPolicyVirtualDrives())); err != nil {
 				return fmt.Errorf("error occurred while setting property RetainPolicyVirtualDrives: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("unused_disks_state", (s.UnusedDisksState)); err != nil {
+			if err := d.Set("unused_disks_state", (s.GetUnusedDisksState())); err != nil {
 				return fmt.Errorf("error occurred while setting property UnusedDisksState: %+v", err)
 			}
 
-			if err := d.Set("virtual_drives", flattenListStorageVirtualDriveConfig(s.VirtualDrives, d)); err != nil {
+			if err := d.Set("virtual_drives", flattenListStorageVirtualDriveConfig(s.GetVirtualDrives(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualDrives: %+v", err)
 			}
 			d.SetId(s.GetMoid())

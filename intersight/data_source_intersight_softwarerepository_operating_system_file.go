@@ -263,57 +263,57 @@ func dataSourceSoftwarerepositoryOperatingSystemFileRead(d *schema.ResourceData,
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.Catalog, d)); err != nil {
+			if err := d.Set("catalog", flattenMapSoftwarerepositoryCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("download_count", (s.DownloadCount)); err != nil {
+			if err := d.Set("download_count", (s.GetDownloadCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property DownloadCount: %+v", err)
 			}
-			if err := d.Set("import_action", (s.ImportAction)); err != nil {
+			if err := d.Set("import_action", (s.GetImportAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportAction: %+v", err)
 			}
-			if err := d.Set("import_state", (s.ImportState)); err != nil {
+			if err := d.Set("import_state", (s.GetImportState())); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportState: %+v", err)
 			}
-			if err := d.Set("md5sum", (s.Md5sum)); err != nil {
+			if err := d.Set("md5sum", (s.GetMd5sum())); err != nil {
 				return fmt.Errorf("error occurred while setting property Md5sum: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("sha512sum", (s.Sha512sum)); err != nil {
+			if err := d.Set("sha512sum", (s.GetSha512sum())); err != nil {
 				return fmt.Errorf("error occurred while setting property Sha512sum: %+v", err)
 			}
-			if err := d.Set("size", (s.Size)); err != nil {
+			if err := d.Set("size", (s.GetSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property Size: %+v", err)
 			}
-			if err := d.Set("software_advisory_url", (s.SoftwareAdvisoryUrl)); err != nil {
+			if err := d.Set("software_advisory_url", (s.GetSoftwareAdvisoryUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property SoftwareAdvisoryUrl: %+v", err)
 			}
 
-			if err := d.Set("nr_source", flattenMapSoftwarerepositoryFileServer(s.Source, d)); err != nil {
+			if err := d.Set("nr_source", flattenMapSoftwarerepositoryFileServer(s.GetSource(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Source: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("nr_version", (s.Version)); err != nil {
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())

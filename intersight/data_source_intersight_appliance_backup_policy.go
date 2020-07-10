@@ -290,52 +290,52 @@ func dataSourceApplianceBackupPolicyRead(d *schema.ResourceData, meta interface{
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
 
-			if err := d.Set("backup_time", (s.BackupTime).String()); err != nil {
+			if err := d.Set("backup_time", (s.GetBackupTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property BackupTime: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("filename", (s.Filename)); err != nil {
+			if err := d.Set("filename", (s.GetFilename())); err != nil {
 				return fmt.Errorf("error occurred while setting property Filename: %+v", err)
 			}
-			if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
+			if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
 				return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 			}
-			if err := d.Set("manual_backup", (s.ManualBackup)); err != nil {
+			if err := d.Set("manual_backup", (s.GetManualBackup())); err != nil {
 				return fmt.Errorf("error occurred while setting property ManualBackup: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("protocol", (s.Protocol)); err != nil {
+			if err := d.Set("protocol", (s.GetProtocol())); err != nil {
 				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 			}
-			if err := d.Set("remote_host", (s.RemoteHost)); err != nil {
+			if err := d.Set("remote_host", (s.GetRemoteHost())); err != nil {
 				return fmt.Errorf("error occurred while setting property RemoteHost: %+v", err)
 			}
-			if err := d.Set("remote_path", (s.RemotePath)); err != nil {
+			if err := d.Set("remote_path", (s.GetRemotePath())); err != nil {
 				return fmt.Errorf("error occurred while setting property RemotePath: %+v", err)
 			}
-			if err := d.Set("remote_port", (s.RemotePort)); err != nil {
+			if err := d.Set("remote_port", (s.GetRemotePort())); err != nil {
 				return fmt.Errorf("error occurred while setting property RemotePort: %+v", err)
 			}
 
-			if err := d.Set("schedule", flattenMapOnpremSchedule(s.Schedule, d)); err != nil {
+			if err := d.Set("schedule", flattenMapOnpremSchedule(s.GetSchedule(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Schedule: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("username", (s.Username)); err != nil {
+			if err := d.Set("username", (s.GetUsername())); err != nil {
 				return fmt.Errorf("error occurred while setting property Username: %+v", err)
 			}
 			d.SetId(s.GetMoid())

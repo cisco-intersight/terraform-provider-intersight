@@ -343,48 +343,48 @@ func dataSourceIamCertificateRequestRead(d *schema.ResourceData, meta interface{
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
 
-			if err := d.Set("certificate", flattenMapIamCertificateRelationship(s.Certificate, d)); err != nil {
+			if err := d.Set("certificate", flattenMapIamCertificateRelationship(s.GetCertificate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Certificate: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("email_address", (s.EmailAddress)); err != nil {
+			if err := d.Set("email_address", (s.GetEmailAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property EmailAddress: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("private_key_spec", flattenMapIamPrivateKeySpecRelationship(s.PrivateKeySpec, d)); err != nil {
+			if err := d.Set("private_key_spec", flattenMapIamPrivateKeySpecRelationship(s.GetPrivateKeySpec(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PrivateKeySpec: %+v", err)
 			}
-			if err := d.Set("request", (s.Request)); err != nil {
+			if err := d.Set("request", (s.GetRequest())); err != nil {
 				return fmt.Errorf("error occurred while setting property Request: %+v", err)
 			}
-			if err := d.Set("self_signed", (s.SelfSigned)); err != nil {
+			if err := d.Set("self_signed", (s.GetSelfSigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property SelfSigned: %+v", err)
 			}
 
-			if err := d.Set("subject", flattenMapPkixDistinguishedName(s.Subject, d)); err != nil {
+			if err := d.Set("subject", flattenMapPkixDistinguishedName(s.GetSubject(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Subject: %+v", err)
 			}
 
-			if err := d.Set("subject_alternate_name", flattenMapPkixSubjectAlternateName(s.SubjectAlternateName, d)); err != nil {
+			if err := d.Set("subject_alternate_name", flattenMapPkixSubjectAlternateName(s.GetSubjectAlternateName(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SubjectAlternateName: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -23,6 +24,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -66,6 +72,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -150,6 +161,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -212,6 +228,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -258,6 +279,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -301,6 +327,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -336,6 +367,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -379,6 +415,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -455,6 +496,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -522,6 +568,11 @@ func resourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -579,6 +630,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -617,6 +678,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -687,6 +758,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewWorkflowMessageWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.Message")
 			if v, ok := l["message"]; ok {
 				{
@@ -736,6 +817,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -774,6 +865,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -812,6 +913,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -845,6 +956,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -883,6 +1004,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowWorkflowInfoPropertiesWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.WorkflowInfoProperties")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -960,6 +1091,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1017,6 +1158,16 @@ func resourceWorkflowWorkflowInfoCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1076,159 +1227,159 @@ func resourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("action", (s.Action)); err != nil {
+	if err := d.Set("action", (s.GetAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property Action: %+v", err)
 	}
 
-	if err := d.Set("associated_object", flattenMapMoBaseMoRelationship(s.AssociatedObject, d)); err != nil {
+	if err := d.Set("associated_object", flattenMapMoBaseMoRelationship(s.GetAssociatedObject(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property AssociatedObject: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("cleanup_time", (s.CleanupTime).String()); err != nil {
+	if err := d.Set("cleanup_time", (s.GetCleanupTime()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property CleanupTime: %+v", err)
 	}
 
-	if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+	if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 	}
 
-	if err := d.Set("failed_workflow_cleanup_duration", (s.FailedWorkflowCleanupDuration)); err != nil {
+	if err := d.Set("failed_workflow_cleanup_duration", (s.GetFailedWorkflowCleanupDuration())); err != nil {
 		return fmt.Errorf("error occurred while setting property FailedWorkflowCleanupDuration: %+v", err)
 	}
 
-	if err := d.Set("input", (s.Input)); err != nil {
+	if err := d.Set("input", (s.GetInput())); err != nil {
 		return fmt.Errorf("error occurred while setting property Input: %+v", err)
 	}
 
-	if err := d.Set("inst_id", (s.InstId)); err != nil {
+	if err := d.Set("inst_id", (s.GetInstId())); err != nil {
 		return fmt.Errorf("error occurred while setting property InstId: %+v", err)
 	}
 
-	if err := d.Set("internal", (s.Internal)); err != nil {
+	if err := d.Set("internal", (s.GetInternal())); err != nil {
 		return fmt.Errorf("error occurred while setting property Internal: %+v", err)
 	}
 
-	if err := d.Set("last_action", (s.LastAction)); err != nil {
+	if err := d.Set("last_action", (s.GetLastAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property LastAction: %+v", err)
 	}
 
-	if err := d.Set("message", flattenListWorkflowMessage(s.Message, d)); err != nil {
+	if err := d.Set("message", flattenListWorkflowMessage(s.GetMessage(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Message: %+v", err)
 	}
 
-	if err := d.Set("meta_version", (s.MetaVersion)); err != nil {
+	if err := d.Set("meta_version", (s.GetMetaVersion())); err != nil {
 		return fmt.Errorf("error occurred while setting property MetaVersion: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("output", (s.Output)); err != nil {
+	if err := d.Set("output", (s.GetOutput())); err != nil {
 		return fmt.Errorf("error occurred while setting property Output: %+v", err)
 	}
 
-	if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRelationship(s.ParentTaskInfo, d)); err != nil {
+	if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRelationship(s.GetParentTaskInfo(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ParentTaskInfo: %+v", err)
 	}
 
-	if err := d.Set("pause_reason", (s.PauseReason)); err != nil {
+	if err := d.Set("pause_reason", (s.GetPauseReason())); err != nil {
 		return fmt.Errorf("error occurred while setting property PauseReason: %+v", err)
 	}
 
-	if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(s.PendingDynamicWorkflowInfo, d)); err != nil {
+	if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(s.GetPendingDynamicWorkflowInfo(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property PendingDynamicWorkflowInfo: %+v", err)
 	}
 
-	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.Permission, d)); err != nil {
+	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 	}
 
-	if err := d.Set("progress", (s.Progress)); err != nil {
+	if err := d.Set("progress", (s.GetProgress())); err != nil {
 		return fmt.Errorf("error occurred while setting property Progress: %+v", err)
 	}
 
-	if err := d.Set("properties", flattenMapWorkflowWorkflowInfoProperties(s.Properties, d)); err != nil {
+	if err := d.Set("properties", flattenMapWorkflowWorkflowInfoProperties(s.GetProperties(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Properties: %+v", err)
 	}
 
-	if err := d.Set("retry_from_task_name", (s.RetryFromTaskName)); err != nil {
+	if err := d.Set("retry_from_task_name", (s.GetRetryFromTaskName())); err != nil {
 		return fmt.Errorf("error occurred while setting property RetryFromTaskName: %+v", err)
 	}
 
-	if err := d.Set("src", (s.Src)); err != nil {
+	if err := d.Set("src", (s.GetSrc())); err != nil {
 		return fmt.Errorf("error occurred while setting property Src: %+v", err)
 	}
 
-	if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+	if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 		return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 	}
 
-	if err := d.Set("status", (s.Status)); err != nil {
+	if err := d.Set("status", (s.GetStatus())); err != nil {
 		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("success_workflow_cleanup_duration", (s.SuccessWorkflowCleanupDuration)); err != nil {
+	if err := d.Set("success_workflow_cleanup_duration", (s.GetSuccessWorkflowCleanupDuration())); err != nil {
 		return fmt.Errorf("error occurred while setting property SuccessWorkflowCleanupDuration: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("task_infos", flattenListWorkflowTaskInfoRelationship(s.TaskInfos, d)); err != nil {
+	if err := d.Set("task_infos", flattenListWorkflowTaskInfoRelationship(s.GetTaskInfos(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TaskInfos: %+v", err)
 	}
 
-	if err := d.Set("trace_id", (s.TraceId)); err != nil {
+	if err := d.Set("trace_id", (s.GetTraceId())); err != nil {
 		return fmt.Errorf("error occurred while setting property TraceId: %+v", err)
 	}
 
-	if err := d.Set("type", (s.Type)); err != nil {
+	if err := d.Set("type", (s.GetType())); err != nil {
 		return fmt.Errorf("error occurred while setting property Type: %+v", err)
 	}
 
-	if err := d.Set("user_id", (s.UserId)); err != nil {
+	if err := d.Set("user_id", (s.GetUserId())); err != nil {
 		return fmt.Errorf("error occurred while setting property UserId: %+v", err)
 	}
 
-	if err := d.Set("wait_reason", (s.WaitReason)); err != nil {
+	if err := d.Set("wait_reason", (s.GetWaitReason())); err != nil {
 		return fmt.Errorf("error occurred while setting property WaitReason: %+v", err)
 	}
 
-	if err := d.Set("workflow_ctx", (s.WorkflowCtx)); err != nil {
+	if err := d.Set("workflow_ctx", (s.GetWorkflowCtx())); err != nil {
 		return fmt.Errorf("error occurred while setting property WorkflowCtx: %+v", err)
 	}
 
-	if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRelationship(s.WorkflowDefinition, d)); err != nil {
+	if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRelationship(s.GetWorkflowDefinition(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property WorkflowDefinition: %+v", err)
 	}
 
-	if err := d.Set("workflow_meta_type", (s.WorkflowMetaType)); err != nil {
+	if err := d.Set("workflow_meta_type", (s.GetWorkflowMetaType())); err != nil {
 		return fmt.Errorf("error occurred while setting property WorkflowMetaType: %+v", err)
 	}
 
-	if err := d.Set("workflow_task_count", (s.WorkflowTaskCount)); err != nil {
+	if err := d.Set("workflow_task_count", (s.GetWorkflowTaskCount())); err != nil {
 		return fmt.Errorf("error occurred while setting property WorkflowTaskCount: %+v", err)
 	}
 
@@ -1249,6 +1400,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1289,6 +1450,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1367,6 +1538,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewWorkflowMessageWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.Message")
 			if v, ok := l["message"]; ok {
 				{
@@ -1420,6 +1601,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1460,6 +1651,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1500,6 +1701,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1534,6 +1745,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1574,6 +1795,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewWorkflowWorkflowInfoPropertiesWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("workflow.WorkflowInfoProperties")
 			if v, ok := l["object_type"]; ok {
 				{
@@ -1658,6 +1889,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoMoRefWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1721,6 +1962,16 @@ func resourceWorkflowWorkflowInfoUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{

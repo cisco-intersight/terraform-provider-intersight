@@ -236,41 +236,41 @@ func dataSourceHyperflexClusterStoragePolicyRead(d *schema.ResourceData, meta in
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.ClusterProfiles, d)); err != nil {
+			if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("disk_partition_cleanup", (s.DiskPartitionCleanup)); err != nil {
+			if err := d.Set("disk_partition_cleanup", (s.GetDiskPartitionCleanup())); err != nil {
 				return fmt.Errorf("error occurred while setting property DiskPartitionCleanup: %+v", err)
 			}
 
-			if err := d.Set("logical_avalability_zone_config", flattenMapHyperflexLogicalAvailabilityZone(s.LogicalAvalabilityZoneConfig, d)); err != nil {
+			if err := d.Set("logical_avalability_zone_config", flattenMapHyperflexLogicalAvailabilityZone(s.GetLogicalAvalabilityZoneConfig(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LogicalAvalabilityZoneConfig: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vdi_optimization", (s.VdiOptimization)); err != nil {
+			if err := d.Set("vdi_optimization", (s.GetVdiOptimization())); err != nil {
 				return fmt.Errorf("error occurred while setting property VdiOptimization: %+v", err)
 			}
 			d.SetId(s.GetMoid())

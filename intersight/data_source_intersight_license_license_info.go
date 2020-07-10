@@ -258,58 +258,58 @@ func dataSourceLicenseLicenseInfoRead(d *schema.ResourceData, meta interface{}) 
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account_license_data", flattenMapLicenseAccountLicenseDataRelationship(s.AccountLicenseData, d)); err != nil {
+			if err := d.Set("account_license_data", flattenMapLicenseAccountLicenseDataRelationship(s.GetAccountLicenseData(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountLicenseData: %+v", err)
 			}
-			if err := d.Set("active_admin", (s.ActiveAdmin)); err != nil {
+			if err := d.Set("active_admin", (s.GetActiveAdmin())); err != nil {
 				return fmt.Errorf("error occurred while setting property ActiveAdmin: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("days_left", (s.DaysLeft)); err != nil {
+			if err := d.Set("days_left", (s.GetDaysLeft())); err != nil {
 				return fmt.Errorf("error occurred while setting property DaysLeft: %+v", err)
 			}
 
-			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+			if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 			}
-			if err := d.Set("enforce_mode", (s.EnforceMode)); err != nil {
+			if err := d.Set("enforce_mode", (s.GetEnforceMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnforceMode: %+v", err)
 			}
-			if err := d.Set("error_desc", (s.ErrorDesc)); err != nil {
+			if err := d.Set("error_desc", (s.GetErrorDesc())); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorDesc: %+v", err)
 			}
-			if err := d.Set("evaluation_period", (s.EvaluationPeriod)); err != nil {
+			if err := d.Set("evaluation_period", (s.GetEvaluationPeriod())); err != nil {
 				return fmt.Errorf("error occurred while setting property EvaluationPeriod: %+v", err)
 			}
-			if err := d.Set("extra_evaluation", (s.ExtraEvaluation)); err != nil {
+			if err := d.Set("extra_evaluation", (s.GetExtraEvaluation())); err != nil {
 				return fmt.Errorf("error occurred while setting property ExtraEvaluation: %+v", err)
 			}
-			if err := d.Set("license_count", (s.LicenseCount)); err != nil {
+			if err := d.Set("license_count", (s.GetLicenseCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseCount: %+v", err)
 			}
-			if err := d.Set("license_state", (s.LicenseState)); err != nil {
+			if err := d.Set("license_state", (s.GetLicenseState())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseState: %+v", err)
 			}
-			if err := d.Set("license_type", (s.LicenseType)); err != nil {
+			if err := d.Set("license_type", (s.GetLicenseType())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseType: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("trial_admin", (s.TrialAdmin)); err != nil {
+			if err := d.Set("trial_admin", (s.GetTrialAdmin())); err != nil {
 				return fmt.Errorf("error occurred while setting property TrialAdmin: %+v", err)
 			}
 			d.SetId(s.GetMoid())

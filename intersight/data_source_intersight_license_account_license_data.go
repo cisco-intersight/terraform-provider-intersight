@@ -463,100 +463,100 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("account_id", (s.AccountId)); err != nil {
+			if err := d.Set("account_id", (s.GetAccountId())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountId: %+v", err)
 			}
-			if err := d.Set("agent_data", (s.AgentData)); err != nil {
+			if err := d.Set("agent_data", (s.GetAgentData())); err != nil {
 				return fmt.Errorf("error occurred while setting property AgentData: %+v", err)
 			}
-			if err := d.Set("auth_expire_time", (s.AuthExpireTime)); err != nil {
+			if err := d.Set("auth_expire_time", (s.GetAuthExpireTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property AuthExpireTime: %+v", err)
 			}
-			if err := d.Set("auth_initial_time", (s.AuthInitialTime)); err != nil {
+			if err := d.Set("auth_initial_time", (s.GetAuthInitialTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property AuthInitialTime: %+v", err)
 			}
-			if err := d.Set("auth_next_time", (s.AuthNextTime)); err != nil {
+			if err := d.Set("auth_next_time", (s.GetAuthNextTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property AuthNextTime: %+v", err)
 			}
-			if err := d.Set("category", (s.Category)); err != nil {
+			if err := d.Set("category", (s.GetCategory())); err != nil {
 				return fmt.Errorf("error occurred while setting property Category: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("customer_op", flattenMapLicenseCustomerOpRelationship(s.CustomerOp, d)); err != nil {
+			if err := d.Set("customer_op", flattenMapLicenseCustomerOpRelationship(s.GetCustomerOp(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property CustomerOp: %+v", err)
 			}
-			if err := d.Set("default_license_type", (s.DefaultLicenseType)); err != nil {
+			if err := d.Set("default_license_type", (s.GetDefaultLicenseType())); err != nil {
 				return fmt.Errorf("error occurred while setting property DefaultLicenseType: %+v", err)
 			}
-			if err := d.Set("error_desc", (s.ErrorDesc)); err != nil {
+			if err := d.Set("error_desc", (s.GetErrorDesc())); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorDesc: %+v", err)
 			}
-			if err := d.Set("group", (s.Group)); err != nil {
+			if err := d.Set("group", (s.GetGroup())); err != nil {
 				return fmt.Errorf("error occurred while setting property Group: %+v", err)
 			}
-			if err := d.Set("highest_compliant_license_tier", (s.HighestCompliantLicenseTier)); err != nil {
+			if err := d.Set("highest_compliant_license_tier", (s.GetHighestCompliantLicenseTier())); err != nil {
 				return fmt.Errorf("error occurred while setting property HighestCompliantLicenseTier: %+v", err)
 			}
 
-			if err := d.Set("last_sync", (s.LastSync).String()); err != nil {
+			if err := d.Set("last_sync", (s.GetLastSync()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastSync: %+v", err)
 			}
 
-			if err := d.Set("last_updated_time", (s.LastUpdatedTime).String()); err != nil {
+			if err := d.Set("last_updated_time", (s.GetLastUpdatedTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property LastUpdatedTime: %+v", err)
 			}
-			if err := d.Set("license_state", (s.LicenseState)); err != nil {
+			if err := d.Set("license_state", (s.GetLicenseState())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseState: %+v", err)
 			}
-			if err := d.Set("license_tech_support_info", (s.LicenseTechSupportInfo)); err != nil {
+			if err := d.Set("license_tech_support_info", (s.GetLicenseTechSupportInfo())); err != nil {
 				return fmt.Errorf("error occurred while setting property LicenseTechSupportInfo: %+v", err)
 			}
 
-			if err := d.Set("licenseinfos", flattenListLicenseLicenseInfoRelationship(s.Licenseinfos, d)); err != nil {
+			if err := d.Set("licenseinfos", flattenListLicenseLicenseInfoRelationship(s.GetLicenseinfos(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Licenseinfos: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("register_expire_time", (s.RegisterExpireTime)); err != nil {
+			if err := d.Set("register_expire_time", (s.GetRegisterExpireTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisterExpireTime: %+v", err)
 			}
-			if err := d.Set("register_initial_time", (s.RegisterInitialTime)); err != nil {
+			if err := d.Set("register_initial_time", (s.GetRegisterInitialTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisterInitialTime: %+v", err)
 			}
-			if err := d.Set("register_next_time", (s.RegisterNextTime)); err != nil {
+			if err := d.Set("register_next_time", (s.GetRegisterNextTime())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisterNextTime: %+v", err)
 			}
-			if err := d.Set("registration_status", (s.RegistrationStatus)); err != nil {
+			if err := d.Set("registration_status", (s.GetRegistrationStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property RegistrationStatus: %+v", err)
 			}
-			if err := d.Set("renew_failure_string", (s.RenewFailureString)); err != nil {
+			if err := d.Set("renew_failure_string", (s.GetRenewFailureString())); err != nil {
 				return fmt.Errorf("error occurred while setting property RenewFailureString: %+v", err)
 			}
-			if err := d.Set("smart_account", (s.SmartAccount)); err != nil {
+			if err := d.Set("smart_account", (s.GetSmartAccount())); err != nil {
 				return fmt.Errorf("error occurred while setting property SmartAccount: %+v", err)
 			}
 
-			if err := d.Set("smartlicense_token", flattenMapLicenseSmartlicenseTokenRelationship(s.SmartlicenseToken, d)); err != nil {
+			if err := d.Set("smartlicense_token", flattenMapLicenseSmartlicenseTokenRelationship(s.GetSmartlicenseToken(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SmartlicenseToken: %+v", err)
 			}
-			if err := d.Set("sync_status", (s.SyncStatus)); err != nil {
+			if err := d.Set("sync_status", (s.GetSyncStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property SyncStatus: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("virtual_account", (s.VirtualAccount)); err != nil {
+			if err := d.Set("virtual_account", (s.GetVirtualAccount())); err != nil {
 				return fmt.Errorf("error occurred while setting property VirtualAccount: %+v", err)
 			}
 			d.SetId(s.GetMoid())

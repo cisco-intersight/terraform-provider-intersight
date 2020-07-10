@@ -486,44 +486,44 @@ func dataSourceWorkflowBatchApiExecutorRead(d *schema.ResourceData, meta interfa
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("batch", flattenListWorkflowApi(s.Batch, d)); err != nil {
+			if err := d.Set("batch", flattenListWorkflowApi(s.GetBatch(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Batch: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.Constraints, d)); err != nil {
+			if err := d.Set("constraints", flattenMapWorkflowTaskConstraints(s.GetConstraints(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Constraints: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.ErrorResponseHandler, d)); err != nil {
+			if err := d.Set("error_response_handler", flattenMapWorkflowErrorResponseHandlerRelationship(s.GetErrorResponseHandler(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property ErrorResponseHandler: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("retry_from_failed_api", (s.RetryFromFailedApi)); err != nil {
+			if err := d.Set("retry_from_failed_api", (s.GetRetryFromFailedApi())); err != nil {
 				return fmt.Errorf("error occurred while setting property RetryFromFailedApi: %+v", err)
 			}
-			if err := d.Set("skip_on_condition", (s.SkipOnCondition)); err != nil {
+			if err := d.Set("skip_on_condition", (s.GetSkipOnCondition())); err != nil {
 				return fmt.Errorf("error occurred while setting property SkipOnCondition: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 
-			if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.TaskDefinition, d)); err != nil {
+			if err := d.Set("task_definition", flattenMapWorkflowTaskDefinitionRelationship(s.GetTaskDefinition(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property TaskDefinition: %+v", err)
 			}
 			d.SetId(s.GetMoid())

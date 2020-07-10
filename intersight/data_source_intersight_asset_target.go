@@ -278,41 +278,41 @@ func dataSourceAssetTargetRead(d *schema.ResourceData, meta interface{}) error {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
 
-			if err := d.Set("assist", flattenMapAssetDeviceRegistrationRelationship(s.Assist, d)); err != nil {
+			if err := d.Set("assist", flattenMapAssetDeviceRegistrationRelationship(s.GetAssist(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Assist: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("connections", flattenListAssetConnection(s.Connections, d)); err != nil {
+			if err := d.Set("connections", flattenListAssetConnection(s.GetConnections(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Connections: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("services", flattenListAssetService(s.Services, d)); err != nil {
+			if err := d.Set("services", flattenListAssetService(s.GetServices(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Services: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
+			if err := d.Set("status", (s.GetStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("status_error_reason", (s.StatusErrorReason)); err != nil {
+			if err := d.Set("status_error_reason", (s.GetStatusErrorReason())); err != nil {
 				return fmt.Errorf("error occurred while setting property StatusErrorReason: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("target_type", (s.TargetType)); err != nil {
+			if err := d.Set("target_type", (s.GetTargetType())); err != nil {
 				return fmt.Errorf("error occurred while setting property TargetType: %+v", err)
 			}
 			d.SetId(s.GetMoid())

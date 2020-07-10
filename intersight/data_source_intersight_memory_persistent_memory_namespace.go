@@ -298,56 +298,56 @@ func dataSourceMemoryPersistentMemoryNamespaceRead(d *schema.ResourceData, meta 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("capacity", (s.Capacity)); err != nil {
+			if err := d.Set("capacity", (s.GetCapacity())); err != nil {
 				return fmt.Errorf("error occurred while setting property Capacity: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("health_state", (s.HealthState)); err != nil {
+			if err := d.Set("health_state", (s.GetHealthState())); err != nil {
 				return fmt.Errorf("error occurred while setting property HealthState: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("label_version", (s.LabelVersion)); err != nil {
+			if err := d.Set("label_version", (s.GetLabelVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property LabelVersion: %+v", err)
 			}
 
-			if err := d.Set("memory_persistent_memory_region", flattenMapMemoryPersistentMemoryRegionRelationship(s.MemoryPersistentMemoryRegion, d)); err != nil {
+			if err := d.Set("memory_persistent_memory_region", flattenMapMemoryPersistentMemoryRegionRelationship(s.GetMemoryPersistentMemoryRegion(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property MemoryPersistentMemoryRegion: %+v", err)
 			}
-			if err := d.Set("mode", (s.Mode)); err != nil {
+			if err := d.Set("mode", (s.GetMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property Mode: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uuid", (s.Uuid)); err != nil {
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
 			d.SetId(s.GetMoid())

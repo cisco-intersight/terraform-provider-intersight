@@ -1,6 +1,7 @@
 package intersight
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -27,6 +28,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -62,6 +68,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -107,6 +118,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -165,6 +181,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -200,6 +221,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -237,6 +263,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -293,6 +324,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -362,6 +398,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -414,6 +455,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -458,6 +504,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -497,6 +548,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -539,6 +595,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicArfsSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -568,6 +634,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicCompletionQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.CompletionQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -611,6 +687,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthInterruptSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
 				{
@@ -666,6 +752,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicNvgreSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -695,6 +791,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -728,6 +834,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicRoceSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.RoceSettings")
 			if v, ok := l["class_of_service"]; ok {
 				{
@@ -785,6 +901,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicRssHashSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.RssHashSettings")
 			if v, ok := l["ipv4_hash"]; ok {
 				{
@@ -859,6 +985,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthRxQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthRxQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -917,6 +1053,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicTcpOffloadSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
 				{
@@ -962,6 +1108,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthTxQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthTxQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -1000,6 +1156,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicVxlanSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -1043,87 +1209,87 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("advanced_filter", (s.AdvancedFilter)); err != nil {
+	if err := d.Set("advanced_filter", (s.GetAdvancedFilter())); err != nil {
 		return fmt.Errorf("error occurred while setting property AdvancedFilter: %+v", err)
 	}
 
-	if err := d.Set("arfs_settings", flattenMapVnicArfsSettings(s.ArfsSettings, d)); err != nil {
+	if err := d.Set("arfs_settings", flattenMapVnicArfsSettings(s.GetArfsSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property ArfsSettings: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassId)); err != nil {
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("completion_queue_settings", flattenMapVnicCompletionQueueSettings(s.CompletionQueueSettings, d)); err != nil {
+	if err := d.Set("completion_queue_settings", flattenMapVnicCompletionQueueSettings(s.GetCompletionQueueSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property CompletionQueueSettings: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
+	if err := d.Set("description", (s.GetDescription())); err != nil {
 		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("interrupt_scaling", (s.InterruptScaling)); err != nil {
+	if err := d.Set("interrupt_scaling", (s.GetInterruptScaling())); err != nil {
 		return fmt.Errorf("error occurred while setting property InterruptScaling: %+v", err)
 	}
 
-	if err := d.Set("interrupt_settings", flattenMapVnicEthInterruptSettings(s.InterruptSettings, d)); err != nil {
+	if err := d.Set("interrupt_settings", flattenMapVnicEthInterruptSettings(s.GetInterruptSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property InterruptSettings: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
+	if err := d.Set("name", (s.GetName())); err != nil {
 		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("nvgre_settings", flattenMapVnicNvgreSettings(s.NvgreSettings, d)); err != nil {
+	if err := d.Set("nvgre_settings", flattenMapVnicNvgreSettings(s.GetNvgreSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property NvgreSettings: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.Organization, d)); err != nil {
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("roce_settings", flattenMapVnicRoceSettings(s.RoceSettings, d)); err != nil {
+	if err := d.Set("roce_settings", flattenMapVnicRoceSettings(s.GetRoceSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property RoceSettings: %+v", err)
 	}
 
-	if err := d.Set("rss_hash_settings", flattenMapVnicRssHashSettings(s.RssHashSettings, d)); err != nil {
+	if err := d.Set("rss_hash_settings", flattenMapVnicRssHashSettings(s.GetRssHashSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property RssHashSettings: %+v", err)
 	}
 
-	if err := d.Set("rss_settings", (s.RssSettings)); err != nil {
+	if err := d.Set("rss_settings", (s.GetRssSettings())); err != nil {
 		return fmt.Errorf("error occurred while setting property RssSettings: %+v", err)
 	}
 
-	if err := d.Set("rx_queue_settings", flattenMapVnicEthRxQueueSettings(s.RxQueueSettings, d)); err != nil {
+	if err := d.Set("rx_queue_settings", flattenMapVnicEthRxQueueSettings(s.GetRxQueueSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property RxQueueSettings: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("tcp_offload_settings", flattenMapVnicTcpOffloadSettings(s.TcpOffloadSettings, d)); err != nil {
+	if err := d.Set("tcp_offload_settings", flattenMapVnicTcpOffloadSettings(s.GetTcpOffloadSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TcpOffloadSettings: %+v", err)
 	}
 
-	if err := d.Set("tx_queue_settings", flattenMapVnicEthTxQueueSettings(s.TxQueueSettings, d)); err != nil {
+	if err := d.Set("tx_queue_settings", flattenMapVnicEthTxQueueSettings(s.GetTxQueueSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property TxQueueSettings: %+v", err)
 	}
 
-	if err := d.Set("uplink_failback_timeout", (s.UplinkFailbackTimeout)); err != nil {
+	if err := d.Set("uplink_failback_timeout", (s.GetUplinkFailbackTimeout())); err != nil {
 		return fmt.Errorf("error occurred while setting property UplinkFailbackTimeout: %+v", err)
 	}
 
-	if err := d.Set("vxlan_settings", flattenMapVnicVxlanSettings(s.VxlanSettings, d)); err != nil {
+	if err := d.Set("vxlan_settings", flattenMapVnicVxlanSettings(s.GetVxlanSettings(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property VxlanSettings: %+v", err)
 	}
 
@@ -1150,6 +1316,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicArfsSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.ArfsSettings")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -1180,6 +1356,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicCompletionQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.CompletionQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -1226,6 +1412,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthInterruptSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthInterruptSettings")
 			if v, ok := l["coalescing_time"]; ok {
 				{
@@ -1284,6 +1480,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicNvgreSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.NvgreSettings")
 			if v, ok := l["enabled"]; ok {
 				{
@@ -1314,6 +1520,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
@@ -1348,6 +1564,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicRoceSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.RoceSettings")
 			if v, ok := l["class_of_service"]; ok {
 				{
@@ -1406,6 +1632,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicRssHashSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.RssHashSettings")
 			if v, ok := l["ipv4_hash"]; ok {
 				{
@@ -1482,6 +1718,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthRxQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthRxQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -1542,6 +1788,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicTcpOffloadSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.TcpOffloadSettings")
 			if v, ok := l["large_receive"]; ok {
 				{
@@ -1588,6 +1844,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicEthTxQueueSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.EthTxQueueSettings")
 			if v, ok := l["nr_count"]; ok {
 				{
@@ -1628,6 +1894,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			l := s[i].(map[string]interface{})
 			o := models.NewVnicVxlanSettingsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			o.SetClassId("vnic.VxlanSettings")
 			if v, ok := l["enabled"]; ok {
 				{

@@ -60,18 +60,22 @@ The following arguments are supported:
 * `closed_loop_therm_throtl`:(string) BIOS Token for setting Closed Loop Therm Throt configuration. 
 * `cmci_enable`:(string) BIOS Token for setting Processor CMCI configuration. 
 * `config_tdp`:(string) BIOS Token for setting Config TDP configuration. 
+* `config_tdp_level`:(string) BIOS Token for setting Configurable TDP Level configuration. 
 * `console_redirection`:(string) BIOS Token for setting Console redirection configuration. 
 * `core_multi_processing`:(string) BIOS Token for setting Core MultiProcessing configuration. 
 * `cpu_energy_performance`:(string) BIOS Token for setting Energy Performance configuration. 
 * `cpu_frequency_floor`:(string) BIOS Token for setting Frequency Floor Override configuration. 
 * `cpu_performance`:(string) BIOS Token for setting CPU Performance configuration. 
 * `cpu_power_management`:(string) BIOS Token for setting Power Technology configuration. 
+* `cr_qos`:(string) BIOS Token for setting CR QoS configuration. 
+* `crfastgo_config`:(string) BIOS Token for setting CR FastGo Config configuration. 
 * `dcpmm_firmware_downgrade`:(string) BIOS Token for setting DCPMM Firmware Downgrade configuration. 
 * `demand_scrub`:(string) BIOS Token for setting Demand Scrub configuration. 
 * `description`:(string) Description of the policy. 
 * `direct_cache_access`:(string) BIOS Token for setting Direct Cache Access Support configuration. 
 * `dram_clock_throttling`:(string) BIOS Token for setting DRAM Clock Throttling configuration. 
 * `dram_refresh_rate`:(string) BIOS Token for setting DRAM Refresh Rate configuration. 
+* `enable_clock_spread_spec`:(string) BIOS Token for setting External SSC Enable configuration. 
 * `energy_efficient_turbo`:(string) BIOS Token for setting Energy Efficient Turbo configuration. 
 * `eng_perf_tuning`:(string) BIOS Token for setting Energy Performance Tuning configuration. 
 * `enhanced_intel_speed_step_tech`:(string) BIOS Token for setting Enhanced Intel Speedstep (R) Technology configuration. 
@@ -117,6 +121,7 @@ The following arguments are supported:
 * `name`:(string) Name of the concrete policy. 
 * `network_stack`:(string) BIOS Token for setting Network Stack configuration. 
 * `numa_optimized`:(string) BIOS Token for setting NUMA optimized configuration. 
+* `nvmdimm_perform_config`:(string) BIOS Token for setting NVM Performance Setting configuration. 
 * `object_type`:(string)(Computed) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
 * `onboard10gbit_lom`:(string) BIOS Token for setting Onboard 10Gbit LOM configuration. 
 * `onboard_gbit_lom`:(string) BIOS Token for setting Onboard Gbit LOM configuration. 
@@ -124,6 +129,8 @@ The following arguments are supported:
 * `onboard_scu_storage_sw_stack`:(string) BIOS Token for setting Onboard SCU Storage SW Stack configuration. 
 * `organization`:(Array with Maximum of one item) - A reference to a organizationOrganization resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `moid`:(string)(Computed) The Moid of the referenced REST resource. 
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 
@@ -146,6 +153,21 @@ This complex property has following sub-properties:
 * `pch_usb30mode`:(string) BIOS Token for setting xHCI Mode configuration. 
 * `pci_option_ro_ms`:(string) BIOS Token for setting All PCIe Slots OptionROM configuration. 
 * `pci_rom_clp`:(string) BIOS Token for setting PCI ROM CLP configuration. 
+* `pcie_ari_support`:(string) BIOS Token for setting PCIe ARI Support configuration. 
+* `pcie_pll_ssc`:(string) BIOS Token for setting PCIe PLL SSC configuration. 
+* `pcie_slot_mstorraid_option_rom`:(string) BIOS Token for setting PCIe Slot MSTOR RAID OptionROM configuration. 
+* `pcie_slot_nvme1link_speed`:(string) BIOS Token for setting NVME-1 Link Speed configuration. 
+* `pcie_slot_nvme1option_rom`:(string) BIOS Token for setting NVME-1 OptionROM configuration. 
+* `pcie_slot_nvme2link_speed`:(string) BIOS Token for setting NVME-2 Link Speed configuration. 
+* `pcie_slot_nvme2option_rom`:(string) BIOS Token for setting NVME-2 OptionROM configuration. 
+* `pcie_slot_nvme3link_speed`:(string) BIOS Token for setting NVME-3 Link Speed configuration. 
+* `pcie_slot_nvme3option_rom`:(string) BIOS Token for setting NVME-3 OptionROM configuration. 
+* `pcie_slot_nvme4link_speed`:(string) BIOS Token for setting NVME-4 Link Speed configuration. 
+* `pcie_slot_nvme4option_rom`:(string) BIOS Token for setting NVME-4 OptionROM configuration. 
+* `pcie_slot_nvme5link_speed`:(string) BIOS Token for setting NVME-5 Link Speed configuration. 
+* `pcie_slot_nvme5option_rom`:(string) BIOS Token for setting NVME-5 OptionROM configuration. 
+* `pcie_slot_nvme6link_speed`:(string) BIOS Token for setting NVME-6 Link Speed configuration. 
+* `pcie_slot_nvme6option_rom`:(string) BIOS Token for setting NVME-6 OptionROM configuration. 
 * `pop_support`:(string) BIOS Token for setting Power ON Password configuration. 
 * `post_error_pause`:(string) BIOS Token for setting POST Error Pause configuration. 
 * `processor_c1e`:(string) BIOS Token for setting Processor C1E configuration. 
@@ -154,6 +176,8 @@ This complex property has following sub-properties:
 * `processor_cstate`:(string) BIOS Token for setting CPU C State configuration. 
 * `profiles`:(Array) An array of relationships to policyAbstractConfigProfile resources. 
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `moid`:(string)(Computed) The Moid of the referenced REST resource. 
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 
@@ -163,6 +187,7 @@ This complex property has following sub-properties:
 * `putty_key_pad`:(string) BIOS Token for setting Putty KeyPad configuration. 
 * `pwr_perf_tuning`:(string) BIOS Token for setting Power Performance Tuning configuration. 
 * `qpi_link_frequency`:(string) BIOS Token for setting QPI Link Frequency Select configuration. 
+* `qpi_link_speed`:(string) BIOS Token for setting UPI Link Frequency Select configuration. 
 * `qpi_snoop_mode`:(string) BIOS Token for setting QPI Snoop Mode configuration. 
 * `rank_inter_leave`:(string) BIOS Token for setting Rank Interleaving configuration. 
 * `redirection_after_post`:(string) BIOS Token for setting Redirection After BIOS POST configuration. 
@@ -269,6 +294,8 @@ This complex property has following sub-properties:
 * `smee`:(string) BIOS Token for setting SMEE configuration. 
 * `smt_mode`:(string) BIOS Token for setting SMT Mode configuration. 
 * `snc`:(string) BIOS Token for setting Sub Numa Clustering configuration. 
+* `snoopy_mode_for2lm`:(string) BIOS Token for setting Snoopy Mode for 2LM configuration. 
+* `snoopy_mode_for_ad`:(string) BIOS Token for setting Snoopy Mode for AD configuration. 
 * `sparing_mode`:(string) BIOS Token for setting Sparing Mode configuration. 
 * `sr_iov`:(string) BIOS Token for setting SR-IOV Support configuration. 
 * `streamer_prefetch`:(string) BIOS Token for setting DCU Streamer Prefetch configuration. 
@@ -282,6 +309,7 @@ This complex property has following sub-properties:
 * `tpm_support`:(string) BIOS Token for setting TPM Support configuration. 
 * `txt_support`:(string) BIOS Token for setting Intel Trusted Execution Technology Support configuration. 
 * `ucsm_boot_order_rule`:(string) BIOS Token for setting Boot Order Rules configuration. 
+* `ufs_disable`:(string) BIOS Token for setting Uncore Frequency Scaling configuration. 
 * `usb_emul6064`:(string) BIOS Token for setting Port 60/64 Emulation configuration. 
 * `usb_port_front`:(string) BIOS Token for setting USB Port Front configuration. 
 * `usb_port_internal`:(string) BIOS Token for setting USB Port Internal configuration. 

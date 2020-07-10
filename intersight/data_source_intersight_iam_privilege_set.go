@@ -266,41 +266,41 @@ func dataSourceIamPrivilegeSetRead(d *schema.ResourceData, meta interface{}) err
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
 
-			if err := d.Set("associated_privilege_sets", flattenListIamPrivilegeSetRelationship(s.AssociatedPrivilegeSets, d)); err != nil {
+			if err := d.Set("associated_privilege_sets", flattenListIamPrivilegeSetRelationship(s.GetAssociatedPrivilegeSets(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AssociatedPrivilegeSets: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("privilege_names", (s.PrivilegeNames)); err != nil {
+			if err := d.Set("privilege_names", (s.GetPrivilegeNames())); err != nil {
 				return fmt.Errorf("error occurred while setting property PrivilegeNames: %+v", err)
 			}
 
-			if err := d.Set("privileges", flattenListIamPrivilegeRelationship(s.Privileges, d)); err != nil {
+			if err := d.Set("privileges", flattenListIamPrivilegeRelationship(s.GetPrivileges(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Privileges: %+v", err)
 			}
 
-			if err := d.Set("system", flattenMapIamSystemRelationship(s.System, d)); err != nil {
+			if err := d.Set("system", flattenMapIamSystemRelationship(s.GetSystem(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property System: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

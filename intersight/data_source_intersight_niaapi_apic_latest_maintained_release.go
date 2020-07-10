@@ -130,26 +130,26 @@ func dataSourceNiaapiApicLatestMaintainedReleaseRead(d *schema.ResourceData, met
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("maintained_release", (s.MaintainedRelease)); err != nil {
+			if err := d.Set("maintained_release", (s.GetMaintainedRelease())); err != nil {
 				return fmt.Errorf("error occurred while setting property MaintainedRelease: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("software_release", (s.SoftwareRelease)); err != nil {
+			if err := d.Set("software_release", (s.GetSoftwareRelease())); err != nil {
 				return fmt.Errorf("error occurred while setting property SoftwareRelease: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("version_tag", (s.VersionTag)); err != nil {
+			if err := d.Set("version_tag", (s.GetVersionTag())); err != nil {
 				return fmt.Errorf("error occurred while setting property VersionTag: %+v", err)
 			}
 			d.SetId(s.GetMoid())

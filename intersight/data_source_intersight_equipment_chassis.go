@@ -690,123 +690,123 @@ func dataSourceEquipmentChassisRead(d *schema.ResourceData, meta interface{}) er
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("blades", flattenListComputeBladeRelationship(s.Blades, d)); err != nil {
+			if err := d.Set("blades", flattenListComputeBladeRelationship(s.GetBlades(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Blades: %+v", err)
 			}
-			if err := d.Set("chassis_id", (s.ChassisId)); err != nil {
+			if err := d.Set("chassis_id", (s.GetChassisId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ChassisId: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("connection_path", (s.ConnectionPath)); err != nil {
+			if err := d.Set("connection_path", (s.GetConnectionPath())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionPath: %+v", err)
 			}
-			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
+			if err := d.Set("connection_status", (s.GetConnectionStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
+			if err := d.Set("description", (s.GetDescription())); err != nil {
 				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoId)); err != nil {
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
+			if err := d.Set("dn", (s.GetDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("fanmodules", flattenListEquipmentFanModuleRelationship(s.Fanmodules, d)); err != nil {
+			if err := d.Set("fanmodules", flattenListEquipmentFanModuleRelationship(s.GetFanmodules(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Fanmodules: %+v", err)
 			}
-			if err := d.Set("fault_summary", (s.FaultSummary)); err != nil {
+			if err := d.Set("fault_summary", (s.GetFaultSummary())); err != nil {
 				return fmt.Errorf("error occurred while setting property FaultSummary: %+v", err)
 			}
 
-			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.InventoryDeviceInfo, d)); err != nil {
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
 
-			if err := d.Set("ioms", flattenListEquipmentIoCardRelationship(s.Ioms, d)); err != nil {
+			if err := d.Set("ioms", flattenListEquipmentIoCardRelationship(s.GetIoms(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Ioms: %+v", err)
 			}
 
-			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRelationship(s.LocatorLed, d)); err != nil {
+			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRelationship(s.GetLocatorLed(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LocatorLed: %+v", err)
 			}
-			if err := d.Set("management_mode", (s.ManagementMode)); err != nil {
+			if err := d.Set("management_mode", (s.GetManagementMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property ManagementMode: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
+			if err := d.Set("model", (s.GetModel())); err != nil {
 				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
+			if err := d.Set("name", (s.GetName())); err != nil {
 				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
 				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
 			}
-			if err := d.Set("part_number", (s.PartNumber)); err != nil {
+			if err := d.Set("part_number", (s.GetPartNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property PartNumber: %+v", err)
 			}
-			if err := d.Set("pid", (s.Pid)); err != nil {
+			if err := d.Set("pid", (s.GetPid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Pid: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
-			if err := d.Set("product_name", (s.ProductName)); err != nil {
+			if err := d.Set("product_name", (s.GetProductName())); err != nil {
 				return fmt.Errorf("error occurred while setting property ProductName: %+v", err)
 			}
 
-			if err := d.Set("psu_control", flattenMapEquipmentPsuControlRelationship(s.PsuControl, d)); err != nil {
+			if err := d.Set("psu_control", flattenMapEquipmentPsuControlRelationship(s.GetPsuControl(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property PsuControl: %+v", err)
 			}
 
-			if err := d.Set("psus", flattenListEquipmentPsuRelationship(s.Psus, d)); err != nil {
+			if err := d.Set("psus", flattenListEquipmentPsuRelationship(s.GetPsus(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Psus: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
 				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
+			if err := d.Set("rn", (s.GetRn())); err != nil {
 				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
 
-			if err := d.Set("sasexpanders", flattenListStorageSasExpanderRelationship(s.Sasexpanders, d)); err != nil {
+			if err := d.Set("sasexpanders", flattenListStorageSasExpanderRelationship(s.GetSasexpanders(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Sasexpanders: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
 
-			if err := d.Set("siocs", flattenListEquipmentSystemIoControllerRelationship(s.Siocs, d)); err != nil {
+			if err := d.Set("siocs", flattenListEquipmentSystemIoControllerRelationship(s.GetSiocs(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Siocs: %+v", err)
 			}
-			if err := d.Set("sku", (s.Sku)); err != nil {
+			if err := d.Set("sku", (s.GetSku())); err != nil {
 				return fmt.Errorf("error occurred while setting property Sku: %+v", err)
 			}
 
-			if err := d.Set("storage_enclosures", flattenListStorageEnclosureRelationship(s.StorageEnclosures, d)); err != nil {
+			if err := d.Set("storage_enclosures", flattenListStorageEnclosureRelationship(s.GetStorageEnclosures(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property StorageEnclosures: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			if err := d.Set("vid", (s.Vid)); err != nil {
+			if err := d.Set("vid", (s.GetVid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Vid: %+v", err)
 			}
 			d.SetId(s.GetMoid())

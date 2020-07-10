@@ -228,44 +228,44 @@ func dataSourceApplianceSetupInfoRead(d *schema.ResourceData, meta interface{}) 
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRelationship(s.Account, d)); err != nil {
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("build_type", (s.BuildType)); err != nil {
+			if err := d.Set("build_type", (s.GetBuildType())); err != nil {
 				return fmt.Errorf("error occurred while setting property BuildType: %+v", err)
 			}
 
-			if err := d.Set("capabilities", flattenListApplianceKeyValuePair(s.Capabilities, d)); err != nil {
+			if err := d.Set("capabilities", flattenListApplianceKeyValuePair(s.GetCapabilities(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Capabilities: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("cloud_url", (s.CloudUrl)); err != nil {
+			if err := d.Set("cloud_url", (s.GetCloudUrl())); err != nil {
 				return fmt.Errorf("error occurred while setting property CloudUrl: %+v", err)
 			}
-			if err := d.Set("deployment_mode", (s.DeploymentMode)); err != nil {
+			if err := d.Set("deployment_mode", (s.GetDeploymentMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeploymentMode: %+v", err)
 			}
 
-			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
+			if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("setup_states", (s.SetupStates)); err != nil {
+			if err := d.Set("setup_states", (s.GetSetupStates())); err != nil {
 				return fmt.Errorf("error occurred while setting property SetupStates: %+v", err)
 			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
 			d.SetId(s.GetMoid())

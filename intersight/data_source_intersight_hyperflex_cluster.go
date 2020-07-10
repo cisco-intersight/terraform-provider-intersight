@@ -614,84 +614,84 @@ func dataSourceHyperflexClusterRead(d *schema.ResourceData, meta interface{}) er
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("alarm", flattenListHyperflexAlarmRelationship(s.Alarm, d)); err != nil {
+			if err := d.Set("alarm", flattenListHyperflexAlarmRelationship(s.GetAlarm(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Alarm: %+v", err)
 			}
-			if err := d.Set("capacity_runway", (s.CapacityRunway)); err != nil {
+			if err := d.Set("capacity_runway", (s.GetCapacityRunway())); err != nil {
 				return fmt.Errorf("error occurred while setting property CapacityRunway: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassId)); err != nil {
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("cluster_name", (s.ClusterName)); err != nil {
+			if err := d.Set("cluster_name", (s.GetClusterName())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterName: %+v", err)
 			}
-			if err := d.Set("cluster_type", (s.ClusterType)); err != nil {
+			if err := d.Set("cluster_type", (s.GetClusterType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterType: %+v", err)
 			}
-			if err := d.Set("cluster_uuid", (s.ClusterUuid)); err != nil {
+			if err := d.Set("cluster_uuid", (s.GetClusterUuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClusterUuid: %+v", err)
 			}
-			if err := d.Set("compute_node_count", (s.ComputeNodeCount)); err != nil {
+			if err := d.Set("compute_node_count", (s.GetComputeNodeCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ComputeNodeCount: %+v", err)
 			}
-			if err := d.Set("converged_node_count", (s.ConvergedNodeCount)); err != nil {
+			if err := d.Set("converged_node_count", (s.GetConvergedNodeCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConvergedNodeCount: %+v", err)
 			}
-			if err := d.Set("deployment_type", (s.DeploymentType)); err != nil {
+			if err := d.Set("deployment_type", (s.GetDeploymentType())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeploymentType: %+v", err)
 			}
-			if err := d.Set("device_id", (s.DeviceId)); err != nil {
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
 				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
 			}
-			if err := d.Set("flt_aggr", (s.FltAggr)); err != nil {
+			if err := d.Set("flt_aggr", (s.GetFltAggr())); err != nil {
 				return fmt.Errorf("error occurred while setting property FltAggr: %+v", err)
 			}
 
-			if err := d.Set("health", flattenMapHyperflexHealthRelationship(s.Health, d)); err != nil {
+			if err := d.Set("health", flattenMapHyperflexHealthRelationship(s.GetHealth(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Health: %+v", err)
 			}
-			if err := d.Set("hx_version", (s.HxVersion)); err != nil {
+			if err := d.Set("hx_version", (s.GetHxVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxVersion: %+v", err)
 			}
-			if err := d.Set("hxdp_build_version", (s.HxdpBuildVersion)); err != nil {
+			if err := d.Set("hxdp_build_version", (s.GetHxdpBuildVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HxdpBuildVersion: %+v", err)
 			}
-			if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
+			if err := d.Set("hypervisor_type", (s.GetHypervisorType())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 			}
-			if err := d.Set("hypervisor_version", (s.HypervisorVersion)); err != nil {
+			if err := d.Set("hypervisor_version", (s.GetHypervisorVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property HypervisorVersion: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
 
-			if err := d.Set("nodes", flattenListHyperflexNodeRelationship(s.Nodes, d)); err != nil {
+			if err := d.Set("nodes", flattenListHyperflexNodeRelationship(s.GetNodes(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Nodes: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.RegisteredDevice, d)); err != nil {
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("summary", flattenMapHyperflexSummary(s.Summary, d)); err != nil {
+			if err := d.Set("summary", flattenMapHyperflexSummary(s.GetSummary(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Summary: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("utilization_percentage", (s.UtilizationPercentage)); err != nil {
+			if err := d.Set("utilization_percentage", (s.GetUtilizationPercentage())); err != nil {
 				return fmt.Errorf("error occurred while setting property UtilizationPercentage: %+v", err)
 			}
-			if err := d.Set("utilization_trend_percentage", (s.UtilizationTrendPercentage)); err != nil {
+			if err := d.Set("utilization_trend_percentage", (s.GetUtilizationTrendPercentage())); err != nil {
 				return fmt.Errorf("error occurred while setting property UtilizationTrendPercentage: %+v", err)
 			}
-			if err := d.Set("vm_count", (s.VmCount)); err != nil {
+			if err := d.Set("vm_count", (s.GetVmCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property VmCount: %+v", err)
 			}
 			d.SetId(s.GetMoid())
