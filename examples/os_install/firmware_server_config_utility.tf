@@ -1,8 +1,9 @@
 resource "intersight_firmware_server_configuration_utility_distributable" "scu1" {
   name = "SCU-6.0.4c nfs"
-  source {
+  nr_source {
     object_type = "softwarerepository.CifsServer"
     additional_properties = jsonencode({
+      FileLocation: "10.255.79.79/Public.iso/scu-604c.iso"
       RemoteIp: "10.225.79.79"
       RemoteShare: "/Public/iso"
       RemoteFile: "scu-604c.iso"
@@ -12,12 +13,12 @@ resource "intersight_firmware_server_configuration_utility_distributable" "scu1"
     })
   }
   vendor = "Cisco"
-  version = "6.0.(4c)"
+  nr_version = "6.0.(4c)"
   supported_models = [
     "C-series",
   ]
   description = "Cisco SCU-6.0(4c)"
   catalog {
-    moid = "5dde4cb06567612d3063467a"
+    moid = var.catalog
   }
 }

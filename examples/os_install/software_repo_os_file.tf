@@ -1,9 +1,11 @@
 resource "intersight_softwarerepository_operating_system_file" "osf1" {
-  version = "ESXi 6.7 U2"
+  nr_version = "ESXi 6.7 U2"
   description = "ESXi6.7U2 without answers"
   name = "ESXi6.7 w/o cifs 21"
-  source {
+
+  nr_source {
     additional_properties = jsonencode({
+      FileLocation = "10.225.79.79/Public/iso/esx67u2.iso"
       RemoteIp = "10.225.79.79"
       RemoteShare = "/Public/iso"
       RemoteFile = "esx67u2.iso"
@@ -15,12 +17,17 @@ resource "intersight_softwarerepository_operating_system_file" "osf1" {
   }
   vendor = "VMware"
   catalog {
-    moid = "5dde4cb06567612d3063467a"
+    moid = var.catalog
   }
+//  organization {
+//    object_type = "organization.Organization"
+//    moid = var.organization
+//  }
 }
 
 resource "intersight_softwarerepository_operating_system_file" "osf2" {
-  source {
+
+  nr_source {
     additional_properties = jsonencode({
       RemoteIp = "10.225.79.79"
       RemoteShare = "/Public/iso"
@@ -28,14 +35,20 @@ resource "intersight_softwarerepository_operating_system_file" "osf2" {
       Username = "user"
       Password = var.os_file_password_1
       MountOption = "sec=ntlm"
+      FileLocation = "10.225.79.79/Public/iso/esx6u3.iso"
     })
+
     object_type = "softwarerepository.CifsServer"
   }
   name = "ESXi6.0-CIFS"
   vendor = "VMware"
-  version = "ESXi 6.0 U3"
+  nr_version = "ESXi 6.0 U3"
   description = "ESXi6.0-CIFS"
   catalog {
-    moid = "5dde4cb06567612d3063467a"
+    moid = var.catalog
   }
+//  organization {
+//    object_type = "organization.Organization"
+//    moid = var.organization
+//  }
 }
