@@ -23,7 +23,7 @@ resource "intersight_snmp_policy" "snmp1" {
     port        = 660
     type        = "Trap"
     user        = "aarush1234"
-    version     = "V3"
+    nr_version     = "V3"
   }
   profiles {
     moid        = intersight_server_profile.server1.id

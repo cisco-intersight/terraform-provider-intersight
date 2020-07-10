@@ -1,5 +1,5 @@
 resource "intersight_smtp_policy" "smtp1" {
-  enabled      = true
+  enabled      = false
   name         = "smtp1"
   description  = "testing smtp policy"
   smtp_port    = 32
@@ -8,7 +8,6 @@ resource "intersight_smtp_policy" "smtp1" {
   sender_email = "IMCSQAAutomation@cisco.com"
   smtp_recipients = [
     "aw@cisco.com",
-    "bx@cisco.com",
     "cy@cisco.com",
   "dz@cisco.com"]
   organization {

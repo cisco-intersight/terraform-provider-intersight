@@ -12,7 +12,7 @@ resource "intersight_networkconfig_policy" "network_config1" {
   enable_ipv4dns_from_dhcp = false
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
 }
 
@@ -30,7 +30,7 @@ resource "intersight_networkconfig_policy" "network_config2" {
   preferred_ipv6dns_server = "::"
   organization {
     object_type = "organization.Organization"
-    moid = "5e2540956972652d301b0a65"
+    moid = var.organization
   }
   profiles {
     moid        = intersight_server_profile.server1.id
