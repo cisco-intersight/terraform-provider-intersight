@@ -20,9 +20,8 @@ Name | Type | Description | Notes
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
 **Assigned** | Pointer to **bool** | Boolean to represent whether the ID is assigned or not. | [optional] 
-**AssignedToMoid** | Pointer to **string** | Moid of the entity/server profile that owns this ID. | [optional] 
-**AssignedToType** | Pointer to **string** | Type of the entity that owns this ID. | [optional] 
 **Uuid** | Pointer to **string** | UUID Prefix+Suffix of this PoolMember. | [optional] 
+**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **BlockHead** | Pointer to [**UuidpoolBlockRelationship**](uuidpool.Block.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**UuidpoolUuidLeaseRelationship**](uuidpool.UuidLease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**UuidpoolPoolRelationship**](uuidpool.Pool.Relationship.md) |  | [optional] 
@@ -466,56 +465,6 @@ SetAssigned sets Assigned field to given value.
 
 HasAssigned returns a boolean if a field has been set.
 
-### GetAssignedToMoid
-
-`func (o *UuidpoolPoolMemberRelationship) GetAssignedToMoid() string`
-
-GetAssignedToMoid returns the AssignedToMoid field if non-nil, zero value otherwise.
-
-### GetAssignedToMoidOk
-
-`func (o *UuidpoolPoolMemberRelationship) GetAssignedToMoidOk() (*string, bool)`
-
-GetAssignedToMoidOk returns a tuple with the AssignedToMoid field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToMoid
-
-`func (o *UuidpoolPoolMemberRelationship) SetAssignedToMoid(v string)`
-
-SetAssignedToMoid sets AssignedToMoid field to given value.
-
-### HasAssignedToMoid
-
-`func (o *UuidpoolPoolMemberRelationship) HasAssignedToMoid() bool`
-
-HasAssignedToMoid returns a boolean if a field has been set.
-
-### GetAssignedToType
-
-`func (o *UuidpoolPoolMemberRelationship) GetAssignedToType() string`
-
-GetAssignedToType returns the AssignedToType field if non-nil, zero value otherwise.
-
-### GetAssignedToTypeOk
-
-`func (o *UuidpoolPoolMemberRelationship) GetAssignedToTypeOk() (*string, bool)`
-
-GetAssignedToTypeOk returns a tuple with the AssignedToType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToType
-
-`func (o *UuidpoolPoolMemberRelationship) SetAssignedToType(v string)`
-
-SetAssignedToType sets AssignedToType field to given value.
-
-### HasAssignedToType
-
-`func (o *UuidpoolPoolMemberRelationship) HasAssignedToType() bool`
-
-HasAssignedToType returns a boolean if a field has been set.
-
 ### GetUuid
 
 `func (o *UuidpoolPoolMemberRelationship) GetUuid() string`
@@ -540,6 +489,31 @@ SetUuid sets Uuid field to given value.
 `func (o *UuidpoolPoolMemberRelationship) HasUuid() bool`
 
 HasUuid returns a boolean if a field has been set.
+
+### GetAssignedToEntity
+
+`func (o *UuidpoolPoolMemberRelationship) GetAssignedToEntity() MoBaseMoRelationship`
+
+GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
+
+### GetAssignedToEntityOk
+
+`func (o *UuidpoolPoolMemberRelationship) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
+
+GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToEntity
+
+`func (o *UuidpoolPoolMemberRelationship) SetAssignedToEntity(v MoBaseMoRelationship)`
+
+SetAssignedToEntity sets AssignedToEntity field to given value.
+
+### HasAssignedToEntity
+
+`func (o *UuidpoolPoolMemberRelationship) HasAssignedToEntity() bool`
+
+HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetBlockHead
 

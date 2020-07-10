@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **DeviceMoId** | Pointer to **string** | The database identifier of the registered device of an object. | [optional] [readonly] 
 **Dn** | Pointer to **string** | The Distinguished Name unambiguously identifies an object in the system. | [optional] [readonly] 
 **Rn** | Pointer to **string** | The Relative Name uniquely identifies an object within a given context. | [optional] [readonly] 
-**OperQualifierReason** | Pointer to **string** |  | [optional] [readonly] 
+**OperQualifierReason** | Pointer to **string** | For certain states, indicates the reason why the operState is in that state. | [optional] [readonly] 
 **Presence** | Pointer to **string** | The presence state of the local disk. | [optional] [readonly] 
 **Role** | Pointer to **string** | Role of the disk normal or hot-spare, used by virtual-drive. | [optional] [readonly] 
 **SpanId** | Pointer to **string** | The span id number of the virtual drive. | [optional] [readonly] 

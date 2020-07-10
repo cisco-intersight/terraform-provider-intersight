@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolPurpose** | Pointer to **string** | Purpose of this WWN pool. | [optional] [readonly] 
 **WwnId** | Pointer to **string** | WWN ID allocated for pool based allocation. | [optional] 
+**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**FcpoolPoolRelationship**](fcpool.Pool.Relationship.md) |  | [optional] 
 **PoolMember** | Pointer to [**FcpoolPoolMemberRelationship**](fcpool.PoolMember.Relationship.md) |  | [optional] 
 **Universe** | Pointer to [**FcpoolUniverseRelationship**](fcpool.Universe.Relationship.md) |  | [optional] 
@@ -78,6 +79,31 @@ SetWwnId sets WwnId field to given value.
 `func (o *FcpoolLease) HasWwnId() bool`
 
 HasWwnId returns a boolean if a field has been set.
+
+### GetAssignedToEntity
+
+`func (o *FcpoolLease) GetAssignedToEntity() MoBaseMoRelationship`
+
+GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
+
+### GetAssignedToEntityOk
+
+`func (o *FcpoolLease) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
+
+GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToEntity
+
+`func (o *FcpoolLease) SetAssignedToEntity(v MoBaseMoRelationship)`
+
+SetAssignedToEntity sets AssignedToEntity field to given value.
+
+### HasAssignedToEntity
+
+`func (o *FcpoolLease) HasAssignedToEntity() bool`
+
+HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetPool
 

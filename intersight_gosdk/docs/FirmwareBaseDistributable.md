@@ -7,10 +7,8 @@ Name | Type | Description | Notes
 **BundleType** | Pointer to **string** | The bundle type of the image, as published on cisco.com. | [optional] [readonly] 
 **ComponentMeta** | Pointer to [**[]FirmwareComponentMeta**](firmware.ComponentMeta.md) |  | [optional] 
 **Guid** | Pointer to **string** | The unique identifier for an image in a Cisco repository. | [optional] [readonly] 
-**ImageCategory** | Pointer to **string** | The category of the distributable. That is, if it is C-Series, B-Series and the like. | [optional] 
 **Mdfid** | Pointer to **string** | The mdfid of the image provided by cisco.com. | [optional] 
 **Model** | Pointer to **string** | The endpoint model for which this firmware image is applicable. | [optional] 
-**Origin** | Pointer to **string** | The source of the distributable. If it has been created by the user or system. | [optional] [default to "System"]
 **PlatformType** | Pointer to **string** | The platform type of the image. | [optional] [readonly] 
 **RecommendedBuild** | Pointer to **string** | The build which is recommended by Cisco. | [optional] 
 **ReleaseNotesUrl** | Pointer to **string** | The url for the release notes of this image. | [optional] 
@@ -114,31 +112,6 @@ SetGuid sets Guid field to given value.
 
 HasGuid returns a boolean if a field has been set.
 
-### GetImageCategory
-
-`func (o *FirmwareBaseDistributable) GetImageCategory() string`
-
-GetImageCategory returns the ImageCategory field if non-nil, zero value otherwise.
-
-### GetImageCategoryOk
-
-`func (o *FirmwareBaseDistributable) GetImageCategoryOk() (*string, bool)`
-
-GetImageCategoryOk returns a tuple with the ImageCategory field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetImageCategory
-
-`func (o *FirmwareBaseDistributable) SetImageCategory(v string)`
-
-SetImageCategory sets ImageCategory field to given value.
-
-### HasImageCategory
-
-`func (o *FirmwareBaseDistributable) HasImageCategory() bool`
-
-HasImageCategory returns a boolean if a field has been set.
-
 ### GetMdfid
 
 `func (o *FirmwareBaseDistributable) GetMdfid() string`
@@ -188,31 +161,6 @@ SetModel sets Model field to given value.
 `func (o *FirmwareBaseDistributable) HasModel() bool`
 
 HasModel returns a boolean if a field has been set.
-
-### GetOrigin
-
-`func (o *FirmwareBaseDistributable) GetOrigin() string`
-
-GetOrigin returns the Origin field if non-nil, zero value otherwise.
-
-### GetOriginOk
-
-`func (o *FirmwareBaseDistributable) GetOriginOk() (*string, bool)`
-
-GetOriginOk returns a tuple with the Origin field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrigin
-
-`func (o *FirmwareBaseDistributable) SetOrigin(v string)`
-
-SetOrigin sets Origin field to given value.
-
-### HasOrigin
-
-`func (o *FirmwareBaseDistributable) HasOrigin() bool`
-
-HasOrigin returns a boolean if a field has been set.
 
 ### GetPlatformType
 

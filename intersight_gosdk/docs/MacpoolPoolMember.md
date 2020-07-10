@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MacAddress** | Pointer to **string** | MAC Address of this pool member. | [optional] 
+**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **BlockHead** | Pointer to [**MacpoolIdBlockRelationship**](macpool.IdBlock.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**MacpoolLeaseRelationship**](macpool.Lease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**MacpoolPoolRelationship**](macpool.Pool.Relationship.md) |  | [optional] 
@@ -52,6 +53,31 @@ SetMacAddress sets MacAddress field to given value.
 `func (o *MacpoolPoolMember) HasMacAddress() bool`
 
 HasMacAddress returns a boolean if a field has been set.
+
+### GetAssignedToEntity
+
+`func (o *MacpoolPoolMember) GetAssignedToEntity() MoBaseMoRelationship`
+
+GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
+
+### GetAssignedToEntityOk
+
+`func (o *MacpoolPoolMember) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
+
+GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToEntity
+
+`func (o *MacpoolPoolMember) SetAssignedToEntity(v MoBaseMoRelationship)`
+
+SetAssignedToEntity sets AssignedToEntity field to given value.
+
+### HasAssignedToEntity
+
+`func (o *MacpoolPoolMember) HasAssignedToEntity() bool`
+
+HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetBlockHead
 

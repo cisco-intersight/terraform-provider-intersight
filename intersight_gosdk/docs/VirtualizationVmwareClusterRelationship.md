@@ -19,7 +19,6 @@ Name | Type | Description | Notes
 **Parent** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
-**RegisteredDevice** | Pointer to [**AssetDeviceRegistrationRelationship**](asset.DeviceRegistration.Relationship.md) |  | [optional] 
 **HypervisorType** | Pointer to **string** | Identifies the broad type of the underlying hypervisor. | [optional] [default to "Unknown"]
 **Identity** | Pointer to **string** | The internally generated identity of this cluster. This entity is not manipulated by users. It aids in uniquely identifying the cluster object. In case of VMware, this is a MOR (managed object reference). | [optional] [readonly] 
 **MemoryCapacity** | Pointer to [**VirtualizationMemoryCapacity**](virtualization.MemoryCapacity.md) |  | [optional] 
@@ -444,31 +443,6 @@ HasDisplayNames returns a boolean if a field has been set.
 `func (o *VirtualizationVmwareClusterRelationship) UnsetDisplayNames()`
 
 UnsetDisplayNames ensures that no value is present for DisplayNames, not even an explicit nil
-### GetRegisteredDevice
-
-`func (o *VirtualizationVmwareClusterRelationship) GetRegisteredDevice() AssetDeviceRegistrationRelationship`
-
-GetRegisteredDevice returns the RegisteredDevice field if non-nil, zero value otherwise.
-
-### GetRegisteredDeviceOk
-
-`func (o *VirtualizationVmwareClusterRelationship) GetRegisteredDeviceOk() (*AssetDeviceRegistrationRelationship, bool)`
-
-GetRegisteredDeviceOk returns a tuple with the RegisteredDevice field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRegisteredDevice
-
-`func (o *VirtualizationVmwareClusterRelationship) SetRegisteredDevice(v AssetDeviceRegistrationRelationship)`
-
-SetRegisteredDevice sets RegisteredDevice field to given value.
-
-### HasRegisteredDevice
-
-`func (o *VirtualizationVmwareClusterRelationship) HasRegisteredDevice() bool`
-
-HasRegisteredDevice returns a boolean if a field has been set.
-
 ### GetHypervisorType
 
 `func (o *VirtualizationVmwareClusterRelationship) GetHypervisorType() string`

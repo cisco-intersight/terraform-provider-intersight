@@ -20,9 +20,8 @@ Name | Type | Description | Notes
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
 **Assigned** | Pointer to **bool** | Boolean to represent whether the ID is assigned or not. | [optional] 
-**AssignedToMoid** | Pointer to **string** | Moid of the entity/server profile that owns this ID. | [optional] 
-**AssignedToType** | Pointer to **string** | Type of the entity that owns this ID. | [optional] 
 **WwnId** | Pointer to **string** | WWN ID of this pool member. | [optional] 
+**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **BlockHead** | Pointer to [**FcpoolFcBlockRelationship**](fcpool.FcBlock.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**FcpoolLeaseRelationship**](fcpool.Lease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**FcpoolPoolRelationship**](fcpool.Pool.Relationship.md) |  | [optional] 
@@ -466,56 +465,6 @@ SetAssigned sets Assigned field to given value.
 
 HasAssigned returns a boolean if a field has been set.
 
-### GetAssignedToMoid
-
-`func (o *FcpoolPoolMemberRelationship) GetAssignedToMoid() string`
-
-GetAssignedToMoid returns the AssignedToMoid field if non-nil, zero value otherwise.
-
-### GetAssignedToMoidOk
-
-`func (o *FcpoolPoolMemberRelationship) GetAssignedToMoidOk() (*string, bool)`
-
-GetAssignedToMoidOk returns a tuple with the AssignedToMoid field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToMoid
-
-`func (o *FcpoolPoolMemberRelationship) SetAssignedToMoid(v string)`
-
-SetAssignedToMoid sets AssignedToMoid field to given value.
-
-### HasAssignedToMoid
-
-`func (o *FcpoolPoolMemberRelationship) HasAssignedToMoid() bool`
-
-HasAssignedToMoid returns a boolean if a field has been set.
-
-### GetAssignedToType
-
-`func (o *FcpoolPoolMemberRelationship) GetAssignedToType() string`
-
-GetAssignedToType returns the AssignedToType field if non-nil, zero value otherwise.
-
-### GetAssignedToTypeOk
-
-`func (o *FcpoolPoolMemberRelationship) GetAssignedToTypeOk() (*string, bool)`
-
-GetAssignedToTypeOk returns a tuple with the AssignedToType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToType
-
-`func (o *FcpoolPoolMemberRelationship) SetAssignedToType(v string)`
-
-SetAssignedToType sets AssignedToType field to given value.
-
-### HasAssignedToType
-
-`func (o *FcpoolPoolMemberRelationship) HasAssignedToType() bool`
-
-HasAssignedToType returns a boolean if a field has been set.
-
 ### GetWwnId
 
 `func (o *FcpoolPoolMemberRelationship) GetWwnId() string`
@@ -540,6 +489,31 @@ SetWwnId sets WwnId field to given value.
 `func (o *FcpoolPoolMemberRelationship) HasWwnId() bool`
 
 HasWwnId returns a boolean if a field has been set.
+
+### GetAssignedToEntity
+
+`func (o *FcpoolPoolMemberRelationship) GetAssignedToEntity() MoBaseMoRelationship`
+
+GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
+
+### GetAssignedToEntityOk
+
+`func (o *FcpoolPoolMemberRelationship) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
+
+GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToEntity
+
+`func (o *FcpoolPoolMemberRelationship) SetAssignedToEntity(v MoBaseMoRelationship)`
+
+SetAssignedToEntity sets AssignedToEntity field to given value.
+
+### HasAssignedToEntity
+
+`func (o *FcpoolPoolMemberRelationship) HasAssignedToEntity() bool`
+
+HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetBlockHead
 

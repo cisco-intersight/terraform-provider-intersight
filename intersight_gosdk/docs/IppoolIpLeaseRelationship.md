@@ -19,10 +19,9 @@ Name | Type | Description | Notes
 **Parent** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
-**AssignedToMoid** | Pointer to **string** | Moid of the entity/server profile that owns this ID. | [optional] 
-**AssignedToType** | Pointer to **string** | Type of the entity that owns this ID. | [optional] 
 **IpV4Address** | Pointer to **string** | IPv4 Address given as a lease to an external entity like server profiles. | [optional] [readonly] 
 **IpV4Config** | Pointer to [**IppoolIpV4Config**](ippool.IpV4Config.md) |  | [optional] 
+**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**IppoolPoolRelationship**](ippool.Pool.Relationship.md) |  | [optional] 
 **PoolMember** | Pointer to [**IppoolPoolMemberRelationship**](ippool.PoolMember.Relationship.md) |  | [optional] 
 **Universe** | Pointer to [**IppoolUniverseRelationship**](ippool.Universe.Relationship.md) |  | [optional] 
@@ -442,56 +441,6 @@ HasDisplayNames returns a boolean if a field has been set.
 `func (o *IppoolIpLeaseRelationship) UnsetDisplayNames()`
 
 UnsetDisplayNames ensures that no value is present for DisplayNames, not even an explicit nil
-### GetAssignedToMoid
-
-`func (o *IppoolIpLeaseRelationship) GetAssignedToMoid() string`
-
-GetAssignedToMoid returns the AssignedToMoid field if non-nil, zero value otherwise.
-
-### GetAssignedToMoidOk
-
-`func (o *IppoolIpLeaseRelationship) GetAssignedToMoidOk() (*string, bool)`
-
-GetAssignedToMoidOk returns a tuple with the AssignedToMoid field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToMoid
-
-`func (o *IppoolIpLeaseRelationship) SetAssignedToMoid(v string)`
-
-SetAssignedToMoid sets AssignedToMoid field to given value.
-
-### HasAssignedToMoid
-
-`func (o *IppoolIpLeaseRelationship) HasAssignedToMoid() bool`
-
-HasAssignedToMoid returns a boolean if a field has been set.
-
-### GetAssignedToType
-
-`func (o *IppoolIpLeaseRelationship) GetAssignedToType() string`
-
-GetAssignedToType returns the AssignedToType field if non-nil, zero value otherwise.
-
-### GetAssignedToTypeOk
-
-`func (o *IppoolIpLeaseRelationship) GetAssignedToTypeOk() (*string, bool)`
-
-GetAssignedToTypeOk returns a tuple with the AssignedToType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToType
-
-`func (o *IppoolIpLeaseRelationship) SetAssignedToType(v string)`
-
-SetAssignedToType sets AssignedToType field to given value.
-
-### HasAssignedToType
-
-`func (o *IppoolIpLeaseRelationship) HasAssignedToType() bool`
-
-HasAssignedToType returns a boolean if a field has been set.
-
 ### GetIpV4Address
 
 `func (o *IppoolIpLeaseRelationship) GetIpV4Address() string`
@@ -541,6 +490,31 @@ SetIpV4Config sets IpV4Config field to given value.
 `func (o *IppoolIpLeaseRelationship) HasIpV4Config() bool`
 
 HasIpV4Config returns a boolean if a field has been set.
+
+### GetAssignedToEntity
+
+`func (o *IppoolIpLeaseRelationship) GetAssignedToEntity() MoBaseMoRelationship`
+
+GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
+
+### GetAssignedToEntityOk
+
+`func (o *IppoolIpLeaseRelationship) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
+
+GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToEntity
+
+`func (o *IppoolIpLeaseRelationship) SetAssignedToEntity(v MoBaseMoRelationship)`
+
+SetAssignedToEntity sets AssignedToEntity field to given value.
+
+### HasAssignedToEntity
+
+`func (o *IppoolIpLeaseRelationship) HasAssignedToEntity() bool`
+
+HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetPool
 

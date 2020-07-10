@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OperQualifierReason** | Pointer to **string** |  | [optional] [readonly] 
+**OperQualifierReason** | Pointer to **string** | For certain states, indicates the reason why the operState is in that state. | [optional] [readonly] 
 **Presence** | Pointer to **string** | The presence state of the local disk. | [optional] [readonly] 
 **Role** | Pointer to **string** | Role of the disk normal or hot-spare, used by virtual-drive. | [optional] [readonly] 
 **SpanId** | Pointer to **string** | The span id number of the virtual drive. | [optional] [readonly] 

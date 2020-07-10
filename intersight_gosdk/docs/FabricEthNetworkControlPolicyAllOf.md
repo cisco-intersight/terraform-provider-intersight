@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **CdpEnabled** | Pointer to **bool** | Enables the CDP on an interface. | [optional] 
 **ForgeMac** | Pointer to **string** | Determines if the MAC forging is allowed or denied on an interface. | [optional] [default to "allow"]
 **LldpSettings** | Pointer to [**FabricLldpSettings**](fabric.LldpSettings.md) |  | [optional] 
-**MacRegisterMode** | Pointer to **string** | Determines the MAC addresses that have to be registered with the switch. | [optional] [default to "nativeVlanOnly"]
+**MacRegistrationMode** | Pointer to **string** | Determines the MAC addresses that have to be registered with the switch. | [optional] [default to "nativeVlanOnly"]
 **UplinkFailAction** | Pointer to **string** | Determines the state of the virtual interface (vethernet / vfc) on the switch when a suitable uplink is not pinned. | [optional] [default to "linkDown"]
 **NetworkPolicy** | Pointer to [**[]VnicEthNetworkPolicyRelationship**](vnic.EthNetworkPolicy.Relationship.md) | An array of relationships to vnicEthNetworkPolicy resources. | [optional] 
 **Organization** | Pointer to [**OrganizationOrganizationRelationship**](organization.Organization.Relationship.md) |  | [optional] 
@@ -106,30 +106,30 @@ SetLldpSettings sets LldpSettings field to given value.
 
 HasLldpSettings returns a boolean if a field has been set.
 
-### GetMacRegisterMode
+### GetMacRegistrationMode
 
-`func (o *FabricEthNetworkControlPolicyAllOf) GetMacRegisterMode() string`
+`func (o *FabricEthNetworkControlPolicyAllOf) GetMacRegistrationMode() string`
 
-GetMacRegisterMode returns the MacRegisterMode field if non-nil, zero value otherwise.
+GetMacRegistrationMode returns the MacRegistrationMode field if non-nil, zero value otherwise.
 
-### GetMacRegisterModeOk
+### GetMacRegistrationModeOk
 
-`func (o *FabricEthNetworkControlPolicyAllOf) GetMacRegisterModeOk() (*string, bool)`
+`func (o *FabricEthNetworkControlPolicyAllOf) GetMacRegistrationModeOk() (*string, bool)`
 
-GetMacRegisterModeOk returns a tuple with the MacRegisterMode field if it's non-nil, zero value otherwise
+GetMacRegistrationModeOk returns a tuple with the MacRegistrationMode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMacRegisterMode
+### SetMacRegistrationMode
 
-`func (o *FabricEthNetworkControlPolicyAllOf) SetMacRegisterMode(v string)`
+`func (o *FabricEthNetworkControlPolicyAllOf) SetMacRegistrationMode(v string)`
 
-SetMacRegisterMode sets MacRegisterMode field to given value.
+SetMacRegistrationMode sets MacRegistrationMode field to given value.
 
-### HasMacRegisterMode
+### HasMacRegistrationMode
 
-`func (o *FabricEthNetworkControlPolicyAllOf) HasMacRegisterMode() bool`
+`func (o *FabricEthNetworkControlPolicyAllOf) HasMacRegistrationMode() bool`
 
-HasMacRegisterMode returns a boolean if a field has been set.
+HasMacRegistrationMode returns a boolean if a field has been set.
 
 ### GetUplinkFailAction
 

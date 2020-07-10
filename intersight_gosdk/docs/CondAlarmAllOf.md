@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | Uniquely identifies the type of alarm. For alarms originating from Intersight, this will be a descriptive name. For alarms that are mapped from faults, the name will be derived from fault properties. For example, alarms mapped from UCS faults will use a prefix of UCS and appended with the fault code. | [optional] 
 **OrigSeverity** | Pointer to **string** | The original severity when the alarm was first created. | [optional] [default to "None"]
 **Severity** | Pointer to **string** | The severity of the alarm. Valid values are Critical, Warning, Info, and Cleared. | [optional] [default to "None"]
+**AffectedMo** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **RegisteredDevice** | Pointer to [**AssetDeviceRegistrationRelationship**](asset.DeviceRegistration.Relationship.md) |  | [optional] 
 
 ## Methods
@@ -362,6 +363,31 @@ SetSeverity sets Severity field to given value.
 `func (o *CondAlarmAllOf) HasSeverity() bool`
 
 HasSeverity returns a boolean if a field has been set.
+
+### GetAffectedMo
+
+`func (o *CondAlarmAllOf) GetAffectedMo() MoBaseMoRelationship`
+
+GetAffectedMo returns the AffectedMo field if non-nil, zero value otherwise.
+
+### GetAffectedMoOk
+
+`func (o *CondAlarmAllOf) GetAffectedMoOk() (*MoBaseMoRelationship, bool)`
+
+GetAffectedMoOk returns a tuple with the AffectedMo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAffectedMo
+
+`func (o *CondAlarmAllOf) SetAffectedMo(v MoBaseMoRelationship)`
+
+SetAffectedMo sets AffectedMo field to given value.
+
+### HasAffectedMo
+
+`func (o *CondAlarmAllOf) HasAffectedMo() bool`
+
+HasAffectedMo returns a boolean if a field has been set.
 
 ### GetRegisteredDevice
 

@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | A unique name for the section inside a catalog. | [optional] 
 **Source** | Pointer to **string** | The configured source for this section of the catalog. | [optional] [readonly] [default to "Local"]
 **Version** | Pointer to **string** | Version of the section inside a catalog. | [optional] 
+**Catalog** | Pointer to [**CapabilityCatalogRelationship**](capability.Catalog.Relationship.md) |  | [optional] 
 
 ## Methods
 
@@ -563,6 +564,31 @@ SetVersion sets Version field to given value.
 `func (o *CapabilitySectionRelationship) HasVersion() bool`
 
 HasVersion returns a boolean if a field has been set.
+
+### GetCatalog
+
+`func (o *CapabilitySectionRelationship) GetCatalog() CapabilityCatalogRelationship`
+
+GetCatalog returns the Catalog field if non-nil, zero value otherwise.
+
+### GetCatalogOk
+
+`func (o *CapabilitySectionRelationship) GetCatalogOk() (*CapabilityCatalogRelationship, bool)`
+
+GetCatalogOk returns a tuple with the Catalog field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCatalog
+
+`func (o *CapabilitySectionRelationship) SetCatalog(v CapabilityCatalogRelationship)`
+
+SetCatalog sets Catalog field to given value.
+
+### HasCatalog
+
+`func (o *CapabilitySectionRelationship) HasCatalog() bool`
+
+HasCatalog returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
