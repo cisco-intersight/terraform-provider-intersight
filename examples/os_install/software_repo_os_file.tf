@@ -7,7 +7,7 @@ resource "intersight_softwarerepository_operating_system_file" "osf1" {
     additional_properties = jsonencode({
       FileLocation = "10.225.79.79/Public/iso/esx67u2.iso"
       RemoteIp = "10.225.79.79"
-      RemoteShare = "/Public/iso"
+      RemoteShare = "/Public/iso/"
       RemoteFile = "esx67u2.iso"
       Username = "user"
       Password = "ChangeMe"
@@ -19,10 +19,6 @@ resource "intersight_softwarerepository_operating_system_file" "osf1" {
   catalog {
     moid = var.catalog
   }
-//  organization {
-//    object_type = "organization.Organization"
-//    moid = var.organization
-//  }
 }
 
 resource "intersight_softwarerepository_operating_system_file" "osf2" {
@@ -30,7 +26,7 @@ resource "intersight_softwarerepository_operating_system_file" "osf2" {
   nr_source {
     additional_properties = jsonencode({
       RemoteIp = "10.225.79.79"
-      RemoteShare = "/Public/iso"
+      RemoteShare = "/Public/iso/"
       RemoteFile = "esx6u3.iso"
       Username = "user"
       Password = var.os_file_password_1
@@ -47,8 +43,4 @@ resource "intersight_softwarerepository_operating_system_file" "osf2" {
   catalog {
     moid = var.catalog
   }
-//  organization {
-//    object_type = "organization.Organization"
-//    moid = var.organization
-//  }
 }
