@@ -16,6 +16,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 		Read:   resourceOsConfigurationFileRead,
 		Delete: resourceOsConfigurationFileDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"catalog": {
 				Description: "A reference to a osCatalog resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -492,6 +498,12 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -517,6 +529,15 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewOsConfigurationFileWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("catalog"); ok {
 		p := make([]models.OsCatalogRelationship, 0, 1)
 		s := v.([]interface{})
@@ -966,6 +987,16 @@ func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1005,6 +1036,10 @@ func resourceOsConfigurationFileRead(d *schema.ResourceData, meta interface{}) e
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.GetCatalog(), d)); err != nil {

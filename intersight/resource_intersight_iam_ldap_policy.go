@@ -16,6 +16,11 @@ func resourceIamLdapPolicy() *schema.Resource {
 		Update: resourceIamLdapPolicyUpdate,
 		Delete: resourceIamLdapPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"appliance_account": {
 				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -404,6 +409,11 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -432,6 +442,15 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIamLdapPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("appliance_account"); ok {
 		p := make([]models.IamAccountRelationship, 0, 1)
 		s := v.([]interface{})
@@ -837,6 +856,16 @@ func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -897,6 +926,10 @@ func resourceIamLdapPolicyRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.GetApplianceAccount(), d)); err != nil {
@@ -973,6 +1006,16 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIamLdapPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("appliance_account") {
 		v := d.Get("appliance_account")
 		p := make([]models.IamAccountRelationship, 0, 1)
@@ -1391,6 +1434,16 @@ func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

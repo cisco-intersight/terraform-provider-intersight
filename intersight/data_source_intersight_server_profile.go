@@ -491,6 +491,9 @@ func dataSourceServerProfileRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("assigned_server", flattenMapComputePhysicalRelationship(s.GetAssignedServer(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AssignedServer: %+v", err)

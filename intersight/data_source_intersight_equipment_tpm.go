@@ -341,6 +341,9 @@ func dataSourceEquipmentTpmRead(d *schema.ResourceData, meta interface{}) error 
 			if err := d.Set("activation_status", (s.GetActivationStatus())); err != nil {
 				return fmt.Errorf("error occurred while setting property ActivationStatus: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 			}

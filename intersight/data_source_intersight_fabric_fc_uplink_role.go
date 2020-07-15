@@ -192,6 +192,9 @@ func dataSourceFabricFcUplinkRoleRead(d *schema.ResourceData, meta interface{}) 
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 			}

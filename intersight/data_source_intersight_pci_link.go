@@ -341,6 +341,9 @@ func dataSourcePciLinkRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("adapter", (s.GetAdapter())); err != nil {
 				return fmt.Errorf("error occurred while setting property Adapter: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}

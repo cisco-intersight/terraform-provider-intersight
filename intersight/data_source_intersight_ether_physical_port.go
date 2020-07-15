@@ -527,6 +527,9 @@ func dataSourceEtherPhysicalPortRead(d *schema.ResourceData, meta interface{}) e
 			if err := d.Set("acknowledged_peer_interface", flattenMapPortInterfaceBaseRelationship(s.GetAcknowledgedPeerInterface(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AcknowledgedPeerInterface: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_speed", (s.GetAdminSpeed())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminSpeed: %+v", err)
 			}

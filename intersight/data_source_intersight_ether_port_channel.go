@@ -305,6 +305,9 @@ func dataSourceEtherPortChannelRead(d *schema.ResourceData, meta interface{}) er
 			if err := d.Set("access_vlan", (s.GetAccessVlan())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessVlan: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 			}

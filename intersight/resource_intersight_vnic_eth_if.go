@@ -16,6 +16,11 @@ func resourceVnicEthIf() *schema.Resource {
 		Update: resourceVnicEthIfUpdate,
 		Delete: resourceVnicEthIfDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"cdn": {
 				Description: "Consistent Device Naming configuration for the virtual NIC.",
 				Type:        schema.TypeList,
@@ -525,6 +530,11 @@ func resourceVnicEthIf() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -656,6 +666,15 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewVnicEthIfWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("cdn"); ok {
 		p := make([]models.VnicCdn, 0, 1)
 		s := v.([]interface{})
@@ -1180,6 +1199,16 @@ func resourceVnicEthIfCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1358,6 +1387,10 @@ func resourceVnicEthIfRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("cdn", flattenMapVnicCdn(s.GetCdn(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Cdn: %+v", err)
 	}
@@ -1460,6 +1493,16 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewVnicEthIfWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("cdn") {
 		v := d.Get("cdn")
 		p := make([]models.VnicCdn, 0, 1)
@@ -2002,6 +2045,16 @@ func resourceVnicEthIfUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

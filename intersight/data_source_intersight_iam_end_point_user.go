@@ -61,7 +61,7 @@ func dataSourceIamEndPointUser() *schema.Resource {
 				Computed:    true,
 			},
 			"name": {
-				Description: "Name of the user created on the endpoint.",
+				Description: "Name of the user to be created on the endpoint. It can be any string that adheres to the following constraints. It can have alphanumeric characters, dots, underscores and hyphen. It cannot be more than 16 characters.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -180,6 +180,9 @@ func dataSourceIamEndPointUserRead(d *schema.ResourceData, meta interface{}) err
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
+			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)

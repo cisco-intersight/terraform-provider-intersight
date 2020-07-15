@@ -300,6 +300,9 @@ func dataSourceIamSessionRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("account_permissions", flattenListIamAccountPermissions(s.GetAccountPermissions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountPermissions: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}

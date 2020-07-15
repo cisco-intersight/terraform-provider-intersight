@@ -682,6 +682,9 @@ func dataSourceStorageVirtualDriveRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("actual_write_cache_policy", (s.GetActualWriteCachePolicy())); err != nil {
 				return fmt.Errorf("error occurred while setting property ActualWriteCachePolicy: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("available_size", (s.GetAvailableSize())); err != nil {
 				return fmt.Errorf("error occurred while setting property AvailableSize: %+v", err)
 			}

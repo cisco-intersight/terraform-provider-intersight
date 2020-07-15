@@ -391,6 +391,9 @@ func dataSourceVirtualizationVmwareDatastoreRead(d *schema.ResourceData, meta in
 			if err := d.Set("accessible", (s.GetAccessible())); err != nil {
 				return fmt.Errorf("error occurred while setting property Accessible: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("capacity", flattenMapVirtualizationStorageCapacity(s.GetCapacity(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Capacity: %+v", err)

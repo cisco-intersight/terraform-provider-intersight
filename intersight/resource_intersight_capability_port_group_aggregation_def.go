@@ -16,6 +16,11 @@ func resourceCapabilityPortGroupAggregationDef() *schema.Resource {
 		Update: resourceCapabilityPortGroupAggregationDefUpdate,
 		Delete: resourceCapabilityPortGroupAggregationDefDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"aggregation_cap": {
 				Description: "Aggregation capability for port group.",
 				Type:        schema.TypeString,
@@ -101,6 +106,11 @@ func resourceCapabilityPortGroupAggregationDef() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -123,6 +133,15 @@ func resourceCapabilityPortGroupAggregationDefCreate(d *schema.ResourceData, met
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewCapabilityPortGroupAggregationDefWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("aggregation_cap"); ok {
 		x := (v.(string))
 		o.SetAggregationCap(x)
@@ -201,6 +220,16 @@ func resourceCapabilityPortGroupAggregationDefCreate(d *schema.ResourceData, met
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -240,6 +269,10 @@ func resourceCapabilityPortGroupAggregationDefRead(d *schema.ResourceData, meta 
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("aggregation_cap", (s.GetAggregationCap())); err != nil {
@@ -288,6 +321,16 @@ func resourceCapabilityPortGroupAggregationDefUpdate(d *schema.ResourceData, met
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewCapabilityPortGroupAggregationDefWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("aggregation_cap") {
 		v := d.Get("aggregation_cap")
 		x := (v.(string))
@@ -373,6 +416,16 @@ func resourceCapabilityPortGroupAggregationDefUpdate(d *schema.ResourceData, met
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

@@ -607,6 +607,9 @@ func dataSourceAdapterUnitRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("adapter_id", (s.GetAdapterId())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdapterId: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("base_mac_address", (s.GetBaseMacAddress())); err != nil {
 				return fmt.Errorf("error occurred while setting property BaseMacAddress: %+v", err)
 			}

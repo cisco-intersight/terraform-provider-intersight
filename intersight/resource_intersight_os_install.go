@@ -354,6 +354,12 @@ func resourceOsInstall() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"answers": {
 				Description: "Answers provided by user for the unattended OS installation.",
 				Type:        schema.TypeList,
@@ -797,6 +803,12 @@ func resourceOsInstall() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -1203,6 +1215,15 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("answers"); ok {
 		p := make([]models.OsAnswers, 0, 1)
 		s := v.([]interface{})
@@ -1602,6 +1623,16 @@ func resourceOsInstallCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1690,6 +1721,10 @@ func resourceOsInstallRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error occurred while setting property AdditionalParameters: %+v", err)
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("answers", flattenMapOsAnswers(s.GetAnswers(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Answers: %+v", err)
 	}
@@ -1761,8 +1796,24 @@ func resourceOsInstallDelete(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*Config)
 	x := d.Get("workflow_info").([]interface{})[0].(map[string]interface{})
 	moid := x["moid"].(string)
+	getWorkflow, _, err := conn.ApiClient.WorkflowApi.GetWorkflowWorkflowInfoByMoid(conn.ctx, moid).Execute()
+	if err != nil {
+		log.Printf("error occurred while fetching workflow info: %s", err.Error())
+		return err
+	}
+	if getWorkflow.GetStatus() == "RUNNING" {
+		status := "Cancel"
+		var o = models.WorkflowWorkflowInfo{Action: &status}
+		o.SetClassId("workflow.WorkflowInfo")
+		o.SetObjectType("workflow.WorkflowInfo")
+		_, _, err = conn.ApiClient.WorkflowApi.UpdateWorkflowWorkflowInfo(conn.ctx, moid).WorkflowWorkflowInfo(o).Execute()
+		if err != nil {
+			log.Printf("error occurred while cancelling workflow: %s", err.Error())
+			return err
+		}
+	}
 	p := conn.ApiClient.WorkflowApi.DeleteWorkflowWorkflowInfo(conn.ctx, moid)
-	_, err := p.Execute()
+	_, err = p.Execute()
 	if err != nil {
 		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}

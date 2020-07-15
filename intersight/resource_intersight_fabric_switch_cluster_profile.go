@@ -16,6 +16,11 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 		Update: resourceFabricSwitchClusterProfileUpdate,
 		Delete: resourceFabricSwitchClusterProfileDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -27,6 +32,7 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -71,7 +77,6 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"description": {
 				Description: "Description of the profile.",
@@ -219,11 +224,22 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"switch_profiles_count": {
+				Description: "Number of switch profiles that are part of this cluster profile.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
+			},
 			"tags": {
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -252,6 +268,15 @@ func resourceFabricSwitchClusterProfileCreate(d *schema.ResourceData, meta inter
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFabricSwitchClusterProfileWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	o.SetClassId("fabric.SwitchClusterProfile")
 
 	if v, ok := d.GetOk("config_context"); ok {
@@ -454,12 +479,27 @@ func resourceFabricSwitchClusterProfileCreate(d *schema.ResourceData, meta inter
 		}
 	}
 
+	if v, ok := d.GetOk("switch_profiles_count"); ok {
+		x := int64(v.(int))
+		o.SetSwitchProfilesCount(x)
+	}
+
 	if v, ok := d.GetOk("tags"); ok {
 		x := make([]models.MoTag, 0)
 		s := v.([]interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -506,6 +546,10 @@ func resourceFabricSwitchClusterProfileRead(d *schema.ResourceData, meta interfa
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
@@ -542,6 +586,10 @@ func resourceFabricSwitchClusterProfileRead(d *schema.ResourceData, meta interfa
 		return fmt.Errorf("error occurred while setting property SwitchProfiles: %+v", err)
 	}
 
+	if err := d.Set("switch_profiles_count", (s.GetSwitchProfilesCount())); err != nil {
+		return fmt.Errorf("error occurred while setting property SwitchProfilesCount: %+v", err)
+	}
+
 	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
@@ -560,6 +608,16 @@ func resourceFabricSwitchClusterProfileUpdate(d *schema.ResourceData, meta inter
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFabricSwitchClusterProfileWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	o.SetClassId("fabric.SwitchClusterProfile")
 
 	if d.HasChange("config_context") {
@@ -769,6 +827,12 @@ func resourceFabricSwitchClusterProfileUpdate(d *schema.ResourceData, meta inter
 		}
 	}
 
+	if d.HasChange("switch_profiles_count") {
+		v := d.Get("switch_profiles_count")
+		x := int64(v.(int))
+		o.SetSwitchProfilesCount(x)
+	}
+
 	if d.HasChange("tags") {
 		v := d.Get("tags")
 		x := make([]models.MoTag, 0)
@@ -776,6 +840,16 @@ func resourceFabricSwitchClusterProfileUpdate(d *schema.ResourceData, meta inter
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

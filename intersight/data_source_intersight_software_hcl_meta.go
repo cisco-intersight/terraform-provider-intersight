@@ -492,6 +492,9 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("bundle_type", (s.GetBundleType())); err != nil {
 				return fmt.Errorf("error occurred while setting property BundleType: %+v", err)
 			}

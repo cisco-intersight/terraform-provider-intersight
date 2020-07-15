@@ -379,6 +379,9 @@ func dataSourceSnmpPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("access_community_string", (s.GetAccessCommunityString())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessCommunityString: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}

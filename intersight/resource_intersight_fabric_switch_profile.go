@@ -22,6 +22,11 @@ func resourceFabricSwitchProfile() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"assigned_switch": {
 				Description: "A reference to a networkElement resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -431,6 +436,11 @@ func resourceFabricSwitchProfile() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -462,6 +472,15 @@ func resourceFabricSwitchProfileCreate(d *schema.ResourceData, meta interface{})
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if v, ok := d.GetOk("assigned_switch"); ok {
@@ -898,6 +917,16 @@ func resourceFabricSwitchProfileCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -946,6 +975,10 @@ func resourceFabricSwitchProfileRead(d *schema.ResourceData, meta interface{}) e
 
 	if err := d.Set("action", (s.GetAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property Action: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("assigned_switch", flattenMapNetworkElementRelationship(s.GetAssignedSwitch(), d)); err != nil {
@@ -1026,6 +1059,16 @@ func resourceFabricSwitchProfileUpdate(d *schema.ResourceData, meta interface{})
 		v := d.Get("action")
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if d.HasChange("assigned_switch") {
@@ -1475,6 +1518,16 @@ func resourceFabricSwitchProfileUpdate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

@@ -700,6 +700,9 @@ func dataSourceOsInstallRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("additional_parameters", flattenListOsPlaceHolder(s.GetAdditionalParameters(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdditionalParameters: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("answers", flattenMapOsAnswers(s.GetAnswers(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Answers: %+v", err)

@@ -291,6 +291,9 @@ func dataSourceNetworkVlanPortInfoRead(d *schema.ResourceData, meta interface{})
 			if err := d.Set("access_vlan_port_count", (s.GetAccessVlanPortCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessVlanPortCount: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("border_vlan_port_count", (s.GetBorderVlanPortCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property BorderVlanPortCount: %+v", err)
 			}

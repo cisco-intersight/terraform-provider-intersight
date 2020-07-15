@@ -48,6 +48,39 @@ func dataSourceHyperflexCluster() *schema.Resource {
 					},
 				},
 			},
+			"alarm_summary": {
+				Description: "The summary of alarm counts based on the severity types (Critical or Warning).",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"critical": {
+							Description: "The count of alarms that have severity type Critical.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"warning": {
+							Description: "The count of alarms that have severity type Warning.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+					},
+				},
+			},
 			"capacity_runway": {
 				Description: "The number of days remaining before the cluster's storage utilization reaches the recommended capacity limit of 76%.\nDefault value is math.MaxInt32 to indicate that the capacity runway is \"Unknown\" for a cluster that is not connected or with not sufficient data.",
 				Type:        schema.TypeInt,
@@ -613,9 +646,16 @@ func dataSourceHyperflexClusterRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("alarm", flattenListHyperflexAlarmRelationship(s.GetAlarm(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Alarm: %+v", err)
+			}
+
+			if err := d.Set("alarm_summary", flattenMapHyperflexAlarmSummary(s.GetAlarmSummary(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property AlarmSummary: %+v", err)
 			}
 			if err := d.Set("capacity_runway", (s.GetCapacityRunway())); err != nil {
 				return fmt.Errorf("error occurred while setting property CapacityRunway: %+v", err)

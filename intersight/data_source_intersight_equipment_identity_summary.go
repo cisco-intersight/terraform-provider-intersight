@@ -322,6 +322,9 @@ func dataSourceEquipmentIdentitySummaryRead(d *schema.ResourceData, meta interfa
 			if err := d.Set("adapter_serial", (s.GetAdapterSerial())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdapterSerial: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_action", (s.GetAdminAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminAction: %+v", err)
 			}

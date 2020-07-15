@@ -63,6 +63,12 @@ func resourceIamTrustPoint() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				ForceNew:   true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"certificates": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -286,6 +292,12 @@ func resourceIamTrustPoint() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -351,6 +363,15 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 		if len(p) > 0 {
 			x := p[0]
 			o.SetAccount(x)
+		}
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
 		}
 	}
 
@@ -618,6 +639,16 @@ func resourceIamTrustPointCreate(d *schema.ResourceData, meta interface{}) error
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -661,6 +692,10 @@ func resourceIamTrustPointRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("certificates", flattenListX509Certificate(s.GetCertificates(), d)); err != nil {

@@ -62,6 +62,12 @@ func resourceIamAccountExperience() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -126,6 +132,12 @@ func resourceIamAccountExperience() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -194,6 +206,15 @@ func resourceIamAccountExperienceCreate(d *schema.ResourceData, meta interface{}
 		}
 	}
 
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	o.SetClassId("iam.AccountExperience")
 
 	if v, ok := d.GetOk("features"); ok {
@@ -245,6 +266,16 @@ func resourceIamAccountExperienceCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -290,6 +321,10 @@ func resourceIamAccountExperienceRead(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
@@ -321,8 +356,24 @@ func resourceIamAccountExperienceDelete(d *schema.ResourceData, meta interface{}
 	conn := meta.(*Config)
 	x := d.Get("workflow_info").([]interface{})[0].(map[string]interface{})
 	moid := x["moid"].(string)
+	getWorkflow, _, err := conn.ApiClient.WorkflowApi.GetWorkflowWorkflowInfoByMoid(conn.ctx, moid).Execute()
+	if err != nil {
+		log.Printf("error occurred while fetching workflow info: %s", err.Error())
+		return err
+	}
+	if getWorkflow.GetStatus() == "RUNNING" {
+		status := "Cancel"
+		var o = models.WorkflowWorkflowInfo{Action: &status}
+		o.SetClassId("workflow.WorkflowInfo")
+		o.SetObjectType("workflow.WorkflowInfo")
+		_, _, err = conn.ApiClient.WorkflowApi.UpdateWorkflowWorkflowInfo(conn.ctx, moid).WorkflowWorkflowInfo(o).Execute()
+		if err != nil {
+			log.Printf("error occurred while cancelling workflow: %s", err.Error())
+			return err
+		}
+	}
 	p := conn.ApiClient.WorkflowApi.DeleteWorkflowWorkflowInfo(conn.ctx, moid)
-	_, err := p.Execute()
+	_, err = p.Execute()
 	if err != nil {
 		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}

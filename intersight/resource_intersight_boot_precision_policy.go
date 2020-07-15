@@ -16,6 +16,11 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 		Update: resourceBootPrecisionPolicyUpdate,
 		Delete: resourceBootPrecisionPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"boot_devices": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -180,6 +185,11 @@ func resourceBootPrecisionPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -202,6 +212,15 @@ func resourceBootPrecisionPolicyCreate(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewBootPrecisionPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("boot_devices"); ok {
 		x := make([]models.BootDeviceBase, 0)
 		s := v.([]interface{})
@@ -364,6 +383,16 @@ func resourceBootPrecisionPolicyCreate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -421,6 +450,10 @@ func resourceBootPrecisionPolicyRead(d *schema.ResourceData, meta interface{}) e
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("boot_devices", flattenListBootDeviceBase(s.GetBootDevices(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property BootDevices: %+v", err)
 	}
@@ -475,6 +508,16 @@ func resourceBootPrecisionPolicyUpdate(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewBootPrecisionPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("boot_devices") {
 		v := d.Get("boot_devices")
 		x := make([]models.BootDeviceBase, 0)
@@ -646,6 +689,16 @@ func resourceBootPrecisionPolicyUpdate(d *schema.ResourceData, meta interface{})
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

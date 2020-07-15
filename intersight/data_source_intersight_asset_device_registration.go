@@ -575,6 +575,9 @@ func dataSourceAssetDeviceRegistrationRead(d *schema.ResourceData, meta interfac
 			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("api_version", (s.GetApiVersion())); err != nil {
 				return fmt.Errorf("error occurred while setting property ApiVersion: %+v", err)
 			}

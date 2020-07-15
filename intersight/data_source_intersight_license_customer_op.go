@@ -217,6 +217,9 @@ func dataSourceLicenseCustomerOpRead(d *schema.ResourceData, meta interface{}) e
 			if err := d.Set("active_admin", (s.GetActiveAdmin())); err != nil {
 				return fmt.Errorf("error occurred while setting property ActiveAdmin: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}

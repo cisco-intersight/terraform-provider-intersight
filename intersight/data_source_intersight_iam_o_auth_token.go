@@ -324,6 +324,9 @@ func dataSourceIamOAuthTokenRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("access_expiration_time", (s.GetAccessExpirationTime()).String()); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessExpirationTime: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("app_registration", flattenMapIamAppRegistrationRelationship(s.GetAppRegistration(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AppRegistration: %+v", err)

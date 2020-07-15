@@ -654,6 +654,9 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("associated_object", flattenMapMoBaseMoRelationship(s.GetAssociatedObject(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AssociatedObject: %+v", err)

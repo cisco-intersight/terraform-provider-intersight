@@ -57,6 +57,11 @@ func resourceIamIdp() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -184,6 +189,11 @@ func resourceIamIdp() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -375,6 +385,15 @@ func resourceIamIdpCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	o.SetClassId("iam.Idp")
 
 	if v, ok := d.GetOk("domain_name"); ok {
@@ -496,6 +515,16 @@ func resourceIamIdpCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -672,6 +701,10 @@ func resourceIamIdpRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("class_id", (s.GetClassId())); err != nil {
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
@@ -779,6 +812,16 @@ func resourceIamIdpUpdate(d *schema.ResourceData, meta interface{}) error {
 		if len(p) > 0 {
 			x := p[0]
 			o.SetAccount(x)
+		}
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
 		}
 	}
 
@@ -911,6 +954,16 @@ func resourceIamIdpUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

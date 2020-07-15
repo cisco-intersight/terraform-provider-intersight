@@ -2800,6 +2800,9 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("acs_control_slot14state", (s.GetAcsControlSlot14state())); err != nil {
 				return fmt.Errorf("error occurred while setting property AcsControlSlot14state: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("adjacent_cache_line_prefetch", (s.GetAdjacentCacheLinePrefetch())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdjacentCacheLinePrefetch: %+v", err)
 			}

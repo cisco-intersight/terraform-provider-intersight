@@ -16,6 +16,11 @@ func resourceFirmwareStorageControllerDescriptor() *schema.Resource {
 		Update: resourceFirmwareStorageControllerDescriptorUpdate,
 		Delete: resourceFirmwareStorageControllerDescriptorDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"brand_string": {
 				Description: "The brand string of the endpoint for which this capability information is applicable.",
 				Type:        schema.TypeString,
@@ -146,6 +151,11 @@ func resourceFirmwareStorageControllerDescriptor() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -178,6 +188,15 @@ func resourceFirmwareStorageControllerDescriptorCreate(d *schema.ResourceData, m
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFirmwareStorageControllerDescriptorWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("brand_string"); ok {
 		x := (v.(string))
 		o.SetBrandString(x)
@@ -303,6 +322,16 @@ func resourceFirmwareStorageControllerDescriptorCreate(d *schema.ResourceData, m
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -352,6 +381,10 @@ func resourceFirmwareStorageControllerDescriptorRead(d *schema.ResourceData, met
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("brand_string", (s.GetBrandString())); err != nil {
@@ -416,6 +449,16 @@ func resourceFirmwareStorageControllerDescriptorUpdate(d *schema.ResourceData, m
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFirmwareStorageControllerDescriptorWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("brand_string") {
 		v := d.Get("brand_string")
 		x := (v.(string))
@@ -550,6 +593,16 @@ func resourceFirmwareStorageControllerDescriptorUpdate(d *schema.ResourceData, m
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

@@ -261,6 +261,9 @@ func dataSourceIppoolPoolMemberRead(d *schema.ResourceData, meta interface{}) er
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("assigned", (s.GetAssigned())); err != nil {
 				return fmt.Errorf("error occurred while setting property Assigned: %+v", err)
 			}

@@ -188,6 +188,9 @@ func dataSourceCapabilitySectionRead(d *schema.ResourceData, meta interface{}) e
 			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("catalog", flattenMapCapabilityCatalogRelationship(s.GetCatalog(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Catalog: %+v", err)

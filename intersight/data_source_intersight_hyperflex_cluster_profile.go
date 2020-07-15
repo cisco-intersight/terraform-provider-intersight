@@ -911,6 +911,9 @@ func dataSourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interfac
 			if err := d.Set("action", (s.GetAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.GetAssociatedCluster(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AssociatedCluster: %+v", err)

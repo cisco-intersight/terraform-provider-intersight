@@ -12,6 +12,8 @@ import (
 )
 
 // SuppressDiffAdditionProps Suppress Difference functions for additional properties
+//old is from tfstate file
+// new is from tf config file
 func SuppressDiffAdditionProps(k, old, new string, d *schema.ResourceData) bool {
 	if old == "null" && new == "" {
 		return true
@@ -61,6 +63,9 @@ func getRequestParams(in []byte) string {
 	return o
 }
 func recursiveValueCheck(oldM map[string]interface{}, k string, v interface{}) bool {
+	if k == "Password" {
+		return true
+	}
 	x := reflect.TypeOf(v).String()
 	b := true
 	simpleDatatypes := "string int int32 int64 float bool float64"

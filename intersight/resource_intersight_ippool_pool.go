@@ -16,6 +16,11 @@ func resourceIppoolPool() *schema.Resource {
 		Update: resourceIppoolPoolUpdate,
 		Delete: resourceIppoolPoolDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"assigned": {
 				Description: "Number of IDs that are currently assigned.",
 				Type:        schema.TypeInt,
@@ -249,6 +254,11 @@ func resourceIppoolPool() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -295,6 +305,15 @@ func resourceIppoolPoolCreate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIppoolPoolWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("assigned"); ok {
 		x := int64(v.(int))
 		o.SetAssigned(x)
@@ -523,6 +542,16 @@ func resourceIppoolPoolCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -582,6 +611,10 @@ func resourceIppoolPoolRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("assigned", (s.GetAssigned())); err != nil {
@@ -662,6 +695,16 @@ func resourceIppoolPoolUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIppoolPoolWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("assigned") {
 		v := d.Get("assigned")
 		x := int64(v.(int))
@@ -901,6 +944,16 @@ func resourceIppoolPoolUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

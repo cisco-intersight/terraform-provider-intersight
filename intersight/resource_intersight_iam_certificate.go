@@ -17,6 +17,11 @@ func resourceIamCertificate() *schema.Resource {
 		Update: resourceIamCertificateUpdate,
 		Delete: resourceIamCertificateDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"certificate": {
 				Description: "User-input pem-encoded certificate, signed by a CAcert.",
 				Type:        schema.TypeList,
@@ -255,6 +260,11 @@ func resourceIamCertificate() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -277,6 +287,15 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIamCertificateWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("certificate"); ok {
 		p := make([]models.X509Certificate, 0, 1)
 		s := v.([]interface{})
@@ -585,6 +604,16 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -626,6 +655,10 @@ func resourceIamCertificateRead(d *schema.ResourceData, meta interface{}) error 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("certificate", flattenMapX509Certificate(s.GetCertificate(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Certificate: %+v", err)
 	}
@@ -664,6 +697,16 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewIamCertificateWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("certificate") {
 		v := d.Get("certificate")
 		p := make([]models.X509Certificate, 0, 1)
@@ -977,6 +1020,16 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

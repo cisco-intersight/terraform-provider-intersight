@@ -21,6 +21,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"associated_cluster": {
 				Description: "A reference to a hyperflexCluster resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -833,6 +838,11 @@ func resourceHyperflexClusterProfile() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -951,6 +961,15 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if v, ok := d.GetOk("associated_cluster"); ok {
@@ -1792,6 +1811,16 @@ func resourceHyperflexClusterProfileCreate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1931,6 +1960,10 @@ func resourceHyperflexClusterProfileRead(d *schema.ResourceData, meta interface{
 
 	if err := d.Set("action", (s.GetAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property Action: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("associated_cluster", flattenMapHyperflexClusterRelationship(s.GetAssociatedCluster(), d)); err != nil {
@@ -2083,6 +2116,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		v := d.Get("action")
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if d.HasChange("associated_cluster") {
@@ -2952,6 +2995,16 @@ func resourceHyperflexClusterProfileUpdate(d *schema.ResourceData, meta interfac
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

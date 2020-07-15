@@ -17,6 +17,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 		Update: resourceFirmwareDriverDistributableUpdate,
 		Delete: resourceFirmwareDriverDistributableDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"bundle_type": {
 				Description: "The bundle type of the image, as published on cisco.com.",
 				Type:        schema.TypeString,
@@ -391,6 +396,11 @@ func resourceFirmwareDriverDistributable() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -423,6 +433,15 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFirmwareDriverDistributableWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("bundle_type"); ok {
 		x := (v.(string))
 		o.SetBundleType(x)
@@ -809,6 +828,16 @@ func resourceFirmwareDriverDistributableCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -858,6 +887,10 @@ func resourceFirmwareDriverDistributableRead(d *schema.ResourceData, meta interf
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("bundle_type", (s.GetBundleType())); err != nil {
@@ -1002,6 +1035,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFirmwareDriverDistributableWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("bundle_type") {
 		v := d.Get("bundle_type")
 		x := (v.(string))
@@ -1417,6 +1460,16 @@ func resourceFirmwareDriverDistributableUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

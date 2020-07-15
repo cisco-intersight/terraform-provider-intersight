@@ -23,6 +23,11 @@ func resourceServerProfile() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"assigned_server": {
 				Description: "A reference to a computePhysical resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -444,6 +449,11 @@ func resourceServerProfile() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -481,6 +491,15 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if v, ok := d.GetOk("assigned_server"); ok {
@@ -927,6 +946,16 @@ func resourceServerProfileCreate(d *schema.ResourceData, meta interface{}) error
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -980,6 +1009,10 @@ func resourceServerProfileRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err := d.Set("action", (s.GetAction())); err != nil {
 		return fmt.Errorf("error occurred while setting property Action: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("assigned_server", flattenMapComputePhysicalRelationship(s.GetAssignedServer(), d)); err != nil {
@@ -1068,6 +1101,16 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 		v := d.Get("action")
 		x := (v.(string))
 		o.SetAction(x)
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if d.HasChange("assigned_server") {
@@ -1529,6 +1572,16 @@ func resourceServerProfileUpdate(d *schema.ResourceData, meta interface{}) error
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

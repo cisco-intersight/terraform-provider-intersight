@@ -57,6 +57,11 @@ func resourceTamAdvisoryCount() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"advisory_count": {
 				Description: "Total number of advisories affecting the account.",
 				Type:        schema.TypeInt,
@@ -86,6 +91,11 @@ func resourceTamAdvisoryCount() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -151,6 +161,15 @@ func resourceTamAdvisoryCountCreate(d *schema.ResourceData, meta interface{}) er
 		}
 	}
 
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("advisory_count"); ok {
 		x := int64(v.(int))
 		o.SetAdvisoryCount(x)
@@ -171,6 +190,16 @@ func resourceTamAdvisoryCountCreate(d *schema.ResourceData, meta interface{}) er
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -214,6 +243,10 @@ func resourceTamAdvisoryCountRead(d *schema.ResourceData, meta interface{}) erro
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("advisory_count", (s.GetAdvisoryCount())); err != nil {
@@ -290,6 +323,16 @@ func resourceTamAdvisoryCountUpdate(d *schema.ResourceData, meta interface{}) er
 		}
 	}
 
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("advisory_count") {
 		v := d.Get("advisory_count")
 		x := int64(v.(int))
@@ -313,6 +356,16 @@ func resourceTamAdvisoryCountUpdate(d *schema.ResourceData, meta interface{}) er
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

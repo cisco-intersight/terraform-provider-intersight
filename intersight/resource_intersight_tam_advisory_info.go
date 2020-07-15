@@ -57,6 +57,11 @@ func resourceTamAdvisoryInfo() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"advisory": {
 				Description: "A reference to a tamBaseAdvisory resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -128,6 +133,11 @@ func resourceTamAdvisoryInfo() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -190,6 +200,15 @@ func resourceTamAdvisoryInfoCreate(d *schema.ResourceData, meta interface{}) err
 		if len(p) > 0 {
 			x := p[0]
 			o.SetAccount(x)
+		}
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
 		}
 	}
 
@@ -256,6 +275,16 @@ func resourceTamAdvisoryInfoCreate(d *schema.ResourceData, meta interface{}) err
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -299,6 +328,10 @@ func resourceTamAdvisoryInfoRead(d *schema.ResourceData, meta interface{}) error
 
 	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Account: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("advisory", flattenMapTamBaseAdvisoryRelationship(s.GetAdvisory(), d)); err != nil {
@@ -379,6 +412,16 @@ func resourceTamAdvisoryInfoUpdate(d *schema.ResourceData, meta interface{}) err
 		}
 	}
 
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("advisory") {
 		v := d.Get("advisory")
 		p := make([]models.TamBaseAdvisoryRelationship, 0, 1)
@@ -446,6 +489,16 @@ func resourceTamAdvisoryInfoUpdate(d *schema.ResourceData, meta interface{}) err
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

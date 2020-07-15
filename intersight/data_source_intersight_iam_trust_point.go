@@ -297,6 +297,9 @@ func dataSourceIamTrustPointRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("certificates", flattenListX509Certificate(s.GetCertificates(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Certificates: %+v", err)

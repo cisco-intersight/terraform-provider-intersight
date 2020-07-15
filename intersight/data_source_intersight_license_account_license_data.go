@@ -469,6 +469,9 @@ func dataSourceLicenseAccountLicenseDataRead(d *schema.ResourceData, meta interf
 			if err := d.Set("account_id", (s.GetAccountId())); err != nil {
 				return fmt.Errorf("error occurred while setting property AccountId: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("agent_data", (s.GetAgentData())); err != nil {
 				return fmt.Errorf("error occurred while setting property AgentData: %+v", err)
 			}

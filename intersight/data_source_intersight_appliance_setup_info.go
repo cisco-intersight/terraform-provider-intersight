@@ -231,6 +231,9 @@ func dataSourceApplianceSetupInfoRead(d *schema.ResourceData, meta interface{}) 
 			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("build_type", (s.GetBuildType())); err != nil {
 				return fmt.Errorf("error occurred while setting property BuildType: %+v", err)
 			}

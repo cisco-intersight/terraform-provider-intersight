@@ -16,6 +16,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 		Read:   resourceFirmwareChassisUpgradeRead,
 		Delete: resourceFirmwareChassisUpgradeDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"chassis": {
 				Description: "A reference to a equipmentChassis resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -637,6 +643,12 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -763,6 +775,15 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewFirmwareChassisUpgradeWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("chassis"); ok {
 		p := make([]models.EquipmentChassisRelationship, 0, 1)
 		s := v.([]interface{})
@@ -1336,6 +1357,16 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1466,6 +1497,10 @@ func resourceFirmwareChassisUpgradeRead(d *schema.ResourceData, meta interface{}
 
 	if err != nil {
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("chassis", flattenMapEquipmentChassisRelationship(s.GetChassis(), d)); err != nil {

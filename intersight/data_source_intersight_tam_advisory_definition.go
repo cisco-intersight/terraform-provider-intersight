@@ -478,6 +478,9 @@ func dataSourceTamAdvisoryDefinitionRead(d *schema.ResourceData, meta interface{
 			if err := d.Set("actions", flattenListTamAction(s.GetActions(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Actions: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("advisory_details", flattenMapTamBaseAdvisoryDetails(s.GetAdvisoryDetails(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdvisoryDetails: %+v", err)

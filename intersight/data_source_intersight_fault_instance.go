@@ -356,6 +356,9 @@ func dataSourceFaultInstanceRead(d *schema.ResourceData, meta interface{}) error
 			if err := d.Set("acknowledged", (s.GetAcknowledged())); err != nil {
 				return fmt.Errorf("error occurred while setting property Acknowledged: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("affected_dn", (s.GetAffectedDn())); err != nil {
 				return fmt.Errorf("error occurred while setting property AffectedDn: %+v", err)
 			}

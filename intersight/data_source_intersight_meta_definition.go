@@ -337,6 +337,9 @@ func dataSourceMetaDefinitionRead(d *schema.ResourceData, meta interface{}) erro
 			if err := d.Set("access_privileges", flattenListMetaAccessPrivilege(s.GetAccessPrivileges(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AccessPrivileges: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("ancestor_classes", (s.GetAncestorClasses())); err != nil {
 				return fmt.Errorf("error occurred while setting property AncestorClasses: %+v", err)
 			}

@@ -16,6 +16,11 @@ func resourceHyperflexExtFcStoragePolicy() *schema.Resource {
 		Update: resourceHyperflexExtFcStoragePolicyUpdate,
 		Delete: resourceHyperflexExtFcStoragePolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"admin_state": {
 				Description: "Enables or disables external FC storage configuration.",
 				Type:        schema.TypeBool,
@@ -215,6 +220,11 @@ func resourceHyperflexExtFcStoragePolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -276,6 +286,15 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewHyperflexExtFcStoragePolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOkExists("admin_state"); ok {
 		x := v.(bool)
 		o.SetAdminState(x)
@@ -477,6 +496,16 @@ func resourceHyperflexExtFcStoragePolicyCreate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -561,6 +590,10 @@ func resourceHyperflexExtFcStoragePolicyRead(d *schema.ResourceData, meta interf
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 		return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 	}
@@ -619,6 +652,16 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewHyperflexExtFcStoragePolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("admin_state") {
 		v := d.Get("admin_state")
 		x := (v.(bool))
@@ -829,6 +872,16 @@ func resourceHyperflexExtFcStoragePolicyUpdate(d *schema.ResourceData, meta inte
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

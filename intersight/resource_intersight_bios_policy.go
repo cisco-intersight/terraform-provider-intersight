@@ -88,6 +88,11 @@ func resourceBiosPolicy() *schema.Resource {
 				Optional:    true,
 				Default:     "platform-default",
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"adjacent_cache_line_prefetch": {
 				Description: "BIOS Token for setting Adjacent Cache Line Prefetcher configuration.",
 				Type:        schema.TypeString,
@@ -1734,6 +1739,11 @@ func resourceBiosPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -1922,6 +1932,15 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("acs_control_slot14state"); ok {
 		x := (v.(string))
 		o.SetAcsControlSlot14state(x)
+	}
+
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if v, ok := d.GetOk("adjacent_cache_line_prefetch"); ok {
@@ -3314,6 +3333,16 @@ func resourceBiosPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -3507,6 +3536,10 @@ func resourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err := d.Set("acs_control_slot14state", (s.GetAcsControlSlot14state())); err != nil {
 		return fmt.Errorf("error occurred while setting property AcsControlSlot14state: %+v", err)
+	}
+
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
 	if err := d.Set("adjacent_cache_line_prefetch", (s.GetAdjacentCacheLinePrefetch())); err != nil {
@@ -4717,6 +4750,16 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		v := d.Get("acs_control_slot14state")
 		x := (v.(string))
 		o.SetAcsControlSlot14state(x)
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
 
 	if d.HasChange("adjacent_cache_line_prefetch") {
@@ -6371,6 +6414,16 @@ func resourceBiosPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

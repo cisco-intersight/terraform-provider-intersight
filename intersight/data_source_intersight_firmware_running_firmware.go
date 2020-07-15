@@ -522,6 +522,9 @@ func dataSourceFirmwareRunningFirmwareRead(d *schema.ResourceData, meta interfac
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("bios_unit", flattenMapBiosUnitRelationship(s.GetBiosUnit(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property BiosUnit: %+v", err)

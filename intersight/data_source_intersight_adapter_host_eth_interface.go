@@ -445,6 +445,9 @@ func dataSourceAdapterHostEthInterfaceRead(d *schema.ResourceData, meta interfac
 			if err := d.Set("adapter_unit", flattenMapAdapterUnitRelationship(s.GetAdapterUnit(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdapterUnit: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("admin_state", (s.GetAdminState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminState: %+v", err)
 			}

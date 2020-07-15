@@ -507,6 +507,9 @@ func dataSourceApplianceUpgradeRead(d *schema.ResourceData, meta interface{}) er
 			if err := d.Set("active", (s.GetActive())); err != nil {
 				return fmt.Errorf("error occurred while setting property Active: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("auto_created", (s.GetAutoCreated())); err != nil {
 				return fmt.Errorf("error occurred while setting property AutoCreated: %+v", err)
 			}

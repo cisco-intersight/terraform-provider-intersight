@@ -403,6 +403,9 @@ func dataSourceHyperflexNodeRead(d *schema.ResourceData, meta interface{}) error
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("build_number", (s.GetBuildNumber())); err != nil {
 				return fmt.Errorf("error occurred while setting property BuildNumber: %+v", err)
 			}

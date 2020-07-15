@@ -16,6 +16,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 		Update: resourceVnicEthAdapterPolicyUpdate,
 		Delete: resourceVnicEthAdapterPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"advanced_filter": {
 				Description: "Enables advanced filtering on the interface.",
 				Type:        schema.TypeBool,
@@ -435,6 +440,11 @@ func resourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -584,6 +594,15 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewVnicEthAdapterPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOkExists("advanced_filter"); ok {
 		x := v.(bool)
 		o.SetAdvancedFilter(x)
@@ -1028,6 +1047,16 @@ func resourceVnicEthAdapterPolicyCreate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))
@@ -1209,6 +1238,10 @@ func resourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+	}
+
 	if err := d.Set("advanced_filter", (s.GetAdvancedFilter())); err != nil {
 		return fmt.Errorf("error occurred while setting property AdvancedFilter: %+v", err)
 	}
@@ -1303,6 +1336,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewVnicEthAdapterPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("advanced_filter") {
 		v := d.Get("advanced_filter")
 		x := (v.(bool))
@@ -1762,6 +1805,16 @@ func resourceVnicEthAdapterPolicyUpdate(d *schema.ResourceData, meta interface{}
 		for i := 0; i < len(s); i++ {
 			o := models.NewMoTagWithDefaults()
 			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
 			if v, ok := l["key"]; ok {
 				{
 					x := (v.(string))

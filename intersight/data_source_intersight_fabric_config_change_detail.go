@@ -204,6 +204,9 @@ func dataSourceFabricConfigChangeDetailRead(d *schema.ResourceData, meta interfa
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 			if err := d.Set("changes", (s.GetChanges())); err != nil {
 				return fmt.Errorf("error occurred while setting property Changes: %+v", err)
 			}

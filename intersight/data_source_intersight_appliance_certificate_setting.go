@@ -177,6 +177,9 @@ func dataSourceApplianceCertificateSettingRead(d *schema.ResourceData, meta inte
 			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
+			}
 
 			if err := d.Set("certificate", flattenMapIamCertificateRelationship(s.GetCertificate(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Certificate: %+v", err)
