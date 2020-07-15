@@ -75,7 +75,7 @@ func resourceIamEndPointUser() *schema.Resource {
 				ForceNew:    true,
 			},
 			"name": {
-				Description: "Name of the user to be created on the endpoint. It can be any string that adheres to the following constraints. It can have alphanumeric characters, dots, underscores and hyphen. It cannot be more than 16 characters.",
+				Description: "Name of the user created on the endpoint.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

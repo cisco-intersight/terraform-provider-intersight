@@ -25,7 +25,6 @@ func dataSourceFabricSwitchClusterProfile() *schema.Resource {
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
-				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"class_id": {
@@ -64,6 +63,7 @@ func dataSourceFabricSwitchClusterProfile() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"description": {
 				Description: "Description of the profile.",
@@ -191,12 +191,6 @@ func dataSourceFabricSwitchClusterProfile() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"switch_profiles_count": {
-				Description: "Number of switch profiles that are part of this cluster profile.",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
-			},
 			"tags": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -248,10 +242,6 @@ func dataSourceFabricSwitchClusterProfileRead(d *schema.ResourceData, meta inter
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.SetObjectType(x)
-	}
-	if v, ok := d.GetOk("switch_profiles_count"); ok {
-		x := int64(v.(int))
-		o.SetSwitchProfilesCount(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
@@ -322,9 +312,6 @@ func dataSourceFabricSwitchClusterProfileRead(d *schema.ResourceData, meta inter
 
 			if err := d.Set("switch_profiles", flattenListFabricSwitchProfileRelationship(s.GetSwitchProfiles(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property SwitchProfiles: %+v", err)
-			}
-			if err := d.Set("switch_profiles_count", (s.GetSwitchProfilesCount())); err != nil {
-				return fmt.Errorf("error occurred while setting property SwitchProfilesCount: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {

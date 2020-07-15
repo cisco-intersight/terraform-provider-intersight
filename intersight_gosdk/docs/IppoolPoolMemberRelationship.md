@@ -20,8 +20,9 @@ Name | Type | Description | Notes
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
 **Assigned** | Pointer to **bool** | Boolean to represent whether the ID is assigned or not. | [optional] 
+**AssignedToMoid** | Pointer to **string** | Moid of the entity/server profile that owns this ID. | [optional] 
+**AssignedToType** | Pointer to **string** | Type of the entity that owns this ID. | [optional] 
 **IpV4Address** | Pointer to **string** | IPv4 Address of this pool member. | [optional] 
-**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **IpV4Block** | Pointer to [**IppoolShadowBlockRelationship**](ippool.ShadowBlock.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**IppoolIpLeaseRelationship**](ippool.IpLease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**IppoolShadowPoolRelationship**](ippool.ShadowPool.Relationship.md) |  | [optional] 
@@ -465,6 +466,56 @@ SetAssigned sets Assigned field to given value.
 
 HasAssigned returns a boolean if a field has been set.
 
+### GetAssignedToMoid
+
+`func (o *IppoolPoolMemberRelationship) GetAssignedToMoid() string`
+
+GetAssignedToMoid returns the AssignedToMoid field if non-nil, zero value otherwise.
+
+### GetAssignedToMoidOk
+
+`func (o *IppoolPoolMemberRelationship) GetAssignedToMoidOk() (*string, bool)`
+
+GetAssignedToMoidOk returns a tuple with the AssignedToMoid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToMoid
+
+`func (o *IppoolPoolMemberRelationship) SetAssignedToMoid(v string)`
+
+SetAssignedToMoid sets AssignedToMoid field to given value.
+
+### HasAssignedToMoid
+
+`func (o *IppoolPoolMemberRelationship) HasAssignedToMoid() bool`
+
+HasAssignedToMoid returns a boolean if a field has been set.
+
+### GetAssignedToType
+
+`func (o *IppoolPoolMemberRelationship) GetAssignedToType() string`
+
+GetAssignedToType returns the AssignedToType field if non-nil, zero value otherwise.
+
+### GetAssignedToTypeOk
+
+`func (o *IppoolPoolMemberRelationship) GetAssignedToTypeOk() (*string, bool)`
+
+GetAssignedToTypeOk returns a tuple with the AssignedToType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToType
+
+`func (o *IppoolPoolMemberRelationship) SetAssignedToType(v string)`
+
+SetAssignedToType sets AssignedToType field to given value.
+
+### HasAssignedToType
+
+`func (o *IppoolPoolMemberRelationship) HasAssignedToType() bool`
+
+HasAssignedToType returns a boolean if a field has been set.
+
 ### GetIpV4Address
 
 `func (o *IppoolPoolMemberRelationship) GetIpV4Address() string`
@@ -489,31 +540,6 @@ SetIpV4Address sets IpV4Address field to given value.
 `func (o *IppoolPoolMemberRelationship) HasIpV4Address() bool`
 
 HasIpV4Address returns a boolean if a field has been set.
-
-### GetAssignedToEntity
-
-`func (o *IppoolPoolMemberRelationship) GetAssignedToEntity() MoBaseMoRelationship`
-
-GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
-
-### GetAssignedToEntityOk
-
-`func (o *IppoolPoolMemberRelationship) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
-
-GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToEntity
-
-`func (o *IppoolPoolMemberRelationship) SetAssignedToEntity(v MoBaseMoRelationship)`
-
-SetAssignedToEntity sets AssignedToEntity field to given value.
-
-### HasAssignedToEntity
-
-`func (o *IppoolPoolMemberRelationship) HasAssignedToEntity() bool`
-
-HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetIpV4Block
 

@@ -27,7 +27,6 @@ Name | Type | Description | Notes
 **Serial** | Pointer to **string** | This field identifies the serial of the given component. | [optional] [readonly] 
 **Vendor** | Pointer to **string** | This field identifies the vendor of the given component. | [optional] [readonly] 
 **AdminPowerState** | Pointer to **string** | The desired power state of the server. | [optional] [readonly] 
-**AlarmSummary** | Pointer to [**ComputeAlarmSummary**](compute.AlarmSummary.md) |  | [optional] 
 **AssetTag** | Pointer to **string** | The user defined asset tag assigned to the server. | [optional] [readonly] 
 **AvailableMemory** | Pointer to **int64** | The amount of memory available on the server. | [optional] [readonly] 
 **BiosPostComplete** | Pointer to **bool** | The BIOS POST completion status of the server. | [optional] 
@@ -667,31 +666,6 @@ SetAdminPowerState sets AdminPowerState field to given value.
 `func (o *ComputePhysicalRelationship) HasAdminPowerState() bool`
 
 HasAdminPowerState returns a boolean if a field has been set.
-
-### GetAlarmSummary
-
-`func (o *ComputePhysicalRelationship) GetAlarmSummary() ComputeAlarmSummary`
-
-GetAlarmSummary returns the AlarmSummary field if non-nil, zero value otherwise.
-
-### GetAlarmSummaryOk
-
-`func (o *ComputePhysicalRelationship) GetAlarmSummaryOk() (*ComputeAlarmSummary, bool)`
-
-GetAlarmSummaryOk returns a tuple with the AlarmSummary field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAlarmSummary
-
-`func (o *ComputePhysicalRelationship) SetAlarmSummary(v ComputeAlarmSummary)`
-
-SetAlarmSummary sets AlarmSummary field to given value.
-
-### HasAlarmSummary
-
-`func (o *ComputePhysicalRelationship) HasAlarmSummary() bool`
-
-HasAlarmSummary returns a boolean if a field has been set.
 
 ### GetAssetTag
 

@@ -208,10 +208,9 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_qualifier_reason": {
-				Description: "This reason for the operational status of the disk.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"operability": {
 				Description: "This field identifies the disk operability of the disk.",

@@ -232,7 +232,7 @@ func dataSourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"drive_cache": {
-							Description: "Drive Cache property expect disk cache policy.",
+							Description: "The property expect disk cache policy.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},

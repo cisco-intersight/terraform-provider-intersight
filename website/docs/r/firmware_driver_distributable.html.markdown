@@ -53,6 +53,7 @@ This complex property has following sub-properties:
   + `selector`:(string)(Computed) An OData $filter expression which describes the REST resource to be referenced. This field maybe set instead of 'moid' by clients.1. If 'moid' is set this field is ignored.1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of theresource matching the filter expression and populates it in the MoRef that is part of the objectinstance being inserted/updated to fulfill the REST request.An error is returned if the filter matches zero or more than one REST resource.An example filter string is: Serial eq '3AA8B7T11'. 
 * `download_count`:(int)(Computed) The number of times this file has been downloaded from the local repository. It is used by the repository monitoring process to determine the files that are to be evicted from the cache. 
 * `guid`:(string)(Computed) The unique identifier for an image in a Cisco repository. 
+* `image_category`:(string) The category of the distributable. That is, if it is C-Series, B-Series and the like. 
 * `import_action`:(string) The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source. 
 * `import_state`:(string)(Computed) The state  of this file in the repository or Appliance. The importState is updated during the import operation and as part of the repository monitoring process. 
 * `md5sum`:(string) The md5sum checksum of the file. This information is available for all Cisco distributed images and files imported to the local repository. 
@@ -61,6 +62,7 @@ This complex property has following sub-properties:
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `name`:(string) The name of the file. It is populated as part of the image import operation. 
 * `object_type`:(string)(Computed) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
+* `origin`:(string) The source of the distributable. If it has been created by the user or system. 
 * `osname`:(string) The operating system name to which this driver is compatible. 
 * `osversion`:(string) OS Version. It is populated as part of the image import operation. 
 * `platform_type`:(string)(Computed) The platform type of the image. 

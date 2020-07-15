@@ -192,7 +192,7 @@ func resourceRecoveryOnDemandBackup() *schema.Resource {
 				ForceNew:   true,
 			},
 			"password": {
-				Description: "Password of Backup server.",
+				Description: "Backup server password.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

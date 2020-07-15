@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ExcludeComponentList** | Pointer to **[]string** |  | [optional] 
 **Chassis** | Pointer to [**EquipmentChassisRelationship**](equipment.Chassis.Relationship.md) |  | [optional] 
 **Device** | Pointer to [**AssetDeviceRegistrationRelationship**](asset.DeviceRegistration.Relationship.md) |  | [optional] 
 
@@ -26,31 +25,6 @@ will change when the set of required properties is changed
 NewFirmwareChassisUpgradeWithDefaults instantiates a new FirmwareChassisUpgrade object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetExcludeComponentList
-
-`func (o *FirmwareChassisUpgrade) GetExcludeComponentList() []string`
-
-GetExcludeComponentList returns the ExcludeComponentList field if non-nil, zero value otherwise.
-
-### GetExcludeComponentListOk
-
-`func (o *FirmwareChassisUpgrade) GetExcludeComponentListOk() (*[]string, bool)`
-
-GetExcludeComponentListOk returns a tuple with the ExcludeComponentList field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExcludeComponentList
-
-`func (o *FirmwareChassisUpgrade) SetExcludeComponentList(v []string)`
-
-SetExcludeComponentList sets ExcludeComponentList field to given value.
-
-### HasExcludeComponentList
-
-`func (o *FirmwareChassisUpgrade) HasExcludeComponentList() bool`
-
-HasExcludeComponentList returns a boolean if a field has been set.
 
 ### GetChassis
 

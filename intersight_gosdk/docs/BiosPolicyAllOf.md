@@ -52,21 +52,17 @@ Name | Type | Description | Notes
 **ClosedLoopThermThrotl** | Pointer to **string** | BIOS Token for setting Closed Loop Therm Throt configuration. | [optional] [default to "platform-default"]
 **CmciEnable** | Pointer to **string** | BIOS Token for setting Processor CMCI configuration. | [optional] [default to "platform-default"]
 **ConfigTdp** | Pointer to **string** | BIOS Token for setting Config TDP configuration. | [optional] [default to "platform-default"]
-**ConfigTdpLevel** | Pointer to **string** | BIOS Token for setting Configurable TDP Level configuration. | [optional] [default to "platform-default"]
 **ConsoleRedirection** | Pointer to **string** | BIOS Token for setting Console redirection configuration. | [optional] [default to "platform-default"]
 **CoreMultiProcessing** | Pointer to **string** | BIOS Token for setting Core MultiProcessing configuration. | [optional] [default to "platform-default"]
 **CpuEnergyPerformance** | Pointer to **string** | BIOS Token for setting Energy Performance configuration. | [optional] [default to "platform-default"]
 **CpuFrequencyFloor** | Pointer to **string** | BIOS Token for setting Frequency Floor Override configuration. | [optional] [default to "platform-default"]
 **CpuPerformance** | Pointer to **string** | BIOS Token for setting CPU Performance configuration. | [optional] [default to "platform-default"]
 **CpuPowerManagement** | Pointer to **string** | BIOS Token for setting Power Technology configuration. | [optional] [default to "platform-default"]
-**CrQos** | Pointer to **string** | BIOS Token for setting CR QoS configuration. | [optional] [default to "platform-default"]
-**CrfastgoConfig** | Pointer to **string** | BIOS Token for setting CR FastGo Config configuration. | [optional] [default to "platform-default"]
 **DcpmmFirmwareDowngrade** | Pointer to **string** | BIOS Token for setting DCPMM Firmware Downgrade configuration. | [optional] [default to "platform-default"]
 **DemandScrub** | Pointer to **string** | BIOS Token for setting Demand Scrub configuration. | [optional] [default to "platform-default"]
 **DirectCacheAccess** | Pointer to **string** | BIOS Token for setting Direct Cache Access Support configuration. | [optional] [default to "platform-default"]
 **DramClockThrottling** | Pointer to **string** | BIOS Token for setting DRAM Clock Throttling configuration. | [optional] [default to "platform-default"]
 **DramRefreshRate** | Pointer to **string** | BIOS Token for setting DRAM Refresh Rate configuration. | [optional] [default to "platform-default"]
-**EnableClockSpreadSpec** | Pointer to **string** | BIOS Token for setting External SSC Enable configuration. | [optional] [default to "platform-default"]
 **EnergyEfficientTurbo** | Pointer to **string** | BIOS Token for setting Energy Efficient Turbo configuration. | [optional] [default to "platform-default"]
 **EngPerfTuning** | Pointer to **string** | BIOS Token for setting Energy Performance Tuning configuration. | [optional] [default to "platform-default"]
 **EnhancedIntelSpeedStepTech** | Pointer to **string** | BIOS Token for setting Enhanced Intel Speedstep (R) Technology configuration. | [optional] [default to "platform-default"]
@@ -110,7 +106,6 @@ Name | Type | Description | Notes
 **MmcfgBase** | Pointer to **string** | BIOS Token for setting MMCFG BASE configuration. | [optional] [default to "platform-default"]
 **NetworkStack** | Pointer to **string** | BIOS Token for setting Network Stack configuration. | [optional] [default to "platform-default"]
 **NumaOptimized** | Pointer to **string** | BIOS Token for setting NUMA optimized configuration. | [optional] [default to "platform-default"]
-**NvmdimmPerformConfig** | Pointer to **string** | BIOS Token for setting NVM Performance Setting configuration. | [optional] [default to "platform-default"]
 **Onboard10gbitLom** | Pointer to **string** | BIOS Token for setting Onboard 10Gbit LOM configuration. | [optional] [default to "platform-default"]
 **OnboardGbitLom** | Pointer to **string** | BIOS Token for setting Onboard Gbit LOM configuration. | [optional] [default to "platform-default"]
 **OnboardScuStorageSupport** | Pointer to **string** | BIOS Token for setting Onboard SCU Storage Support configuration. | [optional] [default to "platform-default"]
@@ -133,21 +128,6 @@ Name | Type | Description | Notes
 **PchUsb30mode** | Pointer to **string** | BIOS Token for setting xHCI Mode configuration. | [optional] [default to "platform-default"]
 **PciOptionRoMs** | Pointer to **string** | BIOS Token for setting All PCIe Slots OptionROM configuration. | [optional] [default to "platform-default"]
 **PciRomClp** | Pointer to **string** | BIOS Token for setting PCI ROM CLP configuration. | [optional] [default to "platform-default"]
-**PcieAriSupport** | Pointer to **string** | BIOS Token for setting PCIe ARI Support configuration. | [optional] [default to "platform-default"]
-**PciePllSsc** | Pointer to **string** | BIOS Token for setting PCIe PLL SSC configuration. | [optional] [default to "platform-default"]
-**PcieSlotMstorraidOptionRom** | Pointer to **string** | BIOS Token for setting PCIe Slot MSTOR RAID OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme1linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-1 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme1optionRom** | Pointer to **string** | BIOS Token for setting NVME-1 OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme2linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-2 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme2optionRom** | Pointer to **string** | BIOS Token for setting NVME-2 OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme3linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-3 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme3optionRom** | Pointer to **string** | BIOS Token for setting NVME-3 OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme4linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-4 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme4optionRom** | Pointer to **string** | BIOS Token for setting NVME-4 OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme5linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-5 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme5optionRom** | Pointer to **string** | BIOS Token for setting NVME-5 OptionROM configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme6linkSpeed** | Pointer to **string** | BIOS Token for setting NVME-6 Link Speed configuration. | [optional] [default to "platform-default"]
-**PcieSlotNvme6optionRom** | Pointer to **string** | BIOS Token for setting NVME-6 OptionROM configuration. | [optional] [default to "platform-default"]
 **PopSupport** | Pointer to **string** | BIOS Token for setting Power ON Password configuration. | [optional] [default to "platform-default"]
 **PostErrorPause** | Pointer to **string** | BIOS Token for setting POST Error Pause configuration. | [optional] [default to "platform-default"]
 **ProcessorC1e** | Pointer to **string** | BIOS Token for setting Processor C1E configuration. | [optional] [default to "platform-default"]
@@ -159,7 +139,6 @@ Name | Type | Description | Notes
 **PuttyKeyPad** | Pointer to **string** | BIOS Token for setting Putty KeyPad configuration. | [optional] [default to "platform-default"]
 **PwrPerfTuning** | Pointer to **string** | BIOS Token for setting Power Performance Tuning configuration. | [optional] [default to "platform-default"]
 **QpiLinkFrequency** | Pointer to **string** | BIOS Token for setting QPI Link Frequency Select configuration. | [optional] [default to "platform-default"]
-**QpiLinkSpeed** | Pointer to **string** | BIOS Token for setting UPI Link Frequency Select configuration. | [optional] [default to "platform-default"]
 **QpiSnoopMode** | Pointer to **string** | BIOS Token for setting QPI Snoop Mode configuration. | [optional] [default to "platform-default"]
 **RankInterLeave** | Pointer to **string** | BIOS Token for setting Rank Interleaving configuration. | [optional] [default to "platform-default"]
 **RedirectionAfterPost** | Pointer to **string** | BIOS Token for setting Redirection After BIOS POST configuration. | [optional] [default to "platform-default"]
@@ -266,8 +245,6 @@ Name | Type | Description | Notes
 **Smee** | Pointer to **string** | BIOS Token for setting SMEE configuration. | [optional] [default to "platform-default"]
 **SmtMode** | Pointer to **string** | BIOS Token for setting SMT Mode configuration. | [optional] [default to "platform-default"]
 **Snc** | Pointer to **string** | BIOS Token for setting Sub Numa Clustering configuration. | [optional] [default to "platform-default"]
-**SnoopyModeFor2lm** | Pointer to **string** | BIOS Token for setting Snoopy Mode for 2LM configuration. | [optional] [default to "platform-default"]
-**SnoopyModeForAd** | Pointer to **string** | BIOS Token for setting Snoopy Mode for AD configuration. | [optional] [default to "platform-default"]
 **SparingMode** | Pointer to **string** | BIOS Token for setting Sparing Mode configuration. | [optional] [default to "platform-default"]
 **SrIov** | Pointer to **string** | BIOS Token for setting SR-IOV Support configuration. | [optional] [default to "platform-default"]
 **StreamerPrefetch** | Pointer to **string** | BIOS Token for setting DCU Streamer Prefetch configuration. | [optional] [default to "platform-default"]
@@ -277,7 +254,6 @@ Name | Type | Description | Notes
 **TpmSupport** | Pointer to **string** | BIOS Token for setting TPM Support configuration. | [optional] [default to "platform-default"]
 **TxtSupport** | Pointer to **string** | BIOS Token for setting Intel Trusted Execution Technology Support configuration. | [optional] [default to "platform-default"]
 **UcsmBootOrderRule** | Pointer to **string** | BIOS Token for setting Boot Order Rules configuration. | [optional] [default to "platform-default"]
-**UfsDisable** | Pointer to **string** | BIOS Token for setting Uncore Frequency Scaling configuration. | [optional] [default to "platform-default"]
 **UsbEmul6064** | Pointer to **string** | BIOS Token for setting Port 60/64 Emulation configuration. | [optional] [default to "platform-default"]
 **UsbPortFront** | Pointer to **string** | BIOS Token for setting USB Port Front configuration. | [optional] [default to "platform-default"]
 **UsbPortInternal** | Pointer to **string** | BIOS Token for setting USB Port Internal configuration. | [optional] [default to "platform-default"]
@@ -1512,31 +1488,6 @@ SetConfigTdp sets ConfigTdp field to given value.
 
 HasConfigTdp returns a boolean if a field has been set.
 
-### GetConfigTdpLevel
-
-`func (o *BiosPolicyAllOf) GetConfigTdpLevel() string`
-
-GetConfigTdpLevel returns the ConfigTdpLevel field if non-nil, zero value otherwise.
-
-### GetConfigTdpLevelOk
-
-`func (o *BiosPolicyAllOf) GetConfigTdpLevelOk() (*string, bool)`
-
-GetConfigTdpLevelOk returns a tuple with the ConfigTdpLevel field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetConfigTdpLevel
-
-`func (o *BiosPolicyAllOf) SetConfigTdpLevel(v string)`
-
-SetConfigTdpLevel sets ConfigTdpLevel field to given value.
-
-### HasConfigTdpLevel
-
-`func (o *BiosPolicyAllOf) HasConfigTdpLevel() bool`
-
-HasConfigTdpLevel returns a boolean if a field has been set.
-
 ### GetConsoleRedirection
 
 `func (o *BiosPolicyAllOf) GetConsoleRedirection() string`
@@ -1687,56 +1638,6 @@ SetCpuPowerManagement sets CpuPowerManagement field to given value.
 
 HasCpuPowerManagement returns a boolean if a field has been set.
 
-### GetCrQos
-
-`func (o *BiosPolicyAllOf) GetCrQos() string`
-
-GetCrQos returns the CrQos field if non-nil, zero value otherwise.
-
-### GetCrQosOk
-
-`func (o *BiosPolicyAllOf) GetCrQosOk() (*string, bool)`
-
-GetCrQosOk returns a tuple with the CrQos field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCrQos
-
-`func (o *BiosPolicyAllOf) SetCrQos(v string)`
-
-SetCrQos sets CrQos field to given value.
-
-### HasCrQos
-
-`func (o *BiosPolicyAllOf) HasCrQos() bool`
-
-HasCrQos returns a boolean if a field has been set.
-
-### GetCrfastgoConfig
-
-`func (o *BiosPolicyAllOf) GetCrfastgoConfig() string`
-
-GetCrfastgoConfig returns the CrfastgoConfig field if non-nil, zero value otherwise.
-
-### GetCrfastgoConfigOk
-
-`func (o *BiosPolicyAllOf) GetCrfastgoConfigOk() (*string, bool)`
-
-GetCrfastgoConfigOk returns a tuple with the CrfastgoConfig field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCrfastgoConfig
-
-`func (o *BiosPolicyAllOf) SetCrfastgoConfig(v string)`
-
-SetCrfastgoConfig sets CrfastgoConfig field to given value.
-
-### HasCrfastgoConfig
-
-`func (o *BiosPolicyAllOf) HasCrfastgoConfig() bool`
-
-HasCrfastgoConfig returns a boolean if a field has been set.
-
 ### GetDcpmmFirmwareDowngrade
 
 `func (o *BiosPolicyAllOf) GetDcpmmFirmwareDowngrade() string`
@@ -1861,31 +1762,6 @@ SetDramRefreshRate sets DramRefreshRate field to given value.
 `func (o *BiosPolicyAllOf) HasDramRefreshRate() bool`
 
 HasDramRefreshRate returns a boolean if a field has been set.
-
-### GetEnableClockSpreadSpec
-
-`func (o *BiosPolicyAllOf) GetEnableClockSpreadSpec() string`
-
-GetEnableClockSpreadSpec returns the EnableClockSpreadSpec field if non-nil, zero value otherwise.
-
-### GetEnableClockSpreadSpecOk
-
-`func (o *BiosPolicyAllOf) GetEnableClockSpreadSpecOk() (*string, bool)`
-
-GetEnableClockSpreadSpecOk returns a tuple with the EnableClockSpreadSpec field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEnableClockSpreadSpec
-
-`func (o *BiosPolicyAllOf) SetEnableClockSpreadSpec(v string)`
-
-SetEnableClockSpreadSpec sets EnableClockSpreadSpec field to given value.
-
-### HasEnableClockSpreadSpec
-
-`func (o *BiosPolicyAllOf) HasEnableClockSpreadSpec() bool`
-
-HasEnableClockSpreadSpec returns a boolean if a field has been set.
 
 ### GetEnergyEfficientTurbo
 
@@ -2962,31 +2838,6 @@ SetNumaOptimized sets NumaOptimized field to given value.
 
 HasNumaOptimized returns a boolean if a field has been set.
 
-### GetNvmdimmPerformConfig
-
-`func (o *BiosPolicyAllOf) GetNvmdimmPerformConfig() string`
-
-GetNvmdimmPerformConfig returns the NvmdimmPerformConfig field if non-nil, zero value otherwise.
-
-### GetNvmdimmPerformConfigOk
-
-`func (o *BiosPolicyAllOf) GetNvmdimmPerformConfigOk() (*string, bool)`
-
-GetNvmdimmPerformConfigOk returns a tuple with the NvmdimmPerformConfig field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNvmdimmPerformConfig
-
-`func (o *BiosPolicyAllOf) SetNvmdimmPerformConfig(v string)`
-
-SetNvmdimmPerformConfig sets NvmdimmPerformConfig field to given value.
-
-### HasNvmdimmPerformConfig
-
-`func (o *BiosPolicyAllOf) HasNvmdimmPerformConfig() bool`
-
-HasNvmdimmPerformConfig returns a boolean if a field has been set.
-
 ### GetOnboard10gbitLom
 
 `func (o *BiosPolicyAllOf) GetOnboard10gbitLom() string`
@@ -3537,381 +3388,6 @@ SetPciRomClp sets PciRomClp field to given value.
 
 HasPciRomClp returns a boolean if a field has been set.
 
-### GetPcieAriSupport
-
-`func (o *BiosPolicyAllOf) GetPcieAriSupport() string`
-
-GetPcieAriSupport returns the PcieAriSupport field if non-nil, zero value otherwise.
-
-### GetPcieAriSupportOk
-
-`func (o *BiosPolicyAllOf) GetPcieAriSupportOk() (*string, bool)`
-
-GetPcieAriSupportOk returns a tuple with the PcieAriSupport field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieAriSupport
-
-`func (o *BiosPolicyAllOf) SetPcieAriSupport(v string)`
-
-SetPcieAriSupport sets PcieAriSupport field to given value.
-
-### HasPcieAriSupport
-
-`func (o *BiosPolicyAllOf) HasPcieAriSupport() bool`
-
-HasPcieAriSupport returns a boolean if a field has been set.
-
-### GetPciePllSsc
-
-`func (o *BiosPolicyAllOf) GetPciePllSsc() string`
-
-GetPciePllSsc returns the PciePllSsc field if non-nil, zero value otherwise.
-
-### GetPciePllSscOk
-
-`func (o *BiosPolicyAllOf) GetPciePllSscOk() (*string, bool)`
-
-GetPciePllSscOk returns a tuple with the PciePllSsc field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPciePllSsc
-
-`func (o *BiosPolicyAllOf) SetPciePllSsc(v string)`
-
-SetPciePllSsc sets PciePllSsc field to given value.
-
-### HasPciePllSsc
-
-`func (o *BiosPolicyAllOf) HasPciePllSsc() bool`
-
-HasPciePllSsc returns a boolean if a field has been set.
-
-### GetPcieSlotMstorraidOptionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotMstorraidOptionRom() string`
-
-GetPcieSlotMstorraidOptionRom returns the PcieSlotMstorraidOptionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotMstorraidOptionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotMstorraidOptionRomOk() (*string, bool)`
-
-GetPcieSlotMstorraidOptionRomOk returns a tuple with the PcieSlotMstorraidOptionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotMstorraidOptionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotMstorraidOptionRom(v string)`
-
-SetPcieSlotMstorraidOptionRom sets PcieSlotMstorraidOptionRom field to given value.
-
-### HasPcieSlotMstorraidOptionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotMstorraidOptionRom() bool`
-
-HasPcieSlotMstorraidOptionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme1linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme1linkSpeed() string`
-
-GetPcieSlotNvme1linkSpeed returns the PcieSlotNvme1linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme1linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme1linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme1linkSpeedOk returns a tuple with the PcieSlotNvme1linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme1linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme1linkSpeed(v string)`
-
-SetPcieSlotNvme1linkSpeed sets PcieSlotNvme1linkSpeed field to given value.
-
-### HasPcieSlotNvme1linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme1linkSpeed() bool`
-
-HasPcieSlotNvme1linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme1optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme1optionRom() string`
-
-GetPcieSlotNvme1optionRom returns the PcieSlotNvme1optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme1optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme1optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme1optionRomOk returns a tuple with the PcieSlotNvme1optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme1optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme1optionRom(v string)`
-
-SetPcieSlotNvme1optionRom sets PcieSlotNvme1optionRom field to given value.
-
-### HasPcieSlotNvme1optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme1optionRom() bool`
-
-HasPcieSlotNvme1optionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme2linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme2linkSpeed() string`
-
-GetPcieSlotNvme2linkSpeed returns the PcieSlotNvme2linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme2linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme2linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme2linkSpeedOk returns a tuple with the PcieSlotNvme2linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme2linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme2linkSpeed(v string)`
-
-SetPcieSlotNvme2linkSpeed sets PcieSlotNvme2linkSpeed field to given value.
-
-### HasPcieSlotNvme2linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme2linkSpeed() bool`
-
-HasPcieSlotNvme2linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme2optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme2optionRom() string`
-
-GetPcieSlotNvme2optionRom returns the PcieSlotNvme2optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme2optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme2optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme2optionRomOk returns a tuple with the PcieSlotNvme2optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme2optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme2optionRom(v string)`
-
-SetPcieSlotNvme2optionRom sets PcieSlotNvme2optionRom field to given value.
-
-### HasPcieSlotNvme2optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme2optionRom() bool`
-
-HasPcieSlotNvme2optionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme3linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme3linkSpeed() string`
-
-GetPcieSlotNvme3linkSpeed returns the PcieSlotNvme3linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme3linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme3linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme3linkSpeedOk returns a tuple with the PcieSlotNvme3linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme3linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme3linkSpeed(v string)`
-
-SetPcieSlotNvme3linkSpeed sets PcieSlotNvme3linkSpeed field to given value.
-
-### HasPcieSlotNvme3linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme3linkSpeed() bool`
-
-HasPcieSlotNvme3linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme3optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme3optionRom() string`
-
-GetPcieSlotNvme3optionRom returns the PcieSlotNvme3optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme3optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme3optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme3optionRomOk returns a tuple with the PcieSlotNvme3optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme3optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme3optionRom(v string)`
-
-SetPcieSlotNvme3optionRom sets PcieSlotNvme3optionRom field to given value.
-
-### HasPcieSlotNvme3optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme3optionRom() bool`
-
-HasPcieSlotNvme3optionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme4linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme4linkSpeed() string`
-
-GetPcieSlotNvme4linkSpeed returns the PcieSlotNvme4linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme4linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme4linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme4linkSpeedOk returns a tuple with the PcieSlotNvme4linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme4linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme4linkSpeed(v string)`
-
-SetPcieSlotNvme4linkSpeed sets PcieSlotNvme4linkSpeed field to given value.
-
-### HasPcieSlotNvme4linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme4linkSpeed() bool`
-
-HasPcieSlotNvme4linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme4optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme4optionRom() string`
-
-GetPcieSlotNvme4optionRom returns the PcieSlotNvme4optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme4optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme4optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme4optionRomOk returns a tuple with the PcieSlotNvme4optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme4optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme4optionRom(v string)`
-
-SetPcieSlotNvme4optionRom sets PcieSlotNvme4optionRom field to given value.
-
-### HasPcieSlotNvme4optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme4optionRom() bool`
-
-HasPcieSlotNvme4optionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme5linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme5linkSpeed() string`
-
-GetPcieSlotNvme5linkSpeed returns the PcieSlotNvme5linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme5linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme5linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme5linkSpeedOk returns a tuple with the PcieSlotNvme5linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme5linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme5linkSpeed(v string)`
-
-SetPcieSlotNvme5linkSpeed sets PcieSlotNvme5linkSpeed field to given value.
-
-### HasPcieSlotNvme5linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme5linkSpeed() bool`
-
-HasPcieSlotNvme5linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme5optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme5optionRom() string`
-
-GetPcieSlotNvme5optionRom returns the PcieSlotNvme5optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme5optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme5optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme5optionRomOk returns a tuple with the PcieSlotNvme5optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme5optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme5optionRom(v string)`
-
-SetPcieSlotNvme5optionRom sets PcieSlotNvme5optionRom field to given value.
-
-### HasPcieSlotNvme5optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme5optionRom() bool`
-
-HasPcieSlotNvme5optionRom returns a boolean if a field has been set.
-
-### GetPcieSlotNvme6linkSpeed
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme6linkSpeed() string`
-
-GetPcieSlotNvme6linkSpeed returns the PcieSlotNvme6linkSpeed field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme6linkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme6linkSpeedOk() (*string, bool)`
-
-GetPcieSlotNvme6linkSpeedOk returns a tuple with the PcieSlotNvme6linkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme6linkSpeed
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme6linkSpeed(v string)`
-
-SetPcieSlotNvme6linkSpeed sets PcieSlotNvme6linkSpeed field to given value.
-
-### HasPcieSlotNvme6linkSpeed
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme6linkSpeed() bool`
-
-HasPcieSlotNvme6linkSpeed returns a boolean if a field has been set.
-
-### GetPcieSlotNvme6optionRom
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme6optionRom() string`
-
-GetPcieSlotNvme6optionRom returns the PcieSlotNvme6optionRom field if non-nil, zero value otherwise.
-
-### GetPcieSlotNvme6optionRomOk
-
-`func (o *BiosPolicyAllOf) GetPcieSlotNvme6optionRomOk() (*string, bool)`
-
-GetPcieSlotNvme6optionRomOk returns a tuple with the PcieSlotNvme6optionRom field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPcieSlotNvme6optionRom
-
-`func (o *BiosPolicyAllOf) SetPcieSlotNvme6optionRom(v string)`
-
-SetPcieSlotNvme6optionRom sets PcieSlotNvme6optionRom field to given value.
-
-### HasPcieSlotNvme6optionRom
-
-`func (o *BiosPolicyAllOf) HasPcieSlotNvme6optionRom() bool`
-
-HasPcieSlotNvme6optionRom returns a boolean if a field has been set.
-
 ### GetPopSupport
 
 `func (o *BiosPolicyAllOf) GetPopSupport() string`
@@ -4186,31 +3662,6 @@ SetQpiLinkFrequency sets QpiLinkFrequency field to given value.
 `func (o *BiosPolicyAllOf) HasQpiLinkFrequency() bool`
 
 HasQpiLinkFrequency returns a boolean if a field has been set.
-
-### GetQpiLinkSpeed
-
-`func (o *BiosPolicyAllOf) GetQpiLinkSpeed() string`
-
-GetQpiLinkSpeed returns the QpiLinkSpeed field if non-nil, zero value otherwise.
-
-### GetQpiLinkSpeedOk
-
-`func (o *BiosPolicyAllOf) GetQpiLinkSpeedOk() (*string, bool)`
-
-GetQpiLinkSpeedOk returns a tuple with the QpiLinkSpeed field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetQpiLinkSpeed
-
-`func (o *BiosPolicyAllOf) SetQpiLinkSpeed(v string)`
-
-SetQpiLinkSpeed sets QpiLinkSpeed field to given value.
-
-### HasQpiLinkSpeed
-
-`func (o *BiosPolicyAllOf) HasQpiLinkSpeed() bool`
-
-HasQpiLinkSpeed returns a boolean if a field has been set.
 
 ### GetQpiSnoopMode
 
@@ -6862,56 +6313,6 @@ SetSnc sets Snc field to given value.
 
 HasSnc returns a boolean if a field has been set.
 
-### GetSnoopyModeFor2lm
-
-`func (o *BiosPolicyAllOf) GetSnoopyModeFor2lm() string`
-
-GetSnoopyModeFor2lm returns the SnoopyModeFor2lm field if non-nil, zero value otherwise.
-
-### GetSnoopyModeFor2lmOk
-
-`func (o *BiosPolicyAllOf) GetSnoopyModeFor2lmOk() (*string, bool)`
-
-GetSnoopyModeFor2lmOk returns a tuple with the SnoopyModeFor2lm field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSnoopyModeFor2lm
-
-`func (o *BiosPolicyAllOf) SetSnoopyModeFor2lm(v string)`
-
-SetSnoopyModeFor2lm sets SnoopyModeFor2lm field to given value.
-
-### HasSnoopyModeFor2lm
-
-`func (o *BiosPolicyAllOf) HasSnoopyModeFor2lm() bool`
-
-HasSnoopyModeFor2lm returns a boolean if a field has been set.
-
-### GetSnoopyModeForAd
-
-`func (o *BiosPolicyAllOf) GetSnoopyModeForAd() string`
-
-GetSnoopyModeForAd returns the SnoopyModeForAd field if non-nil, zero value otherwise.
-
-### GetSnoopyModeForAdOk
-
-`func (o *BiosPolicyAllOf) GetSnoopyModeForAdOk() (*string, bool)`
-
-GetSnoopyModeForAdOk returns a tuple with the SnoopyModeForAd field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSnoopyModeForAd
-
-`func (o *BiosPolicyAllOf) SetSnoopyModeForAd(v string)`
-
-SetSnoopyModeForAd sets SnoopyModeForAd field to given value.
-
-### HasSnoopyModeForAd
-
-`func (o *BiosPolicyAllOf) HasSnoopyModeForAd() bool`
-
-HasSnoopyModeForAd returns a boolean if a field has been set.
-
 ### GetSparingMode
 
 `func (o *BiosPolicyAllOf) GetSparingMode() string`
@@ -7136,31 +6537,6 @@ SetUcsmBootOrderRule sets UcsmBootOrderRule field to given value.
 `func (o *BiosPolicyAllOf) HasUcsmBootOrderRule() bool`
 
 HasUcsmBootOrderRule returns a boolean if a field has been set.
-
-### GetUfsDisable
-
-`func (o *BiosPolicyAllOf) GetUfsDisable() string`
-
-GetUfsDisable returns the UfsDisable field if non-nil, zero value otherwise.
-
-### GetUfsDisableOk
-
-`func (o *BiosPolicyAllOf) GetUfsDisableOk() (*string, bool)`
-
-GetUfsDisableOk returns a tuple with the UfsDisable field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUfsDisable
-
-`func (o *BiosPolicyAllOf) SetUfsDisable(v string)`
-
-SetUfsDisable sets UfsDisable field to given value.
-
-### HasUfsDisable
-
-`func (o *BiosPolicyAllOf) HasUfsDisable() bool`
-
-HasUfsDisable returns a boolean if a field has been set.
 
 ### GetUsbEmul6064
 

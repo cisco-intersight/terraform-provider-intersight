@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"reflect"
 
 	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -280,12 +279,6 @@ func resourceFirmwareChassisUpgrade() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"exclude_component_list": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString}, ForceNew: true,
 			},
 			"file_server": {
 				Description: "Location of the image in user software repository.",
@@ -1020,17 +1013,6 @@ func resourceFirmwareChassisUpgradeCreate(d *schema.ResourceData, meta interface
 		}
 	}
 
-	if v, ok := d.GetOk("exclude_component_list"); ok {
-		x := make([]string, 0)
-		y := reflect.ValueOf(v)
-		for i := 0; i < y.Len(); i++ {
-			x = append(x, y.Index(i).Interface().(string))
-		}
-		if len(x) > 0 {
-			o.SetExcludeComponentList(x)
-		}
-	}
-
 	if v, ok := d.GetOk("file_server"); ok {
 		p := make([]models.SoftwarerepositoryFileServer, 0, 1)
 		s := v.([]interface{})
@@ -1521,10 +1503,6 @@ func resourceFirmwareChassisUpgradeRead(d *schema.ResourceData, meta interface{}
 
 	if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.GetDistributable(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Distributable: %+v", err)
-	}
-
-	if err := d.Set("exclude_component_list", (s.GetExcludeComponentList())); err != nil {
-		return fmt.Errorf("error occurred while setting property ExcludeComponentList: %+v", err)
 	}
 
 	if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.GetFileServer(), d)); err != nil {

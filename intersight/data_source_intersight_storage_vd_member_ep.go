@@ -80,10 +80,9 @@ func dataSourceStorageVdMemberEp() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_qualifier_reason": {
-				Description: "For certain states, indicates the reason why the operState is in that state.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"presence": {
 				Description: "The presence state of the local disk.",

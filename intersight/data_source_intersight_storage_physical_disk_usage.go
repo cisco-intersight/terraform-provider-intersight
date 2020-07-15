@@ -133,10 +133,9 @@ func dataSourceStoragePhysicalDiskUsage() *schema.Resource {
 				Computed:    true,
 			},
 			"span": {
-				Description: "The span of the physical disk.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"starting_block": {
 				Description: "The starting block id of the virtual drive within the physical drive.",

@@ -206,11 +206,6 @@ func resourceFirmwareDistributable() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"file_location": {
-				Description: "The file location of the distributable.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"guid": {
 				Description: "The unique identifier for an image in a Cisco repository.",
 				Type:        schema.TypeString,
@@ -218,7 +213,7 @@ func resourceFirmwareDistributable() *schema.Resource {
 				Computed:    true,
 			},
 			"image_category": {
-				Description: "The category into which the distributable falls into according to the supported platform series. For e.g.; C-Series/B-Series/Infrastructure.",
+				Description: "The category of the distributable. That is, if it is C-Series, B-Series and the like.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -636,11 +631,6 @@ func resourceFirmwareDistributableCreate(d *schema.ResourceData, meta interface{
 		o.SetDownloadCount(x)
 	}
 
-	if v, ok := d.GetOk("file_location"); ok {
-		x := (v.(string))
-		o.SetFileLocation(x)
-	}
-
 	if v, ok := d.GetOk("guid"); ok {
 		x := (v.(string))
 		o.SetGuid(x)
@@ -910,10 +900,6 @@ func resourceFirmwareDistributableRead(d *schema.ResourceData, meta interface{})
 
 	if err := d.Set("download_count", (s.GetDownloadCount())); err != nil {
 		return fmt.Errorf("error occurred while setting property DownloadCount: %+v", err)
-	}
-
-	if err := d.Set("file_location", (s.GetFileLocation())); err != nil {
-		return fmt.Errorf("error occurred while setting property FileLocation: %+v", err)
 	}
 
 	if err := d.Set("guid", (s.GetGuid())); err != nil {
@@ -1234,12 +1220,6 @@ func resourceFirmwareDistributableUpdate(d *schema.ResourceData, meta interface{
 		v := d.Get("download_count")
 		x := int64(v.(int))
 		o.SetDownloadCount(x)
-	}
-
-	if d.HasChange("file_location") {
-		v := d.Get("file_location")
-		x := (v.(string))
-		o.SetFileLocation(x)
 	}
 
 	if d.HasChange("guid") {

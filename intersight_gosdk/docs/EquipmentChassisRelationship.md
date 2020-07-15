@@ -26,7 +26,6 @@ Name | Type | Description | Notes
 **Revision** | Pointer to **string** | This field identifies the revision of the given component. | [optional] [readonly] 
 **Serial** | Pointer to **string** | This field identifies the serial of the given component. | [optional] [readonly] 
 **Vendor** | Pointer to **string** | This field identifies the vendor of the given component. | [optional] [readonly] 
-**AlarmSummary** | Pointer to [**ComputeAlarmSummary**](compute.AlarmSummary.md) |  | [optional] 
 **ChassisId** | Pointer to **int64** | The assigned identifier for a chassis. | [optional] [readonly] 
 **ConnectionPath** | Pointer to **string** | This field identifies the connectivity path for the chassis enclosure. | [optional] [readonly] 
 **ConnectionStatus** | Pointer to **string** | This field identifies the connectivity status for the chassis enclosure. | [optional] [readonly] 
@@ -641,31 +640,6 @@ SetVendor sets Vendor field to given value.
 `func (o *EquipmentChassisRelationship) HasVendor() bool`
 
 HasVendor returns a boolean if a field has been set.
-
-### GetAlarmSummary
-
-`func (o *EquipmentChassisRelationship) GetAlarmSummary() ComputeAlarmSummary`
-
-GetAlarmSummary returns the AlarmSummary field if non-nil, zero value otherwise.
-
-### GetAlarmSummaryOk
-
-`func (o *EquipmentChassisRelationship) GetAlarmSummaryOk() (*ComputeAlarmSummary, bool)`
-
-GetAlarmSummaryOk returns a tuple with the AlarmSummary field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAlarmSummary
-
-`func (o *EquipmentChassisRelationship) SetAlarmSummary(v ComputeAlarmSummary)`
-
-SetAlarmSummary sets AlarmSummary field to given value.
-
-### HasAlarmSummary
-
-`func (o *EquipmentChassisRelationship) HasAlarmSummary() bool`
-
-HasAlarmSummary returns a boolean if a field has been set.
 
 ### GetChassisId
 

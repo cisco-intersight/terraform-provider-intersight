@@ -188,6 +188,11 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"image_category": {
+				Description: "The category of the distributable. That is, if it is C-Series, B-Series and the like.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"import_action": {
 				Description: "The action to be performed on the imported file. If 'PreCache' is set, the image will be cached in Appliance. Applicable in Intersight appliance deployment. If 'Evict' is set, the cached file will be removed. Applicable in Intersight appliance deployment. If 'GeneratePreSignedUploadUrl' is set, generates pre signed URL (s) for the file to be imported into the repository. Applicable for local machine source. The URL (s) will be populated under LocalMachine file server. If 'CompleteImportProcess' is set, the ImportState is marked as 'Imported'. Applicable for local machine source. If 'Cancel' is set, the ImportState is marked as 'Failed'. Applicable for local machine source.",
 				Type:        schema.TypeString,
@@ -230,6 +235,11 @@ func dataSourceSoftwareHclMeta() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"origin": {
+				Description: "The source of the distributable. If it has been created by the user or system.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"platform_type": {
 				Description: "The platform type of the image.",
@@ -392,6 +402,10 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 		x := (v.(string))
 		o.SetGuid(x)
 	}
+	if v, ok := d.GetOk("image_category"); ok {
+		x := (v.(string))
+		o.SetImageCategory(x)
+	}
 	if v, ok := d.GetOk("import_action"); ok {
 		x := (v.(string))
 		o.SetImportAction(x)
@@ -423,6 +437,10 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.SetObjectType(x)
+	}
+	if v, ok := d.GetOk("origin"); ok {
+		x := (v.(string))
+		o.SetOrigin(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
@@ -525,6 +543,9 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			if err := d.Set("guid", (s.GetGuid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Guid: %+v", err)
 			}
+			if err := d.Set("image_category", (s.GetImageCategory())); err != nil {
+				return fmt.Errorf("error occurred while setting property ImageCategory: %+v", err)
+			}
 			if err := d.Set("import_action", (s.GetImportAction())); err != nil {
 				return fmt.Errorf("error occurred while setting property ImportAction: %+v", err)
 			}
@@ -548,6 +569,9 @@ func dataSourceSoftwareHclMetaRead(d *schema.ResourceData, meta interface{}) err
 			}
 			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("origin", (s.GetOrigin())); err != nil {
+				return fmt.Errorf("error occurred while setting property Origin: %+v", err)
 			}
 			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
 				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)

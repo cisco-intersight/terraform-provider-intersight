@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Category** | Pointer to **string** | The category of the model series. | [optional] 
-**DistTag** | Pointer to **string** | The distributable tag value of the model series. | [optional] 
 **RegexPattern** | Pointer to **string** | The regex that all images of this model follow. | [optional] 
 **SeriesId** | Pointer to **string** | Cisco hardware model series. | [optional] 
 **SupportedModels** | Pointer to **[]string** |  | [optional] 
@@ -53,31 +52,6 @@ SetCategory sets Category field to given value.
 `func (o *SoftwarerepositoryCategoryMapperModel) HasCategory() bool`
 
 HasCategory returns a boolean if a field has been set.
-
-### GetDistTag
-
-`func (o *SoftwarerepositoryCategoryMapperModel) GetDistTag() string`
-
-GetDistTag returns the DistTag field if non-nil, zero value otherwise.
-
-### GetDistTagOk
-
-`func (o *SoftwarerepositoryCategoryMapperModel) GetDistTagOk() (*string, bool)`
-
-GetDistTagOk returns a tuple with the DistTag field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDistTag
-
-`func (o *SoftwarerepositoryCategoryMapperModel) SetDistTag(v string)`
-
-SetDistTag sets DistTag field to given value.
-
-### HasDistTag
-
-`func (o *SoftwarerepositoryCategoryMapperModel) HasDistTag() bool`
-
-HasDistTag returns a boolean if a field has been set.
 
 ### GetRegexPattern
 

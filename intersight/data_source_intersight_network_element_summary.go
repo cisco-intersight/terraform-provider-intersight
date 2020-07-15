@@ -26,39 +26,6 @@ func dataSourceNetworkElementSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"alarm_summary": {
-				Description: "The summary of alarm counts based on the severity types (Critical or Warning).",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"critical": {
-							Description: "The count of alarms that have severity type Critical.",
-							Type:        schema.TypeInt,
-							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"warning": {
-							Description: "The count of alarms that have severity type Warning.",
-							Type:        schema.TypeInt,
-							Optional:    true,
-						},
-					},
-				},
-			},
 			"available_memory": {
 				Description: "Available memory (un-used) on this switch platform.",
 				Type:        schema.TypeString,
@@ -609,10 +576,6 @@ func dataSourceNetworkElementSummaryRead(d *schema.ResourceData, meta interface{
 			}
 			if err := d.Set("admin_inband_interface_state", (s.GetAdminInbandInterfaceState())); err != nil {
 				return fmt.Errorf("error occurred while setting property AdminInbandInterfaceState: %+v", err)
-			}
-
-			if err := d.Set("alarm_summary", flattenMapComputeAlarmSummary(s.GetAlarmSummary(), d)); err != nil {
-				return fmt.Errorf("error occurred while setting property AlarmSummary: %+v", err)
 			}
 			if err := d.Set("available_memory", (s.GetAvailableMemory())); err != nil {
 				return fmt.Errorf("error occurred while setting property AvailableMemory: %+v", err)

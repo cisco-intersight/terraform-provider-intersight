@@ -40,7 +40,7 @@ func dataSourceWorkflowTaskInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"inst_id": {
-				Description: "The instance ID of the task running in the workflow engine.",
+				Description: "The current running task instance Id.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -110,12 +110,6 @@ func dataSourceWorkflowTaskInfo() *schema.Resource {
 			"retry_count": {
 				Description: "A counter for number of retries.",
 				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
-			},
-			"running_inst_id": {
-				Description: "The instance ID of the task that is currently being executed. When retrying a workflow with failed tasks, the task in workflow engine will have a new instance ID, but the task may still be in-progress. In this case, the task instId reflects the instance ID in the workflow engine, while runningInstId reflects the instance ID of the instance that is currently being executed.",
-				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -341,10 +335,6 @@ func dataSourceWorkflowTaskInfoRead(d *schema.ResourceData, meta interface{}) er
 		x := int64(v.(int))
 		o.SetRetryCount(x)
 	}
-	if v, ok := d.GetOk("running_inst_id"); ok {
-		x := (v.(string))
-		o.SetRunningInstId(x)
-	}
 	if v, ok := d.GetOk("start_time"); ok {
 		x, _ := time.Parse(v.(string), time.RFC1123)
 		o.SetStartTime(x)
@@ -428,9 +418,6 @@ func dataSourceWorkflowTaskInfoRead(d *schema.ResourceData, meta interface{}) er
 			}
 			if err := d.Set("retry_count", (s.GetRetryCount())); err != nil {
 				return fmt.Errorf("error occurred while setting property RetryCount: %+v", err)
-			}
-			if err := d.Set("running_inst_id", (s.GetRunningInstId())); err != nil {
-				return fmt.Errorf("error occurred while setting property RunningInstId: %+v", err)
 			}
 
 			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {

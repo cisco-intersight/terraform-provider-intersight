@@ -11,6 +11,8 @@ IpLease represents an IP address that is allocated from a pool to a specific ent
 IpLease represents an IP address that is allocated from a pool to a specific entity like server profile.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `assigned_to_moid`:(string) Moid of the entity/server profile that owns this ID. 
+* `assigned_to_type`:(string) Type of the entity that owns this ID. 
 * `class_id`:(string) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `ip_v4_address`:(string) IPv4 Address given as a lease to an external entity like server profiles. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 

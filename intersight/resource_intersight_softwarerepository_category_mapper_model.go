@@ -33,11 +33,6 @@ func resourceSoftwarerepositoryCategoryMapperModel() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"dist_tag": {
-				Description: "The distributable tag value of the model series.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
 				Type:        schema.TypeString,
@@ -159,11 +154,6 @@ func resourceSoftwarerepositoryCategoryMapperModelCreate(d *schema.ResourceData,
 	}
 
 	o.SetClassId("softwarerepository.CategoryMapperModel")
-
-	if v, ok := d.GetOk("dist_tag"); ok {
-		x := (v.(string))
-		o.SetDistTag(x)
-	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -310,10 +300,6 @@ func resourceSoftwarerepositoryCategoryMapperModelRead(d *schema.ResourceData, m
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("dist_tag", (s.GetDistTag())); err != nil {
-		return fmt.Errorf("error occurred while setting property DistTag: %+v", err)
-	}
-
 	if err := d.Set("moid", (s.GetMoid())); err != nil {
 		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
@@ -373,12 +359,6 @@ func resourceSoftwarerepositoryCategoryMapperModelUpdate(d *schema.ResourceData,
 	}
 
 	o.SetClassId("softwarerepository.CategoryMapperModel")
-
-	if d.HasChange("dist_tag") {
-		v := d.Get("dist_tag")
-		x := (v.(string))
-		o.SetDistTag(x)
-	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")

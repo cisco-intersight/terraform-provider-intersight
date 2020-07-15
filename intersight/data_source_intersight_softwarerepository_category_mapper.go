@@ -25,11 +25,6 @@ func dataSourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"file_type": {
-				Description: "The type of distributable image, example huu, scu, driver, os.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"mdf_id": {
 				Description: "Cisco software repository image category identifier.",
 				Type:        schema.TypeString,
@@ -92,22 +87,7 @@ func dataSourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"nr_source": {
-				Description: "The image can be downloaded from cisco.com or external cloud store.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"supported_models": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString}},
-			"sw_id": {
-				Description: "The software type id provided by cisco.com.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"tag_types": {
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -130,11 +110,6 @@ func dataSourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 					},
 				},
 			},
-			"nr_version": {
-				Description: "The version from which user can download images from amazon store, if source is external cloud store.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 		},
 	}
 }
@@ -151,10 +126,6 @@ func dataSourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
 		o.SetClassId(x)
-	}
-	if v, ok := d.GetOk("file_type"); ok {
-		x := (v.(string))
-		o.SetFileType(x)
 	}
 	if v, ok := d.GetOk("mdf_id"); ok {
 		x := (v.(string))
@@ -175,18 +146,6 @@ func dataSourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta
 	if v, ok := d.GetOk("regex_pattern"); ok {
 		x := (v.(string))
 		o.SetRegexPattern(x)
-	}
-	if v, ok := d.GetOk("nr_source"); ok {
-		x := (v.(string))
-		o.SetSource(x)
-	}
-	if v, ok := d.GetOk("sw_id"); ok {
-		x := (v.(string))
-		o.SetSwId(x)
-	}
-	if v, ok := d.GetOk("nr_version"); ok {
-		x := (v.(string))
-		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
@@ -229,9 +188,6 @@ func dataSourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta
 			if err := d.Set("class_id", (s.GetClassId())); err != nil {
 				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("file_type", (s.GetFileType())); err != nil {
-				return fmt.Errorf("error occurred while setting property FileType: %+v", err)
-			}
 			if err := d.Set("mdf_id", (s.GetMdfId())); err != nil {
 				return fmt.Errorf("error occurred while setting property MdfId: %+v", err)
 			}
@@ -251,24 +207,12 @@ func dataSourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta
 			if err := d.Set("section", flattenMapCapabilitySectionRelationship(s.GetSection(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Section: %+v", err)
 			}
-			if err := d.Set("nr_source", (s.GetSource())); err != nil {
-				return fmt.Errorf("error occurred while setting property Source: %+v", err)
-			}
 			if err := d.Set("supported_models", (s.GetSupportedModels())); err != nil {
 				return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
-			}
-			if err := d.Set("sw_id", (s.GetSwId())); err != nil {
-				return fmt.Errorf("error occurred while setting property SwId: %+v", err)
-			}
-			if err := d.Set("tag_types", (s.GetTagTypes())); err != nil {
-				return fmt.Errorf("error occurred while setting property TagTypes: %+v", err)
 			}
 
 			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
-			}
-			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
-				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
 			d.SetId(s.GetMoid())
 		}

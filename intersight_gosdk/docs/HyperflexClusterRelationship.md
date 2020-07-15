@@ -19,7 +19,6 @@ Name | Type | Description | Notes
 **Parent** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
-**AlarmSummary** | Pointer to [**HyperflexAlarmSummary**](hyperflex.AlarmSummary.md) |  | [optional] 
 **CapacityRunway** | Pointer to **int64** | The number of days remaining before the cluster&#39;s storage utilization reaches the recommended capacity limit of 76%. Default value is math.MaxInt32 to indicate that the capacity runway is \&quot;Unknown\&quot; for a cluster that is not connected or with not sufficient data. | [optional] [readonly] 
 **ClusterName** | Pointer to **string** | The name of this HyperFlex cluster. | [optional] [readonly] 
 **ClusterType** | Pointer to **int64** | The storage type of this cluster (All Flash or Hybrid). | [optional] [readonly] 
@@ -456,31 +455,6 @@ HasDisplayNames returns a boolean if a field has been set.
 `func (o *HyperflexClusterRelationship) UnsetDisplayNames()`
 
 UnsetDisplayNames ensures that no value is present for DisplayNames, not even an explicit nil
-### GetAlarmSummary
-
-`func (o *HyperflexClusterRelationship) GetAlarmSummary() HyperflexAlarmSummary`
-
-GetAlarmSummary returns the AlarmSummary field if non-nil, zero value otherwise.
-
-### GetAlarmSummaryOk
-
-`func (o *HyperflexClusterRelationship) GetAlarmSummaryOk() (*HyperflexAlarmSummary, bool)`
-
-GetAlarmSummaryOk returns a tuple with the AlarmSummary field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAlarmSummary
-
-`func (o *HyperflexClusterRelationship) SetAlarmSummary(v HyperflexAlarmSummary)`
-
-SetAlarmSummary sets AlarmSummary field to given value.
-
-### HasAlarmSummary
-
-`func (o *HyperflexClusterRelationship) HasAlarmSummary() bool`
-
-HasAlarmSummary returns a boolean if a field has been set.
-
 ### GetCapacityRunway
 
 `func (o *HyperflexClusterRelationship) GetCapacityRunway() int64`

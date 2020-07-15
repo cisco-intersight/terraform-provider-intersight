@@ -24,7 +24,6 @@ Name | Type | Description | Notes
 **Type** | Pointer to **string** | Defines the type of the profile. Accepted value is instance. | [optional] [default to "instance"]
 **SrcTemplate** | Pointer to [**PolicyAbstractProfileRelationship**](policy.AbstractProfile.Relationship.md) |  | [optional] 
 **ConfigContext** | Pointer to [**PolicyConfigContext**](policy.ConfigContext.md) |  | [optional] 
-**SwitchProfilesCount** | Pointer to **int64** | Number of switch profiles that are part of this cluster profile. | [optional] [readonly] 
 **Organization** | Pointer to [**OrganizationOrganizationRelationship**](organization.Organization.Relationship.md) |  | [optional] 
 **SwitchProfiles** | Pointer to [**[]FabricSwitchProfileRelationship**](fabric.SwitchProfile.Relationship.md) | An array of relationships to fabricSwitchProfile resources. | [optional] 
 
@@ -566,31 +565,6 @@ SetConfigContext sets ConfigContext field to given value.
 `func (o *FabricSwitchClusterProfileRelationship) HasConfigContext() bool`
 
 HasConfigContext returns a boolean if a field has been set.
-
-### GetSwitchProfilesCount
-
-`func (o *FabricSwitchClusterProfileRelationship) GetSwitchProfilesCount() int64`
-
-GetSwitchProfilesCount returns the SwitchProfilesCount field if non-nil, zero value otherwise.
-
-### GetSwitchProfilesCountOk
-
-`func (o *FabricSwitchClusterProfileRelationship) GetSwitchProfilesCountOk() (*int64, bool)`
-
-GetSwitchProfilesCountOk returns a tuple with the SwitchProfilesCount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSwitchProfilesCount
-
-`func (o *FabricSwitchClusterProfileRelationship) SetSwitchProfilesCount(v int64)`
-
-SetSwitchProfilesCount sets SwitchProfilesCount field to given value.
-
-### HasSwitchProfilesCount
-
-`func (o *FabricSwitchClusterProfileRelationship) HasSwitchProfilesCount() bool`
-
-HasSwitchProfilesCount returns a boolean if a field has been set.
 
 ### GetOrganization
 

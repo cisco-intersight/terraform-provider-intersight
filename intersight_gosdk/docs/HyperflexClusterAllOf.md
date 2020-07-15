@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AlarmSummary** | Pointer to [**HyperflexAlarmSummary**](hyperflex.AlarmSummary.md) |  | [optional] 
 **CapacityRunway** | Pointer to **int64** | The number of days remaining before the cluster&#39;s storage utilization reaches the recommended capacity limit of 76%. Default value is math.MaxInt32 to indicate that the capacity runway is \&quot;Unknown\&quot; for a cluster that is not connected or with not sufficient data. | [optional] [readonly] 
 **ClusterName** | Pointer to **string** | The name of this HyperFlex cluster. | [optional] [readonly] 
 **ClusterType** | Pointer to **int64** | The storage type of this cluster (All Flash or Hybrid). | [optional] [readonly] 
@@ -45,31 +44,6 @@ will change when the set of required properties is changed
 NewHyperflexClusterAllOfWithDefaults instantiates a new HyperflexClusterAllOf object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetAlarmSummary
-
-`func (o *HyperflexClusterAllOf) GetAlarmSummary() HyperflexAlarmSummary`
-
-GetAlarmSummary returns the AlarmSummary field if non-nil, zero value otherwise.
-
-### GetAlarmSummaryOk
-
-`func (o *HyperflexClusterAllOf) GetAlarmSummaryOk() (*HyperflexAlarmSummary, bool)`
-
-GetAlarmSummaryOk returns a tuple with the AlarmSummary field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAlarmSummary
-
-`func (o *HyperflexClusterAllOf) SetAlarmSummary(v HyperflexAlarmSummary)`
-
-SetAlarmSummary sets AlarmSummary field to given value.
-
-### HasAlarmSummary
-
-`func (o *HyperflexClusterAllOf) HasAlarmSummary() bool`
-
-HasAlarmSummary returns a boolean if a field has been set.
 
 ### GetCapacityRunway
 

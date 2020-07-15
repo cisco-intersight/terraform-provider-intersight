@@ -204,9 +204,8 @@ func dataSourceStorageFlexUtilVirtualDrive() *schema.Resource {
 				},
 			},
 			"virtual_drive": {
-				Description: "Virtual drive on the Flex Util controller.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}

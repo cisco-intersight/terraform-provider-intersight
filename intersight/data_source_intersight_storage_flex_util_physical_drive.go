@@ -31,9 +31,8 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"controller": {
-				Description: "Type of the Physical Drive Controller.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"device_mo_id": {
 				Description: "The database identifier of the registered device of an object.",
@@ -136,9 +135,8 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Optional:    true,
 			},
 			"physical_drive": {
-				Description: "The type of physical drive. Example - microSD.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"product_name": {
 				Description: "Product name of the FlexUtil Physical Drive.",
@@ -273,9 +271,8 @@ func dataSourceStorageFlexUtilPhysicalDrive() *schema.Resource {
 				Computed:    true,
 			},
 			"write_enabled": {
-				Description: "Write access state of the FlexUtil Physical Drive.",
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"write_error_count": {
 				Description: "Write error count of the FlexUtil Physical Drive.",

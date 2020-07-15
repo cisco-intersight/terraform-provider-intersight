@@ -23,4 +23,4 @@ The following arguments can be used to get data of already created objects in In
 * `resident_image`:(string) The resident image on the flex util virtual Drive. 
 * `rn`:(string) The Relative Name uniquely identifies an object within a given context. 
 * `size`:(string) Size of the Flex Util virtual drive. 
-* `virtual_drive`:(string) Virtual drive on the Flex Util controller. 
+* `virtual_drive`:(string)

@@ -207,11 +207,6 @@ func dataSourceFirmwareChassisUpgrade() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"exclude_component_list": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString}},
 			"file_server": {
 				Description: "Location of the image in user software repository.",
 				Type:        schema.TypeList,
@@ -655,9 +650,6 @@ func dataSourceFirmwareChassisUpgradeRead(d *schema.ResourceData, meta interface
 
 			if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.GetDistributable(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property Distributable: %+v", err)
-			}
-			if err := d.Set("exclude_component_list", (s.GetExcludeComponentList())); err != nil {
-				return fmt.Errorf("error occurred while setting property ExcludeComponentList: %+v", err)
 			}
 
 			if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.GetFileServer(), d)); err != nil {

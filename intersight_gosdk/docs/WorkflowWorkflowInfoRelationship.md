@@ -46,8 +46,8 @@ Name | Type | Description | Notes
 **WorkflowCtx** | Pointer to **interface{}** | The workflow context which contains initiator and target information. | [optional] 
 **WorkflowMetaType** | Pointer to **string** | The type of workflow meta. Derived from the workflow meta that is used to launch this workflow instance. | [optional] [default to "SystemDefined"]
 **WorkflowTaskCount** | Pointer to **int64** | Total number of workflow tasks in this workflow. | [optional] [readonly] 
-**Var0ClusterProfile** | Pointer to [**HyperflexClusterProfileRelationship**](hyperflex.ClusterProfile.Relationship.md) |  | [optional] 
-**Var1SwitchProfile** | Pointer to [**FabricSwitchProfileRelationship**](fabric.SwitchProfile.Relationship.md) |  | [optional] 
+**Var0SwitchProfile** | Pointer to [**FabricSwitchProfileRelationship**](fabric.SwitchProfile.Relationship.md) |  | [optional] 
+**Var1ClusterProfile** | Pointer to [**HyperflexClusterProfileRelationship**](hyperflex.ClusterProfile.Relationship.md) |  | [optional] 
 **Account** | Pointer to [**IamAccountRelationship**](iam.Account.Relationship.md) |  | [optional] 
 **AssociatedObject** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **Organization** | Pointer to [**OrganizationOrganizationRelationship**](organization.Organization.Relationship.md) |  | [optional] 
@@ -1176,55 +1176,55 @@ SetWorkflowTaskCount sets WorkflowTaskCount field to given value.
 
 HasWorkflowTaskCount returns a boolean if a field has been set.
 
-### GetVar0ClusterProfile
+### GetVar0SwitchProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) GetVar0ClusterProfile() HyperflexClusterProfileRelationship`
+`func (o *WorkflowWorkflowInfoRelationship) GetVar0SwitchProfile() FabricSwitchProfileRelationship`
 
-GetVar0ClusterProfile returns the Var0ClusterProfile field if non-nil, zero value otherwise.
+GetVar0SwitchProfile returns the Var0SwitchProfile field if non-nil, zero value otherwise.
 
-### GetVar0ClusterProfileOk
+### GetVar0SwitchProfileOk
 
-`func (o *WorkflowWorkflowInfoRelationship) GetVar0ClusterProfileOk() (*HyperflexClusterProfileRelationship, bool)`
+`func (o *WorkflowWorkflowInfoRelationship) GetVar0SwitchProfileOk() (*FabricSwitchProfileRelationship, bool)`
 
-GetVar0ClusterProfileOk returns a tuple with the Var0ClusterProfile field if it's non-nil, zero value otherwise
+GetVar0SwitchProfileOk returns a tuple with the Var0SwitchProfile field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVar0ClusterProfile
+### SetVar0SwitchProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) SetVar0ClusterProfile(v HyperflexClusterProfileRelationship)`
+`func (o *WorkflowWorkflowInfoRelationship) SetVar0SwitchProfile(v FabricSwitchProfileRelationship)`
 
-SetVar0ClusterProfile sets Var0ClusterProfile field to given value.
+SetVar0SwitchProfile sets Var0SwitchProfile field to given value.
 
-### HasVar0ClusterProfile
+### HasVar0SwitchProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) HasVar0ClusterProfile() bool`
+`func (o *WorkflowWorkflowInfoRelationship) HasVar0SwitchProfile() bool`
 
-HasVar0ClusterProfile returns a boolean if a field has been set.
+HasVar0SwitchProfile returns a boolean if a field has been set.
 
-### GetVar1SwitchProfile
+### GetVar1ClusterProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) GetVar1SwitchProfile() FabricSwitchProfileRelationship`
+`func (o *WorkflowWorkflowInfoRelationship) GetVar1ClusterProfile() HyperflexClusterProfileRelationship`
 
-GetVar1SwitchProfile returns the Var1SwitchProfile field if non-nil, zero value otherwise.
+GetVar1ClusterProfile returns the Var1ClusterProfile field if non-nil, zero value otherwise.
 
-### GetVar1SwitchProfileOk
+### GetVar1ClusterProfileOk
 
-`func (o *WorkflowWorkflowInfoRelationship) GetVar1SwitchProfileOk() (*FabricSwitchProfileRelationship, bool)`
+`func (o *WorkflowWorkflowInfoRelationship) GetVar1ClusterProfileOk() (*HyperflexClusterProfileRelationship, bool)`
 
-GetVar1SwitchProfileOk returns a tuple with the Var1SwitchProfile field if it's non-nil, zero value otherwise
+GetVar1ClusterProfileOk returns a tuple with the Var1ClusterProfile field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVar1SwitchProfile
+### SetVar1ClusterProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) SetVar1SwitchProfile(v FabricSwitchProfileRelationship)`
+`func (o *WorkflowWorkflowInfoRelationship) SetVar1ClusterProfile(v HyperflexClusterProfileRelationship)`
 
-SetVar1SwitchProfile sets Var1SwitchProfile field to given value.
+SetVar1ClusterProfile sets Var1ClusterProfile field to given value.
 
-### HasVar1SwitchProfile
+### HasVar1ClusterProfile
 
-`func (o *WorkflowWorkflowInfoRelationship) HasVar1SwitchProfile() bool`
+`func (o *WorkflowWorkflowInfoRelationship) HasVar1ClusterProfile() bool`
 
-HasVar1SwitchProfile returns a boolean if a field has been set.
+HasVar1ClusterProfile returns a boolean if a field has been set.
 
 ### GetAccount
 

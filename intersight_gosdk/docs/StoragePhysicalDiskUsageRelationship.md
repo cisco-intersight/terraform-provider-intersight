@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **Rn** | Pointer to **string** | The Relative Name uniquely identifies an object within a given context. | [optional] [readonly] 
 **NumberOfBlocks** | Pointer to **string** | The number of blocks that are a part of the virtual drive. | [optional] [readonly] 
 **PhysicalDrive** | Pointer to **string** | The physical disk for which the usage is reported. | [optional] [readonly] 
-**Span** | Pointer to **string** | The span of the physical disk. | [optional] [readonly] 
+**Span** | Pointer to **string** |  | [optional] [readonly] 
 **StartingBlock** | Pointer to **string** | The starting block id of the virtual drive within the physical drive. | [optional] [readonly] 
 **State** | Pointer to **string** | The current state of the physical disk usage. | [optional] [readonly] 
 **VirtualDrive** | Pointer to **string** | The virtual drive corresponding to the physical disk. | [optional] [readonly] 

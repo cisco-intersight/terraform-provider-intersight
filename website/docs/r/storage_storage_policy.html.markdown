@@ -66,7 +66,7 @@ This complex property has following sub-properties:
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `disk_group_name`:(string)(Computed) Disk group policy that has the disk group in which this virtual drive needs to be created. 
   + `disk_group_policy`:(string) Disk group policy that has the disk group in which this virtual drive needs to be created. 
-  + `drive_cache`:(string) Drive Cache property expect disk cache policy. 
+  + `drive_cache`:(string) The property expect disk cache policy. 
   + `expand_to_available`:(bool) The flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored. 
   + `io_policy`:(string) Desired IO mode - direct IO or cached IO. 
   + `name`:(string) The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed. 

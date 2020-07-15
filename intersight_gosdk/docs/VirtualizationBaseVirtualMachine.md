@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Capacity** | Pointer to [**InfraHardwareInfo**](infra.HardwareInfo.md) |  | [optional] 
 **GuestInfo** | Pointer to [**VirtualizationGuestInfo**](virtualization.GuestInfo.md) |  | [optional] 
-**HypervisorType** | Pointer to **string** | Type of hypervisor where the virtual machine is hosted for example ESXi. | [optional] [default to "Unknown"]
+**HypervisorType** | Pointer to **string** | Type of hypervisor where the virtual machine is hosted, for example VMware ESXi. | [optional] 
 **Identity** | Pointer to **string** | The internally generated identity of this VM. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference). | [optional] 
 **IpAddress** | Pointer to **[]string** |  | [optional] 
 **MemoryCapacity** | Pointer to [**VirtualizationMemoryCapacity**](virtualization.MemoryCapacity.md) |  | [optional] 

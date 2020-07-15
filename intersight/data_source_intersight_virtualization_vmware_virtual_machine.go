@@ -39,12 +39,12 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 							Computed:    true,
 						},
 						"cpu_cores": {
-							Description: "The number of cpu cores on this hardware platform.",
+							Description: "The number of CPU cores on this hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"cpu_speed": {
-							Description: "Speed of cpu in MHz. Usually cpu speeds are reported for modern cpus in GHz but MHz makes it more precise.",
+							Description: "Speed of CPU in MHz, as reported by the hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -421,7 +421,7 @@ func dataSourceVirtualizationVmwareVirtualMachine() *schema.Resource {
 				},
 			},
 			"hypervisor_type": {
-				Description: "Type of hypervisor where the virtual machine is hosted for example ESXi.",
+				Description: "Type of hypervisor where the virtual machine is hosted, for example VMware ESXi.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},

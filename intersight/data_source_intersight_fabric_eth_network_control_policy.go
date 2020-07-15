@@ -68,7 +68,7 @@ func dataSourceFabricEthNetworkControlPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"mac_registration_mode": {
+			"mac_register_mode": {
 				Description: "Determines the MAC addresses that have to be registered with the switch.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -207,9 +207,9 @@ func dataSourceFabricEthNetworkControlPolicyRead(d *schema.ResourceData, meta in
 		x := (v.(string))
 		o.SetForgeMac(x)
 	}
-	if v, ok := d.GetOk("mac_registration_mode"); ok {
+	if v, ok := d.GetOk("mac_register_mode"); ok {
 		x := (v.(string))
-		o.SetMacRegistrationMode(x)
+		o.SetMacRegisterMode(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
@@ -278,8 +278,8 @@ func dataSourceFabricEthNetworkControlPolicyRead(d *schema.ResourceData, meta in
 			if err := d.Set("lldp_settings", flattenMapFabricLldpSettings(s.GetLldpSettings(), d)); err != nil {
 				return fmt.Errorf("error occurred while setting property LldpSettings: %+v", err)
 			}
-			if err := d.Set("mac_registration_mode", (s.GetMacRegistrationMode())); err != nil {
-				return fmt.Errorf("error occurred while setting property MacRegistrationMode: %+v", err)
+			if err := d.Set("mac_register_mode", (s.GetMacRegisterMode())); err != nil {
+				return fmt.Errorf("error occurred while setting property MacRegisterMode: %+v", err)
 			}
 			if err := d.Set("moid", (s.GetMoid())); err != nil {
 				return fmt.Errorf("error occurred while setting property Moid: %+v", err)

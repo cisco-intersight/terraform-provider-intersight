@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **IpV4Address** | Pointer to **string** | IPv4 Address of this pool member. | [optional] 
-**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **IpV4Block** | Pointer to [**IppoolShadowBlockRelationship**](ippool.ShadowBlock.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**IppoolIpLeaseRelationship**](ippool.IpLease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**IppoolShadowPoolRelationship**](ippool.ShadowPool.Relationship.md) |  | [optional] 
@@ -53,31 +52,6 @@ SetIpV4Address sets IpV4Address field to given value.
 `func (o *IppoolPoolMember) HasIpV4Address() bool`
 
 HasIpV4Address returns a boolean if a field has been set.
-
-### GetAssignedToEntity
-
-`func (o *IppoolPoolMember) GetAssignedToEntity() MoBaseMoRelationship`
-
-GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
-
-### GetAssignedToEntityOk
-
-`func (o *IppoolPoolMember) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
-
-GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToEntity
-
-`func (o *IppoolPoolMember) SetAssignedToEntity(v MoBaseMoRelationship)`
-
-SetAssignedToEntity sets AssignedToEntity field to given value.
-
-### HasAssignedToEntity
-
-`func (o *IppoolPoolMember) HasAssignedToEntity() bool`
-
-HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetIpV4Block
 

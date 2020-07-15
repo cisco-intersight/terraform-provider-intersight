@@ -15,7 +15,6 @@ The following arguments are supported:
 (Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `category`:(string) The category of the model series. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
-* `dist_tag`:(string) The distributable tag value of the model series. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `name`:(string) An unique identifer for a capability descriptor. 
 * `object_type`:(string)(Computed) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 

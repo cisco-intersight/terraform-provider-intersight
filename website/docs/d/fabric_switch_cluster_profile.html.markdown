@@ -16,5 +16,4 @@ The following arguments can be used to get data of already created objects in In
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `name`:(string) Name of the concrete profile. 
 * `object_type`:(string) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
-* `switch_profiles_count`:(int) Number of switch profiles that are part of this cluster profile. 
 * `type`:(string) Defines the type of the profile. Accepted value is instance. 

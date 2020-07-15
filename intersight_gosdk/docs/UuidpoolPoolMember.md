@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Uuid** | Pointer to **string** | UUID Prefix+Suffix of this PoolMember. | [optional] 
-**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **BlockHead** | Pointer to [**UuidpoolBlockRelationship**](uuidpool.Block.Relationship.md) |  | [optional] 
 **Peer** | Pointer to [**UuidpoolUuidLeaseRelationship**](uuidpool.UuidLease.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**UuidpoolPoolRelationship**](uuidpool.Pool.Relationship.md) |  | [optional] 
@@ -53,31 +52,6 @@ SetUuid sets Uuid field to given value.
 `func (o *UuidpoolPoolMember) HasUuid() bool`
 
 HasUuid returns a boolean if a field has been set.
-
-### GetAssignedToEntity
-
-`func (o *UuidpoolPoolMember) GetAssignedToEntity() MoBaseMoRelationship`
-
-GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
-
-### GetAssignedToEntityOk
-
-`func (o *UuidpoolPoolMember) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
-
-GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToEntity
-
-`func (o *UuidpoolPoolMember) SetAssignedToEntity(v MoBaseMoRelationship)`
-
-SetAssignedToEntity sets AssignedToEntity field to given value.
-
-### HasAssignedToEntity
-
-`func (o *UuidpoolPoolMember) HasAssignedToEntity() bool`
-
-HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetBlockHead
 

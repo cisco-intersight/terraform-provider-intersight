@@ -130,7 +130,7 @@ func dataSourceIaasLicenseInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"label": {
-							Description: "License label of UCSD license.",
+							Description: "License Label.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -148,7 +148,7 @@ func dataSourceIaasLicenseInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"sku": {
-							Description: "SKU for the UCSD license.",
+							Description: "SKU for the license.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,

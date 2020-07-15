@@ -25,7 +25,7 @@ This complex property has following sub-properties:
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 
   + `receive_enabled`:(bool) Determines if the LLDP frames can be received by an interface on the switch. 
   + `transmit_enabled`:(bool) Determines if the LLDP frames can be transmitted by an interface on the switch. 
-* `mac_registration_mode`:(string) Determines the MAC addresses that have to be registered with the switch. 
+* `mac_register_mode`:(string) Determines the MAC addresses that have to be registered with the switch. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `name`:(string) Name of the concrete policy. 
 * `network_policy`:(Array) An array of relationships to vnicEthNetworkPolicy resources. 

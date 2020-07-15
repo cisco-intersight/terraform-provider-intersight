@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 **PartitionName** | Pointer to **string** | Partition name of the Flex Util virtual drive. | [optional] 
 **ResidentImage** | Pointer to **string** | The resident image on the flex util virtual Drive. | [optional] 
 **Size** | Pointer to **string** | Size of the Flex Util virtual drive. | [optional] 
-**VirtualDrive** | Pointer to **string** | Virtual drive on the Flex Util controller. | [optional] 
+**VirtualDrive** | Pointer to **string** |  | [optional] 
 **InventoryDeviceInfo** | Pointer to [**InventoryDeviceInfoRelationship**](inventory.DeviceInfo.Relationship.md) |  | [optional] 
 **RegisteredDevice** | Pointer to [**AssetDeviceRegistrationRelationship**](asset.DeviceRegistration.Relationship.md) |  | [optional] 
 **StorageFlexUtilController** | Pointer to [**StorageFlexUtilControllerRelationship**](storage.FlexUtilController.Relationship.md) |  | [optional] 

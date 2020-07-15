@@ -12,6 +12,8 @@ PoolMember represents a single IPv4 address that is part of a pool.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
 * `assigned`:(bool) Boolean to represent whether the ID is assigned or not. 
+* `assigned_to_moid`:(string) Moid of the entity/server profile that owns this ID. 
+* `assigned_to_type`:(string) Type of the entity that owns this ID. 
 * `class_id`:(string) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `ip_v4_address`:(string) IPv4 Address of this pool member. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 

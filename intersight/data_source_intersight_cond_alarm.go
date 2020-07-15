@@ -15,46 +15,25 @@ func dataSourceCondAlarm() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceCondAlarmRead,
 		Schema: map[string]*schema.Schema{
-			"acknowledge": {
-				Description: "Alarm acknowledgment state. Default value is None.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"acknowledge_by": {
-				Description: "User who acknowledged the alarm.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"acknowledge_time": {
-				Description: "Time at which the alarm was acknowledged by the user.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
 			"affected_mo_id": {
 				Description: "MoId of the affected object from the managed system's point of view.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"affected_mo_type": {
 				Description: "Managed system affected object type. For example Adaptor, FI, CIMC.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"ancestor_mo_id": {
 				Description: "Parent MoId of the fault from managed system. For example, Blade moid for adaptor fault.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"ancestor_mo_type": {
 				Description: "Parent MO type of the fault from managed system. For example, Blade for adaptor fault.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -66,25 +45,21 @@ func dataSourceCondAlarm() *schema.Resource {
 				Description: "A unique alarm code. For alarms mapped from UCS faults, this will be the same as the UCS fault code.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"creation_time": {
 				Description: "The time the alarm was created.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"description": {
 				Description: "A longer description of the alarm than the name. The description contains details of the component reporting the issue.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"last_transition_time": {
 				Description: "The time the alarm last had a change in severity.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -96,13 +71,11 @@ func dataSourceCondAlarm() *schema.Resource {
 				Description: "A unique key for the alarm from the managed system's point of view. For example, in the case of UCS, this is the fault's dn.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"name": {
 				Description: "Uniquely identifies the type of alarm. For alarms originating from Intersight, this will be a descriptive name. For alarms that are mapped from faults, the name will be derived from fault properties. For example, alarms mapped from UCS faults will use a prefix of UCS and appended with the fault code.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
@@ -114,7 +87,6 @@ func dataSourceCondAlarm() *schema.Resource {
 				Description: "The original severity when the alarm was first created.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"registered_device": {
 				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -155,7 +127,6 @@ func dataSourceCondAlarm() *schema.Resource {
 				Description: "The severity of the alarm. Valid values are Critical, Warning, Info, and Cleared.",
 				Type:        schema.TypeString,
 				Optional:    true,
-				Computed:    true,
 			},
 			"tags": {
 				Type:     schema.TypeList,
@@ -184,18 +155,6 @@ func dataSourceCondAlarmRead(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 	var o = models.NewCondAlarmWithDefaults()
-	if v, ok := d.GetOk("acknowledge"); ok {
-		x := (v.(string))
-		o.SetAcknowledge(x)
-	}
-	if v, ok := d.GetOk("acknowledge_by"); ok {
-		x := (v.(string))
-		o.SetAcknowledgeBy(x)
-	}
-	if v, ok := d.GetOk("acknowledge_time"); ok {
-		x, _ := time.Parse(v.(string), time.RFC1123)
-		o.SetAcknowledgeTime(x)
-	}
 	if v, ok := d.GetOk("affected_mo_id"); ok {
 		x := (v.(string))
 		o.SetAffectedMoId(x)
@@ -287,16 +246,6 @@ func dataSourceCondAlarmRead(d *schema.ResourceData, meta interface{}) error {
 			oo, _ := json.Marshal(r.Index(i).Interface())
 			if err = json.Unmarshal(oo, s); err != nil {
 				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
-			}
-			if err := d.Set("acknowledge", (s.GetAcknowledge())); err != nil {
-				return fmt.Errorf("error occurred while setting property Acknowledge: %+v", err)
-			}
-			if err := d.Set("acknowledge_by", (s.GetAcknowledgeBy())); err != nil {
-				return fmt.Errorf("error occurred while setting property AcknowledgeBy: %+v", err)
-			}
-
-			if err := d.Set("acknowledge_time", (s.GetAcknowledgeTime()).String()); err != nil {
-				return fmt.Errorf("error occurred while setting property AcknowledgeTime: %+v", err)
 			}
 			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
 				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)

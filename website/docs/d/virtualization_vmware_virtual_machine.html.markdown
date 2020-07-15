@@ -21,7 +21,7 @@ The following arguments can be used to get data of already created objects in In
 * `dhcp_enabled`:(bool) Shows if DHCP is used for IP/DNS on this VM. 
 * `folder`:(string) The folder name associated with this VM. 
 * `guest_state`:(string) The state of the guest OS running on this VM. Could be running, not running etc. 
-* `hypervisor_type`:(string) Type of hypervisor where the virtual machine is hosted for example ESXi. 
+* `hypervisor_type`:(string) Type of hypervisor where the virtual machine is hosted, for example VMware ESXi. 
 * `identity`:(string) The internally generated identity of this VM. This entity is not manipulated by users. It aids in uniquely identifying the virtual machine object. For VMware, this is MOR (managed object reference). 
 * `instance_uuid`:(string) UUID assigned by vCenter to every VM. 
 * `is_template`:(bool) If true, indicates that the entity refers to a template of a virtual machine and not a real virtual machine. 

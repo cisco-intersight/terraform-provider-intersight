@@ -33,12 +33,6 @@ func resourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"file_type": {
-				Description: "The type of distributable image, example huu, scu, driver, os.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Default:     "Distributable",
-			},
 			"mdf_id": {
 				Description: "Cisco software repository image category identifier.",
 				Type:        schema.TypeString,
@@ -108,23 +102,7 @@ func resourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
-			"nr_source": {
-				Description: "The image can be downloaded from cisco.com or external cloud store.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Default:     "Cisco",
-			},
 			"supported_models": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString}},
-			"sw_id": {
-				Description: "The software type id provided by cisco.com.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"tag_types": {
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -152,11 +130,6 @@ func resourceSoftwarerepositoryCategoryMapper() *schema.Resource {
 					},
 				},
 			},
-			"nr_version": {
-				Description: "The version from which user can download images from amazon store, if source is external cloud store.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 		},
 	}
 }
@@ -181,11 +154,6 @@ func resourceSoftwarerepositoryCategoryMapperCreate(d *schema.ResourceData, meta
 	}
 
 	o.SetClassId("softwarerepository.CategoryMapper")
-
-	if v, ok := d.GetOk("file_type"); ok {
-		x := (v.(string))
-		o.SetFileType(x)
-	}
 
 	if v, ok := d.GetOk("mdf_id"); ok {
 		x := (v.(string))
@@ -252,11 +220,6 @@ func resourceSoftwarerepositoryCategoryMapperCreate(d *schema.ResourceData, meta
 		}
 	}
 
-	if v, ok := d.GetOk("nr_source"); ok {
-		x := (v.(string))
-		o.SetSource(x)
-	}
-
 	if v, ok := d.GetOk("supported_models"); ok {
 		x := make([]string, 0)
 		y := reflect.ValueOf(v)
@@ -265,22 +228,6 @@ func resourceSoftwarerepositoryCategoryMapperCreate(d *schema.ResourceData, meta
 		}
 		if len(x) > 0 {
 			o.SetSupportedModels(x)
-		}
-	}
-
-	if v, ok := d.GetOk("sw_id"); ok {
-		x := (v.(string))
-		o.SetSwId(x)
-	}
-
-	if v, ok := d.GetOk("tag_types"); ok {
-		x := make([]string, 0)
-		y := reflect.ValueOf(v)
-		for i := 0; i < y.Len(); i++ {
-			x = append(x, y.Index(i).Interface().(string))
-		}
-		if len(x) > 0 {
-			o.SetTagTypes(x)
 		}
 	}
 
@@ -319,11 +266,6 @@ func resourceSoftwarerepositoryCategoryMapperCreate(d *schema.ResourceData, meta
 		}
 	}
 
-	if v, ok := d.GetOk("nr_version"); ok {
-		x := (v.(string))
-		o.SetVersion(x)
-	}
-
 	r := conn.ApiClient.SoftwarerepositoryApi.CreateSoftwarerepositoryCategoryMapper(conn.ctx).SoftwarerepositoryCategoryMapper(*o)
 	result, _, err := r.Execute()
 	if err != nil {
@@ -358,10 +300,6 @@ func resourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta i
 		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("file_type", (s.GetFileType())); err != nil {
-		return fmt.Errorf("error occurred while setting property FileType: %+v", err)
-	}
-
 	if err := d.Set("mdf_id", (s.GetMdfId())); err != nil {
 		return fmt.Errorf("error occurred while setting property MdfId: %+v", err)
 	}
@@ -386,28 +324,12 @@ func resourceSoftwarerepositoryCategoryMapperRead(d *schema.ResourceData, meta i
 		return fmt.Errorf("error occurred while setting property Section: %+v", err)
 	}
 
-	if err := d.Set("nr_source", (s.GetSource())); err != nil {
-		return fmt.Errorf("error occurred while setting property Source: %+v", err)
-	}
-
 	if err := d.Set("supported_models", (s.GetSupportedModels())); err != nil {
 		return fmt.Errorf("error occurred while setting property SupportedModels: %+v", err)
 	}
 
-	if err := d.Set("sw_id", (s.GetSwId())); err != nil {
-		return fmt.Errorf("error occurred while setting property SwId: %+v", err)
-	}
-
-	if err := d.Set("tag_types", (s.GetTagTypes())); err != nil {
-		return fmt.Errorf("error occurred while setting property TagTypes: %+v", err)
-	}
-
 	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
-	}
-
-	if err := d.Set("nr_version", (s.GetVersion())); err != nil {
-		return fmt.Errorf("error occurred while setting property Version: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
@@ -437,12 +359,6 @@ func resourceSoftwarerepositoryCategoryMapperUpdate(d *schema.ResourceData, meta
 	}
 
 	o.SetClassId("softwarerepository.CategoryMapper")
-
-	if d.HasChange("file_type") {
-		v := d.Get("file_type")
-		x := (v.(string))
-		o.SetFileType(x)
-	}
 
 	if d.HasChange("mdf_id") {
 		v := d.Get("mdf_id")
@@ -514,12 +430,6 @@ func resourceSoftwarerepositoryCategoryMapperUpdate(d *schema.ResourceData, meta
 		}
 	}
 
-	if d.HasChange("nr_source") {
-		v := d.Get("nr_source")
-		x := (v.(string))
-		o.SetSource(x)
-	}
-
 	if d.HasChange("supported_models") {
 		v := d.Get("supported_models")
 		x := make([]string, 0)
@@ -529,24 +439,6 @@ func resourceSoftwarerepositoryCategoryMapperUpdate(d *schema.ResourceData, meta
 		}
 		if len(x) > 0 {
 			o.SetSupportedModels(x)
-		}
-	}
-
-	if d.HasChange("sw_id") {
-		v := d.Get("sw_id")
-		x := (v.(string))
-		o.SetSwId(x)
-	}
-
-	if d.HasChange("tag_types") {
-		v := d.Get("tag_types")
-		x := make([]string, 0)
-		y := reflect.ValueOf(v)
-		for i := 0; i < y.Len(); i++ {
-			x = append(x, y.Index(i).Interface().(string))
-		}
-		if len(x) > 0 {
-			o.SetTagTypes(x)
 		}
 	}
 
@@ -584,12 +476,6 @@ func resourceSoftwarerepositoryCategoryMapperUpdate(d *schema.ResourceData, meta
 		if len(x) > 0 {
 			o.SetTags(x)
 		}
-	}
-
-	if d.HasChange("nr_version") {
-		v := d.Get("nr_version")
-		x := (v.(string))
-		o.SetVersion(x)
 	}
 
 	r := conn.ApiClient.SoftwarerepositoryApi.UpdateSoftwarerepositoryCategoryMapper(conn.ctx, d.Id()).SoftwarerepositoryCategoryMapper(*o)

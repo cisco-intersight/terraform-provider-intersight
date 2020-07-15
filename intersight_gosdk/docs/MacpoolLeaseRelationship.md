@@ -19,8 +19,9 @@ Name | Type | Description | Notes
 **Parent** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **PermissionResources** | Pointer to [**[]MoBaseMoRelationship**](mo.BaseMo.Relationship.md) | An array of relationships to moBaseMo resources. | [optional] [readonly] 
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
+**AssignedToMoid** | Pointer to **string** | Moid of the entity/server profile that owns this ID. | [optional] 
+**AssignedToType** | Pointer to **string** | Type of the entity that owns this ID. | [optional] 
 **MacAddress** | Pointer to **string** | MAC address allocated for pool-based allocation. | [optional] 
-**AssignedToEntity** | Pointer to [**MoBaseMoRelationship**](mo.BaseMo.Relationship.md) |  | [optional] 
 **Pool** | Pointer to [**MacpoolPoolRelationship**](macpool.Pool.Relationship.md) |  | [optional] 
 **PoolMember** | Pointer to [**MacpoolPoolMemberRelationship**](macpool.PoolMember.Relationship.md) |  | [optional] 
 **Universe** | Pointer to [**MacpoolUniverseRelationship**](macpool.Universe.Relationship.md) |  | [optional] 
@@ -439,6 +440,56 @@ HasDisplayNames returns a boolean if a field has been set.
 `func (o *MacpoolLeaseRelationship) UnsetDisplayNames()`
 
 UnsetDisplayNames ensures that no value is present for DisplayNames, not even an explicit nil
+### GetAssignedToMoid
+
+`func (o *MacpoolLeaseRelationship) GetAssignedToMoid() string`
+
+GetAssignedToMoid returns the AssignedToMoid field if non-nil, zero value otherwise.
+
+### GetAssignedToMoidOk
+
+`func (o *MacpoolLeaseRelationship) GetAssignedToMoidOk() (*string, bool)`
+
+GetAssignedToMoidOk returns a tuple with the AssignedToMoid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToMoid
+
+`func (o *MacpoolLeaseRelationship) SetAssignedToMoid(v string)`
+
+SetAssignedToMoid sets AssignedToMoid field to given value.
+
+### HasAssignedToMoid
+
+`func (o *MacpoolLeaseRelationship) HasAssignedToMoid() bool`
+
+HasAssignedToMoid returns a boolean if a field has been set.
+
+### GetAssignedToType
+
+`func (o *MacpoolLeaseRelationship) GetAssignedToType() string`
+
+GetAssignedToType returns the AssignedToType field if non-nil, zero value otherwise.
+
+### GetAssignedToTypeOk
+
+`func (o *MacpoolLeaseRelationship) GetAssignedToTypeOk() (*string, bool)`
+
+GetAssignedToTypeOk returns a tuple with the AssignedToType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssignedToType
+
+`func (o *MacpoolLeaseRelationship) SetAssignedToType(v string)`
+
+SetAssignedToType sets AssignedToType field to given value.
+
+### HasAssignedToType
+
+`func (o *MacpoolLeaseRelationship) HasAssignedToType() bool`
+
+HasAssignedToType returns a boolean if a field has been set.
+
 ### GetMacAddress
 
 `func (o *MacpoolLeaseRelationship) GetMacAddress() string`
@@ -463,31 +514,6 @@ SetMacAddress sets MacAddress field to given value.
 `func (o *MacpoolLeaseRelationship) HasMacAddress() bool`
 
 HasMacAddress returns a boolean if a field has been set.
-
-### GetAssignedToEntity
-
-`func (o *MacpoolLeaseRelationship) GetAssignedToEntity() MoBaseMoRelationship`
-
-GetAssignedToEntity returns the AssignedToEntity field if non-nil, zero value otherwise.
-
-### GetAssignedToEntityOk
-
-`func (o *MacpoolLeaseRelationship) GetAssignedToEntityOk() (*MoBaseMoRelationship, bool)`
-
-GetAssignedToEntityOk returns a tuple with the AssignedToEntity field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAssignedToEntity
-
-`func (o *MacpoolLeaseRelationship) SetAssignedToEntity(v MoBaseMoRelationship)`
-
-SetAssignedToEntity sets AssignedToEntity field to given value.
-
-### HasAssignedToEntity
-
-`func (o *MacpoolLeaseRelationship) HasAssignedToEntity() bool`
-
-HasAssignedToEntity returns a boolean if a field has been set.
 
 ### GetPool
 

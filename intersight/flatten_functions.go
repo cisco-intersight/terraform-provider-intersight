@@ -324,18 +324,6 @@ func flattenListCapabilityPortRange(p []models.CapabilityPortRange, d *schema.Re
 	}
 	return capabilityportranges
 }
-func flattenListCapabilitySectionRelationship(p []models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var capabilitysectionrelationships []map[string]interface{}
-	if len(p) == 0 {
-		return nil
-	}
-	for _, item := range p {
-		item := item.MoMoRef
-		capabilitysectionrelationship := flattenMoMoRef(item)
-		capabilitysectionrelationships = append(capabilitysectionrelationships, capabilitysectionrelationship)
-	}
-	return capabilitysectionrelationships
-}
 func flattenListComputeBladeRelationship(p []models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computebladerelationships []map[string]interface{}
 	if len(p) == 0 {
@@ -2603,18 +2591,6 @@ func flattenListSnmpUser(p []models.SnmpUser, d *schema.ResourceData) []map[stri
 	}
 	return snmpusers
 }
-func flattenListSoftwareHyperflexDistributableRelationship(p []models.SoftwareHyperflexDistributableRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var softwarehyperflexdistributablerelationships []map[string]interface{}
-	if len(p) == 0 {
-		return nil
-	}
-	for _, item := range p {
-		item := item.MoMoRef
-		softwarehyperflexdistributablerelationship := flattenMoMoRef(item)
-		softwarehyperflexdistributablerelationships = append(softwarehyperflexdistributablerelationships, softwarehyperflexdistributablerelationship)
-	}
-	return softwarehyperflexdistributablerelationships
-}
 func flattenListStorageBaseInitiator(p []models.StorageBaseInitiator, d *schema.ResourceData) []map[string]interface{} {
 	var storagebaseinitiators []map[string]interface{}
 	if len(p) == 0 {
@@ -4120,24 +4096,6 @@ func flattenMapBootDeviceBootModeRelationship(p models.BootDeviceBootModeRelatio
 	bootdevicebootmoderelationships = append(bootdevicebootmoderelationships, bootdevicebootmoderelationship)
 	return bootdevicebootmoderelationships
 }
-func flattenMapCapabilityCatalogRelationship(p models.CapabilityCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
-	var capabilitycatalogrelationships []map[string]interface{}
-	var ret models.CapabilityCatalogRelationship
-	if reflect.DeepEqual(ret, p) {
-		return nil
-	}
-	x := p
-	item := x.MoMoRef
-	capabilitycatalogrelationship := make(map[string]interface{})
-	capabilitycatalogrelationship["additional_properties"] = flattenAdditionalProperties(item.AdditionalProperties)
-	capabilitycatalogrelationship["class_id"] = item.ClassId
-	capabilitycatalogrelationship["moid"] = item.Moid
-	capabilitycatalogrelationship["object_type"] = item.ObjectType
-	capabilitycatalogrelationship["selector"] = item.Selector
-
-	capabilitycatalogrelationships = append(capabilitycatalogrelationships, capabilitycatalogrelationship)
-	return capabilitycatalogrelationships
-}
 func flattenMapCapabilitySectionRelationship(p models.CapabilitySectionRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var capabilitysectionrelationships []map[string]interface{}
 	var ret models.CapabilitySectionRelationship
@@ -4193,23 +4151,6 @@ func flattenMapCommIpV4Interface(p models.CommIpV4Interface, d *schema.ResourceD
 
 	commipv4interfaces = append(commipv4interfaces, commipv4interface)
 	return commipv4interfaces
-}
-func flattenMapComputeAlarmSummary(p models.ComputeAlarmSummary, d *schema.ResourceData) []map[string]interface{} {
-	var computealarmsummarys []map[string]interface{}
-	var ret models.ComputeAlarmSummary
-	if reflect.DeepEqual(ret, p) {
-		return nil
-	}
-	item := p
-	computealarmsummary := make(map[string]interface{})
-	computealarmsummary["additional_properties"] = flattenAdditionalProperties(item.AdditionalProperties)
-	computealarmsummary["class_id"] = item.ClassId
-	computealarmsummary["critical"] = item.Critical
-	computealarmsummary["object_type"] = item.ObjectType
-	computealarmsummary["warning"] = item.Warning
-
-	computealarmsummarys = append(computealarmsummarys, computealarmsummary)
-	return computealarmsummarys
 }
 func flattenMapComputeBladeRelationship(p models.ComputeBladeRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var computebladerelationships []map[string]interface{}
@@ -4335,23 +4276,6 @@ func flattenMapComputeServerConfig(p models.ComputeServerConfig, d *schema.Resou
 
 	computeserverconfigs = append(computeserverconfigs, computeserverconfig)
 	return computeserverconfigs
-}
-func flattenMapCondAlarmSummary(p models.CondAlarmSummary, d *schema.ResourceData) []map[string]interface{} {
-	var condalarmsummarys []map[string]interface{}
-	var ret models.CondAlarmSummary
-	if reflect.DeepEqual(ret, p) {
-		return nil
-	}
-	item := p
-	condalarmsummary := make(map[string]interface{})
-	condalarmsummary["additional_properties"] = flattenAdditionalProperties(item.AdditionalProperties)
-	condalarmsummary["class_id"] = item.ClassId
-	condalarmsummary["critical"] = item.Critical
-	condalarmsummary["object_type"] = item.ObjectType
-	condalarmsummary["warning"] = item.Warning
-
-	condalarmsummarys = append(condalarmsummarys, condalarmsummary)
-	return condalarmsummarys
 }
 func flattenMapCondHclStatusRelationship(p models.CondHclStatusRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var condhclstatusrelationships []map[string]interface{}
@@ -5308,23 +5232,6 @@ func flattenMapHclOperatingSystemVendorRelationship(p models.HclOperatingSystemV
 
 	hcloperatingsystemvendorrelationships = append(hcloperatingsystemvendorrelationships, hcloperatingsystemvendorrelationship)
 	return hcloperatingsystemvendorrelationships
-}
-func flattenMapHyperflexAlarmSummary(p models.HyperflexAlarmSummary, d *schema.ResourceData) []map[string]interface{} {
-	var hyperflexalarmsummarys []map[string]interface{}
-	var ret models.HyperflexAlarmSummary
-	if reflect.DeepEqual(ret, p) {
-		return nil
-	}
-	item := p
-	hyperflexalarmsummary := make(map[string]interface{})
-	hyperflexalarmsummary["additional_properties"] = flattenAdditionalProperties(item.AdditionalProperties)
-	hyperflexalarmsummary["class_id"] = item.ClassId
-	hyperflexalarmsummary["critical"] = item.Critical
-	hyperflexalarmsummary["object_type"] = item.ObjectType
-	hyperflexalarmsummary["warning"] = item.Warning
-
-	hyperflexalarmsummarys = append(hyperflexalarmsummarys, hyperflexalarmsummary)
-	return hyperflexalarmsummarys
 }
 func flattenMapHyperflexAppCatalogRelationship(p models.HyperflexAppCatalogRelationship, d *schema.ResourceData) []map[string]interface{} {
 	var hyperflexappcatalogrelationships []map[string]interface{}

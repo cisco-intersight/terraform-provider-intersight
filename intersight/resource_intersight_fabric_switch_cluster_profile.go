@@ -32,7 +32,6 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
-				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -77,6 +76,7 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 			},
 			"description": {
 				Description: "Description of the profile.",
@@ -223,12 +223,6 @@ func resourceFabricSwitchClusterProfile() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
-			},
-			"switch_profiles_count": {
-				Description: "Number of switch profiles that are part of this cluster profile.",
-				Type:        schema.TypeInt,
-				Optional:    true,
-				Computed:    true,
 			},
 			"tags": {
 				Type:     schema.TypeList,
@@ -479,11 +473,6 @@ func resourceFabricSwitchClusterProfileCreate(d *schema.ResourceData, meta inter
 		}
 	}
 
-	if v, ok := d.GetOk("switch_profiles_count"); ok {
-		x := int64(v.(int))
-		o.SetSwitchProfilesCount(x)
-	}
-
 	if v, ok := d.GetOk("tags"); ok {
 		x := make([]models.MoTag, 0)
 		s := v.([]interface{})
@@ -584,10 +573,6 @@ func resourceFabricSwitchClusterProfileRead(d *schema.ResourceData, meta interfa
 
 	if err := d.Set("switch_profiles", flattenListFabricSwitchProfileRelationship(s.GetSwitchProfiles(), d)); err != nil {
 		return fmt.Errorf("error occurred while setting property SwitchProfiles: %+v", err)
-	}
-
-	if err := d.Set("switch_profiles_count", (s.GetSwitchProfilesCount())); err != nil {
-		return fmt.Errorf("error occurred while setting property SwitchProfilesCount: %+v", err)
 	}
 
 	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
@@ -825,12 +810,6 @@ func resourceFabricSwitchClusterProfileUpdate(d *schema.ResourceData, meta inter
 		if len(x) > 0 {
 			o.SetSwitchProfiles(x)
 		}
-	}
-
-	if d.HasChange("switch_profiles_count") {
-		v := d.Get("switch_profiles_count")
-		x := int64(v.(int))
-		o.SetSwitchProfilesCount(x)
 	}
 
 	if d.HasChange("tags") {

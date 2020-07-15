@@ -260,11 +260,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"config_tdp_level": {
-				Description: "BIOS Token for setting Configurable TDP Level configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"console_redirection": {
 				Description: "BIOS Token for setting Console redirection configuration.",
 				Type:        schema.TypeString,
@@ -295,16 +290,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"cr_qos": {
-				Description: "BIOS Token for setting CR QoS configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"crfastgo_config": {
-				Description: "BIOS Token for setting CR FastGo Config configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"dcpmm_firmware_downgrade": {
 				Description: "BIOS Token for setting DCPMM Firmware Downgrade configuration.",
 				Type:        schema.TypeString,
@@ -332,11 +317,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 			},
 			"dram_refresh_rate": {
 				Description: "BIOS Token for setting DRAM Refresh Rate configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"enable_clock_spread_spec": {
-				Description: "BIOS Token for setting External SSC Enable configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -566,11 +546,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nvmdimm_perform_config": {
-				Description: "BIOS Token for setting NVM Performance Setting configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
@@ -722,81 +697,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"pcie_ari_support": {
-				Description: "BIOS Token for setting PCIe ARI Support configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_pll_ssc": {
-				Description: "BIOS Token for setting PCIe PLL SSC configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_mstorraid_option_rom": {
-				Description: "BIOS Token for setting PCIe Slot MSTOR RAID OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme1link_speed": {
-				Description: "BIOS Token for setting NVME-1 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme1option_rom": {
-				Description: "BIOS Token for setting NVME-1 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme2link_speed": {
-				Description: "BIOS Token for setting NVME-2 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme2option_rom": {
-				Description: "BIOS Token for setting NVME-2 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme3link_speed": {
-				Description: "BIOS Token for setting NVME-3 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme3option_rom": {
-				Description: "BIOS Token for setting NVME-3 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme4link_speed": {
-				Description: "BIOS Token for setting NVME-4 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme4option_rom": {
-				Description: "BIOS Token for setting NVME-4 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme5link_speed": {
-				Description: "BIOS Token for setting NVME-5 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme5option_rom": {
-				Description: "BIOS Token for setting NVME-5 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme6link_speed": {
-				Description: "BIOS Token for setting NVME-6 Link Speed configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"pcie_slot_nvme6option_rom": {
-				Description: "BIOS Token for setting NVME-6 OptionROM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"pop_support": {
 				Description: "BIOS Token for setting Power ON Password configuration.",
 				Type:        schema.TypeString,
@@ -883,11 +783,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 			},
 			"qpi_link_frequency": {
 				Description: "BIOS Token for setting QPI Link Frequency Select configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"qpi_link_speed": {
-				Description: "BIOS Token for setting UPI Link Frequency Select configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1421,16 +1316,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"snoopy_mode_for2lm": {
-				Description: "BIOS Token for setting Snoopy Mode for 2LM configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"snoopy_mode_for_ad": {
-				Description: "BIOS Token for setting Snoopy Mode for AD configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"sparing_mode": {
 				Description: "BIOS Token for setting Sparing Mode configuration.",
 				Type:        schema.TypeString,
@@ -1491,11 +1376,6 @@ func dataSourceBiosPolicy() *schema.Resource {
 			},
 			"ucsm_boot_order_rule": {
 				Description: "BIOS Token for setting Boot Order Rules configuration.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"ufs_disable": {
-				Description: "BIOS Token for setting Uncore Frequency Scaling configuration.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -1764,10 +1644,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		x := (v.(string))
 		o.SetConfigTdp(x)
 	}
-	if v, ok := d.GetOk("config_tdp_level"); ok {
-		x := (v.(string))
-		o.SetConfigTdpLevel(x)
-	}
 	if v, ok := d.GetOk("console_redirection"); ok {
 		x := (v.(string))
 		o.SetConsoleRedirection(x)
@@ -1792,14 +1668,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		x := (v.(string))
 		o.SetCpuPowerManagement(x)
 	}
-	if v, ok := d.GetOk("cr_qos"); ok {
-		x := (v.(string))
-		o.SetCrQos(x)
-	}
-	if v, ok := d.GetOk("crfastgo_config"); ok {
-		x := (v.(string))
-		o.SetCrfastgoConfig(x)
-	}
 	if v, ok := d.GetOk("dcpmm_firmware_downgrade"); ok {
 		x := (v.(string))
 		o.SetDcpmmFirmwareDowngrade(x)
@@ -1823,10 +1691,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("dram_refresh_rate"); ok {
 		x := (v.(string))
 		o.SetDramRefreshRate(x)
-	}
-	if v, ok := d.GetOk("enable_clock_spread_spec"); ok {
-		x := (v.(string))
-		o.SetEnableClockSpreadSpec(x)
 	}
 	if v, ok := d.GetOk("energy_efficient_turbo"); ok {
 		x := (v.(string))
@@ -2008,10 +1872,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		x := (v.(string))
 		o.SetNumaOptimized(x)
 	}
-	if v, ok := d.GetOk("nvmdimm_perform_config"); ok {
-		x := (v.(string))
-		o.SetNvmdimmPerformConfig(x)
-	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
 		o.SetObjectType(x)
@@ -2104,66 +1964,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		x := (v.(string))
 		o.SetPciRomClp(x)
 	}
-	if v, ok := d.GetOk("pcie_ari_support"); ok {
-		x := (v.(string))
-		o.SetPcieAriSupport(x)
-	}
-	if v, ok := d.GetOk("pcie_pll_ssc"); ok {
-		x := (v.(string))
-		o.SetPciePllSsc(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_mstorraid_option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotMstorraidOptionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme1link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme1linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme1option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme1optionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme2link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme2linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme2option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme2optionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme3link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme3linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme3option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme3optionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme4link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme4linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme4option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme4optionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme5link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme5linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme5option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme5optionRom(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme6link_speed"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme6linkSpeed(x)
-	}
-	if v, ok := d.GetOk("pcie_slot_nvme6option_rom"); ok {
-		x := (v.(string))
-		o.SetPcieSlotNvme6optionRom(x)
-	}
 	if v, ok := d.GetOk("pop_support"); ok {
 		x := (v.(string))
 		o.SetPopSupport(x)
@@ -2207,10 +2007,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("qpi_link_frequency"); ok {
 		x := (v.(string))
 		o.SetQpiLinkFrequency(x)
-	}
-	if v, ok := d.GetOk("qpi_link_speed"); ok {
-		x := (v.(string))
-		o.SetQpiLinkSpeed(x)
 	}
 	if v, ok := d.GetOk("qpi_snoop_mode"); ok {
 		x := (v.(string))
@@ -2636,14 +2432,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 		x := (v.(string))
 		o.SetSnc(x)
 	}
-	if v, ok := d.GetOk("snoopy_mode_for2lm"); ok {
-		x := (v.(string))
-		o.SetSnoopyModeFor2lm(x)
-	}
-	if v, ok := d.GetOk("snoopy_mode_for_ad"); ok {
-		x := (v.(string))
-		o.SetSnoopyModeForAd(x)
-	}
 	if v, ok := d.GetOk("sparing_mode"); ok {
 		x := (v.(string))
 		o.SetSparingMode(x)
@@ -2679,10 +2467,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("ucsm_boot_order_rule"); ok {
 		x := (v.(string))
 		o.SetUcsmBootOrderRule(x)
-	}
-	if v, ok := d.GetOk("ufs_disable"); ok {
-		x := (v.(string))
-		o.SetUfsDisable(x)
 	}
 	if v, ok := d.GetOk("usb_emul6064"); ok {
 		x := (v.(string))
@@ -2914,9 +2698,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("config_tdp", (s.GetConfigTdp())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConfigTdp: %+v", err)
 			}
-			if err := d.Set("config_tdp_level", (s.GetConfigTdpLevel())); err != nil {
-				return fmt.Errorf("error occurred while setting property ConfigTdpLevel: %+v", err)
-			}
 			if err := d.Set("console_redirection", (s.GetConsoleRedirection())); err != nil {
 				return fmt.Errorf("error occurred while setting property ConsoleRedirection: %+v", err)
 			}
@@ -2935,12 +2716,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("cpu_power_management", (s.GetCpuPowerManagement())); err != nil {
 				return fmt.Errorf("error occurred while setting property CpuPowerManagement: %+v", err)
 			}
-			if err := d.Set("cr_qos", (s.GetCrQos())); err != nil {
-				return fmt.Errorf("error occurred while setting property CrQos: %+v", err)
-			}
-			if err := d.Set("crfastgo_config", (s.GetCrfastgoConfig())); err != nil {
-				return fmt.Errorf("error occurred while setting property CrfastgoConfig: %+v", err)
-			}
 			if err := d.Set("dcpmm_firmware_downgrade", (s.GetDcpmmFirmwareDowngrade())); err != nil {
 				return fmt.Errorf("error occurred while setting property DcpmmFirmwareDowngrade: %+v", err)
 			}
@@ -2958,9 +2733,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			}
 			if err := d.Set("dram_refresh_rate", (s.GetDramRefreshRate())); err != nil {
 				return fmt.Errorf("error occurred while setting property DramRefreshRate: %+v", err)
-			}
-			if err := d.Set("enable_clock_spread_spec", (s.GetEnableClockSpreadSpec())); err != nil {
-				return fmt.Errorf("error occurred while setting property EnableClockSpreadSpec: %+v", err)
 			}
 			if err := d.Set("energy_efficient_turbo", (s.GetEnergyEfficientTurbo())); err != nil {
 				return fmt.Errorf("error occurred while setting property EnergyEfficientTurbo: %+v", err)
@@ -3097,9 +2869,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("numa_optimized", (s.GetNumaOptimized())); err != nil {
 				return fmt.Errorf("error occurred while setting property NumaOptimized: %+v", err)
 			}
-			if err := d.Set("nvmdimm_perform_config", (s.GetNvmdimmPerformConfig())); err != nil {
-				return fmt.Errorf("error occurred while setting property NvmdimmPerformConfig: %+v", err)
-			}
 			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
 				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
@@ -3173,51 +2942,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("pci_rom_clp", (s.GetPciRomClp())); err != nil {
 				return fmt.Errorf("error occurred while setting property PciRomClp: %+v", err)
 			}
-			if err := d.Set("pcie_ari_support", (s.GetPcieAriSupport())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieAriSupport: %+v", err)
-			}
-			if err := d.Set("pcie_pll_ssc", (s.GetPciePllSsc())); err != nil {
-				return fmt.Errorf("error occurred while setting property PciePllSsc: %+v", err)
-			}
-			if err := d.Set("pcie_slot_mstorraid_option_rom", (s.GetPcieSlotMstorraidOptionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotMstorraidOptionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme1link_speed", (s.GetPcieSlotNvme1linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme1linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme1option_rom", (s.GetPcieSlotNvme1optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme1optionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme2link_speed", (s.GetPcieSlotNvme2linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme2linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme2option_rom", (s.GetPcieSlotNvme2optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme2optionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme3link_speed", (s.GetPcieSlotNvme3linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme3linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme3option_rom", (s.GetPcieSlotNvme3optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme3optionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme4link_speed", (s.GetPcieSlotNvme4linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme4linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme4option_rom", (s.GetPcieSlotNvme4optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme4optionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme5link_speed", (s.GetPcieSlotNvme5linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme5linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme5option_rom", (s.GetPcieSlotNvme5optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme5optionRom: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme6link_speed", (s.GetPcieSlotNvme6linkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme6linkSpeed: %+v", err)
-			}
-			if err := d.Set("pcie_slot_nvme6option_rom", (s.GetPcieSlotNvme6optionRom())); err != nil {
-				return fmt.Errorf("error occurred while setting property PcieSlotNvme6optionRom: %+v", err)
-			}
 			if err := d.Set("pop_support", (s.GetPopSupport())); err != nil {
 				return fmt.Errorf("error occurred while setting property PopSupport: %+v", err)
 			}
@@ -3254,9 +2978,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			}
 			if err := d.Set("qpi_link_frequency", (s.GetQpiLinkFrequency())); err != nil {
 				return fmt.Errorf("error occurred while setting property QpiLinkFrequency: %+v", err)
-			}
-			if err := d.Set("qpi_link_speed", (s.GetQpiLinkSpeed())); err != nil {
-				return fmt.Errorf("error occurred while setting property QpiLinkSpeed: %+v", err)
 			}
 			if err := d.Set("qpi_snoop_mode", (s.GetQpiSnoopMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property QpiSnoopMode: %+v", err)
@@ -3576,12 +3297,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			if err := d.Set("snc", (s.GetSnc())); err != nil {
 				return fmt.Errorf("error occurred while setting property Snc: %+v", err)
 			}
-			if err := d.Set("snoopy_mode_for2lm", (s.GetSnoopyModeFor2lm())); err != nil {
-				return fmt.Errorf("error occurred while setting property SnoopyModeFor2lm: %+v", err)
-			}
-			if err := d.Set("snoopy_mode_for_ad", (s.GetSnoopyModeForAd())); err != nil {
-				return fmt.Errorf("error occurred while setting property SnoopyModeForAd: %+v", err)
-			}
 			if err := d.Set("sparing_mode", (s.GetSparingMode())); err != nil {
 				return fmt.Errorf("error occurred while setting property SparingMode: %+v", err)
 			}
@@ -3612,9 +3327,6 @@ func dataSourceBiosPolicyRead(d *schema.ResourceData, meta interface{}) error {
 			}
 			if err := d.Set("ucsm_boot_order_rule", (s.GetUcsmBootOrderRule())); err != nil {
 				return fmt.Errorf("error occurred while setting property UcsmBootOrderRule: %+v", err)
-			}
-			if err := d.Set("ufs_disable", (s.GetUfsDisable())); err != nil {
-				return fmt.Errorf("error occurred while setting property UfsDisable: %+v", err)
 			}
 			if err := d.Set("usb_emul6064", (s.GetUsbEmul6064())); err != nil {
 				return fmt.Errorf("error occurred while setting property UsbEmul6064: %+v", err)

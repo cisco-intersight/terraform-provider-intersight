@@ -11,6 +11,8 @@ Lease represents a single MAC address that is part of the universe, allocated ei
 Lease represents a single MAC address that is part of the universe, allocated either from a pool or through static assignment.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `assigned_to_moid`:(string) Moid of the entity/server profile that owns this ID. 
+* `assigned_to_type`:(string) Type of the entity that owns this ID. 
 * `class_id`:(string) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `mac_address`:(string) MAC address allocated for pool-based allocation. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 

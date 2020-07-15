@@ -16,7 +16,7 @@ The following arguments can be used to get data of already created objects in In
 * `dn`:(string) The Distinguished Name unambiguously identifies an object in the system. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `object_type`:(string) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
-* `oper_qualifier_reason`:(string) For certain states, indicates the reason why the operState is in that state. 
+* `oper_qualifier_reason`:(string)
 * `presence`:(string) The presence state of the local disk. 
 * `rn`:(string) The Relative Name uniquely identifies an object within a given context. 
 * `role`:(string) Role of the disk normal or hot-spare, used by virtual-drive. 
