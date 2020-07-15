@@ -5,8 +5,8 @@ resource "intersight_softwarerepository_operating_system_file" "osf1" {
 
   nr_source {
     additional_properties = jsonencode({
-      FileLocation = "10.225.79.79/Public/iso/esx67u2.iso"
-      RemoteIp = "10.225.79.79"
+      FileLocation = "10.10.10.1/Public/iso/esx67u2.iso"
+      RemoteIp = "10.10.10.1"
       RemoteShare = "/Public/iso/"
       RemoteFile = "esx67u2.iso"
       Username = "user"
@@ -25,13 +25,13 @@ resource "intersight_softwarerepository_operating_system_file" "osf2" {
 
   nr_source {
     additional_properties = jsonencode({
-      RemoteIp = "10.225.79.79"
+      RemoteIp = "10.10.10.1"
       RemoteShare = "/Public/iso/"
       RemoteFile = "esx6u3.iso"
       Username = "user"
       Password = var.os_file_password_1
       MountOption = "sec=ntlm"
-      FileLocation = "10.225.79.79/Public/iso/esx6u3.iso"
+      FileLocation = "10.10.10.1/Public/iso/esx6u3.iso"
     })
 
     object_type = "softwarerepository.CifsServer"

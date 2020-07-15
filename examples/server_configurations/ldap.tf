@@ -77,7 +77,6 @@ IamLdapPolicyApi: {
         "Domain": "new.com",
         "EnableEncryption": True,
         "BindDn": "admin",
-        "Password": "xyz",
         "Timeout": 180,
         "BindMethod": "Anonymous",
         "Filter": "sAMAccountName",

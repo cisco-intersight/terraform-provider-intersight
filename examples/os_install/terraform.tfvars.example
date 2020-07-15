@@ -15,3 +15,6 @@ server_moid = "changeMe"
 
 //catalog moid
 catalog = "changeMe"
+
+// answer file
+answer_file = "changeMe"

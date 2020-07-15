@@ -40,7 +40,7 @@ SyslogPolicyApi: {
   "Tags": [{"Key": "syslogenable", "Value": "111"}],
   "LocalClients": [{"MinSeverity": "emergency", "ObjectType": "syslog.LocalFileLoggingClient"}
   ],
-  "RemoteClients": [{"Enabled": True, "Hostname": "10.197.110.111", "Port": 514,
+  "RemoteClients": [{"Enabled": True, "Hostname": "10.10.10.1", "Port": 514,
     "Protocol": "tcp", "MinSeverity": "emergency", "ObjectType":
     "syslog.RemoteLoggingClient"},
     {"Enabled": True, "Hostname": "2001:0db8:0a0b:12f0:0000:0000:0000:0004", "Port": 64000,

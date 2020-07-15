@@ -32,3 +32,9 @@ variable "catalog" {
   type = string
   description = "Catalog moid"
 }
+
+variable "answer_file" {
+  type = string
+  default = ""
+  description = "Answer file content"
+}

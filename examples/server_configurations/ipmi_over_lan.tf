@@ -23,9 +23,9 @@ IpmioverlanPolicyApi: {
   "Tags": [{"Key": "ipmiadmin", "Value": "555"}],
   "Enabled": True,
   "Privilege": "admin",
-  "EncryptionKey": "345653",
+  "EncryptionKey": "12345678",
   "Profiles" : [{
-    "Moid":"567890qwert4567",
+    "Moid":"1234567890",
     "ObjectType":"server.Profile"
   }]
 }
