@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **BootDrive** | Pointer to **bool** | The flag enables the use of this virtual drive as a boot drive. | [optional] 
 **DiskGroupName** | Pointer to **string** | Disk group policy that has the disk group in which this virtual drive needs to be created. | [optional] [readonly] 
 **DiskGroupPolicy** | Pointer to **string** | Disk group policy that has the disk group in which this virtual drive needs to be created. | [optional] 
-**DriveCache** | Pointer to **string** | The property expect disk cache policy. | [optional] [default to "Default"]
+**DriveCache** | Pointer to **string** | Drive Cache property expect disk cache policy. | [optional] [default to "Default"]
 **ExpandToAvailable** | Pointer to **bool** | The flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored. | [optional] 
 **IoPolicy** | Pointer to **string** | Desired IO mode - direct IO or cached IO. | [optional] [default to "Default"]
 **Name** | Pointer to **string** | The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed. | [optional] 

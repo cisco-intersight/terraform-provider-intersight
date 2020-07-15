@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Moid** | Pointer to **string** | The Moid of the referenced REST resource. | [optional] [readonly] 
-**ObjectType** | Pointer to **string** | The Object Type of the referenced REST resource. | [readonly] 
+**ObjectType** | **string** | The Object Type of the referenced REST resource. | [readonly] 
 
 ## Methods
 

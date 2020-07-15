@@ -5,12 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AccountMoid** | Pointer to **string** | The Account ID for this managed object. | [optional] [readonly] 
-**ClassId** | Pointer to **string** | The concrete type of this complex type. Its value must be the same as the &#39;objectType&#39; property. The OpenAPI document references this property as a discriminator value. | [readonly] 
+**ClassId** | **string** | The concrete type of this complex type. Its value must be the same as the &#39;objectType&#39; property. The OpenAPI document references this property as a discriminator value. | [readonly] 
 **CreateTime** | Pointer to [**time.Time**](time.Time.md) | The time when this managed object was created. | [optional] [readonly] 
 **DomainGroupMoid** | Pointer to **string** | The DomainGroup ID for this managed object. | [optional] [readonly] 
 **ModTime** | Pointer to [**time.Time**](time.Time.md) | The time when this managed object was last modified. | [optional] [readonly] 
 **Moid** | Pointer to **string** | The unique identifier of this Managed Object instance. | [optional] 
-**ObjectType** | Pointer to **string** | The fully-qualified type of this managed object, i.e. the class name. This property is optional. The ObjectType is implied from the URL path. If specified, the value of objectType must match the class name specified in the URL path. | [readonly] 
+**ObjectType** | **string** | The fully-qualified type of this managed object, i.e. the class name. This property is optional. The ObjectType is implied from the URL path. If specified, the value of objectType must match the class name specified in the URL path. | [readonly] 
 **Owners** | Pointer to **[]string** |  | [optional] 
 **SharedScope** | Pointer to **string** | Intersight provides pre-built workflows, tasks and policies to end users through global catalogs. Objects that are made available through global catalogs are said to have a &#39;shared&#39; ownership. Shared objects are either made globally available to all end users or restricted to end users based on their license entitlement. Users can use this property to differentiate the scope (global or a specific license tier) to which a shared MO belongs. | [optional] [readonly] 
 **Tags** | Pointer to [**[]MoTag**](mo.Tag.md) |  | [optional] 
@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to **string** | Defines the type of the profile. Accepted value is instance. | [optional] [default to "instance"]
 **SrcTemplate** | Pointer to [**PolicyAbstractProfileRelationship**](policy.AbstractProfile.Relationship.md) |  | [optional] 
 **ConfigContext** | Pointer to [**PolicyConfigContext**](policy.ConfigContext.md) |  | [optional] 
+**SwitchProfilesCount** | Pointer to **int64** | Number of switch profiles that are part of this cluster profile. | [optional] [readonly] 
 **Organization** | Pointer to [**OrganizationOrganizationRelationship**](organization.Organization.Relationship.md) |  | [optional] 
 **SwitchProfiles** | Pointer to [**[]FabricSwitchProfileRelationship**](fabric.SwitchProfile.Relationship.md) | An array of relationships to fabricSwitchProfile resources. | [optional] 
 
@@ -565,6 +566,31 @@ SetConfigContext sets ConfigContext field to given value.
 `func (o *FabricSwitchClusterProfileRelationship) HasConfigContext() bool`
 
 HasConfigContext returns a boolean if a field has been set.
+
+### GetSwitchProfilesCount
+
+`func (o *FabricSwitchClusterProfileRelationship) GetSwitchProfilesCount() int64`
+
+GetSwitchProfilesCount returns the SwitchProfilesCount field if non-nil, zero value otherwise.
+
+### GetSwitchProfilesCountOk
+
+`func (o *FabricSwitchClusterProfileRelationship) GetSwitchProfilesCountOk() (*int64, bool)`
+
+GetSwitchProfilesCountOk returns a tuple with the SwitchProfilesCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSwitchProfilesCount
+
+`func (o *FabricSwitchClusterProfileRelationship) SetSwitchProfilesCount(v int64)`
+
+SetSwitchProfilesCount sets SwitchProfilesCount field to given value.
+
+### HasSwitchProfilesCount
+
+`func (o *FabricSwitchClusterProfileRelationship) HasSwitchProfilesCount() bool`
+
+HasSwitchProfilesCount returns a boolean if a field has been set.
 
 ### GetOrganization
 

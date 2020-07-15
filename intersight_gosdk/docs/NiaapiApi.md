@@ -1,6 +1,6 @@
 # \NiaapiApi
 
-All URIs are relative to *https://qa.starshipcloud.com*
+All URIs are relative to *https://intersight.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Name of the Intersight account. By default, name is same as the MoID of the account. | [optional] 
 **Status** | Pointer to **string** | Status of the account. To activate the Intersight account, claim a device to the account. | [optional] [readonly] 
-**Var1LicenseReservationOp** | Pointer to [**LicenseLicenseReservationOpRelationship**](license.LicenseReservationOp.Relationship.md) |  | [optional] 
+**Var3LicenseReservationOp** | Pointer to [**LicenseLicenseReservationOpRelationship**](license.LicenseReservationOp.Relationship.md) |  | [optional] 
 **AppRegistrations** | Pointer to [**[]IamAppRegistrationRelationship**](iam.AppRegistration.Relationship.md) | An array of relationships to iamAppRegistration resources. | [optional] [readonly] 
 **DomainGroups** | Pointer to [**[]IamDomainGroupRelationship**](iam.DomainGroup.Relationship.md) | An array of relationships to iamDomainGroup resources. | [optional] [readonly] 
 **EndPointRoles** | Pointer to [**[]IamEndPointRoleRelationship**](iam.EndPointRole.Relationship.md) | An array of relationships to iamEndPointRole resources. | [optional] [readonly] 
@@ -89,30 +89,30 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
-### GetVar1LicenseReservationOp
+### GetVar3LicenseReservationOp
 
-`func (o *IamAccountAllOf) GetVar1LicenseReservationOp() LicenseLicenseReservationOpRelationship`
+`func (o *IamAccountAllOf) GetVar3LicenseReservationOp() LicenseLicenseReservationOpRelationship`
 
-GetVar1LicenseReservationOp returns the Var1LicenseReservationOp field if non-nil, zero value otherwise.
+GetVar3LicenseReservationOp returns the Var3LicenseReservationOp field if non-nil, zero value otherwise.
 
-### GetVar1LicenseReservationOpOk
+### GetVar3LicenseReservationOpOk
 
-`func (o *IamAccountAllOf) GetVar1LicenseReservationOpOk() (*LicenseLicenseReservationOpRelationship, bool)`
+`func (o *IamAccountAllOf) GetVar3LicenseReservationOpOk() (*LicenseLicenseReservationOpRelationship, bool)`
 
-GetVar1LicenseReservationOpOk returns a tuple with the Var1LicenseReservationOp field if it's non-nil, zero value otherwise
+GetVar3LicenseReservationOpOk returns a tuple with the Var3LicenseReservationOp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVar1LicenseReservationOp
+### SetVar3LicenseReservationOp
 
-`func (o *IamAccountAllOf) SetVar1LicenseReservationOp(v LicenseLicenseReservationOpRelationship)`
+`func (o *IamAccountAllOf) SetVar3LicenseReservationOp(v LicenseLicenseReservationOpRelationship)`
 
-SetVar1LicenseReservationOp sets Var1LicenseReservationOp field to given value.
+SetVar3LicenseReservationOp sets Var3LicenseReservationOp field to given value.
 
-### HasVar1LicenseReservationOp
+### HasVar3LicenseReservationOp
 
-`func (o *IamAccountAllOf) HasVar1LicenseReservationOp() bool`
+`func (o *IamAccountAllOf) HasVar3LicenseReservationOp() bool`
 
-HasVar1LicenseReservationOp returns a boolean if a field has been set.
+HasVar3LicenseReservationOp returns a boolean if a field has been set.
 
 ### GetAppRegistrations
 

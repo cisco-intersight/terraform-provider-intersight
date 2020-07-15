@@ -5,12 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AccountMoid** | Pointer to **string** | The Account ID for this managed object. | [optional] [readonly] 
-**ClassId** | Pointer to **string** | The concrete type of this complex type. Its value must be the same as the &#39;objectType&#39; property. The OpenAPI document references this property as a discriminator value. | [readonly] 
+**ClassId** | **string** | The concrete type of this complex type. Its value must be the same as the &#39;objectType&#39; property. The OpenAPI document references this property as a discriminator value. | [readonly] 
 **CreateTime** | Pointer to [**time.Time**](time.Time.md) | The time when this managed object was created. | [optional] [readonly] 
 **DomainGroupMoid** | Pointer to **string** | The DomainGroup ID for this managed object. | [optional] [readonly] 
 **ModTime** | Pointer to [**time.Time**](time.Time.md) | The time when this managed object was last modified. | [optional] [readonly] 
 **Moid** | Pointer to **string** | The unique identifier of this Managed Object instance. | [optional] 
-**ObjectType** | Pointer to **string** | The fully-qualified type of this managed object, i.e. the class name. This property is optional. The ObjectType is implied from the URL path. If specified, the value of objectType must match the class name specified in the URL path. | [readonly] 
+**ObjectType** | **string** | The fully-qualified type of this managed object, i.e. the class name. This property is optional. The ObjectType is implied from the URL path. If specified, the value of objectType must match the class name specified in the URL path. | [readonly] 
 **Owners** | Pointer to **[]string** |  | [optional] 
 **SharedScope** | Pointer to **string** | Intersight provides pre-built workflows, tasks and policies to end users through global catalogs. Objects that are made available through global catalogs are said to have a &#39;shared&#39; ownership. Shared objects are either made globally available to all end users or restricted to end users based on their license entitlement. Users can use this property to differentiate the scope (global or a specific license tier) to which a shared MO belongs. | [optional] [readonly] 
 **Tags** | Pointer to [**[]MoTag**](mo.Tag.md) |  | [optional] 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **DisplayNames** | Pointer to [**map[string][]string**](array.md) | a map of display names for a resource. | [optional] [readonly] 
 **Name** | Pointer to **string** | Name of the Intersight account. By default, name is same as the MoID of the account. | [optional] 
 **Status** | Pointer to **string** | Status of the account. To activate the Intersight account, claim a device to the account. | [optional] [readonly] 
-**Var1LicenseReservationOp** | Pointer to [**LicenseLicenseReservationOpRelationship**](license.LicenseReservationOp.Relationship.md) |  | [optional] 
+**Var3LicenseReservationOp** | Pointer to [**LicenseLicenseReservationOpRelationship**](license.LicenseReservationOp.Relationship.md) |  | [optional] 
 **AppRegistrations** | Pointer to [**[]IamAppRegistrationRelationship**](iam.AppRegistration.Relationship.md) | An array of relationships to iamAppRegistration resources. | [optional] [readonly] 
 **DomainGroups** | Pointer to [**[]IamDomainGroupRelationship**](iam.DomainGroup.Relationship.md) | An array of relationships to iamDomainGroup resources. | [optional] [readonly] 
 **EndPointRoles** | Pointer to [**[]IamEndPointRoleRelationship**](iam.EndPointRole.Relationship.md) | An array of relationships to iamEndPointRole resources. | [optional] [readonly] 
@@ -499,30 +499,30 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
-### GetVar1LicenseReservationOp
+### GetVar3LicenseReservationOp
 
-`func (o *IamAccountRelationship) GetVar1LicenseReservationOp() LicenseLicenseReservationOpRelationship`
+`func (o *IamAccountRelationship) GetVar3LicenseReservationOp() LicenseLicenseReservationOpRelationship`
 
-GetVar1LicenseReservationOp returns the Var1LicenseReservationOp field if non-nil, zero value otherwise.
+GetVar3LicenseReservationOp returns the Var3LicenseReservationOp field if non-nil, zero value otherwise.
 
-### GetVar1LicenseReservationOpOk
+### GetVar3LicenseReservationOpOk
 
-`func (o *IamAccountRelationship) GetVar1LicenseReservationOpOk() (*LicenseLicenseReservationOpRelationship, bool)`
+`func (o *IamAccountRelationship) GetVar3LicenseReservationOpOk() (*LicenseLicenseReservationOpRelationship, bool)`
 
-GetVar1LicenseReservationOpOk returns a tuple with the Var1LicenseReservationOp field if it's non-nil, zero value otherwise
+GetVar3LicenseReservationOpOk returns a tuple with the Var3LicenseReservationOp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVar1LicenseReservationOp
+### SetVar3LicenseReservationOp
 
-`func (o *IamAccountRelationship) SetVar1LicenseReservationOp(v LicenseLicenseReservationOpRelationship)`
+`func (o *IamAccountRelationship) SetVar3LicenseReservationOp(v LicenseLicenseReservationOpRelationship)`
 
-SetVar1LicenseReservationOp sets Var1LicenseReservationOp field to given value.
+SetVar3LicenseReservationOp sets Var3LicenseReservationOp field to given value.
 
-### HasVar1LicenseReservationOp
+### HasVar3LicenseReservationOp
 
-`func (o *IamAccountRelationship) HasVar1LicenseReservationOp() bool`
+`func (o *IamAccountRelationship) HasVar3LicenseReservationOp() bool`
 
-HasVar1LicenseReservationOp returns a boolean if a field has been set.
+HasVar3LicenseReservationOp returns a boolean if a field has been set.
 
 ### GetAppRegistrations
 
