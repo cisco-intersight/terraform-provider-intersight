@@ -2,10 +2,10 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,6 +16,11 @@ func resourceStorageStoragePolicy() *schema.Resource {
 		Update: resourceStorageStoragePolicyUpdate,
 		Delete: resourceStorageStoragePolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -28,11 +33,22 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"disk_group_policies": {
-				Description: "Relationship to the used disk group policies.",
+				Description: "An array of relationships to storageDiskGroupPolicy resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -40,7 +56,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -57,9 +73,8 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"global_hot_spares": {
-				Description: "A collection of disks used as hot spares globally for all the RAID groups.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -108,12 +123,23 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -121,7 +147,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -138,41 +164,23 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"profiles": {
-				Description: "Relationship to the profile objects.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -180,7 +188,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -202,9 +210,8 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -212,22 +219,10 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -236,8 +231,6 @@ func resourceStorageStoragePolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"unused_disks_state": {
 				Description: "Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved.",
@@ -246,9 +239,8 @@ func resourceStorageStoragePolicy() *schema.Resource {
 				Default:     "UnconfiguredGood",
 			},
 			"virtual_drives": {
-				Description: "The list of virtual drives and the disk groups that need to be created through this policy.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"access_policy": {
@@ -263,7 +255,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"boot_drive": {
-							Description: "This flag enables the use of this virtual drive as a boot drive.",
+							Description: "The flag enables the use of this virtual drive as a boot drive.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
@@ -285,13 +277,13 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"drive_cache": {
-							Description: "This property expect disk cache policy.",
+							Description: "The property expect disk cache policy.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "Default",
 						},
 						"expand_to_available": {
-							Description: "This flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.",
+							Description: "The flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored.",
 							Type:        schema.TypeBool,
 							Optional:    true,
 						},
@@ -320,7 +312,7 @@ func resourceStorageStoragePolicy() *schema.Resource {
 							Default:     "Default",
 						},
 						"size": {
-							Description: "Virtual drive size in MB. This is a required field unless the 'Expand to Available' option is enabled.",
+							Description: "Virtual drive size in MB. Size is mandatory field unless the 'Expand to Available' option is enabled.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -338,426 +330,367 @@ func resourceStorageStoragePolicy() *schema.Resource {
 		},
 	}
 }
+
 func resourceStorageStoragePolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.StorageStoragePolicy
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	var o = models.NewStorageStoragePolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("storage.StoragePolicy")
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("disk_group_policies"); ok {
-		x := make([]*models.StorageDiskGroupPolicyRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageDiskGroupPolicyRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.StorageDiskGroupPolicyRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.DiskGroupPolicies = x
-
-	}
-
-	if v, ok := d.GetOk("global_hot_spares"); ok {
-		x := make([]*models.StorageLocalDisk, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageLocalDisk{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["slot_number"]; ok {
-					{
-						x := int64(v.(int))
-						o.SlotNumber = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.GlobalHotSpares = x
-
-	}
-
-	if v, ok := d.GetOk("moid"); ok {
-		x := (v.(string))
-		o.Moid = x
-
-	}
-
-	if v, ok := d.GetOk("name"); ok {
-		x := (v.(string))
-		o.Name = x
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsStorageDiskGroupPolicyRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(x) > 0 {
+			o.SetDiskGroupPolicies(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	if v, ok := d.GetOk("global_hot_spares"); ok {
+		x := make([]models.StorageLocalDisk, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewStorageLocalDiskWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("storage.LocalDisk")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["slot_number"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetSlotNumber(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.PermissionResources = x
+		if len(x) > 0 {
+			o.SetGlobalHotSpares(x)
+		}
+	}
 
+	if v, ok := d.GetOk("moid"); ok {
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if v, ok := d.GetOk("name"); ok {
+		x := (v.(string))
+		o.SetName(x)
+	}
+
+	o.SetObjectType("storage.StoragePolicy")
+
+	if v, ok := d.GetOk("organization"); ok {
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
-
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOkExists("retain_policy_virtual_drives"); ok {
 		x := v.(bool)
-		o.RetainPolicyVirtualDrives = &x
+		o.SetRetainPolicyVirtualDrives(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("unused_disks_state"); ok {
 		x := (v.(string))
-		o.UnusedDisksState = &x
-
+		o.SetUnusedDisksState(x)
 	}
 
 	if v, ok := d.GetOk("virtual_drives"); ok {
-		x := make([]*models.StorageVirtualDriveConfig, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageVirtualDriveConfig{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["access_policy"]; ok {
-					{
-						x := (v.(string))
-						o.AccessPolicy = &x
-					}
+		x := make([]models.StorageVirtualDriveConfig, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewStorageVirtualDriveConfigWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["access_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetAccessPolicy(x)
 				}
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["boot_drive"]; ok {
-					{
-						x := (v.(bool))
-						o.BootDrive = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["disk_group_name"]; ok {
-					{
-						x := (v.(string))
-						o.DiskGroupName = x
-					}
-				}
-				if v, ok := l["disk_group_policy"]; ok {
-					{
-						x := (v.(string))
-						o.DiskGroupPolicy = x
-					}
-				}
-				if v, ok := l["drive_cache"]; ok {
-					{
-						x := (v.(string))
-						o.DriveCache = &x
-					}
-				}
-				if v, ok := l["expand_to_available"]; ok {
-					{
-						x := (v.(bool))
-						o.ExpandToAvailable = &x
-					}
-				}
-				if v, ok := l["io_policy"]; ok {
-					{
-						x := (v.(string))
-						o.IoPolicy = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["read_policy"]; ok {
-					{
-						x := (v.(string))
-						o.ReadPolicy = &x
-					}
-				}
-				if v, ok := l["size"]; ok {
-					{
-						x := int64(v.(int))
-						o.Size = x
-					}
-				}
-				if v, ok := l["write_policy"]; ok {
-					{
-						x := (v.(string))
-						o.WritePolicy = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["boot_drive"]; ok {
+				{
+					x := (v.(bool))
+					o.SetBootDrive(x)
+				}
+			}
+			o.SetClassId("storage.VirtualDriveConfig")
+			if v, ok := l["disk_group_name"]; ok {
+				{
+					x := (v.(string))
+					o.SetDiskGroupName(x)
+				}
+			}
+			if v, ok := l["disk_group_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetDiskGroupPolicy(x)
+				}
+			}
+			if v, ok := l["drive_cache"]; ok {
+				{
+					x := (v.(string))
+					o.SetDriveCache(x)
+				}
+			}
+			if v, ok := l["expand_to_available"]; ok {
+				{
+					x := (v.(bool))
+					o.SetExpandToAvailable(x)
+				}
+			}
+			if v, ok := l["io_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetIoPolicy(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["read_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetReadPolicy(x)
+				}
+			}
+			if v, ok := l["size"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetSize(x)
+				}
+			}
+			if v, ok := l["write_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetWritePolicy(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.VirtualDrives = x
-
+		if len(x) > 0 {
+			o.SetVirtualDrives(x)
+		}
 	}
 
-	url := "storage/StoragePolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.StorageApi.CreateStorageStoragePolicy(conn.ctx).StorageStoragePolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceStorageStoragePolicyRead(d, meta)
 }
 func detachStorageStoragePolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "storage/StoragePolicies" + "/" + d.Id()
-	var o models.StorageStoragePolicy
+	var o = models.NewStorageStoragePolicyWithDefaults()
+	o.SetClassId("storage.StoragePolicy")
+	o.SetObjectType("storage.StoragePolicy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
-	o.Profiles = []*models.PolicyAbstractConfigProfileRef{}
-
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.StorageApi.UpdateStorageStoragePolicy(conn.ctx, d.Id()).StorageStoragePolicy(*o)
+	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling sol_policy. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		log.Printf("error in sending update request. error %s", err.Error())
-		return err
-	}
-	var s models.ServerProfile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling sol_policy. Error: %s", err.Error())
-	}
-
 	return err
 }
 
@@ -766,472 +699,430 @@ func resourceStorageStoragePolicyRead(d *schema.ResourceData, meta interface{}) 
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "storage/StoragePolicies" + "/" + d.Id()
+	r := conn.ApiClient.StorageApi.GetStorageStoragePolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.StorageStoragePolicy
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("disk_group_policies", flattenListStorageDiskGroupPolicyRef(s.DiskGroupPolicies, d)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("global_hot_spares", flattenListStorageLocalDisk(s.GlobalHotSpares, d)); err != nil {
-		return err
+	if err := d.Set("disk_group_policies", flattenListStorageDiskGroupPolicyRelationship(s.GetDiskGroupPolicies(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property DiskGroupPolicies: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("global_hot_spares", flattenListStorageLocalDisk(s.GetGlobalHotSpares(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property GlobalHotSpares: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
-		return err
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
-	if err := d.Set("retain_policy_virtual_drives", (s.RetainPolicyVirtualDrives)); err != nil {
-		return err
+	if err := d.Set("retain_policy_virtual_drives", (s.GetRetainPolicyVirtualDrives())); err != nil {
+		return fmt.Errorf("error occurred while setting property RetainPolicyVirtualDrives: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("unused_disks_state", (s.UnusedDisksState)); err != nil {
-		return err
+	if err := d.Set("unused_disks_state", (s.GetUnusedDisksState())); err != nil {
+		return fmt.Errorf("error occurred while setting property UnusedDisksState: %+v", err)
 	}
 
-	if err := d.Set("virtual_drives", flattenListStorageVirtualDriveConfig(s.VirtualDrives, d)); err != nil {
-		return err
+	if err := d.Set("virtual_drives", flattenListStorageVirtualDriveConfig(s.GetVirtualDrives(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property VirtualDrives: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceStorageStoragePolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.StorageStoragePolicy
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+	var o = models.NewStorageStoragePolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("storage.StoragePolicy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("disk_group_policies") {
 		v := d.Get("disk_group_policies")
-		x := make([]*models.StorageDiskGroupPolicyRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageDiskGroupPolicyRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.StorageDiskGroupPolicyRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.DiskGroupPolicies = x
-	}
-
-	if d.HasChange("global_hot_spares") {
-		v := d.Get("global_hot_spares")
-		x := make([]*models.StorageLocalDisk, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageLocalDisk{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.StorageLocalDiskAO1P1.StorageLocalDiskAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["slot_number"]; ok {
-					{
-						x := int64(v.(int))
-						o.SlotNumber = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.GlobalHotSpares = x
-	}
-
-	if d.HasChange("moid") {
-		v := d.Get("moid")
-		x := (v.(string))
-		o.Moid = x
-	}
-
-	if d.HasChange("name") {
-		v := d.Get("name")
-		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
-
-	if d.HasChange("organization") {
-		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsStorageDiskGroupPolicyRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(x) > 0 {
+			o.SetDiskGroupPolicies(x)
 		}
 	}
 
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	if d.HasChange("global_hot_spares") {
+		v := d.Get("global_hot_spares")
+		x := make([]models.StorageLocalDisk, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewStorageLocalDiskWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("storage.LocalDisk")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["slot_number"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetSlotNumber(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.PermissionResources = x
+		if len(x) > 0 {
+			o.SetGlobalHotSpares(x)
+		}
+	}
+
+	if d.HasChange("moid") {
+		v := d.Get("moid")
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if d.HasChange("name") {
+		v := d.Get("name")
+		x := (v.(string))
+		o.SetName(x)
+	}
+
+	o.SetObjectType("storage.StoragePolicy")
+
+	if d.HasChange("organization") {
+		v := d.Get("organization")
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
 	}
 
 	if d.HasChange("profiles") {
 		v := d.Get("profiles")
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if d.HasChange("retain_policy_virtual_drives") {
 		v := d.Get("retain_policy_virtual_drives")
 		x := (v.(bool))
-		o.RetainPolicyVirtualDrives = &x
+		o.SetRetainPolicyVirtualDrives(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("unused_disks_state") {
 		v := d.Get("unused_disks_state")
 		x := (v.(string))
-		o.UnusedDisksState = &x
+		o.SetUnusedDisksState(x)
 	}
 
 	if d.HasChange("virtual_drives") {
 		v := d.Get("virtual_drives")
-		x := make([]*models.StorageVirtualDriveConfig, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.StorageVirtualDriveConfig{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["access_policy"]; ok {
-					{
-						x := (v.(string))
-						o.AccessPolicy = &x
-					}
+		x := make([]models.StorageVirtualDriveConfig, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewStorageVirtualDriveConfigWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["access_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetAccessPolicy(x)
 				}
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.StorageVirtualDriveConfigAO1P1.StorageVirtualDriveConfigAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["boot_drive"]; ok {
-					{
-						x := (v.(bool))
-						o.BootDrive = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["disk_group_name"]; ok {
-					{
-						x := (v.(string))
-						o.DiskGroupName = x
-					}
-				}
-				if v, ok := l["disk_group_policy"]; ok {
-					{
-						x := (v.(string))
-						o.DiskGroupPolicy = x
-					}
-				}
-				if v, ok := l["drive_cache"]; ok {
-					{
-						x := (v.(string))
-						o.DriveCache = &x
-					}
-				}
-				if v, ok := l["expand_to_available"]; ok {
-					{
-						x := (v.(bool))
-						o.ExpandToAvailable = &x
-					}
-				}
-				if v, ok := l["io_policy"]; ok {
-					{
-						x := (v.(string))
-						o.IoPolicy = &x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["read_policy"]; ok {
-					{
-						x := (v.(string))
-						o.ReadPolicy = &x
-					}
-				}
-				if v, ok := l["size"]; ok {
-					{
-						x := int64(v.(int))
-						o.Size = x
-					}
-				}
-				if v, ok := l["write_policy"]; ok {
-					{
-						x := (v.(string))
-						o.WritePolicy = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["boot_drive"]; ok {
+				{
+					x := (v.(bool))
+					o.SetBootDrive(x)
+				}
+			}
+			o.SetClassId("storage.VirtualDriveConfig")
+			if v, ok := l["disk_group_name"]; ok {
+				{
+					x := (v.(string))
+					o.SetDiskGroupName(x)
+				}
+			}
+			if v, ok := l["disk_group_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetDiskGroupPolicy(x)
+				}
+			}
+			if v, ok := l["drive_cache"]; ok {
+				{
+					x := (v.(string))
+					o.SetDriveCache(x)
+				}
+			}
+			if v, ok := l["expand_to_available"]; ok {
+				{
+					x := (v.(bool))
+					o.SetExpandToAvailable(x)
+				}
+			}
+			if v, ok := l["io_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetIoPolicy(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["read_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetReadPolicy(x)
+				}
+			}
+			if v, ok := l["size"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetSize(x)
+				}
+			}
+			if v, ok := l["write_policy"]; ok {
+				{
+					x := (v.(string))
+					o.SetWritePolicy(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.VirtualDrives = x
+		if len(x) > 0 {
+			o.SetVirtualDrives(x)
+		}
 	}
 
-	url := "storage/StoragePolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.StorageApi.UpdateStorageStoragePolicy(conn.ctx, d.Id()).StorageStoragePolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceStorageStoragePolicyRead(d, meta)
 }
 
@@ -1239,11 +1130,18 @@ func resourceStorageStoragePolicyDelete(d *schema.ResourceData, meta interface{}
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "storage/StoragePolicies" + "/" + d.Id()
-	detachStorageStoragePolicyProfiles(d, meta)
-	_, err := conn.SendDeleteRequest(url)
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachStorageStoragePolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
+	}
+	p := conn.ApiClient.StorageApi.DeleteStorageStoragePolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

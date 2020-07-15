@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,25 +15,26 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 		Read: dataSourceComputePhysicalSummaryRead,
 		Schema: map[string]*schema.Schema{
 			"admin_power_state": {
-				Description: "Desired power state of the server.",
+				Description: "The desired power state of the server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"asset_tag": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The user defined asset tag assigned to the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"available_memory": {
-				Description: "The actual amount of memory currently available to the server.",
+				Description: "The amount of memory available on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
-			"cpu_capacity": {
-				Description: "CPU Capacity = Number of CPU Sockets x Enabled Cores x Speed (GHz).",
-				Type:        schema.TypeFloat,
+			"bios_post_complete": {
+				Description: "The BIOS POST completion status of the server.",
+				Type:        schema.TypeBool,
 				Optional:    true,
 				Computed:    true,
 			},
@@ -49,10 +50,23 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"connection_status": {
+				Description: "Connectivity Status of RackUnit to Switch - A or B or AB.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"cpu_capacity": {
+				Description: "CPU Capacity = Number of CPU Sockets x Enabled Cores x Speed (GHz).",
+				Type:        schema.TypeFloat,
+				Optional:    true,
+				Computed:    true,
+			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
@@ -61,15 +75,51 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"fault_summary": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "The fault summary for the server.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"firmware": {
 				Description: "The firmware version of the Cisco Integrated Management Controller (CIMC) for this server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"ipv4_address": {
 				Description: "The IPv4 address configured on the management interface of the Integrated Management Controller.",
@@ -78,26 +128,21 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"kvm_ip_addresses": {
-				Description: "KVM address of the device.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"address": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: "IP Address to be used for KVM.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"category": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: "Category of the Kvm IP Address.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -106,36 +151,46 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"default_gateway": {
-							Description: "Gateway address of the KVM IP address.",
+							Description: "Default gateway property of KVM IP Address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"dn": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: "The distinguished name for this managed object.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"http_port": {
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: "HTTP port of an IP Address.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"https_port": {
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: "Secured HTTP port of an IP Address.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"kvm_port": {
-							Description: "Port number on which the KVM is running.",
+							Description: "Port number on which the KVM is running and used for connecting to KVM console.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
+						},
+						"kvm_vlan": {
+							Description: "VLAN Identifier of Inband IP Address.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
 						},
 						"name": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: "Name to identify the KVM IP Address.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -144,21 +199,29 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"subnet": {
-							Description: "Subnet of the KVM IP address.",
+							Description: "Subnet detail of a KVM IP Address.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
 						"type": {
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: "Type of the KVM IP Address.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
+				Computed: true,
+			},
+			"management_mode": {
+				Description: "The management mode of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"memory_speed": {
-				Description: "The memory speed, in megahertz.",
+				Description: "The maximum memory speed in MHz available on the server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
@@ -188,43 +251,43 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"num_adaptors": {
-				Description: "Total number of Adaptors available.",
+				Description: "The total number of network adapters present on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_cpu_cores": {
-				Description: "Total number of CPU cores available.",
+				Description: "The total number of CPU cores present on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_cpu_cores_enabled": {
-				Description: "Number of CPU cores enabled.",
+				Description: "The total number of CPU cores enabled on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_cpus": {
-				Description: "Total number of CPU's available.",
+				Description: "The total number of CPUs present on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_eth_host_interfaces": {
-				Description: "Number of Ethernet Host Interfaces.",
+				Description: "The total number of vNICs which are visible to a host on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_fc_host_interfaces": {
-				Description: "Number of Fibre channel Host Interfaces.",
+				Description: "The total number of vHBAs which are visible to a host on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"num_threads": {
-				Description: "Number of threads enabled.",
+				Description: "The total number of threads the server is capable of handling.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -236,69 +299,49 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Description: "Current power state of the server.",
+				Description: "The actual power state of the server.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"oper_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"operability": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
+				Description: "The operational state of the server.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
+			},
+			"operability": {
+				Description: "The operability of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"platform_type": {
-				Description: "Platform type of the device.",
+				Description: "The platform type of the registered device - whether managed by UCSM or operating in standalone mode.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"presence": {
-				Description: "Identifies the presence of the server.",
+				Description: "Indicates if a server is present in a slot and is applicable for blade servers.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -306,7 +349,7 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -321,9 +364,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -332,9 +376,10 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"scaled_mode": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The mode of the server that determines it is scaled.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"serial": {
 				Description: "This field identifies the serial of the given component.",
@@ -343,19 +388,19 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"server_id": {
-				Description: "The server id of the Rack server.",
+				Description: "RackUnit ID that uniquely identifies the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
 			"service_profile": {
-				Description: "The service profile assigned.",
+				Description: "The distinguished name of the service profile to which the server is associated to. It is applicable only for servers which are managed via UCSM.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"slot_id": {
-				Description: "The slot number in the chassis where the blade is present.",
+				Description: "The slot number in the chassis that the blade is located in.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
@@ -367,32 +412,14 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -401,23 +428,30 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
+			},
+			"topology_scan_status": {
+				Description: "To maintain the Topology workflow run status.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"total_memory": {
-				Description: "The total amount of memory installed on the server.",
+				Description: "The total memory available on the server.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Computed:    true,
 			},
-			"uuid": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
 			"user_label": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The user defined label assigned to the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"uuid": {
+				Description: "The universally unique identity of the server.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",
@@ -428,188 +462,212 @@ func dataSourceComputePhysicalSummary() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceComputePhysicalSummaryRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "compute/PhysicalSummaries"
-	var o models.ComputePhysicalSummary
+	var o = models.NewComputePhysicalSummaryWithDefaults()
 	if v, ok := d.GetOk("admin_power_state"); ok {
 		x := (v.(string))
-		o.AdminPowerState = x
+		o.SetAdminPowerState(x)
 	}
 	if v, ok := d.GetOk("asset_tag"); ok {
 		x := (v.(string))
-		o.AssetTag = x
+		o.SetAssetTag(x)
 	}
 	if v, ok := d.GetOk("available_memory"); ok {
 		x := int64(v.(int))
-		o.AvailableMemory = x
+		o.SetAvailableMemory(x)
 	}
-	if v, ok := d.GetOk("cpu_capacity"); ok {
-		x := v.(float32)
-		o.CPUCapacity = x
+	if v, ok := d.GetOk("bios_post_complete"); ok {
+		x := (v.(bool))
+		o.SetBiosPostComplete(x)
 	}
 	if v, ok := d.GetOk("chassis_id"); ok {
 		x := (v.(string))
-		o.ChassisID = x
+		o.SetChassisId(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
+	}
+	if v, ok := d.GetOk("connection_status"); ok {
+		x := (v.(string))
+		o.SetConnectionStatus(x)
+	}
+	if v, ok := d.GetOk("cpu_capacity"); ok {
+		x := v.(float32)
+		o.SetCpuCapacity(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("fault_summary"); ok {
 		x := int64(v.(int))
-		o.FaultSummary = x
+		o.SetFaultSummary(x)
 	}
 	if v, ok := d.GetOk("firmware"); ok {
 		x := (v.(string))
-		o.Firmware = x
+		o.SetFirmware(x)
 	}
 	if v, ok := d.GetOk("ipv4_address"); ok {
 		x := (v.(string))
-		o.IPV4Address = x
+		o.SetIpv4Address(x)
+	}
+	if v, ok := d.GetOk("management_mode"); ok {
+		x := (v.(string))
+		o.SetManagementMode(x)
 	}
 	if v, ok := d.GetOk("memory_speed"); ok {
 		x := (v.(string))
-		o.MemorySpeed = x
+		o.SetMemorySpeed(x)
 	}
 	if v, ok := d.GetOk("mgmt_ip_address"); ok {
 		x := (v.(string))
-		o.MgmtIPAddress = x
+		o.SetMgmtIpAddress(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("num_adaptors"); ok {
 		x := int64(v.(int))
-		o.NumAdaptors = x
+		o.SetNumAdaptors(x)
 	}
 	if v, ok := d.GetOk("num_cpu_cores"); ok {
 		x := int64(v.(int))
-		o.NumCPUCores = x
+		o.SetNumCpuCores(x)
 	}
 	if v, ok := d.GetOk("num_cpu_cores_enabled"); ok {
 		x := int64(v.(int))
-		o.NumCPUCoresEnabled = x
+		o.SetNumCpuCoresEnabled(x)
 	}
 	if v, ok := d.GetOk("num_cpus"); ok {
 		x := int64(v.(int))
-		o.NumCpus = x
+		o.SetNumCpus(x)
 	}
 	if v, ok := d.GetOk("num_eth_host_interfaces"); ok {
 		x := int64(v.(int))
-		o.NumEthHostInterfaces = x
+		o.SetNumEthHostInterfaces(x)
 	}
 	if v, ok := d.GetOk("num_fc_host_interfaces"); ok {
 		x := int64(v.(int))
-		o.NumFcHostInterfaces = x
+		o.SetNumFcHostInterfaces(x)
 	}
 	if v, ok := d.GetOk("num_threads"); ok {
 		x := int64(v.(int))
-		o.NumThreads = x
+		o.SetNumThreads(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("oper_power_state"); ok {
 		x := (v.(string))
-		o.OperPowerState = x
+		o.SetOperPowerState(x)
 	}
 	if v, ok := d.GetOk("oper_state"); ok {
 		x := (v.(string))
-		o.OperState = x
+		o.SetOperState(x)
 	}
 	if v, ok := d.GetOk("operability"); ok {
 		x := (v.(string))
-		o.Operability = x
+		o.SetOperability(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 	if v, ok := d.GetOk("presence"); ok {
 		x := (v.(string))
-		o.Presence = x
+		o.SetPresence(x)
 	}
 	if v, ok := d.GetOk("revision"); ok {
 		x := (v.(string))
-		o.Revision = x
+		o.SetRevision(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("scaled_mode"); ok {
 		x := (v.(string))
-		o.ScaledMode = x
+		o.SetScaledMode(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("server_id"); ok {
 		x := int64(v.(int))
-		o.ServerID = x
+		o.SetServerId(x)
 	}
 	if v, ok := d.GetOk("service_profile"); ok {
 		x := (v.(string))
-		o.ServiceProfile = x
+		o.SetServiceProfile(x)
 	}
 	if v, ok := d.GetOk("slot_id"); ok {
 		x := int64(v.(int))
-		o.SlotID = x
+		o.SetSlotId(x)
 	}
 	if v, ok := d.GetOk("source_object_type"); ok {
 		x := (v.(string))
-		o.SourceObjectType = x
+		o.SetSourceObjectType(x)
+	}
+	if v, ok := d.GetOk("topology_scan_status"); ok {
+		x := (v.(string))
+		o.SetTopologyScanStatus(x)
 	}
 	if v, ok := d.GetOk("total_memory"); ok {
 		x := int64(v.(int))
-		o.TotalMemory = x
-	}
-	if v, ok := d.GetOk("uuid"); ok {
-		x := (v.(string))
-		o.UUID = x
+		o.SetTotalMemory(x)
 	}
 	if v, ok := d.GetOk("user_label"); ok {
 		x := (v.(string))
-		o.UserLabel = x
+		o.SetUserLabel(x)
+	}
+	if v, ok := d.GetOk("uuid"); ok {
+		x := (v.(string))
+		o.SetUuid(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.ComputeApi.GetComputePhysicalSummaryList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.ComputePhysicalSummaryList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to ComputePhysicalSummary: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -617,151 +675,166 @@ func dataSourceComputePhysicalSummaryRead(d *schema.ResourceData, meta interface
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.ComputePhysicalSummary
+			var s = models.NewComputePhysicalSummaryWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("admin_power_state", (s.AdminPowerState)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("asset_tag", (s.AssetTag)); err != nil {
-				return err
+			if err := d.Set("admin_power_state", (s.GetAdminPowerState())); err != nil {
+				return fmt.Errorf("error occurred while setting property AdminPowerState: %+v", err)
 			}
-			if err := d.Set("available_memory", (s.AvailableMemory)); err != nil {
-				return err
+			if err := d.Set("asset_tag", (s.GetAssetTag())); err != nil {
+				return fmt.Errorf("error occurred while setting property AssetTag: %+v", err)
 			}
-			if err := d.Set("cpu_capacity", (s.CPUCapacity)); err != nil {
-				return err
+			if err := d.Set("available_memory", (s.GetAvailableMemory())); err != nil {
+				return fmt.Errorf("error occurred while setting property AvailableMemory: %+v", err)
 			}
-			if err := d.Set("chassis_id", (s.ChassisID)); err != nil {
-				return err
+			if err := d.Set("bios_post_complete", (s.GetBiosPostComplete())); err != nil {
+				return fmt.Errorf("error occurred while setting property BiosPostComplete: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("chassis_id", (s.GetChassisId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ChassisId: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+			if err := d.Set("connection_status", (s.GetConnectionStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
-			if err := d.Set("fault_summary", (s.FaultSummary)); err != nil {
-				return err
+			if err := d.Set("cpu_capacity", (s.GetCpuCapacity())); err != nil {
+				return fmt.Errorf("error occurred while setting property CpuCapacity: %+v", err)
 			}
-			if err := d.Set("firmware", (s.Firmware)); err != nil {
-				return err
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("ipv4_address", (s.IPV4Address)); err != nil {
-				return err
+			if err := d.Set("dn", (s.GetDn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-
-			if err := d.Set("kvm_ip_addresses", flattenListComputeIPAddress(s.KvmIPAddresses, d)); err != nil {
-				return err
+			if err := d.Set("fault_summary", (s.GetFaultSummary())); err != nil {
+				return fmt.Errorf("error occurred while setting property FaultSummary: %+v", err)
 			}
-			if err := d.Set("memory_speed", (s.MemorySpeed)); err != nil {
-				return err
-			}
-			if err := d.Set("mgmt_ip_address", (s.MgmtIPAddress)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
-			}
-			if err := d.Set("num_adaptors", (s.NumAdaptors)); err != nil {
-				return err
-			}
-			if err := d.Set("num_cpu_cores", (s.NumCPUCores)); err != nil {
-				return err
-			}
-			if err := d.Set("num_cpu_cores_enabled", (s.NumCPUCoresEnabled)); err != nil {
-				return err
-			}
-			if err := d.Set("num_cpus", (s.NumCpus)); err != nil {
-				return err
-			}
-			if err := d.Set("num_eth_host_interfaces", (s.NumEthHostInterfaces)); err != nil {
-				return err
-			}
-			if err := d.Set("num_fc_host_interfaces", (s.NumFcHostInterfaces)); err != nil {
-				return err
-			}
-			if err := d.Set("num_threads", (s.NumThreads)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_power_state", (s.OperPowerState)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_state", (s.OperState)); err != nil {
-				return err
-			}
-			if err := d.Set("operability", (s.Operability)); err != nil {
-				return err
+			if err := d.Set("firmware", (s.GetFirmware())); err != nil {
+				return fmt.Errorf("error occurred while setting property Firmware: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-				return err
-			}
-			if err := d.Set("presence", (s.Presence)); err != nil {
-				return err
+			if err := d.Set("ipv4_address", (s.GetIpv4Address())); err != nil {
+				return fmt.Errorf("error occurred while setting property Ipv4Address: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("kvm_ip_addresses", flattenListComputeIpAddress(s.GetKvmIpAddresses(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property KvmIpAddresses: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+			if err := d.Set("management_mode", (s.GetManagementMode())); err != nil {
+				return fmt.Errorf("error occurred while setting property ManagementMode: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+			if err := d.Set("memory_speed", (s.GetMemorySpeed())); err != nil {
+				return fmt.Errorf("error occurred while setting property MemorySpeed: %+v", err)
 			}
-			if err := d.Set("scaled_mode", (s.ScaledMode)); err != nil {
-				return err
+			if err := d.Set("mgmt_ip_address", (s.GetMgmtIpAddress())); err != nil {
+				return fmt.Errorf("error occurred while setting property MgmtIpAddress: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+			if err := d.Set("model", (s.GetModel())); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("server_id", (s.ServerID)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("service_profile", (s.ServiceProfile)); err != nil {
-				return err
+			if err := d.Set("name", (s.GetName())); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-			if err := d.Set("slot_id", (s.SlotID)); err != nil {
-				return err
+			if err := d.Set("num_adaptors", (s.GetNumAdaptors())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumAdaptors: %+v", err)
 			}
-			if err := d.Set("source_object_type", (s.SourceObjectType)); err != nil {
-				return err
+			if err := d.Set("num_cpu_cores", (s.GetNumCpuCores())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumCpuCores: %+v", err)
+			}
+			if err := d.Set("num_cpu_cores_enabled", (s.GetNumCpuCoresEnabled())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumCpuCoresEnabled: %+v", err)
+			}
+			if err := d.Set("num_cpus", (s.GetNumCpus())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumCpus: %+v", err)
+			}
+			if err := d.Set("num_eth_host_interfaces", (s.GetNumEthHostInterfaces())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumEthHostInterfaces: %+v", err)
+			}
+			if err := d.Set("num_fc_host_interfaces", (s.GetNumFcHostInterfaces())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumFcHostInterfaces: %+v", err)
+			}
+			if err := d.Set("num_threads", (s.GetNumThreads())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumThreads: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("oper_power_state", (s.GetOperPowerState())); err != nil {
+				return fmt.Errorf("error occurred while setting property OperPowerState: %+v", err)
+			}
+			if err := d.Set("oper_state", (s.GetOperState())); err != nil {
+				return fmt.Errorf("error occurred while setting property OperState: %+v", err)
+			}
+			if err := d.Set("operability", (s.GetOperability())); err != nil {
+				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
+			}
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
+				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
+			}
+			if err := d.Set("presence", (s.GetPresence())); err != nil {
+				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("total_memory", (s.TotalMemory)); err != nil {
-				return err
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("uuid", (s.UUID)); err != nil {
-				return err
+			if err := d.Set("rn", (s.GetRn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("user_label", (s.UserLabel)); err != nil {
-				return err
+			if err := d.Set("scaled_mode", (s.GetScaledMode())); err != nil {
+				return fmt.Errorf("error occurred while setting property ScaledMode: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("server_id", (s.GetServerId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ServerId: %+v", err)
+			}
+			if err := d.Set("service_profile", (s.GetServiceProfile())); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceProfile: %+v", err)
+			}
+			if err := d.Set("slot_id", (s.GetSlotId())); err != nil {
+				return fmt.Errorf("error occurred while setting property SlotId: %+v", err)
+			}
+			if err := d.Set("source_object_type", (s.GetSourceObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property SourceObjectType: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("topology_scan_status", (s.GetTopologyScanStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property TopologyScanStatus: %+v", err)
+			}
+			if err := d.Set("total_memory", (s.GetTotalMemory())); err != nil {
+				return fmt.Errorf("error occurred while setting property TotalMemory: %+v", err)
+			}
+			if err := d.Set("user_label", (s.GetUserLabel())); err != nil {
+				return fmt.Errorf("error occurred while setting property UserLabel: %+v", err)
+			}
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
+			}
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

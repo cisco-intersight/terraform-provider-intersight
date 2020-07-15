@@ -2,10 +2,11 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,13 +16,32 @@ func resourceOsConfigurationFile() *schema.Resource {
 		Read:   resourceOsConfigurationFileRead,
 		Delete: resourceOsConfigurationFileDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"catalog": {
-				Description: "A collection of references to the [os.Catalog](mo://os.Catalog) Managed Object.\nWhen this managed object is deleted, the referenced [os.Catalog](mo://os.Catalog) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a osCatalog resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -30,7 +50,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -57,11 +77,24 @@ func resourceOsConfigurationFile() *schema.Resource {
 				ForceNew:    true,
 			},
 			"distributions": {
-				Description: "This captures the operating system for which this configuration file is\ndefined.",
+				Description: "An array of relationships to hclOperatingSystem resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -70,7 +103,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -115,44 +148,9 @@ func resourceOsConfigurationFile() *schema.Resource {
 				Computed:    true,
 				ForceNew:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
-			},
 			"placeholders": {
-				Description: "This readonly property holds the list of placeholder names used in the\nconfiguration file content in case it is a template.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -314,9 +312,8 @@ func resourceOsConfigurationFile() *schema.Resource {
 																ForceNew:    true,
 															},
 															"enum_list": {
-																Description: "When the parameter is a enum then this list of enum entry is used to validate the input belongs to one of items in the list.",
-																Type:        schema.TypeList,
-																Optional:    true,
+																Type:     schema.TypeList,
+																Optional: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 																		"additional_properties": {
@@ -389,9 +386,8 @@ func resourceOsConfigurationFile() *schema.Resource {
 													ForceNew:   true,
 												},
 												"inventory_selector": {
-													Description: "List of Intersight managed object selectors. The workflow execution user interface show objects from inventory that are matching the selectors to help with selecting inputs.",
-													Type:        schema.TypeList,
-													Optional:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"additional_properties": {
@@ -408,9 +404,8 @@ func resourceOsConfigurationFile() *schema.Resource {
 																ForceNew:    true,
 															},
 															"display_attributes": {
-																Description: "List of properties from an Intersight object which can help to identify the object. Typically the set of identity constraints on the object can be listed here to help the user identity the managed object.",
-																Type:        schema.TypeList,
-																Optional:    true,
+																Type:     schema.TypeList,
+																Optional: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString}, ForceNew: true,
 															},
@@ -488,6 +483,7 @@ func resourceOsConfigurationFile() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 				ForceNew:   true,
 			},
 			"supported": {
@@ -498,9 +494,8 @@ func resourceOsConfigurationFile() *schema.Resource {
 				ForceNew:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -509,24 +504,10 @@ func resourceOsConfigurationFile() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 							ForceNew:    true,
 						},
 						"value": {
@@ -537,591 +518,511 @@ func resourceOsConfigurationFile() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
+				ForceNew: true,
 			},
 		},
 	}
 }
+
 func resourceOsConfigurationFileCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.OsConfigurationFile
+	var o = models.NewOsConfigurationFileWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("catalog"); ok {
-		p := models.OsCatalogRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OsCatalogRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OsCatalogRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOsCatalogRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Catalog = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCatalog(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("os.ConfigurationFile")
 
 	if v, ok := d.GetOk("distributions"); ok {
-		x := make([]*models.HclOperatingSystemRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.HclOperatingSystemRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.HclOperatingSystemRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsHclOperatingSystemRelationship(o))
 		}
-		o.Distributions = x
-
+		if len(x) > 0 {
+			o.SetDistributions(x)
+		}
 	}
 
 	if v, ok := d.GetOk("file_content"); ok {
 		x := (v.(string))
-		o.FileContent = x
-
+		o.SetFileContent(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
-	}
+	o.SetObjectType("os.ConfigurationFile")
 
 	if v, ok := d.GetOk("placeholders"); ok {
-		x := make([]*models.OsPlaceHolder, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.OsPlaceHolder{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.OsPlaceHolderAO1P1.OsPlaceHolderAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.OsPlaceHolder, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewOsPlaceHolderWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["is_value_set"]; ok {
-					{
-						x := (v.(bool))
-						o.IsValueSet = &x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						p := models.WorkflowPrimitiveDataType{}
-						if len(v.([]interface{})) > 0 {
-							o := models.WorkflowPrimitiveDataType{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.WorkflowBaseDataTypeAO1P1.WorkflowBaseDataTypeAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["default"]; ok {
-								{
-									p := models.WorkflowDefaultValue{}
-									if len(v.([]interface{})) > 0 {
-										o := models.WorkflowDefaultValue{}
-										l := (v.([]interface{})[0]).(map[string]interface{})
-										if v, ok := l["additional_properties"]; ok {
-											{
-												x := []byte(v.(string))
-												var x1 interface{}
-												err := json.Unmarshal(x, &x1)
-												if err == nil && x1 != nil {
-													o.WorkflowDefaultValueAO1P1.WorkflowDefaultValueAO1P1 = x1.(map[string]interface{})
-												}
-											}
-										}
-										if v, ok := l["class_id"]; ok {
-											{
-												x := (v.(string))
-												o.ClassID = x
-											}
-										}
-										if v, ok := l["object_type"]; ok {
-											{
-												x := (v.(string))
-												o.ObjectType = x
-											}
-										}
-										if v, ok := l["override"]; ok {
-											{
-												x := (v.(bool))
-												o.Override = &x
-											}
-										}
-										if v, ok := l["value"]; ok {
-											{
-												x := v
-												o.Value = &x
-											}
-										}
-
-										p = o
-									}
-									x := p
-									if len(v.([]interface{})) > 0 {
-										o.Default = &x
-									}
-								}
-							}
-							if v, ok := l["description"]; ok {
-								{
-									x := (v.(string))
-									o.Description = x
-								}
-							}
-							if v, ok := l["label"]; ok {
-								{
-									x := (v.(string))
-									o.Label = x
-								}
-							}
-							if v, ok := l["name"]; ok {
-								{
-									x := (v.(string))
-									o.Name = x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-							if v, ok := l["properties"]; ok {
-								{
-									p := models.WorkflowPrimitiveDataProperty{}
-									if len(v.([]interface{})) > 0 {
-										o := models.WorkflowPrimitiveDataProperty{}
-										l := (v.([]interface{})[0]).(map[string]interface{})
-										if v, ok := l["additional_properties"]; ok {
-											{
-												x := []byte(v.(string))
-												var x1 interface{}
-												err := json.Unmarshal(x, &x1)
-												if err == nil && x1 != nil {
-													o.WorkflowPrimitiveDataPropertyAO1P1.WorkflowPrimitiveDataPropertyAO1P1 = x1.(map[string]interface{})
-												}
-											}
-										}
-										if v, ok := l["class_id"]; ok {
-											{
-												x := (v.(string))
-												o.ClassID = x
-											}
-										}
-										if v, ok := l["constraints"]; ok {
-											{
-												p := models.WorkflowConstraints{}
-												if len(v.([]interface{})) > 0 {
-													o := models.WorkflowConstraints{}
-													l := (v.([]interface{})[0]).(map[string]interface{})
-													if v, ok := l["additional_properties"]; ok {
-														{
-															x := []byte(v.(string))
-															var x1 interface{}
-															err := json.Unmarshal(x, &x1)
-															if err == nil && x1 != nil {
-																o.WorkflowConstraintsAO1P1.WorkflowConstraintsAO1P1 = x1.(map[string]interface{})
-															}
-														}
-													}
-													if v, ok := l["class_id"]; ok {
-														{
-															x := (v.(string))
-															o.ClassID = x
-														}
-													}
-													if v, ok := l["enum_list"]; ok {
-														{
-															x := make([]*models.WorkflowEnumEntry, 0)
-															switch reflect.TypeOf(v).Kind() {
-															case reflect.Slice:
-																s := reflect.ValueOf(v)
-																for i := 0; i < s.Len(); i++ {
-																	o := models.WorkflowEnumEntry{}
-																	l := s.Index(i).Interface().(map[string]interface{})
-																	if v, ok := l["additional_properties"]; ok {
-																		{
-																			x := []byte(v.(string))
-																			var x1 interface{}
-																			err := json.Unmarshal(x, &x1)
-																			if err == nil && x1 != nil {
-																				o.WorkflowEnumEntryAO1P1.WorkflowEnumEntryAO1P1 = x1.(map[string]interface{})
-																			}
-																		}
-																	}
-																	if v, ok := l["class_id"]; ok {
-																		{
-																			x := (v.(string))
-																			o.ClassID = x
-																		}
-																	}
-																	if v, ok := l["label"]; ok {
-																		{
-																			x := (v.(string))
-																			o.Label = x
-																		}
-																	}
-																	if v, ok := l["object_type"]; ok {
-																		{
-																			x := (v.(string))
-																			o.ObjectType = x
-																		}
-																	}
-																	if v, ok := l["value"]; ok {
-																		{
-																			x := (v.(string))
-																			o.Value = x
-																		}
-																	}
-																	x = append(x, &o)
-																}
-															}
-															o.EnumList = x
-														}
-													}
-													if v, ok := l["max"]; ok {
-														{
-															x := v.(float64)
-															o.Max = x
-														}
-													}
-													if v, ok := l["min"]; ok {
-														{
-															x := v.(float64)
-															o.Min = x
-														}
-													}
-													if v, ok := l["object_type"]; ok {
-														{
-															x := (v.(string))
-															o.ObjectType = x
-														}
-													}
-													if v, ok := l["regex"]; ok {
-														{
-															x := (v.(string))
-															o.Regex = x
-														}
-													}
-
-													p = o
-												}
-												x := p
-												if len(v.([]interface{})) > 0 {
-													o.Constraints = &x
-												}
-											}
-										}
-										if v, ok := l["inventory_selector"]; ok {
-											{
-												x := make([]*models.WorkflowMoReferenceProperty, 0)
-												switch reflect.TypeOf(v).Kind() {
-												case reflect.Slice:
-													s := reflect.ValueOf(v)
-													for i := 0; i < s.Len(); i++ {
-														o := models.WorkflowMoReferenceProperty{}
-														l := s.Index(i).Interface().(map[string]interface{})
-														if v, ok := l["additional_properties"]; ok {
-															{
-																x := []byte(v.(string))
-																var x1 interface{}
-																err := json.Unmarshal(x, &x1)
-																if err == nil && x1 != nil {
-																	o.WorkflowMoReferencePropertyAO1P1.WorkflowMoReferencePropertyAO1P1 = x1.(map[string]interface{})
-																}
-															}
-														}
-														if v, ok := l["class_id"]; ok {
-															{
-																x := (v.(string))
-																o.ClassID = x
-															}
-														}
-														if v, ok := l["display_attributes"]; ok {
-															{
-																x := make([]string, 0)
-																y := reflect.ValueOf(v)
-																for i := 0; i < y.Len(); i++ {
-																	x = append(x, y.Index(i).Interface().(string))
-																}
-																o.DisplayAttributes = x
-															}
-														}
-														if v, ok := l["object_type"]; ok {
-															{
-																x := (v.(string))
-																o.ObjectType = x
-															}
-														}
-														if v, ok := l["selector"]; ok {
-															{
-																x := (v.(string))
-																o.Selector = x
-															}
-														}
-														if v, ok := l["value_attribute"]; ok {
-															{
-																x := (v.(string))
-																o.ValueAttribute = x
-															}
-														}
-														x = append(x, &o)
-													}
-												}
-												o.InventorySelector = x
-											}
-										}
-										if v, ok := l["object_type"]; ok {
-											{
-												x := (v.(string))
-												o.ObjectType = x
-											}
-										}
-										if v, ok := l["secure"]; ok {
-											{
-												x := (v.(bool))
-												o.Secure = &x
-											}
-										}
-										if v, ok := l["type"]; ok {
-											{
-												x := (v.(string))
-												o.Type = &x
-											}
-										}
-
-										p = o
-									}
-									x := p
-									if len(v.([]interface{})) > 0 {
-										o.Properties = &x
-									}
-								}
-							}
-							if v, ok := l["required"]; ok {
-								{
-									x := (v.(bool))
-									o.Required = &x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.Type = &x
-						}
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := v
-						o.Value = &x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("os.PlaceHolder")
+			if v, ok := l["is_value_set"]; ok {
+				{
+					x := (v.(bool))
+					o.SetIsValueSet(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					p := make([]models.WorkflowPrimitiveDataType, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewWorkflowPrimitiveDataTypeWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("workflow.PrimitiveDataType")
+						if v, ok := l["default"]; ok {
+							{
+								p := make([]models.WorkflowDefaultValue, 0, 1)
+								s := v.([]interface{})
+								for i := 0; i < len(s); i++ {
+									l := s[i].(map[string]interface{})
+									o := models.NewWorkflowDefaultValueWithDefaults()
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
+									o.SetClassId("workflow.DefaultValue")
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
+									if v, ok := l["override"]; ok {
+										{
+											x := (v.(bool))
+											o.SetOverride(x)
+										}
+									}
+									if v, ok := l["value"]; ok {
+										{
+											x := v.(map[string]interface{})
+											o.SetValue(x)
+										}
+									}
+									p = append(p, *o)
+								}
+								if len(p) > 0 {
+									x := p[0]
+									o.SetDefault(x)
+								}
+							}
+						}
+						if v, ok := l["description"]; ok {
+							{
+								x := (v.(string))
+								o.SetDescription(x)
+							}
+						}
+						if v, ok := l["label"]; ok {
+							{
+								x := (v.(string))
+								o.SetLabel(x)
+							}
+						}
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["properties"]; ok {
+							{
+								p := make([]models.WorkflowPrimitiveDataProperty, 0, 1)
+								s := v.([]interface{})
+								for i := 0; i < len(s); i++ {
+									l := s[i].(map[string]interface{})
+									o := models.NewWorkflowPrimitiveDataPropertyWithDefaults()
+									if v, ok := l["additional_properties"]; ok {
+										{
+											x := []byte(v.(string))
+											var x1 interface{}
+											err := json.Unmarshal(x, &x1)
+											if err == nil && x1 != nil {
+												o.AdditionalProperties = x1.(map[string]interface{})
+											}
+										}
+									}
+									o.SetClassId("workflow.PrimitiveDataProperty")
+									if v, ok := l["constraints"]; ok {
+										{
+											p := make([]models.WorkflowConstraints, 0, 1)
+											s := v.([]interface{})
+											for i := 0; i < len(s); i++ {
+												l := s[i].(map[string]interface{})
+												o := models.NewWorkflowConstraintsWithDefaults()
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
+													}
+												}
+												o.SetClassId("workflow.Constraints")
+												if v, ok := l["enum_list"]; ok {
+													{
+														x := make([]models.WorkflowEnumEntry, 0)
+														s := v.([]interface{})
+														for i := 0; i < len(s); i++ {
+															o := models.NewWorkflowEnumEntryWithDefaults()
+															l := s[i].(map[string]interface{})
+															if v, ok := l["additional_properties"]; ok {
+																{
+																	x := []byte(v.(string))
+																	var x1 interface{}
+																	err := json.Unmarshal(x, &x1)
+																	if err == nil && x1 != nil {
+																		o.AdditionalProperties = x1.(map[string]interface{})
+																	}
+																}
+															}
+															o.SetClassId("workflow.EnumEntry")
+															if v, ok := l["label"]; ok {
+																{
+																	x := (v.(string))
+																	o.SetLabel(x)
+																}
+															}
+															if v, ok := l["object_type"]; ok {
+																{
+																	x := (v.(string))
+																	o.SetObjectType(x)
+																}
+															}
+															if v, ok := l["value"]; ok {
+																{
+																	x := (v.(string))
+																	o.SetValue(x)
+																}
+															}
+															x = append(x, *o)
+														}
+														if len(x) > 0 {
+															o.SetEnumList(x)
+														}
+													}
+												}
+												if v, ok := l["max"]; ok {
+													{
+														x := v.(float64)
+														o.SetMax(x)
+													}
+												}
+												if v, ok := l["min"]; ok {
+													{
+														x := v.(float64)
+														o.SetMin(x)
+													}
+												}
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
+												if v, ok := l["regex"]; ok {
+													{
+														x := (v.(string))
+														o.SetRegex(x)
+													}
+												}
+												p = append(p, *o)
+											}
+											if len(p) > 0 {
+												x := p[0]
+												o.SetConstraints(x)
+											}
+										}
+									}
+									if v, ok := l["inventory_selector"]; ok {
+										{
+											x := make([]models.WorkflowMoReferenceProperty, 0)
+											s := v.([]interface{})
+											for i := 0; i < len(s); i++ {
+												o := models.NewWorkflowMoReferencePropertyWithDefaults()
+												l := s[i].(map[string]interface{})
+												if v, ok := l["additional_properties"]; ok {
+													{
+														x := []byte(v.(string))
+														var x1 interface{}
+														err := json.Unmarshal(x, &x1)
+														if err == nil && x1 != nil {
+															o.AdditionalProperties = x1.(map[string]interface{})
+														}
+													}
+												}
+												o.SetClassId("workflow.MoReferenceProperty")
+												if v, ok := l["display_attributes"]; ok {
+													{
+														x := make([]string, 0)
+														y := reflect.ValueOf(v)
+														for i := 0; i < y.Len(); i++ {
+															x = append(x, y.Index(i).Interface().(string))
+														}
+														if len(x) > 0 {
+															o.SetDisplayAttributes(x)
+														}
+													}
+												}
+												if v, ok := l["object_type"]; ok {
+													{
+														x := (v.(string))
+														o.SetObjectType(x)
+													}
+												}
+												if v, ok := l["selector"]; ok {
+													{
+														x := (v.(string))
+														o.SetSelector(x)
+													}
+												}
+												if v, ok := l["value_attribute"]; ok {
+													{
+														x := (v.(string))
+														o.SetValueAttribute(x)
+													}
+												}
+												x = append(x, *o)
+											}
+											if len(x) > 0 {
+												o.SetInventorySelector(x)
+											}
+										}
+									}
+									if v, ok := l["object_type"]; ok {
+										{
+											x := (v.(string))
+											o.SetObjectType(x)
+										}
+									}
+									if v, ok := l["secure"]; ok {
+										{
+											x := (v.(bool))
+											o.SetSecure(x)
+										}
+									}
+									if v, ok := l["type"]; ok {
+										{
+											x := (v.(string))
+											o.SetType(x)
+										}
+									}
+									p = append(p, *o)
+								}
+								if len(p) > 0 {
+									x := p[0]
+									o.SetProperties(x)
+								}
+							}
+						}
+						if v, ok := l["required"]; ok {
+							{
+								x := (v.(bool))
+								o.SetRequired(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetType(x)
+					}
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := v.(map[string]interface{})
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Placeholders = x
-
+		if len(x) > 0 {
+			o.SetPlaceholders(x)
+		}
 	}
 
 	if v, ok := d.GetOkExists("supported"); ok {
 		x := v.(bool)
-		o.Supported = &x
+		o.SetSupported(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	url := "os/ConfigurationFiles"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.OsApi.CreateOsConfigurationFile(conn.ctx).OsConfigurationFile(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceOsConfigurationFileRead(d, meta)
 }
 
@@ -1130,65 +1031,59 @@ func resourceOsConfigurationFileRead(d *schema.ResourceData, meta interface{}) e
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "os/ConfigurationFiles" + "/" + d.Id()
+	r := conn.ApiClient.OsApi.GetOsConfigurationFileByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.OsConfigurationFile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("catalog", flattenMapOsCatalogRef(s.Catalog, d)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("catalog", flattenMapOsCatalogRelationship(s.GetCatalog(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Catalog: %+v", err)
 	}
 
-	if err := d.Set("distributions", flattenListHclOperatingSystemRef(s.Distributions, d)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("file_content", (s.FileContent)); err != nil {
-		return err
+	if err := d.Set("distributions", flattenListHclOperatingSystemRelationship(s.GetDistributions(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Distributions: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("file_content", (s.GetFileContent())); err != nil {
+		return fmt.Errorf("error occurred while setting property FileContent: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("placeholders", flattenListOsPlaceHolder(s.Placeholders, d)); err != nil {
-		return err
+	if err := d.Set("placeholders", flattenListOsPlaceHolder(s.GetPlaceholders(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Placeholders: %+v", err)
 	}
 
-	if err := d.Set("supported", (s.Supported)); err != nil {
-		return err
+	if err := d.Set("supported", (s.GetSupported())); err != nil {
+		return fmt.Errorf("error occurred while setting property Supported: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
 
@@ -1196,10 +1091,10 @@ func resourceOsConfigurationFileDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "os/ConfigurationFiles" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.OsApi.DeleteOsConfigurationFile(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

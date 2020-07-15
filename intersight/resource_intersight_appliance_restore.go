@@ -2,11 +2,12 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,12 +18,25 @@ func resourceApplianceRestore() *schema.Resource {
 		Delete: resourceApplianceRestoreDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "Restore managed object to Account relationship.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -31,7 +45,7 @@ func resourceApplianceRestore() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -49,6 +63,12 @@ func resourceApplianceRestore() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
+			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -85,9 +105,8 @@ func resourceApplianceRestore() *schema.Resource {
 				ForceNew:    true,
 			},
 			"messages": {
-				Description: "Messages generated during the restore process.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}, ForceNew: true,
 			},
@@ -110,39 +129,6 @@ func resourceApplianceRestore() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				ForceNew:    true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
 			},
 			"protocol": {
 				Description: "Communication protocol used by the file server (e.g. scp or sftp).",
@@ -184,9 +170,8 @@ func resourceApplianceRestore() *schema.Resource {
 				ForceNew:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -195,24 +180,10 @@ func resourceApplianceRestore() *schema.Resource {
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 							ForceNew:         true,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 							ForceNew:    true,
 						},
 						"value": {
@@ -223,9 +194,7 @@ func resourceApplianceRestore() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
+				ForceNew: true,
 			},
 			"username": {
 				Description: "Username to authenticate the fileserver.",
@@ -236,71 +205,84 @@ func resourceApplianceRestore() *schema.Resource {
 		},
 	}
 }
+
 func resourceApplianceRestoreCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.ApplianceRestore
+	var o = models.NewApplianceRestoreWithDefaults()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Account = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("appliance.Restore")
 
 	if v, ok := d.GetOk("elapsed_time"); ok {
 		x := int64(v.(int))
-		o.ElapsedTime = x
-
+		o.SetElapsedTime(x)
 	}
 
 	if v, ok := d.GetOk("end_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.EndTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetEndTime(x)
 	}
 
 	if v, ok := d.GetOk("filename"); ok {
 		x := (v.(string))
-		o.Filename = x
-
+		o.SetFilename(x)
 	}
 
 	if v, ok := d.GetOkExists("is_password_set"); ok {
 		x := v.(bool)
-		o.IsPasswordSet = &x
+		o.SetIsPasswordSet(x)
 	}
 
 	if v, ok := d.GetOk("messages"); ok {
@@ -309,171 +291,100 @@ func resourceApplianceRestoreCreate(d *schema.ResourceData, meta interface{}) er
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.Messages = x
-
+		if len(x) > 0 {
+			o.SetMessages(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("appliance.Restore")
 
 	if v, ok := d.GetOk("password"); ok {
 		x := (v.(string))
-		o.Password = x
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
+		o.SetPassword(x)
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
 		x := (v.(string))
-		o.Protocol = &x
-
+		o.SetProtocol(x)
 	}
 
 	if v, ok := d.GetOk("remote_host"); ok {
 		x := (v.(string))
-		o.RemoteHost = x
-
+		o.SetRemoteHost(x)
 	}
 
 	if v, ok := d.GetOk("remote_path"); ok {
 		x := (v.(string))
-		o.RemotePath = x
-
+		o.SetRemotePath(x)
 	}
 
 	if v, ok := d.GetOk("remote_port"); ok {
 		x := int64(v.(int))
-		o.RemotePort = x
-
+		o.SetRemotePort(x)
 	}
 
 	if v, ok := d.GetOk("start_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.StartTime = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetStartTime(x)
 	}
 
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = x
-
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {
 		x := (v.(string))
-		o.Username = x
-
+		o.SetUsername(x)
 	}
 
-	url := "appliance/Restores"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.ApplianceApi.CreateApplianceRestore(conn.ctx).ApplianceRestore(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceApplianceRestoreRead(d, meta)
 }
 
@@ -482,97 +393,87 @@ func resourceApplianceRestoreRead(d *schema.ResourceData, meta interface{}) erro
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "appliance/Restores" + "/" + d.Id()
+	r := conn.ApiClient.ApplianceApi.GetApplianceRestoreByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.ApplianceRestore
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-		return err
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("elapsed_time", (s.ElapsedTime)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("end_time", (s.EndTime).String()); err != nil {
-		return err
+	if err := d.Set("elapsed_time", (s.GetElapsedTime())); err != nil {
+		return fmt.Errorf("error occurred while setting property ElapsedTime: %+v", err)
 	}
 
-	if err := d.Set("filename", (s.Filename)); err != nil {
-		return err
+	if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
+		return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 	}
 
-	if err := d.Set("is_password_set", (s.IsPasswordSet)); err != nil {
-		return err
+	if err := d.Set("filename", (s.GetFilename())); err != nil {
+		return fmt.Errorf("error occurred while setting property Filename: %+v", err)
 	}
 
-	if err := d.Set("messages", (s.Messages)); err != nil {
-		return err
+	if err := d.Set("is_password_set", (s.GetIsPasswordSet())); err != nil {
+		return fmt.Errorf("error occurred while setting property IsPasswordSet: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("messages", (s.GetMessages())); err != nil {
+		return fmt.Errorf("error occurred while setting property Messages: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("password", (s.Password)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("protocol", (s.GetProtocol())); err != nil {
+		return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
 	}
 
-	if err := d.Set("protocol", (s.Protocol)); err != nil {
-		return err
+	if err := d.Set("remote_host", (s.GetRemoteHost())); err != nil {
+		return fmt.Errorf("error occurred while setting property RemoteHost: %+v", err)
 	}
 
-	if err := d.Set("remote_host", (s.RemoteHost)); err != nil {
-		return err
+	if err := d.Set("remote_path", (s.GetRemotePath())); err != nil {
+		return fmt.Errorf("error occurred while setting property RemotePath: %+v", err)
 	}
 
-	if err := d.Set("remote_path", (s.RemotePath)); err != nil {
-		return err
+	if err := d.Set("remote_port", (s.GetRemotePort())); err != nil {
+		return fmt.Errorf("error occurred while setting property RemotePort: %+v", err)
 	}
 
-	if err := d.Set("remote_port", (s.RemotePort)); err != nil {
-		return err
+	if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
+		return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 	}
 
-	if err := d.Set("start_time", (s.StartTime).String()); err != nil {
-		return err
+	if err := d.Set("status", (s.GetStatus())); err != nil {
+		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("status", (s.Status)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("username", (s.Username)); err != nil {
-		return err
+	if err := d.Set("username", (s.GetUsername())); err != nil {
+		return fmt.Errorf("error occurred while setting property Username: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
 
@@ -580,10 +481,10 @@ func resourceApplianceRestoreDelete(d *schema.ResourceData, meta interface{}) er
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "appliance/Restores" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.ApplianceApi.DeleteApplianceRestore(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

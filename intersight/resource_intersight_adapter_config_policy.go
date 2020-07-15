@@ -2,10 +2,10 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,6 +16,11 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 		Update: resourceAdapterConfigPolicyUpdate,
 		Delete: resourceAdapterConfigPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -46,12 +51,23 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -59,7 +75,7 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -76,41 +92,23 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"profiles": {
-				Description: "Relationship to the server profile.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -118,7 +116,7 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -135,9 +133,8 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"settings": {
-				Description: "Configuration for all the adapters available in the server.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -152,9 +149,8 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"dce_interface_settings": {
-							Description: "Collection of DCE interface settings for this adapter.",
-							Type:        schema.TypeList,
-							Optional:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"additional_properties": {
@@ -309,9 +305,8 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -319,22 +314,10 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -343,463 +326,380 @@ func resourceAdapterConfigPolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 		},
 	}
 }
+
 func resourceAdapterConfigPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.AdapterConfigPolicy
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	var o = models.NewAdapterConfigPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("adapter.ConfigPolicy")
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("adapter.ConfigPolicy")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
 		}
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
-
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if v, ok := d.GetOk("settings"); ok {
-		x := make([]*models.AdapterAdapterConfig, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.AdapterAdapterConfig{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.AdapterAdapterConfig, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewAdapterAdapterConfigWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["dce_interface_settings"]; ok {
-					{
-						x := make([]*models.AdapterDceInterfaceSettings, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.AdapterDceInterfaceSettings{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["fec_mode"]; ok {
-									{
-										x := (v.(string))
-										o.FecMode = &x
-									}
-								}
-								if v, ok := l["interface_id"]; ok {
-									{
-										x := int64(v.(int))
-										o.InterfaceID = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.DceInterfaceSettings = x
-					}
-				}
-				if v, ok := l["eth_settings"]; ok {
-					{
-						p := models.AdapterEthSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterEthSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["lldp_enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.LldpEnabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.EthSettings = &x
-						}
-					}
-				}
-				if v, ok := l["fc_settings"]; ok {
-					{
-						p := models.AdapterFcSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterFcSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["fip_enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.FipEnabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.FcSettings = &x
-						}
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["port_channel_settings"]; ok {
-					{
-						p := models.AdapterPortChannelSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterPortChannelSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.Enabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.PortChannelSettings = &x
-						}
-					}
-				}
-				if v, ok := l["slot_id"]; ok {
-					{
-						x := (v.(string))
-						o.SlotID = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("adapter.AdapterConfig")
+			if v, ok := l["dce_interface_settings"]; ok {
+				{
+					x := make([]models.AdapterDceInterfaceSettings, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewAdapterDceInterfaceSettingsWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.DceInterfaceSettings")
+						if v, ok := l["fec_mode"]; ok {
+							{
+								x := (v.(string))
+								o.SetFecMode(x)
+							}
+						}
+						if v, ok := l["interface_id"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetInterfaceId(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetDceInterfaceSettings(x)
+					}
+				}
+			}
+			if v, ok := l["eth_settings"]; ok {
+				{
+					p := make([]models.AdapterEthSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterEthSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.EthSettings")
+						if v, ok := l["lldp_enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetLldpEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetEthSettings(x)
+					}
+				}
+			}
+			if v, ok := l["fc_settings"]; ok {
+				{
+					p := make([]models.AdapterFcSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterFcSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.FcSettings")
+						if v, ok := l["fip_enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetFipEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetFcSettings(x)
+					}
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["port_channel_settings"]; ok {
+				{
+					p := make([]models.AdapterPortChannelSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterPortChannelSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.PortChannelSettings")
+						if v, ok := l["enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetPortChannelSettings(x)
+					}
+				}
+			}
+			if v, ok := l["slot_id"]; ok {
+				{
+					x := (v.(string))
+					o.SetSlotId(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Settings = x
-
+		if len(x) > 0 {
+			o.SetSettings(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	url := "adapter/ConfigPolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.AdapterApi.CreateAdapterConfigPolicy(conn.ctx).AdapterConfigPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceAdapterConfigPolicyRead(d, meta)
 }
 func detachAdapterConfigPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "adapter/ConfigPolicies" + "/" + d.Id()
-	var o models.AdapterConfigPolicy
+	var o = models.NewAdapterConfigPolicyWithDefaults()
+	o.SetClassId("adapter.ConfigPolicy")
+	o.SetObjectType("adapter.ConfigPolicy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
-	o.Profiles = []*models.PolicyAbstractConfigProfileRef{}
-
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.AdapterApi.UpdateAdapterConfigPolicy(conn.ctx, d.Id()).AdapterConfigPolicy(*o)
+	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling sol_policy. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		log.Printf("error in sending update request. error %s", err.Error())
-		return err
-	}
-	var s models.ServerProfile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling sol_policy. Error: %s", err.Error())
-	}
-
 	return err
 }
 
@@ -808,486 +708,419 @@ func resourceAdapterConfigPolicyRead(d *schema.ResourceData, meta interface{}) e
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "adapter/ConfigPolicies" + "/" + d.Id()
+	r := conn.ApiClient.AdapterApi.GetAdapterConfigPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.AdapterConfigPolicy
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
-		return err
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
-	if err := d.Set("settings", flattenListAdapterAdapterConfig(s.Settings, d)); err != nil {
-		return err
+	if err := d.Set("settings", flattenListAdapterAdapterConfig(s.GetSettings(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Settings: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceAdapterConfigPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.AdapterConfigPolicy
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+	var o = models.NewAdapterConfigPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("adapter.ConfigPolicy")
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
+	o.SetObjectType("adapter.ConfigPolicy")
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
 		}
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
 	}
 
 	if d.HasChange("profiles") {
 		v := d.Get("profiles")
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
 	if d.HasChange("settings") {
 		v := d.Get("settings")
-		x := make([]*models.AdapterAdapterConfig, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.AdapterAdapterConfig{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.AdapterAdapterConfigAO1P1.AdapterAdapterConfigAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.AdapterAdapterConfig, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewAdapterAdapterConfigWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["dce_interface_settings"]; ok {
-					{
-						x := make([]*models.AdapterDceInterfaceSettings, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.AdapterDceInterfaceSettings{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.AdapterDceInterfaceSettingsAO1P1.AdapterDceInterfaceSettingsAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["fec_mode"]; ok {
-									{
-										x := (v.(string))
-										o.FecMode = &x
-									}
-								}
-								if v, ok := l["interface_id"]; ok {
-									{
-										x := int64(v.(int))
-										o.InterfaceID = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.DceInterfaceSettings = x
-					}
-				}
-				if v, ok := l["eth_settings"]; ok {
-					{
-						p := models.AdapterEthSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterEthSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterEthSettingsAO1P1.AdapterEthSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["lldp_enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.LldpEnabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.EthSettings = &x
-						}
-					}
-				}
-				if v, ok := l["fc_settings"]; ok {
-					{
-						p := models.AdapterFcSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterFcSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterFcSettingsAO1P1.AdapterFcSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["fip_enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.FipEnabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.FcSettings = &x
-						}
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["port_channel_settings"]; ok {
-					{
-						p := models.AdapterPortChannelSettings{}
-						if len(v.([]interface{})) > 0 {
-							o := models.AdapterPortChannelSettings{}
-							l := (v.([]interface{})[0]).(map[string]interface{})
-							if v, ok := l["additional_properties"]; ok {
-								{
-									x := []byte(v.(string))
-									var x1 interface{}
-									err := json.Unmarshal(x, &x1)
-									if err == nil && x1 != nil {
-										o.AdapterPortChannelSettingsAO1P1.AdapterPortChannelSettingsAO1P1 = x1.(map[string]interface{})
-									}
-								}
-							}
-							if v, ok := l["class_id"]; ok {
-								{
-									x := (v.(string))
-									o.ClassID = x
-								}
-							}
-							if v, ok := l["enabled"]; ok {
-								{
-									x := (v.(bool))
-									o.Enabled = &x
-								}
-							}
-							if v, ok := l["object_type"]; ok {
-								{
-									x := (v.(string))
-									o.ObjectType = x
-								}
-							}
-
-							p = o
-						}
-						x := p
-						if len(v.([]interface{})) > 0 {
-							o.PortChannelSettings = &x
-						}
-					}
-				}
-				if v, ok := l["slot_id"]; ok {
-					{
-						x := (v.(string))
-						o.SlotID = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("adapter.AdapterConfig")
+			if v, ok := l["dce_interface_settings"]; ok {
+				{
+					x := make([]models.AdapterDceInterfaceSettings, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewAdapterDceInterfaceSettingsWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.DceInterfaceSettings")
+						if v, ok := l["fec_mode"]; ok {
+							{
+								x := (v.(string))
+								o.SetFecMode(x)
+							}
+						}
+						if v, ok := l["interface_id"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetInterfaceId(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetDceInterfaceSettings(x)
+					}
+				}
+			}
+			if v, ok := l["eth_settings"]; ok {
+				{
+					p := make([]models.AdapterEthSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterEthSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.EthSettings")
+						if v, ok := l["lldp_enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetLldpEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetEthSettings(x)
+					}
+				}
+			}
+			if v, ok := l["fc_settings"]; ok {
+				{
+					p := make([]models.AdapterFcSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterFcSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.FcSettings")
+						if v, ok := l["fip_enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetFipEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetFcSettings(x)
+					}
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["port_channel_settings"]; ok {
+				{
+					p := make([]models.AdapterPortChannelSettings, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewAdapterPortChannelSettingsWithDefaults()
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("adapter.PortChannelSettings")
+						if v, ok := l["enabled"]; ok {
+							{
+								x := (v.(bool))
+								o.SetEnabled(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						p = append(p, *o)
+					}
+					if len(p) > 0 {
+						x := p[0]
+						o.SetPortChannelSettings(x)
+					}
+				}
+			}
+			if v, ok := l["slot_id"]; ok {
+				{
+					x := (v.(string))
+					o.SetSlotId(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Settings = x
+		if len(x) > 0 {
+			o.SetSettings(x)
+		}
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	url := "adapter/ConfigPolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.AdapterApi.UpdateAdapterConfigPolicy(conn.ctx, d.Id()).AdapterConfigPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceAdapterConfigPolicyRead(d, meta)
 }
 
@@ -1295,11 +1128,18 @@ func resourceAdapterConfigPolicyDelete(d *schema.ResourceData, meta interface{})
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "adapter/ConfigPolicies" + "/" + d.Id()
-	detachAdapterConfigPolicyProfiles(d, meta)
-	_, err := conn.SendDeleteRequest(url)
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachAdapterConfigPolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
+	}
+	p := conn.ApiClient.AdapterApi.DeleteAdapterConfigPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

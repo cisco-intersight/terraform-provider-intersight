@@ -2,10 +2,11 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,6 +16,12 @@ func resourceFirmwareUpgrade() *schema.Resource {
 		Read:   resourceFirmwareUpgradeRead,
 		Delete: resourceFirmwareUpgradeDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+				ForceNew:         true,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -23,13 +30,26 @@ func resourceFirmwareUpgrade() *schema.Resource {
 				ForceNew:    true,
 			},
 			"device": {
-				Description: "The device onto which the upgrade is peformed.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -38,7 +58,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -77,7 +97,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"http_server": {
-							Description: "HTTP Server option when the image source is a local https server.",
+							Description: "HTTP Server option when the image source is a local HTTPS server.",
 							Type:        schema.TypeList,
 							MaxItems:    1,
 							Optional:    true,
@@ -97,7 +117,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										ForceNew:    true,
 									},
 									"location_link": {
-										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.",
+										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image. For a successful upgrade, the remote share server must have network connectivity with the CIMC of the selected devices.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
@@ -122,7 +142,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:   true,
 						},
 						"image_source": {
-							Description: "Source type referring the image to be downloaded from CCO or from a local https server.",
+							Description: "Source type referring the image to be downloaded from CCO or from a local HTTPS server.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "cisco",
@@ -168,12 +188,25 @@ func resourceFirmwareUpgrade() *schema.Resource {
 				ForceNew:   true,
 			},
 			"distributable": {
-				Description: "The image that is used to upgrade the server for direct download upgrade type operation.",
+				Description: "A reference to a firmwareDistributable resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -182,7 +215,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -190,6 +223,45 @@ func resourceFirmwareUpgrade() *schema.Resource {
 						},
 						"selector": {
 							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+				ForceNew:   true,
+			},
+			"exclude_component_list": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString}, ForceNew: true,
+			},
+			"file_server": {
+				Description: "Location of the image in user software repository.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -209,7 +281,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 				ForceNew:    true,
 			},
 			"network_share": {
-				Description: "Network share options in case of the upgradeType is network share based upgrade.",
+				Description: "Deprecated (Use 'fileServer' property). Network share options in case of the upgradeType is network share based upgrade.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
@@ -269,7 +341,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										ForceNew:    true,
 									},
 									"remote_ip": {
-										Description: "CIFS Server Hostname or IP Address. Example:CIFS-server-hostname or 10.10.8.7.",
+										Description: "CIFS Server Hostname or IP Address. For example:CIFS-server-hostname or 10.10.8.7. The remote share server should have network connectivity with the CIMC of the selected devices for a successful upgrade.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
@@ -316,7 +388,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										ForceNew:    true,
 									},
 									"location_link": {
-										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image.",
+										Description: "HTTP/HTTPS link to the image. Accepted formats HTTP[s]://server-hostname/share/image or HTTP[s]://serverip/share/image. For a successful upgrade, the remote share server must have network connectivity with the CIMC of the selected devices.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
@@ -348,7 +420,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"map_type": {
-							Description: "File server protocols like CIFS, NFS, WWW for HTTP (S) that hosts the image.",
+							Description: "File server protocols such as CIFS, NFS, WWW for HTTP (S) that hosts the image.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "nfs",
@@ -381,7 +453,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										ForceNew:    true,
 									},
 									"mount_options": {
-										Description: "Mount option as configured on the NFS Server. Example:nolock.",
+										Description: "Mount option as configured on the NFS Server. For example:nolock.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
@@ -394,21 +466,21 @@ func resourceFirmwareUpgrade() *schema.Resource {
 										ForceNew:    true,
 									},
 									"remote_file": {
-										Description: "Filename of the image in the remote share location. Example:ucs-c220m5-huu-3.1.2c.iso.",
+										Description: "Filename of the image in the remote share location. For example:ucs-c220m5-huu-3.1.2c.iso.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_ip": {
-										Description: "NFS Server Hostname or IP Address. Example:NFS-server-hostname or 10.10.8.7.",
+										Description: "NFS Server Hostname or IP Address. For example:NFS-server-hostname or 10.10.8.7. The remote share server should have network connectivity with the CIMC of the selected devices for a successful upgrade.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
 										ForceNew:    true,
 									},
 									"remote_share": {
-										Description: "Directory where the image is stored. Example:/share/subfolder.",
+										Description: "Directory where the image is stored. For example:/share/subfolder.",
 										Type:        schema.TypeString,
 										Optional:    true,
 										Computed:    true,
@@ -434,7 +506,7 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"upgradeoption": {
-							Description: "Option to control the upgrade, e.g., 1) nw_upgrade_mount_only - mount the image from a file server and run upgrade on-next server boot 2) nw_upgrade_full - mount the image and run upgrade immediately.",
+							Description: "Option to control the upgrade operation. Some examples, 1) nw_upgrade_mount_only - mount the image from a file server and run the upgrade on the next server boot and 2) nw_upgrade_full - mount the image and immediately run the upgrade.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Default:     "nw_upgrade_full",
@@ -459,76 +531,10 @@ func resourceFirmwareUpgrade() *schema.Resource {
 				Computed:    true,
 				ForceNew:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				ForceNew:   true,
-			},
-			"server": {
-				Description: "The server on which this upgrade operation is performed.",
+			"release": {
+				Description: "A reference to a softwarerepositoryRelease resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-							ForceNew:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
-			},
-			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -545,10 +551,11 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							Computed:    true,
 							ForceNew:    true,
 						},
-						"key": {
-							Description: "The string representation of a tag key.",
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 							ForceNew:    true,
 						},
 						"object_type": {
@@ -556,6 +563,96 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+							ForceNew:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+				ForceNew:   true,
+			},
+			"server": {
+				Description: "A reference to a computePhysical resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
+				ForceNew:   true,
+			},
+			"skip_estimate_impact": {
+				Description: "User has the option to skip the estimate impact calculation.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+				ForceNew:    true,
+			},
+			"status": {
+				Description: "Status of the upgrade operation.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "NONE",
+				ForceNew:    true,
+			},
+			"tags": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"key": {
+							Description: "The string representation of a tag key.",
+							Type:        schema.TypeString,
+							Optional:    true,
 							ForceNew:    true,
 						},
 						"value": {
@@ -566,18 +663,29 @@ func resourceFirmwareUpgrade() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-				ForceNew:   true,
+				ForceNew: true,
 			},
-			"upgrade_status": {
-				Description: "Captures status of this upgrade information.",
+			"upgrade_impact": {
+				Description: "A reference to a firmwareUpgradeImpactStatus resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -586,7 +694,54 @@ func resourceFirmwareUpgrade() *schema.Resource {
 							ForceNew:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				ForceNew:   true,
+			},
+			"upgrade_status": {
+				Description: "A reference to a firmwareUpgradeStatus resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+							ForceNew:         true,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+							ForceNew:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -614,634 +769,721 @@ func resourceFirmwareUpgrade() *schema.Resource {
 		},
 	}
 }
+
 func resourceFirmwareUpgradeCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.FirmwareUpgrade
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	var o = models.NewFirmwareUpgradeWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("firmware.Upgrade")
 
 	if v, ok := d.GetOk("device"); ok {
-		p := models.AssetDeviceRegistrationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.AssetDeviceRegistrationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Device = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("direct_download"); ok {
-		p := models.FirmwareDirectDownload{}
-		if len(v.([]interface{})) > 0 {
-			o := models.FirmwareDirectDownload{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.AssetDeviceRegistrationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.FirmwareDirectDownloadAO1P1.FirmwareDirectDownloadAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
+					o.SetMoid(x)
 				}
 			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsAssetDeviceRegistrationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetDevice(x)
+		}
+	}
+
+	if v, ok := d.GetOk("direct_download"); ok {
+		p := make([]models.FirmwareDirectDownload, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewFirmwareDirectDownloadWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("firmware.DirectDownload")
 			if v, ok := l["http_server"]; ok {
 				{
-					p := models.FirmwareHTTPServer{}
-					if len(v.([]interface{})) > 0 {
-						o := models.FirmwareHTTPServer{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.FirmwareHttpServer, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewFirmwareHttpServerWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.FirmwareHTTPServerAO1P1.FirmwareHTTPServerAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("firmware.HttpServer")
 						if v, ok := l["location_link"]; ok {
 							{
 								x := (v.(string))
-								o.LocationLink = x
+								o.SetLocationLink(x)
 							}
 						}
 						if v, ok := l["mount_options"]; ok {
 							{
 								x := (v.(string))
-								o.MountOptions = x
+								o.SetMountOptions(x)
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.HTTPServer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetHttpServer(x)
 					}
 				}
 			}
 			if v, ok := l["image_source"]; ok {
 				{
 					x := (v.(string))
-					o.ImageSource = &x
+					o.SetImageSource(x)
 				}
 			}
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["upgradeoption"]; ok {
 				{
 					x := (v.(string))
-					o.Upgradeoption = &x
+					o.SetUpgradeoption(x)
 				}
 			}
 			if v, ok := l["username"]; ok {
 				{
 					x := (v.(string))
-					o.Username = x
+					o.SetUsername(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.DirectDownload = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetDirectDownload(x)
 		}
-
 	}
 
 	if v, ok := d.GetOk("distributable"); ok {
-		p := models.FirmwareDistributableRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.FirmwareDistributableRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Distributable = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("moid"); ok {
-		x := (v.(string))
-		o.Moid = x
-
-	}
-
-	if v, ok := d.GetOk("network_share"); ok {
-		p := models.FirmwareNetworkShare{}
-		if len(v.([]interface{})) > 0 {
-			o := models.FirmwareNetworkShare{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.FirmwareDistributableRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.FirmwareNetworkShareAO1P1.FirmwareNetworkShareAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsFirmwareDistributableRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetDistributable(x)
+		}
+	}
+
+	if v, ok := d.GetOk("exclude_component_list"); ok {
+		x := make([]string, 0)
+		y := reflect.ValueOf(v)
+		for i := 0; i < y.Len(); i++ {
+			x = append(x, y.Index(i).Interface().(string))
+		}
+		if len(x) > 0 {
+			o.SetExcludeComponentList(x)
+		}
+	}
+
+	if v, ok := d.GetOk("file_server"); ok {
+		p := make([]models.SoftwarerepositoryFileServer, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewSoftwarerepositoryFileServerWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("softwarerepository.FileServer")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetFileServer(x)
+		}
+	}
+
+	if v, ok := d.GetOk("moid"); ok {
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if v, ok := d.GetOk("network_share"); ok {
+		p := make([]models.FirmwareNetworkShare, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewFirmwareNetworkShareWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
 			if v, ok := l["cifs_server"]; ok {
 				{
-					p := models.FirmwareCifsServer{}
-					if len(v.([]interface{})) > 0 {
-						o := models.FirmwareCifsServer{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.FirmwareCifsServer, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewFirmwareCifsServerWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.FirmwareCifsServerAO1P1.FirmwareCifsServerAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("firmware.CifsServer")
 						if v, ok := l["file_location"]; ok {
 							{
 								x := (v.(string))
-								o.FileLocation = x
+								o.SetFileLocation(x)
 							}
 						}
 						if v, ok := l["mount_options"]; ok {
 							{
 								x := (v.(string))
-								o.MountOptions = &x
+								o.SetMountOptions(x)
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["remote_file"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteFile = x
+								o.SetRemoteFile(x)
 							}
 						}
 						if v, ok := l["remote_ip"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteIP = x
+								o.SetRemoteIp(x)
 							}
 						}
 						if v, ok := l["remote_share"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteShare = x
+								o.SetRemoteShare(x)
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.CifsServer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetCifsServer(x)
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("firmware.NetworkShare")
 			if v, ok := l["http_server"]; ok {
 				{
-					p := models.FirmwareHTTPServer{}
-					if len(v.([]interface{})) > 0 {
-						o := models.FirmwareHTTPServer{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.FirmwareHttpServer, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewFirmwareHttpServerWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.FirmwareHTTPServerAO1P1.FirmwareHTTPServerAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("firmware.HttpServer")
 						if v, ok := l["location_link"]; ok {
 							{
 								x := (v.(string))
-								o.LocationLink = x
+								o.SetLocationLink(x)
 							}
 						}
 						if v, ok := l["mount_options"]; ok {
 							{
 								x := (v.(string))
-								o.MountOptions = x
+								o.SetMountOptions(x)
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.HTTPServer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetHttpServer(x)
 					}
 				}
 			}
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
 			if v, ok := l["map_type"]; ok {
 				{
 					x := (v.(string))
-					o.MapType = &x
+					o.SetMapType(x)
 				}
 			}
 			if v, ok := l["nfs_server"]; ok {
 				{
-					p := models.FirmwareNfsServer{}
-					if len(v.([]interface{})) > 0 {
-						o := models.FirmwareNfsServer{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.FirmwareNfsServer, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewFirmwareNfsServerWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.FirmwareNfsServerAO1P1.FirmwareNfsServerAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("firmware.NfsServer")
 						if v, ok := l["file_location"]; ok {
 							{
 								x := (v.(string))
-								o.FileLocation = x
+								o.SetFileLocation(x)
 							}
 						}
 						if v, ok := l["mount_options"]; ok {
 							{
 								x := (v.(string))
-								o.MountOptions = x
+								o.SetMountOptions(x)
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["remote_file"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteFile = x
+								o.SetRemoteFile(x)
 							}
 						}
 						if v, ok := l["remote_ip"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteIP = x
+								o.SetRemoteIp(x)
 							}
 						}
 						if v, ok := l["remote_share"]; ok {
 							{
 								x := (v.(string))
-								o.RemoteShare = x
+								o.SetRemoteShare(x)
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.NfsServer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetNfsServer(x)
 					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["upgradeoption"]; ok {
 				{
 					x := (v.(string))
-					o.Upgradeoption = &x
+					o.SetUpgradeoption(x)
 				}
 			}
 			if v, ok := l["username"]; ok {
 				{
 					x := (v.(string))
-					o.Username = x
+					o.SetUsername(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.NetworkShare = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetNetworkShare(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
+	o.SetObjectType("firmware.Upgrade")
 
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	if v, ok := d.GetOk("release"); ok {
+		p := make([]models.SoftwarerepositoryReleaseRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsSoftwarerepositoryReleaseRelationship(o))
 		}
-		o.PermissionResources = x
-
+		if len(p) > 0 {
+			x := p[0]
+			o.SetRelease(x)
+		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-		p := models.ComputeRackUnitRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.ComputeRackUnitRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.ComputePhysicalRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsComputePhysicalRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Server = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetServer(x)
 		}
+	}
 
+	if v, ok := d.GetOkExists("skip_estimate_impact"); ok {
+		x := v.(bool)
+		o.SetSkipEstimateImpact(x)
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+		x := (v.(string))
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	if v, ok := d.GetOk("upgrade_status"); ok {
-		p := models.FirmwareUpgradeStatusRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.FirmwareUpgradeStatusRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+	if v, ok := d.GetOk("upgrade_impact"); ok {
+		p := make([]models.FirmwareUpgradeImpactStatusRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsFirmwareUpgradeImpactStatusRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.UpgradeStatus = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUpgradeImpact(x)
 		}
+	}
 
+	if v, ok := d.GetOk("upgrade_status"); ok {
+		p := make([]models.FirmwareUpgradeStatusRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsFirmwareUpgradeStatusRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUpgradeStatus(x)
+		}
 	}
 
 	if v, ok := d.GetOk("upgrade_type"); ok {
 		x := (v.(string))
-		o.UpgradeType = &x
-
+		o.SetUpgradeType(x)
 	}
 
-	url := "firmware/Upgrades"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.FirmwareApi.CreateFirmwareUpgrade(conn.ctx).FirmwareUpgrade(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceFirmwareUpgradeRead(d, meta)
 }
 
@@ -1250,69 +1492,87 @@ func resourceFirmwareUpgradeRead(d *schema.ResourceData, meta interface{}) error
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "firmware/Upgrades" + "/" + d.Id()
+	r := conn.ApiClient.FirmwareApi.GetFirmwareUpgradeByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.FirmwareUpgrade
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("device", flattenMapAssetDeviceRegistrationRef(s.Device, d)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.DirectDownload, d)); err != nil {
-		return err
+	if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Device: %+v", err)
 	}
 
-	if err := d.Set("distributable", flattenMapFirmwareDistributableRef(s.Distributable, d)); err != nil {
-		return err
+	if err := d.Set("direct_download", flattenMapFirmwareDirectDownload(s.GetDirectDownload(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property DirectDownload: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("distributable", flattenMapFirmwareDistributableRelationship(s.GetDistributable(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Distributable: %+v", err)
 	}
 
-	if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.NetworkShare, d)); err != nil {
-		return err
+	if err := d.Set("exclude_component_list", (s.GetExcludeComponentList())); err != nil {
+		return fmt.Errorf("error occurred while setting property ExcludeComponentList: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("file_server", flattenMapSoftwarerepositoryFileServer(s.GetFileServer(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property FileServer: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("server", flattenMapComputeRackUnitRef(s.Server, d)); err != nil {
-		return err
+	if err := d.Set("network_share", flattenMapFirmwareNetworkShare(s.GetNetworkShare(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property NetworkShare: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRef(s.UpgradeStatus, d)); err != nil {
-		return err
+	if err := d.Set("release", flattenMapSoftwarerepositoryReleaseRelationship(s.GetRelease(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Release: %+v", err)
 	}
 
-	if err := d.Set("upgrade_type", (s.UpgradeType)); err != nil {
-		return err
+	if err := d.Set("server", flattenMapComputePhysicalRelationship(s.GetServer(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Server: %+v", err)
+	}
+
+	if err := d.Set("skip_estimate_impact", (s.GetSkipEstimateImpact())); err != nil {
+		return fmt.Errorf("error occurred while setting property SkipEstimateImpact: %+v", err)
+	}
+
+	if err := d.Set("status", (s.GetStatus())); err != nil {
+		return fmt.Errorf("error occurred while setting property Status: %+v", err)
+	}
+
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+	}
+
+	if err := d.Set("upgrade_impact", flattenMapFirmwareUpgradeImpactStatusRelationship(s.GetUpgradeImpact(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property UpgradeImpact: %+v", err)
+	}
+
+	if err := d.Set("upgrade_status", flattenMapFirmwareUpgradeStatusRelationship(s.GetUpgradeStatus(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property UpgradeStatus: %+v", err)
+	}
+
+	if err := d.Set("upgrade_type", (s.GetUpgradeType())); err != nil {
+		return fmt.Errorf("error occurred while setting property UpgradeType: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
 
@@ -1320,10 +1580,10 @@ func resourceFirmwareUpgradeDelete(d *schema.ResourceData, meta interface{}) err
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "firmware/Upgrades" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.FirmwareApi.DeleteFirmwareUpgrade(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -2,10 +2,10 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,13 +16,29 @@ func resourceIamLdapPolicy() *schema.Resource {
 		Update: resourceIamLdapPolicyUpdate,
 		Delete: resourceIamLdapPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"appliance_account": {
-				Description: "The appliance account to which the appliance LDAP policy belongs.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -30,7 +46,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -148,6 +164,11 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"description": {
+				Description: "Description of the policy.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"dns_parameters": {
 				Description: "Configuration settings to resolve LDAP servers, when DNS is enabled.",
 				Type:        schema.TypeList,
@@ -182,7 +203,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
-						"source": {
+						"nr_source": {
 							Description: "Source of the domain name used for the DNS SRV request.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -192,11 +213,6 @@ func resourceIamLdapPolicy() *schema.Resource {
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
-			},
-			"description": {
-				Description: "Description of the policy.",
-				Type:        schema.TypeString,
-				Optional:    true,
 			},
 			"enable_dns": {
 				Description: "Enables DNS to access LDAP servers.",
@@ -209,11 +225,22 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Optional:    true,
 			},
 			"groups": {
-				Description: "Relationship to collection of LDAP Groups.",
+				Description: "An array of relationships to iamLdapGroup resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -221,7 +248,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -249,36 +276,6 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nr0_idp": {
-				Description: "A collection of references to the [iam.Idp](mo://iam.Idp) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Idp](mo://iam.Idp) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
@@ -286,12 +283,23 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The organization to which the LDAP policy belongs.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -299,7 +307,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -316,41 +324,23 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"profiles": {
-				Description: "Relationship to the profile object.",
+				Description: "An array of relationships to policyAbstractConfigProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -358,7 +348,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -374,12 +364,23 @@ func resourceIamLdapPolicy() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
-			"providers": {
-				Description: "Relationship to collection of LDAP Providers.",
+			"nr_providers": {
+				Description: "An array of relationships to iamLdapProvider resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -387,7 +388,7 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -404,9 +405,8 @@ func resourceIamLdapPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -414,22 +414,10 @@ func resourceIamLdapPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -438,8 +426,6 @@ func resourceIamLdapPolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"user_search_precedence": {
 				Description: "Search precedence between local user database and LDAP user database.",
@@ -450,554 +436,483 @@ func resourceIamLdapPolicy() *schema.Resource {
 		},
 	}
 }
+
 func resourceIamLdapPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamLdapPolicy
-	if v, ok := d.GetOk("appliance_account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
+	var o = models.NewIamLdapPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.ApplianceAccount = &x
-		}
-
 	}
 
-	if v, ok := d.GetOk("base_properties"); ok {
-		p := models.IamLdapBaseProperties{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamLdapBaseProperties{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+	if v, ok := d.GetOk("appliance_account"); ok {
+		p := make([]models.IamAccountRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetApplianceAccount(x)
+		}
+	}
+
+	if v, ok := d.GetOk("base_properties"); ok {
+		p := make([]models.IamLdapBaseProperties, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewIamLdapBasePropertiesWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
 			if v, ok := l["attribute"]; ok {
 				{
 					x := (v.(string))
-					o.Attribute = x
+					o.SetAttribute(x)
 				}
 			}
 			if v, ok := l["base_dn"]; ok {
 				{
 					x := (v.(string))
-					o.BaseDn = x
+					o.SetBaseDn(x)
 				}
 			}
 			if v, ok := l["bind_dn"]; ok {
 				{
 					x := (v.(string))
-					o.BindDn = x
+					o.SetBindDn(x)
 				}
 			}
 			if v, ok := l["bind_method"]; ok {
 				{
 					x := (v.(string))
-					o.BindMethod = &x
+					o.SetBindMethod(x)
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("iam.LdapBaseProperties")
 			if v, ok := l["domain"]; ok {
 				{
 					x := (v.(string))
-					o.Domain = x
+					o.SetDomain(x)
 				}
 			}
 			if v, ok := l["enable_encryption"]; ok {
 				{
 					x := (v.(bool))
-					o.EnableEncryption = &x
+					o.SetEnableEncryption(x)
 				}
 			}
 			if v, ok := l["enable_group_authorization"]; ok {
 				{
 					x := (v.(bool))
-					o.EnableGroupAuthorization = &x
+					o.SetEnableGroupAuthorization(x)
 				}
 			}
 			if v, ok := l["filter"]; ok {
 				{
 					x := (v.(string))
-					o.Filter = x
+					o.SetFilter(x)
 				}
 			}
 			if v, ok := l["group_attribute"]; ok {
 				{
 					x := (v.(string))
-					o.GroupAttribute = x
+					o.SetGroupAttribute(x)
 				}
 			}
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
 			if v, ok := l["nested_group_search_depth"]; ok {
 				{
 					x := int64(v.(int))
-					o.NestedGroupSearchDepth = x
+					o.SetNestedGroupSearchDepth(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["timeout"]; ok {
 				{
 					x := int64(v.(int))
-					o.Timeout = x
+					o.SetTimeout(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.BaseProperties = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetBaseProperties(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
+	o.SetClassId("iam.LdapPolicy")
 
+	if v, ok := d.GetOk("description"); ok {
+		x := (v.(string))
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("dns_parameters"); ok {
-		p := models.IamLdapDNSParameters{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamLdapDNSParameters{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamLdapDnsParameters, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewIamLdapDnsParametersWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("iam.LdapDnsParameters")
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["search_domain"]; ok {
 				{
 					x := (v.(string))
-					o.SearchDomain = x
+					o.SetSearchDomain(x)
 				}
 			}
 			if v, ok := l["search_forest"]; ok {
 				{
 					x := (v.(string))
-					o.SearchForest = x
+					o.SetSearchForest(x)
 				}
 			}
-			if v, ok := l["source"]; ok {
+			if v, ok := l["nr_source"]; ok {
 				{
 					x := (v.(string))
-					o.Source = &x
+					o.SetSource(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.DNSParameters = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetDnsParameters(x)
 		}
-
-	}
-
-	if v, ok := d.GetOk("description"); ok {
-		x := (v.(string))
-		o.Description = x
-
 	}
 
 	if v, ok := d.GetOkExists("enable_dns"); ok {
 		x := v.(bool)
-		o.EnableDNS = &x
+		o.SetEnableDns(x)
 	}
 
 	if v, ok := d.GetOkExists("enabled"); ok {
 		x := v.(bool)
-		o.Enabled = &x
+		o.SetEnabled(x)
 	}
 
 	if v, ok := d.GetOk("groups"); ok {
-		x := make([]*models.IamLdapGroupRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamLdapGroupRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamLdapGroupRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsIamLdapGroupRelationship(o))
 		}
-		o.Groups = x
-
+		if len(x) > 0 {
+			o.SetGroups(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
-
+		o.SetName(x)
 	}
 
-	if v, ok := d.GetOk("nr0_idp"); ok {
-		p := models.IamIdpRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamIdpRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Nr0Idp = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
+	o.SetObjectType("iam.LdapPolicy")
 
 	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
 		}
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
 	}
 
 	if v, ok := d.GetOk("profiles"); ok {
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
-
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
-	if v, ok := d.GetOk("providers"); ok {
-		x := make([]*models.IamLdapProviderRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamLdapProviderRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	if v, ok := d.GetOk("nr_providers"); ok {
+		x := make([]models.IamLdapProviderRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsIamLdapProviderRelationship(o))
 		}
-		o.Providers = x
-
+		if len(x) > 0 {
+			o.SetProviders(x)
+		}
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("user_search_precedence"); ok {
 		x := (v.(string))
-		o.UserSearchPrecedence = &x
-
+		o.SetUserSearchPrecedence(x)
 	}
 
-	url := "iam/LdapPolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.CreateIamLdapPolicy(conn.ctx).IamLdapPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamLdapPolicyRead(d, meta)
 }
 func detachIamLdapPolicyProfiles(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "iam/LdapPolicies" + "/" + d.Id()
-	var o models.IamLdapPolicy
+	var o = models.NewIamLdapPolicyWithDefaults()
+	o.SetClassId("iam.LdapPolicy")
+	o.SetObjectType("iam.LdapPolicy")
+	o.SetProfiles([]models.PolicyAbstractConfigProfileRelationship{})
 
-	o.Profiles = []*models.PolicyAbstractConfigProfileRef{}
-
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.UpdateIamLdapPolicy(conn.ctx, d.Id()).IamLdapPolicy(*o)
+	_, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling sol_policy. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while creating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		log.Printf("error in sending update request. error %s", err.Error())
-		return err
-	}
-	var s models.ServerProfile
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling sol_policy. Error: %s", err.Error())
-	}
-
 	return err
 }
 
@@ -1006,617 +921,561 @@ func resourceIamLdapPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "iam/LdapPolicies" + "/" + d.Id()
+	r := conn.ApiClient.IamApi.GetIamLdapPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.IamLdapPolicy
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("appliance_account", flattenMapIamAccountRef(s.ApplianceAccount, d)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("base_properties", flattenMapIamLdapBaseProperties(s.BaseProperties, d)); err != nil {
-		return err
+	if err := d.Set("appliance_account", flattenMapIamAccountRelationship(s.GetApplianceAccount(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property ApplianceAccount: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("base_properties", flattenMapIamLdapBaseProperties(s.GetBaseProperties(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property BaseProperties: %+v", err)
 	}
 
-	if err := d.Set("dns_parameters", flattenMapIamLdapDNSParameters(s.DNSParameters, d)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("enable_dns", (s.EnableDNS)); err != nil {
-		return err
+	if err := d.Set("dns_parameters", flattenMapIamLdapDnsParameters(s.GetDnsParameters(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property DnsParameters: %+v", err)
 	}
 
-	if err := d.Set("enabled", (s.Enabled)); err != nil {
-		return err
+	if err := d.Set("enable_dns", (s.GetEnableDns())); err != nil {
+		return fmt.Errorf("error occurred while setting property EnableDns: %+v", err)
 	}
 
-	if err := d.Set("groups", flattenListIamLdapGroupRef(s.Groups, d)); err != nil {
-		return err
+	if err := d.Set("enabled", (s.GetEnabled())); err != nil {
+		return fmt.Errorf("error occurred while setting property Enabled: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("groups", flattenListIamLdapGroupRelationship(s.GetGroups(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Groups: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("nr0_idp", flattenMapIamIdpRef(s.Nr0Idp, d)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-		return err
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRelationship(s.GetProfiles(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Profiles: %+v", err)
 	}
 
-	if err := d.Set("profiles", flattenListPolicyAbstractConfigProfileRef(s.Profiles, d)); err != nil {
-		return err
+	if err := d.Set("nr_providers", flattenListIamLdapProviderRelationship(s.GetProviders(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Providers: %+v", err)
 	}
 
-	if err := d.Set("providers", flattenListIamLdapProviderRef(s.Providers, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
-	}
-
-	if err := d.Set("user_search_precedence", (s.UserSearchPrecedence)); err != nil {
-		return err
+	if err := d.Set("user_search_precedence", (s.GetUserSearchPrecedence())); err != nil {
+		return fmt.Errorf("error occurred while setting property UserSearchPrecedence: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceIamLdapPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamLdapPolicy
-	if d.HasChange("appliance_account") {
-		v := d.Get("appliance_account")
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.ApplianceAccount = &x
+	var o = models.NewIamLdapPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
 		}
 	}
 
-	if d.HasChange("base_properties") {
-		v := d.Get("base_properties")
-		p := models.IamLdapBaseProperties{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamLdapBaseProperties{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+	if d.HasChange("appliance_account") {
+		v := d.Get("appliance_account")
+		p := make([]models.IamAccountRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.IamLdapBasePropertiesAO1P1.IamLdapBasePropertiesAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetApplianceAccount(x)
+		}
+	}
+
+	if d.HasChange("base_properties") {
+		v := d.Get("base_properties")
+		p := make([]models.IamLdapBaseProperties, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewIamLdapBasePropertiesWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
 			if v, ok := l["attribute"]; ok {
 				{
 					x := (v.(string))
-					o.Attribute = x
+					o.SetAttribute(x)
 				}
 			}
 			if v, ok := l["base_dn"]; ok {
 				{
 					x := (v.(string))
-					o.BaseDn = x
+					o.SetBaseDn(x)
 				}
 			}
 			if v, ok := l["bind_dn"]; ok {
 				{
 					x := (v.(string))
-					o.BindDn = x
+					o.SetBindDn(x)
 				}
 			}
 			if v, ok := l["bind_method"]; ok {
 				{
 					x := (v.(string))
-					o.BindMethod = &x
+					o.SetBindMethod(x)
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("iam.LdapBaseProperties")
 			if v, ok := l["domain"]; ok {
 				{
 					x := (v.(string))
-					o.Domain = x
+					o.SetDomain(x)
 				}
 			}
 			if v, ok := l["enable_encryption"]; ok {
 				{
 					x := (v.(bool))
-					o.EnableEncryption = &x
+					o.SetEnableEncryption(x)
 				}
 			}
 			if v, ok := l["enable_group_authorization"]; ok {
 				{
 					x := (v.(bool))
-					o.EnableGroupAuthorization = &x
+					o.SetEnableGroupAuthorization(x)
 				}
 			}
 			if v, ok := l["filter"]; ok {
 				{
 					x := (v.(string))
-					o.Filter = x
+					o.SetFilter(x)
 				}
 			}
 			if v, ok := l["group_attribute"]; ok {
 				{
 					x := (v.(string))
-					o.GroupAttribute = x
+					o.SetGroupAttribute(x)
 				}
 			}
 			if v, ok := l["is_password_set"]; ok {
 				{
 					x := (v.(bool))
-					o.IsPasswordSet = &x
+					o.SetIsPasswordSet(x)
 				}
 			}
 			if v, ok := l["nested_group_search_depth"]; ok {
 				{
 					x := int64(v.(int))
-					o.NestedGroupSearchDepth = x
+					o.SetNestedGroupSearchDepth(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["password"]; ok {
 				{
 					x := (v.(string))
-					o.Password = x
+					o.SetPassword(x)
 				}
 			}
 			if v, ok := l["timeout"]; ok {
 				{
 					x := int64(v.(int))
-					o.Timeout = x
+					o.SetTimeout(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.BaseProperties = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetBaseProperties(x)
 		}
 	}
 
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
+	o.SetClassId("iam.LdapPolicy")
+
+	if d.HasChange("description") {
+		v := d.Get("description")
 		x := (v.(string))
-		o.ClassID = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("dns_parameters") {
 		v := d.Get("dns_parameters")
-		p := models.IamLdapDNSParameters{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamLdapDNSParameters{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamLdapDnsParameters, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewIamLdapDnsParametersWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.IamLdapDNSParametersAO1P1.IamLdapDNSParametersAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("iam.LdapDnsParameters")
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["search_domain"]; ok {
 				{
 					x := (v.(string))
-					o.SearchDomain = x
+					o.SetSearchDomain(x)
 				}
 			}
 			if v, ok := l["search_forest"]; ok {
 				{
 					x := (v.(string))
-					o.SearchForest = x
+					o.SetSearchForest(x)
 				}
 			}
-			if v, ok := l["source"]; ok {
+			if v, ok := l["nr_source"]; ok {
 				{
 					x := (v.(string))
-					o.Source = &x
+					o.SetSource(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.DNSParameters = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetDnsParameters(x)
 		}
-	}
-
-	if d.HasChange("description") {
-		v := d.Get("description")
-		x := (v.(string))
-		o.Description = x
 	}
 
 	if d.HasChange("enable_dns") {
 		v := d.Get("enable_dns")
 		x := (v.(bool))
-		o.EnableDNS = &x
+		o.SetEnableDns(x)
 	}
 
 	if d.HasChange("enabled") {
 		v := d.Get("enabled")
 		x := (v.(bool))
-		o.Enabled = &x
+		o.SetEnabled(x)
 	}
 
 	if d.HasChange("groups") {
 		v := d.Get("groups")
-		x := make([]*models.IamLdapGroupRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamLdapGroupRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamLdapGroupRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsIamLdapGroupRelationship(o))
 		}
-		o.Groups = x
+		if len(x) > 0 {
+			o.SetGroups(x)
+		}
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 
-	if d.HasChange("nr0_idp") {
-		v := d.Get("nr0_idp")
-		p := models.IamIdpRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamIdpRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Nr0Idp = &x
-		}
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
+	o.SetObjectType("iam.LdapPolicy")
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
 		}
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
 	}
 
 	if d.HasChange("profiles") {
 		v := d.Get("profiles")
-		x := make([]*models.PolicyAbstractConfigProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.PolicyAbstractConfigProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.PolicyAbstractConfigProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsPolicyAbstractConfigProfileRelationship(o))
 		}
-		o.Profiles = x
+		if len(x) > 0 {
+			o.SetProfiles(x)
+		}
 	}
 
-	if d.HasChange("providers") {
-		v := d.Get("providers")
-		x := make([]*models.IamLdapProviderRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamLdapProviderRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	if d.HasChange("nr_providers") {
+		v := d.Get("nr_providers")
+		x := make([]models.IamLdapProviderRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsIamLdapProviderRelationship(o))
 		}
-		o.Providers = x
+		if len(x) > 0 {
+			o.SetProviders(x)
+		}
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("user_search_precedence") {
 		v := d.Get("user_search_precedence")
 		x := (v.(string))
-		o.UserSearchPrecedence = &x
+		o.SetUserSearchPrecedence(x)
 	}
 
-	url := "iam/LdapPolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.UpdateIamLdapPolicy(conn.ctx, d.Id()).IamLdapPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamLdapPolicyRead(d, meta)
 }
 
@@ -1624,11 +1483,18 @@ func resourceIamLdapPolicyDelete(d *schema.ResourceData, meta interface{}) error
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "iam/LdapPolicies" + "/" + d.Id()
-	detachIamLdapPolicyProfiles(d, meta)
-	_, err := conn.SendDeleteRequest(url)
+	if p, ok := d.GetOk("profiles"); ok {
+		if len(p.([]interface{})) > 0 {
+			e := detachIamLdapPolicyProfiles(d, meta)
+			if e != nil {
+				return e
+			}
+		}
+	}
+	p := conn.ApiClient.IamApi.DeleteIamLdapPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -70,11 +70,6 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
-			"ip_epg_count": {
-				Description: "Number of IP based EPGs. This determines the total number of IP End Point Groups across the fabric.",
-				Type:        schema.TypeInt,
-				Optional:    true,
-			},
 			"ibgp_count": {
 				Description: "Ibgp feature usage. This determines the total number of BGP sessions across the fabric.",
 				Type:        schema.TypeInt,
@@ -88,6 +83,11 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 			"igmp_snoop": {
 				Description: "IGMP Snooping feature usage. This determines if this feature is enabled or disabled.",
 				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"ip_epg_count": {
+				Description: "Number of IP based EPGs. This determines the total number of IP End Point Groups across the fabric.",
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"isis_count": {
@@ -142,34 +142,6 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"poe_count": {
 				Description: "POE feature usage. This determines the total number of POE configurations across the fabric.",
 				Type:        schema.TypeInt,
@@ -181,13 +153,19 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 				Optional:    true,
 			},
 			"registered_device": {
-				Description: "Relationship to the Device Registration object for this setup.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -195,7 +173,7 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -211,11 +189,6 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 			},
 			"remote_leaf_count": {
 				Description: "Number of remote Leafs. This determines if this feature is being enabled or disabled.",
-				Type:        schema.TypeInt,
-				Optional:    true,
-			},
-			"ssh_over_v6_count": {
-				Description: "Ssh over IPv6 feature usage. This determines the total number of IPv6 configurtaions in the fabric.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
@@ -244,38 +217,25 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
+			"ssh_over_v6_count": {
+				Description: "Ssh over IPv6 feature usage. This determines the total number of IPv6 configurtaions in the fabric.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
 			"syslog_over_v6_count": {
 				Description: "Syslog over IPv6 feature usage. This determines the total number of IPv6 configurtaions in the fabric.",
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -284,7 +244,6 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"tenant_count": {
 				Description: "Number of tenants. This determines the total number of tenants configured across the fabric.",
@@ -314,184 +273,192 @@ func dataSourceNiatelemetryNiaFeatureUsage() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceNiatelemetryNiaFeatureUsageRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "niatelemetry/NiaFeatureUsages"
-	var o models.NiatelemetryNiaFeatureUsage
+	var o = models.NewNiatelemetryNiaFeatureUsageWithDefaults()
 	if v, ok := d.GetOk("apic_count"); ok {
 		x := int64(v.(int))
-		o.ApicCount = x
+		o.SetApicCount(x)
 	}
 	if v, ok := d.GetOk("app_center_count"); ok {
 		x := int64(v.(int))
-		o.AppCenterCount = x
+		o.SetAppCenterCount(x)
 	}
 	if v, ok := d.GetOk("ave"); ok {
 		x := (v.(string))
-		o.Ave = x
+		o.SetAve(x)
 	}
 	if v, ok := d.GetOk("bd_count"); ok {
 		x := int64(v.(int))
-		o.BdCount = x
+		o.SetBdCount(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("consistency_checker_app"); ok {
 		x := (v.(string))
-		o.ConsistencyCheckerApp = x
+		o.SetConsistencyCheckerApp(x)
 	}
 	if v, ok := d.GetOk("contract_count"); ok {
 		x := int64(v.(int))
-		o.ContractCount = x
+		o.SetContractCount(x)
 	}
 	if v, ok := d.GetOk("dns_count"); ok {
 		x := int64(v.(int))
-		o.DNSCount = x
+		o.SetDnsCount(x)
 	}
 	if v, ok := d.GetOk("eigrp_count"); ok {
 		x := int64(v.(int))
-		o.EigrpCount = x
+		o.SetEigrpCount(x)
 	}
 	if v, ok := d.GetOk("epg_count"); ok {
 		x := int64(v.(int))
-		o.EpgCount = x
+		o.SetEpgCount(x)
 	}
 	if v, ok := d.GetOk("hsrp_count"); ok {
 		x := int64(v.(int))
-		o.HsrpCount = x
-	}
-	if v, ok := d.GetOk("ip_epg_count"); ok {
-		x := int64(v.(int))
-		o.IPEpgCount = x
+		o.SetHsrpCount(x)
 	}
 	if v, ok := d.GetOk("ibgp_count"); ok {
 		x := int64(v.(int))
-		o.IbgpCount = x
+		o.SetIbgpCount(x)
 	}
 	if v, ok := d.GetOk("igmp_access_list_count"); ok {
 		x := int64(v.(int))
-		o.IgmpAccessListCount = x
+		o.SetIgmpAccessListCount(x)
 	}
 	if v, ok := d.GetOk("igmp_snoop"); ok {
 		x := (v.(string))
-		o.IgmpSnoop = x
+		o.SetIgmpSnoop(x)
+	}
+	if v, ok := d.GetOk("ip_epg_count"); ok {
+		x := int64(v.(int))
+		o.SetIpEpgCount(x)
 	}
 	if v, ok := d.GetOk("isis_count"); ok {
 		x := int64(v.(int))
-		o.IsisCount = x
+		o.SetIsisCount(x)
 	}
 	if v, ok := d.GetOk("l2_multicast"); ok {
 		x := (v.(string))
-		o.L2Multicast = x
+		o.SetL2Multicast(x)
 	}
 	if v, ok := d.GetOk("leaf_count"); ok {
 		x := int64(v.(int))
-		o.LeafCount = x
+		o.SetLeafCount(x)
 	}
 	if v, ok := d.GetOk("maintenance_mode_count"); ok {
 		x := int64(v.(int))
-		o.MaintenanceModeCount = x
+		o.SetMaintenanceModeCount(x)
 	}
 	if v, ok := d.GetOk("management_over_v6_count"); ok {
 		x := int64(v.(int))
-		o.ManagementOverV6Count = x
+		o.SetManagementOverV6Count(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("nir"); ok {
 		x := (v.(string))
-		o.Nir = x
+		o.SetNir(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("opflex_kubernetes_count"); ok {
 		x := int64(v.(int))
-		o.OpflexKubernetesCount = x
+		o.SetOpflexKubernetesCount(x)
 	}
 	if v, ok := d.GetOk("ospf_count"); ok {
 		x := int64(v.(int))
-		o.OspfCount = x
+		o.SetOspfCount(x)
 	}
 	if v, ok := d.GetOk("poe_count"); ok {
 		x := int64(v.(int))
-		o.PoeCount = x
+		o.SetPoeCount(x)
 	}
 	if v, ok := d.GetOk("qin_vni_tunnel_count"); ok {
 		x := int64(v.(int))
-		o.QinVniTunnelCount = x
+		o.SetQinVniTunnelCount(x)
 	}
 	if v, ok := d.GetOk("remote_leaf_count"); ok {
 		x := int64(v.(int))
-		o.RemoteLeafCount = x
-	}
-	if v, ok := d.GetOk("ssh_over_v6_count"); ok {
-		x := int64(v.(int))
-		o.SSHOverV6Count = x
+		o.SetRemoteLeafCount(x)
 	}
 	if v, ok := d.GetOk("scvmm_count"); ok {
 		x := int64(v.(int))
-		o.ScvmmCount = x
+		o.SetScvmmCount(x)
 	}
 	if v, ok := d.GetOk("shared_l3_out_count"); ok {
 		x := int64(v.(int))
-		o.SharedL3OutCount = x
+		o.SetSharedL3OutCount(x)
 	}
 	if v, ok := d.GetOk("smart_call_home"); ok {
 		x := (v.(string))
-		o.SmartCallHome = x
+		o.SetSmartCallHome(x)
 	}
 	if v, ok := d.GetOk("snmp"); ok {
 		x := (v.(string))
-		o.Snmp = x
+		o.SetSnmp(x)
 	}
 	if v, ok := d.GetOk("spine_count"); ok {
 		x := int64(v.(int))
-		o.SpineCount = x
+		o.SetSpineCount(x)
+	}
+	if v, ok := d.GetOk("ssh_over_v6_count"); ok {
+		x := int64(v.(int))
+		o.SetSshOverV6Count(x)
 	}
 	if v, ok := d.GetOk("syslog_over_v6_count"); ok {
 		x := int64(v.(int))
-		o.SyslogOverV6Count = x
+		o.SetSyslogOverV6Count(x)
 	}
 	if v, ok := d.GetOk("tenant_count"); ok {
 		x := int64(v.(int))
-		o.TenantCount = x
+		o.SetTenantCount(x)
 	}
 	if v, ok := d.GetOk("tier_two_leaf_count"); ok {
 		x := int64(v.(int))
-		o.TierTwoLeafCount = x
+		o.SetTierTwoLeafCount(x)
 	}
 	if v, ok := d.GetOk("twamp"); ok {
 		x := (v.(string))
-		o.Twamp = x
+		o.SetTwamp(x)
 	}
 	if v, ok := d.GetOk("useg"); ok {
 		x := (v.(string))
-		o.Useg = x
+		o.SetUseg(x)
 	}
 	if v, ok := d.GetOk("vpod_count"); ok {
 		x := int64(v.(int))
-		o.VpodCount = x
+		o.SetVpodCount(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.NiatelemetryApi.GetNiatelemetryNiaFeatureUsageList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.NiatelemetryNiaFeatureUsageList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to NiatelemetryNiaFeatureUsage: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -499,144 +466,143 @@ func dataSourceNiatelemetryNiaFeatureUsageRead(d *schema.ResourceData, meta inte
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.NiatelemetryNiaFeatureUsage
+			var s = models.NewNiatelemetryNiaFeatureUsageWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("apic_count", (s.ApicCount)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("app_center_count", (s.AppCenterCount)); err != nil {
-				return err
+			if err := d.Set("apic_count", (s.GetApicCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property ApicCount: %+v", err)
 			}
-			if err := d.Set("ave", (s.Ave)); err != nil {
-				return err
+			if err := d.Set("app_center_count", (s.GetAppCenterCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property AppCenterCount: %+v", err)
 			}
-			if err := d.Set("bd_count", (s.BdCount)); err != nil {
-				return err
+			if err := d.Set("ave", (s.GetAve())); err != nil {
+				return fmt.Errorf("error occurred while setting property Ave: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("bd_count", (s.GetBdCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property BdCount: %+v", err)
 			}
-			if err := d.Set("consistency_checker_app", (s.ConsistencyCheckerApp)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("contract_count", (s.ContractCount)); err != nil {
-				return err
+			if err := d.Set("consistency_checker_app", (s.GetConsistencyCheckerApp())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConsistencyCheckerApp: %+v", err)
 			}
-			if err := d.Set("dns_count", (s.DNSCount)); err != nil {
-				return err
+			if err := d.Set("contract_count", (s.GetContractCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property ContractCount: %+v", err)
 			}
-			if err := d.Set("eigrp_count", (s.EigrpCount)); err != nil {
-				return err
+			if err := d.Set("dns_count", (s.GetDnsCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property DnsCount: %+v", err)
 			}
-			if err := d.Set("epg_count", (s.EpgCount)); err != nil {
-				return err
+			if err := d.Set("eigrp_count", (s.GetEigrpCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property EigrpCount: %+v", err)
 			}
-			if err := d.Set("hsrp_count", (s.HsrpCount)); err != nil {
-				return err
+			if err := d.Set("epg_count", (s.GetEpgCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property EpgCount: %+v", err)
 			}
-			if err := d.Set("ip_epg_count", (s.IPEpgCount)); err != nil {
-				return err
+			if err := d.Set("hsrp_count", (s.GetHsrpCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property HsrpCount: %+v", err)
 			}
-			if err := d.Set("ibgp_count", (s.IbgpCount)); err != nil {
-				return err
+			if err := d.Set("ibgp_count", (s.GetIbgpCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property IbgpCount: %+v", err)
 			}
-			if err := d.Set("igmp_access_list_count", (s.IgmpAccessListCount)); err != nil {
-				return err
+			if err := d.Set("igmp_access_list_count", (s.GetIgmpAccessListCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property IgmpAccessListCount: %+v", err)
 			}
-			if err := d.Set("igmp_snoop", (s.IgmpSnoop)); err != nil {
-				return err
+			if err := d.Set("igmp_snoop", (s.GetIgmpSnoop())); err != nil {
+				return fmt.Errorf("error occurred while setting property IgmpSnoop: %+v", err)
 			}
-			if err := d.Set("isis_count", (s.IsisCount)); err != nil {
-				return err
+			if err := d.Set("ip_epg_count", (s.GetIpEpgCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property IpEpgCount: %+v", err)
 			}
-			if err := d.Set("l2_multicast", (s.L2Multicast)); err != nil {
-				return err
+			if err := d.Set("isis_count", (s.GetIsisCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property IsisCount: %+v", err)
 			}
-			if err := d.Set("leaf_count", (s.LeafCount)); err != nil {
-				return err
+			if err := d.Set("l2_multicast", (s.GetL2Multicast())); err != nil {
+				return fmt.Errorf("error occurred while setting property L2Multicast: %+v", err)
 			}
-			if err := d.Set("maintenance_mode_count", (s.MaintenanceModeCount)); err != nil {
-				return err
+			if err := d.Set("leaf_count", (s.GetLeafCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property LeafCount: %+v", err)
 			}
-			if err := d.Set("management_over_v6_count", (s.ManagementOverV6Count)); err != nil {
-				return err
+			if err := d.Set("maintenance_mode_count", (s.GetMaintenanceModeCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property MaintenanceModeCount: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+			if err := d.Set("management_over_v6_count", (s.GetManagementOverV6Count())); err != nil {
+				return fmt.Errorf("error occurred while setting property ManagementOverV6Count: %+v", err)
 			}
-			if err := d.Set("nir", (s.Nir)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("nir", (s.GetNir())); err != nil {
+				return fmt.Errorf("error occurred while setting property Nir: %+v", err)
 			}
-			if err := d.Set("opflex_kubernetes_count", (s.OpflexKubernetesCount)); err != nil {
-				return err
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("ospf_count", (s.OspfCount)); err != nil {
-				return err
+			if err := d.Set("opflex_kubernetes_count", (s.GetOpflexKubernetesCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property OpflexKubernetesCount: %+v", err)
 			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("ospf_count", (s.GetOspfCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property OspfCount: %+v", err)
 			}
-			if err := d.Set("poe_count", (s.PoeCount)); err != nil {
-				return err
+			if err := d.Set("poe_count", (s.GetPoeCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property PoeCount: %+v", err)
 			}
-			if err := d.Set("qin_vni_tunnel_count", (s.QinVniTunnelCount)); err != nil {
-				return err
-			}
-
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
-			}
-			if err := d.Set("remote_leaf_count", (s.RemoteLeafCount)); err != nil {
-				return err
-			}
-			if err := d.Set("ssh_over_v6_count", (s.SSHOverV6Count)); err != nil {
-				return err
-			}
-			if err := d.Set("scvmm_count", (s.ScvmmCount)); err != nil {
-				return err
-			}
-			if err := d.Set("shared_l3_out_count", (s.SharedL3OutCount)); err != nil {
-				return err
-			}
-			if err := d.Set("smart_call_home", (s.SmartCallHome)); err != nil {
-				return err
-			}
-			if err := d.Set("snmp", (s.Snmp)); err != nil {
-				return err
-			}
-			if err := d.Set("spine_count", (s.SpineCount)); err != nil {
-				return err
-			}
-			if err := d.Set("syslog_over_v6_count", (s.SyslogOverV6Count)); err != nil {
-				return err
+			if err := d.Set("qin_vni_tunnel_count", (s.GetQinVniTunnelCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property QinVniTunnelCount: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("tenant_count", (s.TenantCount)); err != nil {
-				return err
+			if err := d.Set("remote_leaf_count", (s.GetRemoteLeafCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property RemoteLeafCount: %+v", err)
 			}
-			if err := d.Set("tier_two_leaf_count", (s.TierTwoLeafCount)); err != nil {
-				return err
+			if err := d.Set("scvmm_count", (s.GetScvmmCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property ScvmmCount: %+v", err)
 			}
-			if err := d.Set("twamp", (s.Twamp)); err != nil {
-				return err
+			if err := d.Set("shared_l3_out_count", (s.GetSharedL3OutCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property SharedL3OutCount: %+v", err)
 			}
-			if err := d.Set("useg", (s.Useg)); err != nil {
-				return err
+			if err := d.Set("smart_call_home", (s.GetSmartCallHome())); err != nil {
+				return fmt.Errorf("error occurred while setting property SmartCallHome: %+v", err)
 			}
-			if err := d.Set("vpod_count", (s.VpodCount)); err != nil {
-				return err
+			if err := d.Set("snmp", (s.GetSnmp())); err != nil {
+				return fmt.Errorf("error occurred while setting property Snmp: %+v", err)
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("spine_count", (s.GetSpineCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property SpineCount: %+v", err)
+			}
+			if err := d.Set("ssh_over_v6_count", (s.GetSshOverV6Count())); err != nil {
+				return fmt.Errorf("error occurred while setting property SshOverV6Count: %+v", err)
+			}
+			if err := d.Set("syslog_over_v6_count", (s.GetSyslogOverV6Count())); err != nil {
+				return fmt.Errorf("error occurred while setting property SyslogOverV6Count: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("tenant_count", (s.GetTenantCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property TenantCount: %+v", err)
+			}
+			if err := d.Set("tier_two_leaf_count", (s.GetTierTwoLeafCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property TierTwoLeafCount: %+v", err)
+			}
+			if err := d.Set("twamp", (s.GetTwamp())); err != nil {
+				return fmt.Errorf("error occurred while setting property Twamp: %+v", err)
+			}
+			if err := d.Set("useg", (s.GetUseg())); err != nil {
+				return fmt.Errorf("error occurred while setting property Useg: %+v", err)
+			}
+			if err := d.Set("vpod_count", (s.GetVpodCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property VpodCount: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

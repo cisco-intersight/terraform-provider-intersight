@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -64,13 +64,19 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 			},
 			"device": {
-				Description: "A collection of references to the [asset.DeviceRegistration](mo://asset.DeviceRegistration) Managed Object.\nWhen this managed object is deleted, the referenced [asset.DeviceRegistration](mo://asset.DeviceRegistration) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -78,7 +84,7 @@ func dataSourceAssetClusterMember() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -133,34 +139,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"proxy_app": {
 				Description: "The name of the app which will proxy the messages to the device connector.",
 				Type:        schema.TypeString,
@@ -175,11 +153,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -219,11 +192,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -238,11 +206,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
-												"additional_properties": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: SuppressDiffAdditionProps,
-												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -256,17 +219,13 @@ func dataSourceAssetClusterMember() *schema.Resource {
 													Computed:    true,
 												},
 												"country": {
-													Description: "Identifier for the country in which the entity resides.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"locality": {
-													Description: "Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"object_type": {
@@ -276,24 +235,18 @@ func dataSourceAssetClusterMember() *schema.Resource {
 													Computed:    true,
 												},
 												"organization": {
-													Description: "Identifier for the organization in which the entity resides.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"organizational_unit": {
-													Description: "Identifier for a unit within the organization.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"state": {
-													Description: "Identifier for the state or province of the entity.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 											},
@@ -330,11 +283,6 @@ func dataSourceAssetClusterMember() *schema.Resource {
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
-												"additional_properties": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: SuppressDiffAdditionProps,
-												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -348,17 +296,13 @@ func dataSourceAssetClusterMember() *schema.Resource {
 													Computed:    true,
 												},
 												"country": {
-													Description: "Identifier for the country in which the entity resides.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"locality": {
-													Description: "Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"object_type": {
@@ -368,24 +312,18 @@ func dataSourceAssetClusterMember() *schema.Resource {
 													Computed:    true,
 												},
 												"organization": {
-													Description: "Identifier for the organization in which the entity resides.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"organizational_unit": {
-													Description: "Identifier for a unit within the organization.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 												"state": {
-													Description: "Identifier for the state or province of the entity.",
-													Type:        schema.TypeList,
-													Optional:    true,
-													Computed:    true,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString}},
 											},
@@ -399,32 +337,14 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -433,93 +353,100 @@ func dataSourceAssetClusterMember() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceAssetClusterMemberRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "asset/ClusterMembers"
-	var o models.AssetClusterMember
+	var o = models.NewAssetClusterMemberWithDefaults()
 	if v, ok := d.GetOk("api_version"); ok {
 		x := int64(v.(int))
-		o.APIVersion = x
+		o.SetApiVersion(x)
 	}
 	if v, ok := d.GetOk("app_partition_number"); ok {
 		x := int64(v.(int))
-		o.AppPartitionNumber = x
+		o.SetAppPartitionNumber(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("connection_id"); ok {
 		x := (v.(string))
-		o.ConnectionID = x
+		o.SetConnectionId(x)
 	}
 	if v, ok := d.GetOk("connection_reason"); ok {
 		x := (v.(string))
-		o.ConnectionReason = x
+		o.SetConnectionReason(x)
 	}
 	if v, ok := d.GetOk("connection_status"); ok {
 		x := (v.(string))
-		o.ConnectionStatus = x
+		o.SetConnectionStatus(x)
 	}
 	if v, ok := d.GetOk("connection_status_last_change_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ConnectionStatusLastChangeTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetConnectionStatusLastChangeTime(x)
 	}
 	if v, ok := d.GetOk("connector_version"); ok {
 		x := (v.(string))
-		o.ConnectorVersion = x
+		o.SetConnectorVersion(x)
 	}
 	if v, ok := d.GetOk("device_external_ip_address"); ok {
 		x := (v.(string))
-		o.DeviceExternalIPAddress = x
+		o.SetDeviceExternalIpAddress(x)
 	}
 	if v, ok := d.GetOk("leadership"); ok {
 		x := (v.(string))
-		o.Leadership = x
+		o.SetLeadership(x)
 	}
 	if v, ok := d.GetOk("locked_leader"); ok {
 		x := (v.(bool))
-		o.LockedLeader = &x
+		o.SetLockedLeader(x)
 	}
 	if v, ok := d.GetOk("member_identity"); ok {
 		x := (v.(string))
-		o.MemberIdentity = x
+		o.SetMemberIdentity(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("parent_cluster_member_identity"); ok {
 		x := (v.(string))
-		o.ParentClusterMemberIdentity = x
+		o.SetParentClusterMemberIdentity(x)
 	}
 	if v, ok := d.GetOk("proxy_app"); ok {
 		x := (v.(string))
-		o.ProxyApp = x
+		o.SetProxyApp(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.AssetApi.GetAssetClusterMemberList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.AssetClusterMemberList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to AssetClusterMember: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -527,77 +454,76 @@ func dataSourceAssetClusterMemberRead(d *schema.ResourceData, meta interface{}) 
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.AssetClusterMember
+			var s = models.NewAssetClusterMemberWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("api_version", (s.APIVersion)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("app_partition_number", (s.AppPartitionNumber)); err != nil {
-				return err
+			if err := d.Set("api_version", (s.GetApiVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property ApiVersion: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("app_partition_number", (s.GetAppPartitionNumber())); err != nil {
+				return fmt.Errorf("error occurred while setting property AppPartitionNumber: %+v", err)
 			}
-			if err := d.Set("connection_id", (s.ConnectionID)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("connection_reason", (s.ConnectionReason)); err != nil {
-				return err
+			if err := d.Set("connection_id", (s.GetConnectionId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionId: %+v", err)
 			}
-			if err := d.Set("connection_status", (s.ConnectionStatus)); err != nil {
-				return err
+			if err := d.Set("connection_reason", (s.GetConnectionReason())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionReason: %+v", err)
 			}
-
-			if err := d.Set("connection_status_last_change_time", (s.ConnectionStatusLastChangeTime).String()); err != nil {
-				return err
-			}
-			if err := d.Set("connector_version", (s.ConnectorVersion)); err != nil {
-				return err
+			if err := d.Set("connection_status", (s.GetConnectionStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionStatus: %+v", err)
 			}
 
-			if err := d.Set("device", flattenMapAssetDeviceRegistrationRef(s.Device, d)); err != nil {
-				return err
+			if err := d.Set("connection_status_last_change_time", (s.GetConnectionStatusLastChangeTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionStatusLastChangeTime: %+v", err)
 			}
-			if err := d.Set("device_external_ip_address", (s.DeviceExternalIPAddress)); err != nil {
-				return err
-			}
-			if err := d.Set("leadership", (s.Leadership)); err != nil {
-				return err
-			}
-			if err := d.Set("locked_leader", (s.LockedLeader)); err != nil {
-				return err
-			}
-			if err := d.Set("member_identity", (s.MemberIdentity)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("parent_cluster_member_identity", (s.ParentClusterMemberIdentity)); err != nil {
-				return err
+			if err := d.Set("connector_version", (s.GetConnectorVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectorVersion: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("device", flattenMapAssetDeviceRegistrationRelationship(s.GetDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Device: %+v", err)
 			}
-			if err := d.Set("proxy_app", (s.ProxyApp)); err != nil {
-				return err
+			if err := d.Set("device_external_ip_address", (s.GetDeviceExternalIpAddress())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceExternalIpAddress: %+v", err)
+			}
+			if err := d.Set("leadership", (s.GetLeadership())); err != nil {
+				return fmt.Errorf("error occurred while setting property Leadership: %+v", err)
+			}
+			if err := d.Set("locked_leader", (s.GetLockedLeader())); err != nil {
+				return fmt.Errorf("error occurred while setting property LockedLeader: %+v", err)
+			}
+			if err := d.Set("member_identity", (s.GetMemberIdentity())); err != nil {
+				return fmt.Errorf("error occurred while setting property MemberIdentity: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("parent_cluster_member_identity", (s.GetParentClusterMemberIdentity())); err != nil {
+				return fmt.Errorf("error occurred while setting property ParentClusterMemberIdentity: %+v", err)
+			}
+			if err := d.Set("proxy_app", (s.GetProxyApp())); err != nil {
+				return fmt.Errorf("error occurred while setting property ProxyApp: %+v", err)
 			}
 
-			if err := d.Set("sudi", flattenMapAssetSudiInfo(s.Sudi, d)); err != nil {
-				return err
+			if err := d.Set("sudi", flattenMapAssetSudiInfo(s.GetSudi(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Sudi: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

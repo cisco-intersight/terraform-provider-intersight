@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -29,11 +29,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"bill_to": {
 							Description: "BillTo address of listed for the contract.",
 							Type:        schema.TypeList,
@@ -42,11 +37,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -118,11 +108,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -209,11 +194,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"address": {
 							Description: "Address as per the information provided by the user.",
 							Type:        schema.TypeList,
@@ -222,11 +202,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -325,11 +300,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -393,34 +363,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"platform_type": {
 				Description: "The platform type of the Cisco device.",
 				Type:        schema.TypeString,
@@ -435,11 +377,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"bill_to": {
 							Description: "Billing address provided by customer while buying this Cisco product.",
 							Type:        schema.TypeList,
@@ -448,11 +385,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -560,11 +492,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
 									"address1": {
 										Description: "Address Line one of the address information. example \"PO BOX 641570\".",
 										Type:        schema.TypeString,
@@ -644,13 +571,19 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 			},
 			"registered_device": {
-				Description: "Reference to the device connector through which the device is connected.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -658,7 +591,7 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -680,11 +613,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -754,32 +682,14 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -788,7 +698,6 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"warranty_end_date": {
 				Description: "End date for the warranty that covers the Cisco device.",
@@ -805,112 +714,120 @@ func dataSourceAssetDeviceContractInformation() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "asset/DeviceContractInformations"
-	var o models.AssetDeviceContractInformation
+	var o = models.NewAssetDeviceContractInformationWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("contract_status"); ok {
 		x := (v.(string))
-		o.ContractStatus = x
+		o.SetContractStatus(x)
 	}
 	if v, ok := d.GetOk("covered_product_line_end_date"); ok {
 		x := (v.(string))
-		o.CoveredProductLineEndDate = x
+		o.SetCoveredProductLineEndDate(x)
 	}
 	if v, ok := d.GetOk("device_id"); ok {
 		x := (v.(string))
-		o.DeviceID = x
+		o.SetDeviceId(x)
 	}
 	if v, ok := d.GetOk("device_type"); ok {
 		x := (v.(string))
-		o.DeviceType = x
+		o.SetDeviceType(x)
 	}
 	if v, ok := d.GetOk("is_valid"); ok {
 		x := (v.(bool))
-		o.IsValid = &x
+		o.SetIsValid(x)
 	}
 	if v, ok := d.GetOk("item_type"); ok {
 		x := (v.(string))
-		o.ItemType = x
+		o.SetItemType(x)
 	}
 	if v, ok := d.GetOk("maintenance_purchase_order_number"); ok {
 		x := (v.(string))
-		o.MaintenancePurchaseOrderNumber = x
+		o.SetMaintenancePurchaseOrderNumber(x)
 	}
 	if v, ok := d.GetOk("maintenance_sales_order_number"); ok {
 		x := (v.(string))
-		o.MaintenanceSalesOrderNumber = x
+		o.SetMaintenanceSalesOrderNumber(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("platform_type"); ok {
 		x := (v.(string))
-		o.PlatformType = x
+		o.SetPlatformType(x)
 	}
 	if v, ok := d.GetOk("purchase_order_number"); ok {
 		x := (v.(string))
-		o.PurchaseOrderNumber = x
+		o.SetPurchaseOrderNumber(x)
 	}
 	if v, ok := d.GetOk("sales_order_number"); ok {
 		x := (v.(string))
-		o.SalesOrderNumber = x
+		o.SetSalesOrderNumber(x)
 	}
 	if v, ok := d.GetOk("service_description"); ok {
 		x := (v.(string))
-		o.ServiceDescription = x
+		o.SetServiceDescription(x)
 	}
 	if v, ok := d.GetOk("service_end_date"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ServiceEndDate = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetServiceEndDate(x)
 	}
 	if v, ok := d.GetOk("service_level"); ok {
 		x := (v.(string))
-		o.ServiceLevel = x
+		o.SetServiceLevel(x)
 	}
 	if v, ok := d.GetOk("service_sku"); ok {
 		x := (v.(string))
-		o.ServiceSku = x
+		o.SetServiceSku(x)
 	}
 	if v, ok := d.GetOk("service_start_date"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ServiceStartDate = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetServiceStartDate(x)
 	}
 	if v, ok := d.GetOk("state_contract"); ok {
 		x := (v.(string))
-		o.StateContract = &x
+		o.SetStateContract(x)
 	}
 	if v, ok := d.GetOk("warranty_end_date"); ok {
 		x := (v.(string))
-		o.WarrantyEndDate = x
+		o.SetWarrantyEndDate(x)
 	}
 	if v, ok := d.GetOk("warranty_type"); ok {
 		x := (v.(string))
-		o.WarrantyType = x
+		o.SetWarrantyType(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.AssetApi.GetAssetDeviceContractInformationList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.AssetDeviceContractInformationList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to AssetDeviceContractInformation: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -918,112 +835,111 @@ func dataSourceAssetDeviceContractInformationRead(d *schema.ResourceData, meta i
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.AssetDeviceContractInformation
+			var s = models.NewAssetDeviceContractInformationWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-
-			if err := d.Set("contract", flattenMapAssetContractInformation(s.Contract, d)); err != nil {
-				return err
-			}
-			if err := d.Set("contract_status", (s.ContractStatus)); err != nil {
-				return err
-			}
-			if err := d.Set("covered_product_line_end_date", (s.CoveredProductLineEndDate)); err != nil {
-				return err
-			}
-			if err := d.Set("device_id", (s.DeviceID)); err != nil {
-				return err
-			}
-			if err := d.Set("device_type", (s.DeviceType)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("end_customer", flattenMapAssetCustomerInformation(s.EndCustomer, d)); err != nil {
-				return err
+			if err := d.Set("contract", flattenMapAssetContractInformation(s.GetContract(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Contract: %+v", err)
+			}
+			if err := d.Set("contract_status", (s.GetContractStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property ContractStatus: %+v", err)
+			}
+			if err := d.Set("covered_product_line_end_date", (s.GetCoveredProductLineEndDate())); err != nil {
+				return fmt.Errorf("error occurred while setting property CoveredProductLineEndDate: %+v", err)
+			}
+			if err := d.Set("device_id", (s.GetDeviceId())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceId: %+v", err)
+			}
+			if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 			}
 
-			if err := d.Set("end_user_global_ultimate", flattenMapAssetGlobalUltimate(s.EndUserGlobalUltimate, d)); err != nil {
-				return err
-			}
-			if err := d.Set("is_valid", (s.IsValid)); err != nil {
-				return err
-			}
-			if err := d.Set("item_type", (s.ItemType)); err != nil {
-				return err
-			}
-			if err := d.Set("maintenance_purchase_order_number", (s.MaintenancePurchaseOrderNumber)); err != nil {
-				return err
-			}
-			if err := d.Set("maintenance_sales_order_number", (s.MaintenanceSalesOrderNumber)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("end_customer", flattenMapAssetCustomerInformation(s.GetEndCustomer(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property EndCustomer: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("end_user_global_ultimate", flattenMapAssetGlobalUltimate(s.GetEndUserGlobalUltimate(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property EndUserGlobalUltimate: %+v", err)
 			}
-			if err := d.Set("platform_type", (s.PlatformType)); err != nil {
-				return err
+			if err := d.Set("is_valid", (s.GetIsValid())); err != nil {
+				return fmt.Errorf("error occurred while setting property IsValid: %+v", err)
 			}
-
-			if err := d.Set("product", flattenMapAssetProductInformation(s.Product, d)); err != nil {
-				return err
+			if err := d.Set("item_type", (s.GetItemType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ItemType: %+v", err)
 			}
-			if err := d.Set("purchase_order_number", (s.PurchaseOrderNumber)); err != nil {
-				return err
+			if err := d.Set("maintenance_purchase_order_number", (s.GetMaintenancePurchaseOrderNumber())); err != nil {
+				return fmt.Errorf("error occurred while setting property MaintenancePurchaseOrderNumber: %+v", err)
 			}
-
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("maintenance_sales_order_number", (s.GetMaintenanceSalesOrderNumber())); err != nil {
+				return fmt.Errorf("error occurred while setting property MaintenanceSalesOrderNumber: %+v", err)
 			}
-
-			if err := d.Set("reseller_global_ultimate", flattenMapAssetGlobalUltimate(s.ResellerGlobalUltimate, d)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("sales_order_number", (s.SalesOrderNumber)); err != nil {
-				return err
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("service_description", (s.ServiceDescription)); err != nil {
-				return err
+			if err := d.Set("platform_type", (s.GetPlatformType())); err != nil {
+				return fmt.Errorf("error occurred while setting property PlatformType: %+v", err)
 			}
 
-			if err := d.Set("service_end_date", (s.ServiceEndDate).String()); err != nil {
-				return err
+			if err := d.Set("product", flattenMapAssetProductInformation(s.GetProduct(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Product: %+v", err)
 			}
-			if err := d.Set("service_level", (s.ServiceLevel)); err != nil {
-				return err
-			}
-			if err := d.Set("service_sku", (s.ServiceSku)); err != nil {
-				return err
+			if err := d.Set("purchase_order_number", (s.GetPurchaseOrderNumber())); err != nil {
+				return fmt.Errorf("error occurred while setting property PurchaseOrderNumber: %+v", err)
 			}
 
-			if err := d.Set("service_start_date", (s.ServiceStartDate).String()); err != nil {
-				return err
-			}
-			if err := d.Set("state_contract", (s.StateContract)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("reseller_global_ultimate", flattenMapAssetGlobalUltimate(s.GetResellerGlobalUltimate(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ResellerGlobalUltimate: %+v", err)
 			}
-			if err := d.Set("warranty_end_date", (s.WarrantyEndDate)); err != nil {
-				return err
+			if err := d.Set("sales_order_number", (s.GetSalesOrderNumber())); err != nil {
+				return fmt.Errorf("error occurred while setting property SalesOrderNumber: %+v", err)
 			}
-			if err := d.Set("warranty_type", (s.WarrantyType)); err != nil {
-				return err
+			if err := d.Set("service_description", (s.GetServiceDescription())); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceDescription: %+v", err)
 			}
-			d.SetId(s.Moid)
+
+			if err := d.Set("service_end_date", (s.GetServiceEndDate()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceEndDate: %+v", err)
+			}
+			if err := d.Set("service_level", (s.GetServiceLevel())); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceLevel: %+v", err)
+			}
+			if err := d.Set("service_sku", (s.GetServiceSku())); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceSku: %+v", err)
+			}
+
+			if err := d.Set("service_start_date", (s.GetServiceStartDate()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property ServiceStartDate: %+v", err)
+			}
+			if err := d.Set("state_contract", (s.GetStateContract())); err != nil {
+				return fmt.Errorf("error occurred while setting property StateContract: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("warranty_end_date", (s.GetWarrantyEndDate())); err != nil {
+				return fmt.Errorf("error occurred while setting property WarrantyEndDate: %+v", err)
+			}
+			if err := d.Set("warranty_type", (s.GetWarrantyType())); err != nil {
+				return fmt.Errorf("error occurred while setting property WarrantyType: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

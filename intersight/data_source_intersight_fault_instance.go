@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,14 +15,16 @@ func dataSourceFaultInstance() *schema.Resource {
 		Read: dataSourceFaultInstanceRead,
 		Schema: map[string]*schema.Schema{
 			"acknowledged": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The user acknowledgement state of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"affected_dn": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The Distinguished Name of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"affected_mo_id": {
 				Description: "Managed object Id which was affected.",
@@ -37,14 +39,16 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"ancestor_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Object Id of the parent of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"ancestor_mo_type": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Object type of the parent of the Managed object which was affected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -53,31 +57,69 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"code": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Numerical fault code of the fault found.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"creation_time": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The time of creation of the fault instance.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"description": {
-				Description: "Short summary of the fault found.",
+				Description: "Detailed message of the fault.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"dn": {
 				Description: "The Distinguished Name unambiguously identifies an object in the system.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"last_transition_time": {
 				Description: "Last transition time of the fault.",
@@ -104,51 +146,31 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"original_severity": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
+				Description: "Current Severity of the fault found.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"previous_severity": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The Severity of the fault prior to user update.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -156,7 +178,7 @@ func dataSourceFaultInstance() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -177,9 +199,10 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"rule": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The rule that is responsible for generation of the fault.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"severity": {
 				Description: "Severity of the fault found.",
@@ -188,32 +211,14 @@ func dataSourceFaultInstance() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -222,113 +227,120 @@ func dataSourceFaultInstance() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceFaultInstanceRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "fault/Instances"
-	var o models.FaultInstance
+	var o = models.NewFaultInstanceWithDefaults()
 	if v, ok := d.GetOk("acknowledged"); ok {
 		x := (v.(string))
-		o.Acknowledged = x
+		o.SetAcknowledged(x)
 	}
 	if v, ok := d.GetOk("affected_dn"); ok {
 		x := (v.(string))
-		o.AffectedDn = x
+		o.SetAffectedDn(x)
 	}
 	if v, ok := d.GetOk("affected_mo_id"); ok {
 		x := (v.(string))
-		o.AffectedMoID = x
+		o.SetAffectedMoId(x)
 	}
 	if v, ok := d.GetOk("affected_mo_type"); ok {
 		x := (v.(string))
-		o.AffectedMoType = x
+		o.SetAffectedMoType(x)
 	}
 	if v, ok := d.GetOk("ancestor_mo_id"); ok {
 		x := (v.(string))
-		o.AncestorMoID = x
+		o.SetAncestorMoId(x)
 	}
 	if v, ok := d.GetOk("ancestor_mo_type"); ok {
 		x := (v.(string))
-		o.AncestorMoType = x
+		o.SetAncestorMoType(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("code"); ok {
 		x := (v.(string))
-		o.Code = x
+		o.SetCode(x)
 	}
 	if v, ok := d.GetOk("creation_time"); ok {
 		x := (v.(string))
-		o.CreationTime = x
+		o.SetCreationTime(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("last_transition_time"); ok {
 		x := (v.(string))
-		o.LastTransitionTime = x
+		o.SetLastTransitionTime(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("num_occurrences"); ok {
 		x := int64(v.(int))
-		o.NumOccurrences = x
+		o.SetNumOccurrences(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("original_severity"); ok {
 		x := (v.(string))
-		o.OriginalSeverity = x
+		o.SetOriginalSeverity(x)
 	}
 	if v, ok := d.GetOk("previous_severity"); ok {
 		x := (v.(string))
-		o.PreviousSeverity = x
+		o.SetPreviousSeverity(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("rule"); ok {
 		x := (v.(string))
-		o.Rule = x
+		o.SetRule(x)
 	}
 	if v, ok := d.GetOk("severity"); ok {
 		x := (v.(string))
-		o.Severity = x
+		o.SetSeverity(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.FaultApi.GetFaultInstanceList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.FaultInstanceList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to FaultInstance: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -336,87 +348,90 @@ func dataSourceFaultInstanceRead(d *schema.ResourceData, meta interface{}) error
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.FaultInstance
+			var s = models.NewFaultInstanceWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("acknowledged", (s.Acknowledged)); err != nil {
-				return err
+			if err := d.Set("acknowledged", (s.GetAcknowledged())); err != nil {
+				return fmt.Errorf("error occurred while setting property Acknowledged: %+v", err)
 			}
-			if err := d.Set("affected_dn", (s.AffectedDn)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("affected_mo_id", (s.AffectedMoID)); err != nil {
-				return err
+			if err := d.Set("affected_dn", (s.GetAffectedDn())); err != nil {
+				return fmt.Errorf("error occurred while setting property AffectedDn: %+v", err)
 			}
-			if err := d.Set("affected_mo_type", (s.AffectedMoType)); err != nil {
-				return err
+			if err := d.Set("affected_mo_id", (s.GetAffectedMoId())); err != nil {
+				return fmt.Errorf("error occurred while setting property AffectedMoId: %+v", err)
 			}
-			if err := d.Set("ancestor_mo_id", (s.AncestorMoID)); err != nil {
-				return err
+			if err := d.Set("affected_mo_type", (s.GetAffectedMoType())); err != nil {
+				return fmt.Errorf("error occurred while setting property AffectedMoType: %+v", err)
 			}
-			if err := d.Set("ancestor_mo_type", (s.AncestorMoType)); err != nil {
-				return err
+			if err := d.Set("ancestor_mo_id", (s.GetAncestorMoId())); err != nil {
+				return fmt.Errorf("error occurred while setting property AncestorMoId: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("ancestor_mo_type", (s.GetAncestorMoType())); err != nil {
+				return fmt.Errorf("error occurred while setting property AncestorMoType: %+v", err)
 			}
-			if err := d.Set("code", (s.Code)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("creation_time", (s.CreationTime)); err != nil {
-				return err
+			if err := d.Set("code", (s.GetCode())); err != nil {
+				return fmt.Errorf("error occurred while setting property Code: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+			if err := d.Set("creation_time", (s.GetCreationTime())); err != nil {
+				return fmt.Errorf("error occurred while setting property CreationTime: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
-				return err
+			if err := d.Set("description", (s.GetDescription())); err != nil {
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("last_transition_time", (s.LastTransitionTime)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("num_occurrences", (s.NumOccurrences)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("original_severity", (s.OriginalSeverity)); err != nil {
-				return err
+			if err := d.Set("dn", (s.GetDn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("previous_severity", (s.PreviousSeverity)); err != nil {
-				return err
+			if err := d.Set("last_transition_time", (s.GetLastTransitionTime())); err != nil {
+				return fmt.Errorf("error occurred while setting property LastTransitionTime: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("num_occurrences", (s.GetNumOccurrences())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumOccurrences: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("original_severity", (s.GetOriginalSeverity())); err != nil {
+				return fmt.Errorf("error occurred while setting property OriginalSeverity: %+v", err)
+			}
+			if err := d.Set("previous_severity", (s.GetPreviousSeverity())); err != nil {
+				return fmt.Errorf("error occurred while setting property PreviousSeverity: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+			if err := d.Set("rn", (s.GetRn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("rule", (s.Rule)); err != nil {
-				return err
+			if err := d.Set("rule", (s.GetRule())); err != nil {
+				return fmt.Errorf("error occurred while setting property Rule: %+v", err)
 			}
-			if err := d.Set("severity", (s.Severity)); err != nil {
-				return err
+			if err := d.Set("severity", (s.GetSeverity())); err != nil {
+				return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

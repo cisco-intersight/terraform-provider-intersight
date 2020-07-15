@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -20,6 +20,52 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"class_id": {
+				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+			"cluster": {
+				Description: "A reference to a virtualizationVmwareCluster resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
+			"connection_state": {
+				Description: "Indicates if the host is connected to the vCenter. Values are connected, not connected.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"cpu_info": {
 				Description: "Details about the CPUs installed on this host are represented here.",
 				Type:        schema.TypeList,
@@ -27,11 +73,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -73,54 +114,20 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"class_id": {
-				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    true,
-			},
-			"cluster": {
-				Description: "Identifies the cluster associated with the host entity. It is optional and depends on the platform.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				Computed: true,
-			},
-			"connection_state": {
-				Description: "Indicates if the host is connected to the vCenter. Values are connected, not connected.",
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
 			"datacenter": {
-				Description: "Every entity is grouped under the datacenter object and managed as a group.",
+				Description: "A reference to a virtualizationVmwareDatacenter resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -128,7 +135,7 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -143,12 +150,18 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				},
 			},
 			"datastores": {
-				Description: "A collection of references to the [virtualization.VmwareDatastore](mo://virtualization.VmwareDatastore) Managed Object.\nWhen this managed object is deleted, the referenced [virtualization.VmwareDatastore](mo://virtualization.VmwareDatastore) MOs unset their reference to this deleted MO.",
+				Description: "An array of relationships to virtualizationVmwareDatastore resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -156,7 +169,7 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -177,10 +190,11 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"cpu_cores": {
 							Description: "The number of CPU cores on this hardware platform.",
@@ -191,12 +205,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Description: "Speed of CPU in MHz, as reported by the hardware platform.",
 							Type:        schema.TypeInt,
 							Optional:    true,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"memory_size": {
 							Description: "The amount of memory allocated (bytes) to this hardware platform.",
@@ -240,11 +248,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"capacity": {
 							Description: "The total memory capacity of the entity in bytes.",
 							Type:        schema.TypeInt,
@@ -303,34 +306,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"processor_capacity": {
 				Description: "The capacity and usage information for CPU power on this host.",
 				Type:        schema.TypeList,
@@ -338,11 +313,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"capacity": {
 							Description: "Total capacity of the entity in MHz.",
 							Type:        schema.TypeInt,
@@ -381,11 +351,6 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -413,7 +378,7 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Hypervisor version running on the system.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -423,12 +388,18 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Computed: true,
 			},
 			"registered_device": {
-				Description: "Every inventory object comes from a device endpoint. The identity of that device is captured here so that any entity that needs to send a request to that device can use the inventory object to access it.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -436,7 +407,7 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -458,21 +429,16 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"cpu_consumed": {
-							Description: "The amount of CPU consumed in Hz.",
-							Type:        schema.TypeInt,
-							Optional:    true,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"cpu_consumed": {
+							Description: "The amount of CPU consumed in Hz.",
+							Type:        schema.TypeInt,
+							Optional:    true,
 						},
 						"memory_consumed": {
 							Description: "Memory consumed by this host in bytes.",
@@ -505,32 +471,14 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -539,15 +487,14 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
-			},
-			"uuid": {
-				Description: "Universally unique identity of this host (example b3d4483b-5560-9342-8309-b486c9236610). Internally generated.",
-				Type:        schema.TypeString,
-				Optional:    true,
 			},
 			"up_time": {
 				Description: "The uptime of the host, stored as Duration (from w3c).",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"uuid": {
+				Description: "Universally unique identity of this host (example b3d4483b-5560-9342-8309-b486c9236610). Internally generated.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -564,100 +511,108 @@ func dataSourceVirtualizationVmwareHost() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceVirtualizationVmwareHostRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "virtualization/VmwareHosts"
-	var o models.VirtualizationVmwareHost
+	var o = models.NewVirtualizationVmwareHostWithDefaults()
 	if v, ok := d.GetOk("boot_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.BootTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetBootTime(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("connection_state"); ok {
 		x := (v.(string))
-		o.ConnectionState = x
+		o.SetConnectionState(x)
 	}
 	if v, ok := d.GetOk("hw_power_state"); ok {
 		x := (v.(string))
-		o.HwPowerState = &x
+		o.SetHwPowerState(x)
 	}
 	if v, ok := d.GetOk("hypervisor_type"); ok {
 		x := (v.(string))
-		o.HypervisorType = &x
+		o.SetHypervisorType(x)
 	}
 	if v, ok := d.GetOk("identity"); ok {
 		x := (v.(string))
-		o.Identity = x
+		o.SetIdentity(x)
 	}
 	if v, ok := d.GetOk("maintenance_mode"); ok {
 		x := (v.(bool))
-		o.MaintenanceMode = &x
+		o.SetMaintenanceMode(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("network_adapter_count"); ok {
 		x := int64(v.(int))
-		o.NetworkAdapterCount = x
+		o.SetNetworkAdapterCount(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = &x
+		o.SetStatus(x)
 	}
 	if v, ok := d.GetOk("storage_adapter_count"); ok {
 		x := int64(v.(int))
-		o.StorageAdapterCount = x
-	}
-	if v, ok := d.GetOk("uuid"); ok {
-		x := (v.(string))
-		o.UUID = x
+		o.SetStorageAdapterCount(x)
 	}
 	if v, ok := d.GetOk("up_time"); ok {
 		x := (v.(string))
-		o.UpTime = x
+		o.SetUpTime(x)
+	}
+	if v, ok := d.GetOk("uuid"); ok {
+		x := (v.(string))
+		o.SetUuid(x)
 	}
 	if v, ok := d.GetOk("vcenter_host_id"); ok {
 		x := (v.(string))
-		o.VcenterHostID = x
+		o.SetVcenterHostId(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.VirtualizationApi.GetVirtualizationVmwareHostList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.VirtualizationVmwareHostList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to VirtualizationVmwareHost: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -665,118 +620,117 @@ func dataSourceVirtualizationVmwareHostRead(d *schema.ResourceData, meta interfa
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.VirtualizationVmwareHost
+			var s = models.NewVirtualizationVmwareHostWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
+			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
 
-			if err := d.Set("boot_time", (s.BootTime).String()); err != nil {
-				return err
+			if err := d.Set("boot_time", (s.GetBootTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property BootTime: %+v", err)
+			}
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("cpu_info", flattenMapVirtualizationCPUInfo(s.CPUInfo, d)); err != nil {
-				return err
+			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRelationship(s.GetCluster(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Cluster: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
-			}
-
-			if err := d.Set("cluster", flattenMapVirtualizationVmwareClusterRef(s.Cluster, d)); err != nil {
-				return err
-			}
-			if err := d.Set("connection_state", (s.ConnectionState)); err != nil {
-				return err
+			if err := d.Set("connection_state", (s.GetConnectionState())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConnectionState: %+v", err)
 			}
 
-			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRef(s.Datacenter, d)); err != nil {
-				return err
+			if err := d.Set("cpu_info", flattenMapVirtualizationCpuInfo(s.GetCpuInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property CpuInfo: %+v", err)
 			}
 
-			if err := d.Set("datastores", flattenListVirtualizationVmwareDatastoreRef(s.Datastores, d)); err != nil {
-				return err
+			if err := d.Set("datacenter", flattenMapVirtualizationVmwareDatacenterRelationship(s.GetDatacenter(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Datacenter: %+v", err)
 			}
 
-			if err := d.Set("hardware_info", flattenMapInfraHardwareInfo(s.HardwareInfo, d)); err != nil {
-				return err
-			}
-			if err := d.Set("hw_power_state", (s.HwPowerState)); err != nil {
-				return err
-			}
-			if err := d.Set("hypervisor_type", (s.HypervisorType)); err != nil {
-				return err
-			}
-			if err := d.Set("identity", (s.Identity)); err != nil {
-				return err
-			}
-			if err := d.Set("maintenance_mode", (s.MaintenanceMode)); err != nil {
-				return err
+			if err := d.Set("datastores", flattenListVirtualizationVmwareDatastoreRelationship(s.GetDatastores(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Datastores: %+v", err)
 			}
 
-			if err := d.Set("memory_capacity", flattenMapVirtualizationMemoryCapacity(s.MemoryCapacity, d)); err != nil {
-				return err
+			if err := d.Set("hardware_info", flattenMapInfraHardwareInfo(s.GetHardwareInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property HardwareInfo: %+v", err)
 			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
+			if err := d.Set("hw_power_state", (s.GetHwPowerState())); err != nil {
+				return fmt.Errorf("error occurred while setting property HwPowerState: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+			if err := d.Set("hypervisor_type", (s.GetHypervisorType())); err != nil {
+				return fmt.Errorf("error occurred while setting property HypervisorType: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+			if err := d.Set("identity", (s.GetIdentity())); err != nil {
+				return fmt.Errorf("error occurred while setting property Identity: %+v", err)
 			}
-			if err := d.Set("network_adapter_count", (s.NetworkAdapterCount)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("maintenance_mode", (s.GetMaintenanceMode())); err != nil {
+				return fmt.Errorf("error occurred while setting property MaintenanceMode: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("memory_capacity", flattenMapVirtualizationMemoryCapacity(s.GetMemoryCapacity(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property MemoryCapacity: %+v", err)
+			}
+			if err := d.Set("model", (s.GetModel())); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("name", (s.GetName())); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
+			}
+			if err := d.Set("network_adapter_count", (s.GetNetworkAdapterCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property NetworkAdapterCount: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("processor_capacity", flattenMapVirtualizationComputeCapacity(s.ProcessorCapacity, d)); err != nil {
-				return err
+			if err := d.Set("processor_capacity", flattenMapVirtualizationComputeCapacity(s.GetProcessorCapacity(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ProcessorCapacity: %+v", err)
 			}
 
-			if err := d.Set("product_info", flattenMapVirtualizationProductInfo(s.ProductInfo, d)); err != nil {
-				return err
+			if err := d.Set("product_info", flattenMapVirtualizationProductInfo(s.GetProductInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ProductInfo: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
 
-			if err := d.Set("resource_consumed", flattenMapVirtualizationVmwareResourceConsumption(s.ResourceConsumed, d)); err != nil {
-				return err
+			if err := d.Set("resource_consumed", flattenMapVirtualizationVmwareResourceConsumption(s.GetResourceConsumed(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ResourceConsumed: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+			if err := d.Set("status", (s.GetStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("storage_adapter_count", (s.StorageAdapterCount)); err != nil {
-				return err
+			if err := d.Set("storage_adapter_count", (s.GetStorageAdapterCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property StorageAdapterCount: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("uuid", (s.UUID)); err != nil {
-				return err
+			if err := d.Set("up_time", (s.GetUpTime())); err != nil {
+				return fmt.Errorf("error occurred while setting property UpTime: %+v", err)
 			}
-			if err := d.Set("up_time", (s.UpTime)); err != nil {
-				return err
+			if err := d.Set("uuid", (s.GetUuid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Uuid: %+v", err)
 			}
-			if err := d.Set("vcenter_host_id", (s.VcenterHostID)); err != nil {
-				return err
+			if err := d.Set("vcenter_host_id", (s.GetVcenterHostId())); err != nil {
+				return fmt.Errorf("error occurred while setting property VcenterHostId: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -26,11 +26,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -65,19 +60,14 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
-							Description: "The number of completion queue resources to allocate. In general, the number of completion queue resources you should allocate is equal to the number of transmit queue resources plus the number of receive queue resources.",
+						"nr_count": {
+							Description: "The number of completion queue resources to allocate. In general, the number of completion queue resources to allocate is equal to the number of transmit queue resources plus the number of receive queue resources.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
@@ -102,6 +92,11 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"interrupt_scaling": {
+				Description: "Enables Interrupt Scaling on the interface.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
 			"interrupt_settings": {
 				Description: "Interrupt Settings for the virtual ethernet interface.",
 				Type:        schema.TypeList,
@@ -109,11 +104,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -126,17 +116,17 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"coalescing_type": {
-							Description: "Interrupt Coalescing Type. This can be one of the following:- MIN  - The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE - The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.",
+							Description: "Interrupt Coalescing Type. This can be one of the following:- MIN  — The system waits for the time specified in the Coalescing Time field before sending another interrupt event IDLE — The system does not send an interrupt until there is a period of no activity lasting as least as long as the time specified in the Coalescing Time field.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of interrupt resources to allocate. Typical value is be equal to the number of completion queue resources.",
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
 						"mode": {
-							Description: "Preferred driver interrupt mode. This can be one of the following:- MSIx - Message Signaled Interrupts (MSI) with the optional extension. MSI  - MSI only. INTx - PCI INTx interrupts. MSIx is the recommended option.",
+							Description: "Preferred driver interrupt mode. This can be one of the following:- MSIx — Message Signaled Interrupts (MSI) with the optional extension. MSI   — MSI only. INTx  — PCI INTx interrupts. MSIx is the recommended option.",
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
@@ -168,11 +158,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -201,12 +186,18 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -214,7 +205,7 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -229,34 +220,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"roce_settings": {
 				Description: "Settings for RDMA over Converged Ethernet.",
 				Type:        schema.TypeList,
@@ -264,16 +227,16 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"class_of_service": {
+							Description: "The Class of Service for RoCE on this virtual interface.",
+							Type:        schema.TypeInt,
+							Optional:    true,
 						},
 						"enabled": {
 							Description: "If enabled sets RDMA over Converged Ethernet (RoCE) on this virtual interface.",
@@ -301,6 +264,74 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 							Type:        schema.TypeInt,
 							Optional:    true,
 						},
+						"nr_version": {
+							Description: "Configures RDMA over Converged Ethernet (RoCE) version on the virtual interface. Only RoceV1 is supported onn Cisco VIC models 13xx and only RoceV2 is supported on models 14xx.",
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+					},
+				},
+				Computed: true,
+			},
+			"rss_hash_settings": {
+				Description: "Receive Side Scaling allows the incoming traffic to be spread across multiple CPU cores.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"ipv4_hash": {
+							Description: "When enabled, the IPv4 address is used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"ipv6_ext_hash": {
+							Description: "When enabled, the IPv6 extensions are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"ipv6_hash": {
+							Description: "When enabled, the IPv6 address is used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"tcp_ipv4_hash": {
+							Description: "When enabled, both the IPv4 address and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"tcp_ipv6_ext_hash": {
+							Description: "When enabled, both the IPv6 extensions and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"tcp_ipv6_hash": {
+							Description: "When enabled, both the IPv6 address and TCP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"udp_ipv4_hash": {
+							Description: "When enabled, both the IPv4 address and UDP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
+						"udp_ipv6_hash": {
+							Description: "When enabled, both the IPv6 address and UDP port number are used for traffic distribution.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+						},
 					},
 				},
 				Computed: true,
@@ -317,18 +348,13 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -348,6 +374,24 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"tags": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"key": {
+							Description: "The string representation of a tag key.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"value": {
+							Description: "The string representation of a tag value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+					},
+				},
+			},
 			"tcp_offload_settings": {
 				Description: "The TCP offload settings decide whether to offload the TCP related network functions from the CPU to the network hardware or not.",
 				Type:        schema.TypeList,
@@ -355,11 +399,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -396,43 +435,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"key": {
-							Description: "The string representation of a tag key.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"value": {
-							Description: "The string representation of a tag value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
-				Computed: true,
-			},
 			"tx_queue_settings": {
 				Description: "Transmit Queue resource settings.",
 				Type:        schema.TypeList,
@@ -440,18 +442,13 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
 						},
-						"count": {
+						"nr_count": {
 							Description: "The number of queue resources to allocate.",
 							Type:        schema.TypeInt,
 							Optional:    true,
@@ -471,6 +468,11 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"uplink_failback_timeout": {
+				Description: "Uplink Failback Timeout in seconds when uplink failover is enabled for a vNIC. After a vNIC has started using its secondary interface, this setting controls how long the primary interface must be available before the system resumes using the primary interface for the vNIC.",
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
 			"vxlan_settings": {
 				Description: "Virtual Extensible LAN Protocol Settings.",
 				Type:        schema.TypeList,
@@ -478,11 +480,6 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -507,52 +504,68 @@ func dataSourceVnicEthAdapterPolicy() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "vnic/EthAdapterPolicies"
-	var o models.VnicEthAdapterPolicy
+	var o = models.NewVnicEthAdapterPolicyWithDefaults()
 	if v, ok := d.GetOk("advanced_filter"); ok {
 		x := (v.(bool))
-		o.AdvancedFilter = &x
+		o.SetAdvancedFilter(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
+	}
+	if v, ok := d.GetOk("interrupt_scaling"); ok {
+		x := (v.(bool))
+		o.SetInterruptScaling(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("rss_settings"); ok {
 		x := (v.(bool))
-		o.RssSettings = &x
+		o.SetRssSettings(x)
+	}
+	if v, ok := d.GetOk("uplink_failback_timeout"); ok {
+		x := int64(v.(int))
+		o.SetUplinkFailbackTimeout(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.VnicApi.GetVnicEthAdapterPolicyList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.VnicEthAdapterPolicyList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to VnicEthAdapterPolicy: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -560,81 +573,90 @@ func dataSourceVnicEthAdapterPolicyRead(d *schema.ResourceData, meta interface{}
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.VnicEthAdapterPolicy
+			var s = models.NewVnicEthAdapterPolicyWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("advanced_filter", (s.AdvancedFilter)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-
-			if err := d.Set("arfs_settings", flattenMapVnicArfsSettings(s.ArfsSettings, d)); err != nil {
-				return err
-			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("advanced_filter", (s.GetAdvancedFilter())); err != nil {
+				return fmt.Errorf("error occurred while setting property AdvancedFilter: %+v", err)
 			}
 
-			if err := d.Set("completion_queue_settings", flattenMapVnicCompletionQueueSettings(s.CompletionQueueSettings, d)); err != nil {
-				return err
+			if err := d.Set("arfs_settings", flattenMapVnicArfsSettings(s.GetArfsSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ArfsSettings: %+v", err)
 			}
-			if err := d.Set("description", (s.Description)); err != nil {
-				return err
-			}
-
-			if err := d.Set("interrupt_settings", flattenMapVnicEthInterruptSettings(s.InterruptSettings, d)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("nvgre_settings", flattenMapVnicNvgreSettings(s.NvgreSettings, d)); err != nil {
-				return err
+			if err := d.Set("completion_queue_settings", flattenMapVnicCompletionQueueSettings(s.GetCompletionQueueSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property CompletionQueueSettings: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("description", (s.GetDescription())); err != nil {
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
-
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("interrupt_scaling", (s.GetInterruptScaling())); err != nil {
+				return fmt.Errorf("error occurred while setting property InterruptScaling: %+v", err)
 			}
 
-			if err := d.Set("roce_settings", flattenMapVnicRoceSettings(s.RoceSettings, d)); err != nil {
-				return err
+			if err := d.Set("interrupt_settings", flattenMapVnicEthInterruptSettings(s.GetInterruptSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InterruptSettings: %+v", err)
 			}
-			if err := d.Set("rss_settings", (s.RssSettings)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-
-			if err := d.Set("rx_queue_settings", flattenMapVnicEthRxQueueSettings(s.RxQueueSettings, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("tcp_offload_settings", flattenMapVnicTCPOffloadSettings(s.TCPOffloadSettings, d)); err != nil {
-				return err
+			if err := d.Set("name", (s.GetName())); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("nvgre_settings", flattenMapVnicNvgreSettings(s.GetNvgreSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property NvgreSettings: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("tx_queue_settings", flattenMapVnicEthTxQueueSettings(s.TxQueueSettings, d)); err != nil {
-				return err
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("vxlan_settings", flattenMapVnicVxlanSettings(s.VxlanSettings, d)); err != nil {
-				return err
+			if err := d.Set("roce_settings", flattenMapVnicRoceSettings(s.GetRoceSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RoceSettings: %+v", err)
 			}
-			d.SetId(s.Moid)
+
+			if err := d.Set("rss_hash_settings", flattenMapVnicRssHashSettings(s.GetRssHashSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RssHashSettings: %+v", err)
+			}
+			if err := d.Set("rss_settings", (s.GetRssSettings())); err != nil {
+				return fmt.Errorf("error occurred while setting property RssSettings: %+v", err)
+			}
+
+			if err := d.Set("rx_queue_settings", flattenMapVnicEthRxQueueSettings(s.GetRxQueueSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RxQueueSettings: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+
+			if err := d.Set("tcp_offload_settings", flattenMapVnicTcpOffloadSettings(s.GetTcpOffloadSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property TcpOffloadSettings: %+v", err)
+			}
+
+			if err := d.Set("tx_queue_settings", flattenMapVnicEthTxQueueSettings(s.GetTxQueueSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property TxQueueSettings: %+v", err)
+			}
+			if err := d.Set("uplink_failback_timeout", (s.GetUplinkFailbackTimeout())); err != nil {
+				return fmt.Errorf("error occurred while setting property UplinkFailbackTimeout: %+v", err)
+			}
+
+			if err := d.Set("vxlan_settings", flattenMapVnicVxlanSettings(s.GetVxlanSettings(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property VxlanSettings: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

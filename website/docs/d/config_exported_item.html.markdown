@@ -1,20 +1,21 @@
+
 ---
 layout: "intersight"
 page_title: "Intersight: intersight_config_exported_item"
-sidebar_current: "docs-intersight-data-source-configExportedItem"
+sidebar_current: "docs-intersight-data-source-config-exported-item"
 description: |-
 A single managed object that is being exported.
 ---
 
-# Data Source: intersight_config_exported_item
+# Data Source: intersight_config._exported_item
 A single managed object that is being exported.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
-* `class_id`:(string)"The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value."
-* `file_name`:(string)"Name of the file corresponding to item MO."
-* `moid`:(string)"The unique identifier of this Managed Object instance."
-* `name`:(string)"MO item identity (the moref corresponding to item) expressed as a string."
-* `object_type`:(string)"The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path."
-* `service_version`:(string)"Version of the service that owns the item MO."
-* `status`:(string)"Status of the item's export operation."
-* `status_message`:(string)"Progress or error message for the MO's export operation."
+* `class_id`:(string) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
+* `file_name`:(string) Name of the file corresponding to item MO. 
+* `moid`:(string) The unique identifier of this Managed Object instance. 
+* `name`:(string) MO item identity (the moref corresponding to item) expressed as a string. 
+* `object_type`:(string) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
+* `service_version`:(string) Version of the service that owns the item MO. 
+* `status`:(string) Status of the item's export operation. 
+* `status_message`:(string) Progress or error message for the MO's export operation. 

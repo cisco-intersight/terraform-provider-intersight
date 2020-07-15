@@ -2,11 +2,11 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -17,97 +17,9 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 		Update: resourceTamAdvisoryDefinitionUpdate,
 		Delete: resourceTamAdvisoryDefinitionDelete,
 		Schema: map[string]*schema.Schema{
-			"api_data_sources": {
-				Description: "An array of data sources that are used to provide data for queries used to identify an Intersight alert applicability.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"mo_type": {
-							Description: "Type of Intersight managed object used as data source.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"name": {
-							Description: "Name is used to unique identify and refer a given data source in an alert definition.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"queries": {
-							Description: "Optional set of Queries to filter the output for Api datasource. the queries are executed in the order specified.",
-							Type:        schema.TypeList,
-							Optional:    true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"additional_properties": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: SuppressDiffAdditionProps,
-									},
-									"class_id": {
-										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
-									},
-									"name": {
-										Description: "Name is used to unique identify and result of the given query which can be used by subsequent queries as input data source.",
-										Type:        schema.TypeString,
-										Optional:    true,
-									},
-									"object_type": {
-										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
-									},
-									"priority": {
-										Description: "An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.",
-										Type:        schema.TypeInt,
-										Optional:    true,
-									},
-									"query": {
-										Description: "A SparkSQL query to be used on a given data source.",
-										Type:        schema.TypeString,
-										Optional:    true,
-									},
-								},
-							},
-							ConfigMode: schema.SchemaConfigModeAttr,
-							Computed:   true,
-						},
-						"type": {
-							Description: "Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Default:     "nxos",
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-			},
 			"actions": {
-				Description: "An array of actions that are to be taken when a given managed object matches the criteria specified for being affected by an alert definition.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -133,9 +45,8 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"identifiers": {
-							Description: "Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.",
-							Type:        schema.TypeList,
-							Optional:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"additional_properties": {
@@ -188,9 +99,8 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Default:     "create",
 						},
 						"queries": {
-							Description: "Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.",
-							Type:        schema.TypeList,
-							Optional:    true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"additional_properties": {
@@ -241,6 +151,11 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"advisory_details": {
 				Description: "Additional details for the advisory definition. For e.g. if the definition corresponds to a security advisory, the details\nregarding CVE ids and CVSS score would be available here.",
 				Type:        schema.TypeList,
@@ -279,6 +194,91 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Description: "Cisco generated identifier for the published security advisory.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"api_data_sources": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"mo_type": {
+							Description: "Type of Intersight managed object used as data source.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": {
+							Description: "Name is used to unique identify and refer a given data source in an alert definition.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"queries": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
+									"class_id": {
+										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+									"name": {
+										Description: "Name is used to unique identify and result of the given query which can be used by subsequent queries as input data source.",
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"object_type": {
+										Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
+									},
+									"priority": {
+										Description: "An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection.",
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+									"query": {
+										Description: "A SparkSQL query to be used on a given data source.",
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+								},
+							},
+							ConfigMode: schema.SchemaConfigModeAttr,
+							Computed:   true,
+						},
+						"type": {
+							Description: "Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Default:     "nxos",
+						},
+					},
+				},
+				ConfigMode: schema.SchemaConfigModeAttr,
+				Computed:   true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -325,12 +325,23 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -338,7 +349,7 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -354,35 +365,6 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 				Computed:   true,
 				ForceNew:   true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"recommendation": {
 				Description: "Recommended action to resolve the security advisory.",
@@ -425,9 +407,8 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Default:     "ready",
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -435,22 +416,10 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -459,8 +428,6 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"type": {
 				Description: "The type (field notice, security advisory etc.) of Intersight advisory.",
@@ -468,7 +435,7 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 				Optional:    true,
 				Default:     "securityAdvisory",
 			},
-			"version": {
+			"nr_version": {
 				Description: "Cisco assigned advisory version after latest revision.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -481,590 +448,487 @@ func resourceTamAdvisoryDefinition() *schema.Resource {
 		},
 	}
 }
+
 func resourceTamAdvisoryDefinitionCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.TamAdvisoryDefinition
-	if v, ok := d.GetOk("api_data_sources"); ok {
-		x := make([]*models.TamAPIDataSource, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.TamAPIDataSource{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["mo_type"]; ok {
-					{
-						x := (v.(string))
-						o.MoType = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["queries"]; ok {
-					{
-						x := make([]*models.TamQueryEntry, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamQueryEntry{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamQueryEntryAO1P1.TamQueryEntryAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["priority"]; ok {
-									{
-										x := int64(v.(int))
-										o.Priority = x
-									}
-								}
-								if v, ok := l["query"]; ok {
-									{
-										x := (v.(string))
-										o.Query = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Queries = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.APIDataSources = x
-
-	}
-
+	var o = models.NewTamAdvisoryDefinitionWithDefaults()
 	if v, ok := d.GetOk("actions"); ok {
-		x := make([]*models.TamAction, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.TamAction{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.TamActionAO1P1.TamActionAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["affected_object_type"]; ok {
-					{
-						x := (v.(string))
-						o.AffectedObjectType = x
-					}
-				}
-				if v, ok := l["alert_type"]; ok {
-					{
-						x := (v.(string))
-						o.AlertType = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["identifiers"]; ok {
-					{
-						x := make([]*models.TamIdentifiers, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamIdentifiers{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamIdentifiersAO1P1.TamIdentifiersAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["value"]; ok {
-									{
-										x := (v.(string))
-										o.Value = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Identifiers = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["operation_type"]; ok {
-					{
-						x := (v.(string))
-						o.OperationType = &x
-					}
-				}
-				if v, ok := l["queries"]; ok {
-					{
-						x := make([]*models.TamQueryEntry, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamQueryEntry{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamQueryEntryAO1P1.TamQueryEntryAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["priority"]; ok {
-									{
-										x := int64(v.(int))
-										o.Priority = x
-									}
-								}
-								if v, ok := l["query"]; ok {
-									{
-										x := (v.(string))
-										o.Query = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Queries = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Actions = x
-
-	}
-
-	if v, ok := d.GetOk("advisory_details"); ok {
-		p := models.TamBaseAdvisoryDetails{}
-		if len(v.([]interface{})) > 0 {
-			o := models.TamBaseAdvisoryDetails{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		x := make([]models.TamAction, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewTamActionWithDefaults()
+			l := s[i].(map[string]interface{})
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.TamBaseAdvisoryDetailsAO1P1.TamBaseAdvisoryDetailsAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			if v, ok := l["affected_object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
+					o.SetAffectedObjectType(x)
 				}
 			}
-			if v, ok := l["description"]; ok {
+			if v, ok := l["alert_type"]; ok {
 				{
 					x := (v.(string))
-					o.Description = x
+					o.SetAlertType(x)
+				}
+			}
+			o.SetClassId("tam.Action")
+			if v, ok := l["identifiers"]; ok {
+				{
+					x := make([]models.TamIdentifiers, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamIdentifiersWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.Identifiers")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["value"]; ok {
+							{
+								x := (v.(string))
+								o.SetValue(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetIdentifiers(x)
+					}
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
-
-			p = o
+			if v, ok := l["operation_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetOperationType(x)
+				}
+			}
+			if v, ok := l["queries"]; ok {
+				{
+					x := make([]models.TamQueryEntry, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamQueryEntryWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.QueryEntry")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["priority"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetPriority(x)
+							}
+						}
+						if v, ok := l["query"]; ok {
+							{
+								x := (v.(string))
+								o.SetQuery(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.AdvisoryDetails = &x
+		if len(x) > 0 {
+			o.SetActions(x)
 		}
+	}
 
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
+	if v, ok := d.GetOk("advisory_details"); ok {
+		p := make([]models.TamBaseAdvisoryDetails, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewTamBaseAdvisoryDetailsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("tam.BaseAdvisoryDetails")
+			if v, ok := l["description"]; ok {
+				{
+					x := (v.(string))
+					o.SetDescription(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAdvisoryDetails(x)
+		}
 	}
 
 	if v, ok := d.GetOk("advisory_id"); ok {
 		x := (v.(string))
-		o.AdvisoryID = x
-
+		o.SetAdvisoryId(x)
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
-
-	if v, ok := d.GetOk("date_published"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.DatePublished = x
-
-	}
-
-	if v, ok := d.GetOk("date_updated"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.DateUpdated = x
-
-	}
-
-	if v, ok := d.GetOk("description"); ok {
-		x := (v.(string))
-		o.Description = x
-
-	}
-
-	if v, ok := d.GetOk("external_url"); ok {
-		x := (v.(string))
-		o.ExternalURL = x
-
-	}
-
-	if v, ok := d.GetOk("moid"); ok {
-		x := (v.(string))
-		o.Moid = x
-
-	}
-
-	if v, ok := d.GetOk("name"); ok {
-		x := (v.(string))
-		o.Name = x
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
+	if v, ok := d.GetOk("api_data_sources"); ok {
+		x := make([]models.TamApiDataSource, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewTamApiDataSourceWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("tam.ApiDataSource")
+			if v, ok := l["mo_type"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoType(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["queries"]; ok {
+				{
+					x := make([]models.TamQueryEntry, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamQueryEntryWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.QueryEntry")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["priority"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetPriority(x)
+							}
+						}
+						if v, ok := l["query"]; ok {
+							{
+								x := (v.(string))
+								o.SetQuery(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		if len(x) > 0 {
+			o.SetApiDataSources(x)
+		}
+	}
+
+	o.SetClassId("tam.AdvisoryDefinition")
+
+	if v, ok := d.GetOk("date_published"); ok {
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetDatePublished(x)
+	}
+
+	if v, ok := d.GetOk("date_updated"); ok {
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetDateUpdated(x)
+	}
+
+	if v, ok := d.GetOk("description"); ok {
+		x := (v.(string))
+		o.SetDescription(x)
+	}
+
+	if v, ok := d.GetOk("external_url"); ok {
+		x := (v.(string))
+		o.SetExternalUrl(x)
+	}
+
+	if v, ok := d.GetOk("moid"); ok {
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if v, ok := d.GetOk("name"); ok {
+		x := (v.(string))
+		o.SetName(x)
+	}
+
+	o.SetObjectType("tam.AdvisoryDefinition")
+
+	if v, ok := d.GetOk("organization"); ok {
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
 		}
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
 	}
 
 	if v, ok := d.GetOk("recommendation"); ok {
 		x := (v.(string))
-		o.Recommendation = x
-
+		o.SetRecommendation(x)
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-		p := models.TamSeverity{}
-		if len(v.([]interface{})) > 0 {
-			o := models.TamSeverity{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.TamSeverity, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewTamSeverityWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.AO1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("tam.Severity")
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Severity = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSeverity(x)
 		}
-
 	}
 
 	if v, ok := d.GetOk("state"); ok {
 		x := (v.(string))
-		o.State = &x
-
+		o.SetState(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = &x
-
+		o.SetType(x)
 	}
 
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
-		o.Version = x
-
+		o.SetVersion(x)
 	}
 
 	if v, ok := d.GetOk("workaround"); ok {
 		x := (v.(string))
-		o.Workaround = x
-
+		o.SetWorkaround(x)
 	}
 
-	url := "tam/AdvisoryDefinitions"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.TamApi.CreateTamAdvisoryDefinition(conn.ctx).TamAdvisoryDefinition(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceTamAdvisoryDefinitionRead(d, meta)
 }
 
@@ -1073,691 +937,601 @@ func resourceTamAdvisoryDefinitionRead(d *schema.ResourceData, meta interface{})
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "tam/AdvisoryDefinitions" + "/" + d.Id()
+	r := conn.ApiClient.TamApi.GetTamAdvisoryDefinitionByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.TamAdvisoryDefinition
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("api_data_sources", flattenListTamAPIDataSource(s.APIDataSources, d)); err != nil {
-		return err
+	if err := d.Set("actions", flattenListTamAction(s.GetActions(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Actions: %+v", err)
 	}
 
-	if err := d.Set("actions", flattenListTamAction(s.Actions, d)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("advisory_details", flattenMapTamBaseAdvisoryDetails(s.AdvisoryDetails, d)); err != nil {
-		return err
+	if err := d.Set("advisory_details", flattenMapTamBaseAdvisoryDetails(s.GetAdvisoryDetails(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdvisoryDetails: %+v", err)
 	}
 
-	if err := d.Set("advisory_id", (s.AdvisoryID)); err != nil {
-		return err
+	if err := d.Set("advisory_id", (s.GetAdvisoryId())); err != nil {
+		return fmt.Errorf("error occurred while setting property AdvisoryId: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("api_data_sources", flattenListTamApiDataSource(s.GetApiDataSources(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property ApiDataSources: %+v", err)
 	}
 
-	if err := d.Set("date_published", (s.DatePublished).String()); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("date_updated", (s.DateUpdated).String()); err != nil {
-		return err
+	if err := d.Set("date_published", (s.GetDatePublished()).String()); err != nil {
+		return fmt.Errorf("error occurred while setting property DatePublished: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("date_updated", (s.GetDateUpdated()).String()); err != nil {
+		return fmt.Errorf("error occurred while setting property DateUpdated: %+v", err)
 	}
 
-	if err := d.Set("external_url", (s.ExternalURL)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("external_url", (s.GetExternalUrl())); err != nil {
+		return fmt.Errorf("error occurred while setting property ExternalUrl: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("recommendation", (s.Recommendation)); err != nil {
-		return err
+	if err := d.Set("recommendation", (s.GetRecommendation())); err != nil {
+		return fmt.Errorf("error occurred while setting property Recommendation: %+v", err)
 	}
 
-	if err := d.Set("severity", flattenMapTamSeverity(s.Severity, d)); err != nil {
-		return err
+	if err := d.Set("severity", flattenMapTamSeverity(s.GetSeverity(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Severity: %+v", err)
 	}
 
-	if err := d.Set("state", (s.State)); err != nil {
-		return err
+	if err := d.Set("state", (s.GetState())); err != nil {
+		return fmt.Errorf("error occurred while setting property State: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("type", (s.Type)); err != nil {
-		return err
+	if err := d.Set("type", (s.GetType())); err != nil {
+		return fmt.Errorf("error occurred while setting property Type: %+v", err)
 	}
 
-	if err := d.Set("version", (s.Version)); err != nil {
-		return err
+	if err := d.Set("nr_version", (s.GetVersion())); err != nil {
+		return fmt.Errorf("error occurred while setting property Version: %+v", err)
 	}
 
-	if err := d.Set("workaround", (s.Workaround)); err != nil {
-		return err
+	if err := d.Set("workaround", (s.GetWorkaround())); err != nil {
+		return fmt.Errorf("error occurred while setting property Workaround: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceTamAdvisoryDefinitionUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.TamAdvisoryDefinition
-	if d.HasChange("api_data_sources") {
-		v := d.Get("api_data_sources")
-		x := make([]*models.TamAPIDataSource, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.TamAPIDataSource{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.TamBaseDataSourceAO1P1.TamBaseDataSourceAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["mo_type"]; ok {
-					{
-						x := (v.(string))
-						o.MoType = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["queries"]; ok {
-					{
-						x := make([]*models.TamQueryEntry, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamQueryEntry{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamQueryEntryAO1P1.TamQueryEntryAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["priority"]; ok {
-									{
-										x := int64(v.(int))
-										o.Priority = x
-									}
-								}
-								if v, ok := l["query"]; ok {
-									{
-										x := (v.(string))
-										o.Query = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Queries = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.APIDataSources = x
-	}
-
+	var o = models.NewTamAdvisoryDefinitionWithDefaults()
 	if d.HasChange("actions") {
 		v := d.Get("actions")
-		x := make([]*models.TamAction, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.TamAction{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.TamActionAO1P1.TamActionAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["affected_object_type"]; ok {
-					{
-						x := (v.(string))
-						o.AffectedObjectType = x
-					}
-				}
-				if v, ok := l["alert_type"]; ok {
-					{
-						x := (v.(string))
-						o.AlertType = &x
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["identifiers"]; ok {
-					{
-						x := make([]*models.TamIdentifiers, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamIdentifiers{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamIdentifiersAO1P1.TamIdentifiersAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["value"]; ok {
-									{
-										x := (v.(string))
-										o.Value = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Identifiers = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["operation_type"]; ok {
-					{
-						x := (v.(string))
-						o.OperationType = &x
-					}
-				}
-				if v, ok := l["queries"]; ok {
-					{
-						x := make([]*models.TamQueryEntry, 0)
-						switch reflect.TypeOf(v).Kind() {
-						case reflect.Slice:
-							s := reflect.ValueOf(v)
-							for i := 0; i < s.Len(); i++ {
-								o := models.TamQueryEntry{}
-								l := s.Index(i).Interface().(map[string]interface{})
-								if v, ok := l["additional_properties"]; ok {
-									{
-										x := []byte(v.(string))
-										var x1 interface{}
-										err := json.Unmarshal(x, &x1)
-										if err == nil && x1 != nil {
-											o.TamQueryEntryAO1P1.TamQueryEntryAO1P1 = x1.(map[string]interface{})
-										}
-									}
-								}
-								if v, ok := l["class_id"]; ok {
-									{
-										x := (v.(string))
-										o.ClassID = x
-									}
-								}
-								if v, ok := l["name"]; ok {
-									{
-										x := (v.(string))
-										o.Name = x
-									}
-								}
-								if v, ok := l["object_type"]; ok {
-									{
-										x := (v.(string))
-										o.ObjectType = x
-									}
-								}
-								if v, ok := l["priority"]; ok {
-									{
-										x := int64(v.(int))
-										o.Priority = x
-									}
-								}
-								if v, ok := l["query"]; ok {
-									{
-										x := (v.(string))
-										o.Query = x
-									}
-								}
-								x = append(x, &o)
-							}
-						}
-						o.Queries = x
-					}
-				}
-				if v, ok := l["type"]; ok {
-					{
-						x := (v.(string))
-						o.Type = &x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Actions = x
-	}
-
-	if d.HasChange("advisory_details") {
-		v := d.Get("advisory_details")
-		p := models.TamBaseAdvisoryDetails{}
-		if len(v.([]interface{})) > 0 {
-			o := models.TamBaseAdvisoryDetails{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		x := make([]models.TamAction, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewTamActionWithDefaults()
+			l := s[i].(map[string]interface{})
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.TamBaseAdvisoryDetailsAO1P1.TamBaseAdvisoryDetailsAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			if v, ok := l["affected_object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
+					o.SetAffectedObjectType(x)
 				}
 			}
-			if v, ok := l["description"]; ok {
+			if v, ok := l["alert_type"]; ok {
 				{
 					x := (v.(string))
-					o.Description = x
+					o.SetAlertType(x)
+				}
+			}
+			o.SetClassId("tam.Action")
+			if v, ok := l["identifiers"]; ok {
+				{
+					x := make([]models.TamIdentifiers, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamIdentifiersWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.Identifiers")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["value"]; ok {
+							{
+								x := (v.(string))
+								o.SetValue(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetIdentifiers(x)
+					}
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
-
-			p = o
+			if v, ok := l["operation_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetOperationType(x)
+				}
+			}
+			if v, ok := l["queries"]; ok {
+				{
+					x := make([]models.TamQueryEntry, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamQueryEntryWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.QueryEntry")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["priority"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetPriority(x)
+							}
+						}
+						if v, ok := l["query"]; ok {
+							{
+								x := (v.(string))
+								o.SetQuery(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.AdvisoryDetails = &x
+		if len(x) > 0 {
+			o.SetActions(x)
+		}
+	}
+
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
+	if d.HasChange("advisory_details") {
+		v := d.Get("advisory_details")
+		p := make([]models.TamBaseAdvisoryDetails, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewTamBaseAdvisoryDetailsWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("tam.BaseAdvisoryDetails")
+			if v, ok := l["description"]; ok {
+				{
+					x := (v.(string))
+					o.SetDescription(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAdvisoryDetails(x)
 		}
 	}
 
 	if d.HasChange("advisory_id") {
 		v := d.Get("advisory_id")
 		x := (v.(string))
-		o.AdvisoryID = x
+		o.SetAdvisoryId(x)
 	}
 
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
-	}
-
-	if d.HasChange("date_published") {
-		v := d.Get("date_published")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.DatePublished = x
-	}
-
-	if d.HasChange("date_updated") {
-		v := d.Get("date_updated")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.DateUpdated = x
-	}
-
-	if d.HasChange("description") {
-		v := d.Get("description")
-		x := (v.(string))
-		o.Description = x
-	}
-
-	if d.HasChange("external_url") {
-		v := d.Get("external_url")
-		x := (v.(string))
-		o.ExternalURL = x
-	}
-
-	if d.HasChange("moid") {
-		v := d.Get("moid")
-		x := (v.(string))
-		o.Moid = x
-	}
-
-	if d.HasChange("name") {
-		v := d.Get("name")
-		x := (v.(string))
-		o.Name = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
-
-	if d.HasChange("organization") {
-		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
-		}
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-	}
-
-	if d.HasChange("recommendation") {
-		v := d.Get("recommendation")
-		x := (v.(string))
-		o.Recommendation = x
-	}
-
-	if d.HasChange("severity") {
-		v := d.Get("severity")
-		p := models.TamSeverity{}
-		if len(v.([]interface{})) > 0 {
-			o := models.TamSeverity{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+	if d.HasChange("api_data_sources") {
+		v := d.Get("api_data_sources")
+		x := make([]models.TamApiDataSource, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewTamApiDataSourceWithDefaults()
+			l := s[i].(map[string]interface{})
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.AO1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			o.SetClassId("tam.ApiDataSource")
+			if v, ok := l["mo_type"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
+					o.SetMoType(x)
+				}
+			}
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
-
-			p = o
+			if v, ok := l["queries"]; ok {
+				{
+					x := make([]models.TamQueryEntry, 0)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						o := models.NewTamQueryEntryWithDefaults()
+						l := s[i].(map[string]interface{})
+						if v, ok := l["additional_properties"]; ok {
+							{
+								x := []byte(v.(string))
+								var x1 interface{}
+								err := json.Unmarshal(x, &x1)
+								if err == nil && x1 != nil {
+									o.AdditionalProperties = x1.(map[string]interface{})
+								}
+							}
+						}
+						o.SetClassId("tam.QueryEntry")
+						if v, ok := l["name"]; ok {
+							{
+								x := (v.(string))
+								o.SetName(x)
+							}
+						}
+						if v, ok := l["object_type"]; ok {
+							{
+								x := (v.(string))
+								o.SetObjectType(x)
+							}
+						}
+						if v, ok := l["priority"]; ok {
+							{
+								x := int64(v.(int))
+								o.SetPriority(x)
+							}
+						}
+						if v, ok := l["query"]; ok {
+							{
+								x := (v.(string))
+								o.SetQuery(x)
+							}
+						}
+						x = append(x, *o)
+					}
+					if len(x) > 0 {
+						o.SetQueries(x)
+					}
+				}
+			}
+			if v, ok := l["type"]; ok {
+				{
+					x := (v.(string))
+					o.SetType(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Severity = &x
+		if len(x) > 0 {
+			o.SetApiDataSources(x)
+		}
+	}
+
+	o.SetClassId("tam.AdvisoryDefinition")
+
+	if d.HasChange("date_published") {
+		v := d.Get("date_published")
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetDatePublished(x)
+	}
+
+	if d.HasChange("date_updated") {
+		v := d.Get("date_updated")
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetDateUpdated(x)
+	}
+
+	if d.HasChange("description") {
+		v := d.Get("description")
+		x := (v.(string))
+		o.SetDescription(x)
+	}
+
+	if d.HasChange("external_url") {
+		v := d.Get("external_url")
+		x := (v.(string))
+		o.SetExternalUrl(x)
+	}
+
+	if d.HasChange("moid") {
+		v := d.Get("moid")
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if d.HasChange("name") {
+		v := d.Get("name")
+		x := (v.(string))
+		o.SetName(x)
+	}
+
+	o.SetObjectType("tam.AdvisoryDefinition")
+
+	if d.HasChange("organization") {
+		v := d.Get("organization")
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
+	}
+
+	if d.HasChange("recommendation") {
+		v := d.Get("recommendation")
+		x := (v.(string))
+		o.SetRecommendation(x)
+	}
+
+	if d.HasChange("severity") {
+		v := d.Get("severity")
+		p := make([]models.TamSeverity, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewTamSeverityWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("tam.Severity")
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetSeverity(x)
 		}
 	}
 
 	if d.HasChange("state") {
 		v := d.Get("state")
 		x := (v.(string))
-		o.State = &x
+		o.SetState(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
 	if d.HasChange("type") {
 		v := d.Get("type")
 		x := (v.(string))
-		o.Type = &x
+		o.SetType(x)
 	}
 
-	if d.HasChange("version") {
-		v := d.Get("version")
+	if d.HasChange("nr_version") {
+		v := d.Get("nr_version")
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	if d.HasChange("workaround") {
 		v := d.Get("workaround")
 		x := (v.(string))
-		o.Workaround = x
+		o.SetWorkaround(x)
 	}
 
-	url := "tam/AdvisoryDefinitions" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.TamApi.UpdateTamAdvisoryDefinition(conn.ctx, d.Id()).TamAdvisoryDefinition(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceTamAdvisoryDefinitionRead(d, meta)
 }
 
@@ -1765,10 +1539,10 @@ func resourceTamAdvisoryDefinitionDelete(d *schema.ResourceData, meta interface{
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "tam/AdvisoryDefinitions" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.TamApi.DeleteTamAdvisoryDefinition(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,12 +16,18 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 		Read: dataSourceWorkflowWorkflowInfoRead,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "The Account to which the workflow is associated relation is deprecated. Use AssociatedObject to set the account relation.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -29,7 +35,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -50,12 +56,18 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 			},
 			"associated_object": {
-				Description: "The object from which workflow needs to inherit permissions.",
+				Description: "A reference to a moBaseMo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -63,7 +75,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -119,26 +131,15 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"message": {
-				Description: "Collection of Workflow execution messages with severity.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
-						},
-						"message": {
-							Description: "An i18n message that can be translated in multiple languages to support internationalization.",
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -171,35 +172,6 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"nr0_cluster_profile": {
-				Description: "A collection of references to the [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) Managed Object.\nWhen this managed object is deleted, the referenced [hyperflex.ClusterProfile](mo://hyperflex.ClusterProfile) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"object_type": {
 				Description: "The fully-qualified type of this managed object, i.e. the class name.\nThis property is optional. The ObjectType is implied from the URL path.\nIf specified, the value of objectType must match the class name specified in the URL path.",
 				Type:        schema.TypeString,
@@ -207,12 +179,18 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "The Organization to which the workflow is associated relation is deprecated. Use AssociatedObject to set the organization relation.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -220,7 +198,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -236,13 +214,19 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed: true,
 			},
 			"parent_task_info": {
-				Description: "Link to the task in the parent workflow which launched this workflow.",
+				Description: "A reference to a workflowTaskInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -250,7 +234,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -270,13 +254,19 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 			},
 			"pending_dynamic_workflow_info": {
-				Description: "Reference to the PendingDynamicWorkflowInfo that was used to construct this workflow instance.",
+				Description: "A reference to a workflowPendingDynamicWorkflowInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -284,7 +274,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -299,12 +289,18 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				},
 			},
 			"permission": {
-				Description: "Reference to the permission object for which user has access to start this workflow.",
+				Description: "A reference to a iamPermission resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -312,7 +308,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -326,34 +322,6 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 					},
 				},
 				Computed: true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"progress": {
 				Description: "This field indicates percentage of workflow task execution.",
@@ -369,11 +337,6 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -423,32 +386,14 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -457,15 +402,20 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"task_infos": {
-				Description: "List of task instances that ran as part of this workflow execution.",
+				Description: "An array of relationships to workflowTaskInfo resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -473,7 +423,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -511,12 +461,18 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 			},
 			"workflow_definition": {
-				Description: "The workflow definition that was used to launch this workflow execution instance.",
+				Description: "A reference to a workflowWorkflowDefinition resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -524,7 +480,7 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -553,124 +509,132 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "workflow/WorkflowInfos"
-	var o models.WorkflowWorkflowInfo
+	var o = models.NewWorkflowWorkflowInfoWithDefaults()
 	if v, ok := d.GetOk("action"); ok {
 		x := (v.(string))
-		o.Action = &x
+		o.SetAction(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("cleanup_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.CleanupTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetCleanupTime(x)
 	}
 	if v, ok := d.GetOk("end_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.EndTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetEndTime(x)
 	}
 	if v, ok := d.GetOk("failed_workflow_cleanup_duration"); ok {
 		x := int64(v.(int))
-		o.FailedWorkflowCleanupDuration = x
+		o.SetFailedWorkflowCleanupDuration(x)
 	}
 	if v, ok := d.GetOk("inst_id"); ok {
 		x := (v.(string))
-		o.InstID = x
+		o.SetInstId(x)
 	}
 	if v, ok := d.GetOk("internal"); ok {
 		x := (v.(bool))
-		o.Internal = &x
+		o.SetInternal(x)
 	}
 	if v, ok := d.GetOk("last_action"); ok {
 		x := (v.(string))
-		o.LastAction = x
+		o.SetLastAction(x)
 	}
 	if v, ok := d.GetOk("meta_version"); ok {
 		x := int64(v.(int))
-		o.MetaVersion = x
+		o.SetMetaVersion(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("pause_reason"); ok {
 		x := (v.(string))
-		o.PauseReason = &x
+		o.SetPauseReason(x)
 	}
 	if v, ok := d.GetOk("progress"); ok {
 		x := v.(float32)
-		o.Progress = x
+		o.SetProgress(x)
 	}
 	if v, ok := d.GetOk("retry_from_task_name"); ok {
 		x := (v.(string))
-		o.RetryFromTaskName = x
+		o.SetRetryFromTaskName(x)
 	}
 	if v, ok := d.GetOk("src"); ok {
 		x := (v.(string))
-		o.Src = x
+		o.SetSrc(x)
 	}
 	if v, ok := d.GetOk("start_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.StartTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetStartTime(x)
 	}
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = x
+		o.SetStatus(x)
 	}
 	if v, ok := d.GetOk("success_workflow_cleanup_duration"); ok {
 		x := int64(v.(int))
-		o.SuccessWorkflowCleanupDuration = x
+		o.SetSuccessWorkflowCleanupDuration(x)
 	}
 	if v, ok := d.GetOk("trace_id"); ok {
 		x := (v.(string))
-		o.TraceID = x
+		o.SetTraceId(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("user_id"); ok {
 		x := (v.(string))
-		o.UserID = x
+		o.SetUserId(x)
 	}
 	if v, ok := d.GetOk("wait_reason"); ok {
 		x := (v.(string))
-		o.WaitReason = &x
+		o.SetWaitReason(x)
 	}
 	if v, ok := d.GetOk("workflow_meta_type"); ok {
 		x := (v.(string))
-		o.WorkflowMetaType = &x
+		o.SetWorkflowMetaType(x)
 	}
 	if v, ok := d.GetOk("workflow_task_count"); ok {
 		x := int64(v.(int))
-		o.WorkflowTaskCount = x
+		o.SetWorkflowTaskCount(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.WorkflowApi.GetWorkflowWorkflowInfoList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.WorkflowWorkflowInfoList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to WorkflowWorkflowInfo: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -678,142 +642,137 @@ func dataSourceWorkflowWorkflowInfoRead(d *schema.ResourceData, meta interface{}
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.WorkflowWorkflowInfo
+			var s = models.NewWorkflowWorkflowInfoWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
 
-			if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-				return err
+			if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Account: %+v", err)
 			}
-			if err := d.Set("action", (s.Action)); err != nil {
-				return err
+			if err := d.Set("action", (s.GetAction())); err != nil {
+				return fmt.Errorf("error occurred while setting property Action: %+v", err)
 			}
-
-			if err := d.Set("associated_object", flattenMapMoBaseMoRef(s.AssociatedObject, d)); err != nil {
-				return err
-			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
 
-			if err := d.Set("cleanup_time", (s.CleanupTime).String()); err != nil {
-				return err
+			if err := d.Set("associated_object", flattenMapMoBaseMoRelationship(s.GetAssociatedObject(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property AssociatedObject: %+v", err)
+			}
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("end_time", (s.EndTime).String()); err != nil {
-				return err
-			}
-			if err := d.Set("failed_workflow_cleanup_duration", (s.FailedWorkflowCleanupDuration)); err != nil {
-				return err
-			}
-			if err := d.Set("inst_id", (s.InstID)); err != nil {
-				return err
-			}
-			if err := d.Set("internal", (s.Internal)); err != nil {
-				return err
-			}
-			if err := d.Set("last_action", (s.LastAction)); err != nil {
-				return err
+			if err := d.Set("cleanup_time", (s.GetCleanupTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property CleanupTime: %+v", err)
 			}
 
-			if err := d.Set("message", flattenListWorkflowMessage(s.Message, d)); err != nil {
-				return err
+			if err := d.Set("end_time", (s.GetEndTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property EndTime: %+v", err)
 			}
-			if err := d.Set("meta_version", (s.MetaVersion)); err != nil {
-				return err
+			if err := d.Set("failed_workflow_cleanup_duration", (s.GetFailedWorkflowCleanupDuration())); err != nil {
+				return fmt.Errorf("error occurred while setting property FailedWorkflowCleanupDuration: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+			if err := d.Set("inst_id", (s.GetInstId())); err != nil {
+				return fmt.Errorf("error occurred while setting property InstId: %+v", err)
 			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
+			if err := d.Set("internal", (s.GetInternal())); err != nil {
+				return fmt.Errorf("error occurred while setting property Internal: %+v", err)
 			}
-
-			if err := d.Set("nr0_cluster_profile", flattenMapHyperflexClusterProfileRef(s.Nr0ClusterProfile, d)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("last_action", (s.GetLastAction())); err != nil {
+				return fmt.Errorf("error occurred while setting property LastAction: %+v", err)
 			}
 
-			if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-				return err
+			if err := d.Set("message", flattenListWorkflowMessage(s.GetMessage(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Message: %+v", err)
+			}
+			if err := d.Set("meta_version", (s.GetMetaVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property MetaVersion: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("name", (s.GetName())); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
 
-			if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRef(s.ParentTaskInfo, d)); err != nil {
-				return err
-			}
-			if err := d.Set("pause_reason", (s.PauseReason)); err != nil {
-				return err
+			if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 			}
 
-			if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRef(s.PendingDynamicWorkflowInfo, d)); err != nil {
-				return err
+			if err := d.Set("parent_task_info", flattenMapWorkflowTaskInfoRelationship(s.GetParentTaskInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ParentTaskInfo: %+v", err)
+			}
+			if err := d.Set("pause_reason", (s.GetPauseReason())); err != nil {
+				return fmt.Errorf("error occurred while setting property PauseReason: %+v", err)
 			}
 
-			if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
-				return err
+			if err := d.Set("pending_dynamic_workflow_info", flattenMapWorkflowPendingDynamicWorkflowInfoRelationship(s.GetPendingDynamicWorkflowInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property PendingDynamicWorkflowInfo: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 			}
-			if err := d.Set("progress", (s.Progress)); err != nil {
-				return err
-			}
-
-			if err := d.Set("properties", flattenMapWorkflowWorkflowInfoProperties(s.Properties, d)); err != nil {
-				return err
-			}
-			if err := d.Set("retry_from_task_name", (s.RetryFromTaskName)); err != nil {
-				return err
-			}
-			if err := d.Set("src", (s.Src)); err != nil {
-				return err
+			if err := d.Set("progress", (s.GetProgress())); err != nil {
+				return fmt.Errorf("error occurred while setting property Progress: %+v", err)
 			}
 
-			if err := d.Set("start_time", (s.StartTime).String()); err != nil {
-				return err
+			if err := d.Set("properties", flattenMapWorkflowWorkflowInfoProperties(s.GetProperties(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Properties: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+			if err := d.Set("retry_from_task_name", (s.GetRetryFromTaskName())); err != nil {
+				return fmt.Errorf("error occurred while setting property RetryFromTaskName: %+v", err)
 			}
-			if err := d.Set("success_workflow_cleanup_duration", (s.SuccessWorkflowCleanupDuration)); err != nil {
-				return err
-			}
-
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("src", (s.GetSrc())); err != nil {
+				return fmt.Errorf("error occurred while setting property Src: %+v", err)
 			}
 
-			if err := d.Set("task_infos", flattenListWorkflowTaskInfoRef(s.TaskInfos, d)); err != nil {
-				return err
+			if err := d.Set("start_time", (s.GetStartTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property StartTime: %+v", err)
 			}
-			if err := d.Set("trace_id", (s.TraceID)); err != nil {
-				return err
+			if err := d.Set("status", (s.GetStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
-				return err
-			}
-			if err := d.Set("user_id", (s.UserID)); err != nil {
-				return err
-			}
-			if err := d.Set("wait_reason", (s.WaitReason)); err != nil {
-				return err
+			if err := d.Set("success_workflow_cleanup_duration", (s.GetSuccessWorkflowCleanupDuration())); err != nil {
+				return fmt.Errorf("error occurred while setting property SuccessWorkflowCleanupDuration: %+v", err)
 			}
 
-			if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRef(s.WorkflowDefinition, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("workflow_meta_type", (s.WorkflowMetaType)); err != nil {
-				return err
+
+			if err := d.Set("task_infos", flattenListWorkflowTaskInfoRelationship(s.GetTaskInfos(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property TaskInfos: %+v", err)
 			}
-			if err := d.Set("workflow_task_count", (s.WorkflowTaskCount)); err != nil {
-				return err
+			if err := d.Set("trace_id", (s.GetTraceId())); err != nil {
+				return fmt.Errorf("error occurred while setting property TraceId: %+v", err)
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("type", (s.GetType())); err != nil {
+				return fmt.Errorf("error occurred while setting property Type: %+v", err)
+			}
+			if err := d.Set("user_id", (s.GetUserId())); err != nil {
+				return fmt.Errorf("error occurred while setting property UserId: %+v", err)
+			}
+			if err := d.Set("wait_reason", (s.GetWaitReason())); err != nil {
+				return fmt.Errorf("error occurred while setting property WaitReason: %+v", err)
+			}
+
+			if err := d.Set("workflow_definition", flattenMapWorkflowWorkflowDefinitionRelationship(s.GetWorkflowDefinition(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property WorkflowDefinition: %+v", err)
+			}
+			if err := d.Set("workflow_meta_type", (s.GetWorkflowMetaType())); err != nil {
+				return fmt.Errorf("error occurred while setting property WorkflowMetaType: %+v", err)
+			}
+			if err := d.Set("workflow_task_count", (s.GetWorkflowTaskCount())); err != nil {
+				return fmt.Errorf("error occurred while setting property WorkflowTaskCount: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

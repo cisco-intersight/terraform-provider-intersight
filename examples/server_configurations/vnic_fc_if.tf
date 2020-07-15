@@ -33,17 +33,17 @@ resource "intersight_vnic_fc_adapter_policy" "v_fc_adapter1" {
   resource_allocation_timeout = 100000
 
   rx_queue_settings {
-    count     = 1
+    nr_count     = 1
     ring_size = 128
   }
   tx_queue_settings {
-    count     = 1
+    nr_count     = 1
     ring_size = 128
   }
 
 
   scsi_queue_settings {
-    count     = 8
+    nr_count     = 8
     ring_size = 152
   }
 
@@ -87,10 +87,6 @@ resource "intersight_vnic_san_connectivity_policy" "vnic_san1" {
 resource "intersight_vnic_fc_if" "fc1" {
   name  = "fc0"
   order = 1
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
     id = "1"
     pci_link = 0
@@ -115,10 +111,6 @@ resource "intersight_vnic_fc_if" "fc1" {
 resource "intersight_vnic_fc_if" "fc2" {
   name  = "fc0"
   order = 2
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
     id = "MLOM"
     pci_link = 0
@@ -143,10 +135,6 @@ resource "intersight_vnic_fc_if" "fc2" {
 resource "intersight_vnic_fc_if" "fc3" {
   name  = "fc1"
   order = 3
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
     id = "MLOM"
     pci_link = 0
@@ -171,10 +159,6 @@ resource "intersight_vnic_fc_if" "fc3" {
 resource "intersight_vnic_fc_if" "fc4" {
   name  = "fc1"
   order = 1
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
     id = "1"
     pci_link = 1

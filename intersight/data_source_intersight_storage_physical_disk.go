@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -15,15 +15,16 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 		Read: dataSourceStoragePhysicalDiskRead,
 		Schema: map[string]*schema.Schema{
 			"block_size": {
-				Description: "The block size of the physical disk.",
+				Description: "The block size of the physical disk in bytes.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"bootable": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the disk drive as bootable if set to true.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -32,29 +33,34 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"configuration_checkpoint": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The current configuration checkpoint of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"configuration_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The current configuration state of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"device_mo_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The database identifier of the registered device of an object.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"discovered_path": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The discovered path of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"disk_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the ID assigned to physical disks.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"disk_state": {
 				Description: "This field identifies the health of the disk.",
@@ -69,8 +75,9 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"drive_firmware": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "This field identifies the disk firmware running in the disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"drive_state": {
 				Description: "The drive state as reported by the controller.",
@@ -79,8 +86,49 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"fde_capable": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Full-Disk Encryption capability parameter of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"hot_spare_type": {
+				Description: "Type of hotspare configured on the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"inventory_device_info": {
+				Description: "A reference to a inventoryDeviceInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"moid": {
+							Description: "The Moid of the referenced REST resource.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"object_type": {
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+						"selector": {
+							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"link_speed": {
 				Description: "The speed of the link between the drive and the controller.",
@@ -89,17 +137,25 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"link_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The current link state of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"locator_led": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Description: "A reference to a equipmentLocatorLed resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -107,7 +163,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -146,9 +202,10 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"oper_power_state": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Operational power of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"oper_qualifier_reason": {
 				Type:     schema.TypeString,
@@ -156,49 +213,29 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed: true,
 			},
 			"operability": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
+				Description: "This field identifies the disk operability of the disk.",
+				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
 			},
 			"physical_block_size": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The block size of the installed physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"physical_disk_extensions": {
-				Description: "The physical connectivity between a SCSI controller and physical disks.",
+				Description: "An array of relationships to storagePhysicalDiskExtension resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -206,7 +243,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -228,28 +265,37 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"presence": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The presence state of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"protocol": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the disk protocol used for communication.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"raw_size": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The raw size of the physical disk in MB.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"registered_device": {
-				Description: "The Device to which this Managed Object is associated.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -257,7 +303,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -272,9 +318,10 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"revision": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the revision of the given component.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"rn": {
 				Description: "The Relative Name uniquely identifies an object within a given context.",
@@ -283,11 +330,18 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"running_firmware": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
+				Description: "An array of relationships to firmwareRunningFirmware resources.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -295,7 +349,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -310,12 +364,18 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"sas_ports": {
-				Description: "It is a reference to SAS Port to physical disk.",
+				Description: "An array of relationships to storageSasPort resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -323,7 +383,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -349,18 +409,25 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				Computed:    true,
 			},
 			"size": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The size of the physical disk in MB.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"storage_controller": {
-				Description: "A collection of references to the [storage.Controller](mo://storage.Controller) Managed Object.\nWhen this managed object is deleted, the referenced [storage.Controller](mo://storage.Controller) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageController resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -368,7 +435,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -383,13 +450,19 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"storage_enclosure": {
-				Description: "A collection of references to the [storage.Enclosure](mo://storage.Enclosure) Managed Object.\nWhen this managed object is deleted, the referenced [storage.Enclosure](mo://storage.Enclosure) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a storageEnclosure resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -397,7 +470,7 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -412,32 +485,14 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 				},
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -446,22 +501,24 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"thermal": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Thermal state of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"type": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "This field identifies the type of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"variant_type": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "The variant type of the physical disk.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"vendor": {
 				Description: "This field identifies the vendor of the given component.",
@@ -472,168 +529,180 @@ func dataSourceStoragePhysicalDisk() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "storage/PhysicalDisks"
-	var o models.StoragePhysicalDisk
+	var o = models.NewStoragePhysicalDiskWithDefaults()
 	if v, ok := d.GetOk("block_size"); ok {
 		x := (v.(string))
-		o.BlockSize = x
+		o.SetBlockSize(x)
 	}
 	if v, ok := d.GetOk("bootable"); ok {
 		x := (v.(string))
-		o.Bootable = x
+		o.SetBootable(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("configuration_checkpoint"); ok {
 		x := (v.(string))
-		o.ConfigurationCheckpoint = x
+		o.SetConfigurationCheckpoint(x)
 	}
 	if v, ok := d.GetOk("configuration_state"); ok {
 		x := (v.(string))
-		o.ConfigurationState = x
+		o.SetConfigurationState(x)
 	}
 	if v, ok := d.GetOk("device_mo_id"); ok {
 		x := (v.(string))
-		o.DeviceMoID = x
+		o.SetDeviceMoId(x)
 	}
 	if v, ok := d.GetOk("discovered_path"); ok {
 		x := (v.(string))
-		o.DiscoveredPath = x
+		o.SetDiscoveredPath(x)
 	}
 	if v, ok := d.GetOk("disk_id"); ok {
 		x := (v.(string))
-		o.DiskID = x
+		o.SetDiskId(x)
 	}
 	if v, ok := d.GetOk("disk_state"); ok {
 		x := (v.(string))
-		o.DiskState = x
+		o.SetDiskState(x)
 	}
 	if v, ok := d.GetOk("dn"); ok {
 		x := (v.(string))
-		o.Dn = x
+		o.SetDn(x)
 	}
 	if v, ok := d.GetOk("drive_firmware"); ok {
 		x := (v.(string))
-		o.DriveFirmware = x
+		o.SetDriveFirmware(x)
 	}
 	if v, ok := d.GetOk("drive_state"); ok {
 		x := (v.(string))
-		o.DriveState = x
+		o.SetDriveState(x)
 	}
 	if v, ok := d.GetOk("fde_capable"); ok {
 		x := (v.(string))
-		o.FdeCapable = x
+		o.SetFdeCapable(x)
+	}
+	if v, ok := d.GetOk("hot_spare_type"); ok {
+		x := (v.(string))
+		o.SetHotSpareType(x)
 	}
 	if v, ok := d.GetOk("link_speed"); ok {
 		x := (v.(string))
-		o.LinkSpeed = x
+		o.SetLinkSpeed(x)
 	}
 	if v, ok := d.GetOk("link_state"); ok {
 		x := (v.(string))
-		o.LinkState = x
+		o.SetLinkState(x)
 	}
 	if v, ok := d.GetOk("model"); ok {
 		x := (v.(string))
-		o.Model = x
+		o.SetModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("num_blocks"); ok {
 		x := (v.(string))
-		o.NumBlocks = x
+		o.SetNumBlocks(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("oper_power_state"); ok {
 		x := (v.(string))
-		o.OperPowerState = x
+		o.SetOperPowerState(x)
 	}
 	if v, ok := d.GetOk("oper_qualifier_reason"); ok {
 		x := (v.(string))
-		o.OperQualifierReason = x
+		o.SetOperQualifierReason(x)
 	}
 	if v, ok := d.GetOk("operability"); ok {
 		x := (v.(string))
-		o.Operability = x
+		o.SetOperability(x)
 	}
 	if v, ok := d.GetOk("physical_block_size"); ok {
 		x := (v.(string))
-		o.PhysicalBlockSize = x
+		o.SetPhysicalBlockSize(x)
 	}
 	if v, ok := d.GetOk("pid"); ok {
 		x := (v.(string))
-		o.Pid = x
+		o.SetPid(x)
 	}
 	if v, ok := d.GetOk("presence"); ok {
 		x := (v.(string))
-		o.Presence = x
+		o.SetPresence(x)
 	}
 	if v, ok := d.GetOk("protocol"); ok {
 		x := (v.(string))
-		o.Protocol = x
+		o.SetProtocol(x)
 	}
 	if v, ok := d.GetOk("raw_size"); ok {
 		x := (v.(string))
-		o.RawSize = x
+		o.SetRawSize(x)
 	}
 	if v, ok := d.GetOk("revision"); ok {
 		x := (v.(string))
-		o.Revision = x
+		o.SetRevision(x)
 	}
 	if v, ok := d.GetOk("rn"); ok {
 		x := (v.(string))
-		o.Rn = x
+		o.SetRn(x)
 	}
 	if v, ok := d.GetOk("secured"); ok {
 		x := (v.(string))
-		o.Secured = x
+		o.SetSecured(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("size"); ok {
 		x := (v.(string))
-		o.Size = x
+		o.SetSize(x)
 	}
 	if v, ok := d.GetOk("thermal"); ok {
 		x := (v.(string))
-		o.Thermal = x
+		o.SetThermal(x)
 	}
 	if v, ok := d.GetOk("type"); ok {
 		x := (v.(string))
-		o.Type = x
+		o.SetType(x)
 	}
 	if v, ok := d.GetOk("variant_type"); ok {
 		x := (v.(string))
-		o.VariantType = x
+		o.SetVariantType(x)
 	}
 	if v, ok := d.GetOk("vendor"); ok {
 		x := (v.(string))
-		o.Vendor = x
+		o.SetVendor(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.StorageApi.GetStoragePhysicalDiskList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.StoragePhysicalDiskList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to StoragePhysicalDisk: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -641,156 +710,162 @@ func dataSourceStoragePhysicalDiskRead(d *schema.ResourceData, meta interface{})
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.StoragePhysicalDisk
+			var s = models.NewStoragePhysicalDiskWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("block_size", (s.BlockSize)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("bootable", (s.Bootable)); err != nil {
-				return err
+			if err := d.Set("block_size", (s.GetBlockSize())); err != nil {
+				return fmt.Errorf("error occurred while setting property BlockSize: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("bootable", (s.GetBootable())); err != nil {
+				return fmt.Errorf("error occurred while setting property Bootable: %+v", err)
 			}
-			if err := d.Set("configuration_checkpoint", (s.ConfigurationCheckpoint)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("configuration_state", (s.ConfigurationState)); err != nil {
-				return err
+			if err := d.Set("configuration_checkpoint", (s.GetConfigurationCheckpoint())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConfigurationCheckpoint: %+v", err)
 			}
-			if err := d.Set("device_mo_id", (s.DeviceMoID)); err != nil {
-				return err
+			if err := d.Set("configuration_state", (s.GetConfigurationState())); err != nil {
+				return fmt.Errorf("error occurred while setting property ConfigurationState: %+v", err)
 			}
-			if err := d.Set("discovered_path", (s.DiscoveredPath)); err != nil {
-				return err
+			if err := d.Set("device_mo_id", (s.GetDeviceMoId())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceMoId: %+v", err)
 			}
-			if err := d.Set("disk_id", (s.DiskID)); err != nil {
-				return err
+			if err := d.Set("discovered_path", (s.GetDiscoveredPath())); err != nil {
+				return fmt.Errorf("error occurred while setting property DiscoveredPath: %+v", err)
 			}
-			if err := d.Set("disk_state", (s.DiskState)); err != nil {
-				return err
+			if err := d.Set("disk_id", (s.GetDiskId())); err != nil {
+				return fmt.Errorf("error occurred while setting property DiskId: %+v", err)
 			}
-			if err := d.Set("dn", (s.Dn)); err != nil {
-				return err
+			if err := d.Set("disk_state", (s.GetDiskState())); err != nil {
+				return fmt.Errorf("error occurred while setting property DiskState: %+v", err)
 			}
-			if err := d.Set("drive_firmware", (s.DriveFirmware)); err != nil {
-				return err
+			if err := d.Set("dn", (s.GetDn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Dn: %+v", err)
 			}
-			if err := d.Set("drive_state", (s.DriveState)); err != nil {
-				return err
+			if err := d.Set("drive_firmware", (s.GetDriveFirmware())); err != nil {
+				return fmt.Errorf("error occurred while setting property DriveFirmware: %+v", err)
 			}
-			if err := d.Set("fde_capable", (s.FdeCapable)); err != nil {
-				return err
+			if err := d.Set("drive_state", (s.GetDriveState())); err != nil {
+				return fmt.Errorf("error occurred while setting property DriveState: %+v", err)
 			}
-			if err := d.Set("link_speed", (s.LinkSpeed)); err != nil {
-				return err
+			if err := d.Set("fde_capable", (s.GetFdeCapable())); err != nil {
+				return fmt.Errorf("error occurred while setting property FdeCapable: %+v", err)
 			}
-			if err := d.Set("link_state", (s.LinkState)); err != nil {
-				return err
-			}
-
-			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRef(s.LocatorLed, d)); err != nil {
-				return err
-			}
-			if err := d.Set("model", (s.Model)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("num_blocks", (s.NumBlocks)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_power_state", (s.OperPowerState)); err != nil {
-				return err
-			}
-			if err := d.Set("oper_qualifier_reason", (s.OperQualifierReason)); err != nil {
-				return err
-			}
-			if err := d.Set("operability", (s.Operability)); err != nil {
-				return err
+			if err := d.Set("hot_spare_type", (s.GetHotSpareType())); err != nil {
+				return fmt.Errorf("error occurred while setting property HotSpareType: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("inventory_device_info", flattenMapInventoryDeviceInfoRelationship(s.GetInventoryDeviceInfo(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InventoryDeviceInfo: %+v", err)
 			}
-			if err := d.Set("physical_block_size", (s.PhysicalBlockSize)); err != nil {
-				return err
+			if err := d.Set("link_speed", (s.GetLinkSpeed())); err != nil {
+				return fmt.Errorf("error occurred while setting property LinkSpeed: %+v", err)
 			}
-
-			if err := d.Set("physical_disk_extensions", flattenListStoragePhysicalDiskExtensionRef(s.PhysicalDiskExtensions, d)); err != nil {
-				return err
-			}
-			if err := d.Set("pid", (s.Pid)); err != nil {
-				return err
-			}
-			if err := d.Set("presence", (s.Presence)); err != nil {
-				return err
-			}
-			if err := d.Set("protocol", (s.Protocol)); err != nil {
-				return err
-			}
-			if err := d.Set("raw_size", (s.RawSize)); err != nil {
-				return err
+			if err := d.Set("link_state", (s.GetLinkState())); err != nil {
+				return fmt.Errorf("error occurred while setting property LinkState: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("locator_led", flattenMapEquipmentLocatorLedRelationship(s.GetLocatorLed(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property LocatorLed: %+v", err)
 			}
-			if err := d.Set("revision", (s.Revision)); err != nil {
-				return err
+			if err := d.Set("model", (s.GetModel())); err != nil {
+				return fmt.Errorf("error occurred while setting property Model: %+v", err)
 			}
-			if err := d.Set("rn", (s.Rn)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-
-			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRef(s.RunningFirmware, d)); err != nil {
-				return err
+			if err := d.Set("num_blocks", (s.GetNumBlocks())); err != nil {
+				return fmt.Errorf("error occurred while setting property NumBlocks: %+v", err)
 			}
-
-			if err := d.Set("sas_ports", flattenListStorageSasPortRef(s.SasPorts, d)); err != nil {
-				return err
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-			if err := d.Set("secured", (s.Secured)); err != nil {
-				return err
+			if err := d.Set("oper_power_state", (s.GetOperPowerState())); err != nil {
+				return fmt.Errorf("error occurred while setting property OperPowerState: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+			if err := d.Set("oper_qualifier_reason", (s.GetOperQualifierReason())); err != nil {
+				return fmt.Errorf("error occurred while setting property OperQualifierReason: %+v", err)
 			}
-			if err := d.Set("size", (s.Size)); err != nil {
-				return err
+			if err := d.Set("operability", (s.GetOperability())); err != nil {
+				return fmt.Errorf("error occurred while setting property Operability: %+v", err)
 			}
-
-			if err := d.Set("storage_controller", flattenMapStorageControllerRef(s.StorageController, d)); err != nil {
-				return err
+			if err := d.Set("physical_block_size", (s.GetPhysicalBlockSize())); err != nil {
+				return fmt.Errorf("error occurred while setting property PhysicalBlockSize: %+v", err)
 			}
 
-			if err := d.Set("storage_enclosure", flattenMapStorageEnclosureRef(s.StorageEnclosure, d)); err != nil {
-				return err
+			if err := d.Set("physical_disk_extensions", flattenListStoragePhysicalDiskExtensionRelationship(s.GetPhysicalDiskExtensions(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property PhysicalDiskExtensions: %+v", err)
+			}
+			if err := d.Set("pid", (s.GetPid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Pid: %+v", err)
+			}
+			if err := d.Set("presence", (s.GetPresence())); err != nil {
+				return fmt.Errorf("error occurred while setting property Presence: %+v", err)
+			}
+			if err := d.Set("protocol", (s.GetProtocol())); err != nil {
+				return fmt.Errorf("error occurred while setting property Protocol: %+v", err)
+			}
+			if err := d.Set("raw_size", (s.GetRawSize())); err != nil {
+				return fmt.Errorf("error occurred while setting property RawSize: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("thermal", (s.Thermal)); err != nil {
-				return err
+			if err := d.Set("revision", (s.GetRevision())); err != nil {
+				return fmt.Errorf("error occurred while setting property Revision: %+v", err)
 			}
-			if err := d.Set("type", (s.Type)); err != nil {
-				return err
+			if err := d.Set("rn", (s.GetRn())); err != nil {
+				return fmt.Errorf("error occurred while setting property Rn: %+v", err)
 			}
-			if err := d.Set("variant_type", (s.VariantType)); err != nil {
-				return err
+
+			if err := d.Set("running_firmware", flattenListFirmwareRunningFirmwareRelationship(s.GetRunningFirmware(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RunningFirmware: %+v", err)
 			}
-			if err := d.Set("vendor", (s.Vendor)); err != nil {
-				return err
+
+			if err := d.Set("sas_ports", flattenListStorageSasPortRelationship(s.GetSasPorts(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property SasPorts: %+v", err)
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("secured", (s.GetSecured())); err != nil {
+				return fmt.Errorf("error occurred while setting property Secured: %+v", err)
+			}
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
+			}
+			if err := d.Set("size", (s.GetSize())); err != nil {
+				return fmt.Errorf("error occurred while setting property Size: %+v", err)
+			}
+
+			if err := d.Set("storage_controller", flattenMapStorageControllerRelationship(s.GetStorageController(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property StorageController: %+v", err)
+			}
+
+			if err := d.Set("storage_enclosure", flattenMapStorageEnclosureRelationship(s.GetStorageEnclosure(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property StorageEnclosure: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("thermal", (s.GetThermal())); err != nil {
+				return fmt.Errorf("error occurred while setting property Thermal: %+v", err)
+			}
+			if err := d.Set("type", (s.GetType())); err != nil {
+				return fmt.Errorf("error occurred while setting property Type: %+v", err)
+			}
+			if err := d.Set("variant_type", (s.GetVariantType())); err != nil {
+				return fmt.Errorf("error occurred while setting property VariantType: %+v", err)
+			}
+			if err := d.Set("vendor", (s.GetVendor())); err != nil {
+				return fmt.Errorf("error occurred while setting property Vendor: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

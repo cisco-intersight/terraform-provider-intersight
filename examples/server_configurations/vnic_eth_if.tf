@@ -1,6 +1,7 @@
 resource "intersight_vnic_eth_adapter_policy" "v_eth_adapter1" {
   name = "v_eth_adapter1"
   rss_settings = true
+  uplink_failback_timeout = 5
   organization {
     object_type = "organization.Organization"
     moid = var.organization
@@ -20,26 +21,26 @@ resource "intersight_vnic_eth_adapter_policy" "v_eth_adapter1" {
   interrupt_settings {
     coalescing_time = 125
     coalescing_type = "MIN"
-    count           = 4
-    mode            = "MSI"
+    nr_count = 4
+    mode = "MSI"
   }
   completion_queue_settings {
-    count     = 4
+    nr_count = 4
     ring_size = 1
   }
   rx_queue_settings {
-    count     = 4
+    nr_count = 4
     ring_size = 512
   }
   tx_queue_settings {
-    count     = 4
+    nr_count = 4
     ring_size = 512
   }
   tcp_offload_settings {
     large_receive = true
-    large_send    = true
-    rx_checksum   = true
-    tx_checksum   = true
+    large_send = true
+    rx_checksum = true
+    tx_checksum = true
   }
 
 }
@@ -51,16 +52,17 @@ resource "intersight_vnic_eth_network_policy" "v_eth_network1" {
     moid = var.organization
   }
   vlan_settings {
+    object_type = "vnic.VlanSettings"
     default_vlan = 1
-    mode         = "ACCESS"
+    mode = "ACCESS"
   }
 }
 
 resource "intersight_vnic_eth_qos_policy" "v_eth_qos1" {
-  name           = "v_eth_qos1"
-  mtu            = 1500
-  rate_limit     = 0
-  cos            = 0
+  name = "v_eth_qos1"
+  mtu = 1500
+  rate_limit = 0
+  cos = 0
   trust_host_cos = false
   organization {
     object_type = "organization.Organization"
@@ -75,36 +77,34 @@ resource "intersight_vnic_lan_connectivity_policy" "vnic_lan1" {
     moid = var.organization
   }
   profiles {
-    moid        = intersight_server_profile.server1.id
+    moid = intersight_server_profile.server1.id
     object_type = "server.Profile"
   }
 }
 
 resource "intersight_vnic_eth_if" "eth1" {
-  name  = "eth0"
+  name = "eth0"
   order = 0
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
-    id     = "1"
+    id = "1"
     pci_link = 0
     uplink = 0
   }
   cdn {
-    value  = "VIC-1-eth00"
-    source = "user"
+    value = "VIC-1-eth00"
+    nr_source = "user"
   }
   usnic_settings {
     cos = 5
-    count = 0
+    nr_count = 0
   }
   vmq_settings {
     enabled = false
+    num_interrupts = 1
+    num_vmqs = 1
   }
   lan_connectivity_policy {
-    moid        = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
+    moid = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
     object_type = "vnic.LanConnectivityPolicy"
   }
   eth_network_policy {
@@ -119,30 +119,28 @@ resource "intersight_vnic_eth_if" "eth1" {
 }
 
 resource "intersight_vnic_eth_if" "eth2" {
-  name  = "eth1"
+  name = "eth1"
   order = 0
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
-    id     = "1"
+    id = "1"
     pci_link = 1
     uplink = 0
   }
   cdn {
-    value  = "VIC-1-eth1"
-    source = "vnic"
+    value = "VIC-1-eth1"
+    nr_source = "vnic"
   }
   usnic_settings {
     cos = 5
-    count = 0
+    nr_count = 0
   }
   vmq_settings {
     enabled = false
+    num_interrupts = 1
+    num_vmqs = 1
   }
   lan_connectivity_policy {
-    moid        = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
+    moid = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
     object_type = "vnic.LanConnectivityPolicy"
   }
   eth_network_policy {
@@ -157,30 +155,28 @@ resource "intersight_vnic_eth_if" "eth2" {
 }
 
 resource "intersight_vnic_eth_if" "eth3" {
-  name  = "eth0"
+  name = "eth0"
   order = 0
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
-    id     = "MLOM"
+    id = "MLOM"
     pci_link = 0
     uplink = 1
   }
   cdn {
-    value  = "VIC-MLOM-eth0"
-    source = "vnic"
+    value = "VIC-MLOM-eth0"
+    nr_source = "vnic"
   }
   usnic_settings {
     cos = 5
-    count = 0
+    nr_count = 0
   }
   vmq_settings {
     enabled = false
+    num_interrupts = 1
+    num_vmqs = 1
   }
   lan_connectivity_policy {
-    moid        = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
+    moid = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
     object_type = "vnic.LanConnectivityPolicy"
   }
   eth_network_policy {
@@ -195,30 +191,28 @@ resource "intersight_vnic_eth_if" "eth3" {
 }
 
 resource "intersight_vnic_eth_if" "eth4" {
-  name  = "eth1"
+  name = "eth1"
   order = 1
-  organization {
-    object_type = "organization.Organization"
-    moid = var.organization
-  }
   placement {
-    id     = "MLOM"
+    id = "MLOM"
     pci_link = 0
     uplink = 1
   }
   cdn {
-    value  = "VIC-MLOM-eth1"
-    source = "vnic"
+    value = "VIC-MLOM-eth1"
+    nr_source = "vnic"
   }
   usnic_settings {
     cos = 5
-    count = 0
+    nr_count = 0
   }
   vmq_settings {
     enabled = false
+    num_interrupts = 1
+    num_vmqs = 1
   }
   lan_connectivity_policy {
-    moid        = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
+    moid = intersight_vnic_lan_connectivity_policy.vnic_lan1.id
     object_type = "vnic.LanConnectivityPolicy"
   }
   eth_network_policy {

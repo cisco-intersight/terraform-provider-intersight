@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -62,34 +62,6 @@ func dataSourceApplianceSystemInfo() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"serial_id": {
 				Description: "SerialId of the Intersight Appliance. SerialId is generated when the Intersight Appliance is setup. It is a unique UUID string, and serialId will not change for the life time of the Intersight Appliance.",
 				Type:        schema.TypeString,
@@ -97,32 +69,14 @@ func dataSourceApplianceSystemInfo() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -131,14 +85,13 @@ func dataSourceApplianceSystemInfo() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"time_zone": {
 				Description: "Timezone of the Intersight Appliance.",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Current software version of the Intersight Appliance.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -147,68 +100,76 @@ func dataSourceApplianceSystemInfo() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceApplianceSystemInfoRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "appliance/SystemInfos"
-	var o models.ApplianceSystemInfo
+	var o = models.NewApplianceSystemInfoWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("cloud_conn_status"); ok {
 		x := (v.(string))
-		o.CloudConnStatus = x
+		o.SetCloudConnStatus(x)
 	}
 	if v, ok := d.GetOk("deployment_size"); ok {
 		x := (v.(string))
-		o.DeploymentSize = x
+		o.SetDeploymentSize(x)
 	}
 	if v, ok := d.GetOk("hostname"); ok {
 		x := (v.(string))
-		o.Hostname = x
+		o.SetHostname(x)
 	}
 	if v, ok := d.GetOk("init_done"); ok {
 		x := (v.(bool))
-		o.InitDone = &x
+		o.SetInitDone(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("operational_status"); ok {
 		x := (v.(string))
-		o.OperationalStatus = x
+		o.SetOperationalStatus(x)
 	}
 	if v, ok := d.GetOk("serial_id"); ok {
 		x := (v.(string))
-		o.SerialID = x
+		o.SetSerialId(x)
 	}
 	if v, ok := d.GetOk("time_zone"); ok {
 		x := (v.(string))
-		o.TimeZone = &x
+		o.SetTimeZone(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.ApplianceApi.GetApplianceSystemInfoList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.ApplianceSystemInfoList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to ApplianceSystemInfo: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -216,53 +177,52 @@ func dataSourceApplianceSystemInfoRead(d *schema.ResourceData, meta interface{})
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.ApplianceSystemInfo
+			var s = models.NewApplianceSystemInfoWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("cloud_conn_status", (s.CloudConnStatus)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("deployment_size", (s.DeploymentSize)); err != nil {
-				return err
+			if err := d.Set("cloud_conn_status", (s.GetCloudConnStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property CloudConnStatus: %+v", err)
 			}
-			if err := d.Set("hostname", (s.Hostname)); err != nil {
-				return err
+			if err := d.Set("deployment_size", (s.GetDeploymentSize())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeploymentSize: %+v", err)
 			}
-			if err := d.Set("init_done", (s.InitDone)); err != nil {
-				return err
+			if err := d.Set("hostname", (s.GetHostname())); err != nil {
+				return fmt.Errorf("error occurred while setting property Hostname: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
+			if err := d.Set("init_done", (s.GetInitDone())); err != nil {
+				return fmt.Errorf("error occurred while setting property InitDone: %+v", err)
 			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-			if err := d.Set("operational_status", (s.OperationalStatus)); err != nil {
-				return err
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("operational_status", (s.GetOperationalStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property OperationalStatus: %+v", err)
+			}
+			if err := d.Set("serial_id", (s.GetSerialId())); err != nil {
+				return fmt.Errorf("error occurred while setting property SerialId: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("serial_id", (s.SerialID)); err != nil {
-				return err
+			if err := d.Set("time_zone", (s.GetTimeZone())); err != nil {
+				return fmt.Errorf("error occurred while setting property TimeZone: %+v", err)
 			}
-
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
 			}
-			if err := d.Set("time_zone", (s.TimeZone)); err != nil {
-				return err
-			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
-			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

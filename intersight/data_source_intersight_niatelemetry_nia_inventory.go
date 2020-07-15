@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -14,16 +14,16 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceNiatelemetryNiaInventoryRead,
 		Schema: map[string]*schema.Schema{
-			"cpu": {
-				Description: "CPU usage of device being inventoried. This determines the percentage of CPU resources used.",
-				Type:        schema.TypeFloat,
-				Optional:    true,
-			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"cpu": {
+				Description: "CPU usage of device being inventoried. This determines the percentage of CPU resources used.",
+				Type:        schema.TypeFloat,
+				Optional:    true,
 			},
 			"crash_reset_logs": {
 				Description: "Last crash reset reason of device being inventoried. This determines the last reason for a device's restart due to crash of the system.",
@@ -47,11 +47,6 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -89,12 +84,18 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Computed: true,
 			},
 			"license_state": {
-				Description: "The license of this device. It includes features and license information.",
+				Description: "A reference to a niatelemetryNiaLicenseState resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -102,7 +103,7 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -144,34 +145,6 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"record_type": {
 				Description: "Type of record DCNM / APIC / SE. This determines the type of platform where inventory was collected.",
 				Type:        schema.TypeString,
@@ -183,13 +156,19 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Optional:    true,
 			},
 			"registered_device": {
-				Description: "Relationship to the Device Registration object for this setup.",
+				Description: "A reference to a assetDeviceRegistration resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -197,7 +176,7 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -222,32 +201,14 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -256,9 +217,8 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Software version of device being inventoried. The various software version values for each device are available on cisco.com.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -266,84 +226,92 @@ func dataSourceNiatelemetryNiaInventory() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceNiatelemetryNiaInventoryRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "niatelemetry/NiaInventories"
-	var o models.NiatelemetryNiaInventory
-	if v, ok := d.GetOk("cpu"); ok {
-		x := v.(float32)
-		o.CPU = x
-	}
+	var o = models.NewNiatelemetryNiaInventoryWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
+	}
+	if v, ok := d.GetOk("cpu"); ok {
+		x := v.(float32)
+		o.SetCpu(x)
 	}
 	if v, ok := d.GetOk("crash_reset_logs"); ok {
 		x := (v.(string))
-		o.CrashResetLogs = x
+		o.SetCrashResetLogs(x)
 	}
 	if v, ok := d.GetOk("device_name"); ok {
 		x := (v.(string))
-		o.DeviceName = x
+		o.SetDeviceName(x)
 	}
 	if v, ok := d.GetOk("device_type"); ok {
 		x := (v.(string))
-		o.DeviceType = x
+		o.SetDeviceType(x)
 	}
 	if v, ok := d.GetOk("log_in_time"); ok {
 		x := (v.(string))
-		o.LogInTime = x
+		o.SetLogInTime(x)
 	}
 	if v, ok := d.GetOk("log_out_time"); ok {
 		x := (v.(string))
-		o.LogOutTime = x
+		o.SetLogOutTime(x)
 	}
 	if v, ok := d.GetOk("memory"); ok {
 		x := int64(v.(int))
-		o.Memory = x
+		o.SetMemory(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("record_type"); ok {
 		x := (v.(string))
-		o.RecordType = x
+		o.SetRecordType(x)
 	}
 	if v, ok := d.GetOk("record_version"); ok {
 		x := (v.(string))
-		o.RecordVersion = x
+		o.SetRecordVersion(x)
 	}
 	if v, ok := d.GetOk("serial"); ok {
 		x := (v.(string))
-		o.Serial = x
+		o.SetSerial(x)
 	}
 	if v, ok := d.GetOk("software_download"); ok {
 		x := (v.(string))
-		o.SoftwareDownload = x
+		o.SetSoftwareDownload(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.NiatelemetryApi.GetNiatelemetryNiaInventoryList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.NiatelemetryNiaInventoryList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to NiatelemetryNiaInventory: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -351,77 +319,76 @@ func dataSourceNiatelemetryNiaInventoryRead(d *schema.ResourceData, meta interfa
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.NiatelemetryNiaInventory
+			var s = models.NewNiatelemetryNiaInventoryWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("cpu", (s.CPU)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
-			if err := d.Set("crash_reset_logs", (s.CrashResetLogs)); err != nil {
-				return err
+			if err := d.Set("cpu", (s.GetCpu())); err != nil {
+				return fmt.Errorf("error occurred while setting property Cpu: %+v", err)
 			}
-			if err := d.Set("device_name", (s.DeviceName)); err != nil {
-				return err
+			if err := d.Set("crash_reset_logs", (s.GetCrashResetLogs())); err != nil {
+				return fmt.Errorf("error occurred while setting property CrashResetLogs: %+v", err)
 			}
-			if err := d.Set("device_type", (s.DeviceType)); err != nil {
-				return err
+			if err := d.Set("device_name", (s.GetDeviceName())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceName: %+v", err)
 			}
-
-			if err := d.Set("disk", flattenMapNiatelemetryDiskinfo(s.Disk, d)); err != nil {
-				return err
-			}
-
-			if err := d.Set("license_state", flattenMapNiatelemetryNiaLicenseStateRef(s.LicenseState, d)); err != nil {
-				return err
-			}
-			if err := d.Set("log_in_time", (s.LogInTime)); err != nil {
-				return err
-			}
-			if err := d.Set("log_out_time", (s.LogOutTime)); err != nil {
-				return err
-			}
-			if err := d.Set("memory", (s.Memory)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("device_type", (s.GetDeviceType())); err != nil {
+				return fmt.Errorf("error occurred while setting property DeviceType: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
-			}
-			if err := d.Set("record_type", (s.RecordType)); err != nil {
-				return err
-			}
-			if err := d.Set("record_version", (s.RecordVersion)); err != nil {
-				return err
+			if err := d.Set("disk", flattenMapNiatelemetryDiskinfo(s.GetDisk(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Disk: %+v", err)
 			}
 
-			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRef(s.RegisteredDevice, d)); err != nil {
-				return err
+			if err := d.Set("license_state", flattenMapNiatelemetryNiaLicenseStateRelationship(s.GetLicenseState(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property LicenseState: %+v", err)
 			}
-			if err := d.Set("serial", (s.Serial)); err != nil {
-				return err
+			if err := d.Set("log_in_time", (s.GetLogInTime())); err != nil {
+				return fmt.Errorf("error occurred while setting property LogInTime: %+v", err)
 			}
-			if err := d.Set("software_download", (s.SoftwareDownload)); err != nil {
-				return err
+			if err := d.Set("log_out_time", (s.GetLogOutTime())); err != nil {
+				return fmt.Errorf("error occurred while setting property LogOutTime: %+v", err)
+			}
+			if err := d.Set("memory", (s.GetMemory())); err != nil {
+				return fmt.Errorf("error occurred while setting property Memory: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("record_type", (s.GetRecordType())); err != nil {
+				return fmt.Errorf("error occurred while setting property RecordType: %+v", err)
+			}
+			if err := d.Set("record_version", (s.GetRecordVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property RecordVersion: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("registered_device", flattenMapAssetDeviceRegistrationRelationship(s.GetRegisteredDevice(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property RegisteredDevice: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+			if err := d.Set("serial", (s.GetSerial())); err != nil {
+				return fmt.Errorf("error occurred while setting property Serial: %+v", err)
 			}
-			d.SetId(s.Moid)
+			if err := d.Set("software_download", (s.GetSoftwareDownload())); err != nil {
+				return fmt.Errorf("error occurred while setting property SoftwareDownload: %+v", err)
+			}
+
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
+			}
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

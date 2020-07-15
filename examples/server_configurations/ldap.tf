@@ -22,7 +22,7 @@ resource "intersight_iam_ldap_policy" "ldap1" {
     timeout                    = 180
   }
   dns_parameters {
-    source        = "Extracted"
+    nr_source        = "Extracted"
     search_forest = "xyz"
     search_domain = "abc"
   }
@@ -53,7 +53,7 @@ resource "intersight_iam_ldap_policy" "ldap2" {
     timeout                    = 180
   }
   dns_parameters {
-    source        = "Extracted"
+    nr_source        = "Extracted"
     search_forest = "xyz"
     search_domain = "abc"
   }
@@ -77,7 +77,6 @@ IamLdapPolicyApi: {
         "Domain": "new.com",
         "EnableEncryption": True,
         "BindDn": "admin",
-        "Password": "xyz",
         "Timeout": 180,
         "BindMethod": "Anonymous",
         "Filter": "sAMAccountName",

@@ -2,10 +2,11 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,6 +17,11 @@ func resourceIamCertificate() *schema.Resource {
 		Update: resourceIamCertificateUpdate,
 		Delete: resourceIamCertificateDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"certificate": {
 				Description: "User-input pem-encoded certificate, signed by a CAcert.",
 				Type:        schema.TypeList,
@@ -60,17 +66,13 @@ func resourceIamCertificate() *schema.Resource {
 										Computed:    true,
 									},
 									"country": {
-										Description: "Identifier for the country in which the entity resides.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"locality": {
-										Description: "Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"object_type": {
@@ -80,24 +82,18 @@ func resourceIamCertificate() *schema.Resource {
 										Computed:    true,
 									},
 									"organization": {
-										Description: "Identifier for the organization in which the entity resides.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"organizational_unit": {
-										Description: "Identifier for a unit within the organization.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"state": {
-										Description: "Identifier for the state or province of the entity.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 								},
@@ -153,17 +149,13 @@ func resourceIamCertificate() *schema.Resource {
 										Computed:    true,
 									},
 									"country": {
-										Description: "Identifier for the country in which the entity resides.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"locality": {
-										Description: "Identifier for the place where the entry resides. The locality can be a city, county, township, or other geographic region.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"object_type": {
@@ -173,24 +165,18 @@ func resourceIamCertificate() *schema.Resource {
 										Computed:    true,
 									},
 									"organization": {
-										Description: "Identifier for the organization in which the entity resides.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"organizational_unit": {
-										Description: "Identifier for a unit within the organization.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 									"state": {
-										Description: "Identifier for the state or province of the entity.",
-										Type:        schema.TypeList,
-										Optional:    true,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
 								},
@@ -203,12 +189,23 @@ func resourceIamCertificate() *schema.Resource {
 				Computed:   true,
 			},
 			"certificate_request": {
-				Description: "The certificate signing request associated with this certificate.",
+				Description: "A reference to a iamCertificateRequest resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -216,7 +213,7 @@ func resourceIamCertificate() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -252,35 +249,6 @@ func resourceIamCertificate() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"status": {
 				Description: "Status of the certificate.",
 				Type:        schema.TypeString,
@@ -288,9 +256,8 @@ func resourceIamCertificate() *schema.Resource {
 				Computed:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -298,22 +265,10 @@ func resourceIamCertificate() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -322,64 +277,64 @@ func resourceIamCertificate() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 		},
 	}
 }
+
 func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamCertificate
+	var o = models.NewIamCertificateWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if v, ok := d.GetOk("certificate"); ok {
-		p := models.X509Certificate{}
-		if len(v.([]interface{})) > 0 {
-			o := models.X509Certificate{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.X509Certificate, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewX509CertificateWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.X509CertificateAO1P1.X509CertificateAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("x509.Certificate")
 			if v, ok := l["issuer"]; ok {
 				{
-					p := models.PkixDistinguishedName{}
-					if len(v.([]interface{})) > 0 {
-						o := models.PkixDistinguishedName{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.PkixDistinguishedName, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewPkixDistinguishedNameWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
 							{
 								x := (v.(string))
-								o.CommonName = x
+								o.SetCommonName(x)
 							}
 						}
 						if v, ok := l["country"]; ok {
@@ -389,7 +344,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Country = x
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -399,13 +356,15 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Locality = x
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["organization"]; ok {
@@ -415,7 +374,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Organization = x
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -425,7 +386,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.OrganizationalUnit = x
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -435,68 +398,65 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.State = x
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.Issuer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetIssuer(x)
 					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["pem_certificate"]; ok {
 				{
 					x := (v.(string))
-					o.PemCertificate = x
+					o.SetPemCertificate(x)
 				}
 			}
 			if v, ok := l["sha256_fingerprint"]; ok {
 				{
 					x := (v.(string))
-					o.Sha256Fingerprint = x
+					o.SetSha256Fingerprint(x)
 				}
 			}
 			if v, ok := l["signature_algorithm"]; ok {
 				{
 					x := (v.(string))
-					o.SignatureAlgorithm = x
+					o.SetSignatureAlgorithm(x)
 				}
 			}
 			if v, ok := l["subject"]; ok {
 				{
-					p := models.PkixDistinguishedName{}
-					if len(v.([]interface{})) > 0 {
-						o := models.PkixDistinguishedName{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.PkixDistinguishedName, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewPkixDistinguishedNameWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
 							{
 								x := (v.(string))
-								o.CommonName = x
+								o.SetCommonName(x)
 							}
 						}
 						if v, ok := l["country"]; ok {
@@ -506,7 +466,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Country = x
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -516,13 +478,15 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Locality = x
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["organization"]; ok {
@@ -532,7 +496,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Organization = x
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -542,7 +508,9 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.OrganizationalUnit = x
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -552,186 +520,126 @@ func resourceIamCertificateCreate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.State = x
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.Subject = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetSubject(x)
 					}
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Certificate = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCertificate(x)
 		}
-
 	}
 
 	if v, ok := d.GetOk("certificate_request"); ok {
-		p := models.IamCertificateRequestRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamCertificateRequestRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamCertificateRequestRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsIamCertificateRequestRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.CertificateRequest = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCertificateRequest(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
-	}
+	o.SetClassId("iam.Certificate")
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
-	}
+	o.SetObjectType("iam.Certificate")
 
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = x
-
+		o.SetStatus(x)
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
-
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	url := "iam/Certificates"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.CreateIamCertificate(conn.ctx).IamCertificate(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamCertificateRead(d, meta)
 }
 
@@ -740,108 +648,105 @@ func resourceIamCertificateRead(d *schema.ResourceData, meta interface{}) error 
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "iam/Certificates" + "/" + d.Id()
+	r := conn.ApiClient.IamApi.GetIamCertificateByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.IamCertificate
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("certificate", flattenMapX509Certificate(s.Certificate, d)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("certificate_request", flattenMapIamCertificateRequestRef(s.CertificateRequest, d)); err != nil {
-		return err
+	if err := d.Set("certificate", flattenMapX509Certificate(s.GetCertificate(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Certificate: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("certificate_request", flattenMapIamCertificateRequestRelationship(s.GetCertificateRequest(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property CertificateRequest: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("status", (s.Status)); err != nil {
-		return err
+	if err := d.Set("status", (s.GetStatus())); err != nil {
+		return fmt.Errorf("error occurred while setting property Status: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamCertificate
+	var o = models.NewIamCertificateWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
+	}
+
 	if d.HasChange("certificate") {
 		v := d.Get("certificate")
-		p := models.X509Certificate{}
-		if len(v.([]interface{})) > 0 {
-			o := models.X509Certificate{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.X509Certificate, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewX509CertificateWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.X509CertificateAO1P1.X509CertificateAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("x509.Certificate")
 			if v, ok := l["issuer"]; ok {
 				{
-					p := models.PkixDistinguishedName{}
-					if len(v.([]interface{})) > 0 {
-						o := models.PkixDistinguishedName{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.PkixDistinguishedName, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewPkixDistinguishedNameWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
 							{
 								x := (v.(string))
-								o.CommonName = x
+								o.SetCommonName(x)
 							}
 						}
 						if v, ok := l["country"]; ok {
@@ -851,7 +756,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Country = x
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -861,13 +768,15 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Locality = x
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["organization"]; ok {
@@ -877,7 +786,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Organization = x
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -887,7 +798,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.OrganizationalUnit = x
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -897,68 +810,65 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.State = x
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.Issuer = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetIssuer(x)
 					}
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["pem_certificate"]; ok {
 				{
 					x := (v.(string))
-					o.PemCertificate = x
+					o.SetPemCertificate(x)
 				}
 			}
 			if v, ok := l["sha256_fingerprint"]; ok {
 				{
 					x := (v.(string))
-					o.Sha256Fingerprint = x
+					o.SetSha256Fingerprint(x)
 				}
 			}
 			if v, ok := l["signature_algorithm"]; ok {
 				{
 					x := (v.(string))
-					o.SignatureAlgorithm = x
+					o.SetSignatureAlgorithm(x)
 				}
 			}
 			if v, ok := l["subject"]; ok {
 				{
-					p := models.PkixDistinguishedName{}
-					if len(v.([]interface{})) > 0 {
-						o := models.PkixDistinguishedName{}
-						l := (v.([]interface{})[0]).(map[string]interface{})
+					p := make([]models.PkixDistinguishedName, 0, 1)
+					s := v.([]interface{})
+					for i := 0; i < len(s); i++ {
+						l := s[i].(map[string]interface{})
+						o := models.NewPkixDistinguishedNameWithDefaults()
 						if v, ok := l["additional_properties"]; ok {
 							{
 								x := []byte(v.(string))
 								var x1 interface{}
 								err := json.Unmarshal(x, &x1)
 								if err == nil && x1 != nil {
-									o.PkixDistinguishedNameAO1P1.PkixDistinguishedNameAO1P1 = x1.(map[string]interface{})
+									o.AdditionalProperties = x1.(map[string]interface{})
 								}
 							}
 						}
-						if v, ok := l["class_id"]; ok {
-							{
-								x := (v.(string))
-								o.ClassID = x
-							}
-						}
+						o.SetClassId("pkix.DistinguishedName")
 						if v, ok := l["common_name"]; ok {
 							{
 								x := (v.(string))
-								o.CommonName = x
+								o.SetCommonName(x)
 							}
 						}
 						if v, ok := l["country"]; ok {
@@ -968,7 +878,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Country = x
+								if len(x) > 0 {
+									o.SetCountry(x)
+								}
 							}
 						}
 						if v, ok := l["locality"]; ok {
@@ -978,13 +890,15 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Locality = x
+								if len(x) > 0 {
+									o.SetLocality(x)
+								}
 							}
 						}
 						if v, ok := l["object_type"]; ok {
 							{
 								x := (v.(string))
-								o.ObjectType = x
+								o.SetObjectType(x)
 							}
 						}
 						if v, ok := l["organization"]; ok {
@@ -994,7 +908,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.Organization = x
+								if len(x) > 0 {
+									o.SetOrganization(x)
+								}
 							}
 						}
 						if v, ok := l["organizational_unit"]; ok {
@@ -1004,7 +920,9 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.OrganizationalUnit = x
+								if len(x) > 0 {
+									o.SetOrganizationalUnit(x)
+								}
 							}
 						}
 						if v, ok := l["state"]; ok {
@@ -1014,185 +932,130 @@ func resourceIamCertificateUpdate(d *schema.ResourceData, meta interface{}) erro
 								for i := 0; i < y.Len(); i++ {
 									x = append(x, y.Index(i).Interface().(string))
 								}
-								o.State = x
+								if len(x) > 0 {
+									o.SetState(x)
+								}
 							}
 						}
-
-						p = o
+						p = append(p, *o)
 					}
-					x := p
-					if len(v.([]interface{})) > 0 {
-						o.Subject = &x
+					if len(p) > 0 {
+						x := p[0]
+						o.SetSubject(x)
 					}
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Certificate = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCertificate(x)
 		}
 	}
 
 	if d.HasChange("certificate_request") {
 		v := d.Get("certificate_request")
-		p := models.IamCertificateRequestRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamCertificateRequestRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamCertificateRequestRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsIamCertificateRequestRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.CertificateRequest = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetCertificateRequest(x)
 		}
 	}
 
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
-	}
+	o.SetClassId("iam.Certificate")
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-	}
+	o.SetObjectType("iam.Certificate")
 
 	if d.HasChange("status") {
 		v := d.Get("status")
 		x := (v.(string))
-		o.Status = x
+		o.SetStatus(x)
 	}
 
 	if d.HasChange("tags") {
 		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
 			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.Tags = x
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	url := "iam/Certificates" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.IamApi.UpdateIamCertificate(conn.ctx, d.Id()).IamCertificate(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamCertificateRead(d, meta)
 }
 
@@ -1200,10 +1063,10 @@ func resourceIamCertificateDelete(d *schema.ResourceData, meta interface{}) erro
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "iam/Certificates" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.IamApi.DeleteIamCertificate(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,17 +16,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 		Read: dataSourceApplianceImageBundleRead,
 		Schema: map[string]*schema.Schema{
 			"ansible_packages": {
-				Description: "Collection of the Intersight Appliance's system installation packages.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -81,7 +74,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -89,6 +82,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"auto_upgrade": {
 				Description: "Indicates that the software upgrade was automatically initiated by the Intersight Appliance.",
@@ -103,17 +97,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Computed:    true,
 			},
 			"dc_packages": {
-				Description: "Collection of the Intersight Appliance's device connector packages.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -168,7 +155,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -176,19 +163,13 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"debug_packages": {
-				Description: "Collection of the Intersight Appliance's developer debug packages. Optional, and not installed by default.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -243,7 +224,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -251,6 +232,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"description": {
 				Description: "Short description of the software upgrade bundle.",
@@ -259,17 +241,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Computed:    true,
 			},
 			"endpoint_packages": {
-				Description: "Collection of the Intersight Appliance's endpoint UI packages such as Cisco UCSM, Cisco HyperFlex etc.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -324,7 +299,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -332,6 +307,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"fingerprint": {
 				Description: "Fingerprint of the software manifest from which this bundle is created. Fingerprint is calculated using the SHA256 algorithm.",
@@ -346,17 +322,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Computed:    true,
 			},
 			"infra_packages": {
-				Description: "Collection of the Intersight Appliance's infrastructure service packages such as database.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -411,7 +380,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -419,19 +388,13 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"init_packages": {
-				Description: "Collection of the Intersight Appliance's initialization service packages.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -486,7 +449,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -494,6 +457,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -519,34 +483,6 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"priority": {
 				Description: "Software upgrade manifest's upgrade priority. The upgrade service supports two priorities, Normal and Critical. Normal priority is used for regular software upgrades, and the upgrade service uses the Upgrade Policy to compute upgrade start time. Critical priority is used for the critical software security patches, and the upgrade service ignores the Upgrade Policy when it computes the upgrade start time.",
 				Type:        schema.TypeString,
@@ -560,17 +496,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Computed:    true,
 			},
 			"service_packages": {
-				Description: "Collection of the Intersight Appliance's micro-services pakages.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -625,7 +554,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -633,6 +562,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"status_message": {
 				Description: "Status message set during the manifest processing.",
@@ -641,17 +571,10 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Computed:    true,
 			},
 			"system_packages": {
-				Description: "Collection of the Intersight Appliance's system packages such as DNS etc.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -706,7 +629,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -714,34 +637,17 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -750,20 +656,12 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 			"ui_packages": {
-				Description: "Collection of the Intersight Appliance's UI packages of the micro-services.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -818,7 +716,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"version": {
+						"nr_version": {
 							Description: "Image package version string.",
 							Type:        schema.TypeString,
 							Optional:    true,
@@ -826,6 +724,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 						},
 					},
 				},
+				Computed: true,
 			},
 			"upgrade_end_time": {
 				Description: "End date of the software upgrade process.",
@@ -857,7 +756,7 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"version": {
+			"nr_version": {
 				Description: "Software upgrade manifest's version.",
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -866,96 +765,104 @@ func dataSourceApplianceImageBundle() *schema.Resource {
 		},
 	}
 }
+
 func dataSourceApplianceImageBundleRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "appliance/ImageBundles"
-	var o models.ApplianceImageBundle
+	var o = models.NewApplianceImageBundleWithDefaults()
 	if v, ok := d.GetOk("auto_upgrade"); ok {
 		x := (v.(bool))
-		o.AutoUpgrade = &x
+		o.SetAutoUpgrade(x)
 	}
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 	if v, ok := d.GetOk("fingerprint"); ok {
 		x := (v.(string))
-		o.Fingerprint = x
+		o.SetFingerprint(x)
 	}
 	if v, ok := d.GetOk("has_error"); ok {
 		x := (v.(bool))
-		o.HasError = &x
+		o.SetHasError(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("name"); ok {
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 	if v, ok := d.GetOk("notes"); ok {
 		x := (v.(string))
-		o.Notes = x
+		o.SetNotes(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("priority"); ok {
 		x := (v.(string))
-		o.Priority = x
+		o.SetPriority(x)
 	}
 	if v, ok := d.GetOk("release_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.ReleaseTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetReleaseTime(x)
 	}
 	if v, ok := d.GetOk("status_message"); ok {
 		x := (v.(string))
-		o.StatusMessage = x
+		o.SetStatusMessage(x)
 	}
 	if v, ok := d.GetOk("upgrade_end_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.UpgradeEndTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetUpgradeEndTime(x)
 	}
 	if v, ok := d.GetOk("upgrade_grace_period"); ok {
 		x := int64(v.(int))
-		o.UpgradeGracePeriod = x
+		o.SetUpgradeGracePeriod(x)
 	}
 	if v, ok := d.GetOk("upgrade_impact_duration"); ok {
 		x := int64(v.(int))
-		o.UpgradeImpactDuration = x
+		o.SetUpgradeImpactDuration(x)
 	}
 	if v, ok := d.GetOk("upgrade_impact_enum"); ok {
 		x := (v.(string))
-		o.UpgradeImpactEnum = x
+		o.SetUpgradeImpactEnum(x)
 	}
 	if v, ok := d.GetOk("upgrade_start_time"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.UpgradeStartTime = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetUpgradeStartTime(x)
 	}
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOk("nr_version"); ok {
 		x := (v.(string))
-		o.Version = x
+		o.SetVersion(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.ApplianceApi.GetApplianceImageBundleList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.ApplianceImageBundleList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to ApplianceImageBundle: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -963,113 +870,112 @@ func dataSourceApplianceImageBundleRead(d *schema.ResourceData, meta interface{}
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.ApplianceImageBundle
+			var s = models.NewApplianceImageBundleWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
+			}
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
 
-			if err := d.Set("ansible_packages", flattenListOnpremImagePackage(s.AnsiblePackages, d)); err != nil {
-				return err
+			if err := d.Set("ansible_packages", flattenListOnpremImagePackage(s.GetAnsiblePackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property AnsiblePackages: %+v", err)
 			}
-			if err := d.Set("auto_upgrade", (s.AutoUpgrade)); err != nil {
-				return err
+			if err := d.Set("auto_upgrade", (s.GetAutoUpgrade())); err != nil {
+				return fmt.Errorf("error occurred while setting property AutoUpgrade: %+v", err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
-			}
-
-			if err := d.Set("dc_packages", flattenListOnpremImagePackage(s.DcPackages, d)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("debug_packages", flattenListOnpremImagePackage(s.DebugPackages, d)); err != nil {
-				return err
-			}
-			if err := d.Set("description", (s.Description)); err != nil {
-				return err
+			if err := d.Set("dc_packages", flattenListOnpremImagePackage(s.GetDcPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property DcPackages: %+v", err)
 			}
 
-			if err := d.Set("endpoint_packages", flattenListOnpremImagePackage(s.EndpointPackages, d)); err != nil {
-				return err
+			if err := d.Set("debug_packages", flattenListOnpremImagePackage(s.GetDebugPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property DebugPackages: %+v", err)
 			}
-			if err := d.Set("fingerprint", (s.Fingerprint)); err != nil {
-				return err
-			}
-			if err := d.Set("has_error", (s.HasError)); err != nil {
-				return err
+			if err := d.Set("description", (s.GetDescription())); err != nil {
+				return fmt.Errorf("error occurred while setting property Description: %+v", err)
 			}
 
-			if err := d.Set("infra_packages", flattenListOnpremImagePackage(s.InfraPackages, d)); err != nil {
-				return err
+			if err := d.Set("endpoint_packages", flattenListOnpremImagePackage(s.GetEndpointPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property EndpointPackages: %+v", err)
+			}
+			if err := d.Set("fingerprint", (s.GetFingerprint())); err != nil {
+				return fmt.Errorf("error occurred while setting property Fingerprint: %+v", err)
+			}
+			if err := d.Set("has_error", (s.GetHasError())); err != nil {
+				return fmt.Errorf("error occurred while setting property HasError: %+v", err)
 			}
 
-			if err := d.Set("init_packages", flattenListOnpremImagePackage(s.InitPackages, d)); err != nil {
-				return err
-			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("name", (s.Name)); err != nil {
-				return err
-			}
-			if err := d.Set("notes", (s.Notes)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("infra_packages", flattenListOnpremImagePackage(s.GetInfraPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InfraPackages: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("init_packages", flattenListOnpremImagePackage(s.GetInitPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property InitPackages: %+v", err)
 			}
-			if err := d.Set("priority", (s.Priority)); err != nil {
-				return err
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 			}
-
-			if err := d.Set("release_time", (s.ReleaseTime).String()); err != nil {
-				return err
+			if err := d.Set("name", (s.GetName())); err != nil {
+				return fmt.Errorf("error occurred while setting property Name: %+v", err)
 			}
-
-			if err := d.Set("service_packages", flattenListOnpremImagePackage(s.ServicePackages, d)); err != nil {
-				return err
+			if err := d.Set("notes", (s.GetNotes())); err != nil {
+				return fmt.Errorf("error occurred while setting property Notes: %+v", err)
 			}
-			if err := d.Set("status_message", (s.StatusMessage)); err != nil {
-				return err
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 			}
-
-			if err := d.Set("system_packages", flattenListOnpremImagePackage(s.SystemPackages, d)); err != nil {
-				return err
+			if err := d.Set("priority", (s.GetPriority())); err != nil {
+				return fmt.Errorf("error occurred while setting property Priority: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("release_time", (s.GetReleaseTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property ReleaseTime: %+v", err)
 			}
 
-			if err := d.Set("ui_packages", flattenListOnpremImagePackage(s.UIPackages, d)); err != nil {
-				return err
+			if err := d.Set("service_packages", flattenListOnpremImagePackage(s.GetServicePackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property ServicePackages: %+v", err)
+			}
+			if err := d.Set("status_message", (s.GetStatusMessage())); err != nil {
+				return fmt.Errorf("error occurred while setting property StatusMessage: %+v", err)
 			}
 
-			if err := d.Set("upgrade_end_time", (s.UpgradeEndTime).String()); err != nil {
-				return err
-			}
-			if err := d.Set("upgrade_grace_period", (s.UpgradeGracePeriod)); err != nil {
-				return err
-			}
-			if err := d.Set("upgrade_impact_duration", (s.UpgradeImpactDuration)); err != nil {
-				return err
-			}
-			if err := d.Set("upgrade_impact_enum", (s.UpgradeImpactEnum)); err != nil {
-				return err
+			if err := d.Set("system_packages", flattenListOnpremImagePackage(s.GetSystemPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property SystemPackages: %+v", err)
 			}
 
-			if err := d.Set("upgrade_start_time", (s.UpgradeStartTime).String()); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			if err := d.Set("version", (s.Version)); err != nil {
-				return err
+
+			if err := d.Set("ui_packages", flattenListOnpremImagePackage(s.GetUiPackages(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property UiPackages: %+v", err)
 			}
-			d.SetId(s.Moid)
+
+			if err := d.Set("upgrade_end_time", (s.GetUpgradeEndTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property UpgradeEndTime: %+v", err)
+			}
+			if err := d.Set("upgrade_grace_period", (s.GetUpgradeGracePeriod())); err != nil {
+				return fmt.Errorf("error occurred while setting property UpgradeGracePeriod: %+v", err)
+			}
+			if err := d.Set("upgrade_impact_duration", (s.GetUpgradeImpactDuration())); err != nil {
+				return fmt.Errorf("error occurred while setting property UpgradeImpactDuration: %+v", err)
+			}
+			if err := d.Set("upgrade_impact_enum", (s.GetUpgradeImpactEnum())); err != nil {
+				return fmt.Errorf("error occurred while setting property UpgradeImpactEnum: %+v", err)
+			}
+
+			if err := d.Set("upgrade_start_time", (s.GetUpgradeStartTime()).String()); err != nil {
+				return fmt.Errorf("error occurred while setting property UpgradeStartTime: %+v", err)
+			}
+			if err := d.Set("nr_version", (s.GetVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property Version: %+v", err)
+			}
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

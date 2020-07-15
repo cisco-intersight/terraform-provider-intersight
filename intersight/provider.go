@@ -27,8 +27,8 @@ func Provider() terraform.ResourceProvider {
 				Description: "Endpoint URL",
 			},
 		},
-		DataSourcesMap: GetDataSourceMapping(),
 		ResourcesMap:   GetResourceMapping(),
+		DataSourcesMap: GetDataSourceMapping(),
 		ConfigureFunc:  configureProvider,
 	}
 }
@@ -39,5 +39,9 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		SecretKeyFile: d.Get("secretkeyfile").(string),
 		Endpoint:      d.Get("endpoint").(string),
 	}
+
+	client := Client{}
+	config.ctx = client.SetInputs(config.ApiKey, config.SecretKeyFile, config.Endpoint, true)
+	config.ApiClient = client.GetApiClient(config.ctx, true)
 	return &config, nil
 }

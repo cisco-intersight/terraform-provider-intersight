@@ -2,11 +2,12 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
+	"time"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
-	"github.com/go-openapi/strfmt"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -18,13 +19,24 @@ func resourceIamAppRegistration() *schema.Resource {
 		Delete: resourceIamAppRegistrationDelete,
 		Schema: map[string]*schema.Schema{
 			"account": {
-				Description: "A collection of references to the [iam.Account](mo://iam.Account) Managed Object.\nWhen this managed object is deleted, the referenced [iam.Account](mo://iam.Account) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a iamAccount resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -32,7 +44,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -46,6 +58,11 @@ func resourceIamAppRegistration() *schema.Resource {
 					},
 				},
 				ConfigMode: schema.SchemaConfigModeAttr,
+			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
 			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
@@ -81,10 +98,8 @@ func resourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"grant_types": {
-				Description: "The set of grant types that OAuth2 clients can use for this application.\nThe grant type is used in the OAuth2 login flow to validate the grant type that has been requested by the client.\nSee https://tools.ietf.org/html/rfc7591#page-9 for more details.\n# It is set automatically when AppRegistration is created since currently we do not provide option for the user.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"moid": {
@@ -95,12 +110,23 @@ func resourceIamAppRegistration() *schema.Resource {
 				ForceNew:    true,
 			},
 			"oauth_tokens": {
-				Description: "Collection of the OAuth2 tokens. Each OAuth2 token represents valid OAuth session.\nOAuth2 token is created when login over OAuth2 is performed using Authorization Code grant type.",
+				Description: "An array of relationships to iamOAuthToken resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -108,7 +134,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -130,13 +156,24 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:    true,
 			},
 			"permission": {
-				Description: "Permission associated with OAuth token issued through Client Credentials flow. Permission of the current session will be used.",
+				Description: "A reference to a iamPermission resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -144,36 +181,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -189,9 +197,8 @@ func resourceIamAppRegistration() *schema.Resource {
 				ConfigMode: schema.SchemaConfigModeAttr,
 			},
 			"redirect_uris": {
-				Description: "After a user successfully authorizes an application, the OAuth2 authorization server will redirect the user back to the\napplication with either an authorization code or access token in the URL.\nRegistered redirect URLs may contain query string parameters, but must not contain anything in the fragment.\nThe registration server rejects the request if a user tries to register a redirect URL that contains a fragment.\nFor native and mobile apps, Intersight allows a user to register a URL scheme such as myapp:// which can then be used\nin the redirect URL. The authorization server allows arbitrary URL schemes to be registered in order to support\nregistering redirect URLs for native apps.\nRedirect URLs are a critical part of the OAuth flow. After a user successfully authorizes an application,\nthe authorization server will redirect the user back to the application with either an authorization code or access\ntoken in the URL. Because the redirect URL will contain sensitive information, it is critical that the service\ndoesn’t redirect the user to arbitrary locations.\nThe best way to ensure the user will only be directed to appropriate locations is to require the developer to\nregister one or more redirect URLs when they create the application.\nThe redirection endpoint URI MUST be an absolute URI.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"renew_client_secret": {
@@ -200,10 +207,8 @@ func resourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"response_types": {
-				Description: "The set of response types that a OAuth2 client can use.\nThis is static list and it is set automatically when AppRegistration is created.\nAccording to RFC, it is used in OAuth2 login flow to check that this AppRegistration supports response type from the request.\nSee https://tools.ietf.org/html/rfc7591#page-9 for more details.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
 			"revocation_timestamp": {
@@ -218,11 +223,22 @@ func resourceIamAppRegistration() *schema.Resource {
 				Optional:    true,
 			},
 			"roles": {
-				Description: "The set of roles that can be used when a OAuth2 client is accessing this registered application.\nFor example, multiple roles may be defined in your Intersight account, but you want users to login\nwith the 'Read-Only' role when accessing Intersight through a registered application.\nIn that case, the 'roles' property should contain a single element referencing the 'Read-Only' role.\nA user can only assign roles they already have.\nThis relationship is deprecated. Authorization is now performed by passing the 'scope' query parameter\nin the first request of the Authorization Code OAuth2 flow.\nThe value of the 'scope' parameter is a list of scope names separated by comma:\nROLE.Account Administrator, ROLE.<any role name>.",
+				Description: "An array of relationships to iamRole resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -230,7 +246,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -247,9 +263,34 @@ func resourceIamAppRegistration() *schema.Resource {
 				Computed:   true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"key": {
+							Description: "The string representation of a tag key.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"value": {
+							Description: "The string representation of a tag value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+					},
+				},
+			},
+			"user": {
+				Description: "A reference to a iamUser resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
+				MaxItems:    1,
 				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -263,35 +304,6 @@ func resourceIamAppRegistration() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
-						"key": {
-							Description: "The string representation of a tag key.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"value": {
-							Description: "The string representation of a tag value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
-			},
-			"user": {
-				Description: "A collection of references to the [iam.User](mo://iam.User) Managed Object.\nWhen this managed object is deleted, the referenced [iam.User](mo://iam.User) MO unsets its reference to this deleted MO.",
-				Type:        schema.TypeList,
-				MaxItems:    1,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -299,7 +311,7 @@ func resourceIamAppRegistration() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -317,200 +329,192 @@ func resourceIamAppRegistration() *schema.Resource {
 		},
 	}
 }
+
 func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamAppRegistration
+	var o = models.NewIamAppRegistrationWithDefaults()
 	if v, ok := d.GetOk("account"); ok {
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Account = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("iam.AppRegistration")
 
 	if v, ok := d.GetOk("client_id"); ok {
 		x := (v.(string))
-		o.ClientID = x
-
+		o.SetClientId(x)
 	}
 
 	if v, ok := d.GetOk("client_name"); ok {
 		x := (v.(string))
-		o.ClientName = x
-
+		o.SetClientName(x)
 	}
 
 	if v, ok := d.GetOk("client_secret"); ok {
 		x := (v.(string))
-		o.ClientSecret = x
-
+		o.SetClientSecret(x)
 	}
 
 	if v, ok := d.GetOk("client_type"); ok {
 		x := (v.(string))
-		o.ClientType = &x
-
+		o.SetClientType(x)
 	}
 
 	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.Description = x
-
+		o.SetDescription(x)
 	}
 
 	if v, ok := d.GetOk("grant_types"); ok {
-		x := make([]*string, 0)
+		x := make([]string, 0)
 		y := reflect.ValueOf(v)
 		for i := 0; i < y.Len(); i++ {
-			a := y.Index(i).Interface().(string)
-			x = append(x, &a)
+			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.GrantTypes = x
-
+		if len(x) > 0 {
+			o.SetGrantTypes(x)
+		}
 	}
 
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
-
+		o.SetMoid(x)
 	}
 
 	if v, ok := d.GetOk("oauth_tokens"); ok {
-		x := make([]*models.IamOAuthTokenRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamOAuthTokenRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamOAuthTokenRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.OauthTokens = x
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("permission"); ok {
-		p := models.IamPermissionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPermissionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsIamOAuthTokenRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Permission = &x
+		if len(x) > 0 {
+			o.SetOauthTokens(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
+	o.SetObjectType("iam.AppRegistration")
 
+	if v, ok := d.GetOk("permission"); ok {
+		p := make([]models.IamPermissionRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamPermissionRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPermission(x)
+		}
 	}
 
 	if v, ok := d.GetOk("redirect_uris"); ok {
@@ -519,171 +523,164 @@ func resourceIamAppRegistrationCreate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.RedirectUris = x
-
+		if len(x) > 0 {
+			o.SetRedirectUris(x)
+		}
 	}
 
 	if v, ok := d.GetOkExists("renew_client_secret"); ok {
 		x := v.(bool)
-		o.RenewClientSecret = &x
+		o.SetRenewClientSecret(x)
 	}
 
 	if v, ok := d.GetOk("response_types"); ok {
-		x := make([]*string, 0)
+		x := make([]string, 0)
 		y := reflect.ValueOf(v)
 		for i := 0; i < y.Len(); i++ {
-			a := y.Index(i).Interface().(string)
-			x = append(x, &a)
+			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.ResponseTypes = x
-
+		if len(x) > 0 {
+			o.SetResponseTypes(x)
+		}
 	}
 
 	if v, ok := d.GetOk("revocation_timestamp"); ok {
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.RevocationTimestamp = x
-
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetRevocationTimestamp(x)
 	}
 
 	if v, ok := d.GetOkExists("revoke"); ok {
 		x := v.(bool)
-		o.Revoke = &x
+		o.SetRevoke(x)
 	}
 
 	if v, ok := d.GetOk("roles"); ok {
-		x := make([]*models.IamRoleRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamRoleRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamRoleRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.Roles = x
-
-	}
-
-	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
-
-	}
-
-	if v, ok := d.GetOk("user"); ok {
-		p := models.IamUserRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamUserRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsIamRoleRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.User = &x
+		if len(x) > 0 {
+			o.SetRoles(x)
 		}
-
 	}
 
-	url := "iam/AppRegistrations"
-	data, err := o.MarshalJSON()
+	if v, ok := d.GetOk("tags"); ok {
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
+	}
+
+	if v, ok := d.GetOk("user"); ok {
+		p := make([]models.IamUserRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamUserRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUser(x)
+		}
+	}
+
+	r := conn.ApiClient.IamApi.CreateIamAppRegistration(conn.ctx).IamAppRegistration(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamAppRegistrationRead(d, meta)
 }
 
@@ -692,301 +689,298 @@ func resourceIamAppRegistrationRead(d *schema.ResourceData, meta interface{}) er
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "iam/AppRegistrations" + "/" + d.Id()
+	r := conn.ApiClient.IamApi.GetIamAppRegistrationByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.IamAppRegistration
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("account", flattenMapIamAccountRef(s.Account, d)); err != nil {
-		return err
+	if err := d.Set("account", flattenMapIamAccountRelationship(s.GetAccount(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Account: %+v", err)
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("client_id", (s.ClientID)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("client_name", (s.ClientName)); err != nil {
-		return err
+	if err := d.Set("client_id", (s.GetClientId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClientId: %+v", err)
 	}
 
-	if err := d.Set("client_secret", (s.ClientSecret)); err != nil {
-		return err
+	if err := d.Set("client_name", (s.GetClientName())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClientName: %+v", err)
 	}
 
-	if err := d.Set("client_type", (s.ClientType)); err != nil {
-		return err
+	if err := d.Set("client_secret", (s.GetClientSecret())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClientSecret: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("client_type", (s.GetClientType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClientType: %+v", err)
 	}
 
-	if err := d.Set("grant_types", (s.GrantTypes)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("grant_types", (s.GetGrantTypes())); err != nil {
+		return fmt.Errorf("error occurred while setting property GrantTypes: %+v", err)
 	}
 
-	if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRef(s.OauthTokens, d)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("oauth_tokens", flattenListIamOAuthTokenRelationship(s.GetOauthTokens(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property OauthTokens: %+v", err)
 	}
 
-	if err := d.Set("permission", flattenMapIamPermissionRef(s.Permission, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("permission", flattenMapIamPermissionRelationship(s.GetPermission(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Permission: %+v", err)
 	}
 
-	if err := d.Set("redirect_uris", (s.RedirectUris)); err != nil {
-		return err
+	if err := d.Set("redirect_uris", (s.GetRedirectUris())); err != nil {
+		return fmt.Errorf("error occurred while setting property RedirectUris: %+v", err)
 	}
 
-	if err := d.Set("renew_client_secret", (s.RenewClientSecret)); err != nil {
-		return err
+	if err := d.Set("renew_client_secret", (s.GetRenewClientSecret())); err != nil {
+		return fmt.Errorf("error occurred while setting property RenewClientSecret: %+v", err)
 	}
 
-	if err := d.Set("response_types", (s.ResponseTypes)); err != nil {
-		return err
+	if err := d.Set("response_types", (s.GetResponseTypes())); err != nil {
+		return fmt.Errorf("error occurred while setting property ResponseTypes: %+v", err)
 	}
 
-	if err := d.Set("revocation_timestamp", (s.RevocationTimestamp).String()); err != nil {
-		return err
+	if err := d.Set("revocation_timestamp", (s.GetRevocationTimestamp()).String()); err != nil {
+		return fmt.Errorf("error occurred while setting property RevocationTimestamp: %+v", err)
 	}
 
-	if err := d.Set("revoke", (s.Revoke)); err != nil {
-		return err
+	if err := d.Set("revoke", (s.GetRevoke())); err != nil {
+		return fmt.Errorf("error occurred while setting property Revoke: %+v", err)
 	}
 
-	if err := d.Set("roles", flattenListIamRoleRef(s.Roles, d)); err != nil {
-		return err
+	if err := d.Set("roles", flattenListIamRoleRelationship(s.GetRoles(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Roles: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("user", flattenMapIamUserRef(s.User, d)); err != nil {
-		return err
+	if err := d.Set("user", flattenMapIamUserRelationship(s.GetUser(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property User: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.IamAppRegistration
+	var o = models.NewIamAppRegistrationWithDefaults()
 	if d.HasChange("account") {
 		v := d.Get("account")
-		p := models.IamAccountRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamAccountRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.IamAccountRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			p = append(p, models.MoMoRefAsIamAccountRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Account = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetAccount(x)
 		}
 	}
 
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("iam.AppRegistration")
 
 	if d.HasChange("client_id") {
 		v := d.Get("client_id")
 		x := (v.(string))
-		o.ClientID = x
+		o.SetClientId(x)
 	}
 
 	if d.HasChange("client_name") {
 		v := d.Get("client_name")
 		x := (v.(string))
-		o.ClientName = x
+		o.SetClientName(x)
 	}
 
 	if d.HasChange("client_secret") {
 		v := d.Get("client_secret")
 		x := (v.(string))
-		o.ClientSecret = x
+		o.SetClientSecret(x)
 	}
 
 	if d.HasChange("client_type") {
 		v := d.Get("client_type")
 		x := (v.(string))
-		o.ClientType = &x
+		o.SetClientType(x)
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("grant_types") {
 		v := d.Get("grant_types")
-		x := make([]*string, 0)
+		x := make([]string, 0)
 		y := reflect.ValueOf(v)
 		for i := 0; i < y.Len(); i++ {
-			a := y.Index(i).Interface().(string)
-			x = append(x, &a)
+			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.GrantTypes = x
+		if len(x) > 0 {
+			o.SetGrantTypes(x)
+		}
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("oauth_tokens") {
 		v := d.Get("oauth_tokens")
-		x := make([]*models.IamOAuthTokenRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamOAuthTokenRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamOAuthTokenRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.OauthTokens = x
-	}
-
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
-
-	if d.HasChange("permission") {
-		v := d.Get("permission")
-		p := models.IamPermissionRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamPermissionRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsIamOAuthTokenRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Permission = &x
+		if len(x) > 0 {
+			o.SetOauthTokens(x)
 		}
 	}
 
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+	o.SetObjectType("iam.AppRegistration")
+
+	if d.HasChange("permission") {
+		v := d.Get("permission")
+		p := make([]models.IamPermissionRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamPermissionRelationship(o))
 		}
-		o.PermissionResources = x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetPermission(x)
+		}
 	}
 
 	if d.HasChange("redirect_uris") {
@@ -996,172 +990,171 @@ func resourceIamAppRegistrationUpdate(d *schema.ResourceData, meta interface{}) 
 		for i := 0; i < y.Len(); i++ {
 			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.RedirectUris = x
+		if len(x) > 0 {
+			o.SetRedirectUris(x)
+		}
 	}
 
 	if d.HasChange("renew_client_secret") {
 		v := d.Get("renew_client_secret")
 		x := (v.(bool))
-		o.RenewClientSecret = &x
+		o.SetRenewClientSecret(x)
 	}
 
 	if d.HasChange("response_types") {
 		v := d.Get("response_types")
-		x := make([]*string, 0)
+		x := make([]string, 0)
 		y := reflect.ValueOf(v)
 		for i := 0; i < y.Len(); i++ {
-			a := y.Index(i).Interface().(string)
-			x = append(x, &a)
+			x = append(x, y.Index(i).Interface().(string))
 		}
-		o.ResponseTypes = x
+		if len(x) > 0 {
+			o.SetResponseTypes(x)
+		}
 	}
 
 	if d.HasChange("revocation_timestamp") {
 		v := d.Get("revocation_timestamp")
-		x, _ := strfmt.ParseDateTime(v.(string))
-		o.RevocationTimestamp = x
+		x, _ := time.Parse(v.(string), time.RFC1123)
+		o.SetRevocationTimestamp(x)
 	}
 
 	if d.HasChange("revoke") {
 		v := d.Get("revoke")
 		x := (v.(bool))
-		o.Revoke = &x
+		o.SetRevoke(x)
 	}
 
 	if d.HasChange("roles") {
 		v := d.Get("roles")
-		x := make([]*models.IamRoleRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.IamRoleRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.IamRoleRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
-		}
-		o.Roles = x
-	}
-
-	if d.HasChange("tags") {
-		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
-	}
-
-	if d.HasChange("user") {
-		v := d.Get("user")
-		p := models.IamUserRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.IamUserRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsIamRoleRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.User = &x
+		if len(x) > 0 {
+			o.SetRoles(x)
 		}
 	}
 
-	url := "iam/AppRegistrations" + "/" + d.Id()
-	data, err := o.MarshalJSON()
-	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+	if d.HasChange("tags") {
+		v := d.Get("tags")
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
 	}
 
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
+	if d.HasChange("user") {
+		v := d.Get("user")
+		p := make([]models.IamUserRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsIamUserRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetUser(x)
+		}
 	}
 
-	err = o.UnmarshalJSON(body)
+	r := conn.ApiClient.IamApi.UpdateIamAppRegistration(conn.ctx, d.Id()).IamAppRegistration(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceIamAppRegistrationRead(d, meta)
 }
 
@@ -1169,10 +1162,10 @@ func resourceIamAppRegistrationDelete(d *schema.ResourceData, meta interface{}) 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "iam/AppRegistrations" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.IamApi.DeleteIamAppRegistration(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

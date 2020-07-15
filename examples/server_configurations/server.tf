@@ -1,7 +1,8 @@
 resource "intersight_server_profile" "server1" {
   name = "server1"
+  action = "No-op"
   tags {
-    key   = "server"
+    key = "server"
     value = "demo"
   }
   organization {

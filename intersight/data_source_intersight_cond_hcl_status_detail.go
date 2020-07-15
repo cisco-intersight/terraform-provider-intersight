@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -21,13 +21,19 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 				Computed:    true,
 			},
 			"component": {
-				Description: "The related component associated to this status detail HclStatusDetail (adapter or storage controller).",
+				Description: "A reference to a inventoryBase resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -35,7 +41,7 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -80,13 +86,19 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 				Optional:    true,
 			},
 			"hcl_status": {
-				Description: "A collection of references to the [cond.HclStatus](mo://cond.HclStatus) Managed Object.\nWhen this managed object is deleted, the referenced [cond.HclStatus](mo://cond.HclStatus) MO unsets its reference to this deleted MO.",
+				Description: "A reference to a condHclStatus resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -94,7 +106,7 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -145,34 +157,6 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"reason": {
 				Description: "The reason for the status. The reason can be one of \"Incompatible-Server-With-Component\" - HCL validation has failed because the server model is not validated with this component \"Incompatible-Processor\" - HCL validation has failed because the processor is not validated with this server \"Incompatible-Os-Info\" - HCL validation has failed because the os vendor and version is not validated with this server \"Incompatible-Component-Model\" - HCL validation has failed because the component model is not validated \"Incompatible-Firmware\" - HCL validation has failed because the component or server firmware version is not validated \"Incompatible-Driver\" - HCL validation has failed because the driver version is not validated \"Incompatible-Firmware-Driver\" - HCL validation has failed because the firmware version and driver version is not validated \"Missing-Os-Driver-Info\" - HCL validation was not performed because we are missing os driver information form the inventory \"Service-Unavailable\" - HCL data service is unavailable at the moment (try again later). This could be due to HCL data updating \"Service-Error\" - HCL data service is available but an error occured when making the request or parsing the response \"Unrecognized-Protocol\" - This service does not recognize the reason code in the response from the HCL data service \"Compatible\" - this component's inventory data has \"Validated\" status with the HCL. \"Not-Evaluated\" - The component is not evaluated against the HCL because the server is exempted.",
 				Type:        schema.TypeString,
@@ -189,32 +173,14 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 				Optional:    true,
 			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"additional_properties": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: SuppressDiffAdditionProps,
-						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -223,97 +189,104 @@ func dataSourceCondHclStatusDetail() *schema.Resource {
 						},
 					},
 				},
-				Computed: true,
 			},
 		},
 	}
 }
+
 func dataSourceCondHclStatusDetailRead(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-
-	url := "cond/HclStatusDetails"
-	var o models.CondHclStatusDetail
+	var o = models.NewCondHclStatusDetailWithDefaults()
 	if v, ok := d.GetOk("class_id"); ok {
 		x := (v.(string))
-		o.ClassID = x
+		o.SetClassId(x)
 	}
 	if v, ok := d.GetOk("hardware_status"); ok {
 		x := (v.(string))
-		o.HardwareStatus = &x
+		o.SetHardwareStatus(x)
 	}
 	if v, ok := d.GetOk("hcl_cimc_version"); ok {
 		x := (v.(string))
-		o.HclCimcVersion = x
+		o.SetHclCimcVersion(x)
 	}
 	if v, ok := d.GetOk("hcl_driver_name"); ok {
 		x := (v.(string))
-		o.HclDriverName = x
+		o.SetHclDriverName(x)
 	}
 	if v, ok := d.GetOk("hcl_driver_version"); ok {
 		x := (v.(string))
-		o.HclDriverVersion = x
+		o.SetHclDriverVersion(x)
 	}
 	if v, ok := d.GetOk("hcl_firmware_version"); ok {
 		x := (v.(string))
-		o.HclFirmwareVersion = x
+		o.SetHclFirmwareVersion(x)
 	}
 	if v, ok := d.GetOk("hcl_model"); ok {
 		x := (v.(string))
-		o.HclModel = x
+		o.SetHclModel(x)
 	}
 	if v, ok := d.GetOk("inv_cimc_version"); ok {
 		x := (v.(string))
-		o.InvCimcVersion = x
+		o.SetInvCimcVersion(x)
 	}
 	if v, ok := d.GetOk("inv_driver_name"); ok {
 		x := (v.(string))
-		o.InvDriverName = x
+		o.SetInvDriverName(x)
 	}
 	if v, ok := d.GetOk("inv_driver_version"); ok {
 		x := (v.(string))
-		o.InvDriverVersion = x
+		o.SetInvDriverVersion(x)
 	}
 	if v, ok := d.GetOk("inv_firmware_version"); ok {
 		x := (v.(string))
-		o.InvFirmwareVersion = x
+		o.SetInvFirmwareVersion(x)
 	}
 	if v, ok := d.GetOk("inv_model"); ok {
 		x := (v.(string))
-		o.InvModel = x
+		o.SetInvModel(x)
 	}
 	if v, ok := d.GetOk("moid"); ok {
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 	if v, ok := d.GetOk("object_type"); ok {
 		x := (v.(string))
-		o.ObjectType = x
+		o.SetObjectType(x)
 	}
 	if v, ok := d.GetOk("reason"); ok {
 		x := (v.(string))
-		o.Reason = &x
+		o.SetReason(x)
 	}
 	if v, ok := d.GetOk("software_status"); ok {
 		x := (v.(string))
-		o.SoftwareStatus = &x
+		o.SetSoftwareStatus(x)
 	}
 	if v, ok := d.GetOk("status"); ok {
 		x := (v.(string))
-		o.Status = &x
+		o.SetStatus(x)
 	}
 
 	data, err := o.MarshalJSON()
-	body, err := conn.SendGetRequest(url, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Json Marshalling of data source failed with error : %+v", err)
 	}
-	var x = make(map[string]interface{})
-	if err = json.Unmarshal(body, &x); err != nil {
-		return err
+	res, _, err := conn.ApiClient.CondApi.GetCondHclStatusDetailList(conn.ctx).Filter(getRequestParams(data)).Execute()
+	if err != nil {
+		return fmt.Errorf("error occurred while sending request %+v", err)
 	}
-	result := x["Results"]
+
+	x, err := res.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("error occurred while marshalling response: %+v", err)
+	}
+	var s = &models.CondHclStatusDetailList{}
+	err = json.Unmarshal(x, s)
+	if err != nil {
+		return fmt.Errorf("error occurred while unmarshalling response to CondHclStatusDetail: %+v", err)
+	}
+	result := s.GetResults()
 	if result == nil {
 		return fmt.Errorf("your query returned no results. Please change your search criteria and try again")
 	}
@@ -321,79 +294,78 @@ func dataSourceCondHclStatusDetailRead(d *schema.ResourceData, meta interface{})
 	case reflect.Slice:
 		r := reflect.ValueOf(result)
 		for i := 0; i < r.Len(); i++ {
-			var s models.CondHclStatusDetail
+			var s = models.NewCondHclStatusDetailWithDefaults()
 			oo, _ := json.Marshal(r.Index(i).Interface())
-			if err = s.UnmarshalJSON(oo); err != nil {
-				return err
+			if err = json.Unmarshal(oo, s); err != nil {
+				return fmt.Errorf("error occurred while unmarshalling result at index %+v: %+v", i, err)
 			}
-			if err := d.Set("class_id", (s.ClassID)); err != nil {
-				return err
+			if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+				return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 			}
-
-			if err := d.Set("component", flattenMapInventoryBaseRef(s.Component, d)); err != nil {
-				return err
-			}
-			if err := d.Set("hardware_status", (s.HardwareStatus)); err != nil {
-				return err
-			}
-			if err := d.Set("hcl_cimc_version", (s.HclCimcVersion)); err != nil {
-				return err
-			}
-			if err := d.Set("hcl_driver_name", (s.HclDriverName)); err != nil {
-				return err
-			}
-			if err := d.Set("hcl_driver_version", (s.HclDriverVersion)); err != nil {
-				return err
-			}
-			if err := d.Set("hcl_firmware_version", (s.HclFirmwareVersion)); err != nil {
-				return err
-			}
-			if err := d.Set("hcl_model", (s.HclModel)); err != nil {
-				return err
+			if err := d.Set("class_id", (s.GetClassId())); err != nil {
+				return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 			}
 
-			if err := d.Set("hcl_status", flattenMapCondHclStatusRef(s.HclStatus, d)); err != nil {
-				return err
+			if err := d.Set("component", flattenMapInventoryBaseRelationship(s.GetComponent(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Component: %+v", err)
 			}
-			if err := d.Set("inv_cimc_version", (s.InvCimcVersion)); err != nil {
-				return err
+			if err := d.Set("hardware_status", (s.GetHardwareStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property HardwareStatus: %+v", err)
 			}
-			if err := d.Set("inv_driver_name", (s.InvDriverName)); err != nil {
-				return err
+			if err := d.Set("hcl_cimc_version", (s.GetHclCimcVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property HclCimcVersion: %+v", err)
 			}
-			if err := d.Set("inv_driver_version", (s.InvDriverVersion)); err != nil {
-				return err
+			if err := d.Set("hcl_driver_name", (s.GetHclDriverName())); err != nil {
+				return fmt.Errorf("error occurred while setting property HclDriverName: %+v", err)
 			}
-			if err := d.Set("inv_firmware_version", (s.InvFirmwareVersion)); err != nil {
-				return err
+			if err := d.Set("hcl_driver_version", (s.GetHclDriverVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property HclDriverVersion: %+v", err)
 			}
-			if err := d.Set("inv_model", (s.InvModel)); err != nil {
-				return err
+			if err := d.Set("hcl_firmware_version", (s.GetHclFirmwareVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property HclFirmwareVersion: %+v", err)
 			}
-			if err := d.Set("moid", (s.Moid)); err != nil {
-				return err
-			}
-			if err := d.Set("object_type", (s.ObjectType)); err != nil {
-				return err
+			if err := d.Set("hcl_model", (s.GetHclModel())); err != nil {
+				return fmt.Errorf("error occurred while setting property HclModel: %+v", err)
 			}
 
-			if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-				return err
+			if err := d.Set("hcl_status", flattenMapCondHclStatusRelationship(s.GetHclStatus(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property HclStatus: %+v", err)
 			}
-			if err := d.Set("reason", (s.Reason)); err != nil {
-				return err
+			if err := d.Set("inv_cimc_version", (s.GetInvCimcVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property InvCimcVersion: %+v", err)
 			}
-			if err := d.Set("software_status", (s.SoftwareStatus)); err != nil {
-				return err
+			if err := d.Set("inv_driver_name", (s.GetInvDriverName())); err != nil {
+				return fmt.Errorf("error occurred while setting property InvDriverName: %+v", err)
 			}
-			if err := d.Set("status", (s.Status)); err != nil {
-				return err
+			if err := d.Set("inv_driver_version", (s.GetInvDriverVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property InvDriverVersion: %+v", err)
+			}
+			if err := d.Set("inv_firmware_version", (s.GetInvFirmwareVersion())); err != nil {
+				return fmt.Errorf("error occurred while setting property InvFirmwareVersion: %+v", err)
+			}
+			if err := d.Set("inv_model", (s.GetInvModel())); err != nil {
+				return fmt.Errorf("error occurred while setting property InvModel: %+v", err)
+			}
+			if err := d.Set("moid", (s.GetMoid())); err != nil {
+				return fmt.Errorf("error occurred while setting property Moid: %+v", err)
+			}
+			if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+				return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
+			}
+			if err := d.Set("reason", (s.GetReason())); err != nil {
+				return fmt.Errorf("error occurred while setting property Reason: %+v", err)
+			}
+			if err := d.Set("software_status", (s.GetSoftwareStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property SoftwareStatus: %+v", err)
+			}
+			if err := d.Set("status", (s.GetStatus())); err != nil {
+				return fmt.Errorf("error occurred while setting property Status: %+v", err)
 			}
 
-			if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-				return err
+			if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+				return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 			}
-			d.SetId(s.Moid)
+			d.SetId(s.GetMoid())
 		}
 	}
 	return nil

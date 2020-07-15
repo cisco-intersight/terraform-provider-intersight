@@ -25,7 +25,7 @@ KvmPolicyApi: {
   "Tags": [{"Key": "kvm", "Value": "kvm_policy"}],
   "Enabled": True,
   "MaximumSessions": 4,
-  "RemotePort": 1981,
+  "RemotePort": 1800,
   "EnableVideoEncryption": False,
   "EnableLocalServerVideo": False
 }

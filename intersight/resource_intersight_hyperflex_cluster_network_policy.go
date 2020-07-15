@@ -2,10 +2,10 @@ package intersight
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	"reflect"
 
-	"github.com/cisco-intersight/terraform-provider-intersight/models"
+	models "github.com/cisco-intersight/terraform-provider-intersight/intersight_gosdk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -16,6 +16,11 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 		Update: resourceHyperflexClusterNetworkPolicyUpdate,
 		Delete: resourceHyperflexClusterNetworkPolicyDelete,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -23,11 +28,22 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"cluster_profiles": {
-				Description: "List of cluster profiles using this policy.",
+				Description: "An array of relationships to hyperflexClusterProfile resources.",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -35,7 +51,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -207,12 +223,23 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Computed:    true,
 			},
 			"organization": {
-				Description: "Relationship to the Organization that owns the Managed Object.",
+				Description: "A reference to a organizationOrganization resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
+						"class_id": {
+							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
+						},
 						"moid": {
 							Description: "The Moid of the referenced REST resource.",
 							Type:        schema.TypeString,
@@ -220,7 +247,7 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Computed:    true,
 						},
 						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
+							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
@@ -237,39 +264,9 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Computed:   true,
 				ForceNew:   true,
 			},
-			"permission_resources": {
-				Description: "A slice of all permission resources (organizations) associated with this object. Permission ties resources and its associated roles/privileges.\nThese resources which can be specified in a permission is PermissionResource. Currently only organizations can be specified in permission.\nAll logical and physical resources part of an organization will have organization in PermissionResources field.\nIf DeviceRegistration contains another DeviceRegistration and if parent is in org1 and child is part of org2, then child objects will\nhave PermissionResources as org1 and org2. Parent Objects will have PermissionResources as org1.\nAll profiles/policies created with in an organization will have the organization as PermissionResources.",
-				Type:        schema.TypeList,
-				Optional:    true,
-				Computed:    true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"moid": {
-							Description: "The Moid of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"object_type": {
-							Description: "The Object Type of the referenced REST resource.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-						"selector": {
-							Description: "An OData $filter expression which describes the REST resource to be referenced. This field may\nbe set instead of 'moid' by clients.\n1. If 'moid' is set this field is ignored.\n1. If 'selector' is set and 'moid' is empty/absent from the request, Intersight determines the Moid of the\nresource matching the filter expression and populates it in the MoRef that is part of the object\ninstance being inserted/updated to fulfill the REST request.\nAn error is returned if the filter matches zero or more than one REST resource.\nAn example filter string is: Serial eq '3AA8B7T11'.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
-					},
-				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-			},
 			"tags": {
-				Description: "The array of tags, which allow to add key, value meta-data to managed objects.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -277,22 +274,10 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
-						"class_id": {
-							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
 							Optional:    true,
-						},
-						"object_type": {
-							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
 						},
 						"value": {
 							Description: "The string representation of a tag value.",
@@ -301,8 +286,6 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-				ConfigMode: schema.SchemaConfigModeAttr,
-				Computed:   true,
 			},
 			"uplink_speed": {
 				Description: "Link speed of the server adapter port to the upstream switch. When the policy is attached to a cluster profile with EDGE management platform, the uplink speed can be '1G' or '10G+'. Use '10G+' for link speeds of 10G or above. When the policy is attached to a cluster profile with Fabric Interconnect management platform, the uplink speed can be 'default' only.",
@@ -350,9 +333,8 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 				Computed:   true,
 			},
 			"vm_network_vlans": {
-				Description: "The VLANs for VM traffic.\nGuest VMs hosted on the HyperFlex cluster use these VLANs for network communication.",
-				Type:        schema.TypeList,
-				Optional:    true,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"additional_properties": {
@@ -390,476 +372,403 @@ func resourceHyperflexClusterNetworkPolicy() *schema.Resource {
 		},
 	}
 }
+
 func resourceHyperflexClusterNetworkPolicyCreate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.HyperflexClusterNetworkPolicy
-	if v, ok := d.GetOk("class_id"); ok {
-		x := (v.(string))
-		o.ClassID = x
-
+	var o = models.NewHyperflexClusterNetworkPolicyWithDefaults()
+	if v, ok := d.GetOk("additional_properties"); ok {
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("hyperflex.ClusterNetworkPolicy")
 
 	if v, ok := d.GetOk("cluster_profiles"); ok {
-		x := make([]*models.HyperflexClusterProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.HyperflexClusterProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.ClusterProfiles = x
-
-	}
-
-	if v, ok := d.GetOk("description"); ok {
-		x := (v.(string))
-		o.Description = x
-
-	}
-
-	if v, ok := d.GetOkExists("jumbo_frame"); ok {
-		x := v.(bool)
-		o.JumboFrame = &x
-	}
-
-	if v, ok := d.GetOk("kvm_ip_range"); ok {
-		p := models.HyperflexIPAddrRange{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexIPAddrRange{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		x := make([]models.HyperflexClusterProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["end_addr"]; ok {
-				{
-					x := (v.(string))
-					o.EndAddr = x
-				}
-			}
-			if v, ok := l["gateway"]; ok {
-				{
-					x := (v.(string))
-					o.Gateway = x
-				}
-			}
-			if v, ok := l["netmask"]; ok {
-				{
-					x := (v.(string))
-					o.Netmask = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["start_addr"]; ok {
-				{
-					x := (v.(string))
-					o.StartAddr = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.KvmIPRange = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("mac_prefix_range"); ok {
-		p := models.HyperflexMacAddrPrefixRange{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexMacAddrPrefixRange{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["end_addr"]; ok {
-				{
-					x := (v.(string))
-					o.EndAddr = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["start_addr"]; ok {
-				{
-					x := (v.(string))
-					o.StartAddr = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.MacPrefixRange = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("mgmt_vlan"); ok {
-		p := models.HyperflexNamedVlan{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexNamedVlan{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["additional_properties"]; ok {
-				{
-					x := []byte(v.(string))
-					var x1 interface{}
-					err := json.Unmarshal(x, &x1)
-					if err == nil && x1 != nil {
-						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
-					}
-				}
-			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["name"]; ok {
-				{
-					x := (v.(string))
-					o.Name = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["vlan_id"]; ok {
-				{
-					x := int64(v.(int))
-					o.VlanID = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.MgmtVlan = &x
-		}
-
-	}
-
-	if v, ok := d.GetOk("moid"); ok {
-		x := (v.(string))
-		o.Moid = x
-
-	}
-
-	if v, ok := d.GetOk("name"); ok {
-		x := (v.(string))
-		o.Name = x
-
-	}
-
-	if v, ok := d.GetOk("object_type"); ok {
-		x := (v.(string))
-		o.ObjectType = x
-
-	}
-
-	if v, ok := d.GetOk("organization"); ok {
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+			o.SetClassId("mo.MoRef")
 			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.Moid = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["selector"]; ok {
 				{
 					x := (v.(string))
-					o.Selector = x
+					o.SetSelector(x)
 				}
 			}
-
-			p = o
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
 		}
-
 	}
 
-	if v, ok := d.GetOk("permission_resources"); ok {
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-
-	}
-
-	if v, ok := d.GetOk("tags"); ok {
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
-
-	}
-
-	if v, ok := d.GetOk("uplink_speed"); ok {
+	if v, ok := d.GetOk("description"); ok {
 		x := (v.(string))
-		o.UplinkSpeed = &x
-
+		o.SetDescription(x)
 	}
 
-	if v, ok := d.GetOk("vm_migration_vlan"); ok {
-		p := models.HyperflexNamedVlan{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexNamedVlan{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+	if v, ok := d.GetOkExists("jumbo_frame"); ok {
+		x := v.(bool)
+		o.SetJumboFrame(x)
+	}
+
+	if v, ok := d.GetOk("kvm_ip_range"); ok {
+		p := make([]models.HyperflexIpAddrRange, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexIpAddrRangeWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			o.SetClassId("hyperflex.IpAddrRange")
+			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
+					o.SetEndAddr(x)
 				}
 			}
-			if v, ok := l["name"]; ok {
+			if v, ok := l["gateway"]; ok {
 				{
 					x := (v.(string))
-					o.Name = x
+					o.SetGateway(x)
+				}
+			}
+			if v, ok := l["netmask"]; ok {
+				{
+					x := (v.(string))
+					o.SetNetmask(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["start_addr"]; ok {
+				{
+					x := (v.(string))
+					o.SetStartAddr(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetKvmIpRange(x)
+		}
+	}
+
+	if v, ok := d.GetOk("mac_prefix_range"); ok {
+		p := make([]models.HyperflexMacAddrPrefixRange, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("hyperflex.MacAddrPrefixRange")
+			if v, ok := l["end_addr"]; ok {
+				{
+					x := (v.(string))
+					o.SetEndAddr(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["start_addr"]; ok {
+				{
+					x := (v.(string))
+					o.SetStartAddr(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPrefixRange(x)
+		}
+	}
+
+	if v, ok := d.GetOk("mgmt_vlan"); ok {
+		p := make([]models.HyperflexNamedVlan, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("hyperflex.NamedVlan")
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
-					o.VlanID = x
+					o.SetVlanId(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.VMMigrationVlan = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMgmtVlan(x)
 		}
+	}
 
+	if v, ok := d.GetOk("moid"); ok {
+		x := (v.(string))
+		o.SetMoid(x)
+	}
+
+	if v, ok := d.GetOk("name"); ok {
+		x := (v.(string))
+		o.SetName(x)
+	}
+
+	o.SetObjectType("hyperflex.ClusterNetworkPolicy")
+
+	if v, ok := d.GetOk("organization"); ok {
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
+	}
+
+	if v, ok := d.GetOk("tags"); ok {
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
+	}
+
+	if v, ok := d.GetOk("uplink_speed"); ok {
+		x := (v.(string))
+		o.SetUplinkSpeed(x)
+	}
+
+	if v, ok := d.GetOk("vm_migration_vlan"); ok {
+		p := make([]models.HyperflexNamedVlan, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("hyperflex.NamedVlan")
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["vlan_id"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetVlanId(x)
+				}
+			}
+			p = append(p, *o)
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVmMigrationVlan(x)
+		}
 	}
 
 	if v, ok := d.GetOk("vm_network_vlans"); ok {
-		x := make([]*models.HyperflexNamedVlan, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.HyperflexNamedVlan{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.HyperflexNamedVlan, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewHyperflexNamedVlanWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["vlan_id"]; ok {
-					{
-						x := int64(v.(int))
-						o.VlanID = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("hyperflex.NamedVlan")
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["vlan_id"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetVlanId(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.VMNetworkVlans = x
-
+		if len(x) > 0 {
+			o.SetVmNetworkVlans(x)
+		}
 	}
 
-	url := "hyperflex/ClusterNetworkPolicies"
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.HyperflexApi.CreateHyperflexClusterNetworkPolicy(conn.ctx).HyperflexClusterNetworkPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("Failed to invoke operation: %v", err)
 	}
-
-	body, err := conn.SendRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceHyperflexClusterNetworkPolicyRead(d, meta)
 }
 
@@ -868,558 +777,492 @@ func resourceHyperflexClusterNetworkPolicyRead(d *schema.ResourceData, meta inte
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
 
-	url := "hyperflex/ClusterNetworkPolicies" + "/" + d.Id()
+	r := conn.ApiClient.HyperflexApi.GetHyperflexClusterNetworkPolicyByMoid(conn.ctx, d.Id())
+	s, _, err := r.Execute()
 
-	body, err := conn.SendGetRequest(url, []byte(""))
 	if err != nil {
-		return err
-	}
-	var s models.HyperflexClusterNetworkPolicy
-	err = s.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model for read Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error in unmarshaling model for read Error: %s", err.Error())
 	}
 
-	if err := d.Set("class_id", (s.ClassID)); err != nil {
-		return err
+	if err := d.Set("additional_properties", flattenAdditionalProperties(s.AdditionalProperties)); err != nil {
+		return fmt.Errorf("error occurred while setting property AdditionalProperties: %+v", err)
 	}
 
-	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRef(s.ClusterProfiles, d)); err != nil {
-		return err
+	if err := d.Set("class_id", (s.GetClassId())); err != nil {
+		return fmt.Errorf("error occurred while setting property ClassId: %+v", err)
 	}
 
-	if err := d.Set("description", (s.Description)); err != nil {
-		return err
+	if err := d.Set("cluster_profiles", flattenListHyperflexClusterProfileRelationship(s.GetClusterProfiles(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property ClusterProfiles: %+v", err)
 	}
 
-	if err := d.Set("jumbo_frame", (s.JumboFrame)); err != nil {
-		return err
+	if err := d.Set("description", (s.GetDescription())); err != nil {
+		return fmt.Errorf("error occurred while setting property Description: %+v", err)
 	}
 
-	if err := d.Set("kvm_ip_range", flattenMapHyperflexIPAddrRange(s.KvmIPRange, d)); err != nil {
-		return err
+	if err := d.Set("jumbo_frame", (s.GetJumboFrame())); err != nil {
+		return fmt.Errorf("error occurred while setting property JumboFrame: %+v", err)
 	}
 
-	if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.MacPrefixRange, d)); err != nil {
-		return err
+	if err := d.Set("kvm_ip_range", flattenMapHyperflexIpAddrRange(s.GetKvmIpRange(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property KvmIpRange: %+v", err)
 	}
 
-	if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.MgmtVlan, d)); err != nil {
-		return err
+	if err := d.Set("mac_prefix_range", flattenMapHyperflexMacAddrPrefixRange(s.GetMacPrefixRange(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property MacPrefixRange: %+v", err)
 	}
 
-	if err := d.Set("moid", (s.Moid)); err != nil {
-		return err
+	if err := d.Set("mgmt_vlan", flattenMapHyperflexNamedVlan(s.GetMgmtVlan(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property MgmtVlan: %+v", err)
 	}
 
-	if err := d.Set("name", (s.Name)); err != nil {
-		return err
+	if err := d.Set("moid", (s.GetMoid())); err != nil {
+		return fmt.Errorf("error occurred while setting property Moid: %+v", err)
 	}
 
-	if err := d.Set("object_type", (s.ObjectType)); err != nil {
-		return err
+	if err := d.Set("name", (s.GetName())); err != nil {
+		return fmt.Errorf("error occurred while setting property Name: %+v", err)
 	}
 
-	if err := d.Set("organization", flattenMapOrganizationOrganizationRef(s.Organization, d)); err != nil {
-		return err
+	if err := d.Set("object_type", (s.GetObjectType())); err != nil {
+		return fmt.Errorf("error occurred while setting property ObjectType: %+v", err)
 	}
 
-	if err := d.Set("permission_resources", flattenListMoBaseMoRef(s.PermissionResources, d)); err != nil {
-		return err
+	if err := d.Set("organization", flattenMapOrganizationOrganizationRelationship(s.GetOrganization(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Organization: %+v", err)
 	}
 
-	if err := d.Set("tags", flattenListMoTag(s.Tags, d)); err != nil {
-		return err
+	if err := d.Set("tags", flattenListMoTag(s.GetTags(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property Tags: %+v", err)
 	}
 
-	if err := d.Set("uplink_speed", (s.UplinkSpeed)); err != nil {
-		return err
+	if err := d.Set("uplink_speed", (s.GetUplinkSpeed())); err != nil {
+		return fmt.Errorf("error occurred while setting property UplinkSpeed: %+v", err)
 	}
 
-	if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.VMMigrationVlan, d)); err != nil {
-		return err
+	if err := d.Set("vm_migration_vlan", flattenMapHyperflexNamedVlan(s.GetVmMigrationVlan(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property VmMigrationVlan: %+v", err)
 	}
 
-	if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.VMNetworkVlans, d)); err != nil {
-		return err
+	if err := d.Set("vm_network_vlans", flattenListHyperflexNamedVlan(s.GetVmNetworkVlans(), d)); err != nil {
+		return fmt.Errorf("error occurred while setting property VmNetworkVlans: %+v", err)
 	}
 
 	log.Printf("s: %v", s)
-	log.Printf("Moid: %s", s.Moid)
+	log.Printf("Moid: %s", s.GetMoid())
 	return nil
 }
+
 func resourceHyperflexClusterNetworkPolicyUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	var o models.HyperflexClusterNetworkPolicy
-	if d.HasChange("class_id") {
-		v := d.Get("class_id")
-		x := (v.(string))
-		o.ClassID = x
+	var o = models.NewHyperflexClusterNetworkPolicyWithDefaults()
+	if d.HasChange("additional_properties") {
+		v := d.Get("additional_properties")
+		x := []byte(v.(string))
+		var x1 interface{}
+		err := json.Unmarshal(x, &x1)
+		if err == nil && x1 != nil {
+			o.AdditionalProperties = x1.(map[string]interface{})
+		}
 	}
+
+	o.SetClassId("hyperflex.ClusterNetworkPolicy")
 
 	if d.HasChange("cluster_profiles") {
 		v := d.Get("cluster_profiles")
-		x := make([]*models.HyperflexClusterProfileRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.HyperflexClusterProfileRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
+		x := make([]models.HyperflexClusterProfileRelationship, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoMoRefWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
+				{
+					x := (v.(string))
+					o.SetMoid(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			x = append(x, models.MoMoRefAsHyperflexClusterProfileRelationship(o))
 		}
-		o.ClusterProfiles = x
+		if len(x) > 0 {
+			o.SetClusterProfiles(x)
+		}
 	}
 
 	if d.HasChange("description") {
 		v := d.Get("description")
 		x := (v.(string))
-		o.Description = x
+		o.SetDescription(x)
 	}
 
 	if d.HasChange("jumbo_frame") {
 		v := d.Get("jumbo_frame")
 		x := (v.(bool))
-		o.JumboFrame = &x
+		o.SetJumboFrame(x)
 	}
 
 	if d.HasChange("kvm_ip_range") {
 		v := d.Get("kvm_ip_range")
-		p := models.HyperflexIPAddrRange{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexIPAddrRange{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.HyperflexIpAddrRange, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexIpAddrRangeWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexIPAddrRangeAO1P1.HyperflexIPAddrRangeAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("hyperflex.IpAddrRange")
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
-					o.EndAddr = x
+					o.SetEndAddr(x)
 				}
 			}
 			if v, ok := l["gateway"]; ok {
 				{
 					x := (v.(string))
-					o.Gateway = x
+					o.SetGateway(x)
 				}
 			}
 			if v, ok := l["netmask"]; ok {
 				{
 					x := (v.(string))
-					o.Netmask = x
+					o.SetNetmask(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
-					o.StartAddr = x
+					o.SetStartAddr(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.KvmIPRange = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetKvmIpRange(x)
 		}
 	}
 
 	if d.HasChange("mac_prefix_range") {
 		v := d.Get("mac_prefix_range")
-		p := models.HyperflexMacAddrPrefixRange{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexMacAddrPrefixRange{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.HyperflexMacAddrPrefixRange, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexMacAddrPrefixRangeWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexMacAddrPrefixRangeAO1P1.HyperflexMacAddrPrefixRangeAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("hyperflex.MacAddrPrefixRange")
 			if v, ok := l["end_addr"]; ok {
 				{
 					x := (v.(string))
-					o.EndAddr = x
+					o.SetEndAddr(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["start_addr"]; ok {
 				{
 					x := (v.(string))
-					o.StartAddr = x
+					o.SetStartAddr(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.MacPrefixRange = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMacPrefixRange(x)
 		}
 	}
 
 	if d.HasChange("mgmt_vlan") {
 		v := d.Get("mgmt_vlan")
-		p := models.HyperflexNamedVlan{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexNamedVlan{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.HyperflexNamedVlan, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexNamedVlanWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
-				{
-					x := (v.(string))
-					o.ClassID = x
-				}
-			}
+			o.SetClassId("hyperflex.NamedVlan")
 			if v, ok := l["name"]; ok {
 				{
 					x := (v.(string))
-					o.Name = x
+					o.SetName(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
-					o.VlanID = x
+					o.SetVlanId(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.MgmtVlan = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetMgmtVlan(x)
 		}
 	}
 
 	if d.HasChange("moid") {
 		v := d.Get("moid")
 		x := (v.(string))
-		o.Moid = x
+		o.SetMoid(x)
 	}
 
 	if d.HasChange("name") {
 		v := d.Get("name")
 		x := (v.(string))
-		o.Name = x
+		o.SetName(x)
 	}
 
-	if d.HasChange("object_type") {
-		v := d.Get("object_type")
-		x := (v.(string))
-		o.ObjectType = x
-	}
+	o.SetObjectType("hyperflex.ClusterNetworkPolicy")
 
 	if d.HasChange("organization") {
 		v := d.Get("organization")
-		p := models.OrganizationOrganizationRef{}
-		if len(v.([]interface{})) > 0 {
-			o := models.OrganizationOrganizationRef{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
-			if v, ok := l["moid"]; ok {
-				{
-					x := (v.(string))
-					o.Moid = x
-				}
-			}
-			if v, ok := l["object_type"]; ok {
-				{
-					x := (v.(string))
-					o.ObjectType = x
-				}
-			}
-			if v, ok := l["selector"]; ok {
-				{
-					x := (v.(string))
-					o.Selector = x
-				}
-			}
-
-			p = o
-		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.Organization = &x
-		}
-	}
-
-	if d.HasChange("permission_resources") {
-		v := d.Get("permission_resources")
-		x := make([]*models.MoBaseMoRef, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoBaseMoRef{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["moid"]; ok {
-					{
-						x := (v.(string))
-						o.Moid = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["selector"]; ok {
-					{
-						x := (v.(string))
-						o.Selector = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.PermissionResources = x
-	}
-
-	if d.HasChange("tags") {
-		v := d.Get("tags")
-		x := make([]*models.MoTag, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.MoTag{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.MoTagAO1P1.MoTagAO1P1 = x1.(map[string]interface{})
-						}
-					}
-				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["key"]; ok {
-					{
-						x := (v.(string))
-						o.Key = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["value"]; ok {
-					{
-						x := (v.(string))
-						o.Value = x
-					}
-				}
-				x = append(x, &o)
-			}
-		}
-		o.Tags = x
-	}
-
-	if d.HasChange("uplink_speed") {
-		v := d.Get("uplink_speed")
-		x := (v.(string))
-		o.UplinkSpeed = &x
-	}
-
-	if d.HasChange("vm_migration_vlan") {
-		v := d.Get("vm_migration_vlan")
-		p := models.HyperflexNamedVlan{}
-		if len(v.([]interface{})) > 0 {
-			o := models.HyperflexNamedVlan{}
-			l := (v.([]interface{})[0]).(map[string]interface{})
+		p := make([]models.OrganizationOrganizationRelationship, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewMoMoRefWithDefaults()
 			if v, ok := l["additional_properties"]; ok {
 				{
 					x := []byte(v.(string))
 					var x1 interface{}
 					err := json.Unmarshal(x, &x1)
 					if err == nil && x1 != nil {
-						o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
 			}
-			if v, ok := l["class_id"]; ok {
+			o.SetClassId("mo.MoRef")
+			if v, ok := l["moid"]; ok {
 				{
 					x := (v.(string))
-					o.ClassID = x
-				}
-			}
-			if v, ok := l["name"]; ok {
-				{
-					x := (v.(string))
-					o.Name = x
+					o.SetMoid(x)
 				}
 			}
 			if v, ok := l["object_type"]; ok {
 				{
 					x := (v.(string))
-					o.ObjectType = x
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["selector"]; ok {
+				{
+					x := (v.(string))
+					o.SetSelector(x)
+				}
+			}
+			p = append(p, models.MoMoRefAsOrganizationOrganizationRelationship(o))
+		}
+		if len(p) > 0 {
+			x := p[0]
+			o.SetOrganization(x)
+		}
+	}
+
+	if d.HasChange("tags") {
+		v := d.Get("tags")
+		x := make([]models.MoTag, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewMoTagWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			if v, ok := l["key"]; ok {
+				{
+					x := (v.(string))
+					o.SetKey(x)
+				}
+			}
+			if v, ok := l["value"]; ok {
+				{
+					x := (v.(string))
+					o.SetValue(x)
+				}
+			}
+			x = append(x, *o)
+		}
+		if len(x) > 0 {
+			o.SetTags(x)
+		}
+	}
+
+	if d.HasChange("uplink_speed") {
+		v := d.Get("uplink_speed")
+		x := (v.(string))
+		o.SetUplinkSpeed(x)
+	}
+
+	if d.HasChange("vm_migration_vlan") {
+		v := d.Get("vm_migration_vlan")
+		p := make([]models.HyperflexNamedVlan, 0, 1)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			l := s[i].(map[string]interface{})
+			o := models.NewHyperflexNamedVlanWithDefaults()
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
+					}
+				}
+			}
+			o.SetClassId("hyperflex.NamedVlan")
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
 				}
 			}
 			if v, ok := l["vlan_id"]; ok {
 				{
 					x := int64(v.(int))
-					o.VlanID = x
+					o.SetVlanId(x)
 				}
 			}
-
-			p = o
+			p = append(p, *o)
 		}
-		x := p
-		if len(v.([]interface{})) > 0 {
-			o.VMMigrationVlan = &x
+		if len(p) > 0 {
+			x := p[0]
+			o.SetVmMigrationVlan(x)
 		}
 	}
 
 	if d.HasChange("vm_network_vlans") {
 		v := d.Get("vm_network_vlans")
-		x := make([]*models.HyperflexNamedVlan, 0)
-		switch reflect.TypeOf(v).Kind() {
-		case reflect.Slice:
-			s := reflect.ValueOf(v)
-			for i := 0; i < s.Len(); i++ {
-				o := models.HyperflexNamedVlan{}
-				l := s.Index(i).Interface().(map[string]interface{})
-				if v, ok := l["additional_properties"]; ok {
-					{
-						x := []byte(v.(string))
-						var x1 interface{}
-						err := json.Unmarshal(x, &x1)
-						if err == nil && x1 != nil {
-							o.HyperflexNamedVlanAO1P1.HyperflexNamedVlanAO1P1 = x1.(map[string]interface{})
-						}
+		x := make([]models.HyperflexNamedVlan, 0)
+		s := v.([]interface{})
+		for i := 0; i < len(s); i++ {
+			o := models.NewHyperflexNamedVlanWithDefaults()
+			l := s[i].(map[string]interface{})
+			if v, ok := l["additional_properties"]; ok {
+				{
+					x := []byte(v.(string))
+					var x1 interface{}
+					err := json.Unmarshal(x, &x1)
+					if err == nil && x1 != nil {
+						o.AdditionalProperties = x1.(map[string]interface{})
 					}
 				}
-				if v, ok := l["class_id"]; ok {
-					{
-						x := (v.(string))
-						o.ClassID = x
-					}
-				}
-				if v, ok := l["name"]; ok {
-					{
-						x := (v.(string))
-						o.Name = x
-					}
-				}
-				if v, ok := l["object_type"]; ok {
-					{
-						x := (v.(string))
-						o.ObjectType = x
-					}
-				}
-				if v, ok := l["vlan_id"]; ok {
-					{
-						x := int64(v.(int))
-						o.VlanID = x
-					}
-				}
-				x = append(x, &o)
 			}
+			o.SetClassId("hyperflex.NamedVlan")
+			if v, ok := l["name"]; ok {
+				{
+					x := (v.(string))
+					o.SetName(x)
+				}
+			}
+			if v, ok := l["object_type"]; ok {
+				{
+					x := (v.(string))
+					o.SetObjectType(x)
+				}
+			}
+			if v, ok := l["vlan_id"]; ok {
+				{
+					x := int64(v.(int))
+					o.SetVlanId(x)
+				}
+			}
+			x = append(x, *o)
 		}
-		o.VMNetworkVlans = x
+		if len(x) > 0 {
+			o.SetVmNetworkVlans(x)
+		}
 	}
 
-	url := "hyperflex/ClusterNetworkPolicies" + "/" + d.Id()
-	data, err := o.MarshalJSON()
+	r := conn.ApiClient.HyperflexApi.UpdateHyperflexClusterNetworkPolicy(conn.ctx, d.Id()).HyperflexClusterNetworkPolicy(*o)
+	result, _, err := r.Execute()
 	if err != nil {
-		log.Printf("error in marshaling model object. Error: %s", err.Error())
-		return err
+		return fmt.Errorf("error occurred while updating: %s", err.Error())
 	}
-
-	body, err := conn.SendUpdateRequest(url, data)
-	if err != nil {
-		return err
-	}
-
-	err = o.UnmarshalJSON(body)
-	if err != nil {
-		log.Printf("error in unmarshaling model object. Error: %s", err.Error())
-		return err
-	}
-	log.Printf("Moid: %s", o.Moid)
-	d.SetId(o.Moid)
+	log.Printf("Moid: %s", result.GetMoid())
+	d.SetId(result.GetMoid())
 	return resourceHyperflexClusterNetworkPolicyRead(d, meta)
 }
 
@@ -1427,10 +1270,10 @@ func resourceHyperflexClusterNetworkPolicyDelete(d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Printf("%v", meta)
 	conn := meta.(*Config)
-	url := "hyperflex/ClusterNetworkPolicies" + "/" + d.Id()
-	_, err := conn.SendDeleteRequest(url)
+	p := conn.ApiClient.HyperflexApi.DeleteHyperflexClusterNetworkPolicy(conn.ctx, d.Id())
+	_, err := p.Execute()
 	if err != nil {
-		log.Printf("error occurred while deleting: %s", err.Error())
+		return fmt.Errorf("error occurred while deleting: %s", err.Error())
 	}
 	return err
 }

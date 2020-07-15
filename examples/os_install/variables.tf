@@ -17,3 +17,24 @@ variable "os_file_password_1" {
   type = string
   description = "Password for esx6u3.iso remote file in software repo OS"
 }
+
+variable "organization" {
+  type = string
+  description = "Organization moid"
+}
+
+variable "server_moid" {
+  type = string
+  description = "Rack unit's moid"
+}
+
+variable "catalog" {
+  type = string
+  description = "Catalog moid"
+}
+
+variable "answer_file" {
+  type = string
+  default = ""
+  description = "Answer file content"
+}
