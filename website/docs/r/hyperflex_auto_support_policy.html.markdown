@@ -11,6 +11,8 @@ description: |-
 A policy specifying the configuration to automatically generate support tickets with Cisco TAC.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `admin_state`:(bool) Enable or disable Auto Support. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `cluster_profiles`:(Array) An array of relationships to hyperflexClusterProfile resources. 
@@ -36,5 +38,7 @@ This complex property has following sub-properties:
 * `service_ticket_receipient`:(string) The email address recipient for support tickets. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

@@ -11,6 +11,8 @@ description: |-
 Instance of an Intersight advisory applicable for an Intersight managed object. An advisory instance is created when a given advisory is found applicable for an Intersight managed object. An advisory instance is retained for some time even after being cleared for historical purposes. A 'cleared' advisory instance is deleted after the retention time is elaspsed.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `advisory`:(Array with Maximum of one item) - A reference to a tamBaseAdvisory resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -37,5 +39,7 @@ This complex property has following sub-properties:
 * `state`:(string) Current state of the advisory instance (Active/Cleared/Unknown etc.). 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

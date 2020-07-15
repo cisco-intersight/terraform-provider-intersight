@@ -23,6 +23,8 @@ The following arguments are supported:
 * `acs_control_slot12state`:(string) BIOS Token for setting ACS Control Slot 12 configuration. 
 * `acs_control_slot13state`:(string) BIOS Token for setting ACS Control Slot 13 configuration. 
 * `acs_control_slot14state`:(string) BIOS Token for setting ACS Control Slot 14 configuration. 
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `adjacent_cache_line_prefetch`:(string) BIOS Token for setting Adjacent Cache Line Prefetcher configuration. 
 * `all_usb_devices`:(string) BIOS Token for setting All USB Devices configuration. 
 * `altitude`:(string) BIOS Token for setting Altitude configuration. 
@@ -302,6 +304,8 @@ This complex property has following sub-properties:
 * `svm_mode`:(string) BIOS Token for setting SVM Mode configuration. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `terminal_type`:(string) BIOS Token for setting Terminal Type configuration. 

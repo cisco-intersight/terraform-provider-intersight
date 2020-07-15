@@ -11,6 +11,8 @@ description: |-
 Maps a Cisco hardware model Series to its applicable hardware models.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `category`:(string) The category of the model series. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `dist_tag`:(string) The distributable tag value of the model series. 
@@ -31,5 +33,7 @@ This complex property has following sub-properties:
                 (Array of schema.TypeString) -
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

@@ -11,6 +11,9 @@ A state-full entity representing a found problem. Alarms can be reported by the 
 A state-full entity representing a found problem. Alarms can be reported by the managed system itself or can be determined by Intersight.
 ## Argument Reference
 The following arguments can be used to get data of already created objects in Intersight appliance:
+* `acknowledge`:(string) Alarm acknowledgment state. Default value is None. 
+* `acknowledge_by`:(string) User who acknowledged the alarm. 
+* `acknowledge_time`:(string) Time at which the alarm was acknowledged by the user. 
 * `affected_mo_id`:(string) MoId of the affected object from the managed system's point of view. 
 * `affected_mo_type`:(string) Managed system affected object type. For example Adaptor, FI, CIMC. 
 * `ancestor_mo_id`:(string) Parent MoId of the fault from managed system. For example, Blade moid for adaptor fault. 

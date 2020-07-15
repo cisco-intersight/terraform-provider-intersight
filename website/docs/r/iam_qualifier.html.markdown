@@ -11,12 +11,16 @@ description: |-
 The qualifier defines how a user qualifies to be part of a user group.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
 * `name`:(string)(Computed) The name of the SAML attribute used to qualify a user to user group. By default this is memberOf attribute in SAML assertion. 
 * `object_type`:(string)(Computed) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `usergroup`:(Array with Maximum of one item) - A reference to a iamUserGroup resource.When the $expand query parameter is specified, the referenced resource is returned inline. 

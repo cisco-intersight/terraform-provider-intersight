@@ -11,6 +11,8 @@ description: |-
 PcOperation objects allows the user to alter the state of the port channel.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `admin_state`:(string) Admin configured state to disable the port channel. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
@@ -26,5 +28,7 @@ This complex property has following sub-properties:
 * `pc_id`:(int) Port Channel Identifier for the collection of ports. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

@@ -11,6 +11,8 @@ description: |-
 Base Schedule config which contains all the required inputs to do schedule on a local or remote server.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `backup_profiles`:(Array) An array of relationships to recoveryBackupProfile resources. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -43,5 +45,7 @@ This complex property has following sub-properties:
   + `object_type`:(string) The concrete type of this complex type.The ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the ObjectType is optional. The type is ambiguous when a managed object contains an array of nested documents, and the documents in the arrayare heterogeneous, i.e. the array can contain nested documents of different types. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

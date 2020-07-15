@@ -11,6 +11,8 @@ description: |-
 An Ethernet adapter policy governs the host-side behavior of the adapter, including how the adapter handles traffic. For each VIC Virtual Ethernet Interface various features like VXLAN, NVGRE, ARFS, Interrupt settings, and TCP Offload settings can be configured.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `advanced_filter`:(bool) Enables advanced filtering on the interface. 
 * `arfs_settings`:(Array with Maximum of one item) - Settings for Accelerated Receive Flow Steering to reduce the network latency and increase CPU cache efficiency. 
 This complex property has following sub-properties:
@@ -95,6 +97,8 @@ This complex property has following sub-properties:
   + `ring_size`:(int) The number of descriptors in each queue. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `tcp_offload_settings`:(Array with Maximum of one item) - The TCP offload settings decide whether to offload the TCP related network functions from the CPU to the network hardware or not. 

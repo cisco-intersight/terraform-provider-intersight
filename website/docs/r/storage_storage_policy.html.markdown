@@ -11,6 +11,8 @@ description: |-
 The storage policy models the reusable storage related configuration that can be applied on many servers. This policy allows creation of RAID groups using existing disk group policies and virtual drives on the drive groups. The user has options to move all unused disks to JBOD or Unconfigured good state. The encryption of drives can be enabled through this policy using remote keys from a KMIP server.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `description`:(string) Description of the policy. 
 * `disk_group_policies`:(Array) An array of relationships to storageDiskGroupPolicy resources. 
@@ -50,6 +52,8 @@ This complex property has following sub-properties:
 * `retain_policy_virtual_drives`:(bool) Retains the virtual drives defined in policy if they exist already. If this flag is false, the existing virtual drives are removed and created again based on virtual drives in the policy. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `unused_disks_state`:(string) Unused Disks State is used to specify the state, unconfigured good or jbod, in which the disks that are not used in this policy should be moved. 
@@ -62,7 +66,7 @@ This complex property has following sub-properties:
   + `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
   + `disk_group_name`:(string)(Computed) Disk group policy that has the disk group in which this virtual drive needs to be created. 
   + `disk_group_policy`:(string) Disk group policy that has the disk group in which this virtual drive needs to be created. 
-  + `drive_cache`:(string) The property expect disk cache policy. 
+  + `drive_cache`:(string) Drive Cache property expect disk cache policy. 
   + `expand_to_available`:(bool) The flag enables this virtual drive to use all the available space in the disk group. When this flag is configured, the size property is ignored. 
   + `io_policy`:(string) Desired IO mode - direct IO or cached IO. 
   + `name`:(string) The name of the virtual drive. The name can be between 1 and 15 alphanumeric characters. Spaces or any special characters other than - (hyphen), _ (underscore), : (colon), and . (period) are not allowed. 

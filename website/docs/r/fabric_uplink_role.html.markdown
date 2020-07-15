@@ -11,6 +11,8 @@ description: |-
 Configuration object sent by user to create a uplink port.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `admin_speed`:(string) Admin configured speed for the port. 
 * `aggregate_port_id`:(int) Breakout port Identifier of the Switch Interface. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
@@ -29,6 +31,8 @@ This complex property has following sub-properties:
 * `slot_id`:(int) Slot Identifier of the Switch/FEX/Chassis Interface. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `udld_admin_state`:(string) Admin configured state for UDLD for this port. 

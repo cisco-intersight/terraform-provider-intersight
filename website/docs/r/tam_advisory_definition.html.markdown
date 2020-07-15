@@ -39,6 +39,8 @@ This complex property has following sub-properties:
     + `priority`:(int) An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection. 
     + `query`:(string) A SparkSQL query to be used on a given data source. 
   + `type`:(string) Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type. 
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `advisory_details`:(Array with Maximum of one item) - Additional details for the advisory definition. For e.g. if the definition corresponds to a security advisory, the detailsregarding CVE ids and CVSS score would be available here. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -91,6 +93,8 @@ This complex property has following sub-properties:
 * `state`:(string) Current state of the advisory. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `type`:(string) The type (field notice, security advisory etc.) of Intersight advisory. 

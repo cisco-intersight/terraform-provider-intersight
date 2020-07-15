@@ -11,6 +11,8 @@ description: |-
 The Intersight Account used to access Intersight.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `app_registrations`:(Array)(Computed) An array of relationships to iamAppRegistration resources. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -114,5 +116,7 @@ This complex property has following sub-properties:
 * `status`:(string)(Computed) Status of the account. To activate the Intersight account, claim a device to the account. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

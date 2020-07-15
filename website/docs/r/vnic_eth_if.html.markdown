@@ -11,6 +11,8 @@ description: |-
 Virtual Ethernet Interface.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `cdn`:(Array with Maximum of one item) - Consistent Device Naming configuration for the virtual NIC. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -111,6 +113,8 @@ This complex property has following sub-properties:
 * `standby_vif_id`:(int)(Computed) The Standby VIF Id is applicable for failover enabled vNICS. It should be the same as the channel number of the standby vethernet created on switch in order to set up the standby data path. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `usnic_settings`:(Array with Maximum of one item) - User Space NIC Settings that enable low-latency and higher throughput by bypassing the kernel layer when sending/receiving packets. 

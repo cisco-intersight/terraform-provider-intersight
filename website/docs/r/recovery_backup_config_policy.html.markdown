@@ -11,6 +11,8 @@ description: |-
 Backup config policy which contains all the required inputs to do backup on a local or remote server.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `backup_profiles`:(Array) An array of relationships to recoveryBackupProfile resources. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -41,6 +43,8 @@ This complex property has following sub-properties:
 * `retention_count`:(int) Number of backup copies maintained on the local or remote server. When the created backup files exceed this number, the initial backup files are overwritten in a sequential manner. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `user_name`:(string) Backup server user name. 

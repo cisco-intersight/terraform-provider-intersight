@@ -39,6 +39,8 @@ This complex property has following sub-properties:
     + `priority`:(int) An integer value depicting the priority of the query among the queries that are part of the same QueryEntry collection. 
     + `query`:(string) A SparkSQL query to be used on a given data source. 
   + `type`:(string) Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type. 
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `advisory_id`:(string) Cisco generated identifier for the published security advisory. 
 * `api_data_sources`:(Array)
 This complex property has following sub-properties:
@@ -89,6 +91,8 @@ This complex property has following sub-properties:
 * `status`:(string) Cisco assigned status of the published advisory based on whether the investigation is complete or on-going. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `temporal_score`:(float) CVSS version 3 temporal score for the security Advisory. 

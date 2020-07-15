@@ -25,6 +25,8 @@ shall be given during OS installation in the form of os.Answers type and 'additi
 os.OsInstall object.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `catalog`:(Array with Maximum of one item) - A reference to a osCatalog resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -110,5 +112,7 @@ This complex property has following sub-properties:
 * `supported`:(bool)(Computed) An internal property that is used to distinguish between the pre-canned OSconfiguration file entries and user provided entries. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

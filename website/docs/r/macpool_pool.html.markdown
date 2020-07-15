@@ -11,6 +11,8 @@ description: |-
 Pool represents a collection of MAC addresses that can be allocated to VNICs of a server profile.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `assigned`:(int)(Computed) Number of IDs that are currently assigned. 
 * `assignment_order`:(string) Assignment order decides the order in which the next identifier is allocated. 
 * `block_heads`:(Array)(Computed) An array of relationships to macpoolIdBlock resources. 
@@ -46,5 +48,7 @@ This complex property has following sub-properties:
 * `size`:(int)(Computed) Total number of identifiers in this pool. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

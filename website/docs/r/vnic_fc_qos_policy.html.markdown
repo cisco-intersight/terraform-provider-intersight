@@ -11,6 +11,8 @@ description: |-
 A Fibre Channel Quality of Service (QoS) policy assigns a system class to the outgoing traffic for a vHBA. This system class determines the quality of service for the outgoing traffic. For certain adapters additional controls can also be specified like burst and rate on the outgoing traffic.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `cos`:(int) Class of Service to be associated to the traffic on the virtual interface. 
 * `description`:(string) Description of the policy. 
@@ -29,5 +31,7 @@ This complex property has following sub-properties:
 * `rate_limit`:(int) The value in Mbps to use for limiting the data rate on the virtual interface. Setting this to zero will turn rate limiting off. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

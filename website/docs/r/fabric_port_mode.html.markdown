@@ -11,6 +11,8 @@ description: |-
 Object sent by user to configure range of unified ports as FC/Ethernet or ports as breakout.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `custom_mode`:(string) Custom Port Mode specified for the port range. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
@@ -28,5 +30,7 @@ This complex property has following sub-properties:
 * `slot_id`:(int) Slot Identifier of the switch. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

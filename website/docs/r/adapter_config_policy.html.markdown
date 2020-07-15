@@ -11,6 +11,8 @@ description: |-
 An Adapter Configuration Policy configures the Ethernet and Fibre-Channel settings for the VIC adapter.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `description`:(string) Description of the policy. 
 * `moid`:(string) The unique identifier of this Managed Object instance. 
@@ -70,5 +72,7 @@ This complex property has following sub-properties:
   + `slot_id`:(string) PCIe slot where the VIC adapter is installed. Supported values are (1-15) and MLOM. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

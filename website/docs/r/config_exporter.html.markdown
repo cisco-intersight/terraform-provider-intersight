@@ -13,6 +13,8 @@ All export operations are captured as Exporter instances. Users shall use this E
 mo to track the export operation progress.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `download_path`:(string)(Computed) Pre-signed URL to download the exported package, if the export operation has completed successfully. Regenerated during a GET request, if the existing pre-signed URL has expired. 
 * `exported_items`:(Array)(Computed) An array of relationships to configExportedItem resources. 
@@ -45,5 +47,7 @@ This complex property has following sub-properties:
 * `status_message`:(string)(Computed) Status message associated with failures or progress indication. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

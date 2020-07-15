@@ -11,6 +11,8 @@ description: |-
 Switch/Fabric-Interconnect manufacturing def properties.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `caption`:(string) Caption for Switch/Fabric-Interconnect. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `description`:(string) Description for Switch/Fabric-Interconnect. 
@@ -31,6 +33,8 @@ This complex property has following sub-properties:
 * `sku`:(string) SKU information for Switch/Fabric-Interconnect. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `vid`:(string) VID information for Switch/Fabric-Interconnect. 

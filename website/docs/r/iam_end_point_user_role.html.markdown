@@ -11,6 +11,8 @@ description: |-
 Mapping of endpoint user to endpoint roles.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `change_password`:(bool)(Computed) Denotes whether password has changed. 
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `enabled`:(bool) Enables the user account on the endpoint. 
@@ -44,5 +46,7 @@ This complex property has following sub-properties:
 * `password`:(string) Valid login password of the user. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

@@ -11,6 +11,8 @@ description: |-
 Configuration object sent by user to create VSAN configurations.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `default_zoning`:(string) Enables or Disables the default zoning state. 
 * `fc_network_policy`:(Array with Maximum of one item) - A reference to a fabricFcNetworkPolicy resource.When the $expand query parameter is specified, the referenced resource is returned inline. 
@@ -28,6 +30,8 @@ This complex property has following sub-properties:
 * `object_type`:(string)(Computed) The fully-qualified type of this managed object, i.e. the class name.This property is optional. The ObjectType is implied from the URL path.If specified, the value of objectType must match the class name specified in the URL path. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `vsan_id`:(int) Virtual San Identifier in the switch. 

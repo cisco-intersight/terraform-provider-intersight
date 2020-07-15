@@ -11,6 +11,8 @@ description: |-
 Type to represent additional switch specific capabilities.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `first_index`:(float) First Index information for a Switch/Fabric-Interconnect hardware. 
 * `height`:(float) Height information for a Switch/Fabric-Interconnect hardware. 
@@ -38,6 +40,8 @@ This complex property has following sub-properties:
 * `slots_per_line`:(int) Slots per line information for a Switch/Fabric-Interconnect hardware. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `transverse_group_separation`:(float) Transverse Group Separation information for a Switch/Fabric-Interconnect hardware. 

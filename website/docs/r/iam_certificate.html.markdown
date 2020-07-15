@@ -11,6 +11,8 @@ description: |-
 Holds a certificate, signed by a CAcert.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `certificate`:(Array with Maximum of one item) - User-input pem-encoded certificate, signed by a CAcert. 
 This complex property has following sub-properties:
   + `additional_properties`:
@@ -68,5 +70,7 @@ This complex property has following sub-properties:
 * `status`:(string)(Computed) Status of the certificate. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 

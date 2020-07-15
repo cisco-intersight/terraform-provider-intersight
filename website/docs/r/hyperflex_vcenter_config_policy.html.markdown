@@ -11,6 +11,8 @@ description: |-
 A policy specifying vCenter configuration.
 ## Argument Reference
 The following arguments are supported:
+* `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
 * `class_id`:(string)(Computed) The concrete type of this complex type. Its value must be the same as the 'objectType' property.The OpenAPI document references this property as a discriminator value. 
 * `cluster_profiles`:(Array) An array of relationships to hyperflexClusterProfile resources. 
 This complex property has following sub-properties:
@@ -39,6 +41,8 @@ This complex property has following sub-properties:
 * `sso_url`:(string) Overrides the default vCenter Single Sign-On URL. Do not specify unless instructed by Cisco TAC. 
 * `tags`:(Array)
 This complex property has following sub-properties:
+  + `additional_properties`:
+(Array with Maximum of one item) - Add additional properties in json format inside `jsonencode()` for this object.
   + `key`:(string) The string representation of a tag key. 
   + `value`:(string) The string representation of a tag value. 
 * `username`:(string) The vCenter username (e.g. administrator@vsphere.local). 
