@@ -3,6 +3,7 @@ package intersight
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"strings"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -34,10 +35,15 @@ func Provider() terraform.ResourceProvider {
 }
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
+	endpoint := d.Get("endpoint").(string)
+	if strings.HasPrefix(endpoint, "https://") || strings.HasPrefix(endpoint, "http://") {
+		endpoint = strings.TrimPrefix(endpoint, "https://")
+		endpoint = strings.TrimPrefix(endpoint, "http://")
+	}
 	config := Config{
 		ApiKey:        d.Get("apikey").(string),
 		SecretKeyFile: d.Get("secretkeyfile").(string),
-		Endpoint:      d.Get("endpoint").(string),
+		Endpoint:      endpoint,
 	}
 
 	client := Client{}

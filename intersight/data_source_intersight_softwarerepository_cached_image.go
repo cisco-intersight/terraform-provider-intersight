@@ -20,6 +20,11 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"cache_state": {
 				Description: "The state  of this file in the endpoint The importState is updated during the cache operation and as part of the cache monitoring process.",
 				Type:        schema.TypeString,
@@ -39,6 +44,11 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -66,6 +76,13 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"download_error": {
+				Description: "Any error encountered. Set to empty when download is in progress or completed.}\ntype: string",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"download_progress": {
 				Description: "The download progress of the file represented as a percentage between 0% and 100%. If progress reporting is not possible a value of -1 is sent.",
 				Type:        schema.TypeInt,
@@ -84,6 +101,11 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -131,6 +153,11 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -186,6 +213,11 @@ func dataSourceSoftwarerepositoryCachedImage() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

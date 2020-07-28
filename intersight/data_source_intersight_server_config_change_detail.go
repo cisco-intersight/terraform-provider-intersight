@@ -14,6 +14,11 @@ func dataSourceServerConfigChangeDetail() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceServerConfigChangeDetailRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"changes": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -32,11 +37,23 @@ func dataSourceServerConfigChangeDetail() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"entity_data": {
+							Description: "The data of the object present in config result context.",
+							Type:        schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
 						},
 						"entity_moid": {
 							Description: "The Moid of the object present in config result context.",
@@ -73,6 +90,13 @@ func dataSourceServerConfigChangeDetail() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString}},
+			"message": {
+				Description: "Detailed description of the config change.}\ntype: string",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"mod_status": {
 				Description: "Modification status of the mo in this config change.",
 				Type:        schema.TypeString,
@@ -98,6 +122,11 @@ func dataSourceServerConfigChangeDetail() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -130,6 +159,11 @@ func dataSourceServerConfigChangeDetail() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

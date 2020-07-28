@@ -20,6 +20,11 @@ func dataSourceCapabilitySection() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"catalog_name": {
 				Description: "The catalog name reference.",
 				Type:        schema.TypeString,
@@ -59,6 +64,11 @@ func dataSourceCapabilitySection() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

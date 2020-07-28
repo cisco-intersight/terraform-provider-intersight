@@ -14,6 +14,11 @@ func dataSourceFirmwareDistributableMeta() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirmwareDistributableMetaRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"bucket_name": {
 				Description: "The S3 bucket name where the images are present, if source is external cloud store.",
 				Type:        schema.TypeString,
@@ -72,6 +77,11 @@ func dataSourceFirmwareDistributableMeta() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
