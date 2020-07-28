@@ -23,6 +23,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -50,6 +55,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 					},
 				},
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -70,6 +80,13 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Description: "The instance id of AuditRecordLocal, which is used to identify if the comming AuditRecordLocal was already processed before.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"mo_display_names": {
+				Description: "The user-friendly names of the changed MO.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 			"mo_type": {
 				Description: "The object type of the REST resource that was created, modified or deleted.",
@@ -93,6 +110,13 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"request": {
+				Description: "The body of the REST request that was received from a client to create or modify a REST resource, represented as a JSON document.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"sessions": {
 				Description: "A reference to a iamSession resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -101,6 +125,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -138,6 +167,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -170,6 +204,11 @@ func dataSourceAaaAuditRecord() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,

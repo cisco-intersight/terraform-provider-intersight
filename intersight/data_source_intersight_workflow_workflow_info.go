@@ -22,6 +22,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -55,6 +60,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"associated_object": {
 				Description: "A reference to a moBaseMo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -62,6 +72,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -113,6 +128,13 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeInt,
 				Optional:    true,
 			},
+			"input": {
+				Description: "All the given inputs for the workflow.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"inst_id": {
 				Description: "A workflow instance Id which is the unique identified for the workflow execution.",
 				Type:        schema.TypeString,
@@ -135,11 +157,23 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"message": {
+							Description: "An i18n message that can be translated in multiple languages to support internationalization.}\ntype: string",
+							Type:        schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
 						},
 						"object_type": {
 							Description: "The concrete type of this complex type.\nThe ObjectType property must be set explicitly by API clients when the type is ambiguous. In all other cases, the \nObjectType is optional. \nThe type is ambiguous when a managed object contains an array of nested documents, and the documents in the array\nare heterogeneous, i.e. the array can contain nested documents of different types.",
@@ -185,6 +219,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -213,6 +252,14 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"output": {
+				Description: "All the generated outputs for the workflow.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+				Computed: true,
+			},
 			"parent_task_info": {
 				Description: "A reference to a workflowTaskInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -221,6 +268,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -261,6 +313,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -295,6 +352,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -337,6 +399,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -390,6 +457,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -410,6 +482,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -460,6 +537,13 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"workflow_ctx": {
+				Description: "The workflow context which contains initiator and target information.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"workflow_definition": {
 				Description: "A reference to a workflowWorkflowDefinition resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
 				Type:        schema.TypeList,
@@ -467,6 +551,11 @@ func dataSourceWorkflowWorkflowInfo() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,

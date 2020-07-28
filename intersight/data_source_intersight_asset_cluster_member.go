@@ -15,6 +15,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceAssetClusterMemberRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"api_version": {
 				Description: "The version of the connector API, describes the capability of the connector's framework.\nIf the version is lower than the current minimum supported version defined in the service managing the connection, the device connector will be connected with limited capabilities until the device connector is upgraded to a fully supported version. For example if a device connector that was released without delta inventory capabilities registers and connects to Intersight, inventory collection may be disabled until it has been upgraded.",
 				Type:        schema.TypeInt,
@@ -71,6 +76,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -153,6 +163,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -192,6 +207,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -206,6 +226,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -283,6 +308,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"additional_properties": {
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: SuppressDiffAdditionProps,
+												},
 												"class_id": {
 													Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 													Type:        schema.TypeString,
@@ -341,6 +371,11 @@ func dataSourceAssetClusterMember() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

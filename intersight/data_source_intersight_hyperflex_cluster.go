@@ -14,6 +14,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceHyperflexClusterRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"alarm": {
 				Description: "An array of relationships to hyperflexAlarm resources.",
 				Type:        schema.TypeList,
@@ -21,6 +26,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -116,6 +126,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -180,6 +195,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -221,6 +241,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -260,6 +285,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
 						},
 						"address": {
 							Type:     schema.TypeString,
@@ -319,6 +349,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -340,6 +375,13 @@ func dataSourceHyperflexCluster() *schema.Resource {
 										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
+									"messages_iterator": {
+										Type: schema.TypeMap,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										}, Optional: true,
+										Computed: true,
+									},
 									"messages_size": {
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -370,6 +412,13 @@ func dataSourceHyperflexCluster() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"resiliency_details": {
+							Type: schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
+							Computed: true,
+						},
 						"resiliency_details_size": {
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -382,6 +431,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"additional_properties": {
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: SuppressDiffAdditionProps,
+									},
 									"class_id": {
 										Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 										Type:        schema.TypeString,
@@ -398,6 +452,13 @@ func dataSourceHyperflexCluster() *schema.Resource {
 										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString}},
+									"messages_iterator": {
+										Type: schema.TypeMap,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										}, Optional: true,
+										Computed: true,
+									},
 									"messages_size": {
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -465,6 +526,11 @@ func dataSourceHyperflexCluster() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

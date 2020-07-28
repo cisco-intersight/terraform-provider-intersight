@@ -14,6 +14,11 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirmwareUpgradeStatusRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -24,6 +29,13 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Description: "The error message from the endpoint during the download.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"download_message": {
+				Description: "The message from the endpoint during the download.}\ntype: string",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 			"download_percentage": {
 				Description: "The percentage of the image downloaded in the endpoint.",
@@ -87,6 +99,11 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -108,6 +125,11 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -142,6 +164,11 @@ func dataSourceFirmwareUpgradeStatus() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,

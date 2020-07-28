@@ -15,6 +15,11 @@ func dataSourceNiaapiApicSweol() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceNiaapiApicSweolRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"affected_versions": {
 				Description: "String contains the Release versions affected by this notice, seperated by comma.",
 				Type:        schema.TypeString,
@@ -128,6 +133,11 @@ func dataSourceNiaapiApicSweol() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

@@ -15,6 +15,11 @@ func dataSourceNiaapiDcnmHweol() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceNiaapiDcnmHweolRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"affected_pids": {
 				Description: "String contains the PID of hardwares affected by this notice, seperated by comma.",
 				Type:        schema.TypeString,
@@ -158,6 +163,11 @@ func dataSourceNiaapiDcnmHweol() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,

@@ -14,11 +14,23 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceWorkflowPendingDynamicWorkflowInfoRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
+			},
+			"input": {
+				Description: "The inputs of the workflow.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 			"moid": {
 				Description: "The unique identifier of this Managed Object instance.",
@@ -57,6 +69,11 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -85,6 +102,11 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -97,9 +119,23 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"tasks": {
+							Description: "The task list that has precedence which dictates how the workflow should be constructed.",
+							Type:        schema.TypeMap,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							}, Optional: true,
+						},
 					},
 				},
 				Computed: true,
+			},
+			"workflow_ctx": {
+				Description: "The workflow's workflow context which contains initiator and target information.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 			"workflow_info": {
 				Description: "A reference to a workflowWorkflowInfo resource.\nWhen the $expand query parameter is specified, the referenced resource is returned inline.",
@@ -109,6 +145,11 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -140,6 +181,13 @@ func dataSourceWorkflowPendingDynamicWorkflowInfo() *schema.Resource {
 				Description: "This key contains workflow, initiator and target name. Workflow engine uses the key to do workflow dedup.",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"workflow_meta": {
+				Description: "The metadata of the workflow.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 		},
 	}

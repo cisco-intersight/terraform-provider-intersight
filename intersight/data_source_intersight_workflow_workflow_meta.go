@@ -14,6 +14,11 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceWorkflowWorkflowMetaRead,
 		Schema: map[string]*schema.Schema{
+			"additional_properties": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: SuppressDiffAdditionProps,
+			},
 			"class_id": {
 				Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 				Type:        schema.TypeString,
@@ -54,6 +59,11 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"class_id": {
 							Description: "The concrete type of this complex type. Its value must be the same as the 'objectType' property.\nThe OpenAPI document references this property as a discriminator value.",
 							Type:        schema.TypeString,
@@ -82,6 +92,13 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 				},
 				Computed: true,
 			},
+			"output_parameters": {
+				Description: "The workflow output parameters.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
+			},
 			"retryable": {
 				Description: "When true, this workflow can be retried for 2 weeks since the last modification of the workflow.",
 				Type:        schema.TypeBool,
@@ -102,6 +119,11 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"additional_properties": {
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: SuppressDiffAdditionProps,
+						},
 						"key": {
 							Description: "The string representation of a tag key.",
 							Type:        schema.TypeString,
@@ -114,6 +136,13 @@ func dataSourceWorkflowWorkflowMeta() *schema.Resource {
 						},
 					},
 				},
+			},
+			"tasks": {
+				Description: "The tasks contained inside of the workflow.",
+				Type:        schema.TypeMap,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				}, Optional: true,
 			},
 			"type": {
 				Description: "The type of workflow definition.",
